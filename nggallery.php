@@ -35,7 +35,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 
 // Version and path to check version
 define('NGGVERSION', "0.33");
-define('NGGURL', "http://localhost/saegolf/version.php");
+define('NGGURL', "http://nextgen.boelinger.com/version.php");
 
 // define URL
 $myabspath = str_replace("\\","/",ABSPATH);  // required for Windows & XAMPP

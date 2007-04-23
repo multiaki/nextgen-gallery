@@ -142,7 +142,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<tr valign="top">
 						<th align="left"><?php _e('Scan folders during runtime','nggallery') ?></th>
 						<td><input type="checkbox" name="scanfolder" value="1" <?php checked('1', $ngg_options[scanfolder]); ?> /><br />
-						<?php _e('Search automatic in the folders for new images','nggallery') ?></td>
+						<?php _e('Search automatic in the folders for new images (not working)','nggallery') ?></td>
 					</tr>
 					<tr valign="top">
 						<th align="left"><?php _e('Delete image files','nggallery') ?></th>
@@ -359,7 +359,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 									echo "\n".'<option value="'.$fontfile.'" '.ngg_input_selected($fontfile, $ngg_options[wmFont]).' >'.$fontfile.'</option>';
 								}
 								?>
-							</select>
+							</select><br />
+							<?php _e('You can upload more fonts in the folder <strong>nggallery/fonts</strong>','nggallery') ?>
 						</td>
 					</tr>
 					<tr>

@@ -118,7 +118,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<th scope="row"><?php _e('New Gallery', 'nggallery') ;?>:</th> 
 					<td><input type="text" size="35" name="galleryname" value="" /><br />
 					<?php _e('Create a new , empty gallery', 'nggallery') ;?><br />
-					<i>( <?php _e('Authorized characters for file and folder names are', 'nggallery') ;?>: a-z, A-Z, 0-9, -, _ )</i></td>
+					<i>( <?php _e('Allowed characters for file and folder names are', 'nggallery') ;?>: a-z, A-Z, 0-9, -, _ )</i></td>
 				</tr>
 				</table>
 				<div class="submit"><input type="submit" name= "addgallery" value="<?php _e('Add gallery', 'nggallery') ;?>"/></div>
@@ -134,10 +134,10 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				<tr valign="top"> 
 					<th scope="row"><?php _e('Select Zip-File', 'nggallery') ;?>:</th> 
 					<td><input type="file" name="zipfile" id="zipfile" size="35" class="uploadform"/><br />
-					<?php _e('Upload a zip file with images from my harddrive:', 'nggallery') ;?></td> 
+					<?php _e('Upload a zip file with images', 'nggallery') ;?></td> 
 				</tr>
 				</table>
-				<div class="submit"> <input type="submit" name= "zipupload" value="<?php _e('Start Upload', 'nggallery') ;?>"/></div>
+				<div class="submit"> <input type="submit" name= "zipupload" value="<?php _e('Start upload', 'nggallery') ;?>"/></div>
 			</fieldset>
 			</form>
 		</div>

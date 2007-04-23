@@ -46,7 +46,7 @@ global $wpdb;
     
     <ul>
       <?php if(current_user_can('manage_options')): ?><li><a href="admin.php?page=nggallery-add-gallery"><?php _e('Add a new gallery or import pictures', 'nggallery') ?></a></li><?php endif; ?>
-      <li><a href="admin.php?page=nggallery-manage-gallery"><?php _e('Manage gallerys and images', 'nggallery') ?></a></li>
+      <li><a href="admin.php?page=nggallery-manage-gallery"><?php _e('Manage galleries and images', 'nggallery') ?></a></li>
       <?php if(current_user_can('manage_options')): ?><li><a href="admin.php?page=nggallery-manage-album"><?php _e('Create and manage albums', 'nggallery') ?></a></li><?php endif; ?>
       <?php if(current_user_can('manage_options')): ?><li><a href="admin.php?page=nggallery-options"><?php _e('Change the settings of NextGEN Gallery', 'nggallery') ?></a></li><?php endif; ?>
     </ul>
