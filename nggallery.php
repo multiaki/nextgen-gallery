@@ -2,13 +2,13 @@
 /*
 Plugin Name: NextGEN Gallery
 Plugin URI: http://alexrabe.boelinger.com/
-Description: A NextGENeration Photo gallery for the WEB 2.0(beta). 
+Description: A NextGENeration Photo gallery for the WEB2.0(beta). At the moment onyl poor Web1.0 :-(
 Author: Alex Rabe
 Version: 0.33a
 
 Author URI: http://alexrabe.boelinger.com/
 
-Copyright 2007 Alex Rabe
+Copyright 2007 by Alex Rabe
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -42,6 +42,9 @@ $myabspath = str_replace("\\","/",ABSPATH);  // required for Windows & XAMPP
 define('WINABSPATH', $myabspath);
 define('NGGALLERY_ABSPATH', $myabspath.'wp-content/plugins/' . dirname(plugin_basename(__FILE__)).'/');
 define('NGGALLERY_URLPATH', get_option('siteurl').'/wp-content/plugins/' . dirname(plugin_basename(__FILE__)).'/');
+
+// look for imagerotator
+define('NGGALLERY_IREXIST', file_exists(NGGALLERY_ABSPATH.'imagerotator.swf'));
 
 //get value for safe mode
 define('SAFE_MODE', ini_get('safe_mode'));
@@ -115,8 +118,10 @@ wp_upload_tabs
 applied to the list of custom tabs to display on the upload management admin screen. 
 Use action upload_files_(tab) to display a page for your custom tab
 */
-add_action('upload_files_ngg_test', 'ngg_action_upload_Tab');
-add_filter('wp_upload_tabs', 'ngg_wp_upload_tabs');
+
+//TODO: Integrate all galleries in Upload panel
+// add_action('upload_files_ngg_test', 'ngg_action_upload_Tab');
+// add_filter('wp_upload_tabs', 'ngg_wp_upload_tabs');
 
 function ngg_action_upload_Tab() {
 	// execute when click on the tab
@@ -124,7 +129,7 @@ function ngg_action_upload_Tab() {
 }
 
 function ngg_upload_tabs_script() {
-	//TODO: Here could be a script
+
 }
 
 function ngg_wp_upload_tabs ($array) {

@@ -87,7 +87,7 @@ function nggShowSlideshow($galleryID,$irWidth,$irHeight) {
 	if (empty($irWidth) ) $irWidth = $ngg_options[irWidth];
 	if (empty($irHeight)) $irHeight = $ngg_options[irHeight];
 
-	$replace .= "\n".'<div id="ngg_slideshow'.$galleryID.'">';
+	$replace .= "\n".'<div class="slideshow" id="ngg_slideshow'.$galleryID.'">';
 	$replace .= '<a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see the slideshow.</p>';
     $replace .= "\n\t".'<script type="text/javascript">';
 //  $replace .= "\n\t".'<!--';
@@ -148,7 +148,7 @@ function nggShowGallery($galleryID) {
 	if ( isset( $_GET['show'] ) AND ($_GET['show'] == slide) ) {
 		$getvalue['show'] = "gallery";
 		$gallerycontent  = '<div class="ngg-galleryoverview">';
-		$gallerycontent .= '<a class="slideshow" href="' . add_query_arg($getvalue) . '">'.$ngg_options[galTextGallery].'</a>';
+		$gallerycontent .= '<a class="slideshowlink" href="' . add_query_arg($getvalue) . '">'.$ngg_options[galTextGallery].'</a>';
 		$gallerycontent .= nggShowSlideshow($galleryID,$ngg_options[irWidth],$ngg_options[irHeight]);
 		$gallerycontent .= '</div>'."\n";
 		$gallerycontent .= '<div style="clear:both;"></div>'."\n";
@@ -203,9 +203,9 @@ function nggShowGallery($galleryID) {
 		}
 
 	$gallerycontent  = '<div class="ngg-galleryoverview">';
-	if ($ngg_options[galShowSlide]) {
+	if (($ngg_options[galShowSlide]) AND (NGGALLERY_IREXIST)) {
 		$getvalue['show'] = "slide";
-		$gallerycontent .= '<a class="slideshow" href="' . add_query_arg($getvalue) . '">'.$ngg_options[galTextSlide].'</a>';
+		$gallerycontent .= '<a class="slideshowlink" href="' . add_query_arg($getvalue) . '">'.$ngg_options[galTextSlide].'</a>';
 	}
 	
 	foreach ($picturelist as $picture) {

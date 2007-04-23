@@ -393,7 +393,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		<form name="player_options" method="POST" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']).'#slideshow-slider'; ?>" >
 		<input type="hidden" name="page_options" value="irWidth,irHeight,irShuffle,irLinkfromdisplay,irShownavigation,irShowicons,irOverstretch,irRotatetime,irTransition,irBackcolor,irFrontcolor,irLightcolor" />
 		<h2><?php _e('Slideshow','nggallery'); ?></h2>
-		<fieldset class="options"> 
+		<fieldset class="options">
+		<?php if (!NGGALLERY_IREXIST) { ?><p><div id="message" class="error fade"><p><?php _e('The imagerotator.swf is not in the nggallery folder, the slideshow will not work.','nggallery') ?></p></div></p><?php }?>
 		<p><?php _e('The settings are used in the Flash Image Rotator Version 3.2 .', 'nggallery') ?> 
 		   <?php _e('See more information for the Flash Player on the web page', 'nggallery') ?> <a href="http://www.jeroenwijering.com/?item=Flash_Image_Rotator" target="_blank">Flash Image Rotator from Jeroen Wijering</a>.<br />
 				<table class="optiontable" border="0" >
