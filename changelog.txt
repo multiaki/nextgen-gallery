@@ -1,5 +1,15 @@
-﻿NextGEN Gallery
+NextGEN Gallery
 by Alex Rabe
 
-V0.33 - first, very first version
-- Add Overview Page
+V0.34 - 24.04.2006
+- Bugfix for Album
+- Add fix ration setting
+- Change link in Album to get_bloginfo('wpurl')
+- Add language file file
+
+V0.33 - 23.04.2006
+- Overview Page
+- Core function
+- Slideshow
+
+
