@@ -89,12 +89,14 @@ function ngg_default_options() {
 	$ngg_options[imgHeight]			= 600;  						// Image height
 	$ngg_options[imgQuality]		= 100;							// Image Quality
 	$ngg_options[imgResampleMode]	= 4;  							// Resample speed value 1 - 5
+	$ngg_options[imgSinglePicLink]	= false;  						// Add a link to the full size picture
 	
 	// Gallery Settings
 	$ngg_options[galImages]			= "20";		  					// Number Of images per page
 	$ngg_options[galShowSlide]		= true;							// Show slideshow
 	$ngg_options[galTextSlide]		= __('[Show as slideshow]','nggallery'); // Text for slideshow
 	$ngg_options[galTextGallery]	= __('[Show picture list]','nggallery'); // Text for gallery
+	$ngg_options[galShowOrder]		= "gallery";					// Show order
 	$ngg_options[galSort]			= "pid";						// Sort order
 
 	// Thumbnail Effect

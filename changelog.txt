@@ -1,6 +1,14 @@
 NextGEN Gallery
 by Alex Rabe
 
+V0.35 - 25.04.2006
+- Remove get_settings
+- Folder name can be flexible
+- Correction for Safe-Mode ON
+- New option : Fullsize pic for Singlepic mode
+- New option : Select show order
+- Add Check for WP2.1
+
 V0.34 - 24.04.2006
 - Bugfix for Album
 - Add fix ration setting
