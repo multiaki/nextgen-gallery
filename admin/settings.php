@@ -136,7 +136,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				<table class="optiontable editform">
 					<tr valign="top">
 						<th align="left"><?php _e('Gallery path','nggallery') ?></th>
-						<td><input type="text" size="35" name="gallerypath" value="<?php echo $ngg_options[gallerypath]; ?>" /><br />
+						<td><input type="text" size="35" name="gallerypath" value="<?php echo $ngg_options[gallerypath]; ?>" title="TEST" /><br />
 						<?php _e('This is the default path for all galleries','nggallery') ?></td>
 					</tr>
 					<tr valign="top">
@@ -221,7 +221,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<tr valign="top">
 						<th align="left"><?php _e('Add link in [singlepic] tag ','nggallery') ?></th>
 						<td></td>
-						<td><input type="checkbox" name="deleteImg" value="1" <?php checked('1', $ngg_options[imgSinglePicLink]); ?> /><br />
+						<td><input type="checkbox" name="imgSinglePicLink" value="1" <?php checked('1', $ngg_options[imgSinglePicLink]); ?> /><br />
 						<?php _e('Add the fullsize picture as link. Didn\'t support watermark mode on the fly.','nggallery') ?></td>
 					</tr>
 				</table>
