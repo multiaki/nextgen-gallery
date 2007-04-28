@@ -134,9 +134,9 @@ function nggallery_admin_manage_gallery() {
 
 	if ($_POST['scanfolder'])  {
 	// Rescan folder
-		//TODO: Wenn keine bilder vorhanden sind , fehler beim scannen
 		$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$act_gid' ");
-		$old_imageslist = $wpdb->get_col("SELECT filename FROM $wpdb->nggpictures WHERE galleryid = '$act_gid' ");
+		$old_imageslist = array();
+		$old_imageslist[] = $wpdb->get_col("SELECT filename FROM $wpdb->nggpictures WHERE galleryid = '$act_gid' ");
 		// read list of images in folder
 		$new_imageslist = ngg_scandir(WINABSPATH.$gallerypath);
 		// check difference
@@ -187,7 +187,7 @@ function nggallery_manage_gallery_main() {
 			</thead>
 			<tbody>
 <?php			
-$gallerylist = $wpdb->get_results("SELECT * FROM $wpdb->nggallery ");
+$gallerylist = $wpdb->get_results("SELECT * FROM $wpdb->nggallery ORDER BY gid ASC");
 if($gallerylist) {
 	foreach($gallerylist as $gallery) {
 		$class = ( $class == 'class="alternate"' ) ? '' : 'class="alternate"';
