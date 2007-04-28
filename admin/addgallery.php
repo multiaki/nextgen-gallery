@@ -274,7 +274,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		// add images to database		
 		if (is_array($imageslist)) {
 			foreach($imageslist as $picture) {
-			$result = $wpdb->query("INSERT INTO $wpdb->nggpictures (galleryid, filename, alttext) VALUES ('$gallery_id', '$picture', '$picture') ");
+			$result = $wpdb->query("INSERT INTO $wpdb->nggpictures (galleryid, filename, alttext, exclude) VALUES ('$gallery_id', '$picture', '$picture' , FALSE) ");
 			if ($result) $count_pic++;
 			}
 		}
