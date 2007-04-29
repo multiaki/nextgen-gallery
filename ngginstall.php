@@ -22,7 +22,7 @@ function nggallery_install () {
 		filename VARCHAR(255) NOT NULL ,
 		description MEDIUMTEXT NULL ,
 		alttext MEDIUMTEXT NULL ,
-		exclude TINYINT NULL ,
+		exclude TINYINT NULL DEFAULT '0' ,
 		PRIMARY KEY pid (pid)
 		);";
 	
@@ -53,7 +53,7 @@ function nggallery_install () {
 		$sql = "CREATE TABLE " . $nggalbum . " (
 		id MEDIUMINT(9) NOT NULL AUTO_INCREMENT ,
 		name VARCHAR(255) NOT NULL ,
-		sortorder LONGTEXT DEFAULT '0' NOT NULL,
+		sortorder LONGTEXT NOT NULL,
 		PRIMARY KEY id (id)
 		);";
 	
