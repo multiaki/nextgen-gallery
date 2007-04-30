@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-04-29 21:36+0100\n"
+"PO-Revision-Date: 2007-04-29 00:11+0100\n"
 "Last-Translator: Alex Rabe\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Sorry, NextGEN Gallery works only under WordPress 2.1 or higher"
 msgstr ""
 
-#: ../nggbutton.php:36
+#: ../nggbutton.php:33
 #: ../admin/addgallery.php:231
 #: ../admin/addgallery.php:282
 #: ../admin/admin.php:13
@@ -29,91 +29,91 @@ msgstr ""
 msgid "Gallery"
 msgstr ""
 
-#: ../nggbutton.php:37
+#: ../nggbutton.php:34
 #: ../admin/admin.php:16
 msgid "Album"
 msgstr ""
 
-#: ../nggbutton.php:38
+#: ../nggbutton.php:35
 #: ../admin/manage.php:63
 msgid "Picture"
 msgstr ""
 
-#: ../nggbutton.php:48
+#: ../nggbutton.php:45
 msgid "Select gallery"
 msgstr ""
 
-#: ../nggbutton.php:50
+#: ../nggbutton.php:47
 msgid "No gallery"
 msgstr ""
 
-#: ../nggbutton.php:62
-#: ../nggbutton.php:89
+#: ../nggbutton.php:59
+#: ../nggbutton.php:86
 msgid "Show as"
 msgstr ""
 
-#: ../nggbutton.php:63
+#: ../nggbutton.php:60
 msgid "Image list"
 msgstr ""
 
-#: ../nggbutton.php:64
+#: ../nggbutton.php:61
 #: ../admin/settings.php:122
 #: ../admin/settings.php:256
 #: ../admin/settings.php:412
 msgid "Slideshow"
 msgstr ""
 
-#: ../nggbutton.php:75
+#: ../nggbutton.php:72
 msgid "Select album"
 msgstr ""
 
-#: ../nggbutton.php:77
+#: ../nggbutton.php:74
 msgid "No album"
 msgstr ""
 
-#: ../nggbutton.php:90
+#: ../nggbutton.php:87
 msgid "Extended version"
 msgstr ""
 
-#: ../nggbutton.php:91
+#: ../nggbutton.php:88
 msgid "Compact version"
 msgstr ""
 
-#: ../nggbutton.php:102
+#: ../nggbutton.php:99
 msgid "Select picture"
 msgstr ""
 
-#: ../nggbutton.php:104
+#: ../nggbutton.php:101
 msgid "No picture"
 msgstr ""
 
-#: ../nggbutton.php:116
+#: ../nggbutton.php:113
 msgid "Width x Height"
 msgstr ""
 
-#: ../nggbutton.php:120
+#: ../nggbutton.php:117
 msgid "Effect"
 msgstr ""
 
-#: ../nggbutton.php:121
+#: ../nggbutton.php:118
 msgid "No effect"
 msgstr ""
 
-#: ../nggbutton.php:122
+#: ../nggbutton.php:119
 #: ../admin/settings.php:121
 #: ../admin/settings.php:310
 msgid "Watermark"
 msgstr ""
 
-#: ../nggbutton.php:123
+#: ../nggbutton.php:120
 msgid "Web 2.0"
 msgstr ""
 
-#: ../nggbutton.php:133
+#: ../nggbutton.php:130
 msgid "Cancel"
 msgstr ""
 
-#: ../nggbutton.php:137
+#: ../nggbutton.php:134
 msgid "Insert"
 msgstr ""
 
