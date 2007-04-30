@@ -135,8 +135,9 @@ function nggallery_admin_manage_gallery() {
 	if ($_POST['scanfolder'])  {
 	// Rescan folder
 		$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$act_gid' ");
-		$old_imageslist = array();
-		$old_imageslist[] = $wpdb->get_col("SELECT filename FROM $wpdb->nggpictures WHERE galleryid = '$act_gid' ");
+		$old_imageslist = $wpdb->get_col("SELECT filename FROM $wpdb->nggpictures WHERE galleryid = '$act_gid' ");
+		// if no images are there, create empty array
+		if ($old_imageslist == NULL) $old_imageslist = array();
 		// read list of images in folder
 		$new_imageslist = ngg_scandir(WINABSPATH.$gallerypath);
 		// check difference
