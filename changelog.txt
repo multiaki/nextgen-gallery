@@ -1,6 +1,9 @@
 NextGEN Gallery
 by Alex Rabe
 
+V0.41 - 29.04.2007
+- Bugfix : Scan folder in empty gallery
+
 V0.40 - 29.04.2007
 - NEW : TinyMCE Button integration
 - Removed : CSS Style : remove width/height in album
