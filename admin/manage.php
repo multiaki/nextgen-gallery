@@ -252,7 +252,7 @@ function nggallery_pciturelist() {
 */
 	}); 
 </script>
-<script type="text/javascript"> var LoadingImage = '<?php echo NGGALLERY_URLPATH ?>thickbox/loadingAnimation.gif';</script>
+<script type="text/javascript"> var tb_pathToImage = '<?php echo NGGALLERY_URLPATH ?>thickbox/loadingAnimationv2.gif';</script>
 <script type="text/javascript" src="<?php echo NGGALLERY_URLPATH ?>thickbox/thickbox.js"></script>
 <style type="text/css" media="all">@import "<?php echo NGGALLERY_URLPATH ?>thickbox/thickbox.css";</style>
 <style type="text/css" media="all">

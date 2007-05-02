@@ -9,8 +9,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	<h2><?php _e('Copyright notes / Credits', 'nggallery') ;?></h2>
 		<fieldset class="options">
 		<legend><?php _e("About this plugin", 'nggallery'); ?></legend>
-		<p><?php _e('This plugin is written as last study on WordPress. I took the chance to learn PHP, WordPress and programming technics with this plugin.
-		If you study the code of this plugin, you will find out that I mixed a lot of good already existing code and ideas together.', 'nggallery') ;?></p>
+		<p><?php _e('This plugin is written as last study on WordPress. I took the chance to learn PHP, WordPress and programming technics with this plugin. If you study the code of this plugin, you will find out that I mixed a lot of good already existing code and ideas together.', 'nggallery') ;?></p>
 		<p><?php _e('So, I would like to thank the following people for their pioneer work (without this work it\'s impossible to create such a plugin so fast)', 'nggallery') ;?></p>		
 		<ul>
 		<li><a href="http://wordpress.org" target="_blank">The WordPress Team</a> <?php _e('for their great documented code', 'nggallery') ;?></li>
@@ -67,7 +66,8 @@ function ngg_list_support()	{
 	"Alakhnor" => "http://www.alakhnor.info",
 	"Rod" => "http://www.le-hiboo.com",
 	"Ttancm" => "http://www.ttancm.com/",
-	"Francoise Pescatore" => ""	
+	"Francoise Pescatore" => ""	,
+	"Lazy (German Translation)" => "http://www.lazychris.de/"	
 	);
 	
 	ksort($supporter);

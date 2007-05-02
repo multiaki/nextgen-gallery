@@ -89,12 +89,13 @@ function integrate_nggheader() {
 	echo "\n".'<style type="text/css" media="screen">@import "'.NGGALLERY_URLPATH.'css/'.$ngg_options[CSSfile].'";</style>';
 	if ($ngg_options[thumbEffect] == "thickbox") {
 	echo "\n".'<script type="text/javascript" src="'.NGGALLERY_URLPATH.'admin/js/jquery.js"></script>';
-	echo "\n".'<script type="text/javascript"> var LoadingImage = "'.NGGALLERY_URLPATH.'thickbox/loadingAnimation.gif";</script>';
+	//TODO: select v2 or v3 via option
+	echo "\n".'<script type="text/javascript"> var tb_pathToImage = "'.NGGALLERY_URLPATH.'thickbox/loadingAnimationv2.gif";</script>';
 	echo "\n".'<script type="text/javascript" src="'.NGGALLERY_URLPATH.'thickbox/thickbox.js"></script>';
 	echo "\n".'<style type="text/css" media="screen">@import "'.NGGALLERY_URLPATH.'thickbox/thickbox.css";</style>'."\n";
+	}
 	if (!function_exists('integrate_swfobject'))
 	echo "\n".'<script type="text/javascript" src="'.NGGALLERY_URLPATH.'js/swfobject.js'.'"></script>'."\n";
-	}
 }
 // Filter hook to activate CSS in header
 if ($ngg_options[activateCSS]) add_filter('wp_head', 'integrate_nggheader');

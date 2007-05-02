@@ -1,8 +1,12 @@
 NextGEN Gallery
 by Alex Rabe
 
-V0.41 - 29.04.2007
+V0.41 - 
+- Update : Thickbox v3 integrated
+- Added : German translation (THX to Lazy)
+- Added : Better check for save-mode
 - Bugfix : Scan folder in empty gallery
+- Bugfix : Swfobjects only added with Thickbox effect
 
 V0.40 - 29.04.2007
 - NEW : TinyMCE Button integration
