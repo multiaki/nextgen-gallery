@@ -60,7 +60,7 @@ $(document).ready(
 				opacity: 0.7,
 				tolerance: 'intersect'
 			}
-		),
+		)
 		$('a.min').bind('click', toggleContent);
 		$('.textarea1').Autoexpand([230,400]);
 	}
@@ -161,7 +161,7 @@ function serialize(s)
 						}
 					}
 				}
-			} else echo '<h3>'.__('No Album selected', 'nggallery').'</h3>'."\n";
+			} else echo '<h3>'.__('No album selected!', 'nggallery').'</h3>'."\n";
 			?>
 		</div><!-- /#gallery container -->
 
