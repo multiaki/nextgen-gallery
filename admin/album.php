@@ -61,11 +61,23 @@ $(document).ready(
 				tolerance: 'intersect'
 			}
 		),
-
+		$('a.min').bind('click', toggleContent);
 		$('.textarea1').Autoexpand([230,400]);
 	}
 );
 
+var toggleContent = function(e)
+{
+	var targetContent = $('div.itemContent', this.parentNode.parentNode);
+	if (targetContent.css('display') == 'none') {
+		targetContent.slideDown(300);
+		$(this).html('[-]');
+	} else {
+		targetContent.slideUp(300);
+		$(this).html('[+]');
+	}
+	return false;
+};
 function serialize(s)
 {
 	serial = $.SortSerialize(s);
@@ -175,19 +187,21 @@ function getgallerycontainer($galleryid = 0) {
 		$filename = $wpdb->get_var("SELECT filename FROM $wpdb->nggpictures WHERE pid = '$gallery->previewpic'");
 		if ($filename) $img = '<img src="'.$act_thumbnail_url.$act_thumb_prefix.$filename.'" />';
 		else $img = '';
-		echo ' 
-		<div id="gid-'.$gallery->gid.'" class="groupItem">
-			<div class="innerhandle">
-				<div class="itemContent">
-				<div class="inlinepicture">'.$img.'</div>
-					<p><strong>'.__('ID', 'nggallery').' : </strong>'.$gallery->gid.'</p>
-					<p><strong>'.__('Name', 'nggallery').' : </strong>'.$gallery->name.'</p>
-					<p><strong>'.__('Title', 'nggallery').' : </strong>'.$gallery->title.'</p>
-					<p><strong>'.__('Page', 'nggallery').' : </strong>'.$pagename.'</p>
+		echo '<div id="gid-'.$gallery->gid.'" class="groupItem">
+				<div class="innerhandle">
+					<div class="item_top">
+						ID: '.$gallery->gid.' || Title: '.$gallery->title.'	
+						<a href="#" class="min" title="close">[-]</a>
+					</div>
+					<div class="itemContent">
+						<div class="inlinepicture">'.$img.'</div>
+							<p><strong>'.__('ID', 'nggallery').' : </strong>'.$gallery->gid.'</p>
+							<p><strong>'.__('Name', 'nggallery').' : </strong>'.$gallery->name.'</p>
+							<p><strong>'.__('Title', 'nggallery').' : </strong>'.$gallery->title.'</p>
+							<p><strong>'.__('Page', 'nggallery').' : </strong>'.$pagename.'</p>
+						</div>
 				</div>
-			</div>
-		</div>
-		'; 
+			   </div>'; 
 	}
 }
 ?>
