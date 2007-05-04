@@ -270,10 +270,10 @@ function nggCreateGalleryDiv($galleryID,$mode = "extend") {
 				<div class="ngg-album-compact">
 					<div class="ngg-album-compactbox">
 						<div class="setLinkDiv">
-							<a class="Link" href="'.get_bloginfo('wpurl').'/?page_id='.$gallerycontent->pageid.'">'.$insertpic.'</a>
+							<a class="Link" href="'.get_permalink($gallerycontent->pageid).'">'.$insertpic.'</a>
 						</div>
 					</div>
-					<h4><a class="Seta" title="'.$gallerycontent->title.'" href="'.get_bloginfo('wpurl').'/?page_id='.$gallerycontent->pageid.'">'.$gallerycontent->title.'</a></h4>
+					<h4><a class="Seta" title="'.$gallerycontent->title.'" href="'.get_permalink($gallerycontent->pageid).'">'.$gallerycontent->title.'</a></h4>
 					<p><b>'.$counter.'</b> '.__('Photos', 'nggallery').'</p></div>';
 		} else {
 			// mode extend
@@ -283,9 +283,9 @@ function nggCreateGalleryDiv($galleryID,$mode = "extend") {
 				$insertpic = __('Watch gallery', 'nggallery');
 			$galleryoutput = '
 			<div class="ngg-album">
-				<div class="ngg-albumtitle"><a href="'.get_bloginfo('wpurl').'/?page_id='.$gallerycontent->pageid.'">'.$gallerycontent->title.'</a></div>
+				<div class="ngg-albumtitle"><a href="'.get_permalink($gallerycontent->pageid).'">'.$gallerycontent->title.'</a></div>
 				<div class="ngg-albumcontent">
-					<div class="ngg-thumbnail"><a href="'.get_bloginfo('wpurl').'/?page_id='.$gallerycontent->pageid.'">'.$insertpic.'</a></div>
+					<div class="ngg-thumbnail"><a href="'.get_permalink($gallerycontent->pageid).'">'.$insertpic.'</a></div>
 					<div class="ngg-description"><p>'.$gallerycontent->description.'</p></div>'."\n".'</div>'."\n".'</div>';
 
 		}
