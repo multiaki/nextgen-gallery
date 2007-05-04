@@ -1,13 +1,40 @@
+html
+{
+	heigth:100%;
+}
+
 .groupItem
 {
 	background-color:#FBFBFB;
 	border:1px solid #CCCCCC;
-	cursor:move;
 	display:block;
-	line-height:75px;
+	line-height:75px
 	cursor: move;
 	margin: 0 0 10px;
 	width: 390px;
+}
+
+.groupItem .item_top
+{
+	background-color:#669999;
+	color: white;
+	font-weight:bold;
+	line-height: 30px;
+	height: 30px;
+	border-bottom: 2px solid #003333;
+	position: relative;
+	cursor: move;
+}
+
+.groupItem .item_top a
+{
+	position: absolute;
+	right: 5px;
+	top: 0px;
+	text-decoration: none;
+	color: white;
+	border-bottom: 2px solid #003333;
+	
 }
 
 .innerhandle {
