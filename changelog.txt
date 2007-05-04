@@ -4,7 +4,8 @@ by Alex Rabe
 V0.41 - 
 - Update : Thickbox v3 integrated
 - Added : German translation (THX to Lazy)
-- Added : Better check for save-mode
+- Added : Better check for safe-mode
+- Bugfix : Fixed Permalink in album (THX to Helene D.)
 - Bugfix : Scan folder in empty gallery
 - Bugfix : Swfobjects only added with Thickbox effect
 
