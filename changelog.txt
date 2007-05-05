@@ -3,8 +3,10 @@ by Alex Rabe
 
 V0.41 - 
 - Update : Thickbox v3 integrated
+- Added : CSS file for K2 theme
 - Added : German translation (THX to Lazy)
 - Added : Better check for safe-mode
+- Added : CSS Class for single-pic : class="ngg-singlepic"
 - Bugfix : Fixed Permalink in album (THX to Helene D.)
 - Bugfix : Scan folder in empty gallery
 - Bugfix : Swfobjects only added with Thickbox effect

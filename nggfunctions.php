@@ -269,11 +269,11 @@ function nggCreateGalleryDiv($galleryID,$mode = "extend") {
  			$galleryoutput = '	
 				<div class="ngg-album-compact">
 					<div class="ngg-album-compactbox">
-						<div class="setLinkDiv">
+						<div class="ngg-album-link">
 							<a class="Link" href="'.get_permalink($gallerycontent->pageid).'">'.$insertpic.'</a>
 						</div>
 					</div>
-					<h4><a class="Seta" title="'.$gallerycontent->title.'" href="'.get_permalink($gallerycontent->pageid).'">'.$gallerycontent->title.'</a></h4>
+					<h4><a class="ngg-album-desc" title="'.$gallerycontent->title.'" href="'.get_permalink($gallerycontent->pageid).'">'.$gallerycontent->title.'</a></h4>
 					<p><b>'.$counter.'</b> '.__('Photos', 'nggallery').'</p></div>';
 		} else {
 			// mode extend
@@ -324,7 +324,7 @@ function nggSinglePicture($imageID,$width=250,$height=250,$mode="") {
 		$link  = '<a href="'.$folder_url.$picture->filename.'" title="'.$picture->alttext.'" '.$thumbcode.' >';
 	}
 
-	$content = $link . '<img src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$imageID.'&amp;width='.$width.'&amp;height='.$height.'&amp;mode='.$mode.'" alt="'.$picture->alttext.'" title="'.$picture->alttext.'" />';
+	$content = $link . '<img class="ngg-singlepic" src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$imageID.'&amp;width='.$width.'&amp;height='.$height.'&amp;mode='.$mode.'" alt="'.$picture->alttext.'" title="'.$picture->alttext.'" />';
 
 	if ($ngg_options[imgSinglePicLink]) $content .= '</a>';
 	
