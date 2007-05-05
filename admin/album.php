@@ -77,15 +77,16 @@ var toggleContent = function(e)
 		$(this).html('[+]');
 	}
 	return false;
-};
+}
+
 function serialize(s)
 {
 	serial = $.SortSerialize(s);
 	$('input[@name=sortorder]').val(serial.hash);
-};
+}
 </script>
 <div class="wrap">
-	<h2><?php _e('Manage Albums', 'nggallery') ?></h2>
+	<h3><?php _e('Manage Albums', 'nggallery') ?></h3>
 	<form id="selectalbum" method="POST" onsubmit="serialize('galleryContainer')">
 		<input name="sortorder" type="hidden" />
 		<table width="60%" border="0" cellspacing="3" cellpadding="3" >
@@ -161,8 +162,12 @@ function serialize(s)
 						}
 					}
 				}
-			} else echo '<h3>'.__('No album selected!', 'nggallery').'</h3>'."\n";
-			?>
+			} 
+			else
+			{	
+				echo '<h3>'.__('No album selected!', 'nggallery').'</h3>';
+			}
+		?> 
 		</div><!-- /#gallery container -->
 
 	</div><!-- /#container -->
