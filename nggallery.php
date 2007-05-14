@@ -3,12 +3,12 @@
 Plugin Name: NextGEN Gallery
 Plugin URI: http://alexrabe.boelinger.com/?page_id=80
 Description: A NextGENeration Photo gallery for the WEB2.0(beta). At the moment only poor Web1.0 :-(
-Author: Alex Rabe
+Author: NextGEN DEV-Team
 Version: 0.41a
 
 Author URI: http://alexrabe.boelinger.com/
 
-Copyright 2007 by Alex Rabe
+Copyright 2007 by Alex Rabe & NextGEN DEV-Team
 
 The NextGEN button is taken from the Silk set of FamFamFam. See more at 
 http://www.famfamfam.com/lab/icons/silk/

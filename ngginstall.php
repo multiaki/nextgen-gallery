@@ -87,7 +87,7 @@ function ngg_default_options() {
 	$ngg_options[imgResize]			= false;						// Activate resize
 	$ngg_options[imgWidth]			= 800;  						// Image Width
 	$ngg_options[imgHeight]			= 600;  						// Image height
-	$ngg_options[imgQuality]		= 100;							// Image Quality
+	$ngg_options[imgQuality]		= 85;							// Image Quality
 	$ngg_options[imgResampleMode]	= 4;  							// Resample speed value 1 - 5
 	$ngg_options[imgSinglePicLink]	= false;  						// Add a link to the full size picture
 	
