@@ -212,10 +212,14 @@ function nggShowGallery($galleryID) {
 	}
 	
 	foreach ($picturelist as $picture) {
-		
+		$picturefile = str_replace(
+			array('ä',   'ö',   'ü',   'Ä',   'Ö',   'Ü',   'ß',   ' '), 
+			array('%E4', '%F6', '%FC', '%C4', '%D6', '%DC', '%DF', '%20'),
+			utf8_decode($picture->filename)
+		);
 		$gallerycontent .= '<div class="ngg-gallery-thumbnail-box">'."\n\t";
 		$gallerycontent .= '<div class="ngg-gallery-thumbnail">'."\n\t";
-		$gallerycontent .= '<a href="'.$folder_url.$picture->filename.'" title="'.$picture->alttext.'" '.$thumbcode.' >';
+		$gallerycontent .= '<a href="'.$folder_url.$picturefile.'" title="'.$picture->alttext.'" '.$thumbcode.' >';
 		$gallerycontent .= '<img title="'.$picture->alttext.'" alt="'.$picture->alttext.'" src="'.$thumbnailURL.$thumb_prefix.$picture->filename.'" '.$thumbsize.' />';
 		$gallerycontent .= '</a>'."\n".'</div>'."\n".'</div>'."\n";
 		}
@@ -374,7 +378,10 @@ function ngg_get_thumbnail_folder($gallerypath, $include_Abspath = TRUE) {
 	if (!$include_Abspath) $gallerypath = WINABSPATH.$gallerypath;
 	if (is_dir($gallerypath."/thumbs")) return "/thumbs/";
 	if (is_dir($gallerypath."/tumbs")) return "/tumbs/";
-
+	if (!is_dir($gallerypath."/thumbs")) {
+		mkdir($gallerypath."/thumbs");
+		return "/thumbs/";
+	}
 	return FALSE;
 	
 }

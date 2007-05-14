@@ -10,6 +10,7 @@ V0.41 -
 - Bugfix : Fixed Permalink in album (THX to Helene D.)
 - Bugfix : Scan folder in empty gallery
 - Bugfix : Swfobjects only added with Thickbox effect
+- Bugfix : Umlauts are now handled correctly
 
 V0.40 - 29.04.2007
 - NEW : TinyMCE Button integration

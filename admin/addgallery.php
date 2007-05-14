@@ -291,7 +291,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		   while(false !== ($file = readdir($handle))) 
 		       for($i=0;$i<sizeof($ext);$i++) 
 		           if(stristr($file, ".".$ext[$i])) 
-		               $files[] = $file; 
+		               $files[] = utf8_encode($file); 
 		   closedir($handle); 
 		} 
 		return($files); 
@@ -366,7 +366,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		if (is_array($pictures)) {
 			foreach($pictures as $picture) {
 	
-			$thumb = new Thumbnail($gallery_absfolder."/".$picture, TRUE);
+			$thumb = new Thumbnail($gallery_absfolder."/".utf8_decode($picture), TRUE);
 		
 			// echo $thumb->errmsg;	
 			// skip if file is not there
