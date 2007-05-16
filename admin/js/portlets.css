@@ -22,20 +22,15 @@ html
 	line-height: 28px;
 	height: 28px;
 	border-bottom: 2px solid #003333;
-	position: relative;
 	cursor: move;
 	padding: 0 5px;
+	position: static;
 }
 
 .groupItem .item_top a
 {
-	position: absolute;
-	right: 5px;
-	top: 0px;
 	text-decoration: none;
 	color: white;
-	border-bottom: 2px solid #003333;
-	
 }
 
 .innerhandle {
