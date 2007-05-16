@@ -97,7 +97,7 @@ function serialize(s)
 		<input name="sortorder" type="hidden" />
 		<table width="100%" border="0" cellspacing="3" cellpadding="3" >
 			<tr>
-				<th align="right">Select album</th>  
+				<th align="right"><?php _e('Select album', 'nggallery') ?></th>  
 				<td>
 					<select id="act_album" name="act_album" onchange="this.form.submit();">
 						<option value="0" ><?php _e('No album selected', 'nggallery') ?></option>
@@ -113,7 +113,7 @@ function serialize(s)
 						?>
 					</select>
 				</td> 
-				<th align="right">Add new album</th>
+				<th align="right"><?php _e('Add new album', 'nggallery') ?></th>
 				<td><input id="newalbum" name="newalbum" value="" /></td>
 				<td><p class="submit">
 					<?php if ($_POST['act_album'] > 0){ ?>
@@ -203,8 +203,8 @@ function getgallerycontainer($galleryid = 0) {
 		echo '<div id="gid-'.$gallery->gid.'" class="groupItem">
 				<div class="innerhandle">
 					<div class="item_top">
-						ID: '.$gallery->gid.' || Title: '.$gallery->title.'
 						<a href="#" class="min" title="close">[-]</a>
+						ID: '.$gallery->gid.' || Title: '.$gallery->title.'
 					</div>
 					<div class="itemContent">
 						<div class="inlinepicture">'.$img.'</div>

@@ -2,6 +2,7 @@ NextGEN Gallery
 by Alex Rabe
 
 V0.41 - 
+- Update : Better album management more galleries
 - Update : Thickbox v3 integrated
 - Added : CSS file for K2 theme
 - Added : German translation (THX to Lazy)
