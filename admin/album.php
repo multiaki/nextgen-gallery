@@ -53,6 +53,12 @@ function nggallery_admin_manage_album()  {
 $(document).ready(
 	function()
 	{
+		//updating the height of the white backround box, it does not work without this stupid lines
+		//problem: absolute positioning of the minimizing links in item_top does not work :(
+		//position: absolute; right:5px; top:0px; border-bottom: 2px solid #003333; css lines of .groupItem .item_top a
+		var hei = $('.wrap').height();
+		$('.wrap').height(hei);
+		
 		$('div.groupWrapper').Sortable(
 			{
 				accept: 'groupItem',
@@ -85,11 +91,11 @@ function serialize(s)
 	$('input[@name=sortorder]').val(serial.hash);
 }
 </script>
-<div class="wrap">
+<div class="wrap" id="wrap" >
 	<h3><?php _e('Manage Albums', 'nggallery') ?></h3>
 	<form id="selectalbum" method="POST" onsubmit="serialize('galleryContainer')">
 		<input name="sortorder" type="hidden" />
-		<table width="60%" border="0" cellspacing="3" cellpadding="3" >
+		<table width="100%" border="0" cellspacing="3" cellpadding="3" >
 			<tr>
 				<th align="right">Select album</th>  
 				<td>
@@ -109,13 +115,15 @@ function serialize(s)
 				</td> 
 				<th align="right">Add new album</th>
 				<td><input id="newalbum" name="newalbum" value="" /></td>
+				<td><p class="submit">
+					<?php if ($_POST['act_album'] > 0){ ?>
+						<input type="submit" name="delete" class="button delete" value="<?php _e('Delete') ?> &raquo;" onclick="javascript:check=confirm('<?php _e('Delete album ?','nggallery'); ?>');if(check==false) return false;"/>
+					<?php } ?>
+					<input type="submit" name="update" value="<?php _e('Update') ?> &raquo;" />
+				<p></td>
 			</tr>
 		</table>
-		<p class="submit">
-		<?php if ($_POST['act_album'] > 0){ ?>
-		<input type="submit" name="delete" class="button delete" value="<?php _e('Delete') ?> &raquo;" onclick="javascript:check=confirm('<?php _e('Delete album ?','nggallery'); ?>');if(check==false) return false;"/>
-		<?php } ?>
-		<input type="submit" name="update" value="<?php _e('Update') ?> &raquo;" /><p>
+		
 	</form>	
 	<br class="clear"/>
 	<div class="container">
@@ -195,7 +203,7 @@ function getgallerycontainer($galleryid = 0) {
 		echo '<div id="gid-'.$gallery->gid.'" class="groupItem">
 				<div class="innerhandle">
 					<div class="item_top">
-						ID: '.$gallery->gid.' || Title: '.$gallery->title.'	
+						ID: '.$gallery->gid.' || Title: '.$gallery->title.'
 						<a href="#" class="min" title="close">[-]</a>
 					</div>
 					<div class="itemContent">
