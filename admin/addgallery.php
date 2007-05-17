@@ -371,8 +371,13 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			// echo $thumb->errmsg;	
 			// skip if file is not there
 			if (!$thumb->error) {
-				if ($ngg_options[thumbcrop]) $thumb->cropFromCenter($ngg_options[thumbwidth],$ngg_options[thumbResampleMode]);
-				else $thumb->resize($ngg_options[thumbwidth],$ngg_options[thumbheight],$ngg_options[thumbResampleMode]);
+				if ($ngg_options[thumbresizebefore]) {
+					$thumb->resize($ngg_options[thumbwidth],$ngg_options[thumbheight],$ngg_options[thumbResampleMode]);
+					$thumb->cropFromCenter($ngg_options[thumbwidth],$ngg_options[thumbResampleMode]);
+				} else {
+					if ($ngg_options[thumbcrop]) $thumb->cropFromCenter($ngg_options[thumbwidth],$ngg_options[thumbResampleMode]);
+					else $thumb->resize($ngg_options[thumbwidth],$ngg_options[thumbheight],$ngg_options[thumbResampleMode]);
+				}
 				$thumb->save($gallery_absfolder.$thumbfolder.$prefix.$picture,$ngg_options[thumbquality]);
 			}
 			$thumb->destruct();
