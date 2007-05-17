@@ -1,7 +1,11 @@
 NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
-V0.41 - 
+V0.42 - 17.05.2007
+- Bugfix : Float function for singlepic not integrated, sorry !
+- Bugfix : Remove clear:both in widget
+
+V0.41 - 17.05.2007
 - NEW : Sidebar widget from KeViN
 - Update : Better album management for more galleries
 - Update : Thickbox v3 integrated
