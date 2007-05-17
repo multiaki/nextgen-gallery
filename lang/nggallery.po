@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-05-14 14:10+0100\n"
-"Last-Translator: Christian Arnold <webmaster@arctic-media.de>\n"
+"PO-Revision-Date: 2007-05-17 17:34+0100\n"
+"Last-Translator: Alex Rabe\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -24,7 +24,7 @@ msgstr ""
 #: ../admin/addgallery.php:282
 #: ../admin/admin.php:13
 #: ../admin/manage.php:44
-#: ../admin/manage.php:305
+#: ../admin/manage.php:306
 #: ../admin/settings.php:119
 msgid "Gallery"
 msgstr ""
@@ -64,6 +64,7 @@ msgid "Slideshow"
 msgstr ""
 
 #: ../nggbutton.php:75
+#: ../admin/album.php:100
 msgid "Select album"
 msgstr ""
 
@@ -95,25 +96,41 @@ msgstr ""
 msgid "Effect"
 msgstr ""
 
-#: ../nggbutton.php:121
+#: ../nggbutton.php:123
 msgid "No effect"
 msgstr ""
 
-#: ../nggbutton.php:122
+#: ../nggbutton.php:124
 #: ../admin/settings.php:121
 #: ../admin/settings.php:315
 msgid "Watermark"
 msgstr ""
 
-#: ../nggbutton.php:123
+#: ../nggbutton.php:125
 msgid "Web 2.0"
 msgstr ""
 
+#: ../nggbutton.php:130
+msgid "Float"
+msgstr ""
+
 #: ../nggbutton.php:133
+msgid "No float"
+msgstr ""
+
+#: ../nggbutton.php:134
+msgid "Left"
+msgstr ""
+
+#: ../nggbutton.php:135
+msgid "Right"
+msgstr ""
+
+#: ../nggbutton.php:147
 msgid "Cancel"
 msgstr ""
 
-#: ../nggbutton.php:137
+#: ../nggbutton.php:151
 msgid "Insert"
 msgstr ""
 
@@ -134,108 +151,197 @@ msgstr ""
 msgid "[Show picture list]"
 msgstr ""
 
+#: ../nggwidget.php:183
+msgid "NextGEN Random Image"
+msgstr ""
+
+#: ../nggwidget.php:220
+#: ../admin/album.php:215
+#: ../admin/manage.php:183
+#: ../admin/manage.php:313
+msgid "Title"
+msgstr ""
+
+#: ../nggwidget.php:222
+msgid "Number of pics"
+msgstr ""
+
+#: ../nggwidget.php:233
+msgid "Width"
+msgstr ""
+
+#: ../nggwidget.php:234
+msgid "Height"
+msgstr ""
+
+#: ../nggwidget.php:236
+msgid "Mode"
+msgstr ""
+
+#: ../nggwidget.php:238
+#: ../admin/settings.php:451
+msgid "none"
+msgstr ""
+
+#: ../nggwidget.php:239
+msgid "web2.0"
+msgstr ""
+
+#: ../nggwidget.php:248
+msgid "Show in the main page"
+msgstr ""
+
+#: ../nggwidget.php:250
+msgid "yes"
+msgstr ""
+
+#: ../nggwidget.php:251
+msgid "no"
+msgstr ""
+
+#: ../nggwidget.php:254
+msgid "Show in"
+msgstr ""
+
+#: ../nggwidget.php:256
+msgid "All categories"
+msgstr ""
+
+#: ../nggwidget.php:257
+msgid "Only which are not listed"
+msgstr ""
+
+#: ../nggwidget.php:258
+msgid "Only which are listed"
+msgstr ""
+
+#: ../nggwidget.php:261
+msgid "Categories (id (use , to seperate))"
+msgstr ""
+
 #: ../admin/about.php:9
 msgid "Copyright notes / Credits"
 msgstr ""
 
 #: ../admin/about.php:11
-msgid "About this plugin"
+msgid "NextGEN DEV Team"
 msgstr ""
 
 #: ../admin/about.php:12
-msgid "This plugin is written as last study on WordPress. I took the chance to learn PHP, WordPress and programming technics with this plugin. If you study the code of this plugin, you will find out that I mixed a lot of good already existing code and ideas together."
+msgid "This plugin is a team work of a virtual developer team around the world. Follow persons take part at the development till now :"
 msgstr ""
 
-#: ../admin/about.php:13
-msgid "So, I would like to thank the following people for their pioneer work (without this work it's impossible to create such a plugin so fast)"
+#: ../admin/about.php:14
+msgid "(Lead developer)"
 msgstr ""
 
 #: ../admin/about.php:15
-msgid "for their great documented code"
-msgstr ""
-
 #: ../admin/about.php:16
-msgid "for jQuery, which is the best Web2.0 framework"
+msgid "(Core developer)"
 msgstr ""
 
 #: ../admin/about.php:17
-msgid "for the fantastic PHP Thumbnail Class"
-msgstr ""
-
-#: ../admin/about.php:18
-msgid "for PclZip , a PHP library that manage ZIP archives"
+msgid "(Sidebar Widget developer)"
 msgstr ""
 
 #: ../admin/about.php:19
-msgid "for a lot of very useful plugins and ideas"
+msgid "Contributors / Tribute to"
 msgstr ""
 
 #: ../admin/about.php:20
-msgid "for RS-Discuss, it saved me a lot of time"
+msgid "If you study the code of this plugin, you will find out that we mixed a lot of good already existing code and ideas together."
 msgstr ""
 
 #: ../admin/about.php:21
-msgid "for the best Media Flash Scripts on earth"
-msgstr ""
-
-#: ../admin/about.php:22
-msgid "for the Watermark plugin"
+msgid "So, we would like to thank the following people for their pioneer work (without this work it's impossible to create such a plugin so fast)"
 msgstr ""
 
 #: ../admin/about.php:23
-msgid "for MyGallery, the best gallery plugin concept"
+msgid "for their great documented code"
+msgstr ""
+
+#: ../admin/about.php:24
+msgid "for jQuery, which is the best Web2.0 framework"
 msgstr ""
 
 #: ../admin/about.php:25
-msgid "If you didn't find your name on this list and there is some code which I integrate in my plugin, don't hesitate to send me a mail."
+msgid "for the fantastic PHP Thumbnail Class"
 msgstr ""
 
 #: ../admin/about.php:26
-msgid "How to support ?"
+msgid "for PclZip , a PHP library that manage ZIP archives"
 msgstr ""
 
 #: ../admin/about.php:27
-msgid "There exist several ways to contribute, help or support me in this work. Non of them are mandatory."
+msgid "for a lot of very useful plugins and ideas"
+msgstr ""
+
+#: ../admin/about.php:28
+msgid "for RS-Discuss, it saved me a lot of time"
 msgstr ""
 
 #: ../admin/about.php:29
-msgid "Send me bugfixes / code changes"
-msgstr ""
-
-#: ../admin/about.php:29
-msgid "The most motivated support for this plugin are your ideas and brain work"
+msgid "for the best Media Flash Scripts on earth"
 msgstr ""
 
 #: ../admin/about.php:30
-msgid "Translate my plugin"
-msgstr ""
-
-#: ../admin/about.php:30
-msgid "To help people to work with this plugin, I would like to have it in all avaivable languages"
+msgid "for the Watermark plugin"
 msgstr ""
 
 #: ../admin/about.php:31
-msgid "Donate my work via paypal"
+msgid "for MyGallery, the best gallery plugin concept"
 msgstr ""
 
-#: ../admin/about.php:41
-msgid "No doubt a very usefull and easy motivation :-) I send you an email , when I can buy my first Audi S3 with this money..."
+#: ../admin/about.php:33
+msgid "If you didn't find your name on this list and there is some code which I integrate in my plugin, don't hesitate to send me a mail."
 msgstr ""
 
-#: ../admin/about.php:43
-msgid "Place a link to my plugin in your blog/webpage"
+#: ../admin/about.php:34
+msgid "How to support ?"
 msgstr ""
 
-#: ../admin/about.php:43
+#: ../admin/about.php:35
+msgid "There exist several ways to contribute, help or support us in this work. Non of them are mandatory."
+msgstr ""
+
+#: ../admin/about.php:37
+msgid "Send us bugfixes / code changes"
+msgstr ""
+
+#: ../admin/about.php:37
+msgid "The most motivated support for this plugin are your ideas and brain work"
+msgstr ""
+
+#: ../admin/about.php:38
+msgid "Translate the plugin"
+msgstr ""
+
+#: ../admin/about.php:38
+msgid "To help people to work with this plugin, I would like to have it in all avaivable languages"
+msgstr ""
+
+#: ../admin/about.php:39
+msgid "Donate the work via paypal"
+msgstr ""
+
+#: ../admin/about.php:49
+msgid "No doubt a very usefull and easy motivation :-)"
+msgstr ""
+
+#: ../admin/about.php:51
+msgid "Place a link to the plugin in your blog/webpage"
+msgstr ""
+
+#: ../admin/about.php:51
 msgid "Yes, share and trackback is also a good support for this work "
 msgstr ""
 
-#: ../admin/about.php:45
+#: ../admin/about.php:53
 msgid "Thanks!"
 msgstr ""
 
-#: ../admin/about.php:46
-msgid "I would like to thank this people which support me in my work :"
+#: ../admin/about.php:54
+msgid "We would like to thank this people which support us in the work :"
 msgstr ""
 
 #: ../admin/addgallery.php:23
@@ -499,25 +605,29 @@ msgstr ""
 msgid "Album deleted"
 msgstr ""
 
-#: ../admin/album.php:89
+#: ../admin/album.php:95
 msgid "Manage Albums"
 msgstr ""
 
-#: ../admin/album.php:97
+#: ../admin/album.php:103
 msgid "No album selected"
 msgstr ""
 
 #: ../admin/album.php:116
-#: ../admin/manage.php:206
-#: ../admin/manage.php:412
+msgid "Add new album"
+msgstr ""
+
+#: ../admin/album.php:120
+#: ../admin/manage.php:207
+#: ../admin/manage.php:413
 msgid "Delete"
 msgstr ""
 
-#: ../admin/album.php:116
+#: ../admin/album.php:120
 msgid "Delete album ?"
 msgstr ""
 
-#: ../admin/album.php:118
+#: ../admin/album.php:122
 #: ../admin/settings.php:153
 #: ../admin/settings.php:196
 #: ../admin/settings.php:233
@@ -528,35 +638,33 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
-#: ../admin/album.php:123
+#: ../admin/album.php:128
+msgid "After you create and select a album, you can drag and drop a gallery into your album below"
+msgstr ""
+
+#: ../admin/album.php:133
 msgid "Select Gallery"
 msgstr ""
 
-#: ../admin/album.php:156
+#: ../admin/album.php:166
 msgid "Album Page ID"
 msgstr ""
 
-#: ../admin/album.php:168
+#: ../admin/album.php:178
 msgid "No album selected!"
 msgstr ""
 
-#: ../admin/album.php:203
-#: ../admin/manage.php:180
-#: ../admin/manage.php:377
+#: ../admin/album.php:213
+#: ../admin/manage.php:181
+#: ../admin/manage.php:378
 msgid "ID"
 msgstr ""
 
-#: ../admin/album.php:204
+#: ../admin/album.php:214
 msgid "Name"
 msgstr ""
 
-#: ../admin/album.php:205
-#: ../admin/manage.php:182
-#: ../admin/manage.php:312
-msgid "Title"
-msgstr ""
-
-#: ../admin/album.php:206
+#: ../admin/album.php:216
 msgid "Page"
 msgstr ""
 
@@ -587,110 +695,110 @@ msgstr ""
 msgid "Update successfully"
 msgstr ""
 
-#: ../admin/manage.php:154
+#: ../admin/manage.php:155
 msgid " picture(s) successfully added"
 msgstr ""
 
-#: ../admin/manage.php:176
+#: ../admin/manage.php:177
 msgid "Gallery Overview"
 msgstr ""
 
-#: ../admin/manage.php:181
+#: ../admin/manage.php:182
 msgid "Gallery name"
 msgstr ""
 
-#: ../admin/manage.php:183
-#: ../admin/manage.php:331
-#: ../admin/manage.php:380
-#: ../admin/style.php:92
+#: ../admin/manage.php:184
+#: ../admin/manage.php:332
+#: ../admin/manage.php:381
+#: ../admin/style.php:97
 msgid "Description"
 msgstr ""
 
-#: ../admin/manage.php:184
+#: ../admin/manage.php:185
 msgid "Page ID"
 msgstr ""
 
-#: ../admin/manage.php:185
+#: ../admin/manage.php:186
 msgid "Quantity"
 msgstr ""
 
-#: ../admin/manage.php:186
-#: ../admin/manage.php:383
+#: ../admin/manage.php:187
+#: ../admin/manage.php:384
 msgid "Action"
 msgstr ""
 
-#: ../admin/manage.php:205
+#: ../admin/manage.php:206
 msgid "Edit"
 msgstr ""
 
-#: ../admin/manage.php:206
-#: ../admin/manage.php:412
+#: ../admin/manage.php:207
+#: ../admin/manage.php:413
 msgid "Delete this file ?"
 msgstr ""
 
-#: ../admin/manage.php:211
-#: ../admin/manage.php:417
+#: ../admin/manage.php:212
+#: ../admin/manage.php:418
 msgid "No entries found"
 msgstr ""
 
-#: ../admin/manage.php:314
+#: ../admin/manage.php:315
 msgid "Page Link to"
 msgstr ""
 
-#: ../admin/manage.php:317
+#: ../admin/manage.php:318
 msgid "Not linked"
 msgstr ""
 
-#: ../admin/manage.php:333
+#: ../admin/manage.php:334
 msgid "Preview image"
 msgstr ""
 
-#: ../admin/manage.php:336
+#: ../admin/manage.php:337
 msgid "No Picture"
 msgstr ""
 
-#: ../admin/manage.php:351
+#: ../admin/manage.php:352
 msgid "Path"
 msgstr ""
 
-#: ../admin/manage.php:359
+#: ../admin/manage.php:360
 msgid "Scan Folder for new images"
 msgstr ""
 
-#: ../admin/manage.php:360
-#: ../admin/manage.php:424
+#: ../admin/manage.php:361
+#: ../admin/manage.php:425
 msgid "Save Changes"
 msgstr ""
 
-#: ../admin/manage.php:365
+#: ../admin/manage.php:366
 msgid "No action"
 msgstr ""
 
-#: ../admin/manage.php:366
+#: ../admin/manage.php:367
 msgid "Set watermark"
 msgstr ""
 
-#: ../admin/manage.php:367
+#: ../admin/manage.php:368
 msgid "Create new thumbnails"
 msgstr ""
 
-#: ../admin/manage.php:368
+#: ../admin/manage.php:369
 msgid "Resize images"
 msgstr ""
 
-#: ../admin/manage.php:369
+#: ../admin/manage.php:370
 msgid "Delete images"
 msgstr ""
 
-#: ../admin/manage.php:371
+#: ../admin/manage.php:372
 msgid "OK"
 msgstr ""
 
-#: ../admin/manage.php:371
+#: ../admin/manage.php:372
 msgid "No images selected"
 msgstr ""
 
-#: ../admin/manage.php:371
+#: ../admin/manage.php:372
 #, php-format
 msgid ""
 "You are about to start the bulk edit for %s images \n"
@@ -698,24 +806,24 @@ msgid ""
 " 'Cancel' to stop, 'OK' to proceed."
 msgstr ""
 
-#: ../admin/manage.php:378
+#: ../admin/manage.php:379
 #: ../admin/settings.php:266
 msgid "File name"
 msgstr ""
 
-#: ../admin/manage.php:379
+#: ../admin/manage.php:380
 msgid "Thumbnail"
 msgstr ""
 
-#: ../admin/manage.php:381
+#: ../admin/manage.php:382
 msgid "Alt &amp; Title Text"
 msgstr ""
 
-#: ../admin/manage.php:382
+#: ../admin/manage.php:383
 msgid "exclude"
 msgstr ""
 
-#: ../admin/manage.php:411
+#: ../admin/manage.php:412
 msgid "View"
 msgstr ""
 
@@ -1151,10 +1259,6 @@ msgstr ""
 msgid "fit"
 msgstr ""
 
-#: ../admin/settings.php:451
-msgid "none"
-msgstr ""
-
 #: ../admin/settings.php:456
 msgid "Duration time"
 msgstr ""
@@ -1270,49 +1374,49 @@ msgid ""
 "Choose [Cancel] to Stop, [OK] to Uninstall.\\n"
 msgstr ""
 
-#: ../admin/style.php:28
+#: ../admin/style.php:31
 msgid "You do not have sufficient permissions to edit templates for this blog."
 msgstr ""
 
-#: ../admin/style.php:36
+#: ../admin/style.php:40
 msgid "CSS file successfully updated"
 msgstr ""
 
-#: ../admin/style.php:57
+#: ../admin/style.php:62
 msgid "Activate and use style sheet:"
 msgstr ""
 
-#: ../admin/style.php:76
+#: ../admin/style.php:81
 msgid "Activate"
 msgstr ""
 
-#: ../admin/style.php:83
+#: ../admin/style.php:88
 #, php-format
 msgid "Editing <strong>%s</strong>"
 msgstr ""
 
-#: ../admin/style.php:85
+#: ../admin/style.php:90
 #, php-format
 msgid "Browsing <strong>%s</strong>"
 msgstr ""
 
-#: ../admin/style.php:90
+#: ../admin/style.php:95
 msgid "Author"
 msgstr ""
 
-#: ../admin/style.php:91
+#: ../admin/style.php:96
 msgid "Version"
 msgstr ""
 
-#: ../admin/style.php:107
+#: ../admin/style.php:112
 msgid "Update File &raquo;"
 msgstr ""
 
-#: ../admin/style.php:111
+#: ../admin/style.php:116
 msgid "If this file were writable you could edit it."
 msgstr ""
 
-#: ../admin/style.php:116
+#: ../admin/style.php:121
 msgid "Oops, no such file exists! Double check the name and try again, merci."
 msgstr ""
 
