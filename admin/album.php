@@ -124,8 +124,10 @@ function serialize(s)
 			</tr>
 		</table>
 		
-	</form>	
+	</form>
+	<p><?php _e('After you create and select a album, you can drag and drop a gallery into your album below','nggallery'); ?></p>	
 	<br class="clear"/>
+	
 	<div class="container">
 		<div id="selectContainer" class="groupWrapper">
 		<h3><?php _e('Select Gallery', 'nggallery') ?></h3>

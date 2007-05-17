@@ -1,9 +1,12 @@
 NextGEN Gallery
-by Alex Rabe
+by Alex Rabe & NextGEN DEV Team
 
 V0.41 - 
-- Update : Better album management more galleries
+- NEW : Sidebar widget from KeViN
+- Update : Better album management for more galleries
 - Update : Thickbox v3 integrated
+- Added : Float selection for singlepic
+- Added : CSS class for widget
 - Added : CSS file for K2 theme
 - Added : German translation (THX to Lazy)
 - Added : Better check for safe-mode
@@ -11,6 +14,7 @@ V0.41 -
 - Added : Option to resize image before cropping it (Setting reset of 
           prior versions needed! Setup -> Reset Settings)
 - Changed : Image quality by default 85% (THX to ArizonaGroovejet)
+- Bugfix : Update wrong file when select other style
 - Bugfix : Fixed Permalink in album (THX to Helene D.)
 - Bugfix : Scan folder in empty gallery
 - Bugfix : Swfobjects only added with Thickbox effect

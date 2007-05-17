@@ -366,7 +366,7 @@ function ngg_get_image_url($imageID){
 	$picturepath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$galleryID' ");
 
 	// set gallery url
-	$imageURL 	= get_option ('siteurl')."/".$picturepath.$fileName;
+	$imageURL 	= get_option ('siteurl')."/".$picturepath."/".$fileName;
 	
 	return $imageURL;	
 }
