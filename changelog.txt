@@ -1,6 +1,21 @@
 NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
+V0.44 -
+- NEW : Select multiple files for upload (THX to Diego A., http://www.fyneworks.com)
+- Added : Option for CDATA wrapper (not working propper)
+- Added : Option for Thickbox Loading Image
+- Added : CSS file for dKret2
+- Changed : All jQuery scripts are now in "No Conflict" mode
+- Changed : Script loading now via wp_enqueue_script
+- Changed : Add constant values for folder/file permission
+- Changed : Use description in <A href title>
+- Bugfix : Remove wrong DIV tag in slideshow
+- Bugfix : Tag [Slideshow=id,width,height] didn't work proper
+- Bugfix : Name conflict in Album script (serialize) (THX to Die-Andis)
+- Bugfix : Changed check for CSS activation
+- Bugfix : Changed check for safe-mode (Don't ask)
+
 V0.43 - 20.05.2007
 - Changed : Rename Thumbnail class to avoid php name collision
 - Bugfix : Missing translation flag in setup
