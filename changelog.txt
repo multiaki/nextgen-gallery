@@ -3,9 +3,11 @@ by Alex Rabe & NextGEN DEV Team
 
 V0.44 -
 - NEW : Select multiple files for upload (THX to Diego A., http://www.fyneworks.com)
-- Added : Option for CDATA wrapper (not working propper)
+- Added : New Option for Imagerotator 3.8 (Slow zoom effect)
+- Added : Option for CDATA wrapper (not working proper)
 - Added : Option for Thickbox Loading Image
-- Added : CSS file for dKret2
+- Added : CSS file for dKret2 (THK to Joern)
+- Added : Better file permission check
 - Changed : All jQuery scripts are now in "No Conflict" mode
 - Changed : Script loading now via wp_enqueue_script
 - Changed : Add constant values for folder/file permission

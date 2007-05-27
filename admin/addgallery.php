@@ -314,18 +314,23 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		if (is_array($pictures)) {
 			foreach($pictures as $picture) {
 	
-			//TODO: Check for file permission
-			$thumb = new ngg_Thumbnail($gallery_absfolder."/".$picture, TRUE);
-			// echo $thumb->errmsg;	
-			// skip if file is not there
-			if (!$thumb->error) {
-				echo $gallery_absfolder."/".$picture;
-				$thumb->resize($ngg_options[imgWidth],$ngg_options[imgHeight],$ngg_options[imgResampleMode]);
-				$thumb->save($gallery_absfolder."/".$picture,$ngg_options[imgQuality]);
-			}
-			$thumb->destruct();
+				if (!is_writable($gallery_absfolder."/".$picture)) {
+					$messagetext .= $gallery_absfolder."/".$picture."<br />";
+					continue;
+				}
+				
+				$thumb = new ngg_Thumbnail($gallery_absfolder."/".$picture, TRUE);
+				// echo $thumb->errmsg;	
+				// skip if file is not there
+				if (!$thumb->error) {
+					$thumb->resize($ngg_options[imgWidth],$ngg_options[imgHeight],$ngg_options[imgResampleMode]);
+					$thumb->save($gallery_absfolder."/".$picture,$ngg_options[imgQuality]);
+				}
+				$thumb->destruct();
 			}
 		}
+		
+		if(!empty($messagetext)) echo '<div id="message-error" class="error fade"><p><strong>'.__('Some pictures are not writeable :','nggallery').'</strong><br /><ul>'.$messagetext.'</ul></p></div>';
 		
 		return;
 	}
@@ -339,7 +344,11 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		if (is_array($pictures)) {
 			foreach($pictures as $picture) {
 	
-			//TODO: Check for file permission
+			if (!is_writable($gallery_absfolder."/".$picture)) {
+				$messagetext .= $gallery_absfolder."/".$picture."<br />";
+				continue;
+			}
+			
 			$thumb = new ngg_Thumbnail($gallery_absfolder."/".$picture, TRUE);
 			// echo $thumb->errmsg;	
 			// skip if file is not there
@@ -359,6 +368,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			}
 		}
 		
+		if(!empty($messagetext)) echo '<div id="message-error" class="error fade"><p><strong>'.__('Some pictures are not writeable :','nggallery').'</strong><br /><ul>'.$messagetext.'</ul></p></div>';
+		
 		return;
 	}
 
@@ -374,6 +385,14 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		if (is_array($pictures)) {
 			foreach($pictures as $picture) {
 	
+			// check for existing thumbnail
+			if (file_exists($gallery_absfolder.$thumbfolder.$prefix.$picture)) {
+				if (!is_writable($gallery_absfolder.$thumbfolder.$prefix.$picture)) {
+					$messagetext .= $gallery_absfolder."/".$picture."<br />";
+					continue;
+				}
+			}
+
 			$thumb = new ngg_Thumbnail($gallery_absfolder."/".utf8_decode($picture), TRUE);
 		
 			// echo $thumb->errmsg;	
@@ -391,6 +410,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			$thumb->destruct();
 			}
 		}
+
+		if(!empty($messagetext)) echo '<div id="message-error" class="error fade"><p><strong>'.__('Some thumbnails are not writeable :','nggallery').'</strong><br /><ul>'.$messagetext.'</ul></p></div>';
 		
 		return;
 	}
@@ -402,7 +423,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		require_once(NGGALLERY_ABSPATH.'/lib/pclzip.lib.php');
 	
 		$archive = new PclZip($file);
-	
+		
+		//TODO: Check PCLZIP_OPT_REMOVE_ALL_PATH to remove path
 		if ($archive->extract(PCLZIP_OPT_PATH, $dir) == 0) {
 			die("Error : ".$archive->errorInfo(true));
 		}

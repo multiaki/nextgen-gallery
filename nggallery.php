@@ -116,7 +116,7 @@ function ngg_addjs() {
 add_action('init', 'nggallery_init');
 
 add_action('activate_' . NGGFOLDER.'/nggallery.php', 'ngg_install');
-// init wpTable in wp-database if plugin is activated
+// init tables in wp-database if plugin is activated
 function ngg_install() {
 	nggallery_install();
 }
