@@ -21,7 +21,7 @@ function ngg_add_admin_js() {
 	switch ($_GET['page']) {
 		case "nggallery-manage-gallery" :
 			wp_enqueue_script('interface', NGGALLERY_URLPATH .'admin/js/interface.js', array('jquery'), '1.2');
-			wp_enqueue_script('thickbox', NGGALLERY_URLPATH .'thickbox/thickbox.js', array('jquery'), '3');
+			wp_enqueue_script('thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.0.1');
 		break;
 		case "nggallery-manage-album" :
 		case "nggallery-options" :

@@ -394,8 +394,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			}
 
 			$thumb = new ngg_Thumbnail($gallery_absfolder."/".utf8_decode($picture), TRUE);
-		
-			// echo $thumb->errmsg;	
+					
 			// skip if file is not there
 			if (!$thumb->error) {
 				if ($ngg_options[thumbresizebefore]) {
@@ -403,7 +402,19 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					$thumb->cropFromCenter($ngg_options[thumbwidth],$ngg_options[thumbResampleMode]);
 				} else {
 					if ($ngg_options[thumbcrop]) $thumb->cropFromCenter($ngg_options[thumbwidth],$ngg_options[thumbResampleMode]);
-					else $thumb->resize($ngg_options[thumbwidth],$ngg_options[thumbheight],$ngg_options[thumbResampleMode]);
+					else {
+						// check for portrait format
+						if ($thumb->currentDimensions['height'] > $thumb->currentDimensions['width']) {
+							if ($ngg_options[thumbfix]) {
+								$thumb->resize($ngg_options[thumbwidth],0 ,$ngg_options[thumbResampleMode]);
+								// get optimal startpos
+								$ypos = intval(($thumb->currentDimensions['height'] - $ngg_options[thumbheight]) / 2);
+								$thumb->crop(0, $ypos, $ngg_options[thumbwidth],$ngg_options[thumbheight],$ngg_options[thumbResampleMode]);	
+							}
+						} else {
+							$thumb->resize($ngg_options[thumbwidth],$ngg_options[thumbheight],$ngg_options[thumbResampleMode]);	
+						}
+					}
 				}
 				$thumb->save($gallery_absfolder.$thumbfolder.$prefix.$picture,$ngg_options[thumbquality]);
 			}

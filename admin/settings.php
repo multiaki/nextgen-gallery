@@ -164,6 +164,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<form name="thumbnailsettings" method="POST" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']).'#thumbnails-slider'; ?>" >
 			<input type="hidden" name="page_options" value="thumbwidth,thumbheight,thumbfix,thumbcrop,thumbresizebefore,thumbquality,thumbResampleMode" />
 			<fieldset class="options"> 
+				<p><?php _e('Please note : If you change the settings, you need to recreate the thumbnails under -> Manage Gallery .', 'nggallery') ?></p>
 				<table class="optiontable editform">
 					<tr valign="top">
 						<th align="left"><?php _e('Width x height (in pixel)','nggallery') ?></th>

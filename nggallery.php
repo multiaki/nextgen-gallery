@@ -103,7 +103,7 @@ function ngg_addjs() {
 	    if ($wp_version < "2.2") {
 	    	wp_enqueue_script('jquery', NGGALLERY_URLPATH .'admin/js/jquery.js', FALSE, '1.1.2');
 		} 
-	    	wp_enqueue_script('thickbox', NGGALLERY_URLPATH .'thickbox/thickbox.js', array('jquery'), '3');
+	    	wp_enqueue_script('thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.0.1');
 	    }
 	    
 	// test for wordtube function

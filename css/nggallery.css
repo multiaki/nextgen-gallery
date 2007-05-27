@@ -179,43 +179,15 @@ it's only a template design
 }
 
 /* ----------- Sidebar widget -------------*/
-
-.ngg-widget {
+.ngg-widget,
+.ngg-widget-slideshow {
 	overflow: hidden;
-}
-
-.ngg-widget-a {
-/* not in use */
-}
-
-.ngg-widget-img {
-	border: 2px solid #A9A9A9 !important;
-	padding:1px;
-}
-
-.ngg-widget-div {
- text-align: center;
-}
-
-
-ul.ngg-randomlist {
-	background:transparent none repeat scroll 0% !important;
-	display:inline !important;
 	margin:0pt;
-	padding:0pt 0px 0px 0pt;
+	padding:5px 0px 0px 0pt;
 }
 
-ul.ngg-randomlist img {
+.ngg-widget img {
 	border:2px solid #A9A9A9;
 	margin:0pt 2px 2px 0px; 
 	padding:1px; 
 }
-
-
-ul.ngg-randomlist li {
-	display:block;
-	float:left;
-	padding:0pt 2px 0px 0px;
-	position:relative;
-}
-
