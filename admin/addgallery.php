@@ -385,55 +385,57 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		
 		if (is_array($pictures)) {
 			foreach($pictures as $picture) {
+				
+				// check for existing thumbnail
+				if (file_exists($gallery_absfolder.$thumbfolder.$prefix.$picture)) {
+					if (!is_writable($gallery_absfolder.$thumbfolder.$prefix.$picture)) {
+						$messagetext .= $gallery_absfolder."/".$picture."<br />";
+						continue;
+					}
+				}
 	
-			// check for existing thumbnail
-			if (file_exists($gallery_absfolder.$thumbfolder.$prefix.$picture)) {
-				if (!is_writable($gallery_absfolder.$thumbfolder.$prefix.$picture)) {
-					$messagetext .= $gallery_absfolder."/".$picture."<br />";
-					continue;
-				}
-			}
-
-			$thumb = new ngg_Thumbnail($gallery_absfolder."/".utf8_decode($picture), TRUE);
+				$thumb = new ngg_Thumbnail($gallery_absfolder."/".utf8_decode($picture), TRUE);
 					
-			// skip if file is not there
-			if (!$thumb->error) {
-				if ($ngg_options[thumbcrop]) {
-					// THX to Kees de Bruin, better thumbnails if portrait format
-					$width = $ngg_options[thumbwidth];
-					$height = $ngg_options[thumbheight];
-					$curwidth = $thumb->currentDimensions['width'];
-					$curheight = $thumb->currentDimensions['height'];
-					if ($curwidth > $curheight) {
-						$aspect = (100 * $curwidth) / $curheight;
+				// skip if file is not there
+				if (!$thumb->error) {
+					if ($ngg_options[thumbcrop]) {
+						
+						// THX to Kees de Bruin, better thumbnails if portrait format
+						$width = $ngg_options[thumbwidth];
+						$height = $ngg_options[thumbheight];
+						$curwidth = $thumb->currentDimensions['width'];
+						$curheight = $thumb->currentDimensions['height'];
+						if ($curwidth > $curheight) {
+							$aspect = (100 * $curwidth) / $curheight;
+						} else {
+							$aspect = (100 * $curheight) / $curwidth;
+						}
+						$width = intval(($width * $aspect) / 100);
+						$height = intval(($height * $aspect) / 100);
+						$thumb->resize($width,$height,$ngg_options[thumbResampleMode]);
+						$thumb->cropFromCenter($width,$ngg_options[thumbResampleMode]);
+					} 
+					elseif ($ngg_options[thumbfix])  {
+						// check for portrait format
+						if ($thumb->currentDimensions['height'] > $thumb->currentDimensions['width']) {
+							$thumb->resize($ngg_options[thumbwidth], 0,$ngg_options[thumbResampleMode]);
+							// get optimal y startpos
+							$ypos = ($thumb->currentDimensions['height'] - $ngg_options[thumbheight]) / 2;
+							$thumb->crop(0, $ypos, $ngg_options[thumbwidth],$ngg_options[thumbheight],$ngg_options[thumbResampleMode]);	
+						} else {
+							$thumb->resize(0,$ngg_options[thumbheight],$ngg_options[thumbResampleMode]);	
+							// get optimal x startpos
+							$xpos = ($thumb->currentDimensions['width'] - $ngg_options[thumbwidth]) / 2;
+							$thumb->crop($xpos, 0, $ngg_options[thumbwidth],$ngg_options[thumbheight],$ngg_options[thumbResampleMode]);	
+						}
 					} else {
-						$aspect = (100 * $curheight) / $curwidth;
+						$thumb->resize($ngg_options[thumbwidth],$ngg_options[thumbheight],$ngg_options[thumbResampleMode]);	
 					}
-					$width = intval(($width * $aspect) / 100);
-					$height = intval(($height * $aspect) / 100);
-					$thumb->resize($width,$height,$ngg_options[thumbResampleMode]);
-					$thumb->cropFromCenter($width,$ngg_options[thumbResampleMode]);
-				} 
-				elseif ($ngg_options[thumbfix])  {
-					// check for portrait format
-					if ($thumb->currentDimensions['height'] > $thumb->currentDimensions['width']) {
-						$thumb->resize($ngg_options[thumbwidth], 0,$ngg_options[thumbResampleMode]);
-						// get optimal y startpos
-						$ypos = ($thumb->currentDimensions['height'] - $ngg_options[thumbheight]) / 2;
-						$thumb->crop(0, $ypos, $ngg_options[thumbwidth],$ngg_options[thumbheight],$ngg_options[thumbResampleMode]);	
-					} else {
-						$thumb->resize(0,$ngg_options[thumbheight],$ngg_options[thumbResampleMode]);	
-						// get optimal x startpos
-						$xpos = ($thumb->currentDimensions['width'] - $ngg_options[thumbwidth]) / 2;
-						$thumb->crop($xpos, 0, $ngg_options[thumbwidth],$ngg_options[thumbheight],$ngg_options[thumbResampleMode]);	
-					}
-				} else {
-					$thumb->resize($ngg_options[thumbwidth],$ngg_options[thumbheight],$ngg_options[thumbResampleMode]);	
+					$thumb->save($gallery_absfolder.$thumbfolder.$prefix.$picture,$ngg_options[thumbquality]);
+					// didn't work under safe mode, but I want to set it if possible
+					@chmod ($gallery_absfolder.$thumbfolder.$prefix.$picture, NGGFILE_PERMISSION); 
 				}
-				$thumb->save($gallery_absfolder.$thumbfolder.$prefix.$picture,$ngg_options[thumbquality]);
-				if (!@chmod ($gallery_absfolder.$thumbfolder.$prefix.$picture, NGGFILE_PERMISSION)) return '<font color="red">'.__('Error, the file permissions could not set','nggallery').'</font>';
-			}
-			$thumb->destruct();
+				$thumb->destruct();
 			}
 		}
 
