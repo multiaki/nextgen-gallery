@@ -5,9 +5,13 @@ $ngg_db_version = "0.33";
 
 function nggallery_install () {
 	
-   	global $wpdb;
+   	global $wpdb , $wp_roles;
    	global $ngg_db_version;
 
+	// Check for capability
+	if ( !current_user_can('activate_plugins') ) 
+		return;
+	
 	require_once(ABSPATH . 'wp-admin/upgrade-functions.php');
 
    	$nggpictures					= $wpdb->prefix . 'ngg_pictures';
@@ -98,6 +102,15 @@ function ngg_default_options() {
 	$ngg_options[galTextGallery]	= __('[Show picture list]','nggallery'); // Text for gallery
 	$ngg_options[galShowOrder]		= "gallery";					// Show order
 	$ngg_options[galSort]			= "pid";						// Sort order
+	$ngg_options[galSortDir]		= "ASC";						// Sort direction
+	$ngg_options[galUsejQuery]   	= false;						// use the jQuery plugin
+	$ngg_options[galNoPages]   		= true;							// use no subpages for gallery
+
+	// Image Browser
+	$ngg_options[ImgBrHead]			= true;		  					// Show header
+	$ngg_options[ImgBrDesc]			= true;							// Show description
+	$ngg_options[ImgBrTextBack]		= '&#9668; '.__('Back','nggallery'); // Text for Back
+	$ngg_options[ImgBrTextNext]		= __('Next','nggallery').' &#9658;'; // Text for Next	
 
 	// Thumbnail Effect
 	$ngg_options[thumbEffect]		= "thickbox";  					// select effect
