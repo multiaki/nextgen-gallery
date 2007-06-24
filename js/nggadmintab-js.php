@@ -1,8 +1,8 @@
 <?php  
 // required for Rich text editor
 // used by NextGEN Gallery
-require_once('../../../wp-config.php');
-require_once('../../../wp-admin/admin.php'); 
+require_once('../../../../wp-config.php');
+require_once('../../../../wp-admin/admin.php'); 
 cache_javascript_headers(); 
 $ngg_options = get_option('ngg_options');
 
