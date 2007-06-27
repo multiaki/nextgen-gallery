@@ -4,7 +4,7 @@ Plugin Name: NextGEN Gallery
 Plugin URI: http://alexrabe.boelinger.com/?page_id=80
 Description: A NextGENeration Photo gallery for the WEB2.0(beta).
 Author: NextGEN DEV-Team
-Version: 0.60aRC1
+Version: 0.60a
 
 Author URI: http://alexrabe.boelinger.com/
 
@@ -98,9 +98,9 @@ function ngg_addjs() {
     global $wp_version, $ngg_options;
     
 	echo "<meta name='NextGEN' content='".NGGVERSION."' />\n";
-	if ($ngg_options[activateCSS]) 
+	if ($ngg_options['activateCSS']) 
 		echo "\n".'<style type="text/css" media="screen">@import "'.NGGALLERY_URLPATH.'css/'.$ngg_options[CSSfile].'";</style>';
-	if ($ngg_options[thumbEffect] == "thickbox") {
+	if ($ngg_options['thumbEffect'] == "thickbox") {
 		echo "\n".'<script type="text/javascript"> var tb_pathToImage = "'.NGGALLERY_URLPATH.'thickbox/'.$ngg_options[thickboxImage].'";</script>';
 		echo "\n".'<style type="text/css" media="screen">@import "'.NGGALLERY_URLPATH.'thickbox/thickbox.css";</style>'."\n";
 	    if ($wp_version < "2.2") {
@@ -109,7 +109,7 @@ function ngg_addjs() {
 	    	wp_enqueue_script('thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.0.2');
 
     	// add NextGEN jQuery Plugin
-		if ($ngg_options[galUsejQuery])
+		if ($ngg_options['galUsejQuery'])
 			wp_enqueue_script('nextgen', NGGALLERY_URLPATH .'admin/js/jquery.nextgen.pack.js', array('jquery'), '0.5');
 	    }
 	    

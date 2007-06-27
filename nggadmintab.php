@@ -20,7 +20,9 @@ function ngg_upload_tab_content() {
 	
 	// if update/delete pressed
 		if ( isset($_POST['delete']) || ($action == "delete") ) {
+			// Function delete image
 			//TODO: Write a class function "Delete picture"
+			//TODO: use _wpnonce
 			$picture = $wpdb->get_row("SELECT * FROM $wpdb->nggpictures WHERE pid = '$ID' ");
 			if ($picture) {
 				if ($ngg_options[deleteImg]) {
@@ -37,6 +39,7 @@ function ngg_upload_tab_content() {
 		}
 		
 		if ( isset($_POST['save']) ) {
+			// Function save desription
 			$img_title   = attribute_escape($_POST[image_title]);
 			$img_desc    = attribute_escape($_POST[image_desc]);
 			$result = $wpdb->query("UPDATE $wpdb->nggpictures SET alttext= '$img_title', description = '$img_desc' WHERE pid = '$ID'");
@@ -44,7 +47,7 @@ function ngg_upload_tab_content() {
 	}
 	
 	if (($action == "edit") || ($action == "view")) {
-		( $style == 'inline' ) ? ngg_admintab_insert_pic() : ngg_image_edit();			
+		( $style == 'inline' ) ? ngg_admintab_insert_pic($ID) : ngg_image_edit();			
 		return;
 	}	
 
@@ -63,6 +66,7 @@ function ngg_upload_tab_content() {
 	<select id="select_gal" name="select_gal" onchange="this.form.submit();">';
 		<option value="0" ><?php _e('No gallery',"nggallery"); ?></option>
 	<?php
+	// Show gallery selection
 	$gallerylist = $wpdb->get_results("SELECT * FROM $wpdb->nggallery ORDER BY gid ASC");
 	if(is_array($gallerylist)) {
 		foreach($gallerylist as $gallery) {
@@ -155,12 +159,31 @@ function ngg_image_edit() {
 <?php	
 }
 
-function ngg_admintab_insert_pic() {
+function ngg_admintab_insert_pic($picid) {
+	global $wpdb, $post_id, $tab, $style;
 	//TODO: define tb_pathToImage
 	?>
 	<script type="text/javascript"> var tb_pathToImage = '<?php echo NGGALLERY_URLPATH ?>thickbox/loadingAnimationv3.gif';</script>
 	<style type="text/css" media="all">@import "<?php echo NGGALLERY_URLPATH ?>thickbox/thickbox.css";</style>
 	<?php
+	//TODO: Image data can be served by a class function
+	$picture = $wpdb->get_row("SELECT * FROM $wpdb->nggpictures WHERE pid = '$picid'");
+	$imagesrc = ngg_get_image_url($picid);
+	$thumbsrc = ngg_get_thumbnail_url($picid);
+	
+	echo '
+		<div class="upload-file-data">
+		<p>
+		<input id="nggimage-url-'.$picid.'" type="hidden" value="'.$imagesrc.'" name="nggimage-url-'.$picid.'"/>
+		<input id="nggimage-thumb-url-'.$picid.'" type="hidden" value="'.$thumbsrc.'" name="nggimage-thumb-url-'.$picid.'"/>
+		<input id="nggimage-width-'.$picid.'" type="hidden" value="170" name="nggimage-width-'.$picid.'"/>
+		<input id="nggimage-height-'.$picid.'" type="hidden" value="128" name="nggimage-height-'.$picid.'"/>
+		<input id="nggimage-title-'.$picid.'" type="hidden" value="'.$picture->filename.'" name="nggimage-title-'.$picid.'"/>
+		<input id="nggimage-alttext-'.$picid.'" type="hidden" value="'.$picture->alttext.'" name="nggimage-alttext-'.$picid.'"/>
+		<input id="nggimage-description-'.$picid.'" type="hidden" value="'.stripslashes($picture->description).'" name="nggimage-description-'.$picid.'"/>
+		</p>
+		</div>';
+
 }
 
 ?>

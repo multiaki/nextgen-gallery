@@ -469,12 +469,12 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		
 		<div id="slideshow" style="display:none">
 		<form name="player_options" method="POST" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']).'#slideshow-slider'; ?>" >
-		<input type="hidden" name="page_options" value="irWidth,irHeight,irShuffle,irLinkfromdisplay,irShownavigation,irShowicons,irOverstretch,irRotatetime,irTransition,irKenburns,irBackcolor,irFrontcolor,irLightcolor,irXHTMLvalid" />
+		<input type="hidden" name="page_options" value="irWidth,irHeight,irShuffle,irLinkfromdisplay,irShownavigation,irShowicons,irWatermark,irOverstretch,irRotatetime,irTransition,irKenburns,irBackcolor,irFrontcolor,irLightcolor,irAudio,irXHTMLvalid" />
 		<h2><?php _e('Slideshow','nggallery'); ?></h2>
 		<fieldset class="options">
 		<?php if (!NGGALLERY_IREXIST) { ?><p><div id="message" class="error fade"><p><?php _e('The imagerotator.swf is not in the nggallery folder, the slideshow will not work.','nggallery') ?></p></div></p><?php }?>
 		<p><?php _e('The settings are used in the JW Image Rotator Version 3.9 .', 'nggallery') ?> 
-		   <?php _e('See more information for the Flash Player on the web page', 'nggallery') ?> <a href="http://www.jeroenwijering.com/?item=JW_Image_Rotator" target="_blank">Flash Image Rotator from Jeroen Wijering</a>.<br />
+		   <?php _e('See more information for the Flash Player on the web page', 'nggallery') ?> <a href="http://www.jeroenwijering.com/?item=JW_Image_Rotator" target="_blank">JW Image Rotator from Jeroen Wijering</a>.<br />
 				<table class="optiontable" border="0" >
 					<tr>
 						<th><?php _e('Default size (W x H)','nggallery') ?>:</th>
@@ -496,6 +496,11 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<tr>
 						<th><?php _e('Show loading icon','nggallery') ?>:</th>
 						<td><input name="irShowicons" type="checkbox" value="1" <?php checked('1', $ngg_options[irShowicons]); ?> /></td>
+					</tr>
+					<tr>
+						<th><?php _e('Use watermark logo','nggallery') ?>:</th>
+						<td><input name="irWatermark" type="checkbox" value="1" <?php checked('1', $ngg_options[irWatermark]); ?> />
+						<?php _e('You can change the logo at the watermark settings','nggallery') ?></td>
 					</tr>
 					<tr>
 						<th><?php _e('Stretch image','nggallery') ?>:</th>
@@ -545,6 +550,10 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						<th><?php _e('Rollover / Active Color','nggallery') ?>:</th>
 						<td><input type="text" size="6" maxlength="6" id="irLightcolor" name="irLightcolor" onchange="setcolor('#previewLight', this.value)" value="<?php echo $ngg_options[irLightcolor] ?>" />
 						<input type="text" size="1" readonly="readonly" id="previewLight" style="background-color: #<?php echo $ngg_options[irLightcolor] ?>" /></td>
+					</tr>
+					<tr>					
+						<th><?php _e('Background music (URL)','nggallery') ?>:</th>
+						<td><input type="text" size="50" id="irAudio" name="irAudio" value="<?php echo $ngg_options[irAudio] ?>" /></td>
 					</tr>
 					<tr>
 						<th><?php _e('Try XHTML validation (with CDATA)','nggallery') ?>:</th>

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-06-24 18:25+0100\n"
+"PO-Revision-Date: 2007-06-27 20:12+0100\n"
 "Last-Translator: Alex Rabe\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
@@ -15,126 +15,45 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 
-#: ../nggadmintab-js.php:81
-#: ../nggadmintab-js.php:83
-#: ../nggadmintab-js.php:144
-#: ../nggadmintab-js.php:146
-msgid "Browse your files"
-msgstr "Durchsuche deine Dateien"
-
-#: ../nggadmintab-js.php:81
-#: ../nggadmintab-js.php:83
-#: ../nggadmintab-js.php:144
-#: ../nggadmintab-js.php:146
-msgid "&laquo; Back"
-msgstr "&laquo; Zurück"
-
-#: ../nggadmintab-js.php:88
-#: ../admin/manage.php:244
-msgid "Edit"
-msgstr "Bearbeiten"
-
-#: ../nggadmintab-js.php:92
-#: ../nggadmintab-js.php:155
-msgid "Direct link to file"
-msgstr "Link zur Datei"
-
-#: ../nggadmintab-js.php:101
-#: ../nggwidget.php:446
-#: ../nggwidget.php:649
-#: ../admin/manage.php:433
-msgid "Thumbnail"
-msgstr "Thumbnail"
-
-#: ../nggadmintab-js.php:102
-msgid "Full size"
-msgstr "Volle Größe"
-
-#: ../nggadmintab-js.php:104
-#: ../nggwidget.php:441
-#: ../nggwidget.php:644
-#: ../admin/album.php:213
-#: ../admin/manage.php:221
-#: ../admin/manage.php:351
-msgid "Title"
-msgstr "Titel"
-
-#: ../nggadmintab-js.php:105
-msgid "Show:"
-msgstr "Zeige als:"
-
-#: ../nggadmintab-js.php:110
-msgid "Link to:"
-msgstr "Link zu:"
-
-#: ../nggadmintab-js.php:111
-msgid "File"
-msgstr "Datei"
-
-#: ../nggadmintab-js.php:112
-#: ../admin/settings.php:330
-msgid "None"
-msgstr "Keiner"
-
-#: ../nggadmintab-js.php:116
-msgid "Send to editor &raquo;"
-msgstr "Zu  Editor schicken"
-
-#: ../nggadmintab-js.php:151
-#: ../nggbutton.php:151
-msgid "Insert"
-msgstr "Einfügen"
-
-#: ../nggadmintab-js.php:161
-#: ../nggadmintab.php:128
-msgid "URL"
-msgstr "URL"
-
-#: ../nggadmintab-js.php:164
-#: ../nggadmintab.php:132
-#: ../admin/manage.php:437
-msgid "Alt &amp; Title Text"
-msgstr "Alt &amp; Titel Text"
-
-#: ../nggadmintab-js.php:167
-#: ../nggadmintab.php:136
-#: ../admin/manage.php:222
-#: ../admin/manage.php:370
-#: ../admin/manage.php:436
-#: ../admin/style.php:97
-msgid "Description"
-msgstr "Beschreibung"
-
-#: ../nggadmintab-js.php:169
-#: ../nggadmintab.php:141
-msgid "Delete File"
-msgstr "Datei löschen"
-
-#: ../nggadmintab-js.php:175
-msgid "Save &raquo;"
-msgstr "Speichern &raquo;"
-
-#: ../nggadmintab-js.php:254
-#, php-format
-msgid ""
-"Are you sure you want to delete the file '%s'?\n"
-"Click ok to delete or cancel to go back."
-msgstr "Bist du sicher das du diese Datei '%s' löschen willst ?"
-
-#: ../nggadmintab.php:62
+#: ../nggadmintab.php:65
 msgid "Select a gallery"
 msgstr "Wähle Galerie"
 
-#: ../nggadmintab.php:64
+#: ../nggadmintab.php:67
 #: ../nggbutton.php:50
 msgid "No gallery"
 msgstr "Keine Galerie"
 
-#: ../nggadmintab.php:141
+#: ../nggadmintab.php:132
+#: ../js/nggadmintab-js.php:161
+msgid "URL"
+msgstr "URL"
+
+#: ../nggadmintab.php:136
+#: ../admin/manage.php:437
+#: ../js/nggadmintab-js.php:164
+msgid "Alt &amp; Title Text"
+msgstr "Alt &amp; Titel Text"
+
+#: ../nggadmintab.php:140
+#: ../admin/manage.php:222
+#: ../admin/manage.php:370
+#: ../admin/manage.php:436
+#: ../admin/style.php:97
+#: ../js/nggadmintab-js.php:167
+msgid "Description"
+msgstr "Beschreibung"
+
+#: ../nggadmintab.php:145
+#: ../js/nggadmintab-js.php:169
+msgid "Delete File"
+msgstr "Datei löschen"
+
+#: ../nggadmintab.php:145
 msgid "Delete image ?"
 msgstr "Bilder löschen ?"
 
-#: ../nggadmintab.php:149
+#: ../nggadmintab.php:153
 msgid "Save"
 msgstr "Speichern"
 
@@ -158,7 +77,7 @@ msgid "Album"
 msgstr "Album"
 
 #: ../nggbutton.php:38
-#: ../nggfunctions.php:449
+#: ../nggfunctions.php:456
 #: ../admin/manage.php:64
 msgid "Picture"
 msgstr "Bild"
@@ -250,16 +169,21 @@ msgstr "Rechts"
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: ../nggfunctions.php:359
-#: ../nggfunctions.php:375
+#: ../nggbutton.php:151
+#: ../js/nggadmintab-js.php:151
+msgid "Insert"
+msgstr "Einfügen"
+
+#: ../nggfunctions.php:366
+#: ../nggfunctions.php:382
 msgid "Watch gallery"
 msgstr "Galerie ansehen"
 
-#: ../nggfunctions.php:369
+#: ../nggfunctions.php:376
 msgid "Photos"
 msgstr "Fotos"
 
-#: ../nggfunctions.php:449
+#: ../nggfunctions.php:456
 msgid "from"
 msgstr "von"
 
@@ -299,10 +223,26 @@ msgstr "Breite:"
 msgid "NextGEN Recent Image"
 msgstr "NextGEN Letzte Bilder"
 
+#: ../nggwidget.php:441
+#: ../nggwidget.php:644
+#: ../admin/album.php:213
+#: ../admin/manage.php:221
+#: ../admin/manage.php:351
+#: ../js/nggadmintab-js.php:104
+msgid "Title"
+msgstr "Titel"
+
 #: ../nggwidget.php:444
 #: ../nggwidget.php:647
 msgid "Display type"
 msgstr "Verende Bild"
+
+#: ../nggwidget.php:446
+#: ../nggwidget.php:649
+#: ../admin/manage.php:433
+#: ../js/nggadmintab-js.php:101
+msgid "Thumbnail"
+msgstr "Thumbnail"
 
 #: ../nggwidget.php:447
 #: ../nggwidget.php:650
@@ -331,7 +271,7 @@ msgstr "Modus"
 
 #: ../nggwidget.php:467
 #: ../nggwidget.php:671
-#: ../admin/settings.php:507
+#: ../admin/settings.php:512
 msgid "none"
 msgstr "keiner"
 
@@ -427,7 +367,7 @@ msgstr "für Ihren großartig dokumentierten Code"
 
 #: ../admin/about.php:24
 msgid "for jQuery, which is the best Web2.0 framework"
-msgstr "für jQuere, das Beste Web2.0 Framework"
+msgstr "für jQuery, das Beste Web2.0 Framework"
 
 #: ../admin/about.php:25
 msgid "for the fantastic PHP Thumbnail Class"
@@ -467,7 +407,7 @@ msgstr "Wie kann ichs unterstützen ?"
 
 #: ../admin/about.php:35
 msgid "There exist several ways to contribute, help or support us in this work. Non of them are mandatory."
-msgstr "Es existieren verschiedene Möglichkeiten diese Arbeit zu unterstützen. Keine davon sind aber Pflicht."
+msgstr "Es existieren verschiedene Möglichkeiten diese Arbeit zu unterstützen. Es liegt an Dir wie du uns motivierst."
 
 #: ../admin/about.php:37
 msgid "Send us bugfixes / code changes"
@@ -678,7 +618,7 @@ msgstr "Thumbnail Verzeichniss"
 
 #: ../admin/addgallery.php:269
 msgid "Please create the folder <i>thumbs</i> in your gallery folder."
-msgstr "BItte erstelle das Verzeichniss <i>thumbs</i> in Deinem Galerie-Verzeichniss als Unterverzeichniss."
+msgstr "Bitte erstelle das Verzeichniss <i>thumbs</i> in Deinem Galerie-Verzeichniss als Unterverzeichniss."
 
 #: ../admin/addgallery.php:277
 msgid "Database error. Could not add gallery!"
@@ -744,7 +684,7 @@ msgstr "Fehler: die Berechtigungen für diese Datei können nicht gesetzt werden
 
 #: ../admin/addgallery.php:559
 msgid " Images successfully added"
-msgstr "Bilder erfolgreich hinzugefügt"
+msgstr " Bild(er) erfolgreich hinzugefügt"
 
 #: ../admin/admin.php:46
 msgid "Add Gallery"
@@ -816,7 +756,7 @@ msgstr "Lösche Album ?"
 #: ../admin/settings.php:311
 #: ../admin/settings.php:356
 #: ../admin/settings.php:463
-#: ../admin/settings.php:556
+#: ../admin/settings.php:565
 msgid "Update"
 msgstr "Aktualisiere"
 
@@ -909,6 +849,11 @@ msgstr "Anzahl"
 #: ../admin/manage.php:442
 msgid "Action"
 msgstr "Aktion"
+
+#: ../admin/manage.php:244
+#: ../js/nggadmintab-js.php:88
+msgid "Edit"
+msgstr "Bearbeiten"
 
 #: ../admin/manage.php:245
 #: ../admin/manage.php:477
@@ -1064,11 +1009,11 @@ msgstr "Wilkommen"
 
 #: ../admin/overview.php:42
 msgid "gallery administrator"
-msgstr "Galerie.Administrator"
+msgstr "Galerie-Administrator"
 
 #: ../admin/overview.php:42
 msgid "gallery editor"
-msgstr "Galerie Editor"
+msgstr "Galerie-Mitarbeiter"
 
 #: ../admin/overview.php:43
 #, php-format
@@ -1313,7 +1258,7 @@ msgstr "Aktiviere jQuery Navigation"
 
 #: ../admin/settings.php:247
 msgid "Please note : This is still experimental. Requires the Thickbox effect"
-msgstr "Bitte beachten : Diese Funktion befindet sich noch im Teststadium."
+msgstr "Bitte beachten : Diese Funktion befindet sich noch im Teststadium. Geht nur mit Thickbox."
 
 #: ../admin/settings.php:251
 msgid "Deactivate gallery page link"
@@ -1402,6 +1347,11 @@ msgstr "Du kannst eine Navigation durch die Bilder aktivieren (hängt vom Effekt
 #: ../admin/settings.php:327
 msgid "JavaScript Thumbnail effect"
 msgstr "JavaScript Thumbnail Effekt"
+
+#: ../admin/settings.php:330
+#: ../js/nggadmintab-js.php:112
+msgid "None"
+msgstr "Keiner"
 
 #: ../admin/settings.php:331
 msgid "Thickbox"
@@ -1517,90 +1467,102 @@ msgid "Show loading icon"
 msgstr "Zeige Lade-Bildchen"
 
 #: ../admin/settings.php:501
+msgid "Use watermark logo"
+msgstr "Wasserzeichen anzeigen"
+
+#: ../admin/settings.php:503
+msgid "You can change the logo at the watermark settings"
+msgstr "Du kannst den Pfad in Einstellungen für da Wasserzeichen angeben"
+
+#: ../admin/settings.php:506
 msgid "Stretch image"
 msgstr "Bild dehnen"
 
-#: ../admin/settings.php:504
+#: ../admin/settings.php:509
 msgid "true"
 msgstr "true"
 
-#: ../admin/settings.php:505
+#: ../admin/settings.php:510
 msgid "false"
 msgstr "false"
 
-#: ../admin/settings.php:506
+#: ../admin/settings.php:511
 msgid "fit"
 msgstr "passend"
 
-#: ../admin/settings.php:512
+#: ../admin/settings.php:517
 msgid "Duration time"
 msgstr "Dauer"
 
-#: ../admin/settings.php:513
+#: ../admin/settings.php:518
 msgid "sec."
 msgstr "Sek."
 
-#: ../admin/settings.php:516
+#: ../admin/settings.php:521
 msgid "Transition / Fade effect"
 msgstr "Fade Effekt"
 
-#: ../admin/settings.php:519
+#: ../admin/settings.php:524
 msgid "fade"
 msgstr "fade"
 
-#: ../admin/settings.php:520
+#: ../admin/settings.php:525
 msgid "bgfade"
 msgstr "BGFade"
 
-#: ../admin/settings.php:521
+#: ../admin/settings.php:526
 msgid "slowfade"
 msgstr "Slowfade"
 
-#: ../admin/settings.php:522
+#: ../admin/settings.php:527
 msgid "circles"
 msgstr "Kreise"
 
-#: ../admin/settings.php:523
+#: ../admin/settings.php:528
 msgid "bubbles"
 msgstr "Blasen"
 
-#: ../admin/settings.php:524
+#: ../admin/settings.php:529
 msgid "blocks"
 msgstr "Blöcke"
 
-#: ../admin/settings.php:525
+#: ../admin/settings.php:530
 msgid "fluids"
 msgstr "Fluids"
 
-#: ../admin/settings.php:526
+#: ../admin/settings.php:531
 msgid "lines"
 msgstr "Linien"
 
-#: ../admin/settings.php:527
+#: ../admin/settings.php:532
 msgid "random"
 msgstr "Zufall"
 
-#: ../admin/settings.php:531
+#: ../admin/settings.php:536
 msgid "Use slow zooming effect"
 msgstr "nutze Zoom Effekt"
 
-#: ../admin/settings.php:535
+#: ../admin/settings.php:540
 msgid "Background Color"
 msgstr "Hintergrund (BG) Farbe"
 
-#: ../admin/settings.php:540
+#: ../admin/settings.php:545
 msgid "Texts / Buttons Color"
 msgstr "Text- / Button Farbe"
 
-#: ../admin/settings.php:545
+#: ../admin/settings.php:550
 msgid "Rollover / Active Color"
 msgstr "Rollover / Aktiv (Link) Farbe"
 
-#: ../admin/settings.php:550
+#: ../admin/settings.php:555
+msgid "Background music (URL)"
+msgstr "Hintergundmusik (URL)"
+
+#: ../admin/settings.php:559
 msgid "Try XHTML validation (with CDATA)"
 msgstr "Integriere XHTML Validierung (mittels CDATA)"
 
-#: ../admin/settings.php:552
+#: ../admin/settings.php:561
 msgid "Important : Could causes problem at some browser. Please recheck your page."
 msgstr "Wichtig : Es könnnten Probleme bei einigen Browser auftauchen. Unbedingt Seite prüfen."
 
@@ -1719,4 +1681,54 @@ msgstr "Wenn diese Datei beschreibbar wäre, könntest Du Sie bearbeiten."
 #: ../admin/style.php:121
 msgid "Oops, no such file exists! Double check the name and try again, merci."
 msgstr "Oha, keine solche Datei existiert! Bitte überprüfe den Namen und probiere es erneut, danke."
+
+#: ../js/nggadmintab-js.php:81
+#: ../js/nggadmintab-js.php:83
+#: ../js/nggadmintab-js.php:144
+#: ../js/nggadmintab-js.php:146
+msgid "Browse your files"
+msgstr "Durchsuche deine Dateien"
+
+#: ../js/nggadmintab-js.php:81
+#: ../js/nggadmintab-js.php:83
+#: ../js/nggadmintab-js.php:144
+#: ../js/nggadmintab-js.php:146
+msgid "&laquo; Back"
+msgstr "&laquo; Zurück"
+
+#: ../js/nggadmintab-js.php:92
+#: ../js/nggadmintab-js.php:155
+msgid "Direct link to file"
+msgstr "Link zur Datei"
+
+#: ../js/nggadmintab-js.php:102
+msgid "Full size"
+msgstr "Volle Größe"
+
+#: ../js/nggadmintab-js.php:105
+msgid "Show:"
+msgstr "Zeige als:"
+
+#: ../js/nggadmintab-js.php:110
+msgid "Link to:"
+msgstr "Link zu:"
+
+#: ../js/nggadmintab-js.php:111
+msgid "File"
+msgstr "Datei"
+
+#: ../js/nggadmintab-js.php:116
+msgid "Send to editor &raquo;"
+msgstr "Zu  Editor schicken"
+
+#: ../js/nggadmintab-js.php:175
+msgid "Save &raquo;"
+msgstr "Speichern &raquo;"
+
+#: ../js/nggadmintab-js.php:254
+#, php-format
+msgid ""
+"Are you sure you want to delete the file '%s'?\n"
+"Click ok to delete or cancel to go back."
+msgstr "Bist du sicher das du diese Datei '%s' löschen willst ?"
 

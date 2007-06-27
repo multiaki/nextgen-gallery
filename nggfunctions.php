@@ -117,6 +117,8 @@ function nggShowSlideshow($galleryID,$irWidth,$irHeight) {
 	if ($ngg_options[irShownavigation]) $replace .= "\n\t\t".'so.addVariable("shownavigation", "true");';
 	if ($ngg_options[irShowicons]) $replace .= "\n\t\t".'so.addVariable("showicons", "true");';
 	if ($ngg_options[irKenburns]) $replace .= "\n\t\t".'so.addVariable("kenburns", "true");';
+	if ($ngg_options[irWatermark]) $replace .= "\n\t\t".'so.addVariable("logo", "'.$ngg_options[wmPath].'");';
+	if (!empty($ngg_options[irAudio])) $replace .= "\n\t\t".'so.addVariable("audio", "'.$ngg_options[irAudio].'");';
 	$replace .= "\n\t\t".'so.addVariable("overstretch", "'.$ngg_options[irOverstretch].'");';
 	$replace .= "\n\t\t".'so.addVariable("backcolor", "0x'.$ngg_options[irBackcolor].'");';
 	$replace .= "\n\t\t".'so.addVariable("frontcolor", "0x'.$ngg_options[irFrontcolor].'");';
@@ -305,9 +307,13 @@ function nggShowJSGallery($galleryID) {
 function nggShowAlbum($albumID,$mode = "extend") {
 	
 	global $wpdb;
+	
+	$albumcontent = "";
 
 	// look for gallery variable 
-	if ( isset( $_GET['gallery'] )) {
+	if (isset( $_GET['gallery']))  {
+		
+		if ($albumID != $_GET['album']) return $albumcontent;
 
 		$galleryID = attribute_escape($_GET['gallery']);
 		$albumcontent = nggShowGallery($galleryID);
@@ -323,7 +329,7 @@ function nggShowAlbum($albumID,$mode = "extend") {
 		$albumcontent = '<div class="ngg-albumoverview">';
 		if (is_array($gallery_array)) {
 		foreach ($gallery_array as $galleryID) {
-			$albumcontent .= nggCreateAlbum($galleryID,$mode);	
+			$albumcontent .= nggCreateAlbum($galleryID,$mode,$albumID);	
 			}
 		}
 		$albumcontent .= '</div>'."\n";
@@ -335,7 +341,7 @@ function nggShowAlbum($albumID,$mode = "extend") {
 }
 
 /**********************************************************/
-function nggCreateAlbum($galleryID,$mode = "extend") {
+function nggCreateAlbum($galleryID,$mode = "extend",$albumID = 0) {
 	// create a gallery overview div
 	
 	global $wpdb;
@@ -345,6 +351,7 @@ function nggCreateAlbum($galleryID,$mode = "extend") {
 
 	// choose between variable and page link
 	if ($ngg_options[galNoPages]) {
+		$gallerylink['album'] = $albumID; 
 		$gallerylink['gallery'] = $galleryID;
 		$link = add_query_arg($gallerylink);
 	} else {

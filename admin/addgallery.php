@@ -8,7 +8,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	global $wpdb;
 	$ngg_options = get_option('ngg_options');
 
-	$defaultpath = $ngg_options[gallerypath];	
+	$defaultpath = $ngg_options['gallerypath'];	
 	
 	if ($_POST['addgallery']){
 		$newgallery = attribute_escape($_POST['galleryname']);

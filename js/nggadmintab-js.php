@@ -8,7 +8,7 @@ $ngg_options = get_option('ngg_options');
 
 // get the effect code
 if ($ngg_options[thumbEffect] != "none") $thumbcode = stripslashes($ngg_options[thumbCode]);
-if ($ngg_options[thumbEffect] == "highslide") $thumbcode = 'class="highslide" onclick="return hs.expand(this)">';
+if ($ngg_options[thumbEffect] == "highslide") $thumbcode = 'class="highslide" onclick="return hs.expand(this)"';
 else $thumbcode = str_replace("%GALLERY_NAME%", "", $thumbcode);
 
 ?>

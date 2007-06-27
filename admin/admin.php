@@ -33,8 +33,8 @@ function ngg_add_admin_js() {
 		break;
 	}
 	
-	if ($_GET['tab'] == 'ngg_gallery')
-		wp_enqueue_script('thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.0.2');
+	if ( ($_GET['tab'] == 'ngg_gallery') && ($_GET['style'] != 'inline') )
+		 wp_enqueue_script('thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.0.2');
 }
 	
 // add to menu

@@ -1,12 +1,13 @@
 NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
-V0.60 -
+V0.60 - 27.06.2007
 - NEW : Select a image from the Upload Tab
 - NEW : Tag [imageborwser=id] for a Inline Gallery Browser
 - NEW : Show gallery without Subpages
 - NEW : Manage gallery : Function "Add a new page"
 - NEW : Manage gallery : Show/Hide thumbnails
+- Added : Slideshow option : Watermark / Background music 
 - Added : Check for memory limit 
 - Added : Show actual memory usage in overview
 - Added : Include function check in widget
