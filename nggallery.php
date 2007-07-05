@@ -120,7 +120,7 @@ function ngg_addjs() {
 }
 
 // load language file
-// add_action('init', 'nggallery_init');
+add_action('init', 'nggallery_init');
 
 add_action('activate_' . NGGFOLDER.'/nggallery.php', 'ngg_install');
 // init tables in wp-database if plugin is activated
