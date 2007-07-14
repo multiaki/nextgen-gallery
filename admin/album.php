@@ -6,7 +6,7 @@ global $wpdb;
 
 function nggallery_admin_manage_album()  {
 	global $wpdb;
-		
+	
 	if ($_POST['update']){
 		if ($_POST['newalbum']){ 
 			$newablum = attribute_escape($_POST['newalbum']);
@@ -42,18 +42,16 @@ function nggallery_admin_manage_album()  {
 	
 	// message windows
 	if(!empty($messagetext)) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$messagetext.'</p></div>'; }
-		
 ?>
 <style type="text/css" media="all">@import "<?php echo NGGALLERY_URLPATH ?>css/nggallery.css";</style>
 <style type="text/css" media="all">@import "<?php echo NGGALLERY_URLPATH ?>admin/js/portlets.css";</style>
 <script type="text/javascript">
 
+
 jQuery(document).ready(
 	function()
 	{
 		//updating the height of the white backround box, it does not work without this stupid lines
-		//problem: absolute positioning of the minimizing links in item_top does not work :(
-		//position: absolute; right:5px; top:0px; border-bottom: 2px solid #003333; css lines of .groupItem .item_top a
 		var hei = jQuery('.wrap').height();
 		jQuery('.wrap').height(hei);
 		
@@ -67,6 +65,27 @@ jQuery(document).ready(
 		)
 		jQuery('a.min').bind('click', toggleContent);
 		jQuery('.textarea1').Autoexpand([230,400]);
+		
+		// Maximize All Portlets (whole site, no differentiation)
+		$('a#all_max').click(function()
+			{
+				$('div.itemContent:hidden').show();
+				return false;
+			}
+		);
+
+		// Minimize All Portlets (whole site, no differentiation)
+		$('a#all_min').click(function()
+			{
+				$('div.itemContent:visible').hide();
+				return false;
+			}
+		);
+	   // Auto Minimize if more than 4 (whole site, no differentiation)
+	   if($('a').length > 4)
+	   {
+	   		$('div.itemContent:visible').hide();
+	   }
 	}
 );
 
@@ -123,7 +142,9 @@ function ngg_serialize(s)
 		</table>
 		
 	</form>
-	<p><?php _e('After you create and select a album, you can drag and drop a gallery into your album below','nggallery'); ?></p>	
+	<p><?php _e('After you create and select a album, you can drag and drop a gallery into your album below','nggallery'); ?></p>
+	<a href="#" id="all_max">Alle Alben maximieren</a>
+	<a href="#" id="all_min">Alle Alben minimieren</a>
 	<br class="clear"/>
 	
 	<div class="container">
@@ -158,7 +179,7 @@ function ngg_serialize(s)
 
 		<div id="galleryContainer" class="groupWrapper">
 		<?php
-			if ($_POST['act_album'] > 0){
+			if ($_POST['act_album'] > 0){			
 				$act_album = $_POST['act_album'];
 				$album = $wpdb->get_row("SELECT * FROM $wpdb->nggalbum WHERE id = '$act_album'");
 				echo '<h3>'.__('Album Page ID', 'nggallery').' '.$album->id.' : '.$album->name.'</h3>'."\n";
@@ -181,9 +202,8 @@ function ngg_serialize(s)
 	</div><!-- /#container -->
 </div><!-- /#wrap -->
 
-<?php		
+<?php
 }
-
 function getgallerycontainer($galleryid = 0) {
 	global $wpdb;
 	
