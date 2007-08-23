@@ -1,7 +1,8 @@
 <?php
+if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
 
 //required database version
-$ngg_db_version = "0.33";
+$ngg_db_version = "0.70";
 
 function nggallery_install () {
 	
@@ -12,6 +13,16 @@ function nggallery_install () {
 	if ( !current_user_can('activate_plugins') ) 
 		return;
 	
+	// Set the capabilities for the administrator
+	$role = get_role('administrator');
+	$role->add_cap('NextGEN Gallery overview');
+	$role->add_cap('NextGEN Use TinyMCE');
+	$role->add_cap('NextGEN Upload images');
+	$role->add_cap('NextGEN Manage gallery');
+	$role->add_cap('NextGEN Edit album');
+	$role->add_cap('NextGEN Change style');
+	$role->add_cap('NextGEN Change options');
+	
 	// upgrade function changed in WordPress 2.3	
 	if (version_compare($wp_version, '2.3.alpha', '>='))		
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
@@ -21,12 +32,14 @@ function nggallery_install () {
    	$nggpictures					= $wpdb->prefix . 'ngg_pictures';
 	$nggallery						= $wpdb->prefix . 'ngg_gallery';
 	$nggalbum						= $wpdb->prefix . 'ngg_album';
+	$nggtags						= $wpdb->prefix . 'ngg_tags';
+	$nggpic2tags					= $wpdb->prefix . 'ngg_pic2tags';
    
 	if($wpdb->get_var("show tables like '$nggpictures'") != $nggpictures) {
       
 		$sql = "CREATE TABLE " . $nggpictures . " (
-		pid MEDIUMINT(9) NOT NULL AUTO_INCREMENT ,
-		galleryid MEDIUMINT(9) DEFAULT '0' NOT NULL ,
+		pid BIGINT(20) NOT NULL AUTO_INCREMENT ,
+		galleryid BIGINT(20) DEFAULT '0' NOT NULL ,
 		filename VARCHAR(255) NOT NULL ,
 		description MEDIUMTEXT NULL ,
 		alttext MEDIUMTEXT NULL ,
@@ -43,13 +56,13 @@ function nggallery_install () {
 	if($wpdb->get_var("show tables like '$nggallery'") != $nggallery) {
       
 		$sql = "CREATE TABLE " . $nggallery . " (
-		gid MEDIUMINT(9) NOT NULL AUTO_INCREMENT ,
+		gid BIGINT(20) NOT NULL AUTO_INCREMENT ,
 		name VARCHAR(255) NOT NULL ,
 		path MEDIUMTEXT NULL ,
 		title MEDIUMTEXT NULL ,
 		description MEDIUMTEXT NULL ,
-		pageid SMALLINT(6) NULL DEFAULT '0' ,
-		previewpic SMALLINT(6) NULL DEFAULT '0' ,
+		pageid BIGINT(20) NULL DEFAULT '0' ,
+		previewpic BIGINT(20) NULL DEFAULT '0' ,
 		PRIMARY KEY gid (gid)
 		);";
 	
@@ -59,10 +72,36 @@ function nggallery_install () {
 	if($wpdb->get_var("show tables like '$nggalbum'") != $nggalbum) {
       
 		$sql = "CREATE TABLE " . $nggalbum . " (
-		id MEDIUMINT(9) NOT NULL AUTO_INCREMENT ,
+		id BIGINT(20) NOT NULL AUTO_INCREMENT ,
 		name VARCHAR(255) NOT NULL ,
 		sortorder LONGTEXT NOT NULL,
 		PRIMARY KEY id (id)
+		);";
+	
+      dbDelta($sql);
+    }
+    
+    // new since version 0.70
+    if($wpdb->get_var("show tables like '$nggtags'") != $nggtags) {
+      
+		$sql = "CREATE TABLE " . $nggtags . " (
+		id BIGINT(20) NOT NULL AUTO_INCREMENT ,
+		name VARCHAR(55) NOT NULL ,
+		slug VARCHAR(200) NOT NULL,
+		PRIMARY KEY id (id),
+		UNIQUE KEY slug (slug)
+		);";
+	
+      dbDelta($sql);
+    }
+    
+    if($wpdb->get_var("show tables like '$nggpic2tags'") != $nggpic2tags) {
+      
+		$sql = "CREATE TABLE " . $nggpic2tags . " (
+		 picid BIGINT(20) NOT NULL DEFAULT 0,
+		 tagid BIGINT(20) NOT NULL DEFAULT 0,
+		 PRIMARY KEY  (picid, tagid),
+		 KEY tagid (tagid)
 		);";
 	
       dbDelta($sql);
@@ -71,8 +110,15 @@ function nggallery_install () {
    // update routine
     $installed_ver = get_option( "ngg_db_version" );
 	if( $installed_ver != $ngg_db_version ) {
+		
+		// v0.33 -> v.070
+		$wpdb->query("ALTER TABLE ".$nggpictures." CHANGE pid pid BIGINT(20) NOT NULL AUTO_INCREMENT ");
+		$wpdb->query("ALTER TABLE ".$nggpictures." CHANGE galleryid galleryid BIGINT(20) NOT NULL ");
+		$wpdb->query("ALTER TABLE ".$nggallery." CHANGE gid gid BIGINT(20) NOT NULL AUTO_INCREMENT ");
+		$wpdb->query("ALTER TABLE ".$nggallery." CHANGE pageid pageid BIGINT(20) NULL DEFAULT '0'");
+		$wpdb->query("ALTER TABLE ".$nggallery." CHANGE previewpic previewpic BIGINT(20) NULL DEFAULT '0'");
+		$wpdb->query("ALTER TABLE ".$nggallery." CHANGE gid gid BIGINT(20) NOT NULL AUTO_INCREMENT ");
 
-		// do the update (hopefully I didn't required this sometimes)	
 		update_option( "ngg_db_version", $ngg_db_version );
 	}
 
@@ -84,6 +130,12 @@ function ngg_default_options() {
 	$ngg_options['scanfolder']			= false;						// search for new images
 	$ngg_options['deleteImg']			= false;						// delete Images
 	
+	// Tags / categories
+	$ngg_options['activateTags']		= false;						// append related images
+	$ngg_options['appendType']			= "category";					// look for category or tags
+	$ngg_options['maxImages']			= 7;  							// number of images toshow
+	
+	// Thumbnail Settings
 	$ngg_options['thumbwidth']			= 100;  						// Thumb Width
 	$ngg_options['thumbheight']			= 75;  							// Thumb height
 	$ngg_options['thumbfix']			= true;							// Fix the dimension
@@ -97,7 +149,6 @@ function ngg_default_options() {
 	$ngg_options['imgHeight']			= 600;  						// Image height
 	$ngg_options['imgQuality']			= 85;							// Image Quality
 	$ngg_options['imgResampleMode']		= 4;  							// Resample speed value 1 - 5
-	$ngg_options['imgSinglePicLink']	= false;  						// Add a link to the full size picture
 	
 	// Gallery Settings
 	$ngg_options['galImages']			= "20";		  					// Number Of images per page
@@ -109,12 +160,6 @@ function ngg_default_options() {
 	$ngg_options['galSortDir']			= "ASC";						// Sort direction
 	$ngg_options['galUsejQuery']   		= false;						// use the jQuery plugin
 	$ngg_options['galNoPages']   		= true;							// use no subpages for gallery
-
-	// Image Browser
-	$ngg_options['ImgBrHead']			= true;		  					// Show header
-	$ngg_options['ImgBrDesc']			= true;							// Show description
-	$ngg_options['ImgBrTextBack']		= '&#9668; '.__('Back','nggallery'); // Text for Back
-	$ngg_options['ImgBrTextNext']		= __('Next','nggallery').' &#9658;'; // Text for Next	
 
 	// Thumbnail Effect
 	$ngg_options['thumbEffect']			= "thickbox";  					// select effect

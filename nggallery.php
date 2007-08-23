@@ -4,7 +4,7 @@ Plugin Name: NextGEN Gallery
 Plugin URI: http://alexrabe.boelinger.com/?page_id=80
 Description: A NextGENeration Photo gallery for the WEB2.0(beta).
 Author: NextGEN DEV-Team
-Version: 0.63
+Version: 0.69a
 
 Author URI: http://alexrabe.boelinger.com/
 
@@ -44,8 +44,13 @@ global $wpdb, $wp_version;
 //This works only in WP2.1 or higher
 if (version_compare($wp_version, '2.1', '>=')) {
 
+// Permission settings ############################################
+define('NGGFOLDER_PERMISSION', 0777);
+define('NGGFILE_PERMISSION', 0666);
+// ################################################################
+
 // Version and path to check version
-define('NGGVERSION', "0.63");
+define('NGGVERSION', "0.69");
 define('NGGURL', "http://nextgen.boelinger.com/version.php");
 
 // define URL
@@ -54,10 +59,6 @@ define('WINABSPATH', $myabspath);
 define('NGGFOLDER', dirname(plugin_basename(__FILE__)));
 define('NGGALLERY_ABSPATH', $myabspath.'wp-content/plugins/' . NGGFOLDER .'/');
 define('NGGALLERY_URLPATH', get_option('siteurl').'/wp-content/plugins/' . NGGFOLDER.'/');
-
-// Permission settings
-define('NGGFOLDER_PERMISSION', 0777);
-define('NGGFILE_PERMISSION', 0666);
 
 // look for imagerotator
 define('NGGALLERY_IREXIST', file_exists(NGGALLERY_ABSPATH.'imagerotator.swf'));
@@ -73,10 +74,12 @@ define('SAFE_MODE', ini_get('safe_mode'));
 //read the options
 $ngg_options = get_option('ngg_options');
 
-// database 
+// add database pointer 
 $wpdb->nggpictures					= $wpdb->prefix . 'ngg_pictures';
 $wpdb->nggallery					= $wpdb->prefix . 'ngg_gallery';
 $wpdb->nggalbum						= $wpdb->prefix . 'ngg_album';
+$wpdb->nggtags						= $wpdb->prefix . 'ngg_tags';
+$wpdb->nggpic2tags					= $wpdb->prefix . 'ngg_pic2tags';
 
 // Load language
 function nggallery_init ()
@@ -89,7 +92,8 @@ include_once (dirname (__FILE__)."/ngginstall.php");
 include_once (dirname (__FILE__)."/nggfunctions.php");
 include_once (dirname (__FILE__)."/admin/admin.php");
 
-// load class
+// load gallery class
+require_once (dirname (__FILE__).'/lib/nggallery.lib.php');
 $nggallery = new nggallery();
 
 // add javascript to header
@@ -103,10 +107,11 @@ function ngg_addjs() {
 	if ($ngg_options['thumbEffect'] == "thickbox") {
 		echo "\n".'<script type="text/javascript"> var tb_pathToImage = "'.NGGALLERY_URLPATH.'thickbox/'.$ngg_options[thickboxImage].'";</script>';
 		echo "\n".'<style type="text/css" media="screen">@import "'.NGGALLERY_URLPATH.'thickbox/thickbox.css";</style>'."\n";
-	    if ($wp_version < "2.2") {
-	    	wp_enqueue_script('jquery', NGGALLERY_URLPATH .'admin/js/jquery.js', FALSE, '1.1.3');
+	    if ($wp_version < "2.3") {
+	    	if ($wp_version > "2.1.3") wp_deregister_script('jquery'); 
+	    	wp_enqueue_script('jquery', NGGALLERY_URLPATH .'admin/js/jquery.js', FALSE, '1.1.3.1');
 		} 
-	    	wp_enqueue_script('thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.0.2');
+	    	wp_enqueue_script('thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.1.1');
 
     	// add NextGEN jQuery Plugin
 		if ($ngg_options['galUsejQuery'])
@@ -148,14 +153,14 @@ function ngg_wp_upload_tabs ($array) {
 	
 	global $wpdb;
 	
-    /* THX to SilasFlickrPlugin
+    /* 
     0 => tab display name, 
     1 => required cap / role, 
     2 => function that produces tab content, 
     3 => total number objects OR array(total, objects per page), 
     4 => add_query_args
 	*/
-	include_once ("nggadmintab.php");
+	include_once (dirname (__FILE__)."/nggadmintab.php");
 
 	// Create navigation
 	$total = 1;
@@ -165,7 +170,7 @@ function ngg_wp_upload_tabs ($array) {
 	}
 
 	$tab = array(
-            'ngg_gallery' => array('Gallery', 'upload_files', 'ngg_upload_tab_content', array($total, 10))
+            'ngg_gallery' => array(__('Gallery','nggallery'), 'NextGEN Use TinyMCE', 'ngg_upload_tab_content', array($total, 10))
     );
 
     return array_merge($array,$tab);
@@ -209,7 +214,10 @@ function ngg_addbuttons() {
 
 	// Don't bother doing this stuff if the current user lacks permissions
 	if ( !current_user_can('edit_posts') && !current_user_can('edit_pages') ) return;
- 
+	
+	// Check for NextGEN capability
+	if ( !current_user_can('NextGEN Use TinyMCE') ) return;
+	 
 	// Add only in Rich Editor mode
 	if ( get_user_option('rich_editing') == 'true') {
 	 

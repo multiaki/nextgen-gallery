@@ -20,7 +20,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		if ($_FILES['zipfile']['error'] == 0) 
 			$messagetext = ngg_import_zipfile($defaultpath);
 		else
-			$messagetext = '<font color="red">'.__('Upload failed!','nggallery').'</font>';	
+			nggallery::show_error(__('Upload failed!','nggallery'));
 	}
 	
 	if ($_POST['importfolder']){
@@ -34,68 +34,23 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			$messagetext = ngg_upload_images($defaultpath);
 		}
 		else
-			$messagetext = '<font color="red">'.__('Upload failed!','nggallery').'</font>';	
+			nggallery::show_error(__('Upload failed!','nggallery'));	
 	}
 			
 	// message windows
 	if(!empty($messagetext)) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$messagetext.'</p></div>'; }
-	
 	?>
+	
+	<link rel="stylesheet" href="<?php echo NGGALLERY_URLPATH ?>admin/js/jquery.tabs.css" type="text/css" media="print, projection, screen"/>
+    <!-- Additional IE/Win specific style sheet (Conditional Comments) -->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" href="<?php echo NGGALLERY_URLPATH ?>admin/js/jquery.tabs-ie.css" type="text/css" media="projection, screen"/>
+    <![endif]-->
+
 	<script type="text/javascript">
-		var currentTab = null;
-		var inSlide = false;
-		jQuery(document).ready(
-			function()
-			{
-				var url, tab = 0, tabIteration = 0;
-				
-				url = window.location.href.split("#");
-				if (url.length == 2 && url[1].indexOf('-slider') > 0) {
-					currentTab = jQuery('#' + url[1].substr(0, url[1].length-7));
-					if (currentTab.size() == 1) {
-						jQuery('#slider div').each(
-							function(iteration)
-							{
-								if(this === currentTab.get(0)) {
-									tabIteration = iteration;
-								}	
-							}
-						);
-					}
-				}
-				
-				if(!currentTab) {
-					currentTab = jQuery('#slider div:first');
-				}
-
-				currentTab.SlideToggleUp(500);
-				jQuery('#tabs a')
-					.eq(tabIteration).addClass('active')
-					.end()
-					.bind('click', switchTab);
-			}
-		);
-
-		var switchTab = function()
-		{
-			// get id from link
-			var tabName = this.href.split('#')[1];
-			this.blur();
-			if (inSlide == false && currentTab.get(0) != jQuery('#' + tabName.substr(0, tabName.length-7)).get(0)) {
-				jQuery('#tabs a').removeClass('active');
-				jQuery(this).addClass('active');
-				inSlide = true;
-				currentTab.SlideToggleUp(
-					500,
-					function()
-					{
-						currentTab = jQuery('#' + tabName.substr(0, tabName.length-7)).SlideToggleUp(500, function(){inSlide=false;});
-					}
-				);
-			} else {
-				return false;
-			}
-		};
+		jQuery(function() {
+			jQuery('#slider').tabs({ fxFade: true, fxSpeed: 'fast' });	
+		});
 		
 		jQuery(function(){
 			jQuery('#imagefiles').MultiFile({
@@ -106,20 +61,20 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		});
 
 	</script>
-	<div class="wrap" style="text-align: center">
-		<div id="tabs">
-			<a href="#addgallery-slider"><?php _e('Add new gallery', 'nggallery') ;?></a> -
-			<?php if (!SAFE_MODE) { ?>
-			<a href="#zipupload-slider"><?php _e('Upload a Zip-File', 'nggallery') ;?></a> -
-			<?php } ?>
-			<a href="#importfolder-slider"><?php _e('Import image folder', 'nggallery') ;?></a> -
-			<a href="#uploadimage-slider"><?php _e('Upload Images', 'nggallery') ;?></a>
-		</div>
-	</div>
 	
-	<div id="slider">
+	<div id="slider" class="wrap">
+	
+		<ul id="tabs">
+			<li><a href="#addgallery"><?php _e('Add new gallery', 'nggallery') ;?></a></li>
+			<?php if (!SAFE_MODE) { ?>
+			<li><a href="#zipupload"><?php _e('Upload a Zip-File', 'nggallery') ;?></a></li>
+			<?php } ?>
+			<li><a href="#importfolder"><?php _e('Import image folder', 'nggallery') ;?></a></li>
+			<li><a href="#uploadimage"><?php _e('Upload Images', 'nggallery') ;?></a></li>
+		</ul>
+
 		<!-- create gallery -->
-		<div id="addgallery" class="wrap" style="display:none">
+		<div id="addgallery">
 		<h2><?php _e('Add new gallery', 'nggallery') ;?></h2>
 			<form name="addgallery" id="addgallery" method="POST" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>" accept-charset="utf-8" >
 			<fieldset class="options">
@@ -136,9 +91,9 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			</form>
 		</div>
 		<!-- zip-file operation -->
-		<div id="zipupload" class="wrap" style="display:none">
+		<div id="zipupload">
 		<h2><?php _e('Upload a Zip-File', 'nggallery') ;?></h2>
-			<form name="zipupload" id="zipupload" method="POST" enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']).'#zipupload-slider'; ?>" accept-charset="utf-8" >
+			<form name="zipupload" id="zipupload" method="POST" enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']).'#zipupload'; ?>" accept-charset="utf-8" >
 			<fieldset class="options">
 				<table class="optiontable"> 
 				<tr valign="top"> 
@@ -167,9 +122,9 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			</form>
 		</div>
 		<!-- import folder -->
-		<div id="importfolder" class="wrap" style="display:none">
+		<div id="importfolder">
 		<h2><?php _e('Import image folder', 'nggallery') ;?></h2>
-			<form name="importfolder" id="importfolder" method="POST" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']).'#importfolder-slider'; ?>" accept-charset="utf-8" >
+			<form name="importfolder" id="importfolder" method="POST" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']).'#importfolder'; ?>" accept-charset="utf-8" >
 			<fieldset class="options">
 				<table class="optiontable"> 
 				<tr valign="top"> 
@@ -184,9 +139,9 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			</form>
 		</div> 
 		<!-- upload images -->
-		<div id="uploadimage" class="wrap" style="display:none">
+		<div id="uploadimage">
 		<h2><?php _e('Upload Images', 'nggallery') ;?></h2>
-			<form name="uploadimage" id="uploadimage" method="POST" enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']).'#uploadimage-slider'; ?>" accept-charset="utf-8" >
+			<form name="uploadimage" id="uploadimage" method="POST" enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']).'#uploadimage'; ?>" accept-charset="utf-8" >
 			<fieldset class="options">
 				<table class="optiontable"> 
 				<tr valign="top"> 
@@ -226,19 +181,35 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		$myabspath = str_replace("\\","/",ABSPATH);  // required for windows
 		
 		//cleanup pathname
-		$new_pathname = strtolower(preg_replace ("/(\s+)/", '-',$galleryname));
-		$new_pathname = preg_replace('|[^a-z0-9-]|i', '', $new_pathname);
+		//$new_pathname = strtolower(preg_replace ("/(\s+)/", '-',$galleryname));
+		//$new_pathname = preg_replace('|[^a-z0-9-]|i', '', $new_pathname);
+		$galleryname = sanitize_title($galleryname);
+		$nggpath = $defaultpath.$galleryname;
 		
-		if (empty($new_pathname)) return '<font color="red">'.__('No valid gallery name!', 'nggallery'). '</font>';	
-	
-		if ( substr(decoct(@fileperms($myabspath.$defaultpath)),1) != decoct(NGGFOLDER_PERMISSION) )
-			return '<font color="red">'.__('Directory', 'nggallery').' <strong>'.$defaultpath.'</strong> '.__('didn\'t have the permissions ', 'nggallery').decoct(NGGFOLDER_PERMISSION).'!</font>';
+		if (empty($galleryname)) return '<font color="red">'.__('No valid gallery name!', 'nggallery'). '</font>';	
 
-		$nggpath = $defaultpath.$new_pathname;
+		// check for main folder
+		if ( !file_exists(($myabspath.$defaultpath)) ) {
+			$txt  = __('Directory', 'nggallery').' <strong>'.$defaultpath.'</strong> '.__('didn\'t exist. Please create first the main gallery folder ', 'nggallery').'!<br />';
+			$txt .= __('Check this link, if you didn\'t know how to set the permission :', 'nggallery').' <a href="http://codex.wordpress.org/Changing_File_Permissions">http://codex.wordpress.org/Changing_File_Permissions</a> ';
+			nggallery::show_error($txt);
+			return;
+		}
 
-		if (is_dir($myabspath.$nggpath))
-			return '<font color="red">'.__('Directory', 'nggallery').' <strong>'.$nggpath.'</strong> '.__('already exists!', 'nggallery').'</font>';	
-
+		// check for permission settings
+		if ( substr(decoct(@fileperms($myabspath.$defaultpath)),1) != decoct(NGGFOLDER_PERMISSION) ) {
+			$txt  = __('Directory', 'nggallery').' <strong>'.$defaultpath.'</strong> '.__('didn\'t have the permissions ', 'nggallery').decoct(NGGFOLDER_PERMISSION).'!<br />';
+			$txt .= __('Check this link, if you didn\'t know how to set the permission :', 'nggallery').' <a href="http://codex.wordpress.org/Changing_File_Permissions">http://codex.wordpress.org/Changing_File_Permissions</a> ';
+			nggallery::show_error($txt);
+			return;
+		}
+		
+		// avoid double creation	
+		if (is_dir($myabspath.$nggpath)) {
+			nggallery::show_error(__('Directory', 'nggallery').' <strong>'.$nggpath.'</strong> '.__('already exists!', 'nggallery'));
+			return; 
+		}
+		
 		// create new directories
 		if (!SAFE_MODE) {
 			if (!@mkdir ($myabspath.$nggpath,NGGFOLDER_PERMISSION)) return  ('<font color="red">'.__('Unable to create directory ', 'nggallery').$nggpath.'!</font>');
@@ -246,16 +217,16 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			if (!@mkdir ($myabspath.$nggpath.'/thumbs',NGGFOLDER_PERMISSION)) return ('<font color="red">'.__('Unable to create directory ', 'nggallery').$nggpath.'/thumbs !</font>');
 			if (!@chmod ($myabspath.$nggpath.'/thumbs',NGGFOLDER_PERMISSION)) return ('<font color="red">'.__('Unable to set directory permissions', 'nggallery').$nggpath.'/thumbs !</font>');
 		} else {
-			$safemode  = '<br /><font color="green">'.__('The server Safe-Mode is on !', 'nggallery');	
+			$safemode  = '<br /><font color="green">'.__('The server setting Safe-Mode is on !', 'nggallery');	
 			$safemode .= '<br />'.__('Please create directory', 'nggallery').' <strong>'.$nggpath.'</strong> ';	
 			$safemode .= __('and the thumbnails directory', 'nggallery').' <strong>'.$nggpath.'/thumbs</strong> '.__('with permission 777 manually !', 'nggallery').'</font>';	
 		}
 		$result=$wpdb->get_var("SELECT name FROM $wpdb->nggallery WHERE name = '$galleryname' ");
 		if ($result) {
-			return '<font color="red">'.__('Gallery', 'nggallery').' <strong>'.$newgallery.'</strong> '.__('already exists', 'nggallery').'</font>';			
+			return '<font color="red">'.__('Gallery', 'nggallery').' <strong>'.$galleryname.'</strong> '.__('already exists', 'nggallery').'</font>';			
 		} else { 
 			$result = $wpdb->query("INSERT INTO $wpdb->nggallery (name, path) VALUES ('$galleryname', '$nggpath') ");
-			if ($result) return '<font color="green">'.__('Gallery successfully created!','nggallery').'</font>'.$safemode;
+			if ($result) return '<font color="green">'.__('Gallery', 'nggallery').' <strong>'.$wpdb->insert_id." : ".$galleryname.'</strong> '.__('successfully created!','nggallery').'</font>'.$safemode;
 		} 
 	}
 	
@@ -279,7 +250,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		if (empty($new_imageslist)) return '<font color="blue">'.__('Directory', 'nggallery').' <strong>'.$gallerypath.'</strong> '.__('contains no pictures', 'nggallery').'!</font>';
 
 		// create thumbnail folder
-		$check_thumbnail_folder = ngg_get_thumbnail_folder($gallerypath);
+		$check_thumbnail_folder = nggallery::get_thumbnail_folder($gallerypath);
 		if (!$check_thumbnail_folder) {
 			if (SAFE_MODE) return '<font color="red">'.__('Thumbnail Directory', 'nggallery').' <strong>'.$gallerypath.'/thumbs</strong> '.__('doesn&#96;t exist', 'nggallery').'!<br />'.__('Please create the folder <i>thumbs</i> in your gallery folder.', 'nggallery').'</font>';
 	 		else @mkdir ($gallerypath.'/thumbs',NGGFOLDER_PERMISSION) or die  ('<font color="red">'.__('Unable to create directory ', 'nggallery').$gallerypath.'/thumbs !</font>');
@@ -359,7 +330,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			}
 		}
 		
-		if(!empty($messagetext)) echo '<div id="message-error" class="error fade"><p><strong>'.__('Some pictures are not writeable :','nggallery').'</strong><br /><ul>'.$messagetext.'</ul></p></div>';
+		if(!empty($messagetext)) nggallery::show_error('<strong>'.__('Some pictures are not writeable :','nggallery').'</strong><br /><ul>'.$messagetext.'</ul>');
 		
 		return;
 	}
@@ -397,7 +368,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			}
 		}
 		
-		if(!empty($messagetext)) echo '<div id="message-error" class="error fade"><p><strong>'.__('Some pictures are not writeable :','nggallery').'</strong><br /><ul>'.$messagetext.'</ul></p></div>';
+		if(!empty($messagetext)) nggallery::show_error('<strong>'.__('Some pictures are not writeable :','nggallery').'</strong><br /><ul>'.$messagetext.'</ul>');
 		
 		return;
 	}
@@ -408,8 +379,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		
 		$ngg_options = get_option('ngg_options');
 		
-		$prefix = ngg_get_thumbnail_prefix($gallery_absfolder);
-		$thumbfolder = ngg_get_thumbnail_folder($gallery_absfolder);
+		$prefix = nggallery::get_thumbnail_prefix($gallery_absfolder);
+		$thumbfolder = nggallery::get_thumbnail_folder($gallery_absfolder);
 		
 		if (is_array($pictures)) {
 			foreach($pictures as $picture) {
@@ -469,8 +440,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			}
 		}
 
-		if(!empty($errortext)) echo '<div id="message-error" class="error fade"><p><strong>'.__('Follow thumbnails could not created.','nggallery').'</strong><br /><ul>'.$errortext.'</ul></p></div>';		
-		if(!empty($messagetext)) echo '<div id="message-error" class="error fade"><p><strong>'.__('Some thumbnails are not writeable :','nggallery').'</strong><br /><ul>'.$messagetext.'</ul></p></div>';
+		if(!empty($errortext)) nggallery::show_error('<strong>'.__('Follow thumbnails could not created.','nggallery').'</strong><br /><ul>'.$errortext.'</ul>');		
+		if(!empty($messagetext)) nggallery::show_error('<strong>'.__('Some thumbnails are not writeable :','nggallery').'</strong><br /><ul>'.$messagetext.'</ul>');
 
 		return;
 	}
@@ -498,7 +469,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		$ext = array("jpeg", "jpg", "png", "gif"); 
 		if (in_array( strtolower($info['extension']), $ext)) {
 			// For MAC skip the ".image" files
-			if ($info['filename']{0} ==  "." ) 
+			if ($info['basename']{0} ==  "." ) 
 				return 0;
 			else 
 				return 1;
@@ -527,7 +498,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		$foldername = $_POST['zipgalselect'];
 		if ($foldername == "0") {	
 			//cleanup and take the zipfile name as folder name
-			$foldername = preg_replace ("/(\s+)/", '-', strtolower(strtok ($filename,'.')));					
+			$foldername = sanitize_title(strtok ($filename,'.'));
+			//$foldername = preg_replace ("/(\s+)/", '-', strtolower(strtok ($filename,'.')));					
 		}
 
 		// set complete folder path		
@@ -583,6 +555,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					return '<font color="red">'.__('Failure in database, no gallery path set !','nggallery').'</font>';
 				} 
 				
+				//TODO:Sanitize filename, but pay attention for the extension
 				$dest_file = WINABSPATH.$gallerypath."/".$filename;
 				
 				// save temp file to gallery

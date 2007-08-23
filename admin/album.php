@@ -67,24 +67,24 @@ jQuery(document).ready(
 		jQuery('.textarea1').Autoexpand([230,400]);
 		
 		// Maximize All Portlets (whole site, no differentiation)
-		$('a#all_max').click(function()
+		jQuery('a#all_max').click(function()
 			{
-				$('div.itemContent:hidden').show();
+				jQuery('div.itemContent:hidden').show();
 				return false;
 			}
 		);
 
 		// Minimize All Portlets (whole site, no differentiation)
-		$('a#all_min').click(function()
+		jQuery('a#all_min').click(function()
 			{
-				$('div.itemContent:visible').hide();
+				jQuery('div.itemContent:visible').hide();
 				return false;
 			}
 		);
 	   // Auto Minimize if more than 4 (whole site, no differentiation)
-	   if($('a').length > 4)
+	   if(jQuery('a').length > 4)
 	   {
-	   		$('div.itemContent:visible').hide();
+	   		jQuery('div.itemContent:visible').hide();
 	   }
 	}
 );
@@ -142,9 +142,14 @@ function ngg_serialize(s)
 		</table>
 		
 	</form>
-	<p><?php _e('After you create and select a album, you can drag and drop a gallery into your album below','nggallery'); ?></p>
-	<a href="#" id="all_max">Alle Alben maximieren</a>
-	<a href="#" id="all_min">Alle Alben minimieren</a>
+	<p>
+	<div style="float:right;">
+	  <a href="#" id="all_max"><?php _e('[Maximize]', 'nggallery') ?></a>
+	| <a href="#" id="all_min"><?php _e('[Minimize]', 'nggallery') ?></a>
+	</div>
+	<?php _e('After you create and select a album, you can drag and drop a gallery into your album below','nggallery'); ?>
+	</p>
+
 	<br class="clear"/>
 	
 	<div class="container">
@@ -212,8 +217,8 @@ function getgallerycontainer($galleryid = 0) {
 	if ($gallery) {
 
 		// set image url
-		$act_thumbnail_url 	= get_option ('siteurl')."/".$gallery->path.ngg_get_thumbnail_folder($gallery->path, FALSE);
-		$act_thumb_prefix   = ngg_get_thumbnail_prefix($gallery->path, FALSE);
+		$act_thumbnail_url 	= get_option ('siteurl')."/".$gallery->path.nggallery::get_thumbnail_folder($gallery->path, FALSE);
+		$act_thumb_prefix   = nggallery::get_thumbnail_prefix($gallery->path, FALSE);
 		
 		$post= get_post($gallery->pageid); 	
 		$pagename = $post->post_title;	

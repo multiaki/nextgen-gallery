@@ -21,7 +21,7 @@ function nggallery_admin_overview()  {
             '<strong>'.$wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggallery").'</strong>',
             '<strong>'.$wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggalbum").'</strong>'
            );              
-          vprintf(__('There are totally %1$s pictures in %2$s gallerys, which are spread across %3$s albums.', 'nggallery'), $replace);
+          vprintf(__('There are totally %1$s pictures in %2$s galleries, which are spread across %3$s albums.', 'nggallery'), $replace);
         ?>
        </p> 
 	  <?php if (ngg_version_check()) { ?>
@@ -45,10 +45,10 @@ function nggallery_admin_overview()  {
     </p>
     
     <ul>
-      <?php if(current_user_can('manage_options')): ?><li><a href="admin.php?page=nggallery-add-gallery"><?php _e('Add a new gallery or import pictures', 'nggallery') ?></a></li><?php endif; ?>
-      <li><a href="admin.php?page=nggallery-manage-gallery"><?php _e('Manage galleries and images', 'nggallery') ?></a></li>
-      <?php if(current_user_can('manage_options')): ?><li><a href="admin.php?page=nggallery-manage-album"><?php _e('Create and manage albums', 'nggallery') ?></a></li><?php endif; ?>
-      <?php if(current_user_can('manage_options')): ?><li><a href="admin.php?page=nggallery-options"><?php _e('Change the settings of NextGEN Gallery', 'nggallery') ?></a></li><?php endif; ?>
+      <?php if(current_user_can('NextGEN Upload images')): ?><li><a href="admin.php?page=nggallery-add-gallery"><?php _e('Add a new gallery or import pictures', 'nggallery') ?></a></li><?php endif; ?>
+      <?php if(current_user_can('NextGEN Manage gallery')): ?><li><a href="admin.php?page=nggallery-manage-gallery"><?php _e('Manage galleries and images', 'nggallery') ?></a></li><?php endif; ?>
+      <?php if(current_user_can('NextGEN Edit album')): ?><li><a href="admin.php?page=nggallery-manage-album"><?php _e('Create and manage albums', 'nggallery') ?></a></li><?php endif; ?>
+      <?php if(current_user_can('NextGEN Change options')): ?><li><a href="admin.php?page=nggallery-options"><?php _e('Change the settings of NextGEN Gallery', 'nggallery') ?></a></li><?php endif; ?>
     </ul>
     <div id="devnews">
     <h3><?php _e('Latest News', 'nggallery') ?></h3>

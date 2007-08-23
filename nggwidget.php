@@ -3,7 +3,7 @@
 Plugin Name: NextGEN Gallery Widget
 Description: Adds a sidebar widget support to your NextGEN Gallery!
 Author: KeViN
-Version: 1.01
+Version: 1.11
 Author URI: http://www.kev.hu
 Plugin URI: http://www.kev.hu
 
@@ -148,6 +148,9 @@ function widget_ngg_slideshow() {
 		echo '<p style="text-align:right;"><label for="ngg-title">' . __('Title:', 'nggallery') . ' <input style="width: 200px;" id="ngg-title" name="ngg-title" type="text" value="'.$title.'" /></label></p>';
 		echo '<p style="text-align:right;"><label for="ngg-galleryid">' . __('Select Gallery:', 'nggallery'). ' </label>';
 		echo '<select size="1" name="ngg-galleryid" id="ngg-galleryid">';
+			echo '<option value="0" ';
+			if ($table->gid == $options['galleryid']) echo "selected='selected' ";
+			echo '>'.__('All images', 'nggallery').'</option>'."\n\t"; 
 			$tables = $wpdb->get_results("SELECT * FROM $wpdb->nggallery ORDER BY 'name' ASC ");
 			if($tables) {
 				foreach($tables as $table) {
@@ -173,16 +176,14 @@ function widget_ngg_slideshow() {
 function nggDisplayImagesWidget($thumb,$number,$sizeX,$sizeY,$mode,$imgtype) {
 	
 	// Check for NextGEN Gallery
-	if ( !function_exists('ngg_get_thumbnail_url') )
+	if ( !class_exists('nggallery') )
 		return;
 
 	//origy ngg options
 	$ngg_options = get_option('ngg_options');
 
 	// get the effect code
-	if ($ngg_options[thumbEffect] != "none") $thumbcode = stripslashes($ngg_options[thumbCode]);
-	if ($ngg_options[thumbEffect] == "highslide") $thumbcode = str_replace("%GALLERY_NAME%", "'sidebar'", $thumbcode);
-	else $thumbcode = str_replace("%GALLERY_NAME%", "sidebar", $thumbcode);
+	$thumbcode = nggallery::get_thumbcode("sidebar");
 
 	// Put your HTML code here if you want to personalize the image display!
 	$IMGbefore	= ''; // NOT IN USE!
@@ -218,8 +219,8 @@ function nggDisplayImagesWidget($thumb,$number,$sizeX,$sizeY,$mode,$imgtype) {
 			$imageID = $wpdb->get_var("SELECT pid FROM $wpdb->nggpictures ORDER by pid DESC limit ".$i.",1");
 		}
 
-		// [0.97] new variable -> Set up the strings 
-		$Astart		= '<a href="'.ngg_get_image_url($imageID).'" title="" '.$thumbcode.'>';
+		//TODO:Insert title
+		$Astart		= '<a href="'.nggallery::get_image_url($imageID).'" title="" '.$thumbcode.'>';
 		$Aend		= '</a>';
 
 		
@@ -261,7 +262,7 @@ function nggDisplayImagesWidget($thumb,$number,$sizeX,$sizeY,$mode,$imgtype) {
 			}
 			else { 
 				echo $Astart;
-				echo $IMGbefore.'<img src="'.ngg_get_thumbnail_url($imageID).'" style="width:'.$sizeX.'px;height:'.$sizeY.'px;" />';
+				echo $IMGbefore.'<img src="'.nggallery::get_thumbnail_url($imageID).'" style="width:'.$sizeX.'px;height:'.$sizeY.'px;" />';
 				echo $Aend.$IMGafter."\n";
 			}
 		}
@@ -299,7 +300,7 @@ function widget_ngg_recentimage() {
 		return;
 		
 	// Check for NextGEN Gallery
-	if ( !function_exists('ngg_get_thumbnail_url') )
+	if ( !class_exists('nggallery') )
 		return;
 	
 	function widget_nextgenrecentimage($args) {
@@ -369,7 +370,7 @@ function widget_ngg_recentimage() {
 	}
 
 	/**
-	* @desc Output of plugin´s editform in te adminarea
+	* @desc Output of plugin´s editform in the adminarea
 	* @author KeViN
 	*/
 
@@ -482,7 +483,7 @@ function widget_ngg_randomimage() {
 		return;
 		
 	// Check for NextGEN Gallery
-	if ( !function_exists('ngg_get_thumbnail_url') )
+	if ( !class_exists('nggallery') )
 		return;
 	
 	function widget_nextgenimage($args) {
@@ -509,10 +510,7 @@ function widget_ngg_randomimage() {
 		$ngg_options = get_option('ngg_options');
 
 		// get the effect code
-		if ($ngg_options[thumbEffect] != "none") $thumbcode = stripslashes($ngg_options[thumbCode]);
-		if ($ngg_options[thumbEffect] == "highslide") $thumbcode = str_replace("%GALLERY_NAME%", "'sidebar'", $thumbcode);
-		else $thumbcode = str_replace("%GALLERY_NAME%", "sidebar", $thumbcode);
-	
+		$thumbcode = nggallery::get_thumbcode("sidebar");
 		
 		$show_widget = false;								// checking display status (category or home)
 		$categorieslist = nggGetCSVValues($categorylist,','); 	// Make array for checking the categories
