@@ -6,6 +6,8 @@ function nggallery_admin_roles()  {
 
 if ( isset($_POST['update_cap']) ) {	
 
+	check_admin_referer('ngg_addroles');
+
 	// now set or remove the capability
 	ngg_set_capability($_POST['general'],"NextGEN Gallery overview");
 	ngg_set_capability($_POST['tinymce'],"NextGEN Use TinyMCE");
@@ -23,7 +25,8 @@ if ( isset($_POST['update_cap']) ) {
 	<h2><?php _e('Roles / capabilities', 'nggallery') ;?></h2>
 	<p><?php _e('Select the lowest role which should be able to access the follow capabilities. NextGEN Gallery supports the standard roles from WordPress.', 'nggallery') ?> <br />
 	   <?php _e('For a more flexible user management you can use the', 'nggallery') ?> <a href="http://www.im-web-gefunden.de/wordpress-plugins/role-manager/" target="_blank">Role Manager</a>.</p>
-	<form name="addgallery" id="addgallery" method="POST" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>" accept-charset="utf-8" >
+	<form name="addroles" id="addroles" method="POST" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>" accept-charset="utf-8" >
+		<?php wp_nonce_field('ngg_addroles') ?>
 		<fieldset class="options">
 			<table class="optiontable"> 
 			<tr valign="top"> 

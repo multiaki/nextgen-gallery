@@ -8,6 +8,9 @@ function nggallery_admin_manage_album()  {
 	global $wpdb;
 	
 	if ($_POST['update']){
+		
+		check_admin_referer('ngg_album');
+		
 		if ($_POST['newalbum']){ 
 			$newablum = attribute_escape($_POST['newalbum']);
 			$result = $wpdb->query(" INSERT INTO $wpdb->nggalbum (name, sortorder) VALUES ('$newablum','0')");
@@ -35,6 +38,7 @@ function nggallery_admin_manage_album()  {
 	}
 	
 	if ($_POST['delete']){
+		check_admin_referer('ngg_addroles');
 		$act_album = attribute_escape($_POST['act_album']);
 		$result = $wpdb->query("DELETE FROM $wpdb->nggalbum WHERE id = '$act_album' ");
 		if ($result) $messagetext = '<font color="green">'.__('Album deleted','nggallery').'</font>';
@@ -111,6 +115,7 @@ function ngg_serialize(s)
 <div class="wrap" id="wrap" >
 	<h3><?php _e('Manage Albums', 'nggallery') ?></h3>
 	<form id="selectalbum" method="POST" onsubmit="ngg_serialize('galleryContainer')" accept-charset="utf-8">
+		<?php wp_nonce_field('ngg_album') ?>
 		<input name="sortorder" type="hidden" />
 		<table width="100%" border="0" cellspacing="3" cellpadding="3" >
 			<tr>

@@ -128,6 +128,10 @@ it's only a template design
 	background-color: #A9A9A9;
 } 
 
+.ngg-gallery-thumbnail span {
+	display:none;
+}
+
 .ngg-clear {
 	clear: both;
 }

@@ -23,9 +23,10 @@
     clear: both;
     content: " ";
 }
+
 .tabs-nav li {
     float: left;
-    margin: 0px 2px 0px 1px;
+    margin: 0px 2px 0px 1px !important;
 	background: #EEEEEE none repeat scroll 0%;
 	border-color: #CCCCCC;
 	border-style: solid solid none;
@@ -66,7 +67,7 @@
     cursor: text;
 }
 .tabs-nav a:hover, .tabs-nav a:focus, .tabs-nav a:active { /* @ Opera, we need to be explicit again here now... */
-    cursor: pointer;
+    cursor: pointer !important;
 }
 .tabs-nav .tabs-disabled {
     opacity: .4;

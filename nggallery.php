@@ -4,7 +4,7 @@ Plugin Name: NextGEN Gallery
 Plugin URI: http://alexrabe.boelinger.com/?page_id=80
 Description: A NextGENeration Photo gallery for the WEB2.0(beta).
 Author: NextGEN DEV-Team
-Version: 0.69a
+Version: 0.70b1
 
 Author URI: http://alexrabe.boelinger.com/
 
@@ -116,6 +116,9 @@ function ngg_addjs() {
     	// add NextGEN jQuery Plugin
 		if ($ngg_options['galUsejQuery'])
 			wp_enqueue_script('nextgen', NGGALLERY_URLPATH .'admin/js/jquery.nextgen.pack.js', array('jquery'), '0.5');
+			//TODO: NEW AJAX Version
+			// wp_enqueue_script('nextgen-ajax', NGGALLERY_URLPATH .'admin/js/jquery.nextgen.ajax.js', array('jquery'), '0.1');
+			// wp_enqueue_script('blockui', NGGALLERY_URLPATH .'admin/js/jquery.blockUI.js', array('jquery'), '0.1');
 	    }
 	    
 	// test for wordTube function

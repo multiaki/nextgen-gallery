@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: NextGEN Gallery Widget
-Description: Adds a sidebar widget support to your NextGEN Gallery!
+Description: Adds a sidebar widget support to your NextGEN Gallery
 Author: KeViN
 Version: 1.11
 Author URI: http://www.kev.hu
@@ -178,99 +178,42 @@ function nggDisplayImagesWidget($thumb,$number,$sizeX,$sizeY,$mode,$imgtype) {
 	// Check for NextGEN Gallery
 	if ( !class_exists('nggallery') )
 		return;
-
-	//origy ngg options
+		
+	global $wpdb;
+	
+	//get ngg options
 	$ngg_options = get_option('ngg_options');
 
 	// get the effect code
 	$thumbcode = nggallery::get_thumbcode("sidebar");
 
-	// Put your HTML code here if you want to personalize the image display!
-	$IMGbefore	= ''; // NOT IN USE!
-	$IMGafter	= ''; // NOT IN USE!
-	
-	$Abefore	= ''; // NOT IN USE!
-	$Aafter		= ''; // NOT IN USE!
-	
-	// [0.99] remember the displayed images
-	$displayedimages = array();
-	
-	global $wpdb;
-
 	// [0.99] Check the number of the images (disable more pictures)
-	$numberofimages = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggpictures");
-	if (($numberofimages < $number)) $number=$numberofimages;
+	$count = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggpictures");
+	if ($count < $number) 
+		$number = $count;
 
-	for ($i=1; $i<=$number; $i++) {
+	if ($imgtype == "random") 
+		$imageList = $wpdb->get_col("SELECT pid FROM $wpdb->nggpictures ORDER by rand() limit $number");
+	else
+		$imageList = $wpdb->get_col("SELECT pid FROM $wpdb->nggpictures ORDER by pid DESC limit 0,$number");
 
-		// Get a random image from the database
-		if (($imgtype == "random")) {
+	if (is_array($imageList)){
+		foreach($imageList as $imageID) {
 
-				// [0.99] -> disable duplicate images in random!
-				$imageID = $wpdb->get_var("SELECT pid FROM $wpdb->nggpictures ORDER by rand() limit 1");
-				while ( in_array($imageID, $displayedimages)) {
-				$imageID = $wpdb->get_var("SELECT pid FROM $wpdb->nggpictures ORDER by rand() limit 1");
-				}
-				$displayedimages[$i] = $imageID; 
-				
+			//TODO:Insert title
+			$out = '<a href="'.nggallery::get_image_url($imageID).'" title="" '.$thumbcode.'>';
+			$addmode = ($mode == 'web20') ? "&amp;mode=web20" : "" ;
+			if ( $thumb == "false" )
+				$out .= '<img src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$imageID.'&amp;width='.$sizeX.'&amp;height='.$sizeY.$addmode.'" />';
+			else	
+				$out .= '<img src="'.nggallery::get_thumbnail_url($imageID).'" style="width:'.$sizeX.'px;height:'.$sizeY.'px;" />';			
+			
+			echo $out . '</a>'."\n";
+			
 		}
-		else {
-		// Get the $i latest image from the database
-			$imageID = $wpdb->get_var("SELECT pid FROM $wpdb->nggpictures ORDER by pid DESC limit ".$i.",1");
-		}
-
-		//TODO:Insert title
-		$Astart		= '<a href="'.nggallery::get_image_url($imageID).'" title="" '.$thumbcode.'>';
-		$Aend		= '</a>';
-
-		
-		// Here comes the display
-		echo $Abefore;
-	
-		// [0.95] new function -> Thumbnail or Normal image				
-		if ( ($thumb == "false") ) {
-		// NORMAL IMAGE mode
-			if ( ($mode == 'web20') ) {
-				// [0.95] [deleted]	-> <li> </li>
-				// [0.97] [edited]	-> class="ngg-widget-img" -> id="ngg-widget-img"
-				// [0.98] [deleted]	-> id="ngg-widget-img"
-				echo $Astart;
-				echo $IMGbefore.'<img src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$imageID.'&amp;width='.$sizeX.'&amp;height='.$sizeY.'&amp;mode=web20" />';
-				echo $Aend.$IMGafter."\n";
-			} 
-			else { 
-				// [0.95] [deleted]	-> <li> </li>
-				// [0.97] [edited]	-> class="ngg-widget-img" -> id="ngg-widget-img"
-				// [0.98] [deleted]	-> id="ngg-widget-img"
-				echo $Astart;
-				echo $IMGbefore.'<img src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$imageID.'&amp;width='.$sizeX.'&amp;height='.$sizeY.'" />';
-				echo $Aend.$IMGafter."\n";
-			}
-		}
-		else {
-		// THUMBNAIL mode
-			//if web20
-			if ( ($mode == 'web20') ) {
-				
-				// [0.95] [deleted]	-> <li> </li>
-				// [0.95] [edited]	-> class="ngg-widget-img"
-				echo $Astart;
-				// [0.95] [deleted]	-> nggshow because it displays the ORIGYNAL picture and not the THUMBNAIL! 
-				// [0.95] [new line]	-> showreflection.php -> for the web20 thumbnail!
-				echo $IMGbefore.'<img src="'.NGGALLERY_URLPATH.'showreflection.php?pid='.$imageID.'&amp;width='.$sizeX.'&amp;height='.$sizeY.' />'; 
-				echo $Aend.$IMGafter."\n";
-			}
-			else { 
-				echo $Astart;
-				echo $IMGbefore.'<img src="'.nggallery::get_thumbnail_url($imageID).'" style="width:'.$sizeX.'px;height:'.$sizeY.'px;" />';
-				echo $Aend.$IMGafter."\n";
-			}
-		}
-		
-		echo $Aafter;
-
 	}
 }
+
 /**********************************************************/
 /* SIMPLE INSERT TAGS 
 /**********************************************************/
@@ -364,7 +307,6 @@ function widget_ngg_recentimage() {
 			nggDisplayImagesWidget($thumb,$number,$sizeX,$sizeY,$mode,$imgtype);
 		
 			echo '</div>'."\n";
-			// v.095 [deleted] -> echo '<div style="clear:both;"></div>'."\n";
 			echo $after_widget;
 		}
 	}
@@ -553,13 +495,12 @@ function widget_ngg_randomimage() {
 			nggDisplayImagesWidget($thumb,$number,$sizeX,$sizeY,$mode,$imgtype,$thumbcode);
 		
 			echo '</div>'."\n";
-			// v.095 [deleted] -> echo '<div style="clear:both;"></div>'."\n";
 			echo $after_widget;
 		}
 	}
 
 	/**
-	* @desc Output of plugin´s editform in te adminarea
+	* @desc Output of plugin´s editform in the adminarea
 	* @author KeViN
 	*/
 

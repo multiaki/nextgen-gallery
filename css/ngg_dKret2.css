@@ -126,6 +126,13 @@ styles with the dKret2 theme.
 	background-color: #A9A9A9;
 } 
 
+.ngg-gallery-thumbnail span {
+	/* Images description */
+	font-size:90%;
+	padding-left:5px;
+	display:block;
+}
+
 .ngg-clear {
 	clear: both;
 }

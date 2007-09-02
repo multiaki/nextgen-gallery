@@ -273,14 +273,15 @@ class nggallery {
 	 	
 		 	if ($maxElement > 0) {
 			$total = $totalElement;
-		
+			$args['page'] = get_the_ID();
+					
 			// create navigation	
 			if ( $total > $maxElement ) {
 				$total_pages = ceil( $total / $maxElement );
 				$r = '';
 				if ( 1 < $page ) {
 					$args['nggpage'] = ( 1 == $page - 1 ) ? FALSE : $page - 1;
-					$r .=  '<a class="prev" href="'. add_query_arg( $args ) . '">&#9668;</a>';
+					$r .=  '<a class="prev" href="'. htmlspecialchars( add_query_arg( $args ) ) . '">&#9668;</a>';
 				}
 				if ( ( $total_pages = ceil( $total / $maxElement ) ) > 1 ) {
 					for ( $page_num = 1; $page_num <= $total_pages; $page_num++ ) {
@@ -290,7 +291,7 @@ class nggallery {
 							$p = false;
 							if ( $page_num < 3 || ( $page_num >= $page - 3 && $page_num <= $page + 3 ) || $page_num > $total_pages - 3 ) {
 								$args['nggpage'] = ( 1 == $page_num ) ? FALSE : $page_num;
-								$r .= '<a class="page-numbers" href="' . add_query_arg($args) . '">' . ( $page_num ) . '</a>';
+								$r .= '<a class="page-numbers" href="' . htmlspecialchars( add_query_arg( $args ) ) . '">' . ( $page_num ) . '</a>';
 								$in = true;
 							} elseif ( $in == true ) {
 								$r .= '<span>...</span>';
@@ -301,10 +302,12 @@ class nggallery {
 				}
 				if ( ( $page ) * $maxElement < $total || -1 == $total ) {
 					$args['nggpage'] = $page + 1;
-					$r .=  '<a class="next" href="' . add_query_arg($args) . '">&#9658;</a>';
+					$r .=  '<a class="next" href="' . htmlspecialchars( add_query_arg( $args ) ) . '">&#9658;</a>';
 				}
 				
 				$navigation = "<div class='ngg-navigation'>$r</div>";
+			} else {
+				$navigation = "<div class='ngg-clear'></div>"."\n";
 			}
 		}
 		
@@ -415,7 +418,6 @@ class ngg_Tags {
 
 	function remove_relationship($pic_id = 0, $slugarray, $cached = false) {
 		// remove the relation between image and tag
-		//TODO:This must be better, remove should not need get_tags_from_image() first
 		global $wpdb;
 
 		if (!is_array($slugarray))

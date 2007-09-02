@@ -5,12 +5,16 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		global $wpdb;
 				
 		if (isset($_POST['resetdefault'])) {	
+			check_admin_referer('ngg_uninstall');
+			
 			ngg_default_options();
 
 		 	$messagetext = '<font color="green">'.__('Reset all settings to default parameter','nggallery').'</font>';
 		}
 
 		if (isset($_POST['uninstall'])) {	
+			
+			check_admin_referer('ngg_uninstall');
 
 			$wpdb->query("DROP TABLE $wpdb->nggpictures");
 			$wpdb->query("DROP TABLE $wpdb->nggallery");
@@ -41,6 +45,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	<div class="wrap">
 	<h2><?php _e('Reset options', 'nggallery') ;?></h2>
 		<form name="resetsettings" method="post">
+			<?php wp_nonce_field('ngg_uninstall') ?>
 			<p><?php _e('Reset all options/settings to the default installation.', 'nggallery') ;?></p>
 			<div align="center"><input type="submit" class="button" name="resetdefault" value="<?php _e('Reset settings', 'nggallery') ;?>" onclick="javascript:check=confirm('<?php _e('Reset all options to default settings ?\n\nChoose [Cancel] to Stop, [OK] to proceed.\n','nggallery'); ?>');if(check==false) return false;" /></div>
 		</form>

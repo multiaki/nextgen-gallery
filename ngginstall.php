@@ -127,7 +127,7 @@ function nggallery_install () {
 function ngg_default_options() {
 
 	$ngg_options['gallerypath']			= "wp-content/gallery/";  		// set default path to the gallery
-	$ngg_options['scanfolder']			= false;						// search for new images
+	$ngg_options['scanfolder']			= false;						// search for new images  (not used)
 	$ngg_options['deleteImg']			= false;						// delete Images
 	
 	// Tags / categories
@@ -144,7 +144,7 @@ function ngg_default_options() {
 	$ngg_options['thumbResampleMode']	= 3;  							// Resample speed value 1 - 5 
 		
 	// Image Settings
-	$ngg_options['imgResize']			= false;						// Activate resize
+	$ngg_options['imgResize']			= false;						// Activate resize (not used)
 	$ngg_options['imgWidth']			= 800;  						// Image Width
 	$ngg_options['imgHeight']			= 600;  						// Image height
 	$ngg_options['imgQuality']			= 85;							// Image Quality
@@ -160,6 +160,8 @@ function ngg_default_options() {
 	$ngg_options['galSortDir']			= "ASC";						// Sort direction
 	$ngg_options['galUsejQuery']   		= false;						// use the jQuery plugin
 	$ngg_options['galNoPages']   		= true;							// use no subpages for gallery
+	$ngg_options['galShowDesc']			= "none";						// Show a text below the thumbnail
+	$ngg_options['galImgBrowser']   	= false;						// Show ImageBrowser, instead effect
 
 	// Thumbnail Effect
 	$ngg_options['thumbEffect']			= "thickbox";  					// select effect

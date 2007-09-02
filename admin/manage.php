@@ -5,7 +5,6 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 function nggallery_admin_manage_gallery() {
 	global $wpdb;
 
-	//TODO:6.Thickbox text "Enter tags" anpassen für jede aktion
 	//TODO:GID & Mode should the hidden post variables
 
 	// GET variables
@@ -17,6 +16,7 @@ function nggallery_admin_manage_gallery() {
 	$ngg_options=get_option('ngg_options');	
 
 	if (isset ($_POST['togglethumbs']))  {
+		check_admin_referer('ngg_updategallery');
 	// Toggle thumnails, forgive me if it's to complicated
 		$hideThumbs = (isset ($_POST['hideThumbs'])) ?  false : true ;
 	} else {
@@ -24,6 +24,7 @@ function nggallery_admin_manage_gallery() {
 	}
 
 	if (isset ($_POST['toggletags']))  {
+		check_admin_referer('ngg_updategallery');
 	// Toggle tag view
 		$showTags = (isset ($_POST['showTags'])) ?  false : true ;
 	} else {
@@ -32,6 +33,8 @@ function nggallery_admin_manage_gallery() {
 
 	if ($mode == 'delete') {
 	// Delete a gallery
+	
+		check_admin_referer('ngg_editgallery');
 	
 		// get the path to the gallery
 		$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$act_gid' ");
@@ -64,6 +67,7 @@ function nggallery_admin_manage_gallery() {
 
 	if ($mode == 'delpic') {
 	// Delete a picture
+		check_admin_referer('ngg_delpicture');
 		$filename = $wpdb->get_var("SELECT filename FROM $wpdb->nggpictures WHERE pid = '$act_pid' ");
 		if ($filename) {
 			$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$act_gid' ");
@@ -85,6 +89,8 @@ function nggallery_admin_manage_gallery() {
 	
 	if (isset ($_POST['bulkaction']) && isset ($_POST['doaction']))  {
 		// do bulk update
+		
+		check_admin_referer('ngg_updategallery');
 		
 		$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$act_gid' ");
 		$imageslist = array();
@@ -139,6 +145,8 @@ function nggallery_admin_manage_gallery() {
 	if (isset ($_POST['TB_tagaction']) && isset ($_POST['TB_doaction']))  {
 		// do tags update
 
+		check_admin_referer('ngg_form-tags');
+
 		// get the images list		
 		$pic_ids = explode(",", $_POST['TB_imagelist']);
 		$taglist = explode(",", $_POST['taglist']);
@@ -184,6 +192,8 @@ function nggallery_admin_manage_gallery() {
 
 	if (isset ($_POST['updatepictures']))  {
 	// Update pictures	
+	
+		check_admin_referer('ngg_updategallery');
 		
 		$gallery_title   = attribute_escape($_POST[title]);
 		$gallery_path    = attribute_escape($_POST[path]);
@@ -202,6 +212,9 @@ function nggallery_admin_manage_gallery() {
 
 	if (isset ($_POST['scanfolder']))  {
 	// Rescan folder
+	
+		check_admin_referer('ngg_updategallery');
+	
 		$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$act_gid' ");
 		$old_imageslist = $wpdb->get_col("SELECT filename FROM $wpdb->nggpictures WHERE galleryid = '$act_gid' ");
 		// if no images are there, create empty array
@@ -225,6 +238,9 @@ function nggallery_admin_manage_gallery() {
 
 	if (isset ($_POST['addnewpage']))  {
 	// Add a new page
+	
+		check_admin_referer('ngg_updategallery');
+		
 		$parent_id      = attribute_escape($_POST[parent_id]);
 		$gallery_title  = attribute_escape($_POST[title]);
 		$gallery_name   = $wpdb->get_var("SELECT name FROM $wpdb->nggallery WHERE gid = '$act_gid' ");
@@ -294,8 +310,8 @@ if($gallerylist) {
 			<td><?php echo $gallery->description; ?></td>
 			<td><?php echo $gallery->pageid; ?></td>
 			<td><?php echo $counter; ?></td>
-			<td><a href="admin.php?page=nggallery-manage-gallery&amp;mode=edit&amp;gid=<?php echo $gid; ?>" class='edit'> <?php _e('Edit') ?></a></td>
-			<td><a href="admin.php?page=nggallery-manage-gallery&amp;mode=delete&amp;gid=<?php echo $gid; ?>" class="delete" onclick="javascript:check=confirm( '<?php _e("Delete this gallery ?",'nggallery')?>');if(check==false) return false;"><?php _e('Delete') ?></a></td>
+			<td><a href="<?php echo wp_nonce_url("admin.php?page=nggallery-manage-gallery&amp;mode=edit&amp;gid=".$gid, 'ngg_editgallery')?>" class='edit'> <?php _e('Edit') ?></a></td>
+			<td><a href="<?php echo wp_nonce_url("admin.php?page=nggallery-manage-gallery&amp;mode=delete&amp;gid=".$gid, 'ngg_editgallery')?>" class="delete" onclick="javascript:check=confirm( '<?php _e("Delete this gallery ?",'nggallery')?>');if(check==false) return false;"><?php _e('Delete') ?></a></td>
 		</tr>
 		<?php
 	}
@@ -420,6 +436,7 @@ function getNumChecked(form)
 <h2><?php _e('Gallery', 'nggallery') ?> : <?php echo $act_gallery->name; ?></h2>
 
 <form id="updategallery" method="POST" action="<?php echo 'admin.php?page=nggallery-manage-gallery&amp;mode=edit&amp;gid='.$act_gid ?>" accept-charset="utf-8">
+<?php wp_nonce_field('ngg_updategallery') ?>
 
 <?php if ($showTags) { ?><input type="hidden" name="showTags" value="true" /><?php } ?>
 <?php if ($hideThumbs) { ?><input type="hidden" name="hideThumbs" value="true" /><?php } ?>
@@ -558,7 +575,7 @@ if($picturelist) {
 			<td ><input name="tags[<?php echo $pid ?>]" type="text" style="width:95%" value="<?php echo $nggTags->get_tags_from_image($pid); ?>" /></td>
 			<?php } ?>
 			<td><a href="<?php echo $act_gallery_url.$picture->filename ?>" class="thickbox" title="<?php echo $picture->alttext ?>" ><?php _e('View') ?></a></td>
-			<td><a href="admin.php?page=nggallery-manage-gallery&amp;mode=delpic&amp;gid=<?php echo $act_gid ?>&amp;pid=<?php echo $pid ?>" class="delete" onclick="javascript:check=confirm( '<?php _e("Delete this file ?",'nggallery')?>');if(check==false) return false;" ><?php _e('Delete') ?></a></td>
+			<td><a href="<?php echo wp_nonce_url("admin.php?page=nggallery-manage-gallery&amp;mode=delpic&amp;gid=".$act_gid."&amp;pid=".$pid, 'ngg_delpicture')?>" class="delete" onclick="javascript:check=confirm( '<?php _e("Delete this file ?",'nggallery')?>');if(check==false) return false;" ><?php _e('Delete') ?></a></td>
 		</tr>
 		<?php
 	}
@@ -578,6 +595,7 @@ if($picturelist) {
 	<!-- #entertags -->
 	<div id="tags" style="display: none;" >
 		<form id="form-tags" method="POST" accept-charset="utf-8">
+		<?php wp_nonce_field('ngg_form-tags') ?>
 		<?php if ($showTags) { ?><input type="hidden" name="showTags" value="true" /><?php } ?>
 		<?php if ($hideThumbs) { ?><input type="hidden" name="hideThumbs" value="true" /><?php } ?>
 		<input type="hidden" id="TB_imagelist" name="TB_imagelist" value="" />

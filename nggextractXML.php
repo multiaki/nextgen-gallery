@@ -20,7 +20,7 @@ global $wpdb;
 $ngg_options = get_option('ngg_options');
 
 // get the gallery id
-$galleryID = attribute_escape($_GET['gid']);
+$galleryID = (int) attribute_escape($_GET['gid']);
 
 // get the pictures
 if ($galleryID == 0) {

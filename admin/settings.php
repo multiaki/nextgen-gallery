@@ -9,6 +9,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	$ngg_options=get_option('ngg_options');	
 
 	if ( isset($_POST['updateoption']) ) {	
+		check_admin_referer('ngg_settings');
 		// get the hidden option fields, taken from WP core
 		if ( $_POST['page_options'] )	
 			$options = explode(',', stripslashes($_POST['page_options']));
@@ -86,6 +87,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		<div id="generaloptions">
 			<h2><?php _e('General Options','nggallery'); ?></h2>
 			<form name="generaloptions" method="post">
+			<?php wp_nonce_field('ngg_settings') ?>
 			<input type="hidden" name="page_options" value="gallerypath,scanfolder,deleteImg,activateTags,appendType,maxImages" />
 			<fieldset class="options"> 
 				<table class="optiontable editform">
@@ -94,11 +96,14 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						<td><input type="text" size="35" name="gallerypath" value="<?php echo $ngg_options[gallerypath]; ?>" title="TEST" /><br />
 						<?php _e('This is the default path for all galleries','nggallery') ?></td>
 					</tr>
+					<!--TODO:  Later... -->
+					<!--
 					<tr valign="top">
-						<th align="left"><?php _e('Scan folders during runtime','nggallery') ?></th>
-						<td><input type="checkbox" name="scanfolder" value="1" <?php checked('1', $ngg_options[scanfolder]); ?> /><br />
-						<?php _e('Search automatic in the folders for new images (not working)','nggallery') ?></td>
+						<th align="left"><?php //_e('Scan folders during runtime','nggallery') ?></th>
+						<td><input type="checkbox" name="scanfolder" value="1" <?php //checked('1', $ngg_options[scanfolder]); ?> /><br />
+						<?php //_e('Search automatic in the folders for new images (not working)','nggallery') ?></td>
 					</tr>
+					-->
 					<tr valign="top">
 						<th align="left"><?php _e('Delete image files','nggallery') ?></th>
 						<td><input type="checkbox" name="deleteImg" value="1" <?php checked('1', $ngg_options[deleteImg]); ?> /><br />
@@ -120,7 +125,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						</td>
 					</tr>
 					<tr>
-						<th valign="top"><?php _e('Number of images to show','nggallery') ?>:</th>
+						<th valign="top"><?php _e('Max. number of images','nggallery') ?>:</th>
 						<td><input type="text" name="maxImages" value="<?php echo $ngg_options[maxImages] ?>" size="3" maxlength="3" /><br />
 						<?php _e('0 will show all images','nggallery') ?>
 						</td>
@@ -136,6 +141,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		<div id="thumbnails">
 			<h2><?php _e('Thumbnail settings','nggallery'); ?></h2>
 			<form name="thumbnailsettings" method="POST" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']).'#thumbnails'; ?>" >
+			<?php wp_nonce_field('ngg_settings') ?>
 			<input type="hidden" name="page_options" value="thumbwidth,thumbheight,thumbfix,thumbcrop,thumbquality,thumbResampleMode" />
 			<fieldset class="options"> 
 				<p><?php _e('Please note : If you change the settings, you need to recreate the thumbnails under -> Manage Gallery .', 'nggallery') ?></p>
@@ -175,15 +181,16 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		<div id="images">
 			<h2><?php _e('Image settings','nggallery'); ?></h2>
 			<form name="imagesettings" method="POST" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']).'#images'; ?>" >
+			<?php wp_nonce_field('ngg_settings') ?>
 			<input type="hidden" name="page_options" value="imgResize,imgWidth,imgHeight,imgQuality,imgResampleMode" />
 			<fieldset class="options"> 
 				<table class="optiontable">
 					<tr valign="top">
 						<th scope="row"><label for="fixratio"><?php _e('Resize Images','nggallery') ?></label></th>
-						<td><input id="fixratio" type="checkbox" name="imgResize" value="1" <?php checked('1', $ngg_options[imgResize]); ?> /> </td>
+						<!--TODO: checkbox fixratio can be used later -->
+						<td><input type="hidden" name="imgResize" value="1" <?php checked('1', $ngg_options[imgResize]); ?> /> </td>
 						<td><input type="text" size="5" name="imgWidth" value="<?php echo $ngg_options[imgWidth]; ?>" /> x <input type="text" size="5" name="imgHeight" value="<?php echo $ngg_options[imgHeight]; ?>" /><br />
 						<?php _e('Width x height (in pixel). NextGEN Gallery will keep ratio size','nggallery') ?></td>
-						<!--TODO:Option entfernern oder besser erklären-->
 					</tr>
 					<tr valign="top">
 						<th align="left"><?php _e('Image quality','nggallery') ?></th>
@@ -207,7 +214,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		<div id="gallery">
 			<h2><?php _e('Gallery settings','nggallery'); ?></h2>
 			<form name="galleryform" method="POST" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']).'#gallery'; ?>" >
-			<input type="hidden" name="page_options" value="galUsejQuery,galNoPages,galImages,galShowSlide,galTextSlide,galTextGallery,galShowOrder,galSort,galSortDir" />
+			<?php wp_nonce_field('ngg_settings') ?>
+			<input type="hidden" name="page_options" value="galUsejQuery,galNoPages,galImages,galShowSlide,galTextSlide,galTextGallery,galShowOrder,galShowDesc,galImgBrowser,galSort,galSortDir" />
 			<fieldset class="options"> 
 				<table class="optiontable">
 					<tr>
@@ -242,6 +250,22 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						</td>
 					</tr>
 					<tr>
+						<th valign="top"><?php _e('Show thumbnail description','nggallery') ?>:</th>
+						<td><label><input name="galShowDesc" type="radio" value="none" <?php checked('none', $ngg_options[galShowDesc]); ?> /> <?php _e('None', 'nggallery') ;?></label><br />
+						<label><input name="galShowDesc" type="radio" value="desc" <?php checked('desc', $ngg_options[galShowDesc]); ?> /> <?php _e('Description text', 'nggallery') ;?></label><br />
+						<label><input name="galShowDesc" type="radio" value="alttext" <?php checked('alttext', $ngg_options[galShowDesc]); ?> /> <?php _e('Alt / Title text', 'nggallery') ;?></label>
+						</td>
+					</tr>
+					<tr>
+						<th valign="top"><?php _e('Show ImageBrowser','nggallery') ?>:</th>
+						<td><input name="galImgBrowser" type="checkbox" value="1" <?php checked('1', $ngg_options[galImgBrowser]); ?> />
+						<?php _e('The gallery will open the ImageBrowser instead the effect.','nggallery') ?>
+						</td>
+					</tr>
+				</table>
+			<legend><?php _e('Sort options','nggallery') ?></legend>
+				<table class="optiontable">
+					<tr>
 						<th valign="top"><?php _e('Sort thumbnails','nggallery') ?>:</th>
 						<td><label><input name="galSort" type="radio" value="pid" <?php checked('pid', $ngg_options[galSort]); ?> /> <?php _e('Image ID', 'nggallery') ;?></label><br />
 						<label><input name="galSort" type="radio" value="filename" <?php checked('filename', $ngg_options[galSort]); ?> /> <?php _e('File name', 'nggallery') ;?></label><br />
@@ -265,6 +289,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		<div id="effects">
 			<h2><?php _e('Effects','nggallery'); ?></h2>
 			<form name="effectsform" method="POST" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']).'#effects'; ?>" >
+			<?php wp_nonce_field('ngg_settings') ?>
 			<input type="hidden" name="page_options" value="thumbEffect,thumbCode,thickboxImage" />
 			<p><?php _e('Here you can select the thumbnail effect, NextGEN Gallery will integrate the required HTML code in the images. Please note that only the Thickbox effect will automatic added to your theme.','nggallery'); ?>
 			<?php _e('With the placeholder','nggallery'); ?><strong> %GALLERY_NAME% </strong> <?php _e('you can activate a navigation through the images (depend on the effect). Change the code line only , when you use a different thumbnail effect or you know what you do.','nggallery'); ?></p>
@@ -315,7 +340,9 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		?>
 		<div id="watermark">
 			<h2><?php _e('Watermark','nggallery'); ?></h2>
+			<p><?php _e('Please note : You can only activate the watermark under -> Manage Gallery . This action cannot be undone.', 'nggallery') ?></p>
 			<form name="watermarkform" method="POST" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']).'#watermark'; ?>" >
+			<?php wp_nonce_field('ngg_settings') ?>
 			<input type="hidden" name="page_options" value="wmPos,wmXpos,wmYpos,wmType,wmPath,wmFont,wmSize,wmColor,wmText,wmOpaque" />
 			<div id="zeitgeist">
 				<h3><?php _e('Preview','nggallery') ?></h3>
@@ -416,6 +443,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		
 		<div id="slideshow">
 		<form name="player_options" method="POST" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']).'#slideshow-slider'; ?>" >
+		<?php wp_nonce_field('ngg_settings') ?>
 		<input type="hidden" name="page_options" value="irWidth,irHeight,irShuffle,irLinkfromdisplay,irShownavigation,irShowicons,irWatermark,irOverstretch,irRotatetime,irTransition,irKenburns,irBackcolor,irFrontcolor,irLightcolor,irAudio,irXHTMLvalid" />
 		<h2><?php _e('Slideshow','nggallery'); ?></h2>
 		<fieldset class="options">
