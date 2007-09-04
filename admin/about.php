@@ -112,7 +112,10 @@ function ngg_list_support()	{
 	"Emilio Lauretti (Italian Translation)" => "",
 	"Jan Angelovic (Czech Translation)" => "http://www.angelovic.cz/",
 	"Patrick Hennessey" => "http://www.digitalvagabonding.com/",
-	"Hans Kiesouw" => "http://www.digitalvagabonding.com/"
+	"Hans Kiesouw" => "http://www.digitalvagabonding.com/",
+	"Laki (Slovak Translation)" => "http://www.laki.sk/",
+	"Thomas Bradley" => "http://www.tobeon.co.uk/wordpress/",
+	"Frederic Deghetto" => ""
 	);
 
 	

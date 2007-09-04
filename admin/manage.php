@@ -201,7 +201,7 @@ function nggallery_admin_manage_gallery() {
 		$gallery_pageid  = attribute_escape($_POST[pageid]);
 		$gallery_preview = attribute_escape($_POST[previewpic]);
 		
-		$result = $wpdb->query("UPDATE $wpdb->nggallery SET title= '$gallery_title', path= '$gallery_path', description = '$gallery_desc', pageid = '$gallery_pageid', previewpic = '$gallery_preview' WHERE gid = '$act_gid'");
+		$result = $wpdb->query("UPDATE $wpdb->nggallery SET title= '$gallery_title', path= '$gallery_path', galdesc = '$gallery_desc', pageid = '$gallery_pageid', previewpic = '$gallery_preview' WHERE gid = '$act_gid'");
 		if ($showTags)
 			$result = ngg_update_tags(attribute_escape($_POST[tags]));			
 		else 
@@ -307,7 +307,7 @@ if($gallerylist) {
 			<th scope="row" style="text-align: center"><?php echo $gid; ?></th>
 			<td><?php echo $gallery->name; ?></td>
 			<td><?php echo $gallery->title; ?></td>
-			<td><?php echo $gallery->description; ?></td>
+			<td><?php echo $gallery->galdesc; ?></td>
 			<td><?php echo $gallery->pageid; ?></td>
 			<td><?php echo $counter; ?></td>
 			<td><a href="<?php echo wp_nonce_url("admin.php?page=nggallery-manage-gallery&amp;mode=edit&amp;gid=".$gid, 'ngg_editgallery')?>" class='edit'> <?php _e('Edit') ?></a></td>
@@ -465,7 +465,7 @@ function getNumChecked(form)
 		</tr>
 		<tr>
 			<th align="left"><?php _e('Description') ?>:</th> 
-			<th align="left"><textarea name="gallerydesc" cols="30" rows="3" style="width: 95%"  ><?php echo $act_gallery->description; ?></textarea></th>
+			<th align="left"><textarea name="gallerydesc" cols="30" rows="3" style="width: 95%"  ><?php echo $act_gallery->galdesc; ?></textarea></th>
 			<th align="right"><?php _e('Preview image', 'nggallery') ?>:</th>
 			<th align="left">
 				<select name="previewpic" >

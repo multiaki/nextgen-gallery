@@ -2,7 +2,7 @@
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
 
 //required database version
-$ngg_db_version = "0.70";
+$ngg_db_version = "0.71";
 
 function nggallery_install () {
 	
@@ -24,7 +24,7 @@ function nggallery_install () {
 	$role->add_cap('NextGEN Change options');
 	
 	// upgrade function changed in WordPress 2.3	
-	if (version_compare($wp_version, '2.3.alpha', '>='))		
+	if (version_compare($wp_version, '2.3-beta', '>='))		
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 	else
 		require_once(ABSPATH . 'wp-admin/upgrade-functions.php');
@@ -60,7 +60,7 @@ function nggallery_install () {
 		name VARCHAR(255) NOT NULL ,
 		path MEDIUMTEXT NULL ,
 		title MEDIUMTEXT NULL ,
-		description MEDIUMTEXT NULL ,
+		galdesc MEDIUMTEXT NULL ,
 		pageid BIGINT(20) NULL DEFAULT '0' ,
 		previewpic BIGINT(20) NULL DEFAULT '0' ,
 		PRIMARY KEY gid (gid)
@@ -111,13 +111,14 @@ function nggallery_install () {
     $installed_ver = get_option( "ngg_db_version" );
 	if( $installed_ver != $ngg_db_version ) {
 		
-		// v0.33 -> v.070
+		// v0.33 -> v.071
 		$wpdb->query("ALTER TABLE ".$nggpictures." CHANGE pid pid BIGINT(20) NOT NULL AUTO_INCREMENT ");
 		$wpdb->query("ALTER TABLE ".$nggpictures." CHANGE galleryid galleryid BIGINT(20) NOT NULL ");
 		$wpdb->query("ALTER TABLE ".$nggallery." CHANGE gid gid BIGINT(20) NOT NULL AUTO_INCREMENT ");
 		$wpdb->query("ALTER TABLE ".$nggallery." CHANGE pageid pageid BIGINT(20) NULL DEFAULT '0'");
 		$wpdb->query("ALTER TABLE ".$nggallery." CHANGE previewpic previewpic BIGINT(20) NULL DEFAULT '0'");
 		$wpdb->query("ALTER TABLE ".$nggallery." CHANGE gid gid BIGINT(20) NOT NULL AUTO_INCREMENT ");
+		$wpdb->query("ALTER TABLE ".$nggallery." CHANGE description galdesc MEDIUMTEXT NULL");
 
 		update_option( "ngg_db_version", $ngg_db_version );
 	}
@@ -181,7 +182,6 @@ function ngg_default_options() {
 	$ngg_options['wmOpaque']			= "100";  						// Font Opaque
 
 	// Image Rotator settings
-	
 	$ngg_options['irXHTMLvalid']		= false;
 	$ngg_options['irAudio']				= "";
 	$ngg_options['irWidth']				= 320; 

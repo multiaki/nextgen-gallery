@@ -3,7 +3,7 @@
 Plugin Name: NextGEN Gallery Widget
 Description: Adds a sidebar widget support to your NextGEN Gallery
 Author: KeViN
-Version: 1.11
+Version: 1.12
 Author URI: http://www.kev.hu
 Plugin URI: http://www.kev.hu
 
@@ -185,28 +185,27 @@ function nggDisplayImagesWidget($thumb,$number,$sizeX,$sizeY,$mode,$imgtype) {
 	$ngg_options = get_option('ngg_options');
 
 	// get the effect code
-	$thumbcode = nggallery::get_thumbcode("sidebar");
+	$thumbcode = nggallery::get_thumbcode("sidebar_".$imgtype);
 
-	// [0.99] Check the number of the images (disable more pictures)
 	$count = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggpictures");
 	if ($count < $number) 
 		$number = $count;
 
 	if ($imgtype == "random") 
-		$imageList = $wpdb->get_col("SELECT pid FROM $wpdb->nggpictures ORDER by rand() limit $number");
+		$imageList = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures ORDER by rand() limit $number");
 	else
-		$imageList = $wpdb->get_col("SELECT pid FROM $wpdb->nggpictures ORDER by pid DESC limit 0,$number");
+		$imageList = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures ORDER by pid DESC limit 0,$number");
 
 	if (is_array($imageList)){
-		foreach($imageList as $imageID) {
+		foreach($imageList as $image) {
 
 			//TODO:Insert title
-			$out = '<a href="'.nggallery::get_image_url($imageID).'" title="" '.$thumbcode.'>';
+			$out = '<a href="'.nggallery::get_image_url($image->pid).'" title="'.stripslashes($image->description).'" '.$thumbcode.'>';
 			$addmode = ($mode == 'web20') ? "&amp;mode=web20" : "" ;
 			if ( $thumb == "false" )
-				$out .= '<img src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$imageID.'&amp;width='.$sizeX.'&amp;height='.$sizeY.$addmode.'" />';
+				$out .= '<img src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$image->pid.'&amp;width='.$sizeX.'&amp;height='.$sizeY.$addmode.'" title="'.$image->alttext.'" alt="'.$image->alttext.'" />';
 			else	
-				$out .= '<img src="'.nggallery::get_thumbnail_url($imageID).'" style="width:'.$sizeX.'px;height:'.$sizeY.'px;" />';			
+				$out .= '<img src="'.nggallery::get_thumbnail_url($image->pid).'" style="width:'.$sizeX.'px;height:'.$sizeY.'px;" title="'.$image->alttext.'" alt="'.$image->alttext.'" />';			
 			
 			echo $out . '</a>'."\n";
 			

@@ -547,16 +547,21 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		
 		// Images must be an array
 		$imageslist = array();
+		$i = 1;
 		
 		foreach ($_FILES as $key => $value) {
 			
 			// look only for uploded files
 			if ($_FILES[$key]['error'] == 0) {
-
 				$temp_file = $_FILES[$key]['tmp_name'];
 				$filepart = pathinfo ( strtolower($_FILES[$key]['name']) );
+				// required until PHP 5.2.0
+				$filepart['filename'] = substr($filepart["basename"],0 ,strlen($filepart["basename"]) - (strlen($filepart["extension"]) + 1) );
 				$filename = sanitize_title($filepart['filename']).".".$filepart['extension'];
-				
+				// check if this filename already exist
+				if (in_array($filename,$imageslist))
+					$filename = sanitize_title($filepart['filename']) . "_" . $i++ . "." .$filepart['extension'];
+					
 				$dest_gallery = $_POST['galleryselect'];
 				if ($dest_gallery == 0) {
 					@unlink($temp_file)  or die  ('<div class="updated"><p><strong>'.__('Unable to unlink file ', 'nggallery').$temp_zipfile.'!</strong></p></div>');		

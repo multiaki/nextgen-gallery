@@ -210,7 +210,7 @@ function nggShowGallery($galleryID) {
 	$ngg_options['galSortDir'] = ($ngg_options['galSortDir'] == "DESC") ? "DESC" : "ASC";
 
 	// get all picture with this galleryid
-	$picturelist = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggpictures AS t INNER JOIN $wpdb->nggallery AS tt ON t.galleryid = tt.gid WHERE tt.gid = '$galleryID' AND t.exclude != 1 ORDER BY $ngg_options[galSort] $ngg_options[galSortDir] ");
+	$picturelist = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = '$galleryID' AND tt.exclude != 1 ORDER BY tt.$ngg_options[galSort] $ngg_options[galSortDir] ");
 	if (is_array($picturelist)) { 
 		$gallerycontent = nggCreateGallery($picturelist,$galleryID);
 	}
@@ -227,7 +227,7 @@ function nggCreateGallery($picturelist,$galleryID = false) {
     
     if (!is_array($picturelist))
 		$picturelist = array($picturelist);
-		
+	
 	// Get option
 	$ngg_options = get_option('ngg_options');
 	
@@ -441,7 +441,7 @@ function nggCreateAlbum($galleryID,$mode = "extend",$albumID = 0) {
 				<div class="ngg-albumtitle"><a href="'.$link.'">'.$gallerycontent->title.'</a></div>
 				<div class="ngg-albumcontent">
 					<div class="ngg-thumbnail"><a href="'.$link.'">'.$insertpic.'</a></div>
-					<div class="ngg-description"><p>'.html_entity_decode($gallerycontent->description).'</p><p><strong>'.$counter.'</strong> '.__('Photos', 'nggallery').'</p></div>'."\n".'</div>'."\n".'</div>';
+					<div class="ngg-description"><p>'.html_entity_decode($gallerycontent->galdesc).'</p><p><strong>'.$counter.'</strong> '.__('Photos', 'nggallery').'</p></div>'."\n".'</div>'."\n".'</div>';
 
 		}
 	}

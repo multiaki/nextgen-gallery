@@ -54,7 +54,7 @@ class nggImage{
 		$galleryData = $wpdb->get_row("SELECT * FROM $wpdb->nggallery WHERE gid = '$this->galleryid' ") or $this->error = true;
 		if($this->error == false)
 			foreach ($galleryData as $key => $value)
-				$this->$key = $value ;
+				$this->$key = $value ;	
 		
 		if($this->error == false) {
 			// set gallery url
