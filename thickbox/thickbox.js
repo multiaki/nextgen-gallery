@@ -7,6 +7,8 @@
 
 //Version 3.1.1 : alex.rabe : jQuery no colision mode, loading image
 //							  add external inits for nextgen plugin	
+
+//Version 3.1.2 : alex.rabe : Add Full size link
 		  
 // var tb_pathToImage = "images/loadingAnimation.gif";
 
@@ -20,15 +22,16 @@
 // added external access , changed by alex.rabe
 $.tb_init = function(domChunk) {
 	tb_init(domChunk);	
-}
+};
 
 $.tb_show  = function(t,a,g) {
 	tb_show(t,a,g);	
-}
+};
 
 $.tb_remove = function() {
 	tb_remove();	
-}
+};
+
 // ###########################################
 
 //on page load call tb_init
@@ -148,7 +151,7 @@ function tb_show(caption, url, imageGroup) {//function called when the user clic
 			
 			TB_WIDTH = imageWidth + 30;
 			TB_HEIGHT = imageHeight + 60;
-			$("#TB_window").append("<a href='' id='TB_ImageOff' title='Close'><img id='TB_Image' src='"+url+"' width='"+imageWidth+"' height='"+imageHeight+"' alt='"+caption+"'/></a>" + "<div id='TB_caption'>"+caption+"<div id='TB_secondLine'>" + TB_imageCount + TB_PrevHTML + TB_NextHTML + "</div></div><div id='TB_closeWindow'><a href='#' id='TB_closeWindowButton' title='Close'>close</a> or Esc Key</div>"); 		
+			$("#TB_window").append("<a href='' id='TB_ImageOff' title='Close'><img id='TB_Image' src='"+url+"' width='"+imageWidth+"' height='"+imageHeight+"' alt='"+caption+"'/></a>" + "<div id='TB_caption'>"+caption+"<div id='TB_secondLine'>" + TB_imageCount + "&nbsp;&nbsp;<a href='" + url + "' id='TB_FullSize' title='Full Size'>Full Size</a>&nbsp;&nbsp;" + TB_PrevHTML + TB_NextHTML + "</div></div><div id='TB_closeWindow'><a href='#' id='TB_closeWindowButton' title='Close'>close</a> or Esc Key</div>"); 		
 			
 			$("#TB_closeWindowButton").click(tb_remove);
 			

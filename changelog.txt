@@ -9,6 +9,7 @@ V0.70
 - NEW : Option for append related images
 - NEW : Option to show description below thumbnail
 - NEW : Option to show ImageBrowser instead JS effect
+- Added : Add Full size link to thickbox
 - Added  : Check for page/postid in tag processing
 - Added  : Sildeshow widget can now contain all images
 - Added  : Minimize/Maximize option for albums 
