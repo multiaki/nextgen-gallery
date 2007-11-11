@@ -477,7 +477,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	function ngg_unzip($dir, $file) {
 	// thx to Gregor at http://blog.scoutpress.de/forum/topic/45
 		
-		require_once(NGGALLERY_ABSPATH.'/lib/pclzip.lib.php');
+		if(! class_exists('PclZip'))
+			require_once(NGGALLERY_ABSPATH.'/lib/pclzip.lib.php');
 				
 		$archive = new PclZip($file);
 
