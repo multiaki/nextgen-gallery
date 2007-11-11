@@ -3,6 +3,10 @@ html
 	height:100%;
 }
 
+.album {
+	overflow: hidden;
+}
+
 .groupItem
 {
 	background-color:#FBFBFB;

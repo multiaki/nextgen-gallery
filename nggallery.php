@@ -4,7 +4,7 @@ Plugin Name: NextGEN Gallery
 Plugin URI: http://alexrabe.boelinger.com/?page_id=80
 Description: A NextGENeration Photo gallery for the WEB2.0(beta).
 Author: NextGEN DEV-Team
-Version: 0.73
+Version: 0.80.1a
 
 Author URI: http://alexrabe.boelinger.com/
 
@@ -36,13 +36,16 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 //#################################################################
 // Let's Go
 
-global $wpdb, $wp_version;
+global $wpdb, $wp_version, $wpmu_version;
 
 // ini_set('display_errors', '1');
 // ini_set('error_reporting', E_ALL);
 
+// Check for WPMU installation
+define('IS_WPMU', version_compare($wpmu_version, '1.3', '>=') );
+
 //This works only in WP2.1 or higher
-if (version_compare($wp_version, '2.1', '>=')) {
+if ((version_compare($wp_version, '2.1', '>=')) or (IS_WPMU)){
 
 // Permission settings ############################################
 define('NGGFOLDER_PERMISSION', 0777);
@@ -50,7 +53,7 @@ define('NGGFILE_PERMISSION', 0666);
 // ################################################################
 
 // Version and path to check version
-define('NGGVERSION', "0.73");
+define('NGGVERSION', "0.80");
 define('NGGURL', "http://nextgen.boelinger.com/version.php");
 
 // define URL
@@ -130,7 +133,11 @@ function ngg_addjs() {
 // load language file
 add_action('init', 'nggallery_init');
 
-add_action('activate_' . NGGFOLDER.'/nggallery.php', 'ngg_install');
+// Init options & tables during activation 
+// add_action('activate_' . NGGFOLDER.'/nggallery.php', 'ngg_install');
+// WP recommended function, not used until 2.2.3
+register_activation_hook(NGGFOLDER.'/nggallery.php','ngg_install');
+
 // init tables in wp-database if plugin is activated
 function ngg_install() {
 	nggallery_install();
@@ -139,6 +146,10 @@ function ngg_install() {
 // Action calls for all functions 
 add_filter('the_content', 'searchnggallerytags');
 add_filter('the_excerpt', 'searchnggallerytags');
+
+// Content Filters
+add_filter('ngg_gallery_name', 'sanitize_title');
+
 
 //#################################################################
 // add action/filter for the upload tab 

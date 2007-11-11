@@ -1,6 +1,23 @@
 NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
+V0.80 - soon
+- NEW : Cache option for SinglePic
+- Changed : Edit style setting (added new class .desc , THX to Sebastian) 
+- Changed : Check for galleryfolder instead name (THX to Luke Poland)
+- Changed : Delete images per default
+- Bugfix : Change Album CSS (THX to Thomas-DK)
+- Bugfix : Watermark for GIF not correct supported
+- Bugfix : Missing wp_nonce at setup page
+- Added : WPMU : New site admin page (wpmu.php)
+- Added : WPMU : Integrated quota check
+- Added : WPMU : No update check
+- Added : WPMU : Remove edit style (THX to Kristin)
+- Added : WPMU : Remove uninstall button
+- Added : WPMU : Remove server settings
+- Added : WPMU : Gallery path set to blog.dir
+- Added : Support for WPMU
+
 V0.73 - 20.10.2007
 - Added : Support for Shutter Reloaded
 - Update to jQuery Tabs 2.7.4

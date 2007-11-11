@@ -4,7 +4,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	include_once(NGGALLERY_ABSPATH.'/lib/thumbnail.inc.php');
 
 	//TODO: Check better upload form like http://digitarald.de/project/fancyupload/
-	
+
 	function nggallery_admin_add_gallery()  {
 
 	global $wpdb;
@@ -76,10 +76,12 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	
 		<ul id="tabs">
 			<li><a href="#addgallery"><?php _e('Add new gallery', 'nggallery') ;?></a></li>
-			<?php if (!SAFE_MODE) { ?>
+			<?php if ((!SAFE_MODE) && wpmu_enable_function('wpmuZipUpload')) { ?>
 			<li><a href="#zipupload"><?php _e('Upload a Zip-File', 'nggallery') ;?></a></li>
-			<?php } ?>
+			<?php } 
+			if (!IS_WPMU) {?>
 			<li><a href="#importfolder"><?php _e('Import image folder', 'nggallery') ;?></a></li>
+			<?php } ?>
 			<li><a href="#uploadimage"><?php _e('Upload Images', 'nggallery') ;?></a></li>
 		</ul>
 
@@ -93,7 +95,9 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				<tr valign="top"> 
 					<th scope="row"><?php _e('New Gallery', 'nggallery') ;?>:</th> 
 					<td><input type="text" size="35" name="galleryname" value="" /><br />
+					<?php if(!IS_WPMU) { ?>
 					<?php _e('Create a new , empty gallery below the folder', 'nggallery') ;?>  <strong><?php echo $defaultpath ?></strong><br />
+					<?php } ?>
 					<i>( <?php _e('Allowed characters for file and folder names are', 'nggallery') ;?>: a-z, A-Z, 0-9, -, _ )</i></td>
 				</tr>
 				</table>
@@ -101,6 +105,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			</fieldset>
 			</form>
 		</div>
+		<?php if ((!SAFE_MODE) && wpmu_enable_function('wpmuZipUpload')) { ?>
 		<!-- zip-file operation -->
 		<div id="zipupload">
 		<h2><?php _e('Upload a Zip-File', 'nggallery') ;?></h2>
@@ -126,13 +131,16 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						}
 					?>
 					</select>
-					<br /><?php echo _e('Note : The upload limit on your server is ','nggallery') . "<strong>" . ini_get('upload_max_filesize') . "Byte</strong>\n"; ?></td> 
+					<br /><?php echo _e('Note : The upload limit on your server is ','nggallery') . "<strong>" . ini_get('upload_max_filesize') . "Byte</strong>\n"; ?>
+					<br /><?php if ( (IS_WPMU) && wpmu_enable_function('wpmuQuotaCheck') ) display_space_usage(); ?></td> 
 				</tr> 
 				</table>
 				<div class="submit"> <input type="submit" name= "zipupload" value="<?php _e('Start upload', 'nggallery') ;?>"/></div>
 			</fieldset>
 			</form>
 		</div>
+		<?php }
+		if (!IS_WPMU) {?>
 		<!-- import folder -->
 		<div id="importfolder">
 		<h2><?php _e('Import image folder', 'nggallery') ;?></h2>
@@ -144,13 +152,14 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<th scope="row"><?php _e('Import from Server path:', 'nggallery') ;?><br /><code><?php echo WINABSPATH; ?></code></th> 
 					<td><br /><input type="text" size="35" name="galleryfolder" value="<?php echo$defaultpath; ?>" /><br />
 					<?php _e('Import a folder with images. Please note :', 'nggallery') ;?><br /> 
-					<?php _e('For save_mode = ON you need to add the subfolder thumbs manually', 'nggallery') ;?></td> 
+					<?php _e('For safe-mode = ON you need to add the subfolder thumbs manually', 'nggallery') ;?></td> 
 				</tr>
 				</table>
 				<div class="submit"> <input type="submit" name= "importfolder" value="<?php _e('Import folder', 'nggallery') ;?>"/></div>
 			</fieldset>
 			</form>
-		</div> 
+		</div>
+		<?php } ?> 
 		<!-- upload images -->
 		<div id="uploadimage">
 		<h2><?php _e('Upload Images', 'nggallery') ;?></h2>
@@ -175,7 +184,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						}
 					?>
 					</select>
-					<br /><?php echo _e('Note : The upload limit on your server is ','nggallery') . "<strong>" . ini_get('upload_max_filesize') . "Byte</strong>\n"; ?></td> 
+					<br /><?php echo _e('Note : The upload limit on your server is ','nggallery') . "<strong>" . ini_get('upload_max_filesize') . "Byte</strong>\n"; ?>
+					<br /><?php if ((IS_WPMU) && wpmu_enable_function('wpmuQuotaCheck')) display_space_usage(); ?></td> 
 				</tr> 
 				</table>
 				<div class="submit"><input type="submit" name= "uploadimage" value="<?php _e('Upload images', 'nggallery') ;?>"/></div>
@@ -195,17 +205,19 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		$myabspath = str_replace("\\","/",ABSPATH);  // required for windows
 
 		//cleanup pathname
-		$galleryname = sanitize_title($gallerytitle);
+		$galleryname = apply_filters('ngg_gallery_name', $gallerytitle);
 		$nggpath = $defaultpath.$galleryname;
 		
 		if (empty($galleryname)) return '<font color="red">'.__('No valid gallery name!', 'nggallery'). '</font>';	
 
 		// check for main folder
-		if ( !file_exists(($myabspath.$defaultpath)) ) {
-			$txt  = __('Directory', 'nggallery').' <strong>'.$defaultpath.'</strong> '.__('didn\'t exist. Please create first the main gallery folder ', 'nggallery').'!<br />';
-			$txt .= __('Check this link, if you didn\'t know how to set the permission :', 'nggallery').' <a href="http://codex.wordpress.org/Changing_File_Permissions">http://codex.wordpress.org/Changing_File_Permissions</a> ';
-			nggallery::show_error($txt);
-			return;
+		if ( !file_exists($myabspath.$defaultpath) ) {
+			if (!wp_mkdir_p($myabspath.$defaultpath)) {
+				$txt  = __('Directory', 'nggallery').' <strong>'.$defaultpath.'</strong> '.__('didn\'t exist. Please create first the main gallery folder ', 'nggallery').'!<br />';
+				$txt .= __('Check this link, if you didn\'t know how to set the permission :', 'nggallery').' <a href="http://codex.wordpress.org/Changing_File_Permissions">http://codex.wordpress.org/Changing_File_Permissions</a> ';
+				nggallery::show_error($txt);
+				return;
+			}
 		}
 
 		// check for permission settings
@@ -273,8 +285,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		// take folder name as gallery name		
 		$galleryname = basename($galleryfolder);
 		
-		// check for existing gallery
-		$gallery_id = $wpdb->get_var("SELECT gid FROM $wpdb->nggallery WHERE name = '$galleryname' ");
+		// check for existing galleryfolder
+		$gallery_id = $wpdb->get_var("SELECT gid FROM $wpdb->nggallery WHERE path = '$galleryfolder' ");
 		
 		if (!$gallery_id) {
 			$result = $wpdb->query("INSERT INTO $wpdb->nggallery (name, path) VALUES ('$galleryname', '$galleryfolder') ");
@@ -502,6 +514,9 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	// **************************************************************
 	function ngg_import_zipfile($defaultpath) {
 		
+		if (ngg_check_quota())
+			return;
+		
 		$temp_zipfile = $_FILES['zipfile']['tmp_name'];
 		$filename = $_FILES['zipfile']['name']; 
 					
@@ -554,6 +569,10 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	// upload of pictures
 		
 		global $wpdb;
+		
+		// WPMU action
+		if (ngg_check_quota())
+			return;
 		
 		// Images must be an array
 		$imageslist = array();
@@ -628,5 +647,16 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		return;
 
 	} // end function
+	
+	// **************************************************************
+	function ngg_check_quota() {
+		// Only for WPMU
+			if ( (IS_WPMU) && wpmu_enable_function('wpmuQuotaCheck'))
+				if( $error = upload_is_user_over_quota( false ) ) {
+					nggallery::show_error( __( 'Sorry, you have used your space allocation. Please delete some files to upload more files.','nggallery' ) );
+					return true;
+				}
+			return false;
+	}
 
 ?>

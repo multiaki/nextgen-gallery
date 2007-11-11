@@ -128,7 +128,9 @@ function ngg_list_support()	{
 	"Michael Erhart" => "",
 	"Luc Saint-Elie" => "http://luc.saint-elie.com/",
 	"Matthew Barker" => "",
-	"Anthony (Chinese Translation)" => "http://www.angryouth.com/"
+	"Anthony (Chinese Translation)" => "http://www.angryouth.com/",
+	"Milan Vašícek (Czech Translation)" => "http://www.NoWorkTeam.cz/",
+	"Joo Gi-young (Korean Translation)" => "http://lombric.linuxstudy.pe.kr/wp/"
 	);
 
 	

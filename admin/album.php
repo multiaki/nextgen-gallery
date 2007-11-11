@@ -55,10 +55,6 @@ function nggallery_admin_manage_album()  {
 jQuery(document).ready(
 	function()
 	{
-		//updating the height of the white backround box, it does not work without this stupid lines
-		var hei = jQuery('.wrap').height();
-		jQuery('.wrap').height(hei);
-		
 		jQuery('div.groupWrapper').Sortable(
 			{
 				accept: 'groupItem',
@@ -113,8 +109,8 @@ function ngg_serialize(s)
 	jQuery('input[@name=sortorder]').val(serial.hash);
 }
 </script>
-<div class="wrap" id="wrap" >
-	<h3><?php _e('Manage Albums', 'nggallery') ?></h3>
+<div class="wrap album" id="wrap" >
+	<h2><?php _e('Manage Albums', 'nggallery') ?></h2>
 	<form id="selectalbum" method="POST" onsubmit="ngg_serialize('galleryContainer')" accept-charset="utf-8">
 		<?php wp_nonce_field('ngg_album') ?>
 		<input name="sortorder" type="hidden" />

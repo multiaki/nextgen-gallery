@@ -28,7 +28,23 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		update_option('ngg_options', $ngg_options);
 	 	$messagetext = '<font color="green">'.__('Update successfully','nggallery').'</font>';
 	}		
+	
+	if ( isset($_POST['clearcache']) ) {
 		
+		$path = WINABSPATH . $ngg_options['gallerypath'] . "cache/";
+		
+		if (is_dir($path))
+	    	if ($handle = opendir($path)) {
+				while (false !== ($file = readdir($handle))) {
+			    	if ($file != '.' && $file != '..') {
+			          @unlink($path."/".$file);
+	          		}
+	        	}
+	      		closedir($handle);
+			}
+		
+		$messagetext = '<font color="green">'.__('Cache cleared','nggallery').'</font>';
+	}
 	// message windows
 	if(!empty($messagetext)) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$messagetext.'</p></div>'; }
 	
@@ -100,7 +116,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				<table class="optiontable editform">
 					<tr valign="top">
 						<th align="left"><?php _e('Gallery path','nggallery') ?></th>
-						<td><input type="text" size="35" name="gallerypath" value="<?php echo $ngg_options[gallerypath]; ?>" title="TEST" /><br />
+						<td><input <?php if (IS_WPMU) echo 'disabled = "disabled"'; ?> type="text" size="35" name="gallerypath" value="<?php echo $ngg_options[gallerypath]; ?>" title="TEST" /><br />
 						<?php _e('This is the default path for all galleries','nggallery') ?></td>
 					</tr>
 					<!--TODO:  Later... -->
@@ -113,7 +129,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					-->
 					<tr valign="top">
 						<th align="left"><?php _e('Delete image files','nggallery') ?></th>
-						<td><input type="checkbox" name="deleteImg" value="1" <?php checked('1', $ngg_options[deleteImg]); ?> /><br />
+						<td><input <?php if (IS_WPMU) echo 'disabled = "disabled"'; ?> type="checkbox" name="deleteImg" value="1" <?php checked('1', $ngg_options[deleteImg]); ?> /><br />
 						<?php _e('Delete files, when removing a gallery in the database','nggallery') ?></td>
 					</tr>
 				</table>
@@ -189,7 +205,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<h2><?php _e('Image settings','nggallery'); ?></h2>
 			<form name="imagesettings" method="POST" action="<?php echo $filepath.'#images'; ?>" >
 			<?php wp_nonce_field('ngg_settings') ?>
-			<input type="hidden" name="page_options" value="imgResize,imgWidth,imgHeight,imgQuality,imgResampleMode" />
+			<input type="hidden" name="page_options" value="imgResize,imgWidth,imgHeight,imgQuality,imgResampleMode,imgCacheSinglePic" />
 			<fieldset class="options"> 
 				<table class="optiontable">
 					<tr valign="top">
@@ -209,6 +225,20 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						<td></td>
 						<td><input type="text" size="1" maxlength="1" name="imgResampleMode" value="<?php echo $ngg_options[imgResampleMode]; ?>" /><br />
 						<?php _e('Value between 1-5 (higher value, more CPU load)','nggallery') ?></td>
+					</tr>
+				</table>
+				<legend><?php _e('Single picture','nggallery') ?></legend>
+				<table class="optiontable">
+					<tr valign="top">
+						<th align="left"><?php _e('Cache single pictures','nggallery') ?></th>
+						<td></td>
+						<td><input <?php if (IS_WPMU) echo 'disabled = "disabled"'; ?> type="checkbox" name="imgCacheSinglePic" value="1" <?php checked('1', $ngg_options[imgCacheSinglePic]); ?> />
+						<?php _e('Creates a file for each singlepic settings. Reduce the CPU load','nggallery') ?></td>
+					</tr>
+					<tr valign="top">
+						<th align="left"><?php _e('Clear cache folder','nggallery') ?></th>
+						<td></td>
+						<td><input type="submit" name="clearcache" value="<?php _e('Proceed now','nggallery') ;?> &raquo;"/></td>
 					</tr>
 				</table>
 			<div class="submit"><input type="submit" name="updateoption" value="<?php _e('Update') ;?> &raquo;"/></div>

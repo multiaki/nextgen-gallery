@@ -30,16 +30,21 @@ function nggallery_admin_overview()  {
           vprintf(__('There are totally %1$s pictures in %2$s galleries, which are spread across %3$s albums.', 'nggallery'), $replace);
         ?>
        </p>
-	  <?php if ($nggCheck->startCheck()) { ?>
+	  <?php if ( $nggCheck->startCheck() && (!IS_WPMU) ) { ?>
 		<h3><font color="red"><?php _e('New Version available', 'nggallery') ?></font></h3>
 	   	<p><?php _e('The server reports that a new NextGEN Gallery Version is now available. Please visit the plugin homepage for more information.', 'nggallery') ?></p>
 		<p><a href="http://wordpress.org/extend/plugins/nextgen-gallery/download/" target="_blank"> <?php _e('Download here', 'nggallery') ?> </a></p>
-	  <?php } ?>		
-        <h3><?php _e('Server Settings', 'nggallery') ?></h3>
+	  <?php } ?>
+	  <?php if (IS_WPMU) {
+	  	if (wpmu_enable_function('wpmuQuotaCheck'))
+			echo ngg_SpaceManager::details();
+	  } else { ?>
+	  	<h3><?php _e('Server Settings', 'nggallery') ?></h3>
       <ul>
       	<?php ngg_get_serverinfo(); ?>
 	   </ul>
 		<?php ngg_gd_info(); ?>
+	  <?php } ?>
     </div>
     
     <h3><?php _e('Welcome', 'nggallery') ?></h3>
@@ -241,6 +246,130 @@ if ( !class_exists( "CheckPlugin" ) ) {
 			}
 		}
 	}
+}
+// ***************************************************************	
+
+/**
+ * WPMU feature taken from Z-Space Upload Quotas
+ * @author Dylan Reeve
+ * @url http://dylan.wibble.net/
+ *
+ */
+
+class ngg_SpaceManager {
+ 
+ 	function getQuota() {
+		if (function_exists(get_space_allowed))
+			$quota = get_space_allowed();
+		else
+			$quota = get_site_option( "blog_upload_space" );
+			
+		return $quota;
+	}
+	 
+	function details() {
+		
+		// take default seetings
+		$settings = array(
+
+			'remain'	=> array(
+			'color_text'	=> 'white',
+			'color_bar'		=> '#0D324F',
+			'color_bg'		=> '#a0a0a0',
+			'decimals'		=> 2,
+			'unit'			=> 'm',
+			'display'		=> true,
+			'graph'			=> false
+			),
+
+			'used'		=> array(
+			'color_text'	=> 'white',
+			'color_bar'		=> '#0D324F',
+			'color_bg'		=> '#a0a0a0',
+			'decimals'		=> 2,
+			'unit'			=> 'm',
+			'display'		=> true,
+			'graph'			=> true
+			)
+		);
+
+		$quota = ngg_SpaceManager::getQuota() * 1024 * 1024;
+		$used = get_dirsize( constant( "ABSPATH" ) . constant( "UPLOADS" ) );
+//		$used = get_dirsize( ABSPATH."wp-content/blogs.dir/".$blog_id."/files" );
+		
+		if ($used > $quota) $percentused = '100';
+		else $percentused = ( $used / $quota ) * 100;
+
+		$remaining = $quota - $used;
+		$percentremain = 100 - $percentused;
+
+		$out = "";
+		$out .= '<div id="spaceused"> <h3>'.__('Storage Space','nggallery').'</h3>';
+
+		if ($settings['used']['display']) {
+			$out .= __('Upload Space Used:','nggallery') . "\n";
+			$out .= ngg_SpaceManager::buildGraph($settings['used'], $used,$quota,$percentused);
+			$out .= "<br />";
+		}
+
+		if($settings['remain']['display']) {
+			$out .= __('Upload Space Remaining:','nggallery') . "\n";
+			$out .= ngg_SpaceManager::buildGraph($settings['remain'], $remaining,$quota,$percentremain);
+
+		}
+
+		$out .= "</div>";
+
+		echo $out;
+	}
+
+	function buildGraph($settings, $size, $quota, $percent) {
+		$color_bar = $settings['color_bar'];
+		$color_bg = $settings['color_bg'];
+		$color_text = $settings['color_text'];
+		
+		switch ($settings['unit']) {
+			case "b":
+				$unit = "B";
+				break;
+				
+			case "k":
+				$unit = "KB";
+				$size = $size / 1024;
+				$quota = $quota / 1024;
+				break;
+				
+			case "g":   // Gigabytes, really?
+				$unit = "GB";
+				$size = $size / 1024 / 1024 / 1024;
+				$quota = $quota / 1024 / 1024 / 1024;
+				break;
+				
+			default:
+				$unit = "MB";
+				$size = $size / 1024 / 1024;
+				$quota = $quota / 1024 / 1024;
+				break;
+		}
+
+		$size = round($size, (int)$settings['decimals']);
+
+		$pct = round(($size / $quota)*100);
+
+		if ($settings['graph']) {
+
+			$out = '<div style="display: block; margin: 0; padding: 0; height: 15px; border: 1px inset; width: 100%; background-color: '.$color_bg.';">'."\n";
+			$out .= '<div style="display: block; height: 15px; border: none; background-color: '.$color_bar.'; width: '.$pct.'%;">'."\n";
+			$out .= '<div style="display: inline; position: relative; top: 0; left: 0; font-size: 10px; color: '.$color_text.'; font-weight: bold; padding-bottom: 2px; padding-left: 5px;">'."\n";
+			$out .= $size.$unit;
+			$out .= "</div>\n</div>\n</div>\n";
+		} else {
+			$out = "<strong>".$size.$unit." ( ".number_format($percent)."%)"."</strong><br />";
+		}
+
+		return $out;
+	}
+
 }
 
 ?>

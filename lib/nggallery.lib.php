@@ -124,6 +124,61 @@ class nggImage{
 
 		return $this->href;
 	}
+	
+	function cached_singlepic_file($width, $height, $mode = "" ) {
+		// This function creates a cache for all singlepics to reduce the CPU load
+		$ngg_options = get_option('ngg_options');
+		
+		include_once(NGGALLERY_ABSPATH.'/lib/thumbnail.inc.php');
+		
+		// cache filename should be unique
+		$cachename   	= $this->imageID. "_". $width. "x". $height ."_". $this->filename;
+		$cachefolder 	= WINABSPATH .$ngg_options['gallerypath'] . "cache/";
+		$cached_url  	= get_option ('siteurl') ."/". $ngg_options['gallerypath'] . "cache/" . $cachename;
+		$cached_file	 = $cachefolder . $cachename;
+		
+		// check first for the file
+		if ( file_exists($cached_file) ) 
+			return $cached_url;
+		
+		// create folder if needed
+		if ( !file_exists($cachefolder) )
+			if ( !wp_mkdir_p($cachefolder) )
+				return false;
+		
+		// get the filepath on the server
+		$filepath = WINABSPATH . "/" . $this->path ."/" . $this->filename;
+		$thumb = new ngg_Thumbnail($filepath, TRUE);
+		// echo $thumb->errmsg;
+		
+		if (!$thumb->error) {	
+			$thumb->resize($width,$height);
+			
+			if ($mode == 'watermark') {
+				if ($ngg_options['wmType'] == 'image') {
+					$thumb->watermarkImgPath = $ngg_options['wmPath'];
+					$thumb->watermarkImage($ngg_options['wmPos'], $ngg_options['wmXpos'], $ngg_options['wmYpos']); 
+				}
+				if ($ngg_options['wmType'] == 'text') {
+					$thumb->watermarkText = $ngg_options['wmText'];
+					$thumb->watermarkCreateText($ngg_options['wmColor'], $ngg_options['wmFont'], $ngg_options['wmSize'], $ngg_options['wmOpaque']);
+					$thumb->watermarkImage($ngg_options['wmPos'], $ngg_options['wmXpos'], $ngg_options['wmYpos']);  
+				}
+			}
+			
+			if ($mode == 'web20')
+				$thumb->createReflection(40,40,50,false,'#a4a4a4');
+			// save the new cache picture
+			$thumb->save($cached_file,$ngg_options[imgQuality]);
+		}
+		$thumb->destruct();
+		
+		// check again for the file
+		if ( file_exists($cached_file) ) 
+			return $cached_url;
+		
+		return false;
+	}
 }
 
 /**

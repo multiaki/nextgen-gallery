@@ -4,7 +4,7 @@
  * 
  * @author 		Ian Selby (ian@gen-x-design.com)
  * @copyright 	Copyright 2006
- * @version 	1.1.1 (PHP4)
+ * @version 	1.1.2 (PHP4)
  * @modded      by   Alex Rabe
  * 
  */
@@ -112,12 +112,11 @@ class ngg_Thumbnail {
      * 
      */
     var $watermarkText;
-
     /**
-     * Class constructor
+     * Image Resource ID for Watermark
      *
-     * @param string $fileName
-     * @return Thumbnail
+     * @var string
+     * 
      */
     function ngg_Thumbnail($fileName,$no_ErrorImage = false) {
         //make sure the GD library is installed
@@ -835,10 +834,16 @@ class ngg_Thumbnail {
      */
     function watermarkImage( $relPOS = 'botRight', $xPOS = 0, $yPOS = 0) {
     	
+		// if it's a resource ID take it as watermark text image
+    	if(is_resource($this->watermarkImgPath)) {
+    		$this->workingImage = $this->watermarkImgPath;
+    	} else {
 		// Would you really want to use anything other than a png? 
 		$this->workingImage = @imagecreatefrompng($this->watermarkImgPath);
-		if (empty($this->workingImage))
-			$this->workingImage = $this->watermarkImgPath;
+		// if it's not a valid file die...
+		if (empty($this->workingImage) or (!$this->workingImage))
+			return;
+		}
 		
 		imagealphablending($this->workingImage, false);
 		imagesavealpha($this->workingImage, true);
@@ -867,7 +872,7 @@ class ngg_Thumbnail {
 		if($this->format == 'GIF') {
 			$tempimage = imagecreatetruecolor($sourcefile_width,$sourcefile_height);
 			imagecopy($tempimage, $this->oldImage, 0, 0, 0, 0,$sourcefile_width, $sourcefile_height);
-			$this->workingImage = $tempimage;
+			$this->newImage = $tempimage;
 		}
 		
 		imagecopy($this->newImage, $this->workingImage, $dest_x, $dest_y, 0, 0,$watermarkfile_width, $watermarkfile_height);

@@ -485,7 +485,7 @@ function getNumChecked(form)
 		</tr>
 		<tr>
 			<th align="left"><?php _e('Path', 'nggallery') ?>:</th> 
-			<th align="left"><input type="text" size="50" name="path" value="<?php echo $act_gallery->path; ?>"  /></th>
+			<th align="left"><input <?php if (IS_WPMU) echo 'disabled = "disabled"'; ?> type="text" size="50" name="path" value="<?php echo $act_gallery->path; ?>"  /></th>
 		
 			<th align="right"><?php _e('Create new page', 'nggallery') ?>:</th>
 			<th align="left"> 
