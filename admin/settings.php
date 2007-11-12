@@ -116,7 +116,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				<table class="optiontable editform">
 					<tr valign="top">
 						<th align="left"><?php _e('Gallery path','nggallery') ?></th>
-						<td><input <?php if (IS_WPMU) echo 'disabled = "disabled"'; ?> type="text" size="35" name="gallerypath" value="<?php echo $ngg_options[gallerypath]; ?>" title="TEST" /><br />
+						<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="text" size="35" name="gallerypath" value="<?php echo $ngg_options[gallerypath]; ?>" title="TEST" /><br />
 						<?php _e('This is the default path for all galleries','nggallery') ?></td>
 					</tr>
 					<!--TODO:  Later... -->
@@ -129,7 +129,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					-->
 					<tr valign="top">
 						<th align="left"><?php _e('Delete image files','nggallery') ?></th>
-						<td><input <?php if (IS_WPMU) echo 'disabled = "disabled"'; ?> type="checkbox" name="deleteImg" value="1" <?php checked('1', $ngg_options[deleteImg]); ?> /><br />
+						<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="checkbox" name="deleteImg" value="1" <?php checked('1', $ngg_options[deleteImg]); ?> /><br />
 						<?php _e('Delete files, when removing a gallery in the database','nggallery') ?></td>
 					</tr>
 				</table>
@@ -232,7 +232,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<tr valign="top">
 						<th align="left"><?php _e('Cache single pictures','nggallery') ?></th>
 						<td></td>
-						<td><input <?php if (IS_WPMU) echo 'disabled = "disabled"'; ?> type="checkbox" name="imgCacheSinglePic" value="1" <?php checked('1', $ngg_options[imgCacheSinglePic]); ?> />
+						<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="checkbox" name="imgCacheSinglePic" value="1" <?php checked('1', $ngg_options[imgCacheSinglePic]); ?> />
 						<?php _e('Creates a file for each singlepic settings. Reduce the CPU load','nggallery') ?></td>
 					</tr>
 					<tr valign="top">
