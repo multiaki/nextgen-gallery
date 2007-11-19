@@ -23,7 +23,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			foreach ($options as $option) {
 				$option = trim($option);
 				$value = trim($_POST[$option]);
-		//		$value = sanitize_option($option, $value); // This does stripslashes on those that need it
+		//		$value = sanitize_option($option, $value); // This does strip slashes on those that need it
 				$ngg_options[$option] = $value;
 			}
 		}
@@ -47,30 +47,30 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				<tr valign="top">
 					<th align="left"><?php _e('Gallery path','nggallery') ?></th>
 					<td><input type="text" size="50" name="gallerypath" value="<?php echo $ngg_options[gallerypath]; ?>" title="TEST" /><br />
-					<?php _e('This is the default path for all blogs. With the placeholder %BLOG_ID% you can organize the folder sturcture better. The path must end with a /.','nggallery') ?></td>
+					<?php _e('This is the default path for all blogs. With the placeholder %BLOG_ID% you can organize the folder structure better. The path must end with a /.','nggallery') ?></td>
 				</tr>
 				<tr>
 					<th valign="top"><?php _e('Enable upload quota check','nggallery') ?>:</th>
 					<td><input name="wpmuQuotaCheck" type="checkbox" value="1" <?php checked('1', $ngg_options[wpmuQuotaCheck]); ?> />
-					<?php _e('Should working if the gallery is bellow the blog.dir','nggallery') ?>
+					<?php _e('Should work if the gallery is bellow the blog.dir','nggallery') ?>
 					</td>
 				</tr>
 				<tr>
 					<th valign="top"><?php _e('Enable zip upload option','nggallery') ?>:</th>
 					<td><input name="wpmuZipUpload" type="checkbox" value="1" <?php checked('1', $ngg_options[wpmuZipUpload]); ?> />
-					<?php _e('Allow zip-upload for your users.','nggallery') ?>
+					<?php _e('Allow users to upload zip folders.','nggallery') ?>
 					</td>
 				</tr>
 				<tr>
 					<th valign="top"><?php _e('Enable style selection','nggallery') ?>:</th>
 					<td><input name="wpmuStyle" type="checkbox" value="1" <?php checked('1', $ngg_options[wpmuStyle]); ?> />
-					<?php _e('Allow to choose a style for the gallery.','nggallery') ?>
+					<?php _e('Allow users to choose a style for the gallery.','nggallery') ?>
 					</td>
 				</tr>
 				<tr>
 					<th valign="top"><?php _e('Enable roles/capabilities','nggallery') ?>:</th>
 					<td><input name="wpmuRoles" type="checkbox" value="1" <?php checked('1', $ngg_options[wpmuRoles]); ?> />
-					<?php _e('Allow to change the roles for other blog authors.','nggallery') ?>
+					<?php _e('Allow users to change the roles for other blog authors.','nggallery') ?>
 					</td>
 				</tr>
 				<tr>
@@ -91,7 +91,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						}
 					?>
 					</select><br />
-					<?php _e('Define the style for the galleries.','nggallery') ?>
+					<?php _e('Choose the default style for the galleries.','nggallery') ?>
 					</td>
 				</tr>
 			</table> 				
