@@ -285,6 +285,15 @@ This is a template stylesheet which doesn't support description below the thumbn
 	position:relative;
 }
 
+.ngg-left {
+	float: left;
+}
+
+.ngg-right {
+	float: right;
+}
+
+
 /* ----------- Sidebar widget -------------*/
 .ngg-widget,
 .ngg-widget-slideshow {

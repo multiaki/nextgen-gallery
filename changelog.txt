@@ -3,6 +3,9 @@ by Alex Rabe & NextGEN DEV Team
 
 V0.80 - soon
 - NEW : Cache option for SinglePic
+- Changed : Update to jQuery V1.2.1
+- Changed : Hide used galleries in album admin page 
+- Changed : Remove float in singlepic code and added class ngg-left , ngg-right (THX to Nathan Sylvain)
 - Changed : Edit style setting (added new class .desc , THX to Sebastian) 
 - Changed : Check for galleryfolder instead name (THX to Luke Poland)
 - Changed : Delete images per default

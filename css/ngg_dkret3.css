@@ -230,6 +230,15 @@ it's only a template design
 	position:relative;
 }
 
+.ngg-left {
+	float: left;
+}
+
+.ngg-right {
+	float: right;
+}
+
+
 /* ----------- Sidebar widget -------------*/
 
 .ngg-widget,

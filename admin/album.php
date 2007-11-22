@@ -55,6 +55,7 @@ function nggallery_admin_manage_album()  {
 jQuery(document).ready(
 	function()
 	{
+
 		jQuery('div.groupWrapper').Sortable(
 			{
 				accept: 'groupItem',
@@ -63,9 +64,17 @@ jQuery(document).ready(
 				tolerance: 'intersect'
 			}
 		)
-		jQuery('a.min').bind('click', toggleContent);
-		jQuery('.textarea1').Autoexpand([230,400]);
 		
+		jQuery('a.min').bind('click', toggleContent);
+
+		// Hide used galleries
+		jQuery('a#toggle_used').click(function()
+			{
+				jQuery('#selectContainer div.inUse').toggle();
+				return false;
+			}
+		);	
+			
 		// Maximize All Portlets (whole site, no differentiation)
 		jQuery('a#all_max').click(function()
 			{
@@ -86,6 +95,7 @@ jQuery(document).ready(
 	   {
 	   		jQuery('a.min').html('[+]');
 	   		jQuery('div.itemContent:visible').hide();
+	   		jQuery('#selectContainer div.inUse').toggle();
 	   }
 	}
 );
@@ -146,7 +156,8 @@ function ngg_serialize(s)
 	</form>
 	<p>
 	<div style="float:right;">
-	  <a href="#" id="all_max"><?php _e('[Maximize]', 'nggallery') ?></a>
+	  <a href="#" id="toggle_used"><?php _e('[Show all]', 'nggallery') ?></a>
+	| <a href="#" id="all_max"><?php _e('[Maximize]', 'nggallery') ?></a>
 	| <a href="#" id="all_min"><?php _e('[Minimize]', 'nggallery') ?></a>
 	</div>
 	<?php _e('After you create and select a album, you can drag and drop a gallery into your album below','nggallery'); ?>
@@ -160,23 +171,29 @@ function ngg_serialize(s)
 		<?php
 		$gallerylist = $wpdb->get_results("SELECT gid FROM $wpdb->nggallery");
 		
+		//TODO:Code MUST be optimized, how to flag a used galley better ?
+		$used_list = getallusedgalleries();
+		
 		if(is_array($gallerylist)) {
 			if ( ($_POST['act_album'] == 0) or (!isset($_POST['act_album'])) ) {
 				foreach($gallerylist as $gallery) {
-					getgallerycontainer($gallery->gid);
+					if (in_array($gallery->gid,$used_list))
+						getgallerycontainer($gallery->gid,true);
+					else
+						getgallerycontainer($gallery->gid,false);
 				}
 			} else {
 				$act_album = $_POST['act_album'];
 				$sortorder = $wpdb->get_var("SELECT sortorder FROM $wpdb->nggalbum WHERE id = '$act_album'");
-				if (!empty($sortorder)) {
-					$sort_array = unserialize($sortorder);
-					foreach($gallerylist as $gallery) {
-						if (!in_array($gallery->gid, $sort_array))
-							getgallerycontainer($gallery->gid);
-					}
-				} else {
-					foreach($gallerylist as $gallery) {
-						getgallerycontainer($gallery->gid);
+				$sort_array = unserialize($sortorder);
+				// if something went wrong, initialize to empty array
+				if (!is_array($sort_array)) $sort_array = array();
+				foreach($gallerylist as $gallery) {
+					if (!in_array($gallery->gid, $sort_array)) {
+						if (in_array($gallery->gid,$used_list))
+							getgallerycontainer($gallery->gid,true);
+						else
+							getgallerycontainer($gallery->gid,false);
 					}
 				}
 			}
@@ -194,7 +211,7 @@ function ngg_serialize(s)
 					$sort_array = unserialize($album->sortorder);
 					if (is_array($sort_array)) {
 						foreach($sort_array as $galleryid) {
-							getgallerycontainer($galleryid);
+							getgallerycontainer($galleryid,false);
 						}
 					}
 				}
@@ -211,7 +228,7 @@ function ngg_serialize(s)
 
 <?php
 }
-function getgallerycontainer($galleryid = 0) {
+function getgallerycontainer($galleryid = 0, $used = false) {
 	global $wpdb;
 	
 	$gallery = $wpdb->get_row("SELECT * FROM $wpdb->nggallery WHERE gid = '$galleryid'");
@@ -227,7 +244,9 @@ function getgallerycontainer($galleryid = 0) {
 		$filename = $wpdb->get_var("SELECT filename FROM $wpdb->nggpictures WHERE pid = '$gallery->previewpic'");
 		if ($filename) $img = '<img src="'.$act_thumbnail_url.$act_thumb_prefix.$filename.'" />';
 		else $img = '';
-		echo '<div id="gid-'.$gallery->gid.'" class="groupItem">
+		// add class if it's in use in other albums
+		$used = $used ? " inUse" : "";
+		echo '<div id="gid-'.$gallery->gid.'" class="groupItem'. $used .'">
 				<div class="innerhandle">
 					<div class="item_top">
 						<a href="#" class="min" title="close">[-]</a>
@@ -243,5 +262,27 @@ function getgallerycontainer($galleryid = 0) {
 				</div>
 			   </div>'; 
 	}
+}
+
+//get all used galleries form all albums
+function getallusedgalleries() {
+	global $wpdb;
+	
+	$albumids = $wpdb->get_col("SELECT id FROM $wpdb->nggalbum");
+	$used = array();
+	
+	if ($albumids) {
+		foreach($albumids as $albumid) {
+			$sortorder = $wpdb->get_var("SELECT sortorder FROM $wpdb->nggalbum WHERE id = '$albumid'");
+			if (!empty($sortorder)) {
+				$sort_array = unserialize($sortorder);
+				foreach($sort_array as $galleryid) {
+					if (!in_array($galleryid,$used))
+						$used[] = $galleryid;
+				}
+			}
+		}
+	}
+	return $used;
 }
 ?>
