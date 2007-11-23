@@ -8,13 +8,18 @@ function nggallery_install () {
 	
    	global $wpdb , $wp_roles, $wp_version;
    	global $ngg_db_version;
-
+	
 	// Check for capability
 	if ( !current_user_can('activate_plugins') ) 
 		return;
 	
 	// Set the capabilities for the administrator
 	$role = get_role('administrator');
+	// We need this role, no other chance
+	if ( empty($role) ) {
+		update_option( "ngg_init_check", __('Sorry, NextGEN Gallery works only with a role called administrator',"nggallery") );
+		return;
+	}
 	$role->add_cap('NextGEN Gallery overview');
 	$role->add_cap('NextGEN Use TinyMCE');
 	$role->add_cap('NextGEN Upload images');
@@ -121,6 +126,12 @@ function nggallery_install () {
 		$wpdb->query("ALTER TABLE ".$nggallery." CHANGE description galdesc MEDIUMTEXT NULL");
 
 		update_option( "ngg_db_version", $ngg_db_version );
+	}
+
+	// check one table again, to be sure
+	if($wpdb->get_var("show tables like '$nggpictures'")!= $nggpictures) {
+		update_option( "ngg_init_check", __('NextGEN Gallery : Tables could not created, please check your database settings',"nggallery") );
+		return;
 	}
 
 }

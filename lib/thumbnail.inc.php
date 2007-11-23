@@ -804,6 +804,10 @@ class ngg_Thumbnail {
 		if ( !is_readable($wmFontPath))
 			return;	
 			
+		// This function requires both the GD library and the FreeType library. 
+		if ( !function_exists(ImageTTFBBox) )
+			return;
+			
 		$TextSize = ImageTTFBBox($wmSize, 0, $wmFontPath, $this->watermarkText);
 		$TextWidth = abs($TextSize[2]) + abs($TextSize[0]);
 		$TextHeight = abs($TextSize[7]) + abs($TextSize[1]);

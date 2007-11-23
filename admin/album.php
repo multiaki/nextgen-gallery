@@ -63,7 +63,7 @@ jQuery(document).ready(
 				opacity: 0.7,
 				tolerance: 'intersect'
 			}
-		)
+		);
 		
 		jQuery('a.min').bind('click', toggleContent);
 
@@ -96,7 +96,7 @@ jQuery(document).ready(
 	   		jQuery('a.min').html('[+]');
 	   		jQuery('div.itemContent:visible').hide();
 	   		jQuery('#selectContainer div.inUse').toggle();
-	   }
+	   };
 	}
 );
 

@@ -4,7 +4,7 @@ Plugin Name: NextGEN Gallery
 Plugin URI: http://alexrabe.boelinger.com/?page_id=80
 Description: A NextGENeration Photo gallery for the WEB2.0(beta).
 Author: NextGEN DEV-Team
-Version: 0.80.1a
+Version: 0.80.2a
 
 Author URI: http://alexrabe.boelinger.com/
 
@@ -35,8 +35,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 
 //#################################################################
 // Let's Go
-
-global $wpdb, $wp_version, $wpmu_version;
+	
+global $wpdb, $wp_version, $wpmu_version, $wp_roles;
 
 // ini_set('display_errors', '1');
 // ini_set('error_reporting', E_ALL);
@@ -73,6 +73,10 @@ if ((gettype(ini_get('safe_mode')) == 'string')) {
 	else define('SAFE_MODE', ini_get('safe_mode'));
 } else
 define('SAFE_MODE', ini_get('safe_mode'));
+
+//pass the init check or show a message
+if (get_option( "ngg_init_check" ) != false )
+	add_action('admin_notices', create_function('', 'echo \'<div id="message" class="error fade"><p><strong>' . get_option( "ngg_init_check" ) . '</strong></p></div>\';'));
 
 //read the options
 $ngg_options = get_option('ngg_options');
@@ -137,10 +141,17 @@ add_action('init', 'nggallery_init');
 // add_action('activate_' . NGGFOLDER.'/nggallery.php', 'ngg_install');
 // WP recommended function, not used until 2.2.3
 register_activation_hook(NGGFOLDER.'/nggallery.php','ngg_install');
+register_deactivation_hook(NGGFOLDER.'/nggallery.php','ngg_deinstall');
 
 // init tables in wp-database if plugin is activated
 function ngg_install() {
+	// Check for admin role
 	nggallery_install();
+}
+
+function ngg_deinstall() {
+	// remove & reset the init check option
+	delete_option( "ngg_init_check" );
 }
 
 // Action calls for all functions 

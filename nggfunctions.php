@@ -81,7 +81,7 @@ function searchnggallerytags($content) {
 				// check for gallery id
 				$galleryID = $wpdb->get_var("SELECT gid FROM $wpdb->nggallery WHERE gid = '$v0' ");
 				if(!$galleryID) $galleryID = $wpdb->get_var("SELECT gid FROM $wpdb->nggallery WHERE name = '$v0' ");
-				if($galleryID) {
+				if( $galleryID || $v0 == 0 ) {
 					$search = $matches[0][$key];
 					// get the size if they are set
 			 		$irWidth  =  $matches[3][$key]; 
@@ -565,10 +565,10 @@ function nggSinglePicture($imageID,$width=250,$height=250,$mode="",$float="") {
 	if (!empty($float)) {
 		switch ($float) {
 		
-		case 'left': $float=' style="float:left;" ';
+		case 'left': $float=' ngg-left" ';
 		break;
 		
-		case 'right': $float=' style="float:right;" ';
+		case 'right': $float=' ngg-right" ';
 		break;
 		
 		default: $float='';
@@ -583,9 +583,9 @@ function nggSinglePicture($imageID,$width=250,$height=250,$mode="",$float="") {
 	// add fullsize picture as link
 	$content  = '<a href="'.$picture->imagePath.'" title="'.stripslashes($picture->description).'" '.$picture->get_thumbcode("singlepic".$imageID).' >';
 	if (!$cache_url)
-		$content .= '<img class="ngg-singlepic" src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$imageID.'&amp;width='.$width.'&amp;height='.$height.'&amp;mode='.$mode.'" alt="'.stripslashes($picture->alttext).'" title="'.stripslashes($picture->alttext).'"'.$float.' />';
+		$content .= '<img class="ngg-singlepic'. $float .'" src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$imageID.'&amp;width='.$width.'&amp;height='.$height.'&amp;mode='.$mode.'" alt="'.stripslashes($picture->alttext).'" title="'.stripslashes($picture->alttext).'" />';
 	else
-		$content .= '<img class="ngg-singlepic" src="'.$cache_url.'" alt="'.stripslashes($picture->alttext).'" title="'.stripslashes($picture->alttext).'"'.$float.' />';
+		$content .= '<img class="ngg-singlepic'. $float .'" src="'.$cache_url.'" alt="'.stripslashes($picture->alttext).'" title="'.stripslashes($picture->alttext).'" />';
 	$content .= '</a>';
 	
 	$content = apply_filters('ngg_show_singlepic_content', $content);

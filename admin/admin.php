@@ -14,9 +14,12 @@ function ngg_nocache() {
 // load script files depend on page
 add_action('init', 'ngg_add_admin_js',1);
 function ngg_add_admin_js() {
+	global $wp_version;
+	
 	if ($wp_version < "2.3") {
-		if ($wp_version > "2.1.3") wp_deregister_script('jquery'); 
-	    wp_register_script('jquery', NGGALLERY_URLPATH .'admin/js/jquery.js', FALSE, '1.1.3.1');
+		wp_deregister_script('jquery'); 
+	    //TODO:jQuery 1.2.1 causes problems in IE7
+		wp_register_script('jquery', NGGALLERY_URLPATH .'admin/js/jquery.js', FALSE, '1.1.4');
 	} 
 	switch ($_GET['page']) {
 		case "nggallery-manage-gallery" :

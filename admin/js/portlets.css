@@ -64,6 +64,11 @@ html
 	padding:0pt 3px 1px;
 }
 
+.inlinepicture img
+{
+	max-height:75px;
+}
+
 .sort_placeholder
 {
 	border:1px dashed #bba !important;
