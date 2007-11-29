@@ -2,6 +2,7 @@ NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
 V0.80 - soon
+- NEW : Show Meta data information
 - NEW : Cache option for SinglePic
 - Changed : Update to jQuery V1.1.4 (v1.2.1 causes problems with interface.js)
 - Changed : Hide used galleries in album admin page 
