@@ -118,37 +118,6 @@ class nggMeta{
 	
 		return strtotime( "{$y}-{$m}-{$d} {$time}" );
 	}
-
-  /**
-   * nggMeta::i8n_name()
-   *
-   * @param mixed $key
-   * @return translated $key
-   */
-	function i8n_name($key) {
-		
-		$tagnames = array(
-		'aperture' 			=> __('Aperture','nggallery'),
-		'credit' 			=> __('Credit','nggallery'),
-		'camera' 			=> __('Camera','nggallery'),
-		'caption' 			=> __('Caption','nggallery'),
-		'created_timestamp' => __('Date/Time','nggallery'),
-		'copyright' 		=> __('Copyright','nggallery'),
-		'focal_length' 		=> __('Focal length','nggallery'),
-		'iso' 				=> __('ISO','nggallery'),
-		'shutter_speed' 	=> __('Shutter speed','nggallery'),
-		'title' 			=> __('Titel','nggallery'),
-		'author' 			=> __('Author','nggallery'),
-		'tags' 				=> __('Tags','nggallery'),
-		'subject' 			=> __('Subject','nggallery'),
-		'make' 				=> __('Make','nggallery')
-		);
-		
-		if ($tagnames[$key]) $key = $tagnames[$key];
-		
-		return($key);
-
-	}	
 	
   /**
    * nggMeta::readIPTC() - IPTC Data Information for EXIF Display
@@ -160,48 +129,25 @@ class nggMeta{
 	
 	// --------- Set up Array Functions --------- //
 		$iptcTags = array (
-			"2#005" => __('Title','nggallery'),
-			"2#007" => __('Edit Status','nggallery'),
-			"2#008" => __('Editorial Update','nggallery'),
-			"2#010" => __('Urgency','nggallery'),
-			"2#012" => __('Subject Reference','nggallery'),
-			"2#015" => __('Category','nggallery'),
-			"2#020" => __('Supplemental Category','nggallery'),
-			"2#022" => __('Fixture Identifier','nggallery'),
-			"2#025" => __('Keywords','nggallery'),
-			"2#026" => __('Content Location Code','nggallery'),
-			"2#027" => __('Content Location Name','nggallery'),
-			"2#030" => __('Release Date','nggallery'),
-			"2#035" => __('Release Time','nggallery'),
-			"2#037" => __('Expiration Date','nggallery'),
-			"2#035" => __('Expiration Time','nggallery'),
-			"2#040" => __('Special Instructions','nggallery'),
-			"2#042" => __('Action Advised','nggallery'),
-			"2#045" => __('Reference Service','nggallery'),
-			"2#047" => __('Reference Date','nggallery'),
-			"2#050" => __('Reference Number','nggallery'),
-			"2#055" => __('Date Created','nggallery'),
-			"2#060" => __('Time Created','nggallery'),
-			"2#062" => __('Digital Creation Date','nggallery'),
-			"2#063" => __('Digital Creation Time','nggallery'),
-			"2#065" => __('Originating Program','nggallery'),
-			"2#070" => __('Program Version','nggallery'),
-			"2#075" => __('Object Cycle','nggallery'),
-			"2#080" => __('By-Line (Author)','nggallery'),
-			"2#085" => __('By-Line Title (Author Position)','nggallery'),
-			"2#090" => __('City','nggallery'),
-			"2#092" => __('Sub-Location','nggallery'),
-			"2#095" => __('Province/State','nggallery'),
-			"2#100" => __('Country/Primary Location Code','nggallery'),
-			"2#101" => __('Country/Primary Location Name','nggallery'),
-			"2#103" => __('Original Transmission Reference','nggallery'),
-			"2#105" => __('Headline','nggallery'),
-			"2#110" => __('Credit','nggallery'),
-			"2#115" => __('Source','nggallery'),
-			"2#116" => __('Copyright Notice','nggallery'),
-			"2#118" => __('Contact','nggallery'),
-			"2#120" => __('Caption/Abstract','nggallery'),
-			"2#122" => __('Caption Writer/Editor','nggallery')
+			"2#005" => 'title',
+			"2#007" => 'status',
+			"2#012" => 'subject',
+			"2#015" => 'category',
+			"2#025" => 'keywords',
+			"2#055" => 'created_date',
+			"2#060" => 'created_time',
+			"2#080" => 'author',
+			"2#085" => 'position',
+			"2#090" => 'city',
+			"2#092" => 'location',
+			"2#095" => 'state',
+			"2#100" => 'country_code',
+			"2#101" => 'country',
+			"2#105" => 'headline',
+			"2#110" => 'credit',
+			"2#115" => 'source',
+			"2#116" => 'copyright',
+			"2#118" => 'contact'
 		);
 		
 		// var_dump($this->iptc_data);
@@ -265,11 +211,11 @@ class nggMeta{
 		xml_parse_into_struct($parser, $this->xmp_data, $values);
 		xml_parser_free($parser);
 		  
-		$xmlarray = array(); 		// The XML array
-		$XMParray = array(); 		// The returned array
-		$stack = array(); 			// tmp array used for stacking
-	 	$list_element = false;		// rdf:li indicator
+		$xmlarray     = array();	// The XML array
+		$XMParray     = array();	// The returned array
+		$stack        = array();	// tmp array used for stacking
 	 	$list_array   = array();	// tmp array for list elements
+	 	$list_element = false;		// rdf:li indicator
 	 	  
 		foreach($values as $val) {
 			
@@ -309,20 +255,20 @@ class nggMeta{
 		  
 		// --------- Some values from the XMP format--------- //
 		$xmpTags = array (
-			'xap:CreateDate' 			=> __('Date / Time','nggallery'),
-			'xap:ModifyDate'  			=> __('Last modified','nggallery'),
-			'xap:CreatorTool' 			=> __('Tool','nggallery'),
-			'dc:format' 				=> __('Format','nggallery'),
-			'dc:title'					=> __('Title','nggallery'),
-			'dc:creator' 				=> __('Author','nggallery'),
-			'dc:subject' 				=> __('Keywords','nggallery'),
-			'photoshop:AuthorsPosition' => __('Position','nggallery'),
-			'photoshop:City'			=> __('City','nggallery'),
-			'photoshop:Country' 		=> __('Country','nggallery')
+			'xap:CreateDate' 			=> 'created_timestamp',
+			'xap:ModifyDate'  			=> 'last_modfied',
+			'xap:CreatorTool' 			=> 'tool',
+			'dc:format' 				=> 'format',
+			'dc:title'					=> 'title',
+			'dc:creator' 				=> 'author',
+			'dc:subject' 				=> 'keywords',
+			'photoshop:AuthorsPosition' => 'position',
+			'photoshop:City'			=> 'city',
+			'photoshop:Country' 		=> 'country'
 		);
 		
 		foreach ($xmpTags as $key => $value) {
-			// the kex exist
+			// if the kex exist
 			if ($xmlarray[$key]) {
 				switch ($key) {
 					case 'xap:CreateDate':
@@ -348,6 +294,56 @@ class nggMeta{
 	  	}
 	}
 	
+  /**
+   * nggMeta::i8n_name() -  localize the tag name
+   *
+   * @param mixed $key
+   * @return translated $key
+   */
+	function i8n_name($key) {
+		
+		$tagnames = array(
+		'aperture' 			=> __('Aperture','nggallery'),
+		'credit' 			=> __('Credit','nggallery'),
+		'camera' 			=> __('Camera','nggallery'),
+		'caption' 			=> __('Caption','nggallery'),
+		'created_timestamp' => __('Date/Time','nggallery'),
+		'copyright' 		=> __('Copyright','nggallery'),
+		'focal_length' 		=> __('Focal length','nggallery'),
+		'iso' 				=> __('ISO','nggallery'),
+		'shutter_speed' 	=> __('Shutter speed','nggallery'),
+		'title' 			=> __('Titel','nggallery'),
+		'author' 			=> __('Author','nggallery'),
+		'tags' 				=> __('Tags','nggallery'),
+		'subject' 			=> __('Subject','nggallery'),
+		'make' 				=> __('Make','nggallery'),
+		'status' 			=> __('Edit Status','nggallery'),
+		'category'			=> __('Category','nggallery'),
+		'keywords' 			=> __('Keywords','nggallery'),
+		'created_date' 		=> __('Date Created','nggallery'),
+		'created_time'		=> __('Time Created','nggallery'),
+		'position'			=> __('Author Position','nggallery'),
+		'city'				=> __('City','nggallery'),
+		'location'			=> __('Location','nggallery'),
+		'state' 			=> __('Province/State','nggallery'),
+		'country_code'		=> __('Country code','nggallery'),
+		'country'			=> __('Country','nggallery'),
+		'headline' 			=> __('Headline','nggallery'),
+		'credit'			=> __('Credit','nggallery'),
+		'source'			=> __('Source','nggallery'),
+		'copyright'			=> __('Copyright Notice','nggallery'),
+		'contact'			=> __('Contact','nggallery'),
+		'last_modfied'		=> __('Last modified','nggallery'),
+		'tool'				=> __('Program tool','nggallery'),
+		'format'			=> __('Format','nggallery')
+		);
+		
+		if ($tagnames[$key]) $key = $tagnames[$key];
+		
+		return($key);
+
+	}	
+
 }
 
 ?>

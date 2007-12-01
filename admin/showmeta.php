@@ -3,7 +3,6 @@
 require_once(realpath("../../../../wp-config.php"));
 require_once(NGGALLERY_ABSPATH.'/lib/nggmeta.lib.php');
 
-// check_ajax_referer();
 if ( !is_user_logged_in() )
 	die(__('Cheatin&#8217; uh?'));
 	
@@ -77,7 +76,7 @@ $xmpdata = $meta->get_XMP();
 			foreach ($iptcdata as $key => $value){
 				$class = ( $class == 'class="alternate"' ) ? '' : 'class="alternate"';
 				echo '<tr '.$class.'>	
-						<td style="width:230px">'.$key.'</td>
+						<td style="width:230px">'.$meta->i8n_name($key).'</td>
 						<td>'.$value.'</td>
 					</tr>';
 			}
@@ -101,7 +100,7 @@ $xmpdata = $meta->get_XMP();
 			foreach ($xmpdata as $key => $value){
 				$class = ( $class == 'class="alternate"' ) ? '' : 'class="alternate"';
 				echo '<tr '.$class.'>	
-						<td style="width:230px">'.$key.'</td>
+						<td style="width:230px">'.$meta->i8n_name($key).'</td>
 						<td>'.$value.'</td>
 					</tr>';
 			}

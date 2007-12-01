@@ -130,7 +130,12 @@ function ngg_list_support()	{
 	"Matthew Barker" => "",
 	"Anthony (Chinese Translation)" => "http://www.angryouth.com/",
 	"Milan Vašícek (Czech Translation)" => "http://www.NoWorkTeam.cz/",
-	"Joo Gi-young (Korean Translation)" => "http://lombric.linuxstudy.pe.kr/wp/"
+	"Joo Gi-young (Korean Translation)" => "http://lombric.linuxstudy.pe.kr/wp/",
+	"Emanuel Kluge" => "",
+	"Alba Bentos Pereira" => "",
+	"Oleg A. Safonov (Russian Translation)" => "http://blog.olart.ru",
+	"Bill Babcock" => "http://www.bnj.com",
+	"Jesper Haug Karsrud" => "http://www.beyond-sanity.com"
 	);
 
 	
