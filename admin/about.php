@@ -135,7 +135,11 @@ function ngg_list_support()	{
 	"Alba Bentos Pereira" => "",
 	"Oleg A. Safonov (Russian Translation)" => "http://blog.olart.ru",
 	"Bill Babcock" => "http://www.bnj.com",
-	"Jesper Haug Karsrud" => "http://www.beyond-sanity.com"
+	"Jesper Haug Karsrud" => "http://www.beyond-sanity.com",
+	"Marco van de Ven" => "http://www.mvdven.nl",
+	"Peter Krabshuis" => "http://www.dragoneye.nl",
+	"Teresa Lo" => "http://www.invivoanalytics.com",
+	"Jes Carlskov" => ""
 	);
 
 	

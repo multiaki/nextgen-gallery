@@ -10,9 +10,13 @@ V0.80 - soon
 - Changed : Edit style setting (added new class .desc , THX to Sebastian) 
 - Changed : Check for galleryfolder instead name (THX to Luke Poland)
 - Changed : Delete images per default
+- Changed : Change CSS (ngg-album-compact) , remove width & height setting from code
 - Bugfix : Change Album CSS (THX to Thomas-DK)
 - Bugfix : Watermark for GIF not correct supported
 - Bugfix : Missing wp_nonce at setup page
+- Bugfix : Add DIV in Slideshow link (for Safari)
+- Added : Updated to Pclzip.lib.php v2.6
+- Added : CSS ID field for gallery & images
 - Added : WPMU : New site admin page (wpmu.php)
 - Added : WPMU : Integrated quota check
 - Added : WPMU : No update check
@@ -21,6 +25,9 @@ V0.80 - soon
 - Added : WPMU : Remove server settings
 - Added : WPMU : Gallery path set to blog.dir
 - Added : Support for WPMU
+
+V0.74 - 01.12.2007
+- NEW : Added meta reader class, first step to integrated meta data import
 
 V0.73 - 20.10.2007
 - Added : Support for Shutter Reloaded

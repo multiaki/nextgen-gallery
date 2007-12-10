@@ -199,7 +199,7 @@ function nggShowGallery($galleryID) {
 			$args['page'] = get_the_ID();
 			$args['show'] = "gallery";
 			$gallerycontent  = '<div class="ngg-galleryoverview">';
-			$gallerycontent .= '<a class="slideshowlink" href="' . htmlspecialchars(add_query_arg( $args) ) . '">'.$ngg_options['galTextGallery'].'</a>';
+			$gallerycontent .= '<div class="slideshowlink"><a class="slideshowlink" href="' . htmlspecialchars(add_query_arg( $args) ) . '">'.$ngg_options['galTextGallery'].'</a></div>';
 			$gallerycontent .= nggShowSlideshow($galleryID,$ngg_options['irWidth'],$ngg_options['irHeight']);
 			$gallerycontent .= '</div>'."\n";
 			$gallerycontent .= '<div class="ngg-clear"></div>'."\n";
@@ -272,14 +272,14 @@ function nggCreateGallery($picturelist,$galleryID = false) {
 	} 	
 	
 	if (is_array($picturelist)) {
-	$out  = '<div class="ngg-galleryoverview">';
+	$out  = '<div class="ngg-galleryoverview" id="ngg-gallery-'. $galleryID .'">';
 	
 	// show slideshow link
 	if ($galleryID)
 		if (($ngg_options['galShowSlide']) AND (NGGALLERY_IREXIST)) {
 			$args['page'] = get_the_ID();
 			$args['show'] = "slide";
-			$out .= '<a class="slideshowlink" href="' . htmlspecialchars(add_query_arg( $args )) . '">'.$ngg_options[galTextSlide].'</a>';
+			$out .= '<div class="slideshowlink"><a class="slideshowlink" href="' . htmlspecialchars(add_query_arg( $args )) . '">'.$ngg_options['galTextSlide'].'</a></div>';
 		}
 	
 	// a description below the picture, require fixed width
@@ -299,7 +299,7 @@ function nggCreateGallery($picturelist,$galleryID = false) {
 
 		$link =($ngg_options['galImgBrowser']) ? htmlspecialchars(add_query_arg(array('page'=>get_the_ID(),'pid'=>$picture->pid))) : $folder_url.$picturefile;
 		// create output
-		$out .= '<div class="ngg-gallery-thumbnail-box '. $class_desc .'">'."\n\t";
+		$out .= '<div id="ngg-image-'. $picture->pid .'" class="ngg-gallery-thumbnail-box '. $class_desc .'">'."\n\t";
 		$out .= '<div class="ngg-gallery-thumbnail" '.$setwidth.' >'."\n\t";
 		$out .= '<a href="'.$link.'" title="'.stripslashes($picture->description).'" '.$thumbcode.' >';
 		$out .= '<img title="'.stripslashes($picture->alttext).'" alt="'.stripslashes($picture->alttext).'" src="'.$thumbnailURL.$thumb_prefix.$picture->filename.'" '.$thumbsize.' />';
@@ -427,7 +427,7 @@ function nggCreateAlbum($galleryID,$mode = "extend",$albumID = 0) {
 		$counter = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggpictures WHERE galleryid = '$galleryID' AND exclude != 1");
  		if ($mode == "compact") {
 			if ($gallerycontent->previewpic != 0)
-				$insertpic = '<img class="Thumb" width="91" height="68" alt="'.$gallerycontent->title.'" src="'.nggallery::get_thumbnail_url($gallerycontent->previewpic).'"/>';
+				$insertpic = '<img class="Thumb" alt="'.$gallerycontent->title.'" src="'.nggallery::get_thumbnail_url($gallerycontent->previewpic).'"/>';
 			else 
 				$insertpic = __('Watch gallery', 'nggallery');
  			$galleryoutput = '	
@@ -708,7 +708,7 @@ function nggShowAlbumTags($taglist) {
 		$args['gallerytag'] = $picture["slug"];
 		$link = htmlspecialchars( add_query_arg($args) );
 		
-		$insertpic = '<img class="Thumb" width="91" height="68" alt="'.$picture["name"].'" src="'.nggallery::get_thumbnail_url($picture["pid"]).'"/>';
+		$insertpic = '<img class="Thumb" alt="'.$picture["name"].'" src="'.nggallery::get_thumbnail_url($picture["pid"]).'"/>';
 		$tagid = $picture['tagid'];
 		$counter  = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggpic2tags WHERE tagid = '$tagid' ");
 		$content .= '	

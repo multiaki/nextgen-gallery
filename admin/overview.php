@@ -14,7 +14,7 @@ function nggallery_admin_overview()  {
 	$nggCheck->name 	= "ngg";
 
 ?>
-  <div class="wrap">
+  <div class="wrap" style="overflow:hidden;">
     <h2><?php _e('NextGEN Gallery Overview', 'nggallery') ?></h2>
         
     <div id="zeitgeist">
@@ -150,6 +150,15 @@ function ngg_get_serverinfo() {
 	// Get actual memory_get_usage
 	if (function_exists('memory_get_usage')) $memory_usage = round(memory_get_usage() / 1024 / 1024, 2) . __(' MByte', 'nggallery');
 	else $memory_usage = __('N/A', 'nggallery');
+	// required for EXIF read
+	if (is_callable('exif_read_data')) $exif = __('Yes', 'nggallery'). " ( V" . substr(phpversion('exif'),0,4) . ")" ;
+	else $exif = __('No', 'nggallery');
+	// required for meta data
+	if (is_callable('iptcparse')) $iptc = __('Yes', 'nggallery');
+	else $iptc = __('No', 'nggallery');
+	// required for meta data
+	if (is_callable('xml_parser_create')) $xml = __('Yes', 'nggallery');
+	else $xml = __('No', 'nggallery');
 	
 ?>
 	<li><?php _e('Operating System', 'nggallery'); ?> : <strong><?php echo PHP_OS; ?></strong></li>
@@ -164,6 +173,9 @@ function ngg_get_serverinfo() {
 	<li><?php _e('PHP Max Upload Size', 'nggallery'); ?> : <strong><?php echo $upload_max; ?></strong></li>
 	<li><?php _e('PHP Max Post Size', 'nggallery'); ?> : <strong><?php echo $post_max; ?></strong></li>
 	<li><?php _e('PHP Max Script Execute Time', 'nggallery'); ?> : <strong><?php echo $max_execute; ?>s</strong></li>
+	<li><?php _e('PHP Exif support', 'nggallery'); ?> : <strong><?php echo $exif; ?></strong></li>
+	<li><?php _e('PHP IPTC support', 'nggallery'); ?> : <strong><?php echo $iptc; ?></strong></li>
+	<li><?php _e('PHP XML support', 'nggallery'); ?> : <strong><?php echo $xml; ?></strong></li>
 <?php
 }
 

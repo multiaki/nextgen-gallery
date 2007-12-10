@@ -31,7 +31,7 @@ class nggMeta{
 			return false;
 
  		$size = getimagesize ( $this->imagePath, $metadata );
- 		
+
 		if ($size && is_array($metadata)) {
 
 			// get exif - data
@@ -58,7 +58,7 @@ class nggMeta{
    *
    * @return structured EXIF data
    */
-	function get_EXIF() {
+	function get_EXIF($object = false) {
 		
 		if (!$this->exif_data)
 			return false;
@@ -68,17 +68,20 @@ class nggMeta{
 		// taken from WP core
 		$exif = $this->exif_data['EXIF'];
 		if (!empty($exif['FNumber']))
-			$meta['aperture'] = round( $this->exif_frac2dec( $exif['FNumber'] ), 2 );
+			$meta['aperture'] = "F " . round( $this->exif_frac2dec( $exif['FNumber'] ), 2 );
 		if (!empty($exif['Model']))
 			$meta['camera'] = trim( $exif['Model'] );
 		if (!empty($exif['DateTimeDigitized']))
 			$meta['created_timestamp'] = date_i18n(get_option('date_format').' '.get_option('time_format'), $this->exif_date2ts($exif['DateTimeDigitized']));
 		if (!empty($exif['FocalLength']))
-			$meta['focal_length'] = $this->exif_frac2dec( $exif['FocalLength'] );
+			$meta['focal_length'] = $this->exif_frac2dec( $exif['FocalLength'] ) . __(' mm','nggallery');
 		if (!empty($exif['ISOSpeedRatings']))
 			$meta['iso'] = $exif['ISOSpeedRatings'];
-		if (!empty($exif['ExposureTime']))
-			$meta['shutter_speed'] = $this->exif_frac2dec( $exif['ExposureTime'] );
+		if (!empty($exif['ExposureTime'])) {
+			$meta['shutter_speed']  = $this->exif_frac2dec ($exif['ExposureTime']);
+			($meta['shutter_speed'] > 0.0 and $meta['shutter_speed'] < 1.0) ? ("1/" . round(1/$meta['shutter_speed'])) : ($meta['shutter_speed']); 
+			$meta['shutter_speed'] .=  __(' sec','nggallery');
+			}
 
 		// additional information
 		$exif = $this->exif_data['IFD0'];
@@ -97,7 +100,10 @@ class nggMeta{
 			$meta['tags'] = $exif['Keywords'];
 		if (!empty($exif['Subject']))
 			$meta['subject'] = $exif['Subject'];
-			
+		
+		if ($meta[$object])
+			return $meta[$object];
+				
 		return $meta;
 	
 	}
@@ -123,9 +129,9 @@ class nggMeta{
    * nggMeta::readIPTC() - IPTC Data Information for EXIF Display
    *
    * @param mixed $output_tag
-   * @return
+   * @return IPTC-tags
    */
-	function get_IPTC() {
+	function get_IPTC($object = false) {
 	
 	// --------- Set up Array Functions --------- //
 		$iptcTags = array (
@@ -158,6 +164,10 @@ class nggMeta{
 					$IPTCarray[$value] = trim(utf8_encode(implode(", ", $this->iptc_data[$key])));
 
 			}
+			
+			if ($IPTCarray[$object])
+				return $IPTCarray[$object];			
+			
 			return $IPTCarray;
 		}
 
@@ -170,7 +180,7 @@ class nggMeta{
    * code by Pekka Saarinen http://photography-on-the.net	
    *
    * @param mixed $filename
-   * @return
+   * @return XML data
    */
 	function extract_XMP( $filename ) {
 
@@ -198,9 +208,10 @@ class nggMeta{
 	 *
 	 * @package Taken from http://php.net/manual/en/function.xml-parse-into-struct.php
 	 * @author Alf Marius Foss Olsen & Alex Rabe
-	 * 
+	 * @return XML Array or object
+	 *
 	 */
-	function get_XMP() {
+	function get_XMP($object = false) {
    
 		if(!$this->xmp_data)
 			return false; 
@@ -280,7 +291,10 @@ class nggMeta{
 				}
 			}
 		}
-		  
+		
+		if ($XMParray[$object])
+			return $XMParray[$object];		 
+		
 		return $XMParray;
 	}
 	  

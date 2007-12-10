@@ -529,7 +529,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				nggallery::show_error(__('Uploaded file was no or a faulty zip file ! The server recognize : ','nggallery').$_FILES['zipfile']['type']);
 				return; 
 			}
-			
+		
 		// get foldername if selected
 		$foldername = $_POST['zipgalselect'];
 		if ($foldername == "0") {	
@@ -538,6 +538,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			//$foldername = preg_replace ("/(\s+)/", '-', strtolower(strtok ($filename,'.')));					
 		}
 
+		//TODO:FORM must get the path from the tables not from defaultpath	!!!
 		// set complete folder path		
 		$newfolder = WINABSPATH.$defaultpath.$foldername;
 	
@@ -555,7 +556,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 
 		if ($result) {
 			$messagetext = __('Zip-File successfully unpacked','nggallery').'<br />';		
-		
+
 			// parse now the folder and add to database
 			$messagetext .= ngg_import_gallery($defaultpath.$foldername);
 	
