@@ -73,11 +73,12 @@ add_action('admin_menu', 'add_nextgen_gallery_menu');
   	function  show_menu() {
   		switch ($_GET["page"]){
 			case "nggallery-add-gallery" :
+				include_once (dirname (__FILE__). '/functions.php');	// admin functions
 				include_once (dirname (__FILE__). '/addgallery.php');	// nggallery_admin_add_gallery
 				nggallery_admin_add_gallery();
 				break;
 			case "nggallery-manage-gallery" :
-				include_once (dirname (__FILE__). '/addgallery.php');	// nggallery_admin_add_gallery
+				include_once (dirname (__FILE__). '/functions.php');	// admin functions
 				include_once (dirname (__FILE__). '/manage.php');		// nggallery_admin_manage_gallery
 				nggallery_admin_manage_gallery();
 				break;

@@ -139,7 +139,9 @@ function ngg_list_support()	{
 	"Marco van de Ven" => "http://www.mvdven.nl",
 	"Peter Krabshuis" => "http://www.dragoneye.nl",
 	"Teresa Lo" => "http://www.invivoanalytics.com",
-	"Jes Carlskov" => ""
+	"Jes Carlskov" => "",
+	"John Statler" => "http://www.systemsolver.com",
+	"Joshua Katinger" => "http://www.accessionmedia.com"
 	);
 
 	

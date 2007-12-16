@@ -107,17 +107,17 @@ function nggallery_admin_manage_gallery() {
 				break;
 			case 1:
 			// Set watermark
-				ngg_generateWatermark(WINABSPATH.$gallerypath,$imageslist);
+				nggAdmin::generateWatermark(WINABSPATH.$gallerypath,$imageslist);
 				nggallery::show_message(__('Watermark successfully added',"nggallery"));
 				break;
 			case 2:
 			// Create new thumbnails
-				ngg_generatethumbnail(WINABSPATH.$gallerypath,$imageslist);
+				nggAdmin::generateThumbnail(WINABSPATH.$gallerypath,$imageslist);
 				nggallery::show_message(__('Thumbnails successfully created. Please refresh your browser cache.',"nggallery"));
 				break;
 			case 3:
 			// Resample images
-				ngg_resizeImages(WINABSPATH.$gallerypath,$imageslist);
+				nggAdmin::resizeImages(WINABSPATH.$gallerypath,$imageslist);
 				nggallery::show_message(__('Images successfully resized',"nggallery"));
 				break;
 			case 4:

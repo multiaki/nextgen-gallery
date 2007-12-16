@@ -2,8 +2,10 @@ NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
 V0.80 - soon
+- NEW : Progress bar for resize, watermark and thumbnail operation
 - NEW : Show Meta data information
 - NEW : Cache option for SinglePic
+- Changed : Moved several functions into nggAdmin Class (functions.php)
 - Changed : Update to jQuery V1.1.4 (v1.2.1 causes problems with interface.js)
 - Changed : Hide used galleries in album admin page 
 - Changed : Remove float in singlepic code and added class ngg-left , ngg-right (THX to Nathan Sylvain)
