@@ -136,7 +136,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<br /><?php if ( (IS_WPMU) && wpmu_enable_function('wpmuQuotaCheck') ) display_space_usage(); ?></td> 
 				</tr> 
 				<tr>
-					<th><?php _e('Add Meta data :', 'nggallery') ;?></th>
+					<th><?php _e('Add Metadata :', 'nggallery') ;?></th>
 					<td><input type="checkbox" name="addmetadata" value="1" />
 					<?php _e('Import EXIF, IPTC or XMP data (if available)', 'nggallery') ;?></td>
 				</tr>
@@ -161,7 +161,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<?php _e('For safe-mode = ON you need to add the subfolder thumbs manually', 'nggallery') ;?></td> 
 				</tr>
 				<tr>
-					<th><?php _e('Add Meta data :', 'nggallery') ;?></th>
+					<th><?php _e('Add Metadata :', 'nggallery') ;?></th>
 					<td><input type="checkbox" name="addmetadata" value="1" />
 					<?php _e('Import EXIF, IPTC or XMP data (if available)', 'nggallery') ;?></td>
 				</tr>
@@ -199,7 +199,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<br /><?php if ((IS_WPMU) && wpmu_enable_function('wpmuQuotaCheck')) display_space_usage(); ?></td> 
 				</tr> 
 				<tr>
-					<th><?php _e('Add Meta data :', 'nggallery') ;?></th>
+					<th><?php _e('Add Metadata :', 'nggallery') ;?></th>
 					<td><input type="checkbox" name="addmetadata" value="1" />
 					<?php _e('Import EXIF, IPTC or XMP data (if available)', 'nggallery') ;?></td>
 				</tr>
