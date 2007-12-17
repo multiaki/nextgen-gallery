@@ -8,8 +8,8 @@ function nggallery_admin_manage_gallery() {
 	//TODO:GID & Mode should the hidden post variables
 
 	// GET variables
-	$act_gid = trim(attribute_escape($_GET['gid']));
-	$act_pid = trim(attribute_escape($_GET['pid']));	
+	$act_gid = (int) trim(attribute_escape($_GET['gid']));
+	$act_pid = (int) trim(attribute_escape($_GET['pid']));	
 	$mode = trim(attribute_escape($_GET['mode']));
 
 	// get the options
@@ -139,6 +139,11 @@ function nggallery_admin_manage_gallery() {
 					nggallery::show_message(__('Pictures deleted successfully ',"nggallery"));
 				}
 				break;
+			case 8:
+			// Import Metadata
+				nggAdmin::import_MetaData($_POST['doaction']);
+				nggallery::show_message(__('Import metadata finished',"nggallery"));
+				break;
 		}
 	}
 	
@@ -220,11 +225,11 @@ function nggallery_admin_manage_gallery() {
 		// if no images are there, create empty array
 		if ($old_imageslist == NULL) $old_imageslist = array();
 		// read list of images in folder
-		$new_imageslist = ngg_scandir(WINABSPATH.$gallerypath);
+		$new_imageslist = nggAdmin::scandir(WINABSPATH.$gallerypath);
 		// check difference
 		$imageslist = array_diff($new_imageslist, $old_imageslist);
 		//create thumbnails
-		ngg_generatethumbnail(WINABSPATH.$gallerypath,$imageslist);
+		nggAdmin::generatethumbnail(WINABSPATH.$gallerypath,$imageslist);
 		// add images to database
 		$count_pic = 0;		
 		if (is_array($imageslist)) {
@@ -232,7 +237,8 @@ function nggallery_admin_manage_gallery() {
 				$result = $wpdb->query("INSERT INTO $wpdb->nggpictures (galleryid, filename, alttext, exclude) VALUES ('$act_gid', '$picture', '$picture', 0) ");
 				if ($result) $count_pic++;
 			}
-			$messagetext = '<font color="green">'.$count_pic.__(' picture(s) successfully added','nggallery').'</font>';
+			nggallery::show_message($count_pic.__(' picture(s) successfully added','nggallery'));
+			// $messagetext = '<font color="green">'.$count_pic.__(' picture(s) successfully added','nggallery').'</font>';
 		}
 	}
 
@@ -511,6 +517,7 @@ function getNumChecked(form)
 	<option value="2" ><?php _e("Create new thumbnails",'nggallery')?></option>
 	<option value="3" ><?php _e("Resize images",'nggallery')?></option>
 	<option value="4" ><?php _e("Delete images",'nggallery')?></option>
+	<option value="8" ><?php _e("Import metadata",'nggallery')?></option>
 <?php } else { ?>	
 	<option value="5" ><?php _e("Add tags",'nggallery')?></option>
 	<option value="6" ><?php _e("Delete tags",'nggallery')?></option>

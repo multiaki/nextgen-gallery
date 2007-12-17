@@ -98,6 +98,7 @@ class nggMeta{
 	
 			// this is done by Windows
 			$exif = $this->exif_data['WINXP'];
+
 			if (!empty($exif['Title']))
 				$meta['title'] = utf8_encode($exif['Title']);
 			if (!empty($exif['Author']))
@@ -106,7 +107,9 @@ class nggMeta{
 				$meta['tags'] = utf8_encode($exif['Keywords']);
 			if (!empty($exif['Subject']))
 				$meta['subject'] = utf8_encode($exif['Subject']);
-			
+			if (!empty($exif['Comments']))
+				$meta['caption'] = utf8_encode($exif['Comments']);
+							
 			$this->exif_array = $meta;
 		}
 		
@@ -145,7 +148,7 @@ class nggMeta{
 	
 	if (!$this->iptc_data)
 		return false;
-	
+
 	if (!is_array($this->iptc_array)){
 	
 		// --------- Set up Array Functions --------- //
@@ -168,7 +171,8 @@ class nggMeta{
 				"2#110" => 'credit',
 				"2#115" => 'source',
 				"2#116" => 'copyright',
-				"2#118" => 'contact'
+				"2#118" => 'contact',
+				"2#120" => 'caption'
 			);
 			
 			// var_dump($this->iptc_data);
@@ -289,11 +293,12 @@ class nggMeta{
 				'dc:title'					=> 'title',
 				'dc:creator' 				=> 'author',
 				'dc:subject' 				=> 'keywords',
+				'dc:description' 			=> 'caption',
 				'photoshop:AuthorsPosition' => 'position',
 				'photoshop:City'			=> 'city',
 				'photoshop:Country' 		=> 'country'
 			);
-			
+
 			foreach ($xmpTags as $key => $value) {
 				// if the kex exist
 				if ($xmlarray[$key]) {
@@ -330,7 +335,7 @@ class nggMeta{
   /**
    * nggMeta::get_META() - return a meta value form the available list 
    *
-   * @param bool $object
+   * @param string $object
    * @return mixed $value
    */
 	function get_META($object = false) {

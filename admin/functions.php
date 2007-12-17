@@ -69,7 +69,6 @@ class nggAdmin{
 		
 		//TODO: Check permission of existing thumb folder & images
 		
-		// import a existing folder
 		global $wpdb;
 		
 		// remove trailing slash at the end, if somebody use it
@@ -114,20 +113,14 @@ class nggAdmin{
 		nggAdmin::generatethumbnail($gallerypath,$new_images);
 
 		// add images to database		
-		$count_pic = 0;
-		if (is_array($new_images)) {
-			foreach($new_images as $picture) {
-			$result = $wpdb->query("INSERT INTO $wpdb->nggpictures (galleryid, filename, alttext, exclude) VALUES ('$gallery_id', '$picture', '$picture' , 0) ");
-			if ($result) $count_pic++;
-			}
-		}
-		
+		$count_pic = nggAdmin::add_Images($gallery_id, $gallerypath, $new_images);
+				
 		nggallery::show_message(__('Gallery','nggallery').' <strong>'.$galleryname.'</strong> '.__('successfully created!','nggallery').'<br />'.$count_pic.__(' pictures added.','nggallery'));
 		return;
 
 	}
 	// **************************************************************
-	function scandir($dirname=".") { 
+	function scandir($dirname = ".") { 
 		// thx to php.net :-)
 		$ext = array("jpeg", "jpg", "png", "gif"); 
 		$files = array(); 
@@ -259,7 +252,7 @@ class nggAdmin{
 			if ($elements > 10) $bar->setSleepOnFinish(2);
 			//print the empty bar
 			$bar->initialize($elements); 
-			
+		
 			foreach($pictures as $picture) {
 				// check for existing thumbnail
 				if (file_exists($gallery_absfolder.$thumbfolder.$prefix.$picture)) {
@@ -326,6 +319,90 @@ class nggAdmin{
 	}
 
 	// **************************************************************
+	function add_Images($galleryID, $gallerypath, $imageslist) {
+		// add images to database		
+		global $wpdb;
+		
+		$count_pic = 0;
+		if (is_array($imageslist)) {
+			foreach($imageslist as $picture) {
+
+				$result = $wpdb->query("INSERT INTO $wpdb->nggpictures (galleryid, filename, description, alttext, exclude) VALUES ('$galleryID', '$picture', '$description', '$alttext', 0) ");
+				$pic_id = (int) $wpdb->insert_id;
+				if ($result) $count_pic++;
+
+				// add the metadata
+				if ($_POST['addmetadata']) 
+					nggAdmin::import_MetaData($pic_id);
+					
+			} 
+		} // is_array
+		
+		return $count_pic;
+		
+	}
+
+	// **************************************************************
+	function import_MetaData($imagesIds) {
+		// add images to database		
+		global $wpdb;
+		
+		if (!is_array($imagesIds))
+			$imagesIds = array($imagesIds);
+		
+		foreach($imagesIds as $pic_id) {
+			
+			$picture  = new nggImage($pic_id );
+			if (!$picture->error) {
+
+				$meta = nggAdmin::get_MetaData($picture->absPath);
+				
+				// get the title
+				if (!$alttext = $meta['title'])
+					$alttext = $picture->alttext;
+				// get the caption / description field
+				if (!$description = $meta['caption'])
+					$description = $picture->description;
+				// update database
+				$result=$wpdb->query( "UPDATE $wpdb->nggpictures SET alttext = '$alttext', description = '$description'  WHERE pid = $pic_id");
+				// add the tags
+				if ($meta['keywords']) {
+					$taglist = explode(",", $meta['keywords']);
+					$taglist = array_map('trim', $taglist);
+					// load tag list
+					$nggTags = new ngg_Tags();
+					foreach($taglist as $tag) {
+						// get the tag id
+						$tagid = $nggTags->add_tag($tag);
+						if ( $tagid )
+							$nggTags->add_relationship($pic_id, $tagid);
+					}
+				} // add tags
+			}// error check
+		} // foreach
+		
+		return true;
+		
+	}
+
+	// **************************************************************
+	function get_MetaData($picPath) {
+		// must be Gallery absPath + filename
+		
+		require_once(NGGALLERY_ABSPATH.'/lib/nggmeta.lib.php');
+		
+		$meta = array();
+
+		$pdata = new nggMeta($picPath);
+		$meta['title'] = $pdata->get_META('title');		
+		$meta['caption'] = $pdata->get_META('caption');	
+		$meta['keywords'] = $pdata->get_META('keywords');	
+		
+		return $meta;
+		
+	}
+
+	// **************************************************************
 	function unzip($dir, $file) {
 	// thx to Gregor at http://blog.scoutpress.de/forum/topic/45
 		
@@ -367,7 +444,7 @@ class nggAdmin{
 	// **************************************************************
 	function import_zipfile($defaultpath) {
 		
-		if (ngg_check_quota())
+		if (nggAdmin::check_quota())
 			return;
 		
 		$temp_zipfile = $_FILES['zipfile']['tmp_name'];
@@ -445,15 +522,16 @@ class nggAdmin{
 				if (in_array($filename,$imageslist))
 					$filename = sanitize_title($filepart['filename']) . "_" . $i++ . "." .$filepart['extension'];
 					
-				$dest_gallery = $_POST['galleryselect'];
-				if ($dest_gallery == 0) {
-					@unlink($temp_file)  or die  ('<div class="updated"><p><strong>'.__('Unable to unlink file ', 'nggallery').$temp_zipfile.'!</strong></p></div>');		
+				$galleryID = (int) $_POST['galleryselect'];
+				
+				if ($galleryID == 0) {
+					@unlink($temp_file) or die  ('<div class="updated"><p><strong>'.__('Unable to unlink file ', 'nggallery').$temp_zipfile.'!</strong></p></div>');		
 					nggallery::show_error(__('No gallery selected !','nggallery'));
 					return;	
 				}
 		
 				// get the path to the gallery	
-				$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$dest_gallery' ");
+				$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$galleryID' ");
 				if (!$gallerypath){
 					@unlink($temp_file)  or die  ('<div class="updated"><p><strong>'.__('Unable to unlink file ', 'nggallery').$temp_zipfile.'!</strong></p></div>');		
 					nggallery::show_error(__('Failure in database, no gallery path set !','nggallery'));
@@ -484,20 +562,18 @@ class nggAdmin{
 
 			}
 		}
-			
-		//create thumbnails
-		nggAdmin::generatethumbnail(WINABSPATH.$gallerypath,$imageslist);
 		
-		// add images to database		
-		$count_pic = 0;
-		if (is_array($imageslist)) {
-			foreach($imageslist as $picture) {
-			$result = $wpdb->query("INSERT INTO $wpdb->nggpictures (galleryid, filename, alttext, exclude) VALUES ('$dest_gallery', '$picture', '$picture', 0) ");
-			if ($result) $count_pic++;
-			}
+		if (count($imageslist) > 0) {
+			
+			//create thumbnails
+			nggAdmin::generatethumbnail(WINABSPATH.$gallerypath,$imageslist);
+		
+			// add images to database		
+			$count_pic = nggAdmin::add_Images($galleryID, $gallerypath, $imageslist);
+		
+			nggallery::show_message($count_pic.__(' Image(s) successfully added','nggallery'));
 		}
 		
-		nggallery::show_message($count_pic.__(' Image(s) successfully added','nggallery'));
 		return;
 
 	} // end function
@@ -563,9 +639,8 @@ class wpProgressBar {
 
 		$numElements = (int) $numElements ;
 
-    	if($numElements == 0){
-    		$numElements = 1;
-    	}
+    	if($numElements == 0)
+    		return;
     	
     	$this->numSteps = $numElements;
 		

@@ -135,6 +135,11 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<br /><?php echo _e('Note : The upload limit on your server is ','nggallery') . "<strong>" . ini_get('upload_max_filesize') . "Byte</strong>\n"; ?>
 					<br /><?php if ( (IS_WPMU) && wpmu_enable_function('wpmuQuotaCheck') ) display_space_usage(); ?></td> 
 				</tr> 
+				<tr>
+					<th><?php _e('Add Meta data :', 'nggallery') ;?></th>
+					<td><input type="checkbox" name="addmetadata" value="1" />
+					<?php _e('Import EXIF, IPTC or XMP data (if available)', 'nggallery') ;?></td>
+				</tr>
 				</table>
 				<div class="submit"> <input type="submit" name= "zipupload" value="<?php _e('Start upload', 'nggallery') ;?>"/></div>
 			</fieldset>
@@ -154,6 +159,11 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<td><br /><input type="text" size="35" name="galleryfolder" value="<?php echo$defaultpath; ?>" /><br />
 					<?php _e('Import a folder with images. Please note :', 'nggallery') ;?><br /> 
 					<?php _e('For safe-mode = ON you need to add the subfolder thumbs manually', 'nggallery') ;?></td> 
+				</tr>
+				<tr>
+					<th><?php _e('Add Meta data :', 'nggallery') ;?></th>
+					<td><input type="checkbox" name="addmetadata" value="1" />
+					<?php _e('Import EXIF, IPTC or XMP data (if available)', 'nggallery') ;?></td>
 				</tr>
 				</table>
 				<div class="submit"> <input type="submit" name= "importfolder" value="<?php _e('Import folder', 'nggallery') ;?>"/></div>
@@ -188,6 +198,11 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<br /><?php echo _e('Note : The upload limit on your server is ','nggallery') . "<strong>" . ini_get('upload_max_filesize') . "Byte</strong>\n"; ?>
 					<br /><?php if ((IS_WPMU) && wpmu_enable_function('wpmuQuotaCheck')) display_space_usage(); ?></td> 
 				</tr> 
+				<tr>
+					<th><?php _e('Add Meta data :', 'nggallery') ;?></th>
+					<td><input type="checkbox" name="addmetadata" value="1" />
+					<?php _e('Import EXIF, IPTC or XMP data (if available)', 'nggallery') ;?></td>
+				</tr>
 				</table>
 				<div class="submit"><input type="submit" name= "uploadimage" value="<?php _e('Upload images', 'nggallery') ;?>"/></div>
 			</fieldset>

@@ -2,6 +2,7 @@ NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
 V0.80 - soon
+- NEW : Import Meta data from images
 - NEW : Progress bar for resize, watermark and thumbnail operation
 - NEW : Show Meta data information
 - NEW : Cache option for SinglePic
