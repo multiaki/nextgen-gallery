@@ -104,8 +104,8 @@ class nggImage{
 		$ngg_options = get_option('ngg_options');
 		
 		// get the effect code
-		if ($ngg_options[thumbEffect] != "none") $this->thumbcode = stripslashes($ngg_options[thumbCode]);
-		if ($ngg_options[thumbEffect] == "highslide") $this->thumbcode = str_replace("%GALLERY_NAME%", "'".$galleryname."'", $this->thumbcode);
+		if ($ngg_options['thumbEffect'] != "none") $this->thumbcode = stripslashes($ngg_options['thumbCode']);
+		if ($ngg_options['thumbEffect'] == "highslide") $this->thumbcode = str_replace("%GALLERY_NAME%", "'".$galleryname."'", $this->thumbcode);
 		else $this->thumbcode = str_replace("%GALLERY_NAME%", $galleryname, $this->thumbcode);
 		
 		return $this->thumbcode;
@@ -328,11 +328,12 @@ class nggallery {
 	// create the complete navigation
 	/**********************************************************/
 	function create_navigation($page, $totalElement, $maxElement = 0) {
+		global $nggRewrite;
+		
 	 	$navigation = "";
 	 	
 		 	if ($maxElement > 0) {
 			$total = $totalElement;
-			$args['page'] = get_the_ID();
 					
 			// create navigation	
 			if ( $total > $maxElement ) {
@@ -340,7 +341,7 @@ class nggallery {
 				$r = '';
 				if ( 1 < $page ) {
 					$args['nggpage'] = ( 1 == $page - 1 ) ? FALSE : $page - 1;
-					$r .=  '<a class="prev" href="'. htmlspecialchars( add_query_arg( $args ) ) . '">&#9668;</a>';
+					$r .=  '<a class="prev" href="'. $nggRewrite->get_permalink( $args ) . '">&#9668;</a>';
 				}
 				if ( ( $total_pages = ceil( $total / $maxElement ) ) > 1 ) {
 					for ( $page_num = 1; $page_num <= $total_pages; $page_num++ ) {
@@ -350,7 +351,7 @@ class nggallery {
 							$p = false;
 							if ( $page_num < 3 || ( $page_num >= $page - 3 && $page_num <= $page + 3 ) || $page_num > $total_pages - 3 ) {
 								$args['nggpage'] = ( 1 == $page_num ) ? FALSE : $page_num;
-								$r .= '<a class="page-numbers" href="' . htmlspecialchars( add_query_arg( $args ) ) . '">' . ( $page_num ) . '</a>';
+								$r .= '<a class="page-numbers" href="' . $nggRewrite->get_permalink( $args ) . '">' . ( $page_num ) . '</a>';
 								$in = true;
 							} elseif ( $in == true ) {
 								$r .= '<span>...</span>';
@@ -361,7 +362,7 @@ class nggallery {
 				}
 				if ( ( $page ) * $maxElement < $total || -1 == $total ) {
 					$args['nggpage'] = $page + 1;
-					$r .=  '<a class="next" href="' . htmlspecialchars( add_query_arg( $args ) ) . '">&#9658;</a>';
+					$r .=  '<a class="next" href="' . $nggRewrite->get_permalink ( $args ) . '">&#9658;</a>';
 				}
 				
 				$navigation = "<div class='ngg-navigation'>$r</div>";
@@ -373,6 +374,73 @@ class nggallery {
 		return $navigation;
 	}
 	
+ /**
+   * nggallery::get_option() - get the options and overwrite them with custom meta settings
+   *
+   * @param string $key
+   * @return array $options
+   */
+	function get_option($key) {
+		// get first the options from the database 
+		$options = get_option($key);
+		// Get all key/value data for the current post. 
+		$meta_array = get_post_custom();
+		// assign meta key to db setting key
+		$meta_tags = array(
+			'string' => array(
+			'ngg_gal_ShowOrder' 		=> 'galShowOrder',
+			'ngg_gal_Sort' 				=> 'galSort',
+			'ngg_gal_SortDirection' 	=> 'galSortDir',
+			'ngg_gal_ShowDescription'	=> 'galShowDesc',
+			'ngg_ir_Audio' 				=> 'irAudio',
+			'ngg_ir_Overstretch'		=> 'irOverstretch',
+			'ngg_ir_Transition'			=> 'irTransition',
+			'ngg_ir_Backcolor' 			=> 'irBackcolor',
+			'ngg_ir_Frontcolor' 		=> 'irFrontcolor',
+			'ngg_ir_Lightcolor' 		=> 'irLightcolor'
+			),
+
+			'int' => array(
+			'ngg_gal_Images' 			=> 'galImages',
+			'ngg_gal_Sort' 				=> 'galSort',
+			'ngg_ir_Width' 				=> 'irWidth',
+			'ngg_ir_Height' 			=> 'irHeight',
+			'ngg_ir_Rotatetime' 		=> 'irRotatetime'
+			),
+
+			'bool' => array(
+			'ngg_gal_ShowSlide'			=> 'galShowSlide',
+			'ngg_gal_ImgageBrowser' 	=> 'galImgBrowser',
+			'ngg_ir_Shuffle' 			=> 'irShuffle',
+			'ngg_ir_LinkFromDisplay' 	=> 'irLinkfromdisplay',
+			'ngg_ir_ShowNavigation'		=> 'irShownavigation',
+			'ngg_ir_ShowWatermark' 		=> 'irWatermark',
+			'ngg_ir_Overstretch'		=> 'irOverstretch',
+			'ngg_ir_Kenburns' 			=> 'irKenburns'
+			)
+		);
+		
+		foreach ($meta_tags as $typ => $meta_keys){
+			foreach ($meta_keys as $key => $db_value){
+				// if the kex exist overwrite it with the custom field
+				if (array_key_exists($key, $meta_array)){
+					switch ($typ) {
+						case "string":
+							$options[$db_value] = (string) attribute_escape($meta_array[$key][0]);
+							break;
+						case "int":
+							$options[$db_value] = (int) $meta_array[$key][0];
+							break;
+						case "bool":
+							$options[$db_value] = (bool) $meta_array[$key][0];
+							break;	
+					}
+				}
+			}
+		}
+		
+		return $options;
+	}
 }
 
 /**
@@ -537,13 +605,15 @@ class ngg_Tags {
 			
 		$picarray = array();
 		
-		// first get all picture with this tag
+		// first get all picture with this tag //
 		$picids = $wpdb->get_col("SELECT t.picid FROM $wpdb->nggpic2tags AS t INNER JOIN $wpdb->nggtags AS tt ON t.tagid = tt.id WHERE tt.slug IN ($sluglist) ORDER BY t.picid ASC ");
+
 		if (is_array($picids)){
 			// now get all pictures
 			$piclist = "'" . implode("', '", $picids) . "'";
-			//TODO:Use thumbnail sort order ?
-			$picarray = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggpictures AS t INNER JOIN $wpdb->nggallery AS tt ON t.galleryid = tt.gid WHERE t.pid IN ($piclist) ORDER BY t.pid ASC ");
+			//TODO: Use thumbnail sort order ? v0.80 Use now random function
+			//$picarray = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggpictures AS t INNER JOIN $wpdb->nggallery AS tt ON t.galleryid = tt.gid WHERE t.pid IN ($piclist) ORDER BY t.pid ASC ");
+			$picarray = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggpictures AS t INNER JOIN $wpdb->nggallery AS tt ON t.galleryid = tt.gid WHERE t.pid IN ($piclist) ORDER BY rand() ");			
 		}
 		
 		return $picarray;
@@ -579,4 +649,150 @@ class ngg_Tags {
 	}
 
 }
+
+// First version of Rewrite Rules
+// sorry wp-guys I didn't understand this at all. I tried it a couple of hours : this is the only pooooor result
+class nggRewrite {
+
+	// default value
+	var $slug	=	"nggallery";	
+
+	function nggRewrite() {
+		
+		// read the option setting
+		$this->options = get_option('ngg_options');
+		
+		// get later from the options
+		$this->slug = "nggallery";
+
+		/*WARNING: Do nothook rewrite rule regentation on the init hook for anything other than dev. */
+		//add_action('init',array(&$this, 'flush'));
+		
+		add_filter('query_vars', array(&$this, 'add_queryvars') );
+		if ($this->options['usePermalinks'])
+		add_action('generate_rewrite_rules', array(&$this, 'RewriteRules'));
+		   
+	} // end of initialization
+
+	function get_permalink( $args ) {
+		global $wp_rewrite, $wp_query;
+
+		if ($wp_rewrite->using_permalinks() && $this->options['usePermalinks'] ) {
+			
+			$post = &get_post(get_the_ID());
+
+			// $_GET from wp_query
+			$album = get_query_var('album');
+			if ( !empty( $album ) )
+				$args ['album'] = $album;
+			$gallery = get_query_var('gallery');
+			if ( !empty( $gallery ) )
+				$args ['gallery'] = $gallery;
+			$gallerytag = get_query_var('gallerytag');
+			if ( !empty( $gallerytag ) )
+				$args ['gallerytag'] = $gallerytag;
+
+			if (is_home())
+				$args['pageid'] = $post->ID;
+			
+			/* urlconstructor =  slug | type | tags | [nav] | [show]
+				type : 	page | post
+			    tags : 	album, gallery 	-> /album-([0-9]+)/gallery-([0-9]+)/
+						pid 			-> /page/([0-9]+)/
+						gallerytag		-> /tags/([^/]+)/
+				nav	 : 	nggpage			-> /page-([0-9]+)/
+				show : 	show=slide		-> /slideshow/
+						show=gallery	-> /images/	
+			*/
+
+			// 1. Blog url + main slug
+			$url = get_option('home'). "/". $this->slug;
+			// 2. Post or page ?
+			if ( $post->post_type == 'page' )
+				$url .= "/page/".$post->post_name;
+			else
+				$url .= "/post/".$post->post_name;
+			// 3. Album, pid or tags
+			if  (isset ($args['album']) && isset ($args['gallery']) )
+				$url .= "/album-".$args['album']."/gallery-".$args['gallery'];
+			if  (isset ($args['gallerytag']))
+				$url .= "/tags/".$args['gallerytag'];
+			if  (isset ($args['pid']))
+				$url .= "/page/".$args['pid'];				
+			// 4. Navigation
+			if  (isset ($args['nggpage']))
+				$url .= "/page-".$args['nggpage'];
+			// 5. Show images or Slideshow
+			if  (isset ($args['show']))
+				$url .= ( $args['show'] == 'slide' ) ? "/slideshow" : "/images";
+
+			return $url;
+	
+		} else {
+			// we need to add the page/post id at the start_page otherwise we don't know which gallery is clicked
+			if (is_home())
+				$args['pageid'] = get_the_ID();
+				$query = htmlspecialchars(add_query_arg( $args)); 
+			return $query;
+		}
+	}
+
+	// The permalinks needs to be flushed after activation
+	function flush() { 
+		global $wp_rewrite;
+		$wp_rewrite->flush_rules();
+	}
+
+	// add some more vars to the big wp_query
+	function add_queryvars( $query_vars ){
+	    $query_vars[] = 'pid';
+	    $query_vars[] = 'pageid';
+	    $query_vars[] = 'nggpage';
+	    $query_vars[] = 'gallery';
+	    $query_vars[] = 'album';
+	    $query_vars[] = 'gallerytag';
+	    $query_vars[] = 'show';
+	    return $query_vars;
+	}
+	
+	function RewriteRules($wp_rewrite) {
+	
+		$rewrite_rules = array
+		  (
+		  	// rewrite rules for pages
+			$this->slug.'/page/([^/]+)/?$' => 'index.php?pagename=$matches[1]',
+			$this->slug.'/page/([^/]+)/page-([0-9]+)/?$' => 'index.php?pagename=$matches[1]&nggpage=$matches[2]',
+			$this->slug.'/page/([^/]+)/page/([0-9]+)/?$' => 'index.php?pagename=$matches[1]&pid=$matches[2]',
+			$this->slug.'/page/([^/]+)/slideshow/?$' => 'index.php?pagename=$matches[1]&show=slide',
+		    $this->slug.'/page/([^/]+)/images/?$' => 'index.php?pagename=$matches[1]&show=gallery',
+			$this->slug.'/page/([^/]+)/tags/([^/]+)/?$' => 'index.php?pagename=$matches[1]&gallerytag=$matches[2]',
+			$this->slug.'/page/([^/]+)/tags/([^/]+)/page-([0-9]+)/?$' => 'index.php?pagename=$matches[1]&gallerytag=$matches[2]&nggpage=$matches[3]',
+		    $this->slug.'/page/([^/]+)/album-([0-9]+)/gallery-([0-9]+)/?$' => 'index.php?pagename=$matches[1]&album=$matches[2]&gallery=$matches[3]',
+			$this->slug.'/page/([^/]+)/album-([0-9]+)/gallery-([0-9]+)/slideshow/?$' => 'index.php?pagename=$matches[1]&album=$matches[2]&gallery=$matches[3]&show=slide',
+		    $this->slug.'/page/([^/]+)/album-([0-9]+)/gallery-([0-9]+)/images/?$' => 'index.php?pagename=$matches[1]&album=$matches[2]&gallery=$matches[3]&show=gallery',
+			$this->slug.'/page/([^/]+)/album-([0-9]+)/gallery-([0-9]+)/page-([0-9]+)/?$' => 'index.php?pagename=$matches[1]&album=$matches[2]&gallery=$matches[3]&nggpage=$matches[4]',
+		    $this->slug.'/page/([^/]+)/album-([0-9]+)/gallery-([0-9]+)/page-([0-9]+)/slideshow/?$' => 'index.php?pagename=$matches[1]&album=$matches[2]&gallery=$matches[3]&nggpage=$matches[4]&show=slide',
+		    $this->slug.'/page/([^/]+)/album-([0-9]+)/gallery-([0-9]+)/page-([0-9]+)/images/?$' => 'index.php?pagename=$matches[1]&album=$matches[2]&gallery=$matches[3]&nggpage=$matches[4]&show=gallery',
+			// rewrite rules for posts
+			$this->slug.'/post/([^/]+)/?$' => 'index.php?name=$matches[1]',
+			$this->slug.'/post/([^/]+)/page-([0-9]+)/?$' => 'index.php?name=$matches[1]&nggpage=$matches[2]',
+			$this->slug.'/post/([^/]+)/page/([0-9]+)/?$' => 'index.php?name=$matches[1]&pid=$matches[2]',
+			$this->slug.'/post/([^/]+)/slideshow/?$' => 'index.php?name=$matches[1]&show=slide',
+		    $this->slug.'/post/([^/]+)/images/?$' => 'index.php?name=$matches[1]&show=gallery',
+			$this->slug.'/post/([^/]+)/tags/([^/]+)/?$' => 'index.php?name=$matches[1]&gallerytag=$matches[2]',
+			$this->slug.'/post/([^/]+)/tags/([^/]+)/page-([0-9]+)/?$' => 'index.php?name=$matches[1]&gallerytag=$matches[2]&nggpage=$matches[3]',
+		    $this->slug.'/post/([^/]+)/album-([0-9]+)/gallery-([0-9]+)/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]',
+			$this->slug.'/post/([^/]+)/album-([0-9]+)/gallery-([0-9]+)/slideshow/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]&show=slide',
+		    $this->slug.'/post/([^/]+)/album-([0-9]+)/gallery-([0-9]+)/images/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]&show=gallery',
+			$this->slug.'/post/([^/]+)/album-([0-9]+)/gallery-([0-9]+)/page-([0-9]+)/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]&nggpage=$matches[4]',
+		    $this->slug.'/post/([^/]+)/album-([0-9]+)/gallery-([0-9]+)/page-([0-9]+)/slideshow/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]&nggpage=$matches[4]&show=slide',
+		    $this->slug.'/post/([^/]+)/album-([0-9]+)/gallery-([0-9]+)/page-([0-9]+)/images/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]&nggpage=$matches[4]&show=gallery',
+		  );
+
+		$wp_rewrite->rules = $wp_rewrite->rules + $rewrite_rules;
+		
+	}
+	
+}  // of nggRewrite CLASS
+
 ?>
