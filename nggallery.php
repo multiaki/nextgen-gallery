@@ -98,14 +98,18 @@ function nggallery_init ()
 if (is_admin()) {
 	include_once (dirname (__FILE__)."/ngginstall.php");
 	include_once (dirname (__FILE__)."/admin/admin.php");
-	include_once (dirname (__FILE__)."/tinymce/tinymce.php");
 } else {
 // Load the gallery generator
 	include_once (dirname (__FILE__)."/nggfunctions.php");
 }
 
-// load gallery class
+// Load tinymce button 
+include_once (dirname (__FILE__)."/tinymce/tinymce.php");
+
+// Load gallery class
 require_once (dirname (__FILE__).'/lib/nggallery.lib.php');
+
+// Init the clas
 $nggallery = new nggallery();
 
 // Add rewrite rules
@@ -138,7 +142,7 @@ function ngg_addjs() {
 	    
 	// test for wordTube function
 	if (!function_exists('integrate_swfobject')) {
-		wp_enqueue_script('swfobject', NGGALLERY_URLPATH .'js/swfobject.js', FALSE, '1.5');
+		wp_enqueue_script('swfobject', NGGALLERY_URLPATH .'admin/js/swfobject.js', FALSE, '1.5');
 	}
 }
 

@@ -17,7 +17,7 @@ function insert_nextgen_script() {
 
 			var template = new Array();
 	
-			template['file'] = '".NGGALLERY_URLPATH."nggbutton.php';
+			template['file'] = '".NGGALLERY_URLPATH."tinymce/window.php';
 			template['width'] = 360;
 			template['height'] = 210;
 	
@@ -73,7 +73,7 @@ function nextgen_button_plugin($plugins) {
 // Load the TinyMCE plugin : editor_plugin.js (wp2.1)
 function nextgen_button_script() {	
  
-	echo 'tinyMCE.loadPlugin("NextGEN", "'.NGGALLERY_URLPATH.'js/");' . "\n"; 
+	echo 'tinyMCE.loadPlugin("NextGEN", "'.NGGALLERY_URLPATH.'tinymce/");' . "\n"; 
 	return;
 }
 

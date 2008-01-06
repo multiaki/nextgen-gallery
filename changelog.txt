@@ -10,6 +10,7 @@ V0.80 - soon
 - NEW : Permalink support
 - NEW : Custom fields support - Change the settings for each post/page
 - Changed : Admin CSS in new folder/file for better structure
+- Changed : Clean up folder structure
 - Changed : Clean up code in manage.php, functions.php
 - Changed : Moved several functions into nggAdmin Class (functions.php)
 - Changed : Update to jQuery V1.1.4 (v1.2.1 causes problems with interface.js)
