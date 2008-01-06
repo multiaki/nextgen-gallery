@@ -2,10 +2,15 @@ NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
 V0.80 - soon
-- NEW : Import Meta data from images
+- NEW : SWFUpload integrated : Show upload progress and select multiple files in the file browser dialog. 
 - NEW : Progress bar for resize, watermark and thumbnail operation
+- NEW : Import Meta data from images
 - NEW : Show Meta data information
 - NEW : Cache option for SinglePic
+- NEW : Permalink support
+- NEW : Custom fields support - Change the settings for each post/page
+- Changed : Admin CSS in new folder/file for better structure
+- Changed : Clean up code in manage.php, functions.php
 - Changed : Moved several functions into nggAdmin Class (functions.php)
 - Changed : Update to jQuery V1.1.4 (v1.2.1 causes problems with interface.js)
 - Changed : Hide used galleries in album admin page 
@@ -18,6 +23,7 @@ V0.80 - soon
 - Bugfix : Watermark for GIF not correct supported
 - Bugfix : Missing wp_nonce at setup page
 - Bugfix : Add DIV in Slideshow link (for Safari)
+- Added : Set WP-CHARSET / COLLATE during installation
 - Added : Updated to Pclzip.lib.php v2.6
 - Added : CSS ID field for gallery & images
 - Added : WPMU : New site admin page (wpmu.php)
