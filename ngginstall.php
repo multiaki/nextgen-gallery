@@ -33,6 +33,16 @@ function nggallery_install () {
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 	else
 		require_once(ABSPATH . 'wp-admin/upgrade-functions.php');
+	
+	// add charset & collate like wp core
+	$charset_collate = '';
+
+	if ( version_compare(mysql_get_server_info(), '4.1.0', '>=') ) {
+		if ( ! empty($wpdb->charset) )
+			$charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
+		if ( ! empty($wpdb->collate) )
+			$charset_collate .= " COLLATE $wpdb->collate";
+	}
 		
    	$nggpictures					= $wpdb->prefix . 'ngg_pictures';
 	$nggallery						= $wpdb->prefix . 'ngg_gallery';
@@ -50,7 +60,7 @@ function nggallery_install () {
 		alttext MEDIUMTEXT NULL ,
 		exclude TINYINT NULL DEFAULT '0' ,
 		PRIMARY KEY pid (pid)
-		);";
+		) $charset_collate;";
 	
       dbDelta($sql);
  
@@ -69,7 +79,7 @@ function nggallery_install () {
 		pageid BIGINT(20) NULL DEFAULT '0' ,
 		previewpic BIGINT(20) NULL DEFAULT '0' ,
 		PRIMARY KEY gid (gid)
-		);";
+		) $charset_collate;";
 	
       dbDelta($sql);
    }
@@ -81,7 +91,7 @@ function nggallery_install () {
 		name VARCHAR(255) NOT NULL ,
 		sortorder LONGTEXT NOT NULL,
 		PRIMARY KEY id (id)
-		);";
+		) $charset_collate;";
 	
       dbDelta($sql);
     }
@@ -95,7 +105,7 @@ function nggallery_install () {
 		slug VARCHAR(200) NOT NULL,
 		PRIMARY KEY id (id),
 		UNIQUE KEY slug (slug)
-		);";
+		) $charset_collate;";
 	
       dbDelta($sql);
     }
@@ -107,7 +117,7 @@ function nggallery_install () {
 		 tagid BIGINT(20) NOT NULL DEFAULT 0,
 		 PRIMARY KEY  (picid, tagid),
 		 KEY tagid (tagid)
-		);";
+		) $charset_collate;";
 	
       dbDelta($sql);
     }
@@ -143,6 +153,8 @@ function ngg_default_options() {
 	$ngg_options['gallerypath']			= "wp-content/gallery/";  		// set default path to the gallery
 	$ngg_options['scanfolder']			= false;						// search for new images  (not used)
 	$ngg_options['deleteImg']			= true;							// delete Images
+	$ngg_options['swfUpload']			= true;							// activate the batch upload
+	$ngg_options['usePermalinks']		= true;							// use permalinks for parameters
 	
 	// Tags / categories
 	$ngg_options['activateTags']		= false;						// append related images
