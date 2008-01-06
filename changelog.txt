@@ -27,13 +27,13 @@ V0.80 - soon
 - Added : Set WP-CHARSET / COLLATE during installation
 - Added : Updated to Pclzip.lib.php v2.6
 - Added : CSS ID field for gallery & images
-- Added : WPMU : New site admin page (wpmu.php)
-- Added : WPMU : Integrated quota check
-- Added : WPMU : No update check
-- Added : WPMU : Remove edit style (THX to Kristin)
-- Added : WPMU : Remove uninstall button
-- Added : WPMU : Remove server settings
-- Added : WPMU : Gallery path set to blog.dir
+- WPMU : New site admin page (wpmu.php)
+- WPMU : Integrated quota check
+- WPMU : No update check
+- WPMU : Remove edit style (THX to Kristin)
+- WPMU : Remove uninstall button
+- WPMU : Remove server settings
+- WPMU : Gallery path set to blog.dir
 - Added : Support for WPMU
 
 V0.74 - 01.12.2007
