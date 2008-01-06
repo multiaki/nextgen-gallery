@@ -1,7 +1,5 @@
 <?php  
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
-
-	//TODO: Check better upload form like http://digitarald.de/project/fancyupload/
 	
 	// sometimes a error feedback is better than a white screen
 	ini_set('error_reporting', E_ALL ^ E_NOTICE);
@@ -12,10 +10,16 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	$ngg_options = get_option('ngg_options');
 	
 	// same as $_SERVER['REQUEST_URI'], but should work under IIS 6.0
-	$filepath    = get_option('siteurl'). '/wp-admin/admin.php?page='.$_GET['page'];
+	$filepath    = get_option('siteurl') . '/wp-admin/admin.php?page='.$_GET['page'];
+	
+	// link for the flash file
+	$swf_upload_link = NGGALLERY_URLPATH . 'admin/upload.php';
+	$swf_upload_link = wp_nonce_url($swf_upload_link, 'ngg_swfupload');
+	//flash doesn't seem to like encoded ampersands, so convert them back here
+	$swf_upload_link = str_replace('&#038;', '&', $swf_upload_link);
 
 	$defaultpath = $ngg_options['gallerypath'];	
-	
+
 	if ($_POST['addgallery']){
 		check_admin_referer('ngg_addgallery');
 		$newgallery = attribute_escape($_POST['galleryname']);
@@ -41,28 +45,106 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	if ($_POST['uploadimage']){
 		check_admin_referer('ngg_addgallery');
 		if ($_FILES['MF__F_0_0']['error'] == 0) {
-			$messagetext = nggAdmin::upload_images($defaultpath);
+			$messagetext = nggAdmin::upload_images();
 		}
 		else
 			nggallery::show_error(__('Upload failed!','nggallery'));	
 	}
+	
+	if (isset($_POST['swf_callback'])){
+		if ($_POST['galleryselect'] == "0" )
+			nggallery::show_error(__('No gallery selected !','nggallery'));
+		else {
+			// get the path to the gallery
+			$galleryID = (int) $_POST['galleryselect'];
+			$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$galleryID' ");
+			$messagetext = nggAdmin::import_gallery($gallerypath);
+		}	
+	}
+	
+	//get maximum allowable size from php.ini
+	//thx to Whoismanu PhotoQ / M.Flury 
+		$max_upl_size = strtolower( ini_get( 'upload_max_filesize' ) );
+		$max_upl_kbytes = 0;
+		if (strpos($max_upl_size, 'k') !== false)
+			$max_upl_kbytes = $max_upl_size;
+		if (strpos($max_upl_size, 'm') !== false)
+			$max_upl_kbytes = $max_upl_size * 1024;
+		if (strpos($max_upl_size, 'g') !== false)
+			$max_upl_kbytes = $max_upl_size * 1024 * 1024;
 			
 	// message windows
 	if(!empty($messagetext)) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$messagetext.'</p></div>'; }
-
 	?>
 	
-	<link rel="stylesheet" href="<?php echo NGGALLERY_URLPATH ?>admin/js/jquery.tabs.css" type="text/css" media="print, projection, screen"/>
-    <!-- Additional IE/Win specific style sheet (Conditional Comments) -->
+	<link rel="stylesheet" href="<?php echo NGGALLERY_URLPATH ?>admin/css/nggadmin.css" type="text/css" media="print, projection, screen"/>
+	<link rel="stylesheet" href="<?php echo NGGALLERY_URLPATH ?>admin/css/jquery.tabs.css" type="text/css" media="print, projection, screen"/>
+    
+	<!-- Additional IE/Win specific style sheet (Conditional Comments) -->
     <!--[if lte IE 7]>
-    <link rel="stylesheet" href="<?php echo NGGALLERY_URLPATH ?>admin/js/jquery.tabs-ie.css" type="text/css" media="projection, screen"/>
+    <link rel="stylesheet" href="<?php echo NGGALLERY_URLPATH ?>admin/css/jquery.tabs-ie.css" type="text/css" media="projection, screen"/>
     <![endif]-->
-
+	
+	<?php if($ngg_options['swfUpload']) { ?>
+	
+	<!-- SWFUpload script -->
 	<script type="text/javascript">
-		jQuery(function() {
-			jQuery('#slider').tabs({ fxFade: true, fxSpeed: 'fast' });	
-		});
-		
+		var ngg_swf_upload;
+			
+		window.onload = function () {
+			ngg_swf_upload = new SWFUpload({
+				// Backend settings
+				upload_url : "<?php echo $swf_upload_link; ?>",
+				flash_url : "<?php echo NGGALLERY_URLPATH; ?>admin/js/swfupload_f9.swf",
+								
+				// File Upload Settings
+				file_size_limit : <?php echo $max_upl_kbytes;?>,	// 200 kb
+				file_types : "*.jpg;*.gif;*.png",
+				file_types_description : "<?php _e('Image Files', 'nggallery') ;?>",
+				
+				// Queue handler
+				file_queued_handler : fileQueued,
+				
+				// Upload handler
+				upload_start_handler : uploadStart,
+				upload_progress_handler : uploadProgress,
+				upload_error_handler : uploadError,
+				upload_success_handler : uploadSuccess,
+				upload_complete_handler : uploadComplete,
+				
+				post_params : {
+					galleryselect : "0"
+				},
+				
+				// i18names
+				custom_settings : {
+					remove : "<?php _e('remove', 'nggallery') ;?>",
+					browse : "<?php _e('Browse...', 'nggallery') ;?>",
+					upload : "<?php _e('Upload images', 'nggallery') ;?>"
+				},
+
+				// Debug settings
+				debug: false
+				
+			});
+			
+			// on load change the upload to swfupload
+			initSWFUpload();
+			
+		};
+	</script>
+	
+	<div class="wrap" id="progressbar-wrap">
+		<div class="progressborder">
+			<div class="progressbar" id="progressbar">
+				<span>0%</span>
+			</div>
+		</div>
+	</div>
+	
+	<?php } else { ?>
+	<!-- MultiFile script -->
+	<script type="text/javascript">	
 		jQuery(function(){
 			jQuery('#imagefiles').MultiFile({
 				STRING: {
@@ -70,9 +152,15 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
   				}
 		 	});
 		});
-
 	</script>
-	
+	<?php } ?>
+	<!-- jQuery Tabs script -->
+	<script type="text/javascript">
+		jQuery(function() {
+			jQuery('#slider').tabs({ fxFade: true, fxSpeed: 'fast' });	
+		});
+	</script>
+		
 	<div id="slider" class="wrap">
 	
 		<ul id="tabs">
@@ -89,7 +177,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		<!-- create gallery -->
 		<div id="addgallery">
 		<h2><?php _e('Add new gallery', 'nggallery') ;?></h2>
-			<form name="addgallery" id="addgallery" method="POST" action="<?php echo $filepath; ?>" accept-charset="utf-8" >
+			<form name="addgallery" id="addgallery_form" method="POST" action="<?php echo $filepath; ?>" accept-charset="utf-8" >
 			<?php wp_nonce_field('ngg_addgallery') ?>
 			<fieldset class="options">
 				<table class="optiontable"> 
@@ -110,7 +198,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		<!-- zip-file operation -->
 		<div id="zipupload">
 		<h2><?php _e('Upload a Zip-File', 'nggallery') ;?></h2>
-			<form name="zipupload" id="zipupload" method="POST" enctype="multipart/form-data" action="<?php echo $filepath.'#zipupload'; ?>" accept-charset="utf-8" >
+			<form name="zipupload" id="zipupload_form" method="POST" enctype="multipart/form-data" action="<?php echo $filepath.'#zipupload'; ?>" accept-charset="utf-8" >
 			<?php wp_nonce_field('ngg_addgallery') ?>
 			<fieldset class="options">
 				<table class="optiontable"> 
@@ -150,7 +238,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		<!-- import folder -->
 		<div id="importfolder">
 		<h2><?php _e('Import image folder', 'nggallery') ;?></h2>
-			<form name="importfolder" id="importfolder" method="POST" action="<?php echo $filepath.'#importfolder'; ?>" accept-charset="utf-8" >
+			<form name="importfolder" id="importfolder_form" method="POST" action="<?php echo $filepath.'#importfolder'; ?>" accept-charset="utf-8" >
 			<?php wp_nonce_field('ngg_addgallery') ?>
 			<fieldset class="options">
 				<table class="optiontable"> 
@@ -174,17 +262,17 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		<!-- upload images -->
 		<div id="uploadimage">
 		<h2><?php _e('Upload Images', 'nggallery') ;?></h2>
-			<form name="uploadimage" id="uploadimage" method="POST" enctype="multipart/form-data" action="<?php echo $filepath.'#uploadimage'; ?>" accept-charset="utf-8" >
+			<form name="uploadimage" id="uploadimage_form" method="POST" enctype="multipart/form-data" action="<?php echo $filepath.'#uploadimage'; ?>" accept-charset="utf-8" >
 			<?php wp_nonce_field('ngg_addgallery') ?>
 			<fieldset class="options">
 				<table class="optiontable"> 
 				<tr valign="top"> 
-					<th scope="row"><?php _e('Upload image', 'nggallery') ;?></th> 
-					<td><input type="file" name="imagefiles" id="imagefiles" size="35" class="imagefiles"/></td> 
+					<th scope="row"><?php _e('Upload image', 'nggallery') ;?></th>
+					<td><input type="file" name="imagefiles" id="imagefiles" size="35" class="imagefiles"/></td>
 				</tr> 
 				<tr valign="top"> 
 					<th scope="row"><?php _e('in to', 'nggallery') ;?></th> 
-					<td><select name="galleryselect">
+					<td><select name="galleryselect" id="galleryselect">
 					<option value="0" ><?php _e('Choose gallery', 'nggallery') ?></option>
 					<?php
 						$gallerylist = $wpdb->get_results("SELECT * FROM $wpdb->nggallery ORDER BY gid ASC");
@@ -204,7 +292,9 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<?php _e('Import EXIF, IPTC or XMP data (if available)', 'nggallery') ;?></td>
 				</tr>
 				</table>
-				<div class="submit"><input type="submit" name= "uploadimage" value="<?php _e('Upload images', 'nggallery') ;?>"/></div>
+				<div class="submit">
+					<input type="submit" name="uploadimage" id="uploadimage_btn" value="<?php _e('Upload images', 'nggallery') ;?>" />
+				</div>
 			</fieldset>
 			</form>
 		</div>

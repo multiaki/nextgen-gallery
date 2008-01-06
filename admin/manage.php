@@ -76,7 +76,7 @@ function nggallery_admin_manage_gallery() {
 				$thumb_prefix = nggallery::get_thumbnail_prefix($gallerypath, FALSE);
 				if ($ngg_options[deleteImg]) {
 					@unlink(WINABSPATH.$gallerypath.'/'.$thumb_folder.'/'.$thumb_prefix.$filename);
-					 unlink(WINABSPATH.$gallerypath.'/'.$filename);
+					@unlink(WINABSPATH.$gallerypath.'/'.$filename);
 				}
 			}		
 			$delete_pic = $wpdb->query("DELETE FROM $wpdb->nggpictures WHERE pid = $act_pid");
@@ -217,29 +217,11 @@ function nggallery_admin_manage_gallery() {
 
 	if (isset ($_POST['scanfolder']))  {
 	// Rescan folder
-	
+		//TODO:Should be combine in import_gallery function !!!
 		check_admin_referer('ngg_updategallery');
 	
 		$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$act_gid' ");
-		$old_imageslist = $wpdb->get_col("SELECT filename FROM $wpdb->nggpictures WHERE galleryid = '$act_gid' ");
-		// if no images are there, create empty array
-		if ($old_imageslist == NULL) $old_imageslist = array();
-		// read list of images in folder
-		$new_imageslist = nggAdmin::scandir(WINABSPATH.$gallerypath);
-		// check difference
-		$imageslist = array_diff($new_imageslist, $old_imageslist);
-		//create thumbnails
-		nggAdmin::generatethumbnail(WINABSPATH.$gallerypath,$imageslist);
-		// add images to database
-		$count_pic = 0;		
-		if (is_array($imageslist)) {
-			foreach($imageslist as $picture) {
-				$result = $wpdb->query("INSERT INTO $wpdb->nggpictures (galleryid, filename, alttext, exclude) VALUES ('$act_gid', '$picture', '$picture', 0) ");
-				if ($result) $count_pic++;
-			}
-			nggallery::show_message($count_pic.__(' picture(s) successfully added','nggallery'));
-			// $messagetext = '<font color="green">'.$count_pic.__(' picture(s) successfully added','nggallery').'</font>';
-		}
+		nggAdmin::import_gallery($gallerypath);
 	}
 
 	if (isset ($_POST['addnewpage']))  {

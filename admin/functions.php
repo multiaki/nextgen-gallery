@@ -71,21 +71,36 @@ class nggAdmin{
 		
 		global $wpdb;
 		
+		$created_msg = "";
+		
 		// remove trailing slash at the end, if somebody use it
 		if (substr($galleryfolder, -1) == '/') $galleryfolder = substr($galleryfolder, 0, -1);
 		$gallerypath = WINABSPATH.$galleryfolder;
 		
-		if (!is_dir($gallerypath)) return '<font color="red">'.__('Directory', 'nggallery').' <strong>'.$gallerypath.'</strong> '.__('doesn&#96;t exist', 'nggallery').'!</font>';
+		if (!is_dir($gallerypath)) {
+			nggallery::show_error(__('Directory', 'nggallery').' <strong>'.$gallerypath.'</strong> '.__('doesn&#96;t exist!', 'nggallery'));
+			return ;
+		}
 		
 		// read list of images
 		$new_imageslist = nggAdmin::scandir($gallerypath);
-		if (empty($new_imageslist)) return '<font color="blue">'.__('Directory', 'nggallery').' <strong>'.$gallerypath.'</strong> '.__('contains no pictures', 'nggallery').'!</font>';
+		if (empty($new_imageslist)) {
+			nggallery::show_message(__('Directory', 'nggallery').' <strong>'.$gallerypath.'</strong> '.__('contains no pictures', 'nggallery'));
+			return;
+		}
 
 		// create thumbnail folder
 		$check_thumbnail_folder = nggallery::get_thumbnail_folder($gallerypath);
 		if (!$check_thumbnail_folder) {
-			if (SAFE_MODE) return '<font color="red">'.__('Thumbnail Directory', 'nggallery').' <strong>'.$gallerypath.'/thumbs</strong> '.__('doesn&#96;t exist', 'nggallery').'!<br />'.__('Please create the folder <i>thumbs</i> in your gallery folder.', 'nggallery').'</font>';
-	 		else @mkdir ($gallerypath.'/thumbs',NGGFOLDER_PERMISSION) or die  ('<font color="red">'.__('Unable to create directory ', 'nggallery').$gallerypath.'/thumbs !</font>');
+			if (SAFE_MODE) {
+				nggallery::show_error(__('Thumbnail Directory', 'nggallery').' <strong>'.$gallerypath.'/thumbs</strong> '.__('doesn&#96;t exist', 'nggallery').'!<br />'.__('Please create the folder <i>thumbs</i> in your gallery folder.', 'nggallery'));
+				return;
+			} else {
+				if (!@mkdir ($gallerypath.'/thumbs',NGGFOLDER_PERMISSION)) {
+					nggallery::show_error(__('Unable to create directory ', 'nggallery').$gallerypath.'/thumbs !');
+					return;
+				}
+			}
 		}
 		
 		// take folder name as gallery name		
@@ -93,13 +108,14 @@ class nggAdmin{
 		
 		// check for existing galleryfolder
 		$gallery_id = $wpdb->get_var("SELECT gid FROM $wpdb->nggallery WHERE path = '$galleryfolder' ");
-		
+
 		if (!$gallery_id) {
 			$result = $wpdb->query("INSERT INTO $wpdb->nggallery (name, path) VALUES ('$galleryname', '$galleryfolder') ");
 			if (!$result) {
 				nggallery::show_error(__('Database error. Could not add gallery!','nggallery'));
 				return;
 			}
+			$created_msg =__('Gallery','nggallery').' <strong>'.$galleryname.'</strong> '.__('successfully created!','nggallery').'<br />';
 			$gallery_id = $wpdb->insert_id;  // get index_id
 		}
 		
@@ -115,7 +131,7 @@ class nggAdmin{
 		// add images to database		
 		$count_pic = nggAdmin::add_Images($gallery_id, $gallerypath, $new_images);
 				
-		nggallery::show_message(__('Gallery','nggallery').' <strong>'.$galleryname.'</strong> '.__('successfully created!','nggallery').'<br />'.$count_pic.__(' pictures added.','nggallery'));
+		nggallery::show_message($created_msg.$count_pic.__(' picture(s) successfully added','nggallery'));
 		return;
 
 	}
@@ -327,7 +343,7 @@ class nggAdmin{
 		if (is_array($imageslist)) {
 			foreach($imageslist as $picture) {
 
-				$result = $wpdb->query("INSERT INTO $wpdb->nggpictures (galleryid, filename, description, alttext, exclude) VALUES ('$galleryID', '$picture', '$description', '$alttext', 0) ");
+				$result = $wpdb->query("INSERT INTO $wpdb->nggpictures (galleryid, filename, alttext, exclude) VALUES ('$galleryID', '$picture', '$picture', 0) ");
 				$pic_id = (int) $wpdb->insert_id;
 				if ($result) $count_pic++;
 
@@ -496,7 +512,7 @@ class nggAdmin{
 	}
 
 	// **************************************************************
-	function upload_images($defaultpath) {
+	function upload_images() {
 	// upload of pictures
 		
 		global $wpdb;
@@ -577,6 +593,65 @@ class nggAdmin{
 		return;
 
 	} // end function
+	
+	// **************************************************************
+	function swfupload_image($galleryID = 0) {
+		// This function is called by the swfupload
+		global $wpdb;
+		$ngg_options = get_option('ngg_options');
+		
+		if ($galleryID == 0) {
+			@unlink($temp_file);		
+			return __('No gallery selected !','nggallery');;
+		}
+
+		// Check the upload
+		if (!isset($_FILES["Filedata"]) || !is_uploaded_file($_FILES["Filedata"]["tmp_name"]) || $_FILES["Filedata"]["error"] != 0) {
+			return __('Invalid upload. Error Code : ','nggallery').$_FILES["Filedata"]["error"];
+		}
+
+		// get the filename and extension
+		$temp_file = $_FILES["Filedata"]['tmp_name'];
+		$filepart = pathinfo ( strtolower($_FILES["Filedata"]['name']) );
+		// required until PHP 5.2.0
+		$filepart['filename'] = substr($filepart["basename"],0 ,strlen($filepart["basename"]) - (strlen($filepart["extension"]) + 1) );
+		$filename = sanitize_title($filepart['filename']).".".$filepart['extension'];
+
+		// check for allowed extension
+		$ext = array("jpeg", "jpg", "png", "gif"); 
+		if (!in_array($filepart['extension'],$ext)){ 
+			return $_FILES[$key]['name'].__('is no valid image file!','nggallery');
+		}
+
+		// get the path to the gallery	
+		$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$galleryID' ");
+		if (!$gallerypath){
+			@unlink($temp_file);		
+			return __('Failure in database, no gallery path set !','nggallery');
+		} 
+
+		// read list of images
+		$imageslist = nggAdmin::scandir(WINABSPATH.$gallerypath);
+
+		// check if this filename already exist
+		$i = 0;
+		while (in_array($filename,$imageslist)) {
+			$filename = sanitize_title($filepart['filename']) . "_" . $i++ . "." .$filepart['extension'];
+		}
+		
+		$dest_file = WINABSPATH.$gallerypath."/".$filename;
+				
+		// save temp file to gallery
+		if (!@move_uploaded_file($_FILES["Filedata"]['tmp_name'], $dest_file)){
+			return __('Error, the file could not moved to : ','nggallery').$dest_file;
+		} 
+		
+		if (!@chmod ($dest_file, NGGFILE_PERMISSION)) {
+			return __('Error, the file permissions could not set','nggallery');
+		}
+		
+		return "0";
+	}	
 	
 	// **************************************************************
 	function check_quota() {

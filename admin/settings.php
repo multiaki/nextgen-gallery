@@ -49,10 +49,10 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	if(!empty($messagetext)) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$messagetext.'</p></div>'; }
 	
 	?>
-	<link rel="stylesheet" href="<?php echo NGGALLERY_URLPATH ?>admin/js/jquery.tabs.css" type="text/css" media="print, projection, screen"/>
+	<link rel="stylesheet" href="<?php echo NGGALLERY_URLPATH ?>admin/css/jquery.tabs.css" type="text/css" media="print, projection, screen"/>
     <!-- Additional IE/Win specific style sheet (Conditional Comments) -->
     <!--[if lte IE 7]>
-    <link rel="stylesheet" href="<?php echo NGGALLERY_URLPATH ?>admin/js/jquery.tabs-ie.css" type="text/css" media="projection, screen"/>
+    <link rel="stylesheet" href="<?php echo NGGALLERY_URLPATH ?>admin/css/jquery.tabs-ie.css" type="text/css" media="projection, screen"/>
     <![endif]-->
 	<script type="text/javascript">
 		jQuery(function() {
@@ -111,12 +111,12 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<h2><?php _e('General Options','nggallery'); ?></h2>
 			<form name="generaloptions" method="post">
 			<?php wp_nonce_field('ngg_settings') ?>
-			<input type="hidden" name="page_options" value="gallerypath,scanfolder,deleteImg,activateTags,appendType,maxImages" />
+			<input type="hidden" name="page_options" value="gallerypath,scanfolder,deleteImg,swfUpload,usePermalinks,activateTags,appendType,maxImages" />
 			<fieldset class="options"> 
 				<table class="optiontable editform">
 					<tr valign="top">
 						<th align="left"><?php _e('Gallery path','nggallery') ?></th>
-						<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="text" size="35" name="gallerypath" value="<?php echo $ngg_options[gallerypath]; ?>" title="TEST" /><br />
+						<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="text" size="35" name="gallerypath" value="<?php echo $ngg_options['gallerypath']; ?>" title="TEST" /><br />
 						<?php _e('This is the default path for all galleries','nggallery') ?></td>
 					</tr>
 					<!--TODO:  Later... -->
@@ -129,8 +129,18 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					-->
 					<tr valign="top">
 						<th align="left"><?php _e('Delete image files','nggallery') ?></th>
-						<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="checkbox" name="deleteImg" value="1" <?php checked('1', $ngg_options[deleteImg]); ?> /><br />
+						<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="checkbox" name="deleteImg" value="1" <?php checked('1', $ngg_options['deleteImg']); ?> /><br />
 						<?php _e('Delete files, when removing a gallery in the database','nggallery') ?></td>
+					</tr>
+					<tr valign="top">
+						<th align="left"><?php _e('Activate batch upload','nggallery') ?></th>
+						<td><input type="checkbox" name="swfUpload" value="1" <?php checked('1', $ngg_options['swfUpload']); ?> /><br />
+						<?php _e('The batch upload requires Adobe Flash 9, disable it if you have problems','nggallery') ?></td>
+					</tr>
+					<tr valign="top">
+						<th align="left"><?php _e('Activate permalinks','nggallery') ?></th>
+						<td><input type="checkbox" name="usePermalinks" value="1" <?php checked('1', $ngg_options['usePermalinks']); ?> /><br />
+						<?php _e('You can use SEO friendly permalinks, must be also activate for your blog.','nggallery') ?></td>
 					</tr>
 				</table>
 			<legend><?php _e('Tags / Categories','nggallery') ?></legend>
