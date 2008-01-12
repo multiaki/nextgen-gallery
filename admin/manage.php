@@ -44,7 +44,7 @@ function nggallery_admin_manage_gallery() {
 	
 			// delete pictures
 			$imagelist = $wpdb->get_col("SELECT filename FROM $wpdb->nggpictures WHERE galleryid = '$act_gid' ");
-			if ($ngg_options[deleteImg]) {
+			if ($ngg_options['deleteImg']) {
 				if (is_array($imagelist)) {
 					foreach ($imagelist as $filename) {
 						@unlink(WINABSPATH.$gallerypath.'/'.$thumb_folder.'/'.$thumb_prefix.$filename);
@@ -74,7 +74,7 @@ function nggallery_admin_manage_gallery() {
 			if ($gallerypath){
 				$thumb_folder = nggallery::get_thumbnail_folder($gallerypath, FALSE);
 				$thumb_prefix = nggallery::get_thumbnail_prefix($gallerypath, FALSE);
-				if ($ngg_options[deleteImg]) {
+				if ($ngg_options['deleteImg']) {
 					@unlink(WINABSPATH.$gallerypath.'/'.$thumb_folder.'/'.$thumb_prefix.$filename);
 					@unlink(WINABSPATH.$gallerypath.'/'.$filename);
 				}
@@ -128,7 +128,7 @@ function nggallery_admin_manage_gallery() {
 					$thumb_prefix = nggallery::get_thumbnail_prefix($gallerypath, FALSE);
 					foreach ( $_POST['doaction'] as $imageID ) {
 						$filename = $wpdb->get_var("SELECT filename FROM $wpdb->nggpictures WHERE pid = '$imageID' ");
-						if ($ngg_options[deleteImg]) {
+						if ($ngg_options['deleteImg']) {
 							unlink(WINABSPATH.$gallerypath.'/'.$thumb_folder.'/'.$thumb_prefix.$filename);
 							unlink(WINABSPATH.$gallerypath.'/'.$filename);	
 						} 
@@ -200,17 +200,17 @@ function nggallery_admin_manage_gallery() {
 	
 		check_admin_referer('ngg_updategallery');
 		
-		$gallery_title   = attribute_escape($_POST[title]);
-		$gallery_path    = attribute_escape($_POST[path]);
-		$gallery_desc    = attribute_escape($_POST[gallerydesc]);
-		$gallery_pageid  = attribute_escape($_POST[pageid]);
-		$gallery_preview = attribute_escape($_POST[previewpic]);
+		$gallery_title   = attribute_escape($_POST['title']);
+		$gallery_path    = attribute_escape($_POST['path']);
+		$gallery_desc    = attribute_escape($_POST['gallerydesc']);
+		$gallery_pageid  = attribute_escape($_POST['pageid']);
+		$gallery_preview = attribute_escape($_POST['previewpic']);
 		
 		$result = $wpdb->query("UPDATE $wpdb->nggallery SET title= '$gallery_title', path= '$gallery_path', galdesc = '$gallery_desc', pageid = '$gallery_pageid', previewpic = '$gallery_preview' WHERE gid = '$act_gid'");
 		if ($showTags)
-			$result = ngg_update_tags(attribute_escape($_POST[tags]));			
+			$result = ngg_update_tags(attribute_escape($_POST['tags']));			
 		else 
-			$result = ngg_update_pictures(attribute_escape($_POST[description]), attribute_escape($_POST[alttext]), attribute_escape($_POST[exclude]), $act_gid );
+			$result = ngg_update_pictures(attribute_escape($_POST['description']), attribute_escape($_POST['alttext']), attribute_escape($_POST['exclude']), $act_gid );
 
 		nggallery::show_message(__('Update successful',"nggallery"));
 	}
@@ -229,8 +229,8 @@ function nggallery_admin_manage_gallery() {
 	
 		check_admin_referer('ngg_updategallery');
 		
-		$parent_id      = attribute_escape($_POST[parent_id]);
-		$gallery_title  = attribute_escape($_POST[title]);
+		$parent_id      = attribute_escape($_POST['parent_id']);
+		$gallery_title  = attribute_escape($_POST['title']);
 		$gallery_name   = $wpdb->get_var("SELECT name FROM $wpdb->nggallery WHERE gid = '$act_gid' ");
 		
 		// Create a WP page

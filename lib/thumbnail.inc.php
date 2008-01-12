@@ -5,7 +5,7 @@
  * @author 		Ian Selby (ian@gen-x-design.com)
  * @copyright 	Copyright 2006
  * @version 	1.1.2 (PHP4)
- * @modded      by   Alex Rabe
+ * @modded      by Alex Rabe
  * 
  */
 
@@ -585,7 +585,7 @@ class ngg_Thumbnail {
 	    switch($this->format) {
 	        case 'GIF':
 	            if($name != '') {
-	                ImageGif($this->newImage,$name);
+	               @ImageGif($this->newImage,$name) or $this->error = true;
 	            }
 	            else {
 	               header('Content-type: image/gif');
@@ -594,7 +594,7 @@ class ngg_Thumbnail {
 	            break;
 	        case 'JPG':
 	            if($name != '') {
-	                ImageJpeg($this->newImage,$name,$quality);
+	               @ImageJpeg($this->newImage,$name,$quality) or $this->error = true;
 	            }
 	            else {
 	               header('Content-type: image/jpeg');
@@ -603,7 +603,7 @@ class ngg_Thumbnail {
 	            break;
 	        case 'PNG':
 	            if($name != '') {
-	                ImagePng($this->newImage,$name);
+	            	@ImagePng($this->newImage,$name) or $this->error = true;
 	            }
 	            else {
 	               header('Content-type: image/png');
@@ -618,9 +618,15 @@ class ngg_Thumbnail {
 	 *
 	 * @param string $name
 	 * @param int $quality
+	 * @return bool errorstate
 	 */
 	function save($name,$quality=100) {
 	    $this->show($quality,$name);
+	    if ($this->error == true) {
+	    	$this->errmsg = 'Create Image failed. Check safe mode settings';
+	    	return false;
+	    }
+	    return true;
 	}
 
 	/**

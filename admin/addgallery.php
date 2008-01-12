@@ -165,7 +165,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	
 		<ul id="tabs">
 			<li><a href="#addgallery"><?php _e('Add new gallery', 'nggallery') ;?></a></li>
-			<?php if ((!SAFE_MODE) && wpmu_enable_function('wpmuZipUpload')) { ?>
+			<?php if ( wpmu_enable_function('wpmuZipUpload') ) { ?>
 			<li><a href="#zipupload"><?php _e('Upload a Zip-File', 'nggallery') ;?></a></li>
 			<?php } 
 			if (!IS_WPMU) {?>
@@ -194,7 +194,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			</fieldset>
 			</form>
 		</div>
-		<?php if ((!SAFE_MODE) && wpmu_enable_function('wpmuZipUpload')) { ?>
+		<?php if ( wpmu_enable_function('wpmuZipUpload')) { ?>
 		<!-- zip-file operation -->
 		<div id="zipupload">
 		<h2><?php _e('Upload a Zip-File', 'nggallery') ;?></h2>

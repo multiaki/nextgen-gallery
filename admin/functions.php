@@ -44,26 +44,27 @@ class nggAdmin{
 		
 		// avoid double creation	
 		if ( is_dir($myabspath.$nggpath) ) {
-			nggallery::show_error(__('Directory', 'nggallery').' <strong>'.$nggpath.'</strong> '.__('already exists!', 'nggallery'));
-			return false;
-		}
-		
-		// create new directories
-			if ( !wp_mkdir_p ($myabspath.$nggpath) ) 
-				$txt  = __('Unable to create directory ', 'nggallery').$nggpath.'!<br />';
-			if ( !is_writeable($nggRoot ) )
-				$txt .= __('Directory', 'nggallery').' <strong>'.$defaultpath.'</strong> '.__('is not writeable !', 'nggallery').'<br />';
-			if ( !wp_mkdir_p ( $myabspath.$nggpath.'/thumbs') ) 
-				$txt .= __('Unable to create directory ', 'nggallery').$nggpath.'/thumbs !<br />';
-				
-		if ( !empty($error) ) {
-			if (SAFE_MODE) {
-				$txt  = '<br />'.__('The server setting Safe-Mode is on !', 'nggallery');	
-				$txt .= '<br />'.__('Please create directory', 'nggallery').' <strong>'.$nggpath.'</strong> ';	
-				$txt .= __('and the thumbnails directory', 'nggallery').' <strong>'.$nggpath.'/thumbs</strong> '.__('with permission 777 manually !', 'nggallery');
-			}	
-			nggallery::show_error($txt);
-			return false;
+			nggallery::show_error(__('Directory ', 'nggallery').' <strong>'.$nggpath.'</strong> '.__('already exists!', 'nggallery'));
+		} else {
+			// create new directories
+				if ( !wp_mkdir_p ($myabspath.$nggpath) ) 
+					$txt  = __('Unable to create directory ', 'nggallery').$nggpath.'!<br />';
+				if ( !is_writeable($nggRoot ) )
+					$txt .= __('Directory', 'nggallery').' <strong>'.$defaultpath.'</strong> '.__('is not writeable !', 'nggallery').'<br />';
+				if ( !wp_mkdir_p ( $myabspath.$nggpath.'/thumbs') ) 
+					$txt .= __('Unable to create directory ', 'nggallery').$nggpath.'/thumbs !<br />';
+			
+				if (SAFE_MODE) {
+					$help  = __('The server setting Safe-Mode is on !', 'nggallery');	
+					$help .= '<br />'.__('If you have problems, please create directory', 'nggallery').' <strong>'.$nggpath.'</strong> ';	
+					$help .= __('and the thumbnails directory', 'nggallery').' <strong>'.$nggpath.'/thumbs</strong> '.__('with permission 777 manually !', 'nggallery');
+					nggallery::show_message($help);
+				}
+					
+			if ( !empty($txt) ) {
+				nggallery::show_error($txt);
+				return false;
+			}
 		}
 		
 		$result=$wpdb->get_var("SELECT name FROM $wpdb->nggallery WHERE name = '$galleryname' ");
@@ -103,17 +104,9 @@ class nggAdmin{
 			return;
 		}
 
-		// create thumbnail folder
-		$check_thumbnail_folder = nggallery::get_thumbnail_folder($gallerypath);
-		if (!$check_thumbnail_folder) {
-			if ( !wp_mkdir_p ($gallerypath.'/thumbs') ) {
-				if (SAFE_MODE)
-					nggallery::show_error(__('Thumbnail Directory', 'nggallery').' <strong>'.$gallerypath.'/thumbs</strong> '.__('doesn&#96;t exist', 'nggallery').'!<br />'.__('Please create the folder <i>thumbs</i> in your gallery folder.', 'nggallery'));
-				else
-					nggallery::show_error(__('Unable to create directory ', 'nggallery').$gallerypath.'/thumbs !');
-				return;
-			}
-		}
+		// check & create thumbnail folder
+		if ( !nggallery::get_thumbnail_folder($gallerypath) )
+			return;
 		
 		// take folder name as gallery name		
 		$galleryname = basename($galleryfolder);
@@ -138,7 +131,7 @@ class nggAdmin{
 		// check difference
 		$new_images = array_diff($new_imageslist, $old_imageslist);
 		// now create thumbnails
-		nggAdmin::generatethumbnail($gallerypath,$new_images);
+		nggAdmin::generateThumbnail($gallerypath,$new_images);
 
 		// add images to database		
 		$count_pic = nggAdmin::add_Images($gallery_id, $gallerypath, $new_images);
@@ -193,8 +186,8 @@ class nggAdmin{
 				// echo $thumb->errmsg;	
 				// skip if file is not there
 				if (!$thumb->error) {
-					$thumb->resize($ngg_options[imgWidth],$ngg_options[imgHeight],$ngg_options[imgResampleMode]);
-					$thumb->save($gallery_absfolder."/".$picture,$ngg_options[imgQuality]);
+					$thumb->resize($ngg_options['imgWidth'],$ngg_options['imgHeight'],$ngg_options['imgResampleMode']);
+					$thumb->save($gallery_absfolder."/".$picture,$ngg_options['imgQuality']);
 					$bar->addNote($picture. __(' : Image resized...','nggallery'));
 					$bar->increase();
 				}
@@ -267,8 +260,11 @@ class nggAdmin{
 		
 		$ngg_options = get_option('ngg_options');
 		
-		$prefix = nggallery::get_thumbnail_prefix($gallery_absfolder);
 		$thumbfolder = nggallery::get_thumbnail_folder($gallery_absfolder);
+		$prefix = nggallery::get_thumbnail_prefix($gallery_absfolder);
+		
+		if (!$thumbfolder)
+			return;
 		
 		if (is_array($pictures)) {
 			
@@ -286,6 +282,7 @@ class nggAdmin{
 				if (file_exists($gallery_absfolder.$thumbfolder.$prefix.$picture)) {
 					if (!is_writable($gallery_absfolder.$thumbfolder.$prefix.$picture)) {
 						$messagetext .= $gallery_absfolder."/".$picture."<br />";
+						$bar->increase();
 						continue;
 					}
 				}
@@ -327,8 +324,10 @@ class nggAdmin{
 					} else {
 						$thumb->resize($ngg_options['thumbwidth'],$ngg_options['thumbheight'],$ngg_options['thumbResampleMode']);	
 					}
-					$thumb->save($gallery_absfolder.$thumbfolder.$prefix.$picture,$ngg_options['thumbquality']);
-					// didn't work under safe mode, but I want to set it if possible
+					if ( !$thumb->save($gallery_absfolder.$thumbfolder.$prefix.$picture,$ngg_options['thumbquality'])) {
+							$errortext .= $picture . " <strong>(Error : ".$thumb->errmsg .")</strong><br />";
+							$bar->addNote($picture . "  : Error : <strong>".$thumb->errmsg)."</strong>";
+					}
 					nggAdmin::chmod ($gallery_absfolder.$thumbfolder.$prefix.$picture); 
 				} else {
 					$errortext .= $picture . " <strong>(Error : ".$thumb->errmsg .")</strong><br />";
@@ -342,7 +341,7 @@ class nggAdmin{
 
 		if(!empty($errortext)) nggallery::show_error('<strong>'.__('Follow thumbnails could not created.','nggallery').'</strong><br /><ul>'.$errortext.'</ul>');		
 		if(!empty($messagetext)) nggallery::show_error('<strong>'.__('Some thumbnails are not writeable :','nggallery').'</strong><br /><ul>'.$messagetext.'</ul>');
-
+		
 		return;
 	}
 
@@ -440,7 +439,7 @@ class nggAdmin{
 		$archive = new PclZip($file);
 
 		// extract all files in one folder
-		if ($archive->extract(PCLZIP_OPT_PATH, $dir, PCLZIP_OPT_REMOVE_ALL_PATH, PCLZIP_CB_PRE_EXTRACT, 'ngg_getonlyimages') == 0) {
+		if ($archive->extract(PCLZIP_OPT_PATH, $dir, PCLZIP_OPT_REMOVE_ALL_PATH, PCLZIP_CB_PRE_EXTRACT, 'ngg_getOnlyImages') == 0) {
 			if ($archive->error_code == -22)
 				nggallery::show_error(__('The Zip-file is too large. Exceed Memory limit !','nggallery'));
 			else
@@ -501,12 +500,12 @@ class nggAdmin{
 
 		if (!is_dir($newfolder)) {
 			// create new directories
-			if (!@wp_mkdir_p ($newfolder)) {
+			if (!wp_mkdir_p ($newfolder)) {
 				$message = sprintf(__('Unable to create directory %s. Is its parent directory writable by the server?', 'nggallery'), $newfolder);
 				nggallery::show_error($message);
 				return false;
 			}
-			if (!@wp_mkdir_p ($newfolder.'/thumbs')) {
+			if (!wp_mkdir_p ($newfolder.'/thumbs')) {
 				nggallery::show_error(__('Unable to create directory ', 'nggallery').$newfolder.'/thumbs !');
 				return false;
 			}
@@ -580,9 +579,17 @@ class nggAdmin{
 				
 				$dest_file = WINABSPATH.$gallerypath."/".$filename;
 				
+				//check for folder permission
+				if (!is_writeable(WINABSPATH.$gallerypath)) {
+					$message = sprintf(__('Unable to write to directory %s. Is this directory writable by the server?', 'nggallery'), WINABSPATH.$gallerypath);
+					nggallery::show_error($message);
+					return;				
+				}
+				
 				// save temp file to gallery
 				if (!@move_uploaded_file($_FILES[$key]['tmp_name'], $dest_file)){
 					nggallery::show_error(__('Error, the file could not moved to : ','nggallery').$dest_file);
+					nggAdmin::check_safemode(WINABSPATH.$gallerypath);		
 					continue;
 				} 
 				if (!nggAdmin::chmod ($dest_file)) {
@@ -660,6 +667,7 @@ class nggAdmin{
 				
 		// save temp file to gallery
 		if ( !@move_uploaded_file($_FILES["Filedata"]['tmp_name'], $dest_file) ){
+			nggAdmin::check_safemode(WINABSPATH.$gallerypath);	
 			return __('Error, the file could not moved to : ','nggallery').$dest_file;
 		} 
 		
@@ -691,6 +699,25 @@ class nggAdmin{
 			return true;
 			
 		return false;
+	}
+	
+	function check_safemode($foldername) {
+		// Check UID in folder and Script
+		// Read http://www.php.net/manual/en/features.safe-mode.php to understand safe_mode
+		if ( SAFE_MODE ) {
+			
+			$script_uid = ( ini_get('safe_mode_gid') ) ? getmygid() : getmyuid();
+			$folder_uid = fileowner($foldername);
+
+			if ($script_uid != $folder_uid) {
+				$message  = sprintf(__('SAFE MODE Restriction in effect! You need to create the folder <strong>%s</strong> manually','nggallery'), WINABSPATH.$gallerypath);
+				$message .= '<br />' . sprintf(__('When safe_mode is on, PHP checks to see if the owner (%s) of the current script matches the owner (%s) of the file to be operated on by a file function or its directory','nggallery'), $script_uid, $folder_uid );
+				nggallery::show_error($message);
+				return false;
+			}
+		}
+		
+		return true;
 	}
 
 } // END class nggAdmin
@@ -873,4 +900,13 @@ class wpProgressBar {
     }
 
 }
+
+// **************************************************************
+//TODO: Cannot be member of a class ? Check PCLZIP later...
+function ngg_getOnlyImages($p_event, &$p_header)	{
+	
+	return nggAdmin::getOnlyImages($p_event, &$p_header);
+	
+}
+
 ?>

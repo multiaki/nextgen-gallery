@@ -283,13 +283,20 @@ class nggallery {
 		if (!file_exists($gallerypath))
 			return FALSE;
 		if (is_dir($gallerypath."/thumbs")) return "/thumbs/";
+		// old mygallery check
 		if (is_dir($gallerypath."/tumbs")) return "/tumbs/";
-		if (!SAFE_MODE) {
-			if (!is_dir($gallerypath."/thumbs")) {
-				@mkdir($gallerypath."/thumbs");
-				return "/thumbs/";
+		
+		if (!is_dir($gallerypath."/thumbs")) {
+			if ( !wp_mkdir_p($gallerypath."/thumbs") ) {
+				if (SAFE_MODE)
+					nggAdmin::check_safemode($gallerypath."/thumbs");	
+				else
+					nggallery::show_error(__('Unable to create directory ', 'nggallery').$gallerypath.'/thumbs !');
+				return FALSE;
 			}
+			return "/thumbs/";
 		}
+		
 		return FALSE;
 		
 	}
@@ -302,6 +309,7 @@ class nggallery {
 	
 		if (!$include_Abspath) $gallerypath = WINABSPATH.$gallerypath;
 		if (is_dir($gallerypath."/thumbs")) return "thumbs_";
+		// old mygallery check
 		if (is_dir($gallerypath."/tumbs")) return "tmb_";
 	
 		return FALSE;
