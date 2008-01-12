@@ -1,5 +1,7 @@
 <?php
 
+if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
+
 function searchnggallerytags($content) {
 
 	global $wpdb;
@@ -130,6 +132,7 @@ function nggShowSlideshow($galleryID,$irWidth,$irHeight) {
 	
 	global $wpdb, $ngg_options;
 	
+	//TODO: bad intermediate solution until refactor to class
 	$obj = 'so' . $galleryID . rand(10,1000);
 	
 	if (empty($irWidth) ) $irWidth = (int) $ngg_options['irWidth'];
@@ -324,6 +327,7 @@ function nggCreateGallery($picturelist,$galleryID = false) {
 /**********************************************************/
 function nggShowJSGallery($galleryID) {
 	// create a gallery with a jQuery plugin
+	//TODO:Refactor this to better, faster , cleaner solution
 	
 	global $wpdb, $ngg_options;
 

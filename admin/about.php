@@ -141,7 +141,8 @@ function ngg_list_support()	{
 	"Teresa Lo" => "http://www.invivoanalytics.com",
 	"Jes Carlskov" => "",
 	"John Statler" => "http://www.systemsolver.com",
-	"Joshua Katinger" => "http://www.accessionmedia.com"
+	"Joshua Katinger" => "http://www.accessionmedia.com",
+	"iSight Technologies" => "http://www.isighttech.com"
 	);
 
 	

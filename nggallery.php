@@ -47,11 +47,6 @@ define('IS_WPMU', version_compare($wpmu_version, '1.3', '>=') );
 //This works only in WP2.1 or higher
 if ((version_compare($wp_version, '2.1', '>=')) or (IS_WPMU)){
 
-// Permission settings ############################################
-define('NGGFOLDER_PERMISSION', 0777);
-define('NGGFILE_PERMISSION', 0666);
-// ################################################################
-
 // Version and path to check version
 define('NGGVERSION', "0.80a");
 define('NGGURL', "http://nextgen.boelinger.com/version.php");

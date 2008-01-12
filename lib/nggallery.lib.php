@@ -134,7 +134,7 @@ class nggImage{
 		include_once(NGGALLERY_ABSPATH.'/lib/thumbnail.inc.php');
 		
 		// cache filename should be unique
-		$cachename   	= $this->imageID. "_". $width. "x". $height ."_". $this->filename;
+		$cachename   	= $this->imageID. "_". $mode . "_". $width. "x". $height ."_". $this->filename;
 		$cachefolder 	= WINABSPATH .$ngg_options['gallerypath'] . "cache/";
 		$cached_url  	= get_option ('siteurl') ."/". $ngg_options['gallerypath'] . "cache/" . $cachename;
 		$cached_file	 = $cachefolder . $cachename;
@@ -171,7 +171,7 @@ class nggImage{
 			if ($mode == 'web20')
 				$thumb->createReflection(40,40,50,false,'#a4a4a4');
 			// save the new cache picture
-			$thumb->save($cached_file,$ngg_options[imgQuality]);
+			$thumb->save($cached_file,$ngg_options['imgQuality']);
 		}
 		$thumb->destruct();
 		

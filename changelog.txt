@@ -9,6 +9,7 @@ V0.80 - soon
 - NEW : Cache option for SinglePic
 - NEW : Permalink support
 - NEW : Custom fields support - Change the settings for each post/page
+- Changed : Refactor permission check for Safe-Mode Check and mkdir/chmod
 - Changed : Admin CSS in new folder/file for better structure
 - Changed : Clean up folder structure
 - Changed : Clean up code in manage.php, functions.php

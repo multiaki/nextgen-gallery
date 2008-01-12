@@ -24,7 +24,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		check_admin_referer('ngg_addgallery');
 		$newgallery = attribute_escape($_POST['galleryname']);
 		if (!empty($newgallery))
-			$messagetext = nggAdmin::create_gallery($newgallery, $defaultpath);
+			nggAdmin::create_gallery($newgallery, $defaultpath);
 	}
 	
 	if ($_POST['zipupload']){

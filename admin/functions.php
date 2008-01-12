@@ -14,52 +14,66 @@ class nggAdmin{
 		//cleanup pathname
 		$galleryname = apply_filters('ngg_gallery_name', $gallerytitle);
 		$nggpath = $defaultpath.$galleryname;
+		$nggRoot = $myabspath.$defaultpath;
+		$txt = "";
 		
-		if (empty($galleryname)) return '<font color="red">'.__('No valid gallery name!', 'nggallery'). '</font>';	
-
+		// No gallery name ?
+		if (empty($galleryname)) {	
+			nggallery::show_error( __('No valid gallery name!', 'nggallery') );
+			return false;
+		}
+		
 		// check for main folder
-		if ( !file_exists($myabspath.$defaultpath) ) {
-			if (!wp_mkdir_p($myabspath.$defaultpath)) {
+		if ( !is_dir($nggRoot) ) {
+			if ( !wp_mkdir_p($nggRoot) ) {
 				$txt  = __('Directory', 'nggallery').' <strong>'.$defaultpath.'</strong> '.__('didn\'t exist. Please create first the main gallery folder ', 'nggallery').'!<br />';
 				$txt .= __('Check this link, if you didn\'t know how to set the permission :', 'nggallery').' <a href="http://codex.wordpress.org/Changing_File_Permissions">http://codex.wordpress.org/Changing_File_Permissions</a> ';
 				nggallery::show_error($txt);
-				return;
+				return false;
 			}
 		}
 
 		// check for permission settings
-		if ( substr(decoct(@fileperms($myabspath.$defaultpath)),1) != decoct(NGGFOLDER_PERMISSION) ) {
-			$txt  = __('Directory', 'nggallery').' <strong>'.$defaultpath.'</strong> '.__('didn\'t have the permissions ', 'nggallery').decoct(NGGFOLDER_PERMISSION).'!<br />';
+		// if ( substr(decoct(@fileperms($myabspath.$defaultpath)),1) != decoct(NGGFOLDER_PERMISSION) ) {
+		if ( !is_writeable($nggRoot ) ) {
+			$txt  = __('Directory', 'nggallery').' <strong>'.$defaultpath.'</strong> '.__('is not writeable !', 'nggallery').'<br />';
 			$txt .= __('Check this link, if you didn\'t know how to set the permission :', 'nggallery').' <a href="http://codex.wordpress.org/Changing_File_Permissions">http://codex.wordpress.org/Changing_File_Permissions</a> ';
 			nggallery::show_error($txt);
-			return;
+			return false;
 		}
 		
 		// avoid double creation	
-		if (is_dir($myabspath.$nggpath)) {
+		if ( is_dir($myabspath.$nggpath) ) {
 			nggallery::show_error(__('Directory', 'nggallery').' <strong>'.$nggpath.'</strong> '.__('already exists!', 'nggallery'));
-			return; 
+			return false;
 		}
 		
 		// create new directories
-		if (!SAFE_MODE) {
-			if (!@mkdir ($myabspath.$nggpath,NGGFOLDER_PERMISSION)) return  ('<font color="red">'.__('Unable to create directory ', 'nggallery').$nggpath.'!</font>');
-			if (!@chmod ($myabspath.$nggpath,NGGFOLDER_PERMISSION)) return  ('<font color="red">'.__('Unable to set directory permissions ', 'nggallery').$nggpath.'!</font>');
-			if (!@mkdir ($myabspath.$nggpath.'/thumbs',NGGFOLDER_PERMISSION)) return ('<font color="red">'.__('Unable to create directory ', 'nggallery').$nggpath.'/thumbs !</font>');
-			if (!@chmod ($myabspath.$nggpath.'/thumbs',NGGFOLDER_PERMISSION)) return ('<font color="red">'.__('Unable to set directory permissions', 'nggallery').$nggpath.'/thumbs !</font>');
-		} else {
-			$safemode  = '<br /><font color="green">'.__('The server setting Safe-Mode is on !', 'nggallery');	
-			$safemode .= '<br />'.__('Please create directory', 'nggallery').' <strong>'.$nggpath.'</strong> ';	
-			$safemode .= __('and the thumbnails directory', 'nggallery').' <strong>'.$nggpath.'/thumbs</strong> '.__('with permission 777 manually !', 'nggallery').'</font>';	
+			if ( !wp_mkdir_p ($myabspath.$nggpath) ) 
+				$txt  = __('Unable to create directory ', 'nggallery').$nggpath.'!<br />';
+			if ( !is_writeable($nggRoot ) )
+				$txt .= __('Directory', 'nggallery').' <strong>'.$defaultpath.'</strong> '.__('is not writeable !', 'nggallery').'<br />';
+			if ( !wp_mkdir_p ( $myabspath.$nggpath.'/thumbs') ) 
+				$txt .= __('Unable to create directory ', 'nggallery').$nggpath.'/thumbs !<br />';
+				
+		if ( !empty($error) ) {
+			if (SAFE_MODE) {
+				$txt  = '<br />'.__('The server setting Safe-Mode is on !', 'nggallery');	
+				$txt .= '<br />'.__('Please create directory', 'nggallery').' <strong>'.$nggpath.'</strong> ';	
+				$txt .= __('and the thumbnails directory', 'nggallery').' <strong>'.$nggpath.'/thumbs</strong> '.__('with permission 777 manually !', 'nggallery');
+			}	
+			nggallery::show_error($txt);
+			return false;
 		}
+		
 		$result=$wpdb->get_var("SELECT name FROM $wpdb->nggallery WHERE name = '$galleryname' ");
 		if ($result) {
 			nggallery::show_error(__('Gallery', 'nggallery').' <strong>'.$galleryname.'</strong> '.__('already exists', 'nggallery'));
-			return; 			
+			return false;			
 		} else { 
 			$result = $wpdb->query("INSERT INTO $wpdb->nggallery (name, path, title) VALUES ('$galleryname', '$nggpath', '$gallerytitle') ");
 			if ($result) nggallery::show_message(__('Gallery', 'nggallery').' <strong>'.$wpdb->insert_id." : ".$galleryname.'</strong> '.__('successfully created!','nggallery')."<br />".__('You can show this gallery with the tag','nggallery').'<strong> [gallery='.$wpdb->insert_id.']</strong>'.$safemode); 
-			return;
+			return true;;
 		} 
 	}
 	
@@ -92,14 +106,12 @@ class nggAdmin{
 		// create thumbnail folder
 		$check_thumbnail_folder = nggallery::get_thumbnail_folder($gallerypath);
 		if (!$check_thumbnail_folder) {
-			if (SAFE_MODE) {
-				nggallery::show_error(__('Thumbnail Directory', 'nggallery').' <strong>'.$gallerypath.'/thumbs</strong> '.__('doesn&#96;t exist', 'nggallery').'!<br />'.__('Please create the folder <i>thumbs</i> in your gallery folder.', 'nggallery'));
-				return;
-			} else {
-				if (!@mkdir ($gallerypath.'/thumbs',NGGFOLDER_PERMISSION)) {
+			if ( !wp_mkdir_p ($gallerypath.'/thumbs') ) {
+				if (SAFE_MODE)
+					nggallery::show_error(__('Thumbnail Directory', 'nggallery').' <strong>'.$gallerypath.'/thumbs</strong> '.__('doesn&#96;t exist', 'nggallery').'!<br />'.__('Please create the folder <i>thumbs</i> in your gallery folder.', 'nggallery'));
+				else
 					nggallery::show_error(__('Unable to create directory ', 'nggallery').$gallerypath.'/thumbs !');
-					return;
-				}
+				return;
 			}
 		}
 		
@@ -225,16 +237,16 @@ class nggAdmin{
 			// echo $thumb->errmsg;	
 			// skip if file is not there
 			if (!$thumb->error) {
-				if ($ngg_options[wmType] == 'image') {
-					$thumb->watermarkImgPath = $ngg_options[wmPath];
-					$thumb->watermarkImage($ngg_options[wmPos], $ngg_options[wmXpos], $ngg_options[wmYpos]); 
+				if ($ngg_options['wmType'] == 'image') {
+					$thumb->watermarkImgPath = $ngg_options['wmPath'];
+					$thumb->watermarkImage($ngg_options['wmPos'], $ngg_options['wmXpos'], $ngg_options['wmYpos']); 
 				}
-				if ($ngg_options[wmType] == 'text') {
-					$thumb->watermarkText = $ngg_options[wmText];
-					$thumb->watermarkCreateText($ngg_options[wmColor], $ngg_options[wmFont], $ngg_options[wmSize], $ngg_options[wmOpaque]);
-					$thumb->watermarkImage($ngg_options[wmPos], $ngg_options[wmXpos], $ngg_options[wmYpos]);  
+				if ($ngg_options['wmType'] == 'text') {
+					$thumb->watermarkText = $ngg_options['wmText'];
+					$thumb->watermarkCreateText($ngg_options['wmColor'], $ngg_options['wmFont'], $ngg_options['wmSize'], $ngg_options['wmOpaque']);
+					$thumb->watermarkImage($ngg_options['wmPos'], $ngg_options['wmXpos'], $ngg_options['wmYpos']);  
 				}
-				$thumb->save($gallery_absfolder."/".$picture,$ngg_options[imgQuality]);
+				$thumb->save($gallery_absfolder."/".$picture,$ngg_options['imgQuality']);
 				$bar->addNote($picture. __(' : Watermark created...','nggallery'));
 				$bar->increase();
 			}
@@ -282,11 +294,11 @@ class nggAdmin{
 
 				// skip if file is not there
 				if (!$thumb->error) {
-					if ($ngg_options[thumbcrop]) {
+					if ($ngg_options['thumbcrop']) {
 						
 						// THX to Kees de Bruin, better thumbnails if portrait format
-						$width = $ngg_options[thumbwidth];
-						$height = $ngg_options[thumbheight];
+						$width = $ngg_options['thumbwidth'];
+						$height = $ngg_options['thumbheight'];
 						$curwidth = $thumb->currentDimensions['width'];
 						$curheight = $thumb->currentDimensions['height'];
 						if ($curwidth > $curheight) {
@@ -296,28 +308,28 @@ class nggAdmin{
 						}
 						$width = intval(($width * $aspect) / 100);
 						$height = intval(($height * $aspect) / 100);
-						$thumb->resize($width,$height,$ngg_options[thumbResampleMode]);
-						$thumb->cropFromCenter($width,$ngg_options[thumbResampleMode]);
+						$thumb->resize($width,$height,$ngg_options['thumbResampleMode']);
+						$thumb->cropFromCenter($width,$ngg_options['thumbResampleMode']);
 					} 
-					elseif ($ngg_options[thumbfix])  {
+					elseif ($ngg_options['thumbfix'])  {
 						// check for portrait format
 						if ($thumb->currentDimensions['height'] > $thumb->currentDimensions['width']) {
-							$thumb->resize($ngg_options[thumbwidth], 0,$ngg_options[thumbResampleMode]);
+							$thumb->resize($ngg_options['thumbwidth'], 0,$ngg_options['thumbResampleMode']);
 							// get optimal y startpos
-							$ypos = ($thumb->currentDimensions['height'] - $ngg_options[thumbheight]) / 2;
-							$thumb->crop(0, $ypos, $ngg_options[thumbwidth],$ngg_options[thumbheight],$ngg_options[thumbResampleMode]);	
+							$ypos = ($thumb->currentDimensions['height'] - $ngg_options['thumbheight']) / 2;
+							$thumb->crop(0, $ypos, $ngg_options['thumbwidth'],$ngg_options['thumbheight'],$ngg_options['thumbResampleMode']);	
 						} else {
-							$thumb->resize(0,$ngg_options[thumbheight],$ngg_options[thumbResampleMode]);	
+							$thumb->resize(0,$ngg_options['thumbheight'],$ngg_options['thumbResampleMode']);	
 							// get optimal x startpos
-							$xpos = ($thumb->currentDimensions['width'] - $ngg_options[thumbwidth]) / 2;
-							$thumb->crop($xpos, 0, $ngg_options[thumbwidth],$ngg_options[thumbheight],$ngg_options[thumbResampleMode]);	
+							$xpos = ($thumb->currentDimensions['width'] - $ngg_options['thumbwidth']) / 2;
+							$thumb->crop($xpos, 0, $ngg_options['thumbwidth'],$ngg_options['thumbheight'],$ngg_options['thumbResampleMode']);	
 						}
 					} else {
-						$thumb->resize($ngg_options[thumbwidth],$ngg_options[thumbheight],$ngg_options[thumbResampleMode]);	
+						$thumb->resize($ngg_options['thumbwidth'],$ngg_options['thumbheight'],$ngg_options['thumbResampleMode']);	
 					}
-					$thumb->save($gallery_absfolder.$thumbfolder.$prefix.$picture,$ngg_options[thumbquality]);
+					$thumb->save($gallery_absfolder.$thumbfolder.$prefix.$picture,$ngg_options['thumbquality']);
 					// didn't work under safe mode, but I want to set it if possible
-					@chmod ($gallery_absfolder.$thumbfolder.$prefix.$picture, NGGFILE_PERMISSION); 
+					nggAdmin::chmod ($gallery_absfolder.$thumbfolder.$prefix.$picture); 
 				} else {
 					$errortext .= $picture . " <strong>(Error : ".$thumb->errmsg .")</strong><br />";
 					$bar->addNote($picture . "  : Error : <strong>".$thumb->errmsg)."</strong>";
@@ -486,26 +498,31 @@ class nggAdmin{
 		//TODO:FORM must get the path from the tables not from defaultpath	!!!
 		// set complete folder path		
 		$newfolder = WINABSPATH.$defaultpath.$foldername;
-	
+
 		if (!is_dir($newfolder)) {
 			// create new directories
-			if (!@mkdir ($newfolder, NGGFOLDER_PERMISSION)) return ('<font color="red">'.__('Unable to create directory ', 'nggallery').$newfolder.'!</font>');
-			if (!@chmod ($newfolder, NGGFOLDER_PERMISSION)) return ('<font color="red">'.__('Unable to set directory permissions ', 'nggallery').$newfolder.'!</font>');
-			if (!@mkdir ($newfolder.'/thumbs', NGGFOLDER_PERMISSION)) return ('<font color="red">'.__('Unable to create directory ', 'nggallery').$newfolder.'/thumbs !</font>');
-			if (!@chmod ($newfolder.'/thumbs', NGGFOLDER_PERMISSION)) return ('<font color="red">'.__('Unable to set directory permissions ', 'nggallery').$newfolder.'/thumbs !</font>');
+			if (!@wp_mkdir_p ($newfolder)) {
+				$message = sprintf(__('Unable to create directory %s. Is its parent directory writable by the server?', 'nggallery'), $newfolder);
+				nggallery::show_error($message);
+				return false;
+			}
+			if (!@wp_mkdir_p ($newfolder.'/thumbs')) {
+				nggallery::show_error(__('Unable to create directory ', 'nggallery').$newfolder.'/thumbs !');
+				return false;
+			}
 		} 
 		
 		// unzip and del temp file		
 		$result = nggAdmin::unzip($newfolder, $temp_zipfile);
-		@unlink($temp_zipfile) or die ('<div class="updated"><p><strong>'.__('Unable to unlink zip file ', 'nggallery').$temp_zipfile.'!</strong></p></div>');		
+		@unlink($temp_zipfile);		
 
 		if ($result) {
-			$messagetext = __('Zip-File successfully unpacked','nggallery').'<br />';		
+			$message = __('Zip-File successfully unpacked','nggallery').'<br />';		
 
 			// parse now the folder and add to database
-			$messagetext .= nggAdmin::import_gallery($defaultpath.$foldername);
+			$message .= nggAdmin::import_gallery($defaultpath.$foldername);
 	
-			nggallery::show_message($messagetext);
+			nggallery::show_message($message);
 		}
 		
 		return;
@@ -568,7 +585,7 @@ class nggAdmin{
 					nggallery::show_error(__('Error, the file could not moved to : ','nggallery').$dest_file);
 					continue;
 				} 
-				if (!@chmod ($dest_file, NGGFILE_PERMISSION)) {
+				if (!nggAdmin::chmod ($dest_file)) {
 					nggallery::show_error(__('Error, the file permissions could not set','nggallery'));
 					continue;
 				}
@@ -642,11 +659,11 @@ class nggAdmin{
 		$dest_file = WINABSPATH.$gallerypath."/".$filename;
 				
 		// save temp file to gallery
-		if (!@move_uploaded_file($_FILES["Filedata"]['tmp_name'], $dest_file)){
+		if ( !@move_uploaded_file($_FILES["Filedata"]['tmp_name'], $dest_file) ){
 			return __('Error, the file could not moved to : ','nggallery').$dest_file;
 		} 
 		
-		if (!@chmod ($dest_file, NGGFILE_PERMISSION)) {
+		if ( !nggAdmin::chmod($dest_file) ) {
 			return __('Error, the file permissions could not set','nggallery');
 		}
 		
@@ -662,6 +679,18 @@ class nggAdmin{
 					return true;
 				}
 			return false;
+	}
+	
+	// **************************************************************
+	function chmod($filename = "") {
+		// Set correct file permissions (taken from wp core)
+		$stat = @ stat(dirname($filename));
+		$perms = $stat['mode'] & 0007777;
+		$perms = $perms & 0000666;
+		if ( @chmod($filename, $perms) )
+			return true;
+			
+		return false;
 	}
 
 } // END class nggAdmin
