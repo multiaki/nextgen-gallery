@@ -6,6 +6,7 @@ function searchnggallerytags($content) {
 
 	global $wpdb;
 	
+	//TODO:Refactor this to a class
 	$ngg_options = nggallery::get_option('ngg_options');
 	
 	$search = "@\[singlepic=(\d+)(|,\d+|,)(|,\d+|,)(|,watermark|,web20|,)(|,right|,left|,)\]@i";
@@ -130,7 +131,9 @@ function searchnggallerytags($content) {
 /**********************************************************/
 function nggShowSlideshow($galleryID,$irWidth,$irHeight) {
 	
-	global $wpdb, $ngg_options;
+	global $wpdb;
+	
+	$ngg_options = nggallery::get_option('ngg_options');
 	
 	//TODO: bad intermediate solution until refactor to class
 	$obj = 'so' . $galleryID . rand(10,1000);
@@ -173,7 +176,9 @@ function nggShowSlideshow($galleryID,$irWidth,$irHeight) {
 /**********************************************************/
 function nggShowGallery($galleryID) {
 	
-	global $wpdb, $nggRewrite, $ngg_options;
+	global $wpdb, $nggRewrite;
+	
+	$ngg_options = nggallery::get_option('ngg_options');
 
 	// $_GET from wp_query
 	$show    = get_query_var('show');
@@ -234,7 +239,10 @@ function nggCreateGallery($picturelist,$galleryID = false) {
 	* @int		$galleryID
     **/
     
-    global $nggRewrite, $ngg_options;;
+    global $nggRewrite;
+    
+    
+    $ngg_options = nggallery::get_option('ngg_options');
     
     // $_GET from wp_query
 	$nggpage  = get_query_var('nggpage');
@@ -329,7 +337,9 @@ function nggShowJSGallery($galleryID) {
 	// create a gallery with a jQuery plugin
 	//TODO:Refactor this to better, faster , cleaner solution
 	
-	global $wpdb, $ngg_options;
+	global $wpdb;
+	
+	$ngg_options = nggallery::get_option('ngg_options');
 
 	$maxElement = $ngg_options['galImages'];
 
@@ -418,7 +428,9 @@ function nggShowAlbum($albumID,$mode = "extend") {
 function nggCreateAlbum($galleryID,$mode = "extend",$albumID = 0) {
 	// create a gallery overview div
 	
-	global $wpdb, $nggRewrite, $ngg_options;
+	global $wpdb, $nggRewrite;
+	
+	$ngg_options = nggallery::get_option('ngg_options');
 	
 	$gallerycontent = $wpdb->get_row("SELECT * FROM $wpdb->nggallery WHERE gid = '$galleryID' ");
 
@@ -473,7 +485,9 @@ function nggShowImageBrowser($galleryID) {
 	* @galleryID	int / gallery id
 	*/
 	
-	global $wpdb, $ngg_options;
+	global $wpdb;
+	
+	$ngg_options = nggallery::get_option('ngg_options');
 	
 	// get the pictures
 	$picturelist = $wpdb->get_col("SELECT pid FROM $wpdb->nggpictures WHERE galleryid = '$galleryID' AND exclude != 1 ORDER BY $ngg_options[galSort] $ngg_options[galSortDir]");	
@@ -557,7 +571,9 @@ function nggSinglePicture($imageID,$width=250,$height=250,$mode="",$float="") {
 	* @mode 		none, watermark, web20
 	* @float 		none, left, right
 	*/
-	global $wpdb, $post, $ngg_options;
+	global $wpdb, $post;
+	
+	$ngg_options = nggallery::get_option('ngg_options');
 	
 	// remove the comma
 	$float = ltrim($float,',');
@@ -645,7 +661,9 @@ function nggShowRelatedGallery($taglist, $maxImages = 0) {
 	* @maxImages	limit the number of images to show
 	*/
 	
-	global $wpdb, $ngg_options;
+	global $wpdb;
+	
+	$ngg_options = nggallery::get_option('ngg_options');
 	
 	// get now the related images
 	$picturelist = ngg_Tags::get_images($taglist);
@@ -743,7 +761,7 @@ function nggShowAlbumTags($taglist) {
 function nggShowRelatedImages($type = '', $maxImages = 0) {
 	// return related images based on category or tags
 		
-		global $ngg_options;
+		$ngg_options = nggallery::get_option('ngg_options');
 
 		if ($type == '') {
 			$type = $ngg_options['appendType'];

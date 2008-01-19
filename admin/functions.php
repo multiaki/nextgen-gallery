@@ -33,7 +33,7 @@ class nggAdmin{
 			}
 		}
 
-		// check for permission settings
+		// check for permission settings, Safe mode limitations are not taken into account. 
 		// if ( substr(decoct(@fileperms($myabspath.$defaultpath)),1) != decoct(NGGFOLDER_PERMISSION) ) {
 		if ( !is_writeable($nggRoot ) ) {
 			$txt  = __('Directory', 'nggallery').' <strong>'.$defaultpath.'</strong> '.__('is not writeable !', 'nggallery').'<br />';
@@ -179,6 +179,7 @@ class nggAdmin{
 	
 				if (!is_writable($gallery_absfolder."/".$picture)) {
 					$messagetext .= $gallery_absfolder."/".$picture."<br />";
+					$bar->increase();
 					continue;
 				}
 				
@@ -187,8 +188,10 @@ class nggAdmin{
 				// skip if file is not there
 				if (!$thumb->error) {
 					$thumb->resize($ngg_options['imgWidth'],$ngg_options['imgHeight'],$ngg_options['imgResampleMode']);
-					$thumb->save($gallery_absfolder."/".$picture,$ngg_options['imgQuality']);
-					$bar->addNote($picture. __(' : Image resized...','nggallery'));
+					if ( $thumb->save($gallery_absfolder."/".$picture,$ngg_options['imgQuality']) )
+						$bar->addNote($picture. __(' : Image resized...','nggallery'));
+					else
+						$bar->addNote($picture . "  : Error : <strong>".$thumb->errmsg."</strong>");
 					$bar->increase();
 				}
 				$thumb->destruct();
@@ -223,6 +226,7 @@ class nggAdmin{
 	
 			if (!is_writable($gallery_absfolder."/".$picture)) {
 				$messagetext .= $gallery_absfolder."/".$picture."<br />";
+				$bar->increase();
 				continue;
 			}
 			
@@ -239,8 +243,10 @@ class nggAdmin{
 					$thumb->watermarkCreateText($ngg_options['wmColor'], $ngg_options['wmFont'], $ngg_options['wmSize'], $ngg_options['wmOpaque']);
 					$thumb->watermarkImage($ngg_options['wmPos'], $ngg_options['wmXpos'], $ngg_options['wmYpos']);  
 				}
-				$thumb->save($gallery_absfolder."/".$picture,$ngg_options['imgQuality']);
-				$bar->addNote($picture. __(' : Watermark created...','nggallery'));
+				if ( $thumb->save($gallery_absfolder."/".$picture,$ngg_options['imgQuality']) )
+					$bar->addNote($picture. __(' : Watermark created...','nggallery'));
+				else
+					$bar->addNote($picture . "  : Error : <strong>".$thumb->errmsg."</strong>");
 				$bar->increase();
 			}
 			$thumb->destruct();
@@ -331,7 +337,7 @@ class nggAdmin{
 					nggAdmin::chmod ($gallery_absfolder.$thumbfolder.$prefix.$picture); 
 				} else {
 					$errortext .= $picture . " <strong>(Error : ".$thumb->errmsg .")</strong><br />";
-					$bar->addNote($picture . "  : Error : <strong>".$thumb->errmsg)."</strong>";
+					$bar->addNote($picture . "  : Error : <strong>".$thumb->errmsg."</strong>");
 				}
 				$thumb->destruct();
 				$bar->addNote($picture. __(' : Thumbnail created...','nggallery'));

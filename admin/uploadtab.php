@@ -80,8 +80,8 @@ function ngg_upload_tab_content() {
 		
 		if ( isset($_POST['save']) ) {
 			// Function save desription
-			$img_title   = attribute_escape($_POST[image_title]);
-			$img_desc    = attribute_escape($_POST[image_desc]);
+			$img_title   = attribute_escape($_POST['image_title']);
+			$img_desc    = attribute_escape($_POST['image_desc']);
 			$result = $wpdb->query("UPDATE $wpdb->nggpictures SET alttext= '$img_title', description = '$img_desc' WHERE pid = '$ID'");
 		}
 	}
