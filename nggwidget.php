@@ -77,7 +77,7 @@ function widget_ngg_slideshow() {
 		return;
 		
 	// Check for NextGEN Gallery
-	if ( !function_exists('nggShowSlideshow') )
+	if ( !class_exists('nggallery') )
 		return;	
 	
 	function widget_show_ngg_slideshow($args) {
@@ -143,7 +143,7 @@ function widget_ngg_slideshow() {
 add_action('widgets_init', 'widget_ngg_slideshow');
 
 /**
- * nggWidget - The widget control for NextGEN Gallery
+ * nggWidget - The widget control for NextGEN Gallery ( require WP2.2 or hiogher)
  *
  * @package NextGEN Gallery
  * @author Alex Rabe
@@ -162,28 +162,37 @@ class nggWidget {
 	}
 	
 	function ngg_widget_register() {
-
-		if ( !function_exists('wp_register_sidebar_widget') )
-			return;
 		
 		if ( !class_exists('nggallery') )
 			return;
-		
-		$options = get_option('ngg_widget');
-		$number = $options['number'];
-		if ( $number < 1 ) $number = 1;
-		if ( $number > 9 ) $number = 9;
-		$dims = array('width' => 410, 'height' => 300);
-		$class = array('classname' => 'ngg_widget');
-		for ($i = 1; $i <= 9; $i++) {
-			$name = sprintf(__('NextGEN Gallery %d','nggallery'), $i);
-			$id = "ngg-widget-$i"; // Never never never translate an id
-			wp_register_sidebar_widget($id, $name, $i <= $number ? array(&$this, 'ngg_widget_output') : /* unregister */ '', $class, $i);
-			wp_register_widget_control($id, $name, $i <= $number ? array(&$this, 'ngg_widget_control') : /* unregister */ '', $dims, $i);
+
+		// For K2 Sidebar manager we do different 
+		if(class_exists('K2SBM') && K2_USING_SBM ) {
+			
+			K2SBM::register_sidebar_module('NextGEN Gallery', 'ngg_sbm_widget_output', 'sb-ngg-widget');
+			K2SBM::register_sidebar_module_control('NextGEN Gallery', 'ngg_sbm_widget_control');
+
+		} else {
+			
+			// test for widget plugin > 2.2
+			if ( !function_exists('wp_register_sidebar_widget') )
+				return;
+			
+			$options = get_option('ngg_widget');
+			$number = $options['number'];
+			if ( $number < 1 ) $number = 1;
+			if ( $number > 9 ) $number = 9;
+			$dims = array('width' => 410, 'height' => 300);
+			$class = array('classname' => 'ngg_widget');
+			for ($i = 1; $i <= 9; $i++) {
+				$name = sprintf(__('NextGEN Gallery %d','nggallery'), $i);
+				$id = "ngg-widget-$i"; // Never never never translate an id
+				wp_register_sidebar_widget($id, $name, $i <= $number ? array(&$this, 'ngg_widget_output') : /* unregister */ '', $class, $i);
+				wp_register_widget_control($id, $name, $i <= $number ? array(&$this, 'ngg_widget_control') : /* unregister */ '', $dims, $i);
+			}
+			add_action('sidebar_admin_setup', array(&$this, 'ngg_widget_admin_setup'));
+			add_action('sidebar_admin_page', array(&$this, 'ngg_widget_admin_page'));	
 		}
-		add_action('sidebar_admin_setup', array(&$this, 'ngg_widget_admin_setup'));
-		add_action('sidebar_admin_page', array(&$this, 'ngg_widget_admin_page'));	
-		
 	 }
 
 	function ngg_widget_admin_page() {
@@ -221,10 +230,10 @@ class nggWidget {
 		
 	}
 
-	function ngg_widget_control($number) {
+	function ngg_widget_control($number, $is_K2_SMB = false) {
 	
 		$options = $newoptions = get_option('ngg_widget');
-		
+
 		// These post parameter are expected
 		$params = array('title','items','show','type','width','height','exclude','list');
 		
@@ -269,8 +278,9 @@ class nggWidget {
 		$items = (int) $options[$number]['items'];
 		if ( empty($items) || $items < 1 ) $items = 10;
 		
-		// Here comes the form
-	?>
+		// Here comes the form (Not for K2 Style)
+	 	if (!$is_K2_SMB) {
+	 	?>	
 		<style>
 		div .ngg-widget p {
 			text-align:left;
@@ -283,6 +293,9 @@ class nggWidget {
 			width:120px;
 		}		
 		</style>
+		<?php
+		}
+		?>
 		<div class="ngg-widget">
 		<p>
 			<label for="ngg-title-<?php echo "$number"; ?>"><?php _e('Title :','nggallery'); ?></label>
@@ -337,9 +350,9 @@ class nggWidget {
 	function ngg_widget_output($args, $number = 1 , $options = false) {
 
 		global $wpdb;
-		
+				
 		extract($args);
-		
+
 		// We could get this also as parameter
 		if (!$options)				
 			$options = get_option('ngg_widget');
@@ -401,10 +414,52 @@ class nggWidget {
 // let's show it
 $nggWidget = new nggWidget;	
 
-/**********************************************************/
-/* SIMPLE INSERT TAGS 
-/**********************************************************/
 
+/**
+ * ngg_sbm_widget_control()
+ * ONLY required for K2 Theme (tested with K2 RC4)
+ *
+ * @return return widget admin
+ */
+function ngg_sbm_widget_control() {
+	
+	if ( !function_exists('checked') ) {
+		function checked( $checked, $current) {
+			if ( $checked == $current)
+				echo ' checked="checked"';
+		}
+	}
+	
+	$number = 1;
+	
+	// Check for Module id
+	if(isset($_POST['module_id'])) 
+		$number = $_POST['module_id'];
+		
+	nggWidget::ngg_widget_control($number, true);
+
+}
+
+/**
+ * ngg_sbm_widget_output($args)
+ * ONLY required for K2 Theme
+ *
+ * @return widget content
+ */
+function ngg_sbm_widget_output($args) {
+	global $k2sbm_current_module;
+	
+	$number = $k2sbm_current_module->id;
+	
+	nggWidget::ngg_widget_output($args, $number , false);
+}
+
+/**
+ * nggDisplayRandomImages($number,$width,$height,$exclude,$list)
+ * Function for templates without widget support
+ *
+ * @return echo the widget content
+ */
 function nggDisplayRandomImages($number,$width,$height,$exclude = "all", $list = "") {
 	
 	$options[1] = array('title'=>'', 
@@ -419,7 +474,12 @@ function nggDisplayRandomImages($number,$width,$height,$exclude = "all", $list =
 	nggWidget::ngg_widget_output($args = "",1,$options);
 }
 
-
+/**
+ * nggDisplayRecentImages($number,$width,$height,$exclude,$list)
+ * Function for templates without widget support
+ *
+ * @return echo the widget content
+ */
 function nggDisplayRecentImages($number,$width,$height,$exclude = "all", $list = "") {
 
 	$options[1] = array('title'=>'', 

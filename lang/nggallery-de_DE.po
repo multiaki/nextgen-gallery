@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-01-13 16:25+0100\n"
+"PO-Revision-Date: 2008-01-19 21:02+0100\n"
 "Last-Translator: Alex Rabe\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
@@ -12,7 +12,6 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-Country: GERMANY\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-Language: German\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 
@@ -20,36 +19,36 @@ msgstr ""
 msgid "Sorry, NextGEN Gallery works only under WordPress 2.1 or higher"
 msgstr "Tut mir leid aber NextGEN Galerie arbeitet nur ab WordPress 2.1 und aufwärts"
 
-#: ../nggfunctions.php:440
-#: ../nggfunctions.php:455
+#: ../nggfunctions.php:452
+#: ../nggfunctions.php:467
 msgid "Watch gallery"
 msgstr "Galerie ansehen"
 
-#: ../nggfunctions.php:449
 #: ../nggfunctions.php:461
-#: ../nggfunctions.php:732
+#: ../nggfunctions.php:473
+#: ../nggfunctions.php:750
 msgid "Photos"
 msgstr "Fotos"
 
-#: ../nggfunctions.php:533
+#: ../nggfunctions.php:547
 msgid "Back"
 msgstr "Zurück"
 
-#: ../nggfunctions.php:537
+#: ../nggfunctions.php:551
 msgid "Next"
 msgstr "Vor"
 
-#: ../nggfunctions.php:540
+#: ../nggfunctions.php:554
 #: ../admin/manage.php:85
 #: ../tinymce/window.php:37
 msgid "Picture"
 msgstr "Bild"
 
-#: ../nggfunctions.php:540
+#: ../nggfunctions.php:554
 msgid "from"
 msgstr "von"
 
-#: ../nggfunctions.php:702
+#: ../nggfunctions.php:720
 msgid "Overview"
 msgstr "Übersicht"
 
@@ -69,134 +68,98 @@ msgstr "[Zeige als Diashow]"
 msgid "[Show picture list]"
 msgstr "[Zeige Bilder-Liste]"
 
-#: ../nggwidget.php:148
+#: ../nggwidget.php:118
 msgid "Title:"
 msgstr "Titel:"
 
-#: ../nggwidget.php:149
+#: ../nggwidget.php:119
 msgid "Select Gallery:"
 msgstr "Wähle Galerie"
 
-#: ../nggwidget.php:153
+#: ../nggwidget.php:123
 msgid "All images"
 msgstr "Alle Bilder"
 
-#: ../nggwidget.php:163
+#: ../nggwidget.php:133
 msgid "Height:"
 msgstr "Höhe:"
 
-#: ../nggwidget.php:164
+#: ../nggwidget.php:134
 msgid "Width:"
 msgstr "Breite:"
 
-#: ../nggwidget.php:323
-msgid "NextGEN Recent Image"
-msgstr "NextGEN Neuste Bilder"
+#: ../nggwidget.php:179
+#, php-format
+msgid "NextGEN Gallery %d"
+msgstr "NextGEN Gallery %d"
 
-#: ../nggwidget.php:363
-#: ../nggwidget.php:549
-#: ../admin/album.php:259
-#: ../admin/manage.php:278
-#: ../admin/manage.php:436
-#: ../admin/myimport.php:51
-#: ../admin/_manage.php:208
-#: ../admin/_manage.php:1005
-#: ../admin/js/uploadtab.js.php:109
-#: ../lib/nggmeta.lib.php:373
-msgid "Title"
-msgstr "Titel"
+#: ../nggwidget.php:195
+msgid "NextGEN Gallery Widgets"
+msgstr "NextGEN Gallery Widgets"
 
-#: ../nggwidget.php:365
-#: ../nggwidget.php:551
-msgid "Display type"
-msgstr "Verwende Bild"
+#: ../nggwidget.php:196
+msgid "How many NextGEN Gallery widgets would you like?"
+msgstr ""
 
-#: ../nggwidget.php:367
-#: ../nggwidget.php:553
-#: ../admin/manage.php:526
-#: ../admin/js/uploadtab.js.php:106
-msgid "Thumbnail"
-msgstr "Thumbnail"
+#: ../nggwidget.php:200
+#: ../admin/uploadtab.php:193
+msgid "Save"
+msgstr "Speichern"
 
-#: ../nggwidget.php:368
-#: ../nggwidget.php:554
-msgid "Orginal"
-msgstr "Orginal"
+#: ../nggwidget.php:288
+msgid "Title :"
+msgstr "Titel :"
 
-#: ../nggwidget.php:371
-#: ../nggwidget.php:557
-msgid "Number of pics"
-msgstr "Anzahl der Bilder"
+#: ../nggwidget.php:293
+msgid "Show :"
+msgstr "Zeige als :"
 
-#: ../nggwidget.php:382
-#: ../nggwidget.php:568
-msgid "Width (px)"
-msgstr "Breite (px)"
+#: ../nggwidget.php:298
+#: ../admin/settings.php:100
+#: ../admin/settings.php:295
+msgid "Thumbnails"
+msgstr "Thumbnails"
 
-#: ../nggwidget.php:384
-#: ../nggwidget.php:570
-msgid "Height (px)"
-msgstr "Höhe (px)"
+#: ../nggwidget.php:299
+msgid "Orginal images"
+msgstr "Orginal Bilder"
 
-#: ../nggwidget.php:386
-#: ../nggwidget.php:572
-msgid "Mode"
-msgstr "Modus"
+#: ../nggwidget.php:305
+#: ../admin/settings.php:559
+msgid "random"
+msgstr "Zufall"
 
-#: ../nggwidget.php:388
-#: ../nggwidget.php:574
-#: ../admin/settings.php:538
-msgid "none"
-msgstr "keiner"
+#: ../nggwidget.php:306
+msgid "recent added "
+msgstr "zuletzt hinzugefügt"
 
-#: ../nggwidget.php:389
-#: ../nggwidget.php:575
-msgid "web2.0"
-msgstr "Web 2.0"
+#: ../nggwidget.php:310
+msgid "Width x Height :"
+msgstr "Breite x Höhe :"
 
-#: ../nggwidget.php:392
-#: ../nggwidget.php:578
-msgid "Show in the main page"
-msgstr "Zeige auf der Startseite"
+#: ../nggwidget.php:316
+msgid "Select :"
+msgstr "Wähle :"
 
-#: ../nggwidget.php:394
-#: ../nggwidget.php:580
-msgid "yes"
-msgstr "Ja"
+#: ../nggwidget.php:318
+msgid "All galleries"
+msgstr "Alle Galerien"
 
-#: ../nggwidget.php:395
-#: ../nggwidget.php:581
-msgid "no"
-msgstr "Nein"
-
-#: ../nggwidget.php:398
-#: ../nggwidget.php:584
-msgid "Show in"
-msgstr "Zeige in"
-
-#: ../nggwidget.php:400
-#: ../nggwidget.php:586
-msgid "All categories"
-msgstr "Alle Kategorien"
-
-#: ../nggwidget.php:401
-#: ../nggwidget.php:587
+#: ../nggwidget.php:319
 msgid "Only which are not listed"
 msgstr "Nur ungelistete"
 
-#: ../nggwidget.php:402
-#: ../nggwidget.php:588
+#: ../nggwidget.php:320
 msgid "Only which are listed"
 msgstr "Nur gelistete"
 
-#: ../nggwidget.php:405
-#: ../nggwidget.php:591
-msgid "Categories (id (use , to seperate)"
-msgstr "Kategorie (ID (nutze , für mehrere))"
+#: ../nggwidget.php:325
+msgid "Gallery ID :"
+msgstr "Galerie ID :"
 
-#: ../nggwidget.php:511
-msgid "NextGEN Random Image"
-msgstr "NextGEN Zufallsbild"
+#: ../nggwidget.php:327
+msgid "Gallery IDs, separated by commas."
+msgstr ""
 
 #: ../admin/about.php:9
 msgid "Copyright notes / Credits"
@@ -602,6 +565,17 @@ msgstr "ID"
 #: ../admin/album.php:258
 msgid "Name"
 msgstr "Name"
+
+#: ../admin/album.php:259
+#: ../admin/manage.php:278
+#: ../admin/manage.php:436
+#: ../admin/myimport.php:51
+#: ../admin/_manage.php:208
+#: ../admin/_manage.php:1005
+#: ../admin/js/uploadtab.js.php:109
+#: ../lib/nggmeta.lib.php:373
+msgid "Title"
+msgstr "Titel"
 
 #: ../admin/album.php:260
 msgid "Page"
@@ -1036,6 +1010,11 @@ msgstr "Verstecke Tags"
 msgid "File name"
 msgstr "Dateiname"
 
+#: ../admin/manage.php:526
+#: ../admin/js/uploadtab.js.php:106
+msgid "Thumbnail"
+msgstr "Thumbnail"
+
 #: ../admin/manage.php:530
 #: ../admin/uploadtab.php:176
 #: ../admin/js/uploadtab.js.php:169
@@ -1345,11 +1324,6 @@ msgstr "Cache löschen"
 #: ../admin/settings.php:111
 msgid "General Options"
 msgstr "Allg. Optionen"
-
-#: ../admin/settings.php:100
-#: ../admin/settings.php:295
-msgid "Thumbnails"
-msgstr "Thumbnails"
 
 #: ../admin/settings.php:101
 msgid "Images"
@@ -1777,6 +1751,10 @@ msgstr "Nein"
 msgid "fit"
 msgstr "Passend"
 
+#: ../admin/settings.php:538
+msgid "none"
+msgstr "keiner"
+
 #: ../admin/settings.php:543
 msgid "Duration time"
 msgstr "Dauer"
@@ -1824,10 +1802,6 @@ msgstr "Flash"
 #: ../admin/settings.php:558
 msgid "lines"
 msgstr "Linien"
-
-#: ../admin/settings.php:559
-msgid "random"
-msgstr "Zufall"
 
 #: ../admin/settings.php:563
 msgid "Use slow zooming effect"
@@ -2030,10 +2004,6 @@ msgstr "Datei löschen"
 msgid "Delete image ?"
 msgstr "Bilder löschen ?"
 
-#: ../admin/uploadtab.php:193
-msgid "Save"
-msgstr "Speichern"
-
 #: ../admin/wpmu.php:41
 msgid "General WordPress MU Settings"
 msgstr "WordPress MU Einstellungen"
@@ -2052,11 +2022,11 @@ msgstr ""
 
 #: ../admin/wpmu.php:59
 msgid "Enable zip upload option"
-msgstr ""
+msgstr "Erlaube ZIP-Upload"
 
 #: ../admin/wpmu.php:61
 msgid "Allow users to upload zip folders."
-msgstr ""
+msgstr "Erlaubt die Nutzung des ZIP-Upload"
 
 #: ../admin/wpmu.php:65
 msgid "Enable style selection"
@@ -2079,9 +2049,8 @@ msgid "Default style"
 msgstr "Standard CSS-Style"
 
 #: ../admin/wpmu.php:94
-#, fuzzy
 msgid "Choose the default style for the galleries."
-msgstr "Dies ist der Standard-Pfad für alle Galerien"
+msgstr "Wähle das Default-Stylesheet für die Galerien"
 
 #: ../admin/js/uploadtab.js.php:86
 #: ../admin/js/uploadtab.js.php:88
@@ -2194,7 +2163,7 @@ msgstr "Hersteller"
 
 #: ../lib/nggmeta.lib.php:378
 msgid "Edit Status"
-msgstr ""
+msgstr "Ändere Status"
 
 #: ../lib/nggmeta.lib.php:379
 msgid "Category"
