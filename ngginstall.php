@@ -154,7 +154,7 @@ function ngg_default_options() {
 	$ngg_options['scanfolder']			= false;						// search for new images  (not used)
 	$ngg_options['deleteImg']			= true;							// delete Images
 	$ngg_options['swfUpload']			= true;							// activate the batch upload
-	$ngg_options['usePermalinks']		= true;							// use permalinks for parameters
+	$ngg_options['usePermalinks']		= false;						// use permalinks for parameters
 	
 	// Tags / categories
 	$ngg_options['activateTags']		= false;						// append related images

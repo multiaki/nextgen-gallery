@@ -9,12 +9,11 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	<h2><?php _e('Copyright notes / Credits', 'nggallery') ;?></h2>
 		<fieldset class="options">
 		<legend><?php _e("NextGEN DEV Team", 'nggallery'); ?></legend>
-		<p><?php _e('This plugin is a team work of a virtual developer team around the world. Follow persons take part at the development till now :', 'nggallery') ;?></p>
+		<p><?php _e('This plugin is primarily developed, maintained, supported, documented by', 'nggallery'); ?> <a href="http://alexrabe.boelinger.com" target="_blank">Alex Rabe</a>. <?php _e('There are many other folks who have made contributions to this project :', 'nggallery') ;?></p>
 		<ul>
-		<li><a href="http://alexrabe.boelinger.com" target="_blank">Alex Rabe</a> <?php _e('(Lead developer)', 'nggallery') ;?></li>
-		<li><a href="http://li.deranter.com" target="_blank">Frederic De Ranter</a> <?php _e('(Core AJAX developer)', 'nggallery') ;?></li>
-		<li><a href="http://blog.arctic-media.de" target="_blank">Christian Arnold</a> <?php _e('(Core developer)', 'nggallery') ;?></li>
-		<li><a href="http://mufuschnu.mu.funpic.de" target="_blank">Thomas Matzke</a> <?php _e('(Core developer)', 'nggallery') ;?></li>
+		<li><a href="http://li.deranter.com" target="_blank">Frederic De Ranter</a> <?php _e('(AJAX code contributor)', 'nggallery') ;?></li>
+		<li><a href="http://blog.arctic-media.de" target="_blank">Christian Arnold</a> <?php _e('(Code contributor)', 'nggallery') ;?></li>
+		<li><a href="http://mufuschnu.mu.funpic.de" target="_blank">Thomas Matzke</a> <?php _e('(Album code contributor)', 'nggallery') ;?></li>
 		<li><a href="http://www.kev.hu" target="_blank">KeViN</a> <?php _e('(Sidebar Widget developer)', 'nggallery') ;?></li>
 		</ul>
 		<legend><?php _e("Contributors / Tribute to", 'nggallery'); ?></legend>
@@ -107,7 +106,7 @@ function ngg_list_support()	{
 	"Morten Johansen (Danish Translation)" => "http://www.fr3ak.dk/",
 	"Clive Loseby" => "http://www.access-bydesign.com/",
 	"Vidar Seland (Norwegian Translation)" => "http://www.viidar.net/",
-	"Emre Guler (Turkish Translation)" => "http://www.emreguler.com/",	
+	"Emre G&uuml;ler (Turkish Translation)" => "http://www.emreguler.com/",	
 	"Tonny Kluften" => "http://www.tinnitus-behandling.info/",
 	"Andreas Oeye" => "http://www.andreasoye.com/",
 	"Laurent Momy" => "",
@@ -129,7 +128,7 @@ function ngg_list_support()	{
 	"Luc Saint-Elie" => "http://luc.saint-elie.com/",
 	"Matthew Barker" => "",
 	"Anthony (Chinese Translation)" => "http://www.angryouth.com/",
-	"Milan Vašícek (Czech Translation)" => "http://www.NoWorkTeam.cz/",
+	"Milan Vasicek (Czech Translation)" => "http://www.NoWorkTeam.cz/",
 	"Joo Gi-young (Korean Translation)" => "http://lombric.linuxstudy.pe.kr/wp/",
 	"Emanuel Kluge" => "",
 	"Alba Bentos Pereira" => "",
@@ -142,7 +141,11 @@ function ngg_list_support()	{
 	"Jes Carlskov" => "",
 	"John Statler" => "http://www.systemsolver.com",
 	"Joshua Katinger" => "http://www.accessionmedia.com",
-	"iSight Technologies" => "http://www.isighttech.com"
+	"iSight Technologies" => "http://www.isighttech.com",
+	"AleXander Kirichev (Bulgarian Translation)" => "http://xsakex.art-bg.org/",
+	"Eivind (Norwegian Translation)" => "",
+	"Richer Yang (Chinese Translation)" => "http://fantasyworld.idv.tw/",
+	"Kay Germer" => "http://highkay.de/"
 	);
 
 	

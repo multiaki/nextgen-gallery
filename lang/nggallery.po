@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-01-19 20:59+0100\n"
+"PO-Revision-Date: 2008-01-20 17:50+0100\n"
 "Last-Translator: Alex Rabe\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
@@ -88,76 +88,76 @@ msgstr ""
 msgid "Width:"
 msgstr ""
 
-#: ../nggwidget.php:179
+#: ../nggwidget.php:188
 #, php-format
 msgid "NextGEN Gallery %d"
 msgstr ""
 
-#: ../nggwidget.php:195
+#: ../nggwidget.php:204
 msgid "NextGEN Gallery Widgets"
 msgstr ""
 
-#: ../nggwidget.php:196
+#: ../nggwidget.php:205
 msgid "How many NextGEN Gallery widgets would you like?"
 msgstr ""
 
-#: ../nggwidget.php:200
+#: ../nggwidget.php:209
 #: ../admin/uploadtab.php:193
 msgid "Save"
 msgstr ""
 
-#: ../nggwidget.php:288
+#: ../nggwidget.php:301
 msgid "Title :"
 msgstr ""
 
-#: ../nggwidget.php:293
+#: ../nggwidget.php:306
 msgid "Show :"
 msgstr ""
 
-#: ../nggwidget.php:298
+#: ../nggwidget.php:311
 #: ../admin/settings.php:100
 #: ../admin/settings.php:295
 msgid "Thumbnails"
 msgstr ""
 
-#: ../nggwidget.php:299
+#: ../nggwidget.php:312
 msgid "Orginal images"
 msgstr ""
 
-#: ../nggwidget.php:305
+#: ../nggwidget.php:318
 #: ../admin/settings.php:559
 msgid "random"
 msgstr ""
 
-#: ../nggwidget.php:306
+#: ../nggwidget.php:319
 msgid "recent added "
 msgstr ""
 
-#: ../nggwidget.php:310
+#: ../nggwidget.php:323
 msgid "Width x Height :"
 msgstr ""
 
-#: ../nggwidget.php:316
+#: ../nggwidget.php:329
 msgid "Select :"
 msgstr ""
 
-#: ../nggwidget.php:318
+#: ../nggwidget.php:331
 msgid "All galleries"
 msgstr ""
 
-#: ../nggwidget.php:319
+#: ../nggwidget.php:332
 msgid "Only which are not listed"
 msgstr ""
 
-#: ../nggwidget.php:320
+#: ../nggwidget.php:333
 msgid "Only which are listed"
 msgstr ""
 
-#: ../nggwidget.php:325
+#: ../nggwidget.php:338
 msgid "Gallery ID :"
 msgstr ""
 
-#: ../nggwidget.php:327
+#: ../nggwidget.php:340
 msgid "Gallery IDs, separated by commas."
 msgstr ""
 
@@ -170,119 +170,122 @@ msgid "NextGEN DEV Team"
 msgstr ""
 
 #: ../admin/about.php:12
-msgid "This plugin is a team work of a virtual developer team around the world. Follow persons take part at the development till now :"
+msgid "This plugin is primarily developed, maintained, supported, documented by"
+msgstr ""
+
+#: ../admin/about.php:12
+msgid "There are many other folks who have made contributions to this project :"
 msgstr ""
 
 #: ../admin/about.php:14
-msgid "(Lead developer)"
+msgid "(AJAX code contributor)"
 msgstr ""
 
 #: ../admin/about.php:15
-msgid "(Core AJAX developer)"
+msgid "(Code contributor)"
 msgstr ""
 
 #: ../admin/about.php:16
-#: ../admin/about.php:17
-msgid "(Core developer)"
+msgid "(Album code contributor)"
 msgstr ""
 
-#: ../admin/about.php:18
+#: ../admin/about.php:17
 msgid "(Sidebar Widget developer)"
 msgstr ""
 
-#: ../admin/about.php:20
+#: ../admin/about.php:19
 msgid "Contributors / Tribute to"
 msgstr ""
 
-#: ../admin/about.php:21
+#: ../admin/about.php:20
 msgid "If you study the code of this plugin, you will find out that we mixed a lot of good already existing code and ideas together."
 msgstr ""
 
-#: ../admin/about.php:22
+#: ../admin/about.php:21
 msgid "So, we would like to thank the following people for their pioneer work (without this work it's impossible to create such a plugin so fast)"
 msgstr ""
 
-#: ../admin/about.php:24
+#: ../admin/about.php:23
 msgid "for their great documented code"
 msgstr ""
 
-#: ../admin/about.php:25
+#: ../admin/about.php:24
 msgid "for jQuery, which is the best Web2.0 framework"
 msgstr ""
 
-#: ../admin/about.php:26
+#: ../admin/about.php:25
 msgid "for the fantastic PHP Thumbnail Class"
 msgstr ""
 
-#: ../admin/about.php:27
+#: ../admin/about.php:26
 msgid "for PclZip , a PHP library that manage ZIP archives"
 msgstr ""
 
-#: ../admin/about.php:28
+#: ../admin/about.php:27
 msgid "for a lot of very useful plugins and ideas"
 msgstr ""
 
-#: ../admin/about.php:29
+#: ../admin/about.php:28
 msgid "for RS-Discuss, it saved me a lot of time"
 msgstr ""
 
-#: ../admin/about.php:30
+#: ../admin/about.php:29
 msgid "for the best Media Flash Scripts on earth"
 msgstr ""
 
-#: ../admin/about.php:31
+#: ../admin/about.php:30
 msgid "for the Watermark plugin"
 msgstr ""
 
-#: ../admin/about.php:33
+#: ../admin/about.php:32
 msgid "If you didn't find your name on this list and there is some code which I integrate in my plugin, don't hesitate to send me a mail."
 msgstr ""
 
-#: ../admin/about.php:34
+#: ../admin/about.php:33
 msgid "How to support ?"
 msgstr ""
 
-#: ../admin/about.php:35
+#: ../admin/about.php:34
 msgid "There exist several ways to contribute, help or support us in this work. Non of them are mandatory."
 msgstr ""
 
-#: ../admin/about.php:37
+#: ../admin/about.php:36
 msgid "Send us bugfixes / code changes"
 msgstr ""
 
-#: ../admin/about.php:37
+#: ../admin/about.php:36
 msgid "The most motivated support for this plugin are your ideas and brain work"
 msgstr ""
 
-#: ../admin/about.php:38
+#: ../admin/about.php:37
 msgid "Translate the plugin"
 msgstr ""
 
-#: ../admin/about.php:38
+#: ../admin/about.php:37
 msgid "To help people to work with this plugin, I would like to have it in all avaivable languages"
 msgstr ""
 
-#: ../admin/about.php:39
+#: ../admin/about.php:38
 msgid "Donate the work via paypal"
 msgstr ""
 
-#: ../admin/about.php:50
+#: ../admin/about.php:49
 msgid "No doubt a very usefull and easy motivation :-)"
 msgstr ""
 
-#: ../admin/about.php:52
+#: ../admin/about.php:51
 msgid "Place a link to the plugin in your blog/webpage"
 msgstr ""
 
-#: ../admin/about.php:52
+#: ../admin/about.php:51
 msgid "Yes, share and trackback is also a good support for this work "
 msgstr ""
 
-#: ../admin/about.php:54
+#: ../admin/about.php:53
 msgid "Thanks!"
 msgstr ""
 
-#: ../admin/about.php:55
+#: ../admin/about.php:54
 msgid "We would like to thank this people which support us in the work :"
 msgstr ""
 
@@ -1373,7 +1376,7 @@ msgid "Activate permalinks"
 msgstr ""
 
 #: ../admin/settings.php:143
-msgid "You can use SEO friendly permalinks, must be also activate for your blog."
+msgid "When you activate this option, you need to update your permalink structure one time."
 msgstr ""
 
 #: ../admin/settings.php:146

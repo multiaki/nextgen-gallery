@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-01-19 21:02+0100\n"
+"PO-Revision-Date: 2008-01-20 17:50+0100\n"
 "Last-Translator: Alex Rabe\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
@@ -88,78 +88,78 @@ msgstr "Höhe:"
 msgid "Width:"
 msgstr "Breite:"
 
-#: ../nggwidget.php:179
+#: ../nggwidget.php:188
 #, php-format
 msgid "NextGEN Gallery %d"
 msgstr "NextGEN Gallery %d"
 
-#: ../nggwidget.php:195
+#: ../nggwidget.php:204
 msgid "NextGEN Gallery Widgets"
 msgstr "NextGEN Gallery Widgets"
 
-#: ../nggwidget.php:196
+#: ../nggwidget.php:205
 msgid "How many NextGEN Gallery widgets would you like?"
-msgstr ""
+msgstr "Wie viele NextGEN Gallery Widgets möchtest du haben ?"
 
-#: ../nggwidget.php:200
+#: ../nggwidget.php:209
 #: ../admin/uploadtab.php:193
 msgid "Save"
 msgstr "Speichern"
 
-#: ../nggwidget.php:288
+#: ../nggwidget.php:301
 msgid "Title :"
 msgstr "Titel :"
 
-#: ../nggwidget.php:293
+#: ../nggwidget.php:306
 msgid "Show :"
 msgstr "Zeige als :"
 
-#: ../nggwidget.php:298
+#: ../nggwidget.php:311
 #: ../admin/settings.php:100
 #: ../admin/settings.php:295
 msgid "Thumbnails"
 msgstr "Thumbnails"
 
-#: ../nggwidget.php:299
+#: ../nggwidget.php:312
 msgid "Orginal images"
 msgstr "Orginal Bilder"
 
-#: ../nggwidget.php:305
+#: ../nggwidget.php:318
 #: ../admin/settings.php:559
 msgid "random"
 msgstr "Zufall"
 
-#: ../nggwidget.php:306
+#: ../nggwidget.php:319
 msgid "recent added "
 msgstr "zuletzt hinzugefügt"
 
-#: ../nggwidget.php:310
+#: ../nggwidget.php:323
 msgid "Width x Height :"
 msgstr "Breite x Höhe :"
 
-#: ../nggwidget.php:316
+#: ../nggwidget.php:329
 msgid "Select :"
 msgstr "Wähle :"
 
-#: ../nggwidget.php:318
+#: ../nggwidget.php:331
 msgid "All galleries"
 msgstr "Alle Galerien"
 
-#: ../nggwidget.php:319
+#: ../nggwidget.php:332
 msgid "Only which are not listed"
 msgstr "Nur ungelistete"
 
-#: ../nggwidget.php:320
+#: ../nggwidget.php:333
 msgid "Only which are listed"
 msgstr "Nur gelistete"
 
-#: ../nggwidget.php:325
+#: ../nggwidget.php:338
 msgid "Gallery ID :"
 msgstr "Galerie ID :"
 
-#: ../nggwidget.php:327
+#: ../nggwidget.php:340
 msgid "Gallery IDs, separated by commas."
-msgstr ""
+msgstr "Galerie ID's, mit Kommas getrennt"
 
 #: ../admin/about.php:9
 msgid "Copyright notes / Credits"
@@ -170,119 +170,122 @@ msgid "NextGEN DEV Team"
 msgstr "NextGEN DEV Team"
 
 #: ../admin/about.php:12
-msgid "This plugin is a team work of a virtual developer team around the world. Follow persons take part at the development till now :"
-msgstr "Dieses Plugin wurde von einem virtuellen Entwickler Team rund um den Globus erstellt. Folgende Personen haben bis heute mitgeholfen :"
+msgid "This plugin is primarily developed, maintained, supported, documented by"
+msgstr "Dieses Plugin wird hauptsächlich entwickelt, dokumentiert, supportet von"
+
+#: ../admin/about.php:12
+msgid "There are many other folks who have made contributions to this project :"
+msgstr "Folgende Personen haben die Entwicklung  bisher unterstützt :"
 
 #: ../admin/about.php:14
-msgid "(Lead developer)"
-msgstr "(Leitender Entwickler)"
+msgid "(AJAX code contributor)"
+msgstr "(AJAX Code)"
 
 #: ../admin/about.php:15
-msgid "(Core AJAX developer)"
-msgstr "(Core AJAX Entwickler)"
+msgid "(Code contributor)"
+msgstr "(Allg. Code Anpassungen)"
 
 #: ../admin/about.php:16
-#: ../admin/about.php:17
-msgid "(Core developer)"
-msgstr "(Core Entwickler)"
+msgid "(Album code contributor)"
+msgstr "(Album Code Erweiterungen)"
 
-#: ../admin/about.php:18
+#: ../admin/about.php:17
 msgid "(Sidebar Widget developer)"
 msgstr "(Sidebar Widget Entwickler)"
 
-#: ../admin/about.php:20
+#: ../admin/about.php:19
 msgid "Contributors / Tribute to"
 msgstr "Anerkennung / Hinweise"
 
-#: ../admin/about.php:21
+#: ../admin/about.php:20
 msgid "If you study the code of this plugin, you will find out that we mixed a lot of good already existing code and ideas together."
 msgstr "Falls Du Dir den Sourcecode dieses Plugins ansiehst wirst Du merken, das wir verschiedene gute Scripte sowie Ideen verwendet haben."
 
-#: ../admin/about.php:22
+#: ../admin/about.php:21
 msgid "So, we would like to thank the following people for their pioneer work (without this work it's impossible to create such a plugin so fast)"
 msgstr "Wir möchten folgenden Menschen für Ihre Pionier-Arbeit danken (ohne diese Vorleistung wäre es unmöglich ein Plugin so schnell zu entwickeln)"
 
-#: ../admin/about.php:24
+#: ../admin/about.php:23
 msgid "for their great documented code"
 msgstr "für Ihren großartig dokumentierten Code"
 
-#: ../admin/about.php:25
+#: ../admin/about.php:24
 msgid "for jQuery, which is the best Web2.0 framework"
 msgstr "für jQuery, das Beste Web2.0 Framework"
 
-#: ../admin/about.php:26
+#: ../admin/about.php:25
 msgid "for the fantastic PHP Thumbnail Class"
 msgstr "für die fantastische PHP Thumbnail Klasse"
 
-#: ../admin/about.php:27
+#: ../admin/about.php:26
 msgid "for PclZip , a PHP library that manage ZIP archives"
 msgstr "für PclZip, eine ZIP PHP Library"
 
-#: ../admin/about.php:28
+#: ../admin/about.php:27
 msgid "for a lot of very useful plugins and ideas"
 msgstr "für viele nützliche Plugins und Ideen"
 
-#: ../admin/about.php:29
+#: ../admin/about.php:28
 msgid "for RS-Discuss, it saved me a lot of time"
 msgstr "für RS-Discuss, welches mir viel Zeit sparte"
 
-#: ../admin/about.php:30
+#: ../admin/about.php:29
 msgid "for the best Media Flash Scripts on earth"
 msgstr "für die besten Media Flash Scripte"
 
-#: ../admin/about.php:31
+#: ../admin/about.php:30
 msgid "for the Watermark plugin"
 msgstr "für das Wasserzeichen Plugin"
 
-#: ../admin/about.php:33
+#: ../admin/about.php:32
 msgid "If you didn't find your name on this list and there is some code which I integrate in my plugin, don't hesitate to send me a mail."
 msgstr "Falls Du Deinen Namen hier nicht auf dieser Liste findest und es einigen Code gibt, den ich in meinem Plugin verwendet habe, so schicken mir bitte sofort einfach eine EMail."
 
-#: ../admin/about.php:34
+#: ../admin/about.php:33
 msgid "How to support ?"
 msgstr "Unterstützung / Hilfe"
 
-#: ../admin/about.php:35
+#: ../admin/about.php:34
 msgid "There exist several ways to contribute, help or support us in this work. Non of them are mandatory."
 msgstr "Es existieren verschiedene Möglichkeiten diese Arbeit zu unterstützen."
 
-#: ../admin/about.php:37
+#: ../admin/about.php:36
 msgid "Send us bugfixes / code changes"
 msgstr "Schicke uns Verbesserungen / Bugfixes"
 
-#: ../admin/about.php:37
+#: ../admin/about.php:36
 msgid "The most motivated support for this plugin are your ideas and brain work"
 msgstr "Der beste Support für dieses Plugin sind Deine Ideen und Gedanken"
 
-#: ../admin/about.php:38
+#: ../admin/about.php:37
 msgid "Translate the plugin"
 msgstr "Übersetze das Plugin"
 
-#: ../admin/about.php:38
+#: ../admin/about.php:37
 msgid "To help people to work with this plugin, I would like to have it in all avaivable languages"
 msgstr "Um jedem das Arbeiten mit diesem Plugin zu vereinfachen würde ich es gerne in allen verfügbaren Sprachen anbieten"
 
-#: ../admin/about.php:39
+#: ../admin/about.php:38
 msgid "Donate the work via paypal"
 msgstr "Zeig Dich für diese Arbeit per PayPal dankbar"
 
-#: ../admin/about.php:50
+#: ../admin/about.php:49
 msgid "No doubt a very usefull and easy motivation :-)"
 msgstr "Kein Zweifel, eine schöne und simple Motivationshilfe"
 
-#: ../admin/about.php:52
+#: ../admin/about.php:51
 msgid "Place a link to the plugin in your blog/webpage"
 msgstr "Setze einen Link zu diesem Plugin auf Deinen Blog"
 
-#: ../admin/about.php:52
+#: ../admin/about.php:51
 msgid "Yes, share and trackback is also a good support for this work "
 msgstr "Natürlich sind Trackbacks und Links auch ein guter Support für diese Arbeit"
 
-#: ../admin/about.php:54
+#: ../admin/about.php:53
 msgid "Thanks!"
 msgstr "Vielen Dank!"
 
-#: ../admin/about.php:55
+#: ../admin/about.php:54
 msgid "We would like to thank this people which support us in the work :"
 msgstr "Wir wollen diesen Menschen für Ihre Hilfe danken:"
 
@@ -725,7 +728,7 @@ msgstr "Die hochgeladene Datei war keine korrekte Zip-Datei. Servermeldung :"
 #: ../admin/functions.php:510
 #, php-format
 msgid "Unable to create directory %s. Is its parent directory writable by the server?"
-msgstr ""
+msgstr "Kann das Verzeichnis %s nicht erstellen. Is das Hauptverzeichnis vielleicht schreibgeschützt ?"
 
 #: ../admin/functions.php:525
 msgid "Zip-File successfully unpacked"
@@ -749,7 +752,7 @@ msgstr "ist keine zulässige Bilddatei !"
 #: ../admin/functions.php:590
 #, php-format
 msgid "Unable to write to directory %s. Is this directory writable by the server?"
-msgstr ""
+msgstr "Kann das Verzeichnis %s nicht erstellen. Is das Hauptverzeichnis vielleicht schreibgeschützt ?"
 
 #: ../admin/functions.php:597
 #: ../admin/functions.php:677
@@ -771,17 +774,17 @@ msgstr "Ungültiger Upload. Fehler Code :"
 
 #: ../admin/functions.php:692
 msgid "Sorry, you have used your space allocation. Please delete some files to upload more files."
-msgstr ""
+msgstr "Schade, dein freier Speicher scheint aufgebraucht zu sein. Bitte lösche zuerst ein paar Bilder."
 
 #: ../admin/functions.php:719
 #, php-format
 msgid "SAFE MODE Restriction in effect! You need to create the folder <strong>%s</strong> manually"
-msgstr ""
+msgstr "SAFE MODE Einschränkungen aktiv. Du must das Verzeichnis <strong>%s</strong> manuell anlegen."
 
 #: ../admin/functions.php:720
 #, php-format
 msgid "When safe_mode is on, PHP checks to see if the owner (%s) of the current script matches the owner (%s) of the file to be operated on by a file function or its directory"
-msgstr ""
+msgstr "Wenn der Safe-Mode eingeschaltet ist, überprüft PHP ob der Besitzer (%s) des Skript mit dem Besitzer (%s) der Datei/Verzeichnis übereinstimmt."
 
 #: ../admin/manage.php:64
 #: ../admin/manage.php:85
@@ -1254,13 +1257,12 @@ msgid "Storage Space"
 msgstr "Speicherplatz"
 
 #: ../admin/overview.php:322
-#, fuzzy
 msgid "Upload Space Used:"
-msgstr "Bilder hochladen"
+msgstr "Verbrauchter Uploadspeicher:"
 
 #: ../admin/overview.php:328
 msgid "Upload Space Remaining:"
-msgstr ""
+msgstr "Verbleibender Speicher:"
 
 #: ../admin/roles.php:20
 msgid "Updated capabilities"
@@ -1370,15 +1372,15 @@ msgstr "Aktiviere Batch-Upload"
 
 #: ../admin/settings.php:138
 msgid "The batch upload requires Adobe Flash 9, disable it if you have problems"
-msgstr ""
+msgstr "Das Batch-Upload-Skript benötigt Adbode Flash 9, wenn es Probleme gibt deaktiviere es besser."
 
 #: ../admin/settings.php:141
 msgid "Activate permalinks"
 msgstr "Aktiviere Permalinks"
 
 #: ../admin/settings.php:143
-msgid "You can use SEO friendly permalinks, must be also activate for your blog."
-msgstr ""
+msgid "When you activate this option, you need to update your permalink structure one time."
+msgstr "Wenn du diese Option aktivierst, muss du einmail die Permalink Struktur aktualisieren."
 
 #: ../admin/settings.php:146
 msgid "Tags / Categories"
@@ -1920,7 +1922,7 @@ msgstr "Stichwort"
 #: ../admin/showmeta.php:72
 #: ../admin/showmeta.php:96
 msgid "Value"
-msgstr ""
+msgstr "Wert"
 
 #: ../admin/showmeta.php:61
 msgid "No exif data"
@@ -2010,15 +2012,15 @@ msgstr "WordPress MU Einstellungen"
 
 #: ../admin/wpmu.php:50
 msgid "This is the default path for all blogs. With the placeholder %BLOG_ID% you can organize the folder structure better. The path must end with a /."
-msgstr ""
+msgstr "Dieses ist der Default Pfad für alle Blogs. Mit dem Platzhalter %BLOG_ID% wird die Ordnerstruktur gesteuert. Der Pfad muss mit / enden."
 
 #: ../admin/wpmu.php:53
 msgid "Enable upload quota check"
-msgstr ""
+msgstr "Schalte die Uploadbegrenzung ein"
 
 #: ../admin/wpmu.php:55
 msgid "Should work if the gallery is bellow the blog.dir"
-msgstr ""
+msgstr "Sollte funktionieren wenn die Galerien sich unterhalb blog.dir befinden"
 
 #: ../admin/wpmu.php:59
 msgid "Enable zip upload option"
@@ -2030,11 +2032,11 @@ msgstr "Erlaubt die Nutzung des ZIP-Upload"
 
 #: ../admin/wpmu.php:65
 msgid "Enable style selection"
-msgstr ""
+msgstr "Freie CSS Style Auswahl"
 
 #: ../admin/wpmu.php:67
 msgid "Allow users to choose a style for the gallery."
-msgstr ""
+msgstr "Erlaube dem User ein CSS für die Galerie zu wählen"
 
 #: ../admin/wpmu.php:71
 msgid "Enable roles/capabilities"
@@ -2042,7 +2044,7 @@ msgstr "Rollen / Zugriffsrechte freischalten"
 
 #: ../admin/wpmu.php:73
 msgid "Allow users to change the roles for other blog authors."
-msgstr ""
+msgstr "Erlaube dem User die Anpassung der Zugangsberechtigung"
 
 #: ../admin/wpmu.php:77
 msgid "Default style"
@@ -2117,12 +2119,12 @@ msgstr " Sek."
 
 #: ../lib/nggmeta.lib.php:364
 msgid "Aperture"
-msgstr ""
+msgstr "Blende"
 
 #: ../lib/nggmeta.lib.php:365
 #: ../lib/nggmeta.lib.php:390
 msgid "Credit"
-msgstr ""
+msgstr "Autor"
 
 #: ../lib/nggmeta.lib.php:366
 msgid "Camera"
@@ -2142,16 +2144,15 @@ msgstr "Rechte"
 
 #: ../lib/nggmeta.lib.php:370
 msgid "Focal length"
-msgstr ""
+msgstr "Brennweite"
 
 #: ../lib/nggmeta.lib.php:371
 msgid "ISO"
 msgstr "ISO"
 
 #: ../lib/nggmeta.lib.php:372
-#, fuzzy
 msgid "Shutter speed"
-msgstr "Shutter"
+msgstr "Belichtungszeit"
 
 #: ../lib/nggmeta.lib.php:376
 msgid "Subject"

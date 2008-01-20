@@ -140,7 +140,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<tr valign="top">
 						<th align="left"><?php _e('Activate permalinks','nggallery') ?></th>
 						<td><input type="checkbox" name="usePermalinks" value="1" <?php checked('1', $ngg_options['usePermalinks']); ?> /><br />
-						<?php _e('You can use SEO friendly permalinks, must be also activate for your blog.','nggallery') ?></td>
+						<?php _e('When you activate this option, you need to update your permalink structure one time.','nggallery') ?></td>
 					</tr>
 				</table>
 			<legend><?php _e('Tags / Categories','nggallery') ?></legend>
