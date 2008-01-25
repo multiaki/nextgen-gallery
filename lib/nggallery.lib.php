@@ -5,7 +5,7 @@
  * nggallery.lib.php
  * 
  * @author 		Alex Rabe 
- * @copyright 	Copyright 2007
+ * @copyright 	Copyright 2007-2008
  * 
  */
 	  
@@ -43,7 +43,7 @@ class nggImage{
  		global $wpdb;
  		
  		//initialize variables
-        $this->imageID              = $imageID;
+        $this->imageID              = (int) $imageID;
  		
  		// get image values
  		$imageData = $wpdb->get_row("SELECT * FROM $wpdb->nggpictures WHERE pid = '$this->imageID' ") or $this->error = true;
@@ -68,35 +68,37 @@ class nggImage{
 	
 	/**********************************************************/
 	function get_thumbnail_folder($gallerypath, $include_Abspath = TRUE) {
-		//required for myGallery import :-)
-		
+		//TODO:Double coded, see also class nggallery, fix it !
 		if (!$include_Abspath) 
 			$gallerypath = WINABSPATH.$gallerypath;
 			
+		if (!file_exists($gallerypath))
+			return FALSE;
+			
 		if (is_dir($gallerypath."/thumbs")) {
 			$this->thumbFolder 	= "/thumbs/";
-			$this->thumbPrefix 	= "thumbs_";
+			$this->thumbPrefix 	= "thumbs_";		
 			return TRUE;
-		} 
-			 
+		}
+		// old mygallery check
 		if (is_dir($gallerypath."/tumbs")) {
 			$this->thumbFolder	= "/tumbs/";
 			$this->thumbPrefix 	= "tmb_";
 			return TRUE;
 		}
 		
-		// create the folder if it not exist
-		if (!SAFE_MODE) {
+		if (is_admin()) {
 			if (!is_dir($gallerypath."/thumbs")) {
-				mkdir($gallerypath."/thumbs");
+				if ( !wp_mkdir_p($gallerypath."/thumbs") )
+					return FALSE;
 				$this->thumbFolder	= "/thumbs/";
-				$this->thumbPrefix 	= "thumbs_";
+				$this->thumbPrefix 	= "thumbs_";			
 				return TRUE;
 			}
 		}
 		
 		return FALSE;
-		
+
 	}
 	
 	function get_thumbcode($galleryname) {
@@ -221,7 +223,7 @@ class nggallery {
 	}
 
 	/**********************************************************/
-	// remove some umlauts
+	// remove some umlauts - deprecated
 	/**********************************************************/
 	function remove_umlauts($filename) {
 	
@@ -660,8 +662,17 @@ class ngg_Tags {
 
 }
 
-// First version of Rewrite Rules
-// sorry wp-guys I didn't understand this at all. I tried it a couple of hours : this is the only pooooor result
+/**
+ * nggRewrite - First version of Rewrite Rules
+ *
+ * sorry wp-guys I didn't understand this at all. 
+ * I tried it a couple of hours : this is the only pooooor result
+ *
+ * @package NextGEN Gallery
+ * @author Alex Rabe
+ * @copyright 2008
+ *	
+ */
 class nggRewrite {
 
 	// default value
