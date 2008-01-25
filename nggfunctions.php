@@ -319,9 +319,9 @@ function nggCreateGallery($picturelist,$galleryID = false) {
 		$out .= '<img title="'.stripslashes($picture->alttext).'" alt="'.stripslashes($picture->alttext).'" src="'.$thumbnailURL.$thumb_prefix.$picture->filename.'" '.$thumbsize.' />';
 		$out .= '</a>'."\n";
 		if ($ngg_options['galShowDesc'] == "alttext")
-			$out .= '<span>'.stripslashes($picture->alttext).'</span>'."\n";
+			$out .= '<span>'.html_entity_decode(stripslashes($picture->alttext)).'</span>'."\n";
 		if ($ngg_options['galShowDesc'] == "desc")
-			$out .= '<span>'.stripslashes($picture->description).'</span>'."\n";
+			$out .= '<span>'.html_entity_decode(stripslashes($picture->description)).'</span>'."\n";
 		$out .= '</div>'."\n".'</div>'."\n";
 		}
 	$out .= '</div>'."\n";
@@ -470,7 +470,7 @@ function nggCreateAlbum($galleryID,$mode = "extend",$albumID = 0) {
 				<div class="ngg-albumtitle"><a href="'.$link.'">'.$gallerycontent->title.'</a></div>
 				<div class="ngg-albumcontent">
 					<div class="ngg-thumbnail"><a href="'.$link.'">'.$insertpic.'</a></div>
-					<div class="ngg-description"><p>'.html_entity_decode($gallerycontent->galdesc).'</p><p><strong>'.$counter.'</strong> '.__('Photos', 'nggallery').'</p></div>'."\n".'</div>'."\n".'</div>';
+					<div class="ngg-description"><p>'.html_entity_decode(stripslashes($gallerycontent->galdesc)).'</p><p><strong>'.$counter.'</strong> '.__('Photos', 'nggallery').'</p></div>'."\n".'</div>'."\n".'</div>';
 
 		}
 	}
@@ -539,7 +539,7 @@ function nggCreateImageBrowser($picarray) {
 	if ($picture) {
 		$out = '
 		<div class="ngg-imagebrowser" >
-			<h3>'.stripslashes($picture->alttext).'</h3>
+			<h3>'.html_entity_decode(stripslashes($picture->alttext)).'</h3>
 			<div class="pic">'.$picture->get_href_link().'</div>
 			<div class="ngg-imagebrowser-nav">';
 		if 	($back_pid) {
@@ -552,7 +552,7 @@ function nggCreateImageBrowser($picarray) {
 		}
 		$out .='
 				<div class="counter">'.__('Picture', 'nggallery').' '.($key+1).' '.__('from', 'nggallery').' '.$total.'</div>
-				<div class="ngg-imagebrowser-desc"><p>'.html_entity_decode($picture->description).'</p></div>
+				<div class="ngg-imagebrowser-desc"><p>'.html_entity_decode(stripslashes($picture->description)).'</p></div>
 			</div>	
 		</div>';
 	}

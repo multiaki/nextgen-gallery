@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-01-20 17:50+0100\n"
+"PO-Revision-Date: 2008-01-20 18:23+0100\n"
 "Last-Translator: Alex Rabe\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
@@ -171,7 +171,7 @@ msgstr "NextGEN DEV Team"
 
 #: ../admin/about.php:12
 msgid "This plugin is primarily developed, maintained, supported, documented by"
-msgstr "Dieses Plugin wird hauptsächlich entwickelt, dokumentiert, supportet von"
+msgstr "Dieses Plugin wird hauptsächlich entwickelt, dokumentiert und supportet von"
 
 #: ../admin/about.php:12
 msgid "There are many other folks who have made contributions to this project :"
@@ -331,7 +331,7 @@ msgstr "Zip-Datei hochladen"
 #: ../admin/addgallery.php:172
 #: ../admin/addgallery.php:240
 msgid "Import image folder"
-msgstr "Bilder-Verzeichniss importieren"
+msgstr "Bilder-Verzeichnis importieren"
 
 #: ../admin/addgallery.php:174
 #: ../admin/addgallery.php:264
@@ -344,11 +344,11 @@ msgstr "Neue Galerie"
 
 #: ../admin/addgallery.php:188
 msgid "Create a new , empty gallery below the folder"
-msgstr "Erstelle eine neue, leere Galerie unter dem Verzeichniss"
+msgstr "Erstelle eine neue, leere Galerie unter dem Verzeichnis"
 
 #: ../admin/addgallery.php:190
 msgid "Allowed characters for file and folder names are"
-msgstr "Erlaubte Charaktere für die Datei- und Verzeichnissnamen sind"
+msgstr "Erlaubte Charaktere für die Datei- und Verzeichnisnamen sind"
 
 #: ../admin/addgallery.php:193
 msgid "Add gallery"
@@ -374,7 +374,7 @@ msgstr "eine neue Galerie"
 #: ../admin/addgallery.php:223
 #: ../admin/addgallery.php:286
 msgid "Note : The upload limit on your server is "
-msgstr "Hinweis : Das Upload-Limit auf dem Server beträgt"
+msgstr "Hinweis : Das Upload-Limit auf dem Server beträgt "
 
 #: ../admin/addgallery.php:227
 #: ../admin/addgallery.php:252
@@ -402,11 +402,11 @@ msgstr "Importiere ein Verzeichniss mit Bildern. Bitte beachte:"
 
 #: ../admin/addgallery.php:249
 msgid "For safe-mode = ON you need to add the subfolder thumbs manually"
-msgstr "Da der safe-mode  (PHP.INI) eingeschaltet ist, mußt Du das Unterverzeichniss für die Vorschaubilder (\"thumbs\") manuell (per FTP) anlegen"
+msgstr "Da der safe-mode  (PHP.INI) eingeschaltet ist, mußt Du das Unterverzeichnis für die Vorschaubilder (\"thumbs\") manuell (per FTP) anlegen"
 
 #: ../admin/addgallery.php:257
 msgid "Import folder"
-msgstr "Verzeichniss importieren"
+msgstr "Verzeichnis importieren"
 
 #: ../admin/addgallery.php:270
 msgid "Upload image"
@@ -432,7 +432,7 @@ msgstr "Galerie"
 
 #: ../admin/admin.php:55
 msgid "Add Gallery"
-msgstr "Galerie hinzufügen"
+msgstr "Bilder/Galerie hinzufügen"
 
 #: ../admin/admin.php:56
 msgid "Manage Gallery"
@@ -594,7 +594,7 @@ msgstr "Kein gültiger Galerie-Name!"
 #: ../admin/functions.php:96
 #: ../admin/functions.php:103
 msgid "Directory"
-msgstr "Verzeichniss"
+msgstr "Verzeichnis"
 
 #: ../admin/functions.php:29
 msgid "didn't exist. Please create first the main gallery folder "
@@ -612,7 +612,7 @@ msgstr "ist schreibgeschützt !"
 
 #: ../admin/functions.php:47
 msgid "Directory "
-msgstr "Verzeichnis"
+msgstr "Verzeichnis "
 
 #: ../admin/functions.php:47
 msgid "already exists!"
@@ -623,7 +623,7 @@ msgstr "gibt es schon!"
 #: ../admin/functions.php:515
 #: ../lib/nggallery.lib.php:295
 msgid "Unable to create directory "
-msgstr "Kann Verzeichniss nicht erstellen"
+msgstr "Kann Verzeichnis nicht erstellen"
 
 #: ../admin/functions.php:58
 msgid "The server setting Safe-Mode is on !"
@@ -635,7 +635,7 @@ msgstr "Wenn Probleme auftreten, erstelle bitte das Verzeichnis"
 
 #: ../admin/functions.php:60
 msgid "and the thumbnails directory"
-msgstr "und das Thumbnails-Verzeichniss"
+msgstr "und das Thumbnails-Verzeichnis"
 
 #: ../admin/functions.php:60
 msgid "with permission 777 manually !"
@@ -1380,7 +1380,7 @@ msgstr "Aktiviere Permalinks"
 
 #: ../admin/settings.php:143
 msgid "When you activate this option, you need to update your permalink structure one time."
-msgstr "Wenn du diese Option aktivierst, muss du einmail die Permalink Struktur aktualisieren."
+msgstr "Wenn du diese Option aktivierst, muss du einmal die Permalink Struktur aktualisieren."
 
 #: ../admin/settings.php:146
 msgid "Tags / Categories"
