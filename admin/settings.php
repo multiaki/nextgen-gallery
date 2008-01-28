@@ -487,7 +487,6 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<div class="clear"> &nbsp; </div>
 			<div class="submit"><input type="submit" name="updateoption" value="<?php _e('Update') ;?> &raquo;"/></div>
 			</form>	
-			<center>Based on Marekki's Watermark plugin</center>
 		</div>
 		
 		<!-- Slideshow settings -->
@@ -495,11 +494,11 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		<div id="slideshow">
 		<form name="player_options" method="POST" action="<?php echo $filepath.'#slideshow'; ?>" >
 		<?php wp_nonce_field('ngg_settings') ?>
-		<input type="hidden" name="page_options" value="irWidth,irHeight,irShuffle,irLinkfromdisplay,irShownavigation,irShowicons,irWatermark,irOverstretch,irRotatetime,irTransition,irKenburns,irBackcolor,irFrontcolor,irLightcolor,irAudio,irXHTMLvalid" />
+		<input type="hidden" name="page_options" value="irWidth,irHeight,irShuffle,irLinkfromdisplay,irShownavigation,irShowicons,irWatermark,irOverstretch,irRotatetime,irTransition,irKenburns,irBackcolor,irFrontcolor,irLightcolor,irScreencolor,irAudio,irXHTMLvalid" />
 		<h2><?php _e('Slideshow','nggallery'); ?></h2>
 		<fieldset class="options">
 		<?php if (!NGGALLERY_IREXIST) { ?><p><div id="message" class="error fade"><p><?php _e('The imagerotator.swf is not in the nggallery folder, the slideshow will not work.','nggallery') ?></p></div></p><?php }?>
-		<p><?php _e('The settings are used in the JW Image Rotator Version 3.9 .', 'nggallery') ?> 
+		<p><?php _e('The settings are used in the JW Image Rotator Version 3.13 .', 'nggallery') ?> 
 		   <?php _e('See more information for the Flash Player on the web page', 'nggallery') ?> <a href="http://www.jeroenwijering.com/?item=JW_Image_Rotator" target="_blank">JW Image Rotator from Jeroen Wijering</a>.</p>
 				<table class="optiontable" border="0" >
 					<tr>
@@ -577,6 +576,11 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						<th><?php _e('Rollover / Active Color','nggallery') ?>:</th>
 						<td><input type="text" size="6" maxlength="6" id="irLightcolor" name="irLightcolor" onchange="setcolor('#previewLight', this.value)" value="<?php echo $ngg_options['irLightcolor'] ?>" />
 						<input type="text" size="1" readonly="readonly" id="previewLight" style="background-color: #<?php echo $ngg_options['irLightcolor'] ?>" /></td>
+					</tr>
+					<tr>					
+						<th><?php _e('Screen Color','nggallery') ?>:</th>
+						<td><input type="text" size="6" maxlength="6" id="irScreencolor" name="irScreencolor" onchange="setcolor('#previewScreen', this.value)" value="<?php echo $ngg_options['irScreencolor'] ?>" />
+						<input type="text" size="1" readonly="readonly" id="previewScreen" style="background-color: #<?php echo $ngg_options['irScreencolor'] ?>" /></td>
 					</tr>
 					<tr>					
 						<th><?php _e('Background music (URL)','nggallery') ?>:</th>

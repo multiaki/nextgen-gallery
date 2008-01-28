@@ -27,6 +27,7 @@ V0.80 - soon
 - Bugfix : Watermark for GIF not correct supported
 - Bugfix : Missing wp_nonce at setup page
 - Bugfix : Add DIV in Slideshow link (for Safari)
+- Added : Screencolor flashvar for JW Image Rotator 3.13 or higher
 - Added : Set WP-CHARSET / COLLATE during installation
 - Added : Updated to Pclzip.lib.php v2.6
 - Added : CSS ID field for gallery & images

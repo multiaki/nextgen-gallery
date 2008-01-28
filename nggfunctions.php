@@ -160,6 +160,7 @@ function nggShowSlideshow($galleryID,$irWidth,$irHeight) {
 	$out .= "\n\t\t".$obj.'.addVariable("backcolor", "0x'.$ngg_options['irBackcolor'].'");';
 	$out .= "\n\t\t".$obj.'.addVariable("frontcolor", "0x'.$ngg_options['irFrontcolor'].'");';
 	$out .= "\n\t\t".$obj.'.addVariable("lightcolor", "0x'.$ngg_options['irLightcolor'].'");';
+	if (!empty($ngg_options['irScreencolor'])) $out .= "\n\t\t".$obj.'.addVariable("screencolor", "0x'.$ngg_options['irScreencolor'].'");';
 	$out .= "\n\t\t".$obj.'.addVariable("rotatetime", "'.$ngg_options['irRotatetime'].'");';
 	$out .= "\n\t\t".$obj.'.addVariable("transition", "'.$ngg_options['irTransition'].'");';	
 	$out .= "\n\t\t".$obj.'.addVariable("width", "'.$irWidth.'");';

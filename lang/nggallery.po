@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-01-20 17:50+0100\n"
+"PO-Revision-Date: 2008-01-28 20:12+0100\n"
 "Last-Translator: Alex Rabe\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
@@ -125,7 +125,7 @@ msgid "Orginal images"
 msgstr ""
 
 #: ../nggwidget.php:318
-#: ../admin/settings.php:559
+#: ../admin/settings.php:558
 msgid "random"
 msgstr ""
 
@@ -178,114 +178,98 @@ msgid "There are many other folks who have made contributions to this project :"
 msgstr ""
 
 #: ../admin/about.php:14
-msgid "(AJAX code contributor)"
-msgstr ""
-
-#: ../admin/about.php:15
-msgid "(Code contributor)"
-msgstr ""
-
-#: ../admin/about.php:16
-msgid "(Album code contributor)"
-msgstr ""
-
-#: ../admin/about.php:17
-msgid "(Sidebar Widget developer)"
-msgstr ""
-
-#: ../admin/about.php:19
 msgid "Contributors / Tribute to"
 msgstr ""
 
-#: ../admin/about.php:20
+#: ../admin/about.php:15
 msgid "If you study the code of this plugin, you will find out that we mixed a lot of good already existing code and ideas together."
 msgstr ""
 
-#: ../admin/about.php:21
+#: ../admin/about.php:16
 msgid "So, we would like to thank the following people for their pioneer work (without this work it's impossible to create such a plugin so fast)"
 msgstr ""
 
-#: ../admin/about.php:23
+#: ../admin/about.php:18
 msgid "for their great documented code"
 msgstr ""
 
-#: ../admin/about.php:24
+#: ../admin/about.php:19
 msgid "for jQuery, which is the best Web2.0 framework"
 msgstr ""
 
-#: ../admin/about.php:25
+#: ../admin/about.php:20
 msgid "for the fantastic PHP Thumbnail Class"
 msgstr ""
 
-#: ../admin/about.php:26
+#: ../admin/about.php:21
 msgid "for PclZip , a PHP library that manage ZIP archives"
 msgstr ""
 
-#: ../admin/about.php:27
+#: ../admin/about.php:22
 msgid "for a lot of very useful plugins and ideas"
 msgstr ""
 
-#: ../admin/about.php:28
+#: ../admin/about.php:23
 msgid "for RS-Discuss, it saved me a lot of time"
 msgstr ""
 
-#: ../admin/about.php:29
+#: ../admin/about.php:24
 msgid "for the best Media Flash Scripts on earth"
 msgstr ""
 
-#: ../admin/about.php:30
+#: ../admin/about.php:25
 msgid "for the Watermark plugin"
 msgstr ""
 
-#: ../admin/about.php:32
+#: ../admin/about.php:27
 msgid "If you didn't find your name on this list and there is some code which I integrate in my plugin, don't hesitate to send me a mail."
 msgstr ""
 
-#: ../admin/about.php:33
+#: ../admin/about.php:28
 msgid "How to support ?"
 msgstr ""
 
-#: ../admin/about.php:34
+#: ../admin/about.php:29
 msgid "There exist several ways to contribute, help or support us in this work. Non of them are mandatory."
 msgstr ""
 
-#: ../admin/about.php:36
+#: ../admin/about.php:31
 msgid "Send us bugfixes / code changes"
 msgstr ""
 
-#: ../admin/about.php:36
+#: ../admin/about.php:31
 msgid "The most motivated support for this plugin are your ideas and brain work"
 msgstr ""
 
-#: ../admin/about.php:37
+#: ../admin/about.php:32
 msgid "Translate the plugin"
 msgstr ""
 
-#: ../admin/about.php:37
+#: ../admin/about.php:32
 msgid "To help people to work with this plugin, I would like to have it in all avaivable languages"
 msgstr ""
 
-#: ../admin/about.php:38
+#: ../admin/about.php:33
 msgid "Donate the work via paypal"
 msgstr ""
 
-#: ../admin/about.php:49
+#: ../admin/about.php:44
 msgid "No doubt a very usefull and easy motivation :-)"
 msgstr ""
 
-#: ../admin/about.php:51
+#: ../admin/about.php:46
 msgid "Place a link to the plugin in your blog/webpage"
 msgstr ""
 
-#: ../admin/about.php:51
+#: ../admin/about.php:46
 msgid "Yes, share and trackback is also a good support for this work "
 msgstr ""
 
-#: ../admin/about.php:53
+#: ../admin/about.php:48
 msgid "Thanks!"
 msgstr ""
 
-#: ../admin/about.php:54
+#: ../admin/about.php:49
 msgid "We would like to thank this people which support us in the work :"
 msgstr ""
 
@@ -524,7 +508,7 @@ msgstr ""
 #: ../admin/settings.php:329
 #: ../admin/settings.php:376
 #: ../admin/settings.php:488
-#: ../admin/settings.php:592
+#: ../admin/settings.php:591
 #: ../admin/wpmu.php:98
 msgid "Update"
 msgstr ""
@@ -621,7 +605,7 @@ msgstr ""
 #: ../admin/functions.php:51
 #: ../admin/functions.php:55
 #: ../admin/functions.php:515
-#: ../lib/nggallery.lib.php:295
+#: ../lib/nggallery.lib.php:297
 msgid "Unable to create directory "
 msgstr ""
 
@@ -1341,7 +1325,7 @@ msgstr ""
 
 #: ../admin/settings.php:105
 #: ../admin/settings.php:296
-#: ../admin/settings.php:499
+#: ../admin/settings.php:498
 #: ../tinymce/window.php:63
 msgid "Slideshow"
 msgstr ""
@@ -1694,139 +1678,139 @@ msgstr ""
 msgid "Opaque"
 msgstr ""
 
-#: ../admin/settings.php:501
+#: ../admin/settings.php:500
 msgid "The imagerotator.swf is not in the nggallery folder, the slideshow will not work."
 msgstr ""
 
-#: ../admin/settings.php:502
+#: ../admin/settings.php:501
 msgid "The settings are used in the JW Image Rotator Version 3.9 ."
 msgstr ""
 
-#: ../admin/settings.php:503
+#: ../admin/settings.php:502
 msgid "See more information for the Flash Player on the web page"
 msgstr ""
 
-#: ../admin/settings.php:506
+#: ../admin/settings.php:505
 msgid "Default size (W x H)"
 msgstr ""
 
-#: ../admin/settings.php:511
+#: ../admin/settings.php:510
 msgid "Shuffle mode"
 msgstr ""
 
-#: ../admin/settings.php:515
+#: ../admin/settings.php:514
 msgid "Show next image on click"
 msgstr ""
 
-#: ../admin/settings.php:519
+#: ../admin/settings.php:518
 msgid "Show navigation bar"
 msgstr ""
 
-#: ../admin/settings.php:523
+#: ../admin/settings.php:522
 msgid "Show loading icon"
 msgstr ""
 
-#: ../admin/settings.php:527
+#: ../admin/settings.php:526
 msgid "Use watermark logo"
 msgstr ""
 
-#: ../admin/settings.php:529
+#: ../admin/settings.php:528
 msgid "You can change the logo at the watermark settings"
 msgstr ""
 
-#: ../admin/settings.php:532
+#: ../admin/settings.php:531
 msgid "Stretch image"
 msgstr ""
 
-#: ../admin/settings.php:535
+#: ../admin/settings.php:534
 msgid "true"
 msgstr ""
 
-#: ../admin/settings.php:536
+#: ../admin/settings.php:535
 msgid "false"
 msgstr ""
 
-#: ../admin/settings.php:537
+#: ../admin/settings.php:536
 msgid "fit"
 msgstr ""
 
-#: ../admin/settings.php:538
+#: ../admin/settings.php:537
 msgid "none"
 msgstr ""
 
-#: ../admin/settings.php:543
+#: ../admin/settings.php:542
 msgid "Duration time"
 msgstr ""
 
-#: ../admin/settings.php:544
+#: ../admin/settings.php:543
 msgid "sec."
 msgstr ""
 
-#: ../admin/settings.php:547
+#: ../admin/settings.php:546
 msgid "Transition / Fade effect"
 msgstr ""
 
-#: ../admin/settings.php:550
+#: ../admin/settings.php:549
 msgid "fade"
 msgstr ""
 
-#: ../admin/settings.php:551
+#: ../admin/settings.php:550
 msgid "bgfade"
 msgstr ""
 
-#: ../admin/settings.php:552
+#: ../admin/settings.php:551
 msgid "slowfade"
 msgstr ""
 
-#: ../admin/settings.php:553
+#: ../admin/settings.php:552
 msgid "circles"
 msgstr ""
 
-#: ../admin/settings.php:554
+#: ../admin/settings.php:553
 msgid "bubbles"
 msgstr ""
 
-#: ../admin/settings.php:555
+#: ../admin/settings.php:554
 msgid "blocks"
 msgstr ""
 
-#: ../admin/settings.php:556
+#: ../admin/settings.php:555
 msgid "fluids"
 msgstr ""
 
-#: ../admin/settings.php:557
+#: ../admin/settings.php:556
 msgid "flash"
 msgstr ""
 
-#: ../admin/settings.php:558
+#: ../admin/settings.php:557
 msgid "lines"
 msgstr ""
 
-#: ../admin/settings.php:563
+#: ../admin/settings.php:562
 msgid "Use slow zooming effect"
 msgstr ""
 
-#: ../admin/settings.php:567
+#: ../admin/settings.php:566
 msgid "Background Color"
 msgstr ""
 
-#: ../admin/settings.php:572
+#: ../admin/settings.php:571
 msgid "Texts / Buttons Color"
 msgstr ""
 
-#: ../admin/settings.php:577
+#: ../admin/settings.php:576
 msgid "Rollover / Active Color"
 msgstr ""
 
-#: ../admin/settings.php:582
+#: ../admin/settings.php:581
 msgid "Background music (URL)"
 msgstr ""
 
-#: ../admin/settings.php:586
+#: ../admin/settings.php:585
 msgid "Try XHTML validation (with CDATA)"
 msgstr ""
 
-#: ../admin/settings.php:588
+#: ../admin/settings.php:587
 msgid "Important : Could causes problem at some browser. Please recheck your page."
 msgstr ""
 

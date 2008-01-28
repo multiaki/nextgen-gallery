@@ -223,7 +223,8 @@ function ngg_default_options() {
 	$ngg_options['irKenburns']			= false;
 	$ngg_options['irBackcolor']			= "000000";
 	$ngg_options['irFrontcolor']		= "FFFFFF";
-	$ngg_options['irLightcolor']		= "CC0000";	
+	$ngg_options['irLightcolor']		= "CC0000";
+	$ngg_options['irScreencolor']		= "000000";		
 
 	// CSS Style
 	$ngg_options['activateCSS']			= true;							// activate the CSS file
