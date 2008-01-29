@@ -363,7 +363,7 @@ class nggWidget {
 		$items 	= $options[$number]['items'];
 		$exclude = $options[$number]['exclude'];
 		$list = $options[$number]['list'];
-		 	
+
 		$count = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggpictures WHERE exclude != 1 ");
 		if ($count < $options[$number]['items']) 
 			$options[$number]['items'] = $count;
@@ -460,7 +460,7 @@ function ngg_sbm_widget_output($args) {
  *
  * @return echo the widget content
  */
-function nggDisplayRandomImages($number,$width,$height,$exclude = "all", $list = "") {
+function nggDisplayRandomImages($number, $width = "75", $height = "50", $exclude = "all", $list = "") {
 	
 	$options[1] = array('title'=>'', 
 						'items'=>$number,
@@ -471,7 +471,7 @@ function nggDisplayRandomImages($number,$width,$height,$exclude = "all", $list =
 						'exclude'=>'all',
 						'list'=>$list   );
 	
-	nggWidget::ngg_widget_output($args = "",1,$options);
+	nggWidget::ngg_widget_output($args = array(), 1, $options);
 }
 
 /**
@@ -480,7 +480,7 @@ function nggDisplayRandomImages($number,$width,$height,$exclude = "all", $list =
  *
  * @return echo the widget content
  */
-function nggDisplayRecentImages($number,$width,$height,$exclude = "all", $list = "") {
+function nggDisplayRecentImages($number, $width = "75", $height = "50", $exclude = "all", $list = "") {
 
 	$options[1] = array('title'=>'', 
 						'items'=>$number,
@@ -491,7 +491,7 @@ function nggDisplayRecentImages($number,$width,$height,$exclude = "all", $list =
 						'exclude'=>'all',
 						'list'=>$list   );
 	
-	nggWidget::ngg_widget_output($args = "",1,$options);
+	nggWidget::ngg_widget_output($args = array(), 1, $options);
 }
 
 ?>
