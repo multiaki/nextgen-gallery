@@ -169,7 +169,8 @@ function ngg_list_support()	{
 	"Kay Germer" => "http://highkay.de/",
 	"Ramon Cutanda Lopez" => "",
 	"Luc Dubois" => "http://www.oriste.com/",
-	"Dixie Reid" => "http://www.thereids.co.nz/"
+	"Dixie Reid" => "http://www.thereids.co.nz/",
+	"Gareth Bridger" => ""
 	);
 
 	

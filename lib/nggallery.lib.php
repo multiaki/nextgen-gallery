@@ -712,9 +712,6 @@ class nggRewrite {
 			$gallerytag = get_query_var('gallerytag');
 			if ( !empty( $gallerytag ) )
 				$args ['gallerytag'] = $gallerytag;
-
-			if (is_home())
-				$args['pageid'] = $post->ID;
 			
 			/* urlconstructor =  slug | type | tags | [nav] | [show]
 				type : 	page | post
@@ -750,10 +747,20 @@ class nggRewrite {
 			return $url;
 	
 		} else {
+			
 			// we need to add the page/post id at the start_page otherwise we don't know which gallery is clicked
 			if (is_home())
 				$args['pageid'] = get_the_ID();
-				$query = htmlspecialchars(add_query_arg( $args)); 
+			
+			// taken from is_frontpage plugin, required for static homepage
+			$show_on_front = get_option('show_on_front');
+			$page_on_front = get_option('page_on_front');
+		
+			if ( ($show_on_front == 'page') && ($page_on_front == get_the_ID()) )
+				$args['page_id'] = get_the_ID();
+
+			$query = htmlspecialchars(add_query_arg( $args));
+				 
 			return $query;
 		}
 	}

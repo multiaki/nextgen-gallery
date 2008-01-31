@@ -22,6 +22,7 @@ V0.80 - soon
 - Changed : Check for galleryfolder instead name (THX to Luke Poland)
 - Changed : Delete images per default
 - Changed : Change CSS (ngg-album-compact) , remove width & height setting from code
+- Bugfix : Fixed static front page problem
 - Bugfix : Missing stripslashes & html_entity_decode
 - Bugfix : Change Album CSS (THX to Thomas-DK)
 - Bugfix : Watermark for GIF not correct supported
