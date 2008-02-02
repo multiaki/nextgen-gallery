@@ -170,7 +170,9 @@ function ngg_list_support()	{
 	"Ramon Cutanda Lopez" => "",
 	"Luc Dubois" => "http://www.oriste.com/",
 	"Dixie Reid" => "http://www.thereids.co.nz/",
-	"Gareth Bridger" => ""
+	"Gareth Bridger" => "",
+	"McGillveray Studios" => "http://www.mcgillveraystudios.ca/",
+	"Paul Rogers" => "http://www.swarfworks.com"
 	);
 
 	

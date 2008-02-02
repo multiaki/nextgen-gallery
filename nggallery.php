@@ -117,9 +117,9 @@ function ngg_addjs() {
     
 	echo "<meta name='NextGEN' content='".NGGVERSION."' />\n";
 	if ($ngg_options['activateCSS']) 
-		echo "\n".'<style type="text/css" media="screen">@import "'.NGGALLERY_URLPATH.'css/'.$ngg_options[CSSfile].'";</style>';
+		echo "\n".'<style type="text/css" media="screen">@import "'.NGGALLERY_URLPATH.'css/'.$ngg_options['CSSfile'].'";</style>';
 	if ($ngg_options['thumbEffect'] == "thickbox") {
-		echo "\n".'<script type="text/javascript"> var tb_pathToImage = "'.NGGALLERY_URLPATH.'thickbox/'.$ngg_options[thickboxImage].'";</script>';
+		echo "\n".'<script type="text/javascript"> var tb_pathToImage = "'.NGGALLERY_URLPATH.'thickbox/'.$ngg_options['thickboxImage'].'";</script>';
 		echo "\n".'<style type="text/css" media="screen">@import "'.NGGALLERY_URLPATH.'thickbox/thickbox.css";</style>'."\n";
 	    if ($wp_version < "2.3") {
 	    	if ($wp_version > "2.1.3") wp_deregister_script('jquery'); 
