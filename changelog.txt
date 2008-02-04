@@ -4,7 +4,8 @@ by Alex Rabe & NextGEN DEV Team
 V0.81 - 04.02.2008
 - Changed : Use stristr first to reduce CPU cycles (THX to Alakhnor)
 - Changed : Flush Rewrites rules after option update
-- Bugfix : Check for array in get_option()
+- Changed : Rework for folder check under Safe-Mode 
+- Bugfix : Check for array in get_option() (THX to Alessandro)
 - Bugfix : Add Cookie to SWFUpload, show Error code included
 - Bugfix : galShowOrder = Sildeshow at first didn't work
 - Bugfix : Remove reference from ngg_getOnlyImages 
