@@ -457,7 +457,7 @@ class nggAdmin{
 	}
  
 	// **************************************************************
-	function getOnlyImages($p_event, &$p_header)	{
+	function getOnlyImages($p_event, $p_header)	{
 		$info = pathinfo($p_header['filename']);
 		// check for extension
 		$ext = array("jpeg", "jpg", "png", "gif"); 
@@ -909,9 +909,9 @@ class wpProgressBar {
 
 // **************************************************************
 //TODO: Cannot be member of a class ? Check PCLZIP later...
-function ngg_getOnlyImages($p_event, &$p_header)	{
+function ngg_getOnlyImages($p_event, $p_header)	{
 	
-	return nggAdmin::getOnlyImages($p_event, &$p_header);
+	return nggAdmin::getOnlyImages($p_event, $p_header);
 	
 }
 
