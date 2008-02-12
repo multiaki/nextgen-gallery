@@ -4,7 +4,7 @@ Plugin Name: NextGEN Gallery
 Plugin URI: http://alexrabe.boelinger.com/?page_id=80
 Description: A NextGENeration Photo gallery for the WEB2.0(beta).
 Author: NextGEN DEV-Team
-Version: 0.81
+Version: 0.83a
 
 Author URI: http://alexrabe.boelinger.com/
 
@@ -48,8 +48,11 @@ define('IS_WPMU', version_compare($wpmu_version, '1.3', '>=') );
 if ((version_compare($wp_version, '2.1', '>=')) or (IS_WPMU)){
 
 // Version and path to check version
-define('NGGVERSION', "0.81");
+define('NGGVERSION', "0.83a");
 define('NGGURL', "http://nextgen.boelinger.com/version.php");
+
+// increase memory-limit if possible, GD needs this for large images
+@ini_set('memory_limit', '128M');
 
 // define URL
 $myabspath = str_replace("\\","/",ABSPATH);  // required for Windows & XAMPP
@@ -96,6 +99,10 @@ if (is_admin()) {
 } else {
 // Load the gallery generator
 	include_once (dirname (__FILE__)."/nggfunctions.php");
+	
+	// Action calls for all functions 
+	add_filter('the_content', 'searchnggallerytags');
+	add_filter('the_excerpt', 'searchnggallerytags');
 }
 
 // Load tinymce button 
@@ -104,7 +111,7 @@ include_once (dirname (__FILE__)."/tinymce/tinymce.php");
 // Load gallery class
 require_once (dirname (__FILE__).'/lib/nggallery.lib.php');
 
-// Init the clas
+// Init the gallery class
 $nggallery = new nggallery();
 
 // Add rewrite rules
@@ -121,9 +128,9 @@ function ngg_addjs() {
 	if ($ngg_options['thumbEffect'] == "thickbox") {
 		echo "\n".'<script type="text/javascript"> var tb_pathToImage = "'.NGGALLERY_URLPATH.'thickbox/'.$ngg_options['thickboxImage'].'";</script>';
 		echo "\n".'<style type="text/css" media="screen">@import "'.NGGALLERY_URLPATH.'thickbox/thickbox.css";</style>'."\n";
-	    if ($wp_version < "2.3") {
+	    if ($wp_version < "2.5") {
 	    	if ($wp_version > "2.1.3") wp_deregister_script('jquery'); 
-	    	wp_enqueue_script('jquery', NGGALLERY_URLPATH .'admin/js/jquery.js', FALSE, '1.1.3.1');
+	    	wp_enqueue_script('jquery', NGGALLERY_URLPATH .'admin/js/jquery.js', FALSE, '1.2.2');
 		} 
 	    	wp_enqueue_script('thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.1.1');
 
@@ -163,10 +170,6 @@ function ngg_deinstall() {
 	// remove & reset the init check option
 	delete_option( "ngg_init_check" );
 }
-
-// Action calls for all functions 
-add_filter('the_content', 'searchnggallerytags');
-add_filter('the_excerpt', 'searchnggallerytags');
 
 // Content Filters
 add_filter('ngg_gallery_name', 'sanitize_title');
