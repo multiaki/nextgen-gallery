@@ -5,10 +5,19 @@
 // ************************************
 
 // add to header in admin area
-add_action('admin_head', 'ngg_nocache');
-function ngg_nocache() {
+add_action('admin_head', 'ngg_header');
+function ngg_header() {
+	global $wp_version;
 	echo "\n".'<meta name="NextGEN" content="'.NGGVERSION.'" />';
 	echo "\n".'<meta http-equiv="pragma" content="no-cache" />'."\n";
+
+	// since WP2.5 redesign we need a different CSS
+	if ($wp_version < "2.4")
+		echo '<link rel="stylesheet" href="'.NGGALLERY_URLPATH.'admin/css/nggadmin.wp23.css" type="text/css" media="screen" />'."\n"; 
+	else {
+		echo '<link rel="stylesheet" href="'.NGGALLERY_URLPATH.'admin/css/nggadmin.wp25.css" type="text/css" media="screen" />'."\n";
+		wp_admin_css( 'css/dashboard' );
+	}
 }
 
 include_once (dirname (__FILE__)."/uploadtab.php");
@@ -76,6 +85,7 @@ add_action('admin_menu', 'add_nextgen_gallery_menu');
   	// Thx to http://weblogtoolscollection.com/archives/2007/07/09/reduce-the-size-of-your-wordpress-plugin-footprint/
   	
   	function  show_menu() {
+  		global $wp_version;
   		switch ($_GET["page"]){
 			case "nggallery-add-gallery" :
 				include_once (dirname (__FILE__). '/functions.php');	// admin functions
@@ -122,7 +132,10 @@ add_action('admin_menu', 'add_nextgen_gallery_menu');
 				break;
 			case "nggallery" :
 			default :
-				include_once (dirname (__FILE__). '/overview.php'); 	// nggallery_admin_overview
+				if ($wp_version < "2.4")
+					include_once (dirname (__FILE__). '/overview.php'); 	// nggallery_admin_overview
+				else
+					include_once (dirname (__FILE__). '/wp25/overview.php'); 	// nggallery_admin_overview	
 				nggallery_admin_overview();
 				break;
 		}
