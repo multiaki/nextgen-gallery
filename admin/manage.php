@@ -48,7 +48,7 @@ function nggallery_admin_manage_gallery() {
 				if (is_array($imagelist)) {
 					foreach ($imagelist as $filename) {
 						@unlink(WINABSPATH.$gallerypath.'/'.$thumb_folder.'/'.$thumb_prefix.$filename);
-						 unlink(WINABSPATH.$gallerypath.'/'.$filename);
+						@unlink(WINABSPATH.$gallerypath.'/'.$filename);
 					}
 				}
 				// delete folder
@@ -129,8 +129,8 @@ function nggallery_admin_manage_gallery() {
 					foreach ( $_POST['doaction'] as $imageID ) {
 						$filename = $wpdb->get_var("SELECT filename FROM $wpdb->nggpictures WHERE pid = '$imageID' ");
 						if ($ngg_options['deleteImg']) {
-							unlink(WINABSPATH.$gallerypath.'/'.$thumb_folder.'/'.$thumb_prefix.$filename);
-							unlink(WINABSPATH.$gallerypath.'/'.$filename);	
+							@unlink(WINABSPATH.$gallerypath.'/'.$thumb_folder.'/'.$thumb_prefix.$filename);
+							@unlink(WINABSPATH.$gallerypath.'/'.$filename);	
 						} 
 						$delete_pic = $wpdb->query("DELETE FROM $wpdb->nggpictures WHERE pid = $imageID");
 					}
@@ -217,7 +217,6 @@ function nggallery_admin_manage_gallery() {
 
 	if (isset ($_POST['scanfolder']))  {
 	// Rescan folder
-		//TODO:Should be combine in import_gallery function !!!
 		check_admin_referer('ngg_updategallery');
 	
 		$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$act_gid' ");
@@ -248,6 +247,12 @@ function nggallery_admin_manage_gallery() {
 			$result = $wpdb->query("UPDATE $wpdb->nggallery SET title= '$gallery_title', pageid = '$gallery_pageid' WHERE gid = '$act_gid'");
 			$messagetext = '<font color="green">'.__('New gallery page ID','nggallery'). ' ' . $pageid . ' -> <strong>' . $gallery_title . '</strong> ' .__('created','nggallery').'</font>';
 		}
+	}
+
+	if (isset ($_POST['sortGallery'])) {
+		$mode = 'sort';
+		include_once (dirname (__FILE__). '/sort.php');
+		nggallery_sortorder($act_gid);
 	}
 	
 	// message windows
@@ -323,6 +328,8 @@ function nggallery_picturelist($hideThumbs = false,$showTags = false) {
 	// get the options
 	$ngg_options=get_option('ngg_options');	
 	
+	//TODO:A unique gallery call must provide me with this information, like $gallery  = new nggGallery($id);
+	
 	// get gallery values
 	$act_gallery = $wpdb->get_row("SELECT * FROM $wpdb->nggallery WHERE gid = '$act_gid' ");
 
@@ -336,7 +343,8 @@ function nggallery_picturelist($hideThumbs = false,$showTags = false) {
 <script type="text/javascript"> 
 jQuery(document).ready(	
 	function()	{ 
-		jQuery('.textarea1').Autoexpand([230,400]); 
+		
+		//jQuery('.textarea1').Autoexpand([230,400]); 
 		
 		
 /*		jQuery("input:checkbox").click( 
@@ -513,6 +521,7 @@ function getNumChecked(form)
 <input type="submit" name="togglethumbs" value="<?php _e("Show thumbnails ",'nggallery')?>" /><?php } ?>
 <?php if (!$showTags) { ?><input  type="submit" name="toggletags" value="<?php _e("Show tags",'nggallery')?>" /> <?php } else {?>
 <input type="submit" name="toggletags" value="<?php _e("Hide tags",'nggallery')?>" /><?php } ?>
+<input type="submit" name="sortGallery" value="<?php _e("Sort gallery",'nggallery')?>" />
 
 </p>
 

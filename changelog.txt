@@ -1,6 +1,12 @@
 NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
+V0.90
+- NEW : Sort order for images (in porgess !!!)
+- Changed : wpdb->escape gallerytag in nggfunctions.
+- Changed : Sort files after scan folder
+- Changed : Check for filename during upload
+
 V0.83 - 14.02.2008
 - Changed : New Interfaces.js from WP Core 2.5, for sortable bug under IE7
 - Changed : Update to jQuery V1.2.2, deregister older version from WP

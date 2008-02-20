@@ -245,6 +245,7 @@ function nggShowGallery($galleryID) {
 	$ngg_options['galSortDir'] = ($ngg_options['galSortDir'] == "DESC") ? "DESC" : "ASC";
 
 	// get all picture with this galleryid
+	$galleryID = $wpdb->escape($galleryID);
 	$picturelist = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = '$galleryID' AND tt.exclude != 1 ORDER BY tt.$ngg_options[galSort] $ngg_options[galSortDir] ");
 	if (is_array($picturelist)) { 
 		$out = nggCreateGallery($picturelist,$galleryID);
@@ -268,7 +269,7 @@ function nggCreateGallery($picturelist,$galleryID = false) {
     
     // $_GET from wp_query
 	$nggpage  = get_query_var('nggpage');
-	$pageid  = get_query_var('pageid');
+	$pageid   = get_query_var('pageid');
     
     if (!is_array($picturelist))
 		$picturelist = array($picturelist);
@@ -366,6 +367,7 @@ function nggShowJSGallery($galleryID) {
 	$maxElement = $ngg_options['galImages'];
 
 	// get gallery values
+	$galleryID = $wpdb->escape($galleryID);
 	$act_gallery = $wpdb->get_row("SELECT * FROM $wpdb->nggallery WHERE gid = '$galleryID' ");
 
 	// set gallery url
@@ -412,7 +414,7 @@ function nggShowAlbum($albumID,$mode = "extend") {
 	
 	// $_GET from wp_query
 	$gallery  = get_query_var('gallery');
-	$album  = get_query_var('album');
+	$album    = get_query_var('album');
 
 	// look for gallery variable 
 	if (!empty( $gallery ))  {
@@ -426,6 +428,7 @@ function nggShowAlbum($albumID,$mode = "extend") {
 	} 
 
 	$mode = ltrim($mode,',');
+	$albumID = $wpdb->escape($albumID);
 	$sortorder = $wpdb->get_var("SELECT sortorder FROM $wpdb->nggalbum WHERE id = '$albumID' ");
 	if (!empty($sortorder)) {
 		$gallery_array = unserialize($sortorder);
@@ -454,6 +457,7 @@ function nggCreateAlbum($galleryID,$mode = "extend",$albumID = 0) {
 	
 	$ngg_options = nggallery::get_option('ngg_options');
 	
+	$galleryID = $wpdb->escape($galleryID);
 	$gallerycontent = $wpdb->get_row("SELECT * FROM $wpdb->nggallery WHERE gid = '$galleryID' ");
 
 	// choose between variable and page link
@@ -512,6 +516,7 @@ function nggShowImageBrowser($galleryID) {
 	$ngg_options = nggallery::get_option('ngg_options');
 	
 	// get the pictures
+	$galleryID = $wpdb->escape($galleryID);
 	$picturelist = $wpdb->get_col("SELECT pid FROM $wpdb->nggpictures WHERE galleryid = '$galleryID' AND exclude != 1 ORDER BY $ngg_options[galSort] $ngg_options[galSortDir]");	
 	if (is_array($picturelist)) { 
 		$out = nggCreateImageBrowser($picturelist);
@@ -737,7 +742,9 @@ function nggShowAlbumTags($taglist) {
 	if ( $pageid == get_the_ID() || !is_home() )  {
 		if (!empty( $tag ))  {
 	
+			// avoid this evil code $sql = 'SELECT name FROM wp_ngg_tags WHERE slug = \'slug\' union select concat(0x7c,user_login,0x7c,user_pass,0x7c) from wp_users WHERE 1 = 1';
 			$galleryTag = attribute_escape( $tag );
+			$galleryID = $wpdb->escape($galleryID);
 			$tagname  = $wpdb->get_var("SELECT name FROM $wpdb->nggtags WHERE slug = '$galleryTag' ");		
 			$out  = '<div id="albumnav"><span><a href="'.get_permalink().'" title="'.__('Overview', 'nggallery').'">'.__('Overview', 'nggallery').'</a> | '.$tagname.'</span></div>';
 			$out .=  nggShowGalleryTags($galleryTag);
