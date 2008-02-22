@@ -43,6 +43,8 @@ global $wpdb, $wp_version, $wpmu_version, $wp_roles;
 
 // Check for WPMU installation
 define('IS_WPMU', version_compare($wpmu_version, '1.3', '>=') );
+// Check for WP2.5 installation
+define('IS_WP25', version_compare($wp_version, '2.4', '>=') );
 
 //This works only in WP2.2 or higher
 if ((version_compare($wp_version, '2.1', '>=')) or (IS_WPMU)){
@@ -106,8 +108,11 @@ if (is_admin()) {
 }
 
 // Load tinymce button 
-include_once (dirname (__FILE__)."/tinymce/tinymce.php");
-
+if (IS_WP25)
+	include_once (dirname (__FILE__)."/tinymce3/tinymce.php");
+else
+	include_once (dirname (__FILE__)."/tinymce/tinymce.php");
+	
 // Load gallery class
 require_once (dirname (__FILE__).'/lib/nggallery.lib.php');
 
