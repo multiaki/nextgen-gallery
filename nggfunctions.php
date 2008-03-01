@@ -171,9 +171,15 @@ function nggShowSlideshow($galleryID,$irWidth,$irHeight) {
 	$out .= "\n\t\t".$obj.'.addParam("wmode", "opaque");';
 	$out .= "\n\t\t".$obj.'.addVariable("file", "'.NGGALLERY_URLPATH.'nggextractXML.php?gid='.$galleryID.'");';
 	if (!$ngg_options['irShuffle']) $out .= "\n\t\t".$obj.'.addVariable("shuffle", "false");';
-	if ($ngg_options['irLinkfromdisplay']) $out .= "\n\t\t".$obj.'.addVariable("linkfromdisplay", "false");';
+	// default value changed in 3.15 : linkfromdisplay, shownavigation, showicons
+	if (!$ngg_options['irLinkfromdisplay']) $out .= "\n\t\t".$obj.'.addVariable("linkfromdisplay", "false");';
+	if (!$ngg_options['irShownavigation']) $out .= "\n\t\t".$obj.'.addVariable("shownavigation", "false");';
+	if (!$ngg_options['irShowicons']) $out .= "\n\t\t".$obj.'.addVariable("showicons", "false");';
+	// keep compatible to older version, remove later
+	if ($ngg_options['irLinkfromdisplay']) $out .= "\n\t\t".$obj.'.addVariable("linkfromdisplay", "true");';
 	if ($ngg_options['irShownavigation']) $out .= "\n\t\t".$obj.'.addVariable("shownavigation", "true");';
 	if ($ngg_options['irShowicons']) $out .= "\n\t\t".$obj.'.addVariable("showicons", "true");';
+	// hidden feature since 3.14
 	if ($ngg_options['irKenburns']) $out .= "\n\t\t".$obj.'.addVariable("kenburns", "true");';
 	if ($ngg_options['irWatermark']) $out .= "\n\t\t".$obj.'.addVariable("logo", "'.$ngg_options['wmPath'].'");';
 	if (!empty($ngg_options['irAudio'])) $out .= "\n\t\t".$obj.'.addVariable("audio", "'.$ngg_options['irAudio'].'");';
