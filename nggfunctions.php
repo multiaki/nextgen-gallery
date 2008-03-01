@@ -11,7 +11,7 @@ function searchnggallerytags($content) {
 	
 	if ( stristr( $content, '[singlepic' )) {
 		
-		$search = "@\[singlepic=(\d+)(|,\d+|,)(|,\d+|,)(|,watermark|,web20|,)(|,right|,left|,)\]@i";
+		$search = "@\[singlepic=(\d+)(|,\d+|,)(|,\d+|,)(|,watermark|,web20|,)(|,right|,center|,left|,)\]@i";
 		
 		if	(preg_match_all($search, $content, $matches)) {
 			
@@ -621,10 +621,13 @@ function nggSinglePicture($imageID,$width=250,$height=250,$mode="",$float="") {
 	if (!empty($float)) {
 		switch ($float) {
 		
-		case 'left': $float=' ngg-left" ';
+		case 'left': $float=' ngg-left';
 		break;
 		
-		case 'right': $float=' ngg-right" ';
+		case 'right': $float=' ngg-right';
+		break;
+
+		case 'center': $float=' ngg-center';
 		break;
 		
 		default: $float='';

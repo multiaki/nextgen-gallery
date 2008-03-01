@@ -7,11 +7,10 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 
 	<div class="wrap">
 	<h2><?php _e('Copyright notes / Credits', 'nggallery') ;?></h2>
-		<fieldset class="options">
-		<legend><?php _e("NextGEN DEV Team", 'nggallery'); ?></legend>
+		<h3><?php _e("NextGEN DEV Team", 'nggallery'); ?></h3>
 		<p><?php _e('This plugin is primarily developed, maintained, supported, documented by', 'nggallery'); ?> <a href="http://alexrabe.boelinger.com" target="_blank">Alex Rabe</a>. <?php _e('There are many other folks who have made contributions to this project :', 'nggallery') ;?></p>
 		<p><?php ngg_list_contributors(); ?></p>
-		<legend><?php _e("Contributors / Tribute to", 'nggallery'); ?></legend>
+		<h3><?php _e("Contributors / Tribute to", 'nggallery'); ?></h3>
 		<p><?php _e('If you study the code of this plugin, you will find out that we mixed a lot of good already existing code and ideas together.', 'nggallery') ;?>
 		<?php _e('So, we would like to thank the following people for their pioneer work (without this work it\'s impossible to create such a plugin so fast)', 'nggallery') ;?></p>		
 		<ul>
@@ -25,7 +24,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		<li><a href="http://watermark.malcherek.com/" target="_blank">Marek Malcherek</a> <?php _e('for the Watermark plugin', 'nggallery') ;?></li>
 		</ul>
 		<p><?php _e('If you didn\'t find your name on this list and there is some code which I integrate in my plugin, don\'t hesitate to send me a mail.', 'nggallery') ;?></p>		
-		<legend><?php _e("How to support ?", 'nggallery'); ?></legend>
+		<h3><?php _e("How to support ?", 'nggallery'); ?></h3>
 		<p><?php _e('There exist several ways to contribute, help or support us in this work. Non of them are mandatory.', 'nggallery') ;?></p>
 		<ul>
 			<li><strong><?php _e('Send us bugfixes / code changes', 'nggallery') ;?></strong><br /><?php _e('The most motivated support for this plugin are your ideas and brain work', 'nggallery') ;?></li>
@@ -45,10 +44,9 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			</li>
 			<li><strong><?php _e('Place a link to the plugin in your blog/webpage', 'nggallery') ;?></strong><br /><?php _e('Yes, share and trackback is also a good support for this work ', 'nggallery') ;?></li>
 		</ul>
-		<legend><?php _e("Thanks!", 'nggallery'); ?></legend>
+		<h3><?php _e("Thanks!", 'nggallery'); ?></h3>
 		<p><?php _e('We would like to thank this people which support us in the work :', 'nggallery') ;?></p>
 		<p><a href="http://www.boelinger.com/heike/" target="_blank">HEIKE</a>, <?php ngg_list_support(); ?></p>
-		</fieldset>
 	</div>
 	
 	<?php
@@ -180,7 +178,11 @@ function ngg_list_support()	{
 	"Steve Lieber" => "http://www.stevelieber.com",
 	"Modo Web Design" => "http://www.modowebdesign.com",
 	"Matthew Feldman" => "",
-	"Gideon Kiers" => "http://www.gideonkiers.com"
+	"Gideon Kiers" => "http://www.gideonkiers.com",
+	"Susan Bates" => "http://www.fineartsmith.com",
+	"ILISA International USA" => "http://www.ilisa.com",
+	"Mark Campbell" => "http://www.layersofcolor.com",
+	"Aaron Snyder" => "http://www.aaronsnyder.net"	
 	);
 
 	

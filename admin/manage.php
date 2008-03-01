@@ -497,7 +497,7 @@ function getNumChecked(form)
 <p class="submit">
 	<input type="submit" name="scanfolder" value="<?php _e("Scan Folder for new images",'nggallery')?> " />
 	<input type="submit" name="updatepictures" value="<?php _e("Save Changes",'nggallery')?> &raquo;" />
-<p>
+</p>
 </fieldset>
 <fieldset class="options">
 <p><select id="bulkaction" name="bulkaction">
@@ -586,7 +586,7 @@ if($picturelist) {
 		</tbody>
 	</table>
 	</fieldset>
-	<p class="submit"><input type="submit" name="updatepictures" value="<?php _e("Save Changes",'nggallery')?> &raquo;" /><p>
+	<p class="submit"><input type="submit" name="updatepictures" value="<?php _e("Save Changes",'nggallery')?> &raquo;" /></p>
 	</form>	
 	<br class="clear"/>
 	</div><!-- /#wrap -->

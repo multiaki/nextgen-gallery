@@ -180,7 +180,11 @@ function ngg_list_support()	{
 	"Steve Lieber" => "http://www.stevelieber.com",
 	"Modo Web Design" => "http://www.modowebdesign.com",
 	"Matthew Feldman" => "",
-	"Gideon Kiers" => "http://www.gideonkiers.com"
+	"Gideon Kiers" => "http://www.gideonkiers.com",
+	"Susan Bates" => "http://www.fineartsmith.com",
+	"ILISA International USA" => "http://www.ilisa.com",
+	"Mark Campbell" => "http://www.layersofcolor.com",
+	"Aaron Snyder" => "http://www.aaronsnyder.net"	
 	);
 
 	
