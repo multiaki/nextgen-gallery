@@ -19,8 +19,10 @@ function ngg_header() {
 		break;
 		case "nggallery-add-gallery" :
 		case "nggallery-options" :
-			echo '<link rel="stylesheet" href="'.NGGALLERY_URLPATH.'admin/css/nggadmin.wp25.css" type="text/css" media="screen" />'."\n";
 			echo '<link rel="stylesheet" href="'.NGGALLERY_URLPATH.'admin/css/jquery.ui.tabs.css" type="text/css" media="print, projection, screen" />'."\n";
+		case "nggallery-roles" :
+		case "nggallery-manage-gallery" :
+			echo '<link rel="stylesheet" href="'.NGGALLERY_URLPATH.'admin/css/nggadmin.wp25.css" type="text/css" media="screen" />'."\n";			
 		break;
 	}
 }

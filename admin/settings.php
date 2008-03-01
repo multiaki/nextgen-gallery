@@ -269,12 +269,15 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<input type="hidden" name="page_options" value="galUsejQuery,galNoPages,galImages,galShowSlide,galTextSlide,galTextGallery,galShowOrder,galShowDesc,galImgBrowser,galSort,galSortDir" />
 			<fieldset class="options"> 
 				<table class="optiontable">
+					<!--TODO:  Do better... -->
+					<!--
 					<tr>
-						<th valign="top"><?php _e('Activate jQuery navigation','nggallery') ?>:</th>
-						<td><input name="galUsejQuery" type="checkbox" value="1" <?php checked('1', $ngg_options['galUsejQuery']); ?> />
-						<?php _e('Please note : This is still experimental. Requires the Thickbox effect','nggallery') ?>
+						<th valign="top"><?php //_e('Activate jQuery navigation','nggallery') ?>:</th>
+						<td><input name="galUsejQuery" type="checkbox" value="1" <?php // checked('1', $ngg_options['galUsejQuery']); ?> />
+						<?php //_e('Please note : This is still experimental. Requires the Thickbox effect','nggallery') ?>
 						</td>
 					</tr>
+					-->
 					<tr>
 						<th valign="top"><?php _e('Deactivate gallery page link','nggallery') ?>:</th>
 						<td><input name="galNoPages" type="checkbox" value="1" <?php checked('1', $ngg_options['galNoPages']); ?> />

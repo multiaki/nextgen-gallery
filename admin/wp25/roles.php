@@ -27,8 +27,7 @@ if ( isset($_POST['update_cap']) ) {
 	   <?php _e('For a more flexible user management you can use the', 'nggallery') ?> <a href="http://www.im-web-gefunden.de/wordpress-plugins/role-manager/" target="_blank">Role Manager</a>.</p>
 	<form name="addroles" id="addroles" method="POST" accept-charset="utf-8" >
 		<?php wp_nonce_field('ngg_addroles') ?>
-		<fieldset class="options">
-			<table class="optiontable"> 
+			<table class="form-table"> 
 			<tr valign="top"> 
 				<th scope="row"><?php _e('Main NextGEN Gallery overview', 'nggallery') ;?>:</th> 
 				<td><label for="general"><select name="general" id="general"><?php wp_dropdown_roles( ngg_get_role('NextGEN Gallery overview') ); ?></select></label></td>
@@ -59,7 +58,6 @@ if ( isset($_POST['update_cap']) ) {
 			</tr>
 			</table>
 			<div class="submit"><input type="submit" name= "update_cap" value="<?php _e('Update capabilities', 'nggallery') ;?>"/></div>
-		</fieldset>
 	</form>
 	</div>
 <?php

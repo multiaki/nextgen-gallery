@@ -10,6 +10,7 @@ V0.90
 - Changed : wpdb->escape gallerytag in nggfunctions.
 - Changed : Sort files after scan folder
 - Changed : Check for filename during upload
+- Changed : Remove jQuery plugin for navigation
 - Bugfix  : P tags not closed in manage.php
 - Bugfix  : Remove " from singlepic class
 

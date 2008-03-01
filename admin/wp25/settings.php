@@ -262,12 +262,15 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<?php wp_nonce_field('ngg_settings') ?>
 			<input type="hidden" name="page_options" value="galUsejQuery,galNoPages,galImages,galShowSlide,galTextSlide,galTextGallery,galShowOrder,galShowDesc,galImgBrowser,galSort,galSortDir" />
 				<table class="form-table">
+					<!--TODO:  Do better... -->
+					<!--
 					<tr>
-						<th valign="top"><?php _e('Activate jQuery navigation','nggallery') ?>:</th>
-						<td><input name="galUsejQuery" type="checkbox" value="1" <?php checked('1', $ngg_options['galUsejQuery']); ?> />
-						<?php _e('Please note : This is still experimental. Requires the Thickbox effect','nggallery') ?>
+						<th valign="top"><?php //_e('Activate jQuery navigation','nggallery') ?>:</th>
+						<td><input name="galUsejQuery" type="checkbox" value="1" <?php // checked('1', $ngg_options['galUsejQuery']); ?> />
+						<?php //_e('Please note : This is still experimental. Requires the Thickbox effect','nggallery') ?>
 						</td>
 					</tr>
+					-->
 					<tr>
 						<th valign="top"><?php _e('Deactivate gallery page link','nggallery') ?>:</th>
 						<td><input name="galNoPages" type="checkbox" value="1" <?php checked('1', $ngg_options['galNoPages']); ?> />
@@ -491,8 +494,9 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		<input type="hidden" name="page_options" value="irWidth,irHeight,irShuffle,irLinkfromdisplay,irShownavigation,irShowicons,irWatermark,irOverstretch,irRotatetime,irTransition,irKenburns,irBackcolor,irFrontcolor,irLightcolor,irScreencolor,irAudio,irXHTMLvalid" />
 		<h2><?php _e('Slideshow','nggallery'); ?></h2>
 		<?php if (!NGGALLERY_IREXIST) { ?><p><div id="message" class="error fade"><p><?php _e('The imagerotator.swf is not in the nggallery folder, the slideshow will not work.','nggallery') ?></p></div></p><?php }?>
-		<p><?php _e('The settings are used in the JW Image Rotator Version 3.13 .', 'nggallery') ?> 
-		   <?php _e('See more information for the Flash Player on the web page', 'nggallery') ?> <a href="http://www.jeroenwijering.com/?item=JW_Image_Rotator" target="_blank">JW Image Rotator from Jeroen Wijering</a>.</p>
+		<p><?php _e('The settings are used in the JW Image Rotator Version', 'nggallery') ?> 3.15 .
+		   <?php _e('See more information for the Flash Player on the web page', 'nggallery') ?> <a href="http://www.jeroenwijering.com/?item=JW_Image_Rotator" target="_blank" >JW Image Rotator from Jeroen Wijering</a>.
+		</p>
 				<table class="form-table">
 					<tr>
 						<th><?php _e('Default size (W x H)','nggallery') ?>:</th>

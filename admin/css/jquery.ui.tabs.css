@@ -51,6 +51,7 @@
     padding: 0 10px;
     background: url(tab.png) no-repeat;
 }
+
 .ui-tabs-nav a {
     margin: 1px 0 0; /* position: relative makes opacity fail for disabled tab in IE */
     padding-left: 0;
@@ -132,6 +133,11 @@
 	margin:0pt 0pt 0pt 0px !important;
 	overflow:visible !important;
 }
+
+.ui-tabs-panel a {
+	display:inline;
+}
+
 .ui-tabs-loading em {
     padding: 0 0 0 20px;
     background: url(loading.gif) no-repeat 0 50%;

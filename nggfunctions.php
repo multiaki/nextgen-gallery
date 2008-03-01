@@ -213,12 +213,6 @@ function nggShowGallery($galleryID) {
 	$pid     = get_query_var('pid');
 	$pageid  = get_query_var('pageid');
 	
-	// use the jQuery Plugin if activated
-	if (($ngg_options['thumbEffect'] == "thickbox") && ($ngg_options['galUsejQuery'])) {
-		$out .= nggShowJSGallery($galleryID);
-		return $out;
-	}
-
 	// set $show if slideshow first
 	if ( empty( $show ) AND ($ngg_options['galShowOrder'] == 'slide')) {
 		if (is_home()) $pageid = get_the_ID();
@@ -360,59 +354,6 @@ function nggCreateGallery($picturelist,$galleryID = false) {
 	return $out;
 }
 
-
-/**********************************************************/
-function nggShowJSGallery($galleryID) {
-	// create a gallery with a jQuery plugin
-	//TODO:Refactor this to better, faster , cleaner solution
-	
-	global $wpdb;
-	
-	$ngg_options = nggallery::get_option('ngg_options');
-
-	$maxElement = $ngg_options['galImages'];
-
-	// get gallery values
-	$galleryID = $wpdb->escape($galleryID);
-	$act_gallery = $wpdb->get_row("SELECT * FROM $wpdb->nggallery WHERE gid = '$galleryID' ");
-
-	// set gallery url
-	$folder_url 	= get_option ('siteurl')."/".$act_gallery->path."/";
-	$thumb_folder   = str_replace('/','',nggallery::get_thumbnail_folder($act_gallery->path, FALSE));
-
-	$picturelist = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures WHERE galleryid = '$galleryID' AND exclude != 1 ORDER BY $ngg_options[galSort] $ngg_options[galSortDir] ");	
-	
-	if (is_array($picturelist)) {
-		
-		// create array	
-		$i = 0;
-		
-		$out  = '<script type="text/javascript">'."\n";
-		$out .= 'var nggal'. $galleryID .'=new Array()'."\n";
-		foreach ($picturelist as $picture) {
-			$out .= 'nggal'. $galleryID .'['.$i++.']=["'.$picture->filename.'", "'.stripslashes($picture->alttext).'", "'.strip_tags(nggallery::ngg_nl2br($picture->description)).'"]'."\n";	
-		}
-		$out .=	'jQuery(document).ready(function() {'."\n";
-		$out .=  '  jQuery("#nggal'. $galleryID .'").nggallery({'."\n";
-		$out .=	'		imgarray    : nggal'. $galleryID . ','."\n";
-		$out .=	'		name        : "'. $act_gallery->name . '",'."\n";
-		$out .=	'		galleryurl  : "'. $folder_url  . '",'."\n";
-		$out .=	'		thumbfolder : "'. $thumb_folder  . '",'."\n";
-		if ($ngg_options['thumbEffect'] == "thickbox")
-			$out .=	'		thickbox    : true,'."\n";	
-		$out .=	'		maxelement  : '. $maxElement ."\n";
-		$out .=	'	});'."\n";
-		$out .=	'});'."\n";
-		
-		$out .= '</script>'."\n";
-		$out .= '	<div id="nggal'. $galleryID .'">'."\n";
-		$out .= '	<!-- The content will be dynamically loaded in here -->'."\n";
-		$out .= '</div>'."\n";
-		$out .= '<div class="ngg-clear"></div>'."\n";
-	}
-		
-	return $out;	
-}
 /**********************************************************/
 function nggShowAlbum($albumID,$mode = "extend") {
 	

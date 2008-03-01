@@ -341,21 +341,6 @@ function nggallery_picturelist($hideThumbs = false,$showTags = false) {
 ?>
 
 <script type="text/javascript"> 
-jQuery(document).ready(	
-	function()	{ 
-		
-		//jQuery('.textarea1').Autoexpand([230,400]); 
-		
-		
-/*		jQuery("input:checkbox").click( 
-			function() {
-				jQuery(this).parents('tr').Highlight(500, '#ff0', function(){jQuery(this).parents('tr').css('backgroundColor', 'transparent');});	
-//				jQuery(this).parents('tr').('#td.img').fadeOut(2000);
-			}
-		); 
-*/
-	}); 
-	
 	function enterTags(form) {
 
 		var elementlist = "";
@@ -373,31 +358,10 @@ jQuery(document).ready(
 		jQuery("#TB_imagelist").val(elementlist);
 		// console.log (jQuery("#TB_imagelist").val());
 		jQuery.tb_show("", "#TB_inline?width=640&height=110&inlineId=tags&modal=true", false);
-		
 	}
 </script>
 <script type="text/javascript"> var tb_pathToImage = '<?php echo NGGALLERY_URLPATH ?>thickbox/loadingAnimationv3.gif';</script>
 <style type="text/css" media="all">@import "<?php echo NGGALLERY_URLPATH ?>thickbox/thickbox.css";</style>
-<style type="text/css" media="all">
-	/** required for view button **/
-	a.thickbox:hover {
-			
-		background:#CCCCCC none repeat scroll 0% 50%;
-		color:#003366;
-		
-		}
-		
-	a.thickbox, a.thickbox:hover {
-		border-bottom:medium none;
-		display:block;
-		padding:5px 0pt;
-		text-align:center;
-		}
-		
-	fieldset.nggallery {
-		border:1px solid #CCCCCC;
-	}	
-</style>
 <script type="text/javascript">
 <!--
 function checkAll(form)
@@ -429,7 +393,11 @@ function getNumChecked(form)
 //-->
 </script>
 <div class="wrap">
-<h2><?php _e('Gallery', 'nggallery') ?> : <?php echo $act_gallery->name; ?></h2>
+<h2><?php _e('Gallery', 'nggallery') ?> : <?php echo $act_gallery->name; ?>
+	<span class="ngg-inlinebutton">
+		<input type="submit" title="Edit" value="edit"/>
+	</span>
+</h2>
 
 <form id="updategallery" method="POST" action="<?php echo 'admin.php?page=nggallery-manage-gallery&amp;mode=edit&amp;gid='.$act_gid ?>" accept-charset="utf-8">
 <?php wp_nonce_field('ngg_updategallery') ?>
@@ -437,8 +405,7 @@ function getNumChecked(form)
 <?php if ($showTags) { ?><input type="hidden" name="showTags" value="true" /><?php } ?>
 <?php if ($hideThumbs) { ?><input type="hidden" name="hideThumbs" value="true" /><?php } ?>
 
-	<h3><?php _e('Main settings', 'nggallery') ?></h3>
-	<table width="100%" border="0" cellspacing="3" cellpadding="3" >
+	<table class="form-table" >
 		<tr>
 			<th align="left"><?php _e('Title') ?>:</th>
 			<th align="left"><input type="text" size="50" name="title" value="<?php echo $act_gallery->title; ?>"  /></th>
@@ -500,7 +467,8 @@ function getNumChecked(form)
 </form>
 <br style="clear: both;"/>
 <form id="table-operation" method="POST" action="<?php echo 'admin.php?page=nggallery-manage-gallery&amp;mode=edit&amp;gid='.$act_gid ?>" accept-charset="utf-8">
-<div class="tablenav">
+<?php wp_nonce_field('ngg_updategallery') ?>
+<div class="tablenav ngg-tablenav">
 	<div style="float: left;">
 	<select id="bulkaction" name="bulkaction">
 		<option value="0" ><?php _e("No action",'nggallery')?></option>
@@ -527,10 +495,10 @@ function getNumChecked(form)
 	</div>
 </div>
 <br style="clear: both;"/>
-<table id="listimages" class="widefat" >
+<table id="ngg-listimages" class="widefat" >
 	<thead>
 	<tr>
-		<th scope="col" style="text-align: center"><input name="checkall" type="checkbox" onclick="checkAll(document.getElementById('updategallery'));" /></th>
+		<th scope="col" class="check-column" ><input name="checkall" type="checkbox" onclick="checkAll(document.getElementById('updategallery'));" /></th>
 		<th scope="col" style="text-align: center"><?php _e('ID') ?></th>
 		<th scope="col" style="text-align: center"><?php _e('File name', 'nggallery') ?></th>
 		<?php if (!$hideThumbs) { ?>
@@ -561,9 +529,9 @@ if($picturelist) {
 
 		?>
 		<tr id="picture-<?php echo $pid ?>" <?php echo $class ?> style="text-align:center">
-			<td><input name="doaction[]" type="checkbox" value="<?php echo $pid ?>" /></td>
+			<td class="check-column"><input name="doaction[]" type="checkbox" value="<?php echo $pid ?>" /></td>
 			<th scope="row" style="text-align: center"><?php echo $pid ?></th>
-			<td><?php echo $picture->filename ?></td>
+			<td class="media-icon" ><?php echo $picture->filename ?></td>
 			<?php if (!$hideThumbs) { ?>
 			<td><img class="thumb" src="<?php echo $act_thumbnail_url.$act_thumb_prefix.$picture->filename ?>" /></td>
 			<?php } ?>
