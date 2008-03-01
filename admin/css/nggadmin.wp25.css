@@ -13,6 +13,55 @@ div.dashboard-widget-content .settings li {
 	margin:0.3em 0pt 0em;
 }
 
+/* SETTINGS FOR THE OPTIONS TABLE */ 
+.form-table th {
+	width:33%;
+} 
+
+/* WATERMARK */
+#wm-preview {
+	float:right;
+	font-size:90%;
+	width:40%;
+	border-color:#EBEBEB rgb(204, 204, 204) rgb(204, 204, 204) rgb(235, 235, 235);
+	border-style:solid;
+	border-width:1px;
+	margin-bottom:10px;
+	margin-left:20px;
+	margin-right:8px;
+	padding:2px;
+}
+#wm-preview h3{
+	background:#EAF3FA none repeat scroll 0%;
+	font-size:14px;
+	font-weight:bold;
+	margin:0pt 0pt 10px;
+	padding:8px 5px;
+}
+
+.wm-preview tr{
+	 width : 100%;
+	 border: none;
+}
+
+.wm-table {
+	border-collapse:collapse;
+	margin-top:1em;
+}
+.wm-table td {
+	border-bottom:8px solid #FFFFFF;
+	line-height:20px;
+	margin-bottom:9px;
+	padding:10px;
+}
+.wm-table th {
+	border-bottom:8px solid #FFFFFF;
+	padding:10px;
+	text-align:left;
+}
+.wm-table tr {
+	background:#EAF3FA none repeat scroll 0%;
+}
 
 /* SETTINGS FOR PROGRESS BAR */
 

@@ -3,8 +3,8 @@
  * thumbnail.inc.php
  * 
  * @author 		Ian Selby (ian@gen-x-design.com)
- * @copyright 	Copyright 2006
- * @version 	1.1.2 (PHP4)
+ * @copyright 	Copyright 2006-2008
+ * @version 	1.1.3 (PHP4)
  * @modded      by Alex Rabe
  * 
  */
@@ -163,6 +163,9 @@ class ngg_Thumbnail {
                 $this->error = true;
             }
         }
+        
+		// increase memory-limit if possible, GD needs this for large images
+		@ini_set('memory_limit', '128M');
         
 		if($this->error == false) { 
         // Check memory consumption if file exists

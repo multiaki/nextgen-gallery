@@ -4,6 +4,7 @@ by Alex Rabe & NextGEN DEV Team
 V0.90
 - NEW : Sort order for images (in porgess !!!)
 - Changed : New default parameter for ImageRotator 3.15
+- Added   : Change wp shortcode filter 
 - Added   : TinyMCE V3 Button for WordPress 2.5 
 - Changed : wpdb->escape gallerytag in nggfunctions.
 - Changed : Sort files after scan folder
