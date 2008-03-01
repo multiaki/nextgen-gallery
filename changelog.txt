@@ -13,6 +13,7 @@ V0.90
 - Changed : Remove jQuery plugin for navigation
 - Bugfix  : P tags not closed in manage.php
 - Bugfix  : Remove " from singlepic class
+- Removed : myGallery import
 
 V0.83 - 14.02.2008
 - Changed : New Interfaces.js from WP Core 2.5, for sortable bug under IE7

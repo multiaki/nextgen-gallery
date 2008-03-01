@@ -69,8 +69,6 @@ add_action('admin_menu', 'add_nextgen_gallery_menu');
     add_submenu_page( NGGFOLDER , __('Setup Gallery', 'nggallery'), __('Setup', 'nggallery'), 'activate_plugins', 'nggallery-setup', 'show_menu');
     if (wpmu_enable_function('wpmuRoles'))
 	add_submenu_page( NGGFOLDER , __('Roles', 'nggallery'), __('Roles', 'nggallery'), 'activate_plugins', 'nggallery-roles', 'show_menu');
-	if (check_for_myGallery())
-    add_submenu_page( NGGFOLDER , __('Import', 'nggallery'), __('Import', 'nggallery'), 'activate_plugins', 'nggallery-import', 'show_menu');
     add_submenu_page( NGGFOLDER , __('About this Gallery', 'nggallery'), __('About', 'nggallery'), 'NextGEN Gallery overview', 'nggallery-about', 'show_menu');
 	if (wpmu_site_admin())
 	add_submenu_page( 'wpmu-admin.php' , __('NextGEN Gallery', 'nggallery'), __('NextGEN Gallery', 'nggallery'), 'activate_plugins', 'nggallery-wpmu', 'show_menu');
@@ -137,32 +135,6 @@ add_action('admin_menu', 'add_nextgen_gallery_menu');
 
 	} 
   
-  /**************************************************************************/
-  
-  function check_for_myGallery() {
-  	
-  	global $wpdb;
-
-   	$ngg_check_mygallery					= $wpdb->prefix . 'mygallery';
-	$ngg_check_mygprelation					= $wpdb->prefix . 'mygprelation';
-	$ngg_check_mypictures					= $wpdb->prefix . 'mypictures';
-   
-	// check for correct tables
-	$ngg_dberror = false; 
-	
-	if ($wpdb->get_var("show tables like '$ngg_check_mygallery'") != $ngg_check_mygallery)  
-		return false;
-
-	if($wpdb->get_var("show tables like '$ngg_check_mygprelation'") != $ngg_check_mygprelation)
-		return false;
-	
-	if($wpdb->get_var("show tables like '$ngg_check_mypictures'") != $ngg_check_mypictures)
-		return false;
-	
-	// if all tables exits show import	
-	return true;
-	
-}
 	/**************************************************************************/
 	function wpmu_site_admin() {
 		// Check for site admin
