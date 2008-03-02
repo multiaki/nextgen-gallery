@@ -48,7 +48,6 @@ function nggallery_admin_manage_album()  {
 	if(!empty($messagetext)) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$messagetext.'</p></div>'; }
 ?>
 <style type="text/css" media="all">@import "<?php echo NGGALLERY_URLPATH ?>css/nggallery.css";</style>
-<style type="text/css" media="all">@import "<?php echo NGGALLERY_URLPATH ?>admin/css/nggadmin.css";</style>
 <script type="text/javascript">
 
 
@@ -124,7 +123,7 @@ function ngg_serialize(s)
 	<form id="selectalbum" method="POST" onsubmit="ngg_serialize('galleryContainer')" accept-charset="utf-8">
 		<?php wp_nonce_field('ngg_album') ?>
 		<input name="sortorder" type="hidden" />
-		<table width="100%" border="0" cellspacing="3" cellpadding="3" >
+		<table class="ngg-tablenav">
 			<tr>
 				<th align="right"><?php _e('Select album', 'nggallery') ?></th>  
 				<td>
@@ -144,16 +143,18 @@ function ngg_serialize(s)
 				</td> 
 				<th align="right"><?php _e('Add new album', 'nggallery') ?></th>
 				<td><input id="newalbum" name="newalbum" value="" /></td>
-				<td><p class="submit">
-					<?php if ($_POST['act_album'] > 0){ ?>
-						<input type="submit" name="delete" class="button delete" value="<?php _e('Delete') ?> &raquo;" onclick="javascript:check=confirm('<?php _e('Delete album ?','nggallery'); ?>');if(check==false) return false;"/>
-					<?php } ?>
-					<input type="submit" name="update" value="<?php _e('Update') ?> &raquo;" />
-				<p></td>
+				<td>
+					<p class="ngg-submit">
+						<?php if ($_POST['act_album'] > 0){ ?>
+							<input type="submit" name="delete" class="button delete" value="<?php _e('Delete') ?> &raquo;" onclick="javascript:check=confirm('<?php _e('Delete album ?','nggallery'); ?>');if(check==false) return false;"/>
+						<?php } ?>
+						<input type="submit" name="update" class="button" value="<?php _e('Update') ?> &raquo;" />
+					</p>
+				</td>
 			</tr>
 		</table>
-		
 	</form>
+	<br style="clear: both;"/>
 	<p>
 	<div style="float:right;">
 	  <a href="#" id="toggle_used"><?php _e('[Show all]', 'nggallery') ?></a>

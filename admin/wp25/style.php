@@ -60,75 +60,80 @@ if(!empty($messagetext)) { echo '<!-- Last Action --><div id="message" class="up
 	
 ?>		
 <div class="wrap">
-	<form name="cssfiles" method="post">
-	<?php wp_nonce_field('ngg_style') ?>
-	<input type="checkbox" name="activateCSS" value="1" <?php checked('1', $ngg_options[activateCSS]); ?> /> 
-	<?php _e('Activate and use style sheet:','nggallery') ?>
-		<select name="css" id="css" onchange="this.form.submit();">
-		<?php
-			$csslist = ngg_get_cssfiles();
-			foreach ($csslist as $key =>$a_cssfile) {
-				$css_name = $a_cssfile['Name'];
-				if ($key == $act_cssfile) {
-					$file_show = $key;
-					$selected = " selected='selected'";
-					$act_css_description = $a_cssfile['Description'];
-					$act_css_author = $a_cssfile['Author'];
-					$act_css_version = $a_cssfile['Version'];
-				}
-				else $selected = '';
-				$css_name = attribute_escape($css_name);
-				echo "\n\t<option value=\"$key\" $selected>$css_name</option>";
-			}
-		?>
-		</select>
-		<input type="submit" name="activate" value="<?php _e('Activate','nggallery') ?> &raquo;" class="button" />
-	</form>
-</div>
 
-<? if (!IS_WPMU || wpmu_site_admin() ) { ?>
-<div class="wrap"> 
-  <?php
-	if ( is_writeable($real_file) ) {
-		echo '<h2>' . sprintf(__('Editing <strong>%s</strong>'), $file_show) . '</h2>';
-	} else {
-		echo '<h2>' . sprintf(__('Browsing <strong>%s</strong>'), $file_show) . '</h2>';
-	}
-	?>
-	<div id="templateside">
-	<ul>
-	<li><strong><?php _e('Author','nggallery') ?> :</strong> <?php echo $act_css_author ?></li>
-	<li><strong><?php _e('Version','nggallery') ?> :</strong> <?php echo $act_css_version ?></li>
-	<li><strong><?php _e('Description','nggallery') ?> :<br /></strong> <?php echo $act_css_description ?></li>
-	</ul>
-	
+	<div class="bordertitle">
+		<h2 style="border: medium none ; padding-bottom: 0px;"><?php _e('Style Editor','nggallery') ?></h2>
+		<form id="themeselector" name="cssfiles" method="post">
+		<?php wp_nonce_field('ngg_style') ?>
+		<strong><?php _e('Activate and use style sheet:','nggallery') ?></strong>
+		<input type="checkbox" name="activateCSS" value="1" <?php checked('1', $ngg_options['activateCSS']); ?> /> 
+			<select name="css" id="theme" style="margin: 0pt; padding: 0pt;" onchange="this.form.submit();">
+			<?php
+				$csslist = ngg_get_cssfiles();
+				foreach ($csslist as $key =>$a_cssfile) {
+					$css_name = $a_cssfile['Name'];
+					if ($key == $act_cssfile) {
+						$file_show = $key;
+						$selected = " selected='selected'";
+						$act_css_description = $a_cssfile['Description'];
+						$act_css_author = $a_cssfile['Author'];
+						$act_css_version = $a_cssfile['Version'];
+					}
+					else $selected = '';
+					$css_name = attribute_escape($css_name);
+					echo "\n\t<option value=\"$key\" $selected>$css_name</option>";
+				}
+			?>
+			</select>
+			<input class="button" type="submit" name="activate" value="<?php _e('Activate','nggallery') ?> &raquo;" class="button" />
+		</form>
 	</div>
-	<?php
-	if (!$error) {
-	?>
-	<form name="template" id="template" method="post">
-		 <?php wp_nonce_field('ngg_style') ?>
-		 <div><textarea cols="70" rows="25" name="newcontent" id="newcontent" tabindex="1"><?php echo $content ?></textarea>
-		 <input type="hidden" name="updatecss" value="updatecss" />
-		 <input type="hidden" name="file" value="<?php echo $file_show ?>" />
-		 </div>
-<?php if ( is_writeable($real_file) ) : ?>
-	<p class="submit">
-<?php
-	echo "<input type='submit' name='submit' value='	" . __('Update File &raquo;') . "' tabindex='2' />";
-?>
-</p>
-<?php else : ?>
-<p><em><?php _e('If this file were writable you could edit it.'); ?></em></p>
-<?php endif; ?>
-	</form>
-	<?php
-	} else {
-		echo '<div class="error"><p>' . __('Oops, no such file exists! Double check the name and try again, merci.') . '</p></div>';
-	}
-	?>
-<div class="clear"> &nbsp; </div>
-</div>
+	<br style="clear: both;"/>
+	
+<? if (!IS_WPMU || wpmu_site_admin() ) { ?>
+	<div class="tablenav" style="margin-right: 210px;"> 
+	  <?php
+		if ( is_writeable($real_file) ) {
+			echo '<big>' . sprintf(__('Editing <strong>%s</strong>'), $file_show) . '</big>';
+		} else {
+			echo '<big>' . sprintf(__('Browsing <strong>%s</strong>'), $file_show) . '</big>';
+		}
+		?>
+	</div>
+	<br style="clear: both;"/>
+	
+	<div id="templateside">
+		<ul>
+			<li><strong><?php _e('Author','nggallery') ?> :</strong> <?php echo $act_css_author ?></li>
+			<li><strong><?php _e('Version','nggallery') ?> :</strong> <?php echo $act_css_version ?></li>
+			<li><strong><?php _e('Description','nggallery') ?> :<br /></strong> <?php echo $act_css_description ?></li>
+		</ul>
+	</div>
+	
+		<?php
+		if (!$error) {
+		?>
+		<form name="template" id="template" method="post">
+			 <?php wp_nonce_field('ngg_style') ?>
+			 <div><textarea cols="70" rows="25" name="newcontent" id="newcontent" tabindex="1"><?php echo $content ?></textarea>
+			 <input type="hidden" name="updatecss" value="updatecss" />
+			 <input type="hidden" name="file" value="<?php echo $file_show ?>" />
+			 </div>
+	<?php if ( is_writeable($real_file) ) : ?>
+		<p class="submit">
+			<input type="submit" name="submit" value="<?php _e('Update File &raquo;','nggallery') ?>" tabindex="2" />
+		</p>
+	<?php else : ?>
+	<p><em><?php _e('If this file were writable you could edit it.','nggallery'); ?></em></p>
+	<?php endif; ?>
+		</form>
+		<?php
+		} else {
+			echo '<div class="error"><p>' . __('Oops, no such file exists! Double check the name and try again, merci.','nggallery') . '</p></div>';
+		}
+		?>
+	<div class="clear"> &nbsp; </div>
+</div> <!-- wrap-->
 	
 <?php
 	}

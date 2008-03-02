@@ -114,9 +114,13 @@ div .progressbar span {
 }
 
  /* SETTINGS FOR ALBUM PAGE */
- 
-.album {
-	overflow: hidden;
+
+.ngg-tablenav {
+	width : 100%;
+	background-color:#EAF3FA;
+	clear:both;
+	margin-bottom:-10px;
+	margin-top:8px;
 }
 
 .groupItem
@@ -132,12 +136,11 @@ div .progressbar span {
 
 .groupItem .item_top
 {
-	background-color:#669999;
-	color: white;
+	background-color:#CEE1EF;
+	color: #333333;
 	font-weight:bold;
 	line-height: 28px;
 	height: 28px;
-	border-bottom: 2px solid #003333;
 	cursor: move;
 	padding: 0 5px;
 	position: static;
@@ -147,8 +150,12 @@ div .progressbar span {
 {
 	float:right;
 	text-decoration: none;
-	color: white;
-	border-bottom: 2px solid #003333;
+	color: #333333;
+}
+
+.groupItem .item_top a:hover
+{
+	color: #D54E21;
 }
 
 .innerhandle {
@@ -188,7 +195,7 @@ div .progressbar span {
 }
 
 #galleryContainer {
-	background-color:#F0F8FF;
+	background-color:#FBFBFB;
 	border:1px solid #BBBBBB;
 	margin:10px 440px 10px 10px;
 	padding:0px 10px 10px 10px;
@@ -196,7 +203,7 @@ div .progressbar span {
 
 #selectContainer {
 	float:right;
-	background:#F0F8FF none repeat scroll 0%;
+	background:#FBFBFB none repeat scroll 0%;
 	border:1px solid #BBBBBB;
 	margin:0pt 10px 10px;
 	padding:0px 5px 5px 10px;

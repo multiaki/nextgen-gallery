@@ -22,7 +22,11 @@ function ngg_header() {
 			echo '<link rel="stylesheet" href="'.NGGALLERY_URLPATH.'admin/css/jquery.ui.tabs.css" type="text/css" media="print, projection, screen" />'."\n";
 		case "nggallery-roles" :
 		case "nggallery-manage-gallery" :
+		case "nggallery-manage-album" :
 			echo '<link rel="stylesheet" href="'.NGGALLERY_URLPATH.'admin/css/nggadmin.wp25.css" type="text/css" media="screen" />'."\n";			
+		break;
+		case "nggallery-style" :
+			wp_admin_css( 'css/theme-editor' );
 		break;
 	}
 }
