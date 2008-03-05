@@ -275,6 +275,7 @@ function nggallery_manage_gallery_main() {
 	<script type="text/javascript"> var tb_pathToImage = '<?php echo NGGALLERY_URLPATH ?>thickbox/loadingAnimationv3.gif';</script>
 	<div class="wrap">
 		<h2><?php _e('Gallery Overview', 'nggallery') ?></h2>
+		<br style="clear: both;"/>
 		<table class="widefat">
 			<thead>
 			<tr>
@@ -395,7 +396,7 @@ function getNumChecked(form)
 <div class="wrap">
 <h2><?php _e('Gallery', 'nggallery') ?> : <?php echo $act_gallery->name; ?>
 	<span class="ngg-inlinebutton">
-		<input type="submit" title="Edit" value="edit"/>
+		<input type="submit" title="Edit" value="edit" onclick="jQuery('#manage-gallery').toggle()" />
 	</span>
 </h2>
 
@@ -404,7 +405,7 @@ function getNumChecked(form)
 
 <?php if ($showTags) { ?><input type="hidden" name="showTags" value="true" /><?php } ?>
 <?php if ($hideThumbs) { ?><input type="hidden" name="hideThumbs" value="true" /><?php } ?>
-
+<div id="manage-gallery" style="display:none;">
 	<table class="form-table" >
 		<tr>
 			<th align="left"><?php _e('Title') ?>:</th>
@@ -460,13 +461,14 @@ function getNumChecked(form)
 		</tr>
 
 	</table>
-
-<div class="submit">
-	<input type="submit" name="scanfolder" value="<?php _e("Scan Folder for new images",'nggallery')?> " />
-	<input type="submit" name="updatepictures" value="<?php _e("Save Changes",'nggallery')?> &raquo;" />
+	
+	<div class="submit">
+		<input type="submit" name="scanfolder" value="<?php _e("Scan Folder for new images",'nggallery')?> " />
+		<input type="submit" name="updatepictures" value="<?php _e("Save Changes",'nggallery')?> &raquo;" />
+	</div>
+	
 </div>
 <br style="clear: both;"/>
-
 <?php wp_nonce_field('ngg_updategallery') ?>
 <div class="tablenav ngg-tablenav">
 	<div style="float: left;">
