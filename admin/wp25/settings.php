@@ -393,60 +393,55 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				<h3><?php _e('Preview','nggallery') ?></h3>
 				<p style="text-align:center;"><?php echo $imageURL; ?></p>
 				<h3><?php _e('Position','nggallery') ?></h3>
-			    <table class="wm-preview">
-				<tr>
-					<td valign="top">
-						<strong><?php _e('Position','nggallery') ?></strong><br />
-						<table border="1">
-						<tr>
-							<td><input type="radio" name="wmPos" value="topLeft" <?php checked('topLeft', $ngg_options['wmPos']); ?> /></td>
-							<td><input type="radio" name="wmPos" value="topCenter" <?php checked('topCenter', $ngg_options['wmPos']); ?> /></td>
-							<td><input type="radio" name="wmPos" value="topRight" <?php checked('topRight', $ngg_options['wmPos']); ?> /></td>
-						</tr>
-						<tr>
-							<td><input type="radio" name="wmPos" value="midLeft" <?php checked('midLeft', $ngg_options['wmPos']); ?> /></td>
-							<td><input type="radio" name="wmPos" value="midCenter" <?php checked('midCenter', $ngg_options['wmPos']); ?> /></td>
-							<td><input type="radio" name="wmPos" value="midRight" <?php checked('midRight', $ngg_options['wmPos']); ?> /></td>
-						</tr>
-						<tr>
-							<td><input type="radio" name="wmPos" value="botLeft" <?php checked('botLeft', $ngg_options['wmPos']); ?> /></td>
-							<td><input type="radio" name="wmPos" value="botCenter" <?php checked('botCenter', $ngg_options['wmPos']); ?> /></td>
-							<td><input type="radio" name="wmPos" value="botRight" <?php checked('botRight', $ngg_options['wmPos']); ?> /></td>
-						</tr>
-						</table>
-					</td>
-					<td valign="top">
-						<strong><?php _e('Offset','nggallery') ?></strong><br />
-						<table border="0">
-							<tr>
-								<td>x</td>
-								<td><input type="text" name="wmXpos" value="<?php echo $ngg_options['wmXpos'] ?>" size="4" /> px</td>
-							</tr>
-							<tr>
-								<td>y</td>
-								<td><input type="text" name="wmYpos" value="<?php echo $ngg_options['wmYpos'] ?>" size="4" /> px</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-				</table>
-			</div> 
-				<table class="wm-table">
+				<div>
+				    <table id="wm-position">
 					<tr>
-						<td align="left" colspan="2"><label><input type="radio" name="wmType" value="image" <?php checked('image', $ngg_options['wmType']); ?> /> <?php _e('Use image as watermark','nggallery') ?></label></td>
+						<td valign="top">
+							<strong><?php _e('Position','nggallery') ?></strong>
+							<table border="1">
+								<tr>
+									<td><input type="radio" name="wmPos" value="topLeft" <?php checked('topLeft', $ngg_options['wmPos']); ?> /></td>
+									<td><input type="radio" name="wmPos" value="topCenter" <?php checked('topCenter', $ngg_options['wmPos']); ?> /></td>
+									<td><input type="radio" name="wmPos" value="topRight" <?php checked('topRight', $ngg_options['wmPos']); ?> /></td>
+								</tr>
+								<tr>
+									<td><input type="radio" name="wmPos" value="midLeft" <?php checked('midLeft', $ngg_options['wmPos']); ?> /></td>
+									<td><input type="radio" name="wmPos" value="midCenter" <?php checked('midCenter', $ngg_options['wmPos']); ?> /></td>
+									<td><input type="radio" name="wmPos" value="midRight" <?php checked('midRight', $ngg_options['wmPos']); ?> /></td>
+								</tr>
+								<tr>
+									<td><input type="radio" name="wmPos" value="botLeft" <?php checked('botLeft', $ngg_options['wmPos']); ?> /></td>
+									<td><input type="radio" name="wmPos" value="botCenter" <?php checked('botCenter', $ngg_options['wmPos']); ?> /></td>
+									<td><input type="radio" name="wmPos" value="botRight" <?php checked('botRight', $ngg_options['wmPos']); ?> /></td>
+								</tr>
+							</table>
+						</td>
+						<td valign="top">
+							<strong><?php _e('Offset','nggallery') ?></strong>
+							<table border="0">
+								<tr>
+									<td>x</td>
+									<td><input type="text" name="wmXpos" value="<?php echo $ngg_options['wmXpos'] ?>" size="4" /> px</td>
+								</tr>
+								<tr>
+									<td>y</td>
+									<td><input type="text" name="wmYpos" value="<?php echo $ngg_options['wmYpos'] ?>" size="4" /> px</td>
+								</tr>
+							</table>
+						</td>
 					</tr>
+					</table>
+				</div>
+			</div> 
+				<h3><label><input type="radio" name="wmType" value="image" <?php checked('image', $ngg_options['wmType']); ?> /> <?php _e('Use image as watermark','nggallery') ?></label></h3>
+				<table class="wm-table">
 					<tr>
 						<th><?php _e('URL to file','nggallery') ?> :</th>
 						<td><input type="text" size="40" name="wmPath" value="<?php echo $ngg_options['wmPath']; ?>" /><br />
 						<?php if(!ini_get('allow_url_fopen')) _e('The accessing of URL files is disabled at your server (allow_url_fopen)','nggallery') ?> </td>
 					</tr>
-					<tr>
-						<td colspan="2"><hr /></td>
-					</tr>
-					<tr>
-						<td align="left" colspan="2"><label><input type="radio" name="wmType" value="text" <?php checked('text', $ngg_options['wmType']); ?> /> <?php _e('Use text as watermark','nggallery') ?></label></td>
-					</tr>
 				</table>	
+				<h3><label><input type="radio" name="wmType" value="text" <?php checked('text', $ngg_options['wmType']); ?> /> <?php _e('Use text as watermark','nggallery') ?></label></h3>
 				<table class="wm-table">	
 					<tr>
 						<th><?php _e('Font','nggallery') ?>:</th>

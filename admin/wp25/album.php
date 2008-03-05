@@ -123,7 +123,7 @@ function ngg_serialize(s)
 	<form id="selectalbum" method="POST" onsubmit="ngg_serialize('galleryContainer')" accept-charset="utf-8">
 		<?php wp_nonce_field('ngg_album') ?>
 		<input name="sortorder" type="hidden" />
-		<table class="ngg-tablenav">
+		<table class="ngg-albumnav">
 			<tr>
 				<th align="right"><?php _e('Select album', 'nggallery') ?></th>  
 				<td>

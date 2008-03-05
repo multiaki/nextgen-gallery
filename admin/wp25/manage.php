@@ -460,13 +460,13 @@ function getNumChecked(form)
 		</tr>
 
 	</table>
-<p class="submit">
+
+<div class="submit">
 	<input type="submit" name="scanfolder" value="<?php _e("Scan Folder for new images",'nggallery')?> " />
 	<input type="submit" name="updatepictures" value="<?php _e("Save Changes",'nggallery')?> &raquo;" />
-</p>
-</form>
+</div>
 <br style="clear: both;"/>
-<form id="table-operation" method="POST" action="<?php echo 'admin.php?page=nggallery-manage-gallery&amp;mode=edit&amp;gid='.$act_gid ?>" accept-charset="utf-8">
+
 <?php wp_nonce_field('ngg_updategallery') ?>
 <div class="tablenav ngg-tablenav">
 	<div style="float: left;">

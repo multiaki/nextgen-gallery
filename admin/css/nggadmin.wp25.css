@@ -39,9 +39,9 @@ div.dashboard-widget-content .settings li {
 	padding:8px 5px;
 }
 
-.wm-preview tr{
-	 width : 100%;
-	 border: none;
+#wm-position {
+	width:100%;
+	margin-left:40px;
 }
 
 .wm-table {
@@ -115,7 +115,7 @@ div .progressbar span {
 
  /* SETTINGS FOR ALBUM PAGE */
 
-.ngg-tablenav {
+.ngg-albumnav {
 	width : 100%;
 	background-color:#EAF3FA;
 	clear:both;

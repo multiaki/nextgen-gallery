@@ -53,11 +53,14 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	<?php if (!IS_WPMU || wpmu_site_admin() ) : ?>
 	<div class="wrap">
 	<h2><?php _e('Uninstall plugin tables', 'nggallery') ;?></h2>
+		
 		<form name="resetsettings" method="post">
+		<div class="tablenav">
 			<?php wp_nonce_field('ngg_uninstall') ?>
 			<p><?php _e('You don\'t like NextGEN Gallery ?', 'nggallery') ;?></p>
 			<p><?php _e('No problem, before you deactivate this plugin press the Uninstall Button, because deactivating NextGEN Gallery does not remove any data that may have been created. ', 'nggallery') ;?>
-			<p ><font color="red"><strong><?php _e('WARNING:', 'nggallery') ;?></strong><br />
+			</div>
+			<p><font color="red"><strong><?php _e('WARNING:', 'nggallery') ;?></strong><br />
 			<?php _e('Once uninstalled, this cannot be undone. You should use a Database Backup plugin of WordPress to backup all the tables first. NextGEN gallery is stored in the tables', 'nggallery') ;?> <strong><?php echo $wpdb->nggpictures; ?></strong>, <strong><?php echo $wpdb->nggalbum; ?></strong>, <strong><?php echo $wpdb->nggtags; ?></strong>, <strong><?php echo $wpdb->nggpic2tags; ?></strong> <?php _e('and', 'nggallery') ;?> <strong><?php echo $wpdb->nggalbum; ?></strong>.</font></p>
 			<div align="center">
 			<input type="submit" name="uninstall" class="button delete" value="<?php _e('Uninstall plugin', 'nggallery') ?>" onclick="javascript:check=confirm('<?php _e('You are about to Uninstall this plugin from WordPress.\nThis action is not reversible.\n\nChoose [Cancel] to Stop, [OK] to Uninstall.\n','nggallery'); ?>');if(check==false) return false;"/>

@@ -13,7 +13,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	$filepath    = get_option('siteurl') . '/wp-admin/admin.php?page='.$_GET['page'];
 	
 	// link for the flash file
-	$swf_upload_link = NGGALLERY_URLPATH . 'admin/upload.php';
+	$swf_upload_link = NGGALLERY_URLPATH . 'admin/wp25/upload.php';
 	$swf_upload_link = wp_nonce_url($swf_upload_link, 'ngg_swfupload');
 	//flash doesn't seem to like encoded ampersands, so convert them back here
 	$swf_upload_link = str_replace('&#038;', '&', $swf_upload_link);
@@ -89,7 +89,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				flash_url : "<?php echo NGGALLERY_URLPATH; ?>admin/js/swfupload_f9.swf",
 								
 				// File Upload Settings
-				file_size_limit : "<?php echo $max_upl_kbytes;?> kb", // can use in WP2.5 wp_max_upload_size()
+				file_size_limit : "<?php echo wp_max_upload_size(); ?>b",
 				file_types : "*.jpg;*.gif;*.png",
 				file_types_description : "<?php _e('Image Files', 'nggallery') ;?>",
 				
@@ -104,8 +104,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				upload_complete_handler : uploadComplete,
 				
 				post_params : {
-					"user_cookie" : "<?php echo $_COOKIE[USER_COOKIE]; ?>",
-					"pass_cookie" : "<?php echo $_COOKIE[PASS_COOKIE]; ?>",
+					"auth_cookie" : "<?php echo $_COOKIE[AUTH_COOKIE]; ?>",
 					"galleryselect" : "0"
 				},
 				
@@ -231,10 +230,10 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<?php wp_nonce_field('ngg_addgallery') ?>
 				<table class="form-table"> 
 				<tr valign="top"> 
-					<th scope="row"><?php _e('Import from Server path:', 'nggallery') ;?><br /><code><?php echo WINABSPATH; ?></code></th> 
-					<td><br /><input type="text" size="35" name="galleryfolder" value="<?php echo$defaultpath; ?>" /><br />
-					<?php _e('Import a folder with images. Please note :', 'nggallery') ;?><br /> 
-					<?php _e('For safe-mode = ON you need to add the subfolder thumbs manually', 'nggallery') ;?></td> 
+					<th scope="row"><?php _e('Import from Server path:', 'nggallery') ;?></th> 
+					<td><input type="text" size="35" name="galleryfolder" value="<?php echo$defaultpath; ?>" /><br />
+					<?php _e('Import a folder with all images.', 'nggallery') ;?>
+					<?php if (SAFE_MODE) {?><br /><?php _e(' Please note : For safe-mode = ON you need to add the subfolder thumbs manually', 'nggallery') ;?><?php }; ?></td> 
 				</tr>
 				<tr>
 					<th><?php _e('Add Metadata :', 'nggallery') ;?></th>
