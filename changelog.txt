@@ -13,6 +13,7 @@ V0.90
 - Changed : Remove jQuery plugin for navigation
 - Bugfix  : P tags not closed in manage.php
 - Bugfix  : Remove " from singlepic class
+- Bugfix  : Rewrite rule for ImageBrowser added
 - Removed : myGallery import
 
 V0.83 - 14.02.2008
