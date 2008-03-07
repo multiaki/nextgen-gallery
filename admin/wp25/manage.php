@@ -394,11 +394,10 @@ function getNumChecked(form)
 //-->
 </script>
 <div class="wrap">
-<h2><?php _e('Gallery', 'nggallery') ?> : <?php echo $act_gallery->name; ?>
-	<span class="ngg-inlinebutton">
-		<input type="submit" title="Edit" value="edit" onclick="jQuery('#manage-gallery').toggle()" />
-	</span>
-</h2>
+<h2><?php _e('Gallery', 'nggallery') ?> : <?php echo $act_gallery->name; ?></h2>
+<p id="ngg-inlinebutton">
+	<input type="submit" class="button-secondary" title="<?php _e('Edit gallery', 'nggallery') ?>" value="<?php _e('Edit gallery', 'nggallery') ?>" onclick="jQuery('#manage-gallery').toggle()" />
+</p>
 
 <form id="updategallery" method="POST" action="<?php echo 'admin.php?page=nggallery-manage-gallery&amp;mode=edit&amp;gid='.$act_gid ?>" accept-charset="utf-8">
 <?php wp_nonce_field('ngg_updategallery') ?>

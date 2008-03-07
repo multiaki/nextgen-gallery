@@ -65,15 +65,11 @@ div.dashboard-widget-content .settings li {
 
 /* SETTINGS FOR MANAGE TABLE */
 
-.ngg-inlinebutton input {
-	bottom:1.3em;
+p#ngg-inlinebutton {
 	float:right;
-	position:relative;
-	background:transparent none repeat scroll 0% 50%;
-	border-style:dotted;
-	border-width:1px;
 	margin:0pt;
-	padding:0.1em;
+	position:relative;
+	top:-25pt;
 }
 
 div .ngg-tablenav {
@@ -81,8 +77,8 @@ div .ngg-tablenav {
 }
 
 #ngg-listimages td, #ngg-listimages th {
-	vertical-align:middle;
-	padding:10px 5px 10px;
+	vertical-align: middle;
+	padding: 10px 5px 10px;
 }
 
 /* SETTINGS FOR PROGRESS BAR */
