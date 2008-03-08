@@ -2,7 +2,7 @@
 
 /*
 +----------------------------------------------------------------+
-+	imageRotartor-XML V1.20
++	imageRotartor-XML V1.21
 +	by Alex Rabe
 +   	required for NextGEN Gallery
 +----------------------------------------------------------------+
@@ -35,7 +35,7 @@ if ($galleryID == 0) {
 header("content-type:text/xml;charset=utf-8");
 
 echo "<playlist version='1' xmlns='http://xspf.org/ns/0/'>\n";
-echo "	<title>".$thepictures[0]->name."</title>\n";
+echo "	<title>".stripslashes($thepictures[0]->name)."</title>\n";
 echo "	<trackList>\n";
 
 if (is_array ($thepictures)){

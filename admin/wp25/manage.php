@@ -495,6 +495,7 @@ function getNumChecked(form)
 	<input class="button-secondary" type="submit" name="sortGallery" value="<?php _e("Sort gallery",'nggallery')?>" />
 	<?php } ?>
 	</div>
+	<span style="float:right;"><input type="submit" name="updatepictures" class="button-secondary"  value="<?php _e("Save Changes",'nggallery')?> &raquo;" /></span>
 </div>
 <br style="clear: both;"/>
 <table id="ngg-listimages" class="widefat" >
