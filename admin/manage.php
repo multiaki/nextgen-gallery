@@ -521,8 +521,9 @@ function getNumChecked(form)
 <input type="submit" name="togglethumbs" value="<?php _e("Show thumbnails ",'nggallery')?>" /><?php } ?>
 <?php if (!$showTags) { ?><input  type="submit" name="toggletags" value="<?php _e("Show tags",'nggallery')?>" /> <?php } else {?>
 <input type="submit" name="toggletags" value="<?php _e("Hide tags",'nggallery')?>" /><?php } ?>
+<?php if (file_exists(dirname (__FILE__).'/sort.php')) { ?>
 <input type="submit" name="sortGallery" value="<?php _e("Sort gallery",'nggallery')?>" />
-
+<?php } ?>
 </p>
 
 <table id="listimages" width="100%" cellspacing="2" cellpadding="5" class="widefat" >

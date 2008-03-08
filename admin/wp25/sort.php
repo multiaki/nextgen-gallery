@@ -27,16 +27,15 @@ function nggallery_sortorder($galleryID = 0){
 
 ?>
 	<script type='text/javascript' src='<?php echo NGGALLERY_URLPATH ?>admin/js/sorter.js'></script>
-	<style type="text/css" media="all">@import "<?php echo NGGALLERY_URLPATH ?>admin/css/nggSorter.css";</style>
-	<div class="wrap" style="overflow:hidden;">
-		<h2><?php _e('Sort Gallery', 'nggallery') ?></h2>
-		<!-- <form id="sortGallery" method="POST" onsubmit="saveImageOrder()" accept-charset="utf-8"> -->
-			<div id="debug" style="clear:both"></div>
-			<p class="submit">
+	<div class="wrap">
+		<div class="bordertitle">
+			<h2 style="border: medium none ; padding-bottom: 0px;"><?php _e('Sort Gallery', 'nggallery') ?></h2>
+			<form id="sortGallery" method="POST" onsubmit="saveImageOrder()" accept-charset="utf-8">
 				<input name="sortorder" type="hidden" />
-				<input type="submit" name="update" onclick="saveImageOrder()" value="<?php _e('Update Sort Order') ?> &raquo;" />
-			</p>
-		<!-- </form> -->
+				<input class="button" type="submit" name="update" onclick="saveImageOrder()" value="<?php _e('Update Sort Order') ?> &raquo;" />
+			</form>
+		</div>
+		<div id="debug" style="clear:both"></div>
 		<?php 
 		if($picturelist) {
 			foreach($picturelist as $picture) {
