@@ -13,6 +13,7 @@ V0.90
 - Changed : Sort files after scan folder
 - Changed : Check for filename during upload
 - Changed : Remove jQuery plugin for navigation
+- Bugfix  : nggextractXML missing stripslashes
 - Bugfix  : P tags not closed in manage.php
 - Bugfix  : Remove " from singlepic class
 - Bugfix  : Rewrite rule for ImageBrowser added

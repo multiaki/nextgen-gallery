@@ -42,9 +42,9 @@ if (is_array ($thepictures)){
 	foreach ($thepictures as $picture) {
 		echo "		<track>\n";
 		if (!empty($picture->description))	
-		echo "			<title>".strip_tags($picture->description)."</title>\n";
+		echo "			<title>".strip_tags(stripslashes($picture->description))."</title>\n";
 		else if (!empty($picture->alttext))	
-		echo "			<title>".$picture->alttext."</title>\n";
+		echo "			<title>".stripslashes($picture->alttext)."</title>\n";
 		else 
 		echo "			<title>".$picture->filename."</title>\n";
 		echo "			<location>".$siteurl."/".$picture->path."/".$picture->filename."</location>\n";
