@@ -769,7 +769,7 @@ class wpProgressBar {
 	 * @param str $domID Html-Attribute "id" for the bar
 	 * @param str $header the header title
 	 */
-    function wpProgressBar($message='', $hide=true, $sleepOnFinish=0, $barLength=100, $domID='progressbar', $header='')
+    function wpProgressBar($message='', $hide=true, $sleepOnFinish=0, $domID='progressbar', $header='')
     {
 		global $pb_instance;
     	$this->instance = $pb_instance++;
@@ -778,7 +778,6 @@ class wpProgressBar {
 		$this->setDomIDs($domID);
     	$this->setMessage($message);
 		$this->setheader($header);
-		$this->barLength = (int) $barLength;
     }
 
 
@@ -807,10 +806,10 @@ class wpProgressBar {
     	ob_start();
 		
 		echo '<div id="'.$this->domID.'_container" class="wrap">
-			  <h2>'.$this->header.'</h2>
-			  <div id="'.$this->domID.'" class="progressbar" style="border: 1px inset ; display: block; height: 20px; background-color: rgb(160, 160, 160); width: '.$this->barLength.'%;"><div style="border: medium none ; display: block; height: 20px; background-color: rgb(13, 50, 79); width: 2%;"><span style="display: inline; position: relative; color: white; font-weight: bold; padding-bottom: 2px; padding-left: 5px;">0%</span></div></div>
-			  <div class="progressbar_message"><span style="display:block" id="'.$this->domIDMessage.'">'.$this->message.'</span></div>
-			  <ul id="'.$this->domIDProgressNote.'">&nbsp;</ul>
+				  <h2>'.$this->header.'</h2>
+				  <div id="'.$this->domID.'" class="progressborder"><div class="progressbar"><span>0%</span></div></div>
+			  	  <div class="progressbar_message"><span style="display:block" id="'.$this->domIDMessage.'">'.$this->message.'</span></div>
+			  	  <ul id="'.$this->domIDProgressNote.'">&nbsp;</ul>
 			  </div>
 			  
 			  <script type="text/javascript">

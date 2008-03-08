@@ -8,8 +8,8 @@ function nggallery_admin_manage_gallery() {
 	//TODO:GID & Mode should the hidden post variables
 
 	// GET variables
-	$act_gid = (int) trim(attribute_escape($_GET['gid']));
-	$act_pid = (int) trim(attribute_escape($_GET['pid']));	
+	$act_gid = (int) $_GET['gid'];
+	$act_pid = (int) $_GET['pid'];	
 	$mode = trim(attribute_escape($_GET['mode']));
 
 	// get the options
@@ -362,7 +362,6 @@ function nggallery_picturelist($hideThumbs = false,$showTags = false) {
 	}
 </script>
 <script type="text/javascript"> var tb_pathToImage = '<?php echo NGGALLERY_URLPATH ?>thickbox/loadingAnimationv3.gif';</script>
-<style type="text/css" media="all">@import "<?php echo NGGALLERY_URLPATH ?>thickbox/thickbox.css";</style>
 <script type="text/javascript">
 <!--
 function checkAll(form)
@@ -632,6 +631,7 @@ function ngg_update_pictures( $nggdescription, $nggalttext, $nggexclude, $nggall
 /**************************************************************************/
 function ngg_update_tags( $taglist ) {
 // update all tags
+//TODO:Move to class nggTags
 	
 	global $wpdb;
 	

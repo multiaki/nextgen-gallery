@@ -20,15 +20,16 @@ function nggallery_admin_overview()  {
 	$nggCheck->version 	= NGGVERSION;
 	$nggCheck->name 	= "ngg";
 ?>
-  <?php if ( $nggCheck->startCheck() && (!IS_WPMU) ) { ?>
-	<h3><font color="red"><?php _e('New Version available', 'nggallery') ?></font></h3>
-   	<p><?php _e('The server reports that a new NextGEN Gallery Version is now available. Please visit the plugin homepage for more information.', 'nggallery') ?></p>
-	<p><a href="http://wordpress.org/extend/plugins/nextgen-gallery/download/" target="_blank"> <?php _e('Download here', 'nggallery') ?> </a></p>
-  <?php } ?>
-
   <div class="wrap ngg-wrap">
     <h2><?php _e('NextGEN Gallery Overview', 'nggallery') ?></h2>
     <br class="clear"/>
+	<?php if ( $nggCheck->startCheck() && (!IS_WPMU) ) { ?>
+	<div id="newversion">
+		<h3 class="dashboard-widget-title"><?php _e('New Version available', 'nggallery') ?> !!!</h3>
+	   	<div class="dashboard-widget-content"><?php _e('The server reports that a new NextGEN Gallery Version is now available. Please visit the plugin homepage for more information.', 'nggallery') ?>
+		<a href="http://wordpress.org/extend/plugins/nextgen-gallery/download/" target="_blank"> <?php _e('Download here', 'nggallery') ?> </a></div>
+	</div>
+	<?php } ?>
 	<div id="rightnow">
 		<h3 class="reallynow">
 			<span><?php _e('Welcome to NextGEN Gallery !', 'nggallery') ?></span>
@@ -95,7 +96,7 @@ function nggallery_admin_overview()  {
 			  	if (wpmu_enable_function('wpmuQuotaCheck'))
 					echo ngg_SpaceManager::details();
 				else {
-					//TODO:WPMU message
+					//TODO:WPMU message in WP2.5 style
 					echo ngg_SpaceManager::details();
 				}
 			  } else { ?>

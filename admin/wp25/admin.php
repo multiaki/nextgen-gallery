@@ -19,9 +19,12 @@ function ngg_header() {
 		break;
 		case "nggallery-add-gallery" :
 		case "nggallery-options" :
+			echo '<link rel="stylesheet" href="'.NGGALLERY_URLPATH.'admin/css/nggadmin.wp25.css" type="text/css" media="screen" />'."\n";
 			echo '<link rel="stylesheet" href="'.NGGALLERY_URLPATH.'admin/css/jquery.ui.tabs.css" type="text/css" media="print, projection, screen" />'."\n";
-		case "nggallery-roles" :
+		break;
 		case "nggallery-manage-gallery" :
+			echo '<link rel="stylesheet" href="'.NGGALLERY_URLPATH.'thickbox/thickbox.css" type="text/css" media="print, projection, screen" />'."\n";
+		case "nggallery-roles" :
 		case "nggallery-manage-album" :
 			echo '<link rel="stylesheet" href="'.NGGALLERY_URLPATH.'admin/css/nggadmin.wp25.css" type="text/css" media="screen" />'."\n";			
 		break;
@@ -41,7 +44,7 @@ function ngg_add_admin_js() {
 	switch ($_GET['page']) {
 		case "nggallery-manage-gallery" :
 			wp_enqueue_script('interface', NGGALLERY_URLPATH .'admin/js/interface.js', array('jquery'), '1.2.1');
-			wp_enqueue_script('thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.1.1');
+			wp_enqueue_script('ngg-thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.1.1');
 		break;
 		case "nggallery-manage-album" :
 			wp_enqueue_script('interface', NGGALLERY_URLPATH .'admin/js/interface.js', array('jquery'), '1.2.1');

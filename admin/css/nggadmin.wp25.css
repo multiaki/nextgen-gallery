@@ -13,6 +13,15 @@ div.dashboard-widget-content .settings li {
 	margin:0.3em 0pt 0em;
 }
 
+#newversion {
+	border-color:#CCCCCC;
+	border-style:solid;
+	border-width:1px;
+	margin-right:7px;
+	margin-top:10px;
+	padding:2px;
+}
+
 /* SETTINGS FOR THE OPTIONS TABLE */ 
 .form-table th {
 	width:33%;
@@ -87,16 +96,17 @@ div .progressborder {
 	border: 1px inset ; 
 	display: block; 
 	height: 20px; 
-	background-color: rgb(160, 160, 160); 
+	background-color: #464646; 
 	width: 100%;
-	margin-top:5px;
+	margin-top: 15px;
+	margin-bottom: 15px;
 }
 
 div .progressbar {
 	border: medium none ; 
 	display: block; 
 	height: 20px; 
-	background-color: rgb(13, 50, 79); 
+	background-color: #D54E21; 
 	width: 0%;
 }
 
@@ -105,7 +115,6 @@ div .progressbar span {
 	position: relative; 
 	color: white; 
 	font-weight: bold; 
-	padding-bottom: 2px; 
 	padding-left: 5px;
 }
 

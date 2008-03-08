@@ -1,6 +1,6 @@
 <?php
 
-require_once('../../../../wp-config.php');
+require_once('../../../../../wp-config.php');
 
 // Flash often fails to send cookies with the POST or upload, so we need to pass it in GET or POST instead
 if ( empty($_COOKIE[AUTH_COOKIE]) && !empty($_REQUEST['auth_cookie']) )
