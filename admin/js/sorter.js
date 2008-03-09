@@ -235,7 +235,6 @@
 		var objects = document.getElementsByTagName('DIV');
 		for(var no=0;no<objects.length;no++){
 			if(objects[no].className=='imageBox' || objects[no].className=='imageBoxHighlighted'){
-				console.log(no);
 				if (serial.length > 0)	serial = serial + '&'
 				serial = serial + "sortArray[]=" + objects[no].id;
 			}			
