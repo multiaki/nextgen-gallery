@@ -5,6 +5,8 @@
  * @copyright 2008
  */
 
+if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
+
 function nggallery_sortorder($galleryID = 0){
 	global $wpdb;
 	
@@ -49,20 +51,20 @@ function nggallery_sortorder($galleryID = 0){
 	<style type="text/css" media="all">@import "<?php echo NGGALLERY_URLPATH ?>admin/css/nggSorter.css";</style>
 	<div class="wrap" style="overflow:hidden;">
 		<h2><?php _e('Sort Gallery', 'nggallery') ?></h2>
-		<!-- <form id="sortGallery" method="POST" onsubmit="saveImageOrder()" accept-charset="utf-8"> -->
-			<div id="debug" style="clear:both"></div>
-			<p class="submit">
+			<form id="sortGallery" method="POST" action="<?php echo 'admin.php?page=nggallery-manage-gallery&amp;mode=sort&amp;gid='.$galleryID ?>" onsubmit="saveImageOrder()" accept-charset="utf-8">
+				<?php wp_nonce_field('ngg_updatesortorder') ?>
 				<input name="sortorder" type="hidden" />
-				<input type="submit" name="update" onclick="saveImageOrder()" value="<?php _e('Update Sort Order') ?> &raquo;" />
-			</p>
-		<!-- </form> -->
+				<p class="submit">
+					<input class="button" type="submit" name="updateSortorder" onclick="saveImageOrder()" value="<?php _e('Update Sort Order') ?> &raquo;" />
+				</p>
+			</form>
 		<?php 
 		if($picturelist) {
 			foreach($picturelist as $picture) {
 				?>
-				<div class="imageBox" id="image[<?php echo $picture->pid ?>]">
+					<div class="imageBox" id="pid-<?php echo $picture->pid ?>">
 					<div class="imageBox_theImage" style="background-image:url('<?php echo $act_thumbnail_url.$act_thumb_prefix.$picture->filename ?>')"></div>	
-					<div class="imageBox_label"><span><?php echo $picture->alttext ?></span></div>
+					<div class="imageBox_label"><span><?php echo stripslashes($picture->alttext) ?></span></div>
 				</div>
 				<?php
 			}
