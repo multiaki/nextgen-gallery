@@ -184,7 +184,8 @@ function ngg_list_support()	{
 	"Susan Bates" => "http://www.fineartsmith.com",
 	"ILISA International USA" => "http://www.ilisa.com",
 	"Mark Campbell" => "http://www.layersofcolor.com",
-	"Aaron Snyder" => "http://www.aaronsnyder.net"	
+	"Aaron Snyder" => "http://www.aaronsnyder.net",
+	"Patrick Pirker" => ""
 	);
 
 	
