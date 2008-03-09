@@ -321,7 +321,9 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				<table class="optiontable">
 					<tr>
 						<th valign="top"><?php _e('Sort thumbnails','nggallery') ?>:</th>
-						<td><label><input name="galSort" type="radio" value="pid" <?php checked('pid', $ngg_options['galSort']); ?> /> <?php _e('Image ID', 'nggallery') ;?></label><br />
+						<td>
+						<label><input name="galSort" type="radio" value="sortorder" <?php checked('sortorder', $ngg_options['galSort']); ?> /> <?php _e('Custom order', 'nggallery') ;?></label><br />
+						<label><input name="galSort" type="radio" value="pid" <?php checked('pid', $ngg_options['galSort']); ?> /> <?php _e('Image ID', 'nggallery') ;?></label><br />
 						<label><input name="galSort" type="radio" value="filename" <?php checked('filename', $ngg_options['galSort']); ?> /> <?php _e('File name', 'nggallery') ;?></label><br />
 						<label><input name="galSort" type="radio" value="alttext" <?php checked('alttext', $ngg_options['galSort']); ?> /> <?php _e('Alt / Title text', 'nggallery') ;?></label>
 						</td>

@@ -160,7 +160,6 @@
 		
 		// message =  " topPos: <strong>" + topPos + "</strong> e.pageY: <strong>" + e.pageY + "</strong> e.clientY: <strong>" + e.clientY + "</strong> scrollTop: <strong>" + document.documentElement.scrollTop + "</strong>";
 		// message += "<br /> leftPos: <strong>" + leftPos + "</strong> e.pageX: <strong>" + e.pageX + "</strong> e.clientX: <strong>" + e.clientX + "</strong> scrollLeft: <strong>" + document.documentElement.scrollLeft + "</strong>";
-		
 		//debug( message );
 		
 		dragDropDiv.style.top = topPos + 'px';
@@ -229,18 +228,20 @@
 		}
 	}
 	
+	// seralize the ImageOrder
 	function saveImageOrder()
 	{
-		var orderString = "";
+		var serial = "";
 		var objects = document.getElementsByTagName('DIV');
 		for(var no=0;no<objects.length;no++){
 			if(objects[no].className=='imageBox' || objects[no].className=='imageBoxHighlighted'){
-				if(orderString.length>0)orderString = orderString + ',';
-				orderString = orderString + objects[no].id;
+				console.log(no);
+				if (serial.length > 0)	serial = serial + '&'
+				serial = serial + "sortArray[]=" + objects[no].id;
 			}			
 		}
-		
-		debug( 'This is the new order of the images(IDs) : <br>' + orderString );
+		jQuery('input[@name=sortorder]').val(serial);
+		// debug( 'This is the new order of the images(IDs) : <br>' + orderString );
 		
 	}
 	

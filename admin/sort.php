@@ -9,12 +9,31 @@ function nggallery_sortorder($galleryID = 0){
 	global $wpdb;
 	
 	if ($galleryID == 0) return;
+
+	$galleryID = (int) $galleryID;
 	
 	// get the options
 	$ngg_options=get_option('ngg_options');	
-	
-	//TODO:A unique gallery call must provide me with this information, like $gallery  = new nggGallery($id);
-	
+
+	if (isset ($_POST['updateSortorder']))  {
+		check_admin_referer('ngg_updatesortorder');
+		// get variable new sortorder 
+		parse_str($_POST['sortorder']);
+		if (is_array($sortArray)){ 
+			$neworder = array();
+			foreach($sortArray as $pid) {		
+				$pid = substr($pid, 4); // get id from "pid-x"
+				$neworder[] = (int) $pid;
+			}
+			$sortindex = 1;
+			foreach($neworder as $pic_id) {
+				$wpdb->query("UPDATE $wpdb->nggpictures SET sortorder = '$sortindex' WHERE pid = $pic_id");
+				$sortindex++;
+			}
+			nggallery::show_message(__('Sort order changed','nggallery'));
+		} 
+	}
+		
 	// get gallery values
 	$act_gallery = $wpdb->get_row("SELECT * FROM $wpdb->nggallery WHERE gid = '$galleryID' ");
 
@@ -23,7 +42,7 @@ function nggallery_sortorder($galleryID = 0){
 	$act_thumbnail_url 	= get_option ('siteurl')."/".$act_gallery->path.nggallery::get_thumbnail_folder($act_gallery->path, FALSE);
 	$act_thumb_prefix   = nggallery::get_thumbnail_prefix($act_gallery->path, FALSE);
 
-	$picturelist = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures WHERE galleryid = '$galleryID' ORDER BY $ngg_options[galSort] $ngg_options[galSortDir]");
+	$picturelist = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures WHERE galleryid = '$galleryID' ORDER BY sortorder ASC");
 
 ?>
 	<script type='text/javascript' src='<?php echo NGGALLERY_URLPATH ?>admin/js/sorter.js'></script>

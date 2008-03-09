@@ -248,11 +248,13 @@ function nggallery_admin_manage_gallery() {
 			$messagetext = '<font color="green">'.__('New gallery page ID','nggallery'). ' ' . $pageid . ' -> <strong>' . $gallery_title . '</strong> ' .__('created','nggallery').'</font>';
 		}
 	}
-
-	if (isset ($_POST['sortGallery'])) {
+	
+	// show sort order
+	if ( ($mode == 'sort') || isset ($_POST['sortGallery'])) {
 		$mode = 'sort';
 		include_once (dirname (__FILE__). '/sort.php');
 		nggallery_sortorder($act_gid);
+		return;
 	}
 	
 	// message windows
@@ -491,7 +493,7 @@ function getNumChecked(form)
 	<input class="button-secondary" type="submit" name="togglethumbs" value="<?php _e("Show thumbnails ",'nggallery')?>" /><?php } ?>
 	<?php if (!$showTags) { ?><input class="button-secondary" type="submit" name="toggletags" value="<?php _e("Show tags",'nggallery')?>" /> <?php } else {?>
 	<input class="button-secondary" type="submit" name="toggletags" value="<?php _e("Hide tags",'nggallery')?>" /><?php } ?>
-	<?php if (file_exists(dirname (__FILE__).'/sort.php')) { ?>
+	<?php if ($ngg_options['galSort'] == "sortorder") { ?>
 	<input class="button-secondary" type="submit" name="sortGallery" value="<?php _e("Sort gallery",'nggallery')?>" />
 	<?php } ?>
 	</div>
