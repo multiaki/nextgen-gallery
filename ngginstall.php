@@ -1,13 +1,12 @@
 <?php
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
 
-//required database version
-$ngg_db_version = "0.71";
-
 function nggallery_install () {
 	
    	global $wpdb , $wp_roles, $wp_version;
-   	global $ngg_db_version;
+   	
+	//required database version
+	$ngg_db_version = "0.84";
 	
 	// Check for capability
 	if ( !current_user_can('activate_plugins') ) 
@@ -59,6 +58,7 @@ function nggallery_install () {
 		description MEDIUMTEXT NULL ,
 		alttext MEDIUMTEXT NULL ,
 		exclude TINYINT NULL DEFAULT '0' ,
+		sortorder BIGINT(20) DEFAULT '0' NOT NULL ,
 		PRIMARY KEY pid (pid)
 		) $charset_collate;";
 	
@@ -127,13 +127,19 @@ function nggallery_install () {
 	if( $installed_ver != $ngg_db_version ) {
 		
 		// v0.33 -> v.071
-		$wpdb->query("ALTER TABLE ".$nggpictures." CHANGE pid pid BIGINT(20) NOT NULL AUTO_INCREMENT ");
-		$wpdb->query("ALTER TABLE ".$nggpictures." CHANGE galleryid galleryid BIGINT(20) NOT NULL ");
-		$wpdb->query("ALTER TABLE ".$nggallery." CHANGE gid gid BIGINT(20) NOT NULL AUTO_INCREMENT ");
-		$wpdb->query("ALTER TABLE ".$nggallery." CHANGE pageid pageid BIGINT(20) NULL DEFAULT '0'");
-		$wpdb->query("ALTER TABLE ".$nggallery." CHANGE previewpic previewpic BIGINT(20) NULL DEFAULT '0'");
-		$wpdb->query("ALTER TABLE ".$nggallery." CHANGE gid gid BIGINT(20) NOT NULL AUTO_INCREMENT ");
-		$wpdb->query("ALTER TABLE ".$nggallery." CHANGE description galdesc MEDIUMTEXT NULL");
+		if (version_compare($installed_ver, '0.71', '<')) {
+			$wpdb->query("ALTER TABLE ".$nggpictures." CHANGE pid pid BIGINT(20) NOT NULL AUTO_INCREMENT ");
+			$wpdb->query("ALTER TABLE ".$nggpictures." CHANGE galleryid galleryid BIGINT(20) NOT NULL ");
+			$wpdb->query("ALTER TABLE ".$nggallery." CHANGE gid gid BIGINT(20) NOT NULL AUTO_INCREMENT ");
+			$wpdb->query("ALTER TABLE ".$nggallery." CHANGE pageid pageid BIGINT(20) NULL DEFAULT '0'");
+			$wpdb->query("ALTER TABLE ".$nggallery." CHANGE previewpic previewpic BIGINT(20) NULL DEFAULT '0'");
+			$wpdb->query("ALTER TABLE ".$nggallery." CHANGE gid gid BIGINT(20) NOT NULL AUTO_INCREMENT ");
+			$wpdb->query("ALTER TABLE ".$nggallery." CHANGE description galdesc MEDIUMTEXT NULL");
+		}
+		// v0.71 -> v0.84
+		if (version_compare($installed_ver, '0.84', '<')) {
+			$wpdb->query("ALTER TABLE ".$nggpictures." ADD sortorder BIGINT(20) DEFAULT '0' NOT NULL AFTER exclude");
+		}
 
 		update_option( "ngg_db_version", $ngg_db_version );
 	}
@@ -153,7 +159,7 @@ function ngg_default_options() {
 	$ngg_options['gallerypath']			= "wp-content/gallery/";  		// set default path to the gallery
 	$ngg_options['scanfolder']			= false;						// search for new images  (not used)
 	$ngg_options['deleteImg']			= true;							// delete Images
-	$ngg_options['swfUpload']			= true;							// activate the batch upload
+	$ngg_options['swfUpload']			= false;						// activate the batch upload
 	$ngg_options['usePermalinks']		= false;						// use permalinks for parameters
 	
 	// Tags / categories
