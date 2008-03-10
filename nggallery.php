@@ -56,6 +56,8 @@ if ( (IS_WP21_COMPATIBLE == FALSE) and (IS_WPMU != TRUE) ){
 
 // Version and path to check version
 define('NGGVERSION', "0.90-alpha");
+// Required database version
+define('NGG_DBVERSION', "0.84");
 define('NGGURL', "http://nextgen.boelinger.com/version.php");
 
 // define URL
@@ -164,6 +166,12 @@ add_action('init', 'nggallery_init');
 // WP recommended function, not used until 2.2.3
 register_activation_hook(NGGFOLDER.'/nggallery.php','ngg_install');
 register_deactivation_hook(NGGFOLDER.'/nggallery.php','ngg_deinstall');
+
+// Check for a database upgrade
+$installed_ver = get_option( "ngg_db_version" );
+if( $installed_ver != NGG_DBVERSION ) {
+	nggallery_install();
+}
 
 // init tables in wp-database if plugin is activated
 function ngg_install() {

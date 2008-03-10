@@ -5,9 +5,6 @@ function nggallery_install () {
 	
    	global $wpdb , $wp_roles, $wp_version;
    	
-	//required database version
-	$ngg_db_version = "0.84";
-	
 	// Check for capability
 	if ( !current_user_can('activate_plugins') ) 
 		return;
@@ -124,7 +121,7 @@ function nggallery_install () {
    
    // update routine
     $installed_ver = get_option( "ngg_db_version" );
-	if( $installed_ver != $ngg_db_version ) {
+	if( $installed_ver != NGG_DBVERSION ) {
 		
 		// v0.33 -> v.071
 		if (version_compare($installed_ver, '0.71', '<')) {
