@@ -100,20 +100,29 @@ function nggallery_init ()
 
 // Load the admin panel
 if (is_admin()) {
+	
 	include_once (dirname (__FILE__)."/ngginstall.php");
+
+	// check for upgrade
+	if( get_option( "ngg_db_version" ) != NGG_DBVERSION ) 
+		ngg_upgrade();
+	
 	if (IS_WP25)
 		include_once (dirname (__FILE__)."/admin/wp25/admin.php");
 	else
 		include_once (dirname (__FILE__)."/admin/admin.php");
+		
 } else {
-// Load the gallery generator
+	
+	// Load the gallery generator
 	include_once (dirname (__FILE__)."/nggfunctions.php");
 	
 	// required in WP 2.5, NextGEN should have higher priority
-if (IS_WP25) {	
-	remove_filter('the_content', 'do_shortcode');
-	add_filter('the_content', 'do_shortcode', 20);
-}	
+	if (IS_WP25) {	
+		remove_filter('the_content', 'do_shortcode');
+		add_filter('the_content', 'do_shortcode', 20);
+	}
+		
 	// Action calls for all functions 
 	add_filter('the_content', 'searchnggallerytags', 10);
 	add_filter('the_excerpt', 'searchnggallerytags', 10);
@@ -166,12 +175,6 @@ add_action('init', 'nggallery_init');
 // WP recommended function, not used until 2.2.3
 register_activation_hook(NGGFOLDER.'/nggallery.php','ngg_install');
 register_deactivation_hook(NGGFOLDER.'/nggallery.php','ngg_deinstall');
-
-// Check for a database upgrade
-$installed_ver = get_option( "ngg_db_version" );
-if( $installed_ver != NGG_DBVERSION ) {
-	ngg_install();
-}
 
 // init tables in wp-database if plugin is activated
 function ngg_install() {

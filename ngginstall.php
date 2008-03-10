@@ -62,7 +62,7 @@ function nggallery_install () {
       dbDelta($sql);
  
  		ngg_default_options();
-		add_option("ngg_db_version", $ngg_db_version);
+		add_option("ngg_db_version", NGG_DBVERSION);
    }
 
 	if($wpdb->get_var("show tables like '$nggallery'") != $nggallery) {
@@ -118,11 +118,28 @@ function nggallery_install () {
 	
       dbDelta($sql);
     }
-   
-   // update routine
-    $installed_ver = get_option( "ngg_db_version" );
-	if( $installed_ver != NGG_DBVERSION ) {
-		
+
+	// check one table again, to be sure
+	if($wpdb->get_var("show tables like '$nggpictures'")!= $nggpictures) {
+		update_option( "ngg_init_check", __('NextGEN Gallery : Tables could not created, please check your database settings',"nggallery") );
+		return;
+	}
+
+}
+	
+// update routine
+function ngg_upgrade() {
+	
+	global $wpdb;
+	
+	$nggpictures					= $wpdb->prefix . 'ngg_pictures';
+	$nggallery						= $wpdb->prefix . 'ngg_gallery';
+
+	// Be sure that the tables exist
+	if($wpdb->get_var("show tables like '$nggpictures'") == $nggpictures) {
+
+		$installed_ver = get_option( "ngg_db_version" );
+
 		// v0.33 -> v.071
 		if (version_compare($installed_ver, '0.71', '<')) {
 			$wpdb->query("ALTER TABLE ".$nggpictures." CHANGE pid pid BIGINT(20) NOT NULL AUTO_INCREMENT ");
@@ -138,15 +155,8 @@ function nggallery_install () {
 			$wpdb->query("ALTER TABLE ".$nggpictures." ADD sortorder BIGINT(20) DEFAULT '0' NOT NULL AFTER exclude");
 		}
 
-		update_option( "ngg_db_version", $ngg_db_version );
+		update_option( "ngg_db_version", NGG_DBVERSION );
 	}
-
-	// check one table again, to be sure
-	if($wpdb->get_var("show tables like '$nggpictures'")!= $nggpictures) {
-		update_option( "ngg_init_check", __('NextGEN Gallery : Tables could not created, please check your database settings',"nggallery") );
-		return;
-	}
-
 }
 
 function ngg_default_options() {
