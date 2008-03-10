@@ -170,7 +170,7 @@ register_deactivation_hook(NGGFOLDER.'/nggallery.php','ngg_deinstall');
 // Check for a database upgrade
 $installed_ver = get_option( "ngg_db_version" );
 if( $installed_ver != NGG_DBVERSION ) {
-	nggallery_install();
+	ngg_install();
 }
 
 // init tables in wp-database if plugin is activated
