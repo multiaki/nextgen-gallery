@@ -652,6 +652,10 @@ class nggAdmin{
 			return __('No gallery selected !','nggallery');;
 		}
 
+		// WPMU action
+		if (nggAdmin::check_quota())
+			return;
+
 		// Check the upload
 		if (!isset($_FILES["Filedata"]) || !is_uploaded_file($_FILES["Filedata"]["tmp_name"]) || $_FILES["Filedata"]["error"] != 0) {
 			return __('Invalid upload. Error Code : ','nggallery').$_FILES["Filedata"]["error"];
