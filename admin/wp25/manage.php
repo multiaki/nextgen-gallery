@@ -395,7 +395,7 @@ function getNumChecked(form)
 //-->
 </script>
 <div class="wrap">
-<h2><?php _e('Gallery', 'nggallery') ?> : <?php echo $act_gallery->name; ?></h2>
+<h2><?php _e('Gallery', 'nggallery') ?> : <?php echo $act_gallery->title; ?></h2>
 <p id="ngg-inlinebutton">
 	<input type="submit" class="button-secondary" title="<?php _e('Edit gallery', 'nggallery') ?>" value="<?php _e('Edit gallery', 'nggallery') ?>" onclick="jQuery('#manage-gallery').toggle()" />
 </p>

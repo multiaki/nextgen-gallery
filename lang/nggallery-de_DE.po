@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-03-10 21:16+0100\n"
+"PO-Revision-Date: 2008-03-10 21:24+0100\n"
 "Last-Translator: Alex Rabe\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
@@ -2385,7 +2385,7 @@ msgstr "Reihenfolge aktualisiert"
 #: ../admin/sort.php:53
 #: ../admin/wp25/sort.php:53
 msgid "Sort Gallery"
-msgstr "Sotiere Bilder"
+msgstr "Sortiere Bilder"
 
 #: ../admin/sort.php:58
 #: ../admin/wp25/sort.php:57
