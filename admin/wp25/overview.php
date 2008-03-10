@@ -57,61 +57,62 @@ function nggallery_admin_overview()  {
 	    </p>
 	</div>
 	<br class="clear"/> 
-	<div id="dashboard-widgets">
-	
-		<div id="dashboard_primary" class="dashboard-widget-holder widget_rss wp_dashboard_empty">
-	    	<div class="ngg-dashboard-widget">
-			    <h3 class="dashboard-widget-title"><?php _e('Latest News', 'nggallery') ?></h3>
-			    <div class="dashboard-widget-content">
-			    <?php
-			      $rss = fetch_rss('http://alexrabe.boelinger.com/?tag=nextgen-gallery&feed=rss2');
-			      
-			      if ( isset($rss->items) && 0 != count($rss->items) )
-			      {
-			        $rss->items = array_slice($rss->items, 0, 4);
-			        echo "<ul>";
-					foreach ($rss->items as $item)
-			        {
-			        ?>
-			          <li><a class="rsswidget" title="" href='<?php echo wp_filter_kses($item['link']); ?>'><?php echo wp_specialchars($item['title']); ?></a><span class="rss-date"><?php echo date("F jS, Y", strtotime($item['pubdate'])); ?></span> 
-			          <div class="rssSummary"><strong><?php echo human_time_diff(strtotime($item['pubdate'], time())); ?></strong> - <?php echo $item['description']; ?></div></li>
-			        <?php
-			        }
-			        echo "</ul>";
-			      }
-			      else
-			      {
-			        ?>
-			        <p><?php printf(__('Newsfeed could not be loaded.  Check the <a href="%s">front page</a> to check for updates.', 'nggallery'), 'http://alexrabe.boelinger.com/') ?></p>
-			        <?php
-			      }
-			    ?>
+	<div id="dashboard-widgets-wrap">
+	    <div id="dashboard-widgets">	
+			<div id="dashboard_primary" class="dashboard-widget-holder widget_rss wp_dashboard_empty">
+		    	<div class="ngg-dashboard-widget">
+				    <h3 class="dashboard-widget-title"><?php _e('Latest News', 'nggallery') ?></h3>
+				    <div class="dashboard-widget-content">
+				    <?php
+				      $rss = @fetch_rss('http://alexrabe.boelinger.com/?tag=nextgen-gallery&feed=rss2');
+				      
+				      if ( isset($rss->items) && 0 != count($rss->items) )
+				      {
+				        $rss->items = array_slice($rss->items, 0, 4);
+				        echo "<ul>";
+						foreach ($rss->items as $item)
+				        {
+				        ?>
+				          <li><a class="rsswidget" title="" href='<?php echo wp_filter_kses($item['link']); ?>'><?php echo wp_specialchars($item['title']); ?></a><span class="rss-date"><?php echo date("F jS, Y", strtotime($item['pubdate'])); ?></span> 
+				          <div class="rssSummary"><strong><?php echo human_time_diff(strtotime($item['pubdate'], time())); ?></strong> - <?php echo $item['description']; ?></div></li>
+				        <?php
+				        }
+				        echo "</ul>";
+				      }
+				      else
+				      {
+				        ?>
+				        <p><?php printf(__('Newsfeed could not be loaded.  Check the <a href="%s">front page</a> to check for updates.', 'nggallery'), 'http://alexrabe.boelinger.com/') ?></p>
+				        <?php
+				      }
+				    ?>
+				    </div>
+			    </div>
+			</div>
+
+			<div id="dashboard_server_settings" class="dashboard-widget-holder wp_dashboard_empty">
+				<div class="ngg-dashboard-widget">
+				  <?php if (IS_WPMU) {
+				  	if (wpmu_enable_function('wpmuQuotaCheck'))
+						echo ngg_SpaceManager::details();
+					else {
+						//TODO:WPMU message in WP2.5 style
+						echo ngg_SpaceManager::details();
+					}
+				  } else { ?>
+				  	<h3 class="dashboard-widget-title" ><?php _e('Server Settings', 'nggallery') ?></h3>
+				  	<div class="dashboard-widget-content">
+			      		<ul class="settings">
+			      		<?php ngg_get_serverinfo(); ?>
+				   		</ul>
+						<?php ngg_gd_info(); ?>
+					</div>
+				  <?php } ?>
 			    </div>
 		    </div>
 		</div>
-	
-		<div id="dashboard_server_settings" class="dashboard-widget-holder wp_dashboard_empty">
-			<div class="ngg-dashboard-widget">
-			  <?php if (IS_WPMU) {
-			  	if (wpmu_enable_function('wpmuQuotaCheck'))
-					echo ngg_SpaceManager::details();
-				else {
-					//TODO:WPMU message in WP2.5 style
-					echo ngg_SpaceManager::details();
-				}
-			  } else { ?>
-			  	<h3 class="dashboard-widget-title" ><?php _e('Server Settings', 'nggallery') ?></h3>
-			  	<div class="dashboard-widget-content">
-		      		<ul class="settings">
-		      		<?php ngg_get_serverinfo(); ?>
-			   		</ul>
-					<?php ngg_gd_info(); ?>
-				</div>
-			  <?php } ?>
-		    </div>
-	    </div>
-
-    <br style="clear: both" />
+		
+    	<br style="clear: both" />
    </div>
    </div>
 <?php
