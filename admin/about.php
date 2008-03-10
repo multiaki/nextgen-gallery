@@ -185,7 +185,8 @@ function ngg_list_support()	{
 	"ILISA International USA" => "http://www.ilisa.com",
 	"Mark Campbell" => "http://www.layersofcolor.com",
 	"Aaron Snyder" => "http://www.aaronsnyder.net",
-	"Patrick Pirker" => ""
+	"Patrick Pirker" => "",
+	"Christoph Wander" => ""
 	);
 
 	
