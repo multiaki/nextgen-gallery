@@ -110,7 +110,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<h2><?php _e('General Options','nggallery'); ?></h2>
 			<form name="generaloptions" method="post">
 			<?php wp_nonce_field('ngg_settings') ?>
-			<input type="hidden" name="page_options" value="gallerypath,scanfolder,deleteImg,swfUpload,usePermalinks,activateTags,appendType,maxImages" />
+			<input type="hidden" name="page_options" value="gallerypath,scanfolder,deleteImg,usePermalinks,activateTags,appendType,maxImages" />
 				<table class="form-table">
 					<tr valign="top">
 						<th align="left"><?php _e('Gallery path','nggallery') ?></th>
@@ -129,11 +129,6 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						<th align="left"><?php _e('Delete image files','nggallery') ?></th>
 						<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="checkbox" name="deleteImg" value="1" <?php checked('1', $ngg_options['deleteImg']); ?> /><br />
 						<?php _e('Delete files, when removing a gallery in the database','nggallery') ?></td>
-					</tr>
-					<tr valign="top">
-						<th align="left"><?php _e('Activate batch upload','nggallery') ?></th>
-						<td><input type="checkbox" name="swfUpload" value="1" <?php checked('1', $ngg_options['swfUpload']); ?> /><br />
-						<?php _e('The batch upload requires Adobe Flash 9, disable it if you have problems','nggallery') ?></td>
 					</tr>
 					<tr valign="top">
 						<th align="left"><?php _e('Activate permalinks','nggallery') ?></th>
