@@ -34,6 +34,9 @@ function ngg_header() {
 	}
 }
 
+// Load the NextGEN Gallery Media Upload Tab
+include_once (dirname (__FILE__)."/media-upload.php");
+
 // load script files depend on page
 add_action('init', 'ngg_add_admin_js',1);
 function ngg_add_admin_js() {
@@ -55,8 +58,8 @@ function ngg_add_admin_js() {
 		case "nggallery-add-gallery" :
 			wp_enqueue_script('ui-tabs', NGGALLERY_URLPATH .'admin/js/jquery.ui.tabs.pack.js', array('jquery'), '2.7.4');
 			wp_enqueue_script('mutlifile', NGGALLERY_URLPATH .'admin/js/jquery.MultiFile.js', array('jquery'), '1.1.1');
-			wp_enqueue_script('swfupload', NGGALLERY_URLPATH .'admin/js/swfupload.js', array('jquery'), '2.0.1');
-			wp_enqueue_script('swfupload-handler', NGGALLERY_URLPATH .'admin/js/swfupload.handler.js', array('swfupload'), '1.0.0');
+			wp_enqueue_script('ngg-swfupload', NGGALLERY_URLPATH .'admin/js/swfupload.js', array('jquery'), '2.0.1');
+			wp_enqueue_script('ngg-swfupload-handler', NGGALLERY_URLPATH .'admin/js/swfupload.handler.js', array('swfupload'), '1.0.0');
 		break;
 	}
 }

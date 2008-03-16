@@ -158,7 +158,10 @@ function ngg_addjs() {
 	    	if ($wp_version > "2.1.3") wp_deregister_script('jquery'); 
 	    	wp_enqueue_script('jquery', NGGALLERY_URLPATH .'admin/js/jquery.js', FALSE, '1.2.2');
 		} 
-	    	wp_enqueue_script('thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.1.1');
+			if (IS_WP25)
+	    		wp_enqueue_script('ngg-thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.1.1');
+	    	else
+	    		wp_enqueue_script('thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.1.1');
 	    }
 	    
 	// test for wordTube function

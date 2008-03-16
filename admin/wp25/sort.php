@@ -54,6 +54,7 @@ function nggallery_sortorder($galleryID = 0){
 			<form id="sortGallery" method="POST" action="<?php echo 'admin.php?page=nggallery-manage-gallery&amp;mode=sort&amp;gid='.$galleryID ?>" onsubmit="saveImageOrder()" accept-charset="utf-8">
 				<?php wp_nonce_field('ngg_updatesortorder') ?>
 				<input name="sortorder" type="hidden" />
+				<input class="button" type="submit" name="backToGallery" value="<?php _e('Back to gallery', 'nggallery') ?>" />
 				<input class="button" type="submit" name="updateSortorder" onclick="saveImageOrder()" value="<?php _e('Update Sort Order', 'nggallery') ?> &raquo;" />
 			</form>
 		</div>

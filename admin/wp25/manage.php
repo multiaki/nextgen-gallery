@@ -249,6 +249,10 @@ function nggallery_admin_manage_gallery() {
 		}
 	}
 	
+	if (isset ($_POST['backToGallery'])) {
+		$mode = 'edit';
+	}
+	
 	// show sort order
 	if ( ($mode == 'sort') || isset ($_POST['sortGallery'])) {
 		$mode = 'sort';

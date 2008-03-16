@@ -16,13 +16,13 @@ function ngg_addbuttons() {
 	// Add only in Rich Editor mode
 	if ( get_user_option('rich_editing') == 'true') {
 	 
-	// add the button for wp21 in a new way
+	// add the button for wp25 in a new way
 		add_filter("mce_external_plugins", "add_nextgen_tinymce_plugin", 5);
 		add_filter('mce_buttons', 'register_nextgen_button', 5);
 	}
 }
 
-// used to insert button in wordpress 2.1x editor
+// used to insert button in wordpress 2.5x editor
 function register_nextgen_button($buttons) {
 
 	array_push($buttons, "separator", "NextGEN");
@@ -37,6 +37,13 @@ function add_nextgen_tinymce_plugin($plugin_array) {
 	
 	return $plugin_array;
 }
+
+function nextgen_change_tinymce_version($version) {
+	return ++$version;
+}
+
+// Modify the version when tinyMCE plugins are changed.
+add_filter('tiny_mce_version', 'nextgen_change_tinymce_version');
 
 // init process for button control
 add_action('init', 'ngg_addbuttons');
