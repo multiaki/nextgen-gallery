@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-03-10 21:24+0100\n"
+"PO-Revision-Date: 2008-03-18 19:54+0100\n"
 "Last-Translator: Alex Rabe\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
@@ -502,14 +502,12 @@ msgstr "Aktiviere Flash Batch Uplaod"
 #: ../admin/manage.php:434
 #: ../admin/settings.php:106
 #: ../admin/uploadtab.php:36
-#: ../admin/_manage.php:182
-#: ../admin/_manage.php:991
-#: ../admin/wp25/admin.php:69
+#: ../admin/wp25/admin.php:72
 #: ../admin/wp25/functions.php:78
 #: ../admin/wp25/functions.php:82
 #: ../admin/wp25/functions.php:128
 #: ../admin/wp25/manage.php:64
-#: ../admin/wp25/manage.php:398
+#: ../admin/wp25/manage.php:402
 #: ../admin/wp25/settings.php:101
 #: ../tinymce/window.php:35
 #: ../tinymce3/window.php:35
@@ -517,59 +515,60 @@ msgid "Gallery"
 msgstr "Galerie"
 
 #: ../admin/admin.php:65
-#: ../admin/wp25/admin.php:70
+#: ../admin/wp25/admin.php:73
 msgid "Add Gallery"
 msgstr "Bilder/Galerie hinzufügen"
 
 #: ../admin/admin.php:66
-#: ../admin/wp25/admin.php:71
+#: ../admin/wp25/admin.php:74
 msgid "Manage Gallery"
 msgstr "Galerie verwalten"
 
 #: ../admin/admin.php:67
-#: ../admin/wp25/admin.php:72
+#: ../admin/wp25/admin.php:75
 #: ../tinymce/window.php:36
 #: ../tinymce3/window.php:36
 msgid "Album"
 msgstr "Album"
 
 #: ../admin/admin.php:68
-#: ../admin/wp25/admin.php:73
+#: ../admin/wp25/admin.php:76
 msgid "Options"
 msgstr "Optionen"
 
 #: ../admin/admin.php:70
-#: ../admin/wp25/admin.php:75
+#: ../admin/wp25/admin.php:78
 msgid "Style"
 msgstr "Style"
 
 #: ../admin/admin.php:71
-#: ../admin/wp25/admin.php:76
+#: ../admin/wp25/admin.php:79
 msgid "Setup Gallery"
 msgstr "Galerie Setup"
 
 #: ../admin/admin.php:71
-#: ../admin/wp25/admin.php:76
+#: ../admin/wp25/admin.php:79
 msgid "Setup"
 msgstr "Setup"
 
 #: ../admin/admin.php:73
-#: ../admin/wp25/admin.php:78
+#: ../admin/wp25/admin.php:81
 msgid "Roles"
 msgstr "Zugriff"
 
 #: ../admin/admin.php:74
-#: ../admin/wp25/admin.php:79
+#: ../admin/wp25/admin.php:82
 msgid "About this Gallery"
 msgstr "Über diese Galerie"
 
 #: ../admin/admin.php:74
-#: ../admin/wp25/admin.php:79
+#: ../admin/wp25/admin.php:82
 msgid "About"
 msgstr "Über"
 
 #: ../admin/admin.php:76
-#: ../admin/wp25/admin.php:81
+#: ../admin/wp25/admin.php:84
+#: ../admin/wp25/media-upload.php:11
 msgid "NextGEN Gallery"
 msgstr "NextGEN Gallery"
 
@@ -610,10 +609,9 @@ msgstr "Album hinzufügen"
 #: ../admin/album.php:150
 #: ../admin/manage.php:309
 #: ../admin/manage.php:580
-#: ../admin/_manage.php:232
 #: ../admin/wp25/album.php:146
-#: ../admin/wp25/manage.php:310
-#: ../admin/wp25/manage.php:552
+#: ../admin/wp25/manage.php:314
+#: ../admin/wp25/manage.php:556
 msgid "Delete"
 msgstr "Lösche"
 
@@ -681,10 +679,9 @@ msgstr "Kein Album ausgewählt"
 #: ../admin/album.php:258
 #: ../admin/manage.php:283
 #: ../admin/manage.php:535
-#: ../admin/_manage.php:206
 #: ../admin/wp25/album.php:255
-#: ../admin/wp25/manage.php:284
-#: ../admin/wp25/manage.php:507
+#: ../admin/wp25/manage.php:288
+#: ../admin/wp25/manage.php:511
 msgid "ID"
 msgstr "ID"
 
@@ -696,12 +693,10 @@ msgstr "Name"
 #: ../admin/album.php:260
 #: ../admin/manage.php:285
 #: ../admin/manage.php:446
-#: ../admin/_manage.php:208
-#: ../admin/_manage.php:1005
 #: ../admin/js/uploadtab.js.php:109
 #: ../admin/wp25/album.php:257
-#: ../admin/wp25/manage.php:286
-#: ../admin/wp25/manage.php:411
+#: ../admin/wp25/manage.php:290
+#: ../admin/wp25/manage.php:415
 #: ../lib/nggmeta.lib.php:373
 msgid "Title"
 msgstr "Titel"
@@ -827,7 +822,7 @@ msgstr "Läuft... Bitte warten"
 #: ../admin/functions.php:176
 #: ../admin/manage.php:510
 #: ../admin/wp25/functions.php:176
-#: ../admin/wp25/manage.php:480
+#: ../admin/wp25/manage.php:484
 msgid "Resize images"
 msgstr "Bilder verkleinern"
 
@@ -846,7 +841,7 @@ msgstr "Einige Bilder sind schreibgeschützt :"
 #: ../admin/functions.php:225
 #: ../admin/manage.php:508
 #: ../admin/wp25/functions.php:225
-#: ../admin/wp25/manage.php:478
+#: ../admin/wp25/manage.php:482
 msgid "Set watermark"
 msgstr "Wasserzeichen setzen"
 
@@ -858,7 +853,7 @@ msgstr " : Wasserzeichen gesetzt..."
 #: ../admin/functions.php:288
 #: ../admin/manage.php:509
 #: ../admin/wp25/functions.php:288
-#: ../admin/wp25/manage.php:479
+#: ../admin/wp25/manage.php:483
 msgid "Create new thumbnails"
 msgstr "Neue Thumbnails erstellen"
 
@@ -899,16 +894,16 @@ msgid "Zip-File successfully unpacked"
 msgstr "Zip-Datei erfolgreich entpackt"
 
 #: ../admin/functions.php:571
-#: ../admin/functions.php:677
+#: ../admin/functions.php:681
 #: ../admin/wp25/functions.php:571
-#: ../admin/wp25/functions.php:677
+#: ../admin/wp25/functions.php:681
 msgid "Failure in database, no gallery path set !"
 msgstr "Datenbankfehler! Kein Galerie-Pfad gesetzt !"
 
 #: ../admin/functions.php:592
-#: ../admin/functions.php:670
+#: ../admin/functions.php:674
 #: ../admin/wp25/functions.php:592
-#: ../admin/wp25/functions.php:670
+#: ../admin/wp25/functions.php:674
 msgid "is no valid image file!"
 msgstr "ist keine zulässige Bilddatei !"
 
@@ -919,16 +914,16 @@ msgid "Unable to write to directory %s. Is this directory writable by the server
 msgstr "Kann das Verzeichnis %s nicht erstellen. Is das Hauptverzeichnis vielleicht schreibgeschützt ?"
 
 #: ../admin/functions.php:613
-#: ../admin/functions.php:694
+#: ../admin/functions.php:698
 #: ../admin/wp25/functions.php:613
-#: ../admin/wp25/functions.php:694
+#: ../admin/wp25/functions.php:698
 msgid "Error, the file could not moved to : "
 msgstr "Fehler: Diese Datei kann nicht verschoben werden zu :"
 
 #: ../admin/functions.php:618
-#: ../admin/functions.php:698
+#: ../admin/functions.php:702
 #: ../admin/wp25/functions.php:618
-#: ../admin/wp25/functions.php:698
+#: ../admin/wp25/functions.php:702
 msgid "Error, the file permissions could not set"
 msgstr "Fehler: Die Berechtigungen für diese Datei können nicht gesetzt werden"
 
@@ -937,31 +932,30 @@ msgstr "Fehler: Die Berechtigungen für diese Datei können nicht gesetzt werden
 msgid " Image(s) successfully added"
 msgstr " Bild(er) erfolgreich hinzugefügt"
 
-#: ../admin/functions.php:657
-#: ../admin/wp25/functions.php:657
+#: ../admin/functions.php:661
+#: ../admin/wp25/functions.php:661
 msgid "Invalid upload. Error Code : "
 msgstr "Ungültiger Upload. Fehler Code :"
 
-#: ../admin/functions.php:709
-#: ../admin/wp25/functions.php:709
+#: ../admin/functions.php:713
+#: ../admin/wp25/functions.php:713
 msgid "Sorry, you have used your space allocation. Please delete some files to upload more files."
 msgstr "Schade, dein freier Speicher scheint aufgebraucht zu sein. Bitte lösche zuerst ein paar Bilder."
 
-#: ../admin/functions.php:736
-#: ../admin/wp25/functions.php:736
+#: ../admin/functions.php:740
+#: ../admin/wp25/functions.php:740
 #, php-format
 msgid "SAFE MODE Restriction in effect! You need to create the folder <strong>%s</strong> manually"
 msgstr "SAFE MODE Einschränkungen ist aktiv. Du must das Verzeichnis <strong>%s</strong> manuell anlegen."
 
-#: ../admin/functions.php:737
-#: ../admin/wp25/functions.php:737
+#: ../admin/functions.php:741
+#: ../admin/wp25/functions.php:741
 #, php-format
 msgid "When safe_mode is on, PHP checks to see if the owner (%s) of the current script matches the owner (%s) of the file to be operated on by a file function or its directory"
 msgstr "Wenn der Safe-Mode eingeschaltet ist, überprüft PHP ob der Besitzer (%s) des Skript mit dem Besitzer (%s) der Datei/Verzeichnis übereinstimmt."
 
 #: ../admin/manage.php:64
 #: ../admin/manage.php:85
-#: ../admin/_manage.php:182
 #: ../admin/wp25/manage.php:64
 #: ../admin/wp25/manage.php:85
 msgid "deleted successfully"
@@ -1013,14 +1007,12 @@ msgid "created"
 msgstr "erstellt"
 
 #: ../admin/manage.php:279
-#: ../admin/_manage.php:202
-#: ../admin/wp25/manage.php:279
+#: ../admin/wp25/manage.php:283
 msgid "Gallery Overview"
 msgstr "Galerie Übersicht"
 
 #: ../admin/manage.php:284
-#: ../admin/_manage.php:207
-#: ../admin/wp25/manage.php:285
+#: ../admin/wp25/manage.php:289
 msgid "Gallery name"
 msgstr "Galerie Name"
 
@@ -1029,176 +1021,157 @@ msgstr "Galerie Name"
 #: ../admin/manage.php:541
 #: ../admin/style.php:102
 #: ../admin/uploadtab.php:180
-#: ../admin/_manage.php:209
-#: ../admin/_manage.php:1024
 #: ../admin/js/uploadtab.js.php:172
-#: ../admin/wp25/manage.php:287
-#: ../admin/wp25/manage.php:430
-#: ../admin/wp25/manage.php:513
+#: ../admin/wp25/manage.php:291
+#: ../admin/wp25/manage.php:434
+#: ../admin/wp25/manage.php:517
+#: ../admin/wp25/media-upload.php:180
 #: ../admin/wp25/style.php:109
 msgid "Description"
 msgstr "Beschreibung"
 
 #: ../admin/manage.php:287
-#: ../admin/_manage.php:210
-#: ../admin/wp25/manage.php:288
+#: ../admin/wp25/manage.php:292
 msgid "Page ID"
 msgstr "Seiten ID (Page ID)"
 
 #: ../admin/manage.php:288
-#: ../admin/_manage.php:211
-#: ../admin/wp25/manage.php:289
+#: ../admin/wp25/manage.php:293
 msgid "Quantity"
 msgstr "Anzahl"
 
 #: ../admin/manage.php:289
 #: ../admin/manage.php:547
-#: ../admin/_manage.php:212
-#: ../admin/wp25/manage.php:290
-#: ../admin/wp25/manage.php:519
+#: ../admin/wp25/manage.php:294
+#: ../admin/wp25/manage.php:523
 msgid "Action"
 msgstr "Aktion"
 
 #: ../admin/manage.php:308
-#: ../admin/_manage.php:231
 #: ../admin/js/uploadtab.js.php:93
-#: ../admin/wp25/manage.php:309
+#: ../admin/wp25/manage.php:313
 msgid "Edit"
 msgstr "Bearbeiten"
 
 #: ../admin/manage.php:309
-#: ../admin/_manage.php:232
-#: ../admin/wp25/manage.php:310
+#: ../admin/wp25/manage.php:314
 msgid "Delete this gallery ?"
 msgstr "Diese Galerie löschen ?"
 
 #: ../admin/manage.php:314
 #: ../admin/manage.php:585
-#: ../admin/_manage.php:237
-#: ../admin/_manage.php:1155
-#: ../admin/wp25/manage.php:315
-#: ../admin/wp25/manage.php:557
+#: ../admin/wp25/manage.php:319
+#: ../admin/wp25/manage.php:561
 msgid "No entries found"
 msgstr "Keine Einträge gefunden"
 
 #: ../admin/manage.php:443
-#: ../admin/_manage.php:1001
 msgid "Main settings"
 msgstr "Haupteinstellungen"
 
 #: ../admin/manage.php:448
-#: ../admin/_manage.php:1007
-#: ../admin/wp25/manage.php:413
+#: ../admin/wp25/manage.php:417
 msgid "Page Link to"
 msgstr "Seite verlinkt zu"
 
 #: ../admin/manage.php:451
-#: ../admin/_manage.php:1010
-#: ../admin/wp25/manage.php:416
+#: ../admin/wp25/manage.php:420
 msgid "Not linked"
 msgstr "Nicht verlinkt"
 
 #: ../admin/manage.php:467
-#: ../admin/_manage.php:1026
-#: ../admin/wp25/manage.php:432
+#: ../admin/wp25/manage.php:436
 msgid "Preview image"
 msgstr "Vorschau-Bild"
 
 #: ../admin/manage.php:470
-#: ../admin/_manage.php:1029
-#: ../admin/wp25/manage.php:435
+#: ../admin/wp25/manage.php:439
 msgid "No Picture"
 msgstr "Kein Bild"
 
 #: ../admin/manage.php:485
-#: ../admin/_manage.php:1043
-#: ../admin/wp25/manage.php:450
+#: ../admin/wp25/manage.php:454
 msgid "Path"
 msgstr "Pfad"
 
 #: ../admin/manage.php:488
-#: ../admin/_manage.php:1045
-#: ../admin/wp25/manage.php:453
+#: ../admin/wp25/manage.php:457
 msgid "Create new page"
 msgstr "Neue Seite erstellen"
 
 #: ../admin/manage.php:491
-#: ../admin/_manage.php:1048
-#: ../admin/wp25/manage.php:456
+#: ../admin/wp25/manage.php:460
 msgid "Main page (No parent)"
 msgstr "Haupseite (keine Unterseite)"
 
 #: ../admin/manage.php:494
-#: ../admin/_manage.php:1051
-#: ../admin/wp25/manage.php:459
+#: ../admin/wp25/manage.php:463
 msgid "Add page"
 msgstr "Seite hinzufügen"
 
 #: ../admin/manage.php:500
-#: ../admin/_manage.php:1057
-#: ../admin/wp25/manage.php:466
+#: ../admin/wp25/manage.php:470
 msgid "Scan Folder for new images"
 msgstr "Überprüfe Verzeichniss nach neuen Bildern"
 
 #: ../admin/manage.php:501
 #: ../admin/manage.php:592
-#: ../admin/_manage.php:1058
-#: ../admin/wp25/manage.php:467
-#: ../admin/wp25/manage.php:500
-#: ../admin/wp25/manage.php:563
+#: ../admin/wp25/manage.php:471
+#: ../admin/wp25/manage.php:504
+#: ../admin/wp25/manage.php:567
 msgid "Save Changes"
 msgstr "Änderungen Speichern"
 
 #: ../admin/manage.php:506
-#: ../admin/wp25/manage.php:476
+#: ../admin/wp25/manage.php:480
 msgid "No action"
 msgstr "Keine Aktion"
 
 #: ../admin/manage.php:511
-#: ../admin/wp25/manage.php:481
+#: ../admin/wp25/manage.php:485
 msgid "Delete images"
 msgstr "Bilder löschen"
 
 #: ../admin/manage.php:512
-#: ../admin/wp25/manage.php:482
+#: ../admin/wp25/manage.php:486
 msgid "Import metadata"
 msgstr "Metadaten importieren"
 
 #: ../admin/manage.php:514
-#: ../admin/wp25/manage.php:484
+#: ../admin/wp25/manage.php:488
 msgid "Add tags"
 msgstr "Stichwörter hinzufügen"
 
 #: ../admin/manage.php:515
-#: ../admin/wp25/manage.php:485
+#: ../admin/wp25/manage.php:489
 msgid "Delete tags"
 msgstr "Stichwörter löschen"
 
 #: ../admin/manage.php:516
-#: ../admin/wp25/manage.php:486
+#: ../admin/wp25/manage.php:490
 msgid "Overwrite tags"
 msgstr "Stichwörter überschreiben"
 
 #: ../admin/manage.php:520
 #: ../admin/manage.php:521
 #: ../admin/manage.php:610
-#: ../admin/wp25/manage.php:490
-#: ../admin/wp25/manage.php:491
-#: ../admin/wp25/manage.php:581
+#: ../admin/wp25/manage.php:494
+#: ../admin/wp25/manage.php:495
+#: ../admin/wp25/manage.php:585
 msgid "OK"
 msgstr "OK"
 
 #: ../admin/manage.php:520
 #: ../admin/manage.php:610
-#: ../admin/wp25/manage.php:490
-#: ../admin/wp25/manage.php:581
+#: ../admin/wp25/manage.php:494
+#: ../admin/wp25/manage.php:585
 msgid "No images selected"
 msgstr "Keine Bilder ausgewählt"
 
 #: ../admin/manage.php:520
 #: ../admin/manage.php:610
-#: ../admin/wp25/manage.php:490
-#: ../admin/wp25/manage.php:581
+#: ../admin/wp25/manage.php:494
+#: ../admin/wp25/manage.php:585
 #, php-format
 msgid ""
 "You are about to start the bulk edit for %s images \n"
@@ -1210,87 +1183,87 @@ msgstr ""
 " 'Abbrechenl' um zu stoppen, 'OK' um die Bearbeitung durchzuführen."
 
 #: ../admin/manage.php:522
-#: ../admin/wp25/manage.php:492
+#: ../admin/wp25/manage.php:496
 msgid "Hide thumbnails "
 msgstr "Thumbnails verstecken"
 
 #: ../admin/manage.php:523
-#: ../admin/wp25/manage.php:493
+#: ../admin/wp25/manage.php:497
 msgid "Show thumbnails "
 msgstr "Thumbnails zeigen"
 
 #: ../admin/manage.php:524
-#: ../admin/wp25/manage.php:494
+#: ../admin/wp25/manage.php:498
 msgid "Show tags"
 msgstr "Zeige Tags"
 
 #: ../admin/manage.php:525
-#: ../admin/wp25/manage.php:495
+#: ../admin/wp25/manage.php:499
 msgid "Hide tags"
 msgstr "Verstecke Tags"
 
 #: ../admin/manage.php:527
-#: ../admin/wp25/manage.php:497
+#: ../admin/wp25/manage.php:501
 msgid "Sort gallery"
 msgstr "Sortiere Bilder"
 
 #: ../admin/manage.php:536
 #: ../admin/settings.php:322
-#: ../admin/wp25/manage.php:508
+#: ../admin/wp25/manage.php:512
 #: ../admin/wp25/settings.php:310
 msgid "File name"
 msgstr "Dateiname"
 
 #: ../admin/manage.php:538
 #: ../admin/js/uploadtab.js.php:106
-#: ../admin/wp25/manage.php:510
+#: ../admin/wp25/manage.php:514
 msgid "Thumbnail"
 msgstr "Thumbnail"
 
 #: ../admin/manage.php:542
 #: ../admin/uploadtab.php:176
 #: ../admin/js/uploadtab.js.php:169
-#: ../admin/wp25/manage.php:514
+#: ../admin/wp25/manage.php:518
 msgid "Alt &amp; Title Text"
 msgstr "Alt &amp; Titel Text"
 
 #: ../admin/manage.php:543
-#: ../admin/wp25/manage.php:515
+#: ../admin/wp25/manage.php:519
 msgid "exclude"
 msgstr "ausschließen"
 
 #: ../admin/manage.php:545
-#: ../admin/wp25/manage.php:517
+#: ../admin/wp25/manage.php:521
 msgid "Tags (comma separated list)"
 msgstr "Stichwörter (Tags)"
 
 #: ../admin/manage.php:578
-#: ../admin/wp25/manage.php:550
+#: ../admin/wp25/manage.php:554
 msgid "View"
 msgstr "Ansehen"
 
 #: ../admin/manage.php:579
-#: ../admin/wp25/manage.php:551
+#: ../admin/wp25/manage.php:555
 msgid "Show Meta data"
 msgstr "Zeige Metadaten"
 
 #: ../admin/manage.php:579
-#: ../admin/wp25/manage.php:551
+#: ../admin/wp25/manage.php:555
 msgid "Meta"
 msgstr "Meta"
 
 #: ../admin/manage.php:580
-#: ../admin/wp25/manage.php:552
+#: ../admin/wp25/manage.php:556
 msgid "Delete this file ?"
 msgstr "Diese Datei löschen ?"
 
 #: ../admin/manage.php:607
-#: ../admin/wp25/manage.php:578
+#: ../admin/wp25/manage.php:582
 msgid "Enter the tags"
 msgstr "Stichwörter angeben"
 
 #: ../admin/manage.php:610
-#: ../admin/wp25/manage.php:581
+#: ../admin/wp25/manage.php:585
 #: ../tinymce/window.php:147
 #: ../tinymce3/window.php:147
 msgid "Cancel"
@@ -1874,6 +1847,7 @@ msgstr "Zeige Bildbeschreibung"
 #: ../admin/settings.php:303
 #: ../admin/settings.php:353
 #: ../admin/js/uploadtab.js.php:117
+#: ../admin/wp25/media-upload.php:187
 #: ../admin/wp25/settings.php:291
 #: ../admin/wp25/settings.php:339
 msgid "None"
@@ -2389,6 +2363,11 @@ msgstr "Sortiere Bilder"
 
 #: ../admin/sort.php:58
 #: ../admin/wp25/sort.php:57
+msgid "Back to gallery"
+msgstr "Zurück zur Galerie"
+
+#: ../admin/sort.php:59
+#: ../admin/wp25/sort.php:58
 msgid "Update Sort Order"
 msgstr "Sortierung speichern"
 
@@ -2455,6 +2434,7 @@ msgid "Select a gallery"
 msgstr "Wähle Galerie"
 
 #: ../admin/uploadtab.php:107
+#: ../admin/wp25/media-upload.php:120
 #: ../tinymce/window.php:49
 #: ../tinymce3/window.php:49
 msgid "No gallery"
@@ -2598,9 +2578,59 @@ msgstr "Importiere ein Verzeichniss mit Bildern."
 msgid " Please note : For safe-mode = ON you need to add the subfolder thumbs manually"
 msgstr "Achtung : Da der Safe-Mode  (PHP.INI) eingeschaltet ist, mußt Du das Unterverzeichnis für die Vorschaubilder (\"thumbs\") manuell (per FTP) anlegen"
 
-#: ../admin/wp25/manage.php:400
+#: ../admin/wp25/manage.php:404
 msgid "Edit gallery"
 msgstr "Galerie ändern"
+
+#: ../admin/wp25/media-upload.php:132
+msgid "Select Gallery &#187;"
+msgstr "Wähle Galerie &#187;"
+
+#: ../admin/wp25/media-upload.php:164
+msgid "Show"
+msgstr "Zeige"
+
+#: ../admin/wp25/media-upload.php:165
+msgid "Hide"
+msgstr "Verstecke"
+
+#: ../admin/wp25/media-upload.php:170
+msgid "Image ID:"
+msgstr "Bilder ID:"
+
+#: ../admin/wp25/media-upload.php:176
+msgid "Alt/Titel text"
+msgstr "Alt / Titel Text"
+
+#: ../admin/wp25/media-upload.php:184
+msgid "Alignment"
+msgstr "Ausrichtung"
+
+#: ../admin/wp25/media-upload.php:189
+#: ../tinymce/window.php:133
+#: ../tinymce3/window.php:133
+msgid "Left"
+msgstr "Links"
+
+#: ../admin/wp25/media-upload.php:191
+#: ../tinymce/window.php:134
+#: ../tinymce3/window.php:134
+msgid "Center"
+msgstr "Zentrieren"
+
+#: ../admin/wp25/media-upload.php:193
+#: ../tinymce/window.php:135
+#: ../tinymce3/window.php:135
+msgid "Right"
+msgstr "Rechts"
+
+#: ../admin/wp25/media-upload.php:201
+msgid "Insert into Post"
+msgstr ""
+
+#: ../admin/wp25/media-upload.php:210
+msgid "Save all changes"
+msgstr "Änderungen Speichern"
 
 #: ../admin/wp25/overview.php:35
 msgid "Welcome to NextGEN Gallery !"
@@ -2819,19 +2849,4 @@ msgstr "Float"
 #: ../tinymce3/window.php:132
 msgid "No float"
 msgstr "Kein Float"
-
-#: ../tinymce/window.php:133
-#: ../tinymce3/window.php:133
-msgid "Left"
-msgstr "Links"
-
-#: ../tinymce/window.php:134
-#: ../tinymce3/window.php:134
-msgid "Center"
-msgstr "Zentrieren"
-
-#: ../tinymce/window.php:135
-#: ../tinymce3/window.php:135
-msgid "Right"
-msgstr "Rechts"
 
