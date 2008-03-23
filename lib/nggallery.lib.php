@@ -823,8 +823,8 @@ class nggRewrite {
 		    $this->slug.'/post/([^/]+)/album-([0-9]+)/gallery-([0-9]+)/page-([0-9]+)/slideshow/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]&nggpage=$matches[4]&show=slide',
 		    $this->slug.'/post/([^/]+)/album-([0-9]+)/gallery-([0-9]+)/page-([0-9]+)/images/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]&nggpage=$matches[4]&show=gallery',
 		  );
-
-		$wp_rewrite->rules = $wp_rewrite->rules + $rewrite_rules;
+		  
+		$wp_rewrite->rules = array_merge($rewrite_rules, $wp_rewrite->rules);
 		
 	}
 	

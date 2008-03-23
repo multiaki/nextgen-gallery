@@ -1,6 +1,12 @@
 NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
+V0.91
+- Changed : Increase Tweakfactor for Memory Check
+- Bugfix : Updates widgets (V1.21) for ImageRotator 3.15
+- Bugfix : Change order of rewrite rules for WP 2.5
+- Bugfix : Include Dashboard CSS also for page "nextgen-gallery"
+
 V0.90 - 18.03.2008
 - NEW : Sort order for images
 - NEW : Updated style for Wp 2.5
