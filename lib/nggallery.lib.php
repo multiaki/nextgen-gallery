@@ -129,7 +129,7 @@ class nggImage{
 		return $this->href;
 	}
 	
-	function cached_singlepic_file($width, $height, $mode = "" ) {
+	function cached_singlepic_file($width = "", $height = "", $mode = "" ) {
 		// This function creates a cache for all singlepics to reduce the CPU load
 		$ngg_options = get_option('ngg_options');
 		
@@ -150,13 +150,11 @@ class nggImage{
 			if ( !wp_mkdir_p($cachefolder) )
 				return false;
 		
-		// get the filepath on the server
-		$filepath = WINABSPATH . "/" . $this->path ."/" . $this->filename;
-		$thumb = new ngg_Thumbnail($filepath, TRUE);
+		$thumb = new ngg_Thumbnail($this->absPath, TRUE);
 		// echo $thumb->errmsg;
 		
 		if (!$thumb->error) {	
-			$thumb->resize($width,$height);
+			$thumb->resize($width , $height);
 			
 			if ($mode == 'watermark') {
 				if ($ngg_options['wmType'] == 'image') {
