@@ -2,7 +2,9 @@ NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
 V0.91
+- Changed : Add DIV "ngg-singlepic-wrapper" for SingelPic (THX to Travel-Junkie)
 - Changed : Increase Tweakfactor for Memory Check
+- Bugfix : Use admin.css only on NextGEN pages (THX tp Oliver)
 - Bugfix : Updates widgets (V1.21) for ImageRotator 3.15
 - Bugfix : Change order of rewrite rules for WP 2.5
 - Bugfix : Include Dashboard CSS also for page "nextgen-gallery"

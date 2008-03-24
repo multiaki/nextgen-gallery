@@ -65,6 +65,7 @@ function ngg_add_admin_js() {
 	if ( ($_GET['tab'] == 'ngg_gallery') && ($_GET['style'] != 'inline') )
 		 wp_enqueue_script('thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.1.2');
 }
+
 	
 // add to menu
 add_action('admin_menu', 'add_nextgen_gallery_menu');
