@@ -1,6 +1,9 @@
 NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
+V0.92
+- Added : Read EXIF field ImageDescription
+
 V0.91 - 24.03.2008
 - Changed : Resample mode back to 3
 - Changed : Add DIV "ngg-singlepic-wrapper" for SingelPic (THX to Travel-Junkie)
