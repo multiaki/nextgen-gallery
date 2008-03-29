@@ -117,15 +117,11 @@ if (is_admin()) {
 	// Load the gallery generator
 	include_once (dirname (__FILE__)."/nggfunctions.php");
 	
-	// required in WP 2.5, NextGEN should have higher priority
-	if (IS_WP25) {	
-		remove_filter('the_content', 'do_shortcode');
-		add_filter('the_content', 'do_shortcode', 20);
-	}
-		
 	// Action calls for all functions 
-	add_filter('the_content', 'searchnggallerytags', 10);
-	add_filter('the_excerpt', 'searchnggallerytags', 10);
+	// required in WP 2.5, NextGEN should have higher priority than 9
+	// see also http://trac.wordpress.org/ticket/6436 
+	add_filter('the_content', 'searchnggallerytags', 6);
+	add_filter('the_excerpt', 'searchnggallerytags', 6);
 }
 
 // Load tinymce button 
