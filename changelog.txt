@@ -2,6 +2,7 @@ NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
 V0.92
+- Changed : Higher priority for filter in RC3
 - Added : Read EXIF field ImageDescription
 
 V0.91 - 24.03.2008
