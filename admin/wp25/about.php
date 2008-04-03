@@ -97,7 +97,10 @@ function ngg_list_contributors()	{
 	"aleX Zhang (Chinese Translation)" => "http://zhangfei.info/",
 	"TheSoloist (Chinese Translation)" => "http://www.soloist-ic.cn/",
 	"Nica Luigi Cristian (Romanian Translation)" => "http://www.cristiannica.com/",
-	"Zdenek Hatas (Czech Translation)" => ""
+	"Zdenek Hatas (Czech Translation)" => "",
+	"David Potter (Documentation and Help)" => "http://dpotter.net/",
+	"Carlale Chen (Chinese Translation)" => "http://0-o-0.cc/",
+	"Nica Luigi Cristian (Romanian Translation)" => "http://www.cristiannica.com/"
 	);
 	
 	ksort($contributors);
@@ -189,9 +192,12 @@ function ngg_list_support()	{
 	"Christoph Wander" => "",
 	"Monterey Bay Singles LLC" => "",
 	"Elvina Flower" => "",
-	"Colossal Pups" => ""	
+	"Colossal Pups" => "",
+	"Florian Seuret" => "",
+	"Petri Teittinen" => "",
+	"Deval Shah" => "http://www.LuvPix.net ",
+	"Simply Charlotte Mason, LLC"  => ""
 	);
-
 	
 	ksort($supporter);
 	$i = count($supporter);
