@@ -22,13 +22,15 @@ function media_upload_nextgen() {
 		$keys = array_keys($_POST['send']);
 		$send_id = (int) array_shift($keys);
 		$image = $_POST['image'][$send_id];
-		$alttext = stripslashes($image['alttext']);
-		$description = stripslashes($image['description']);
+		$alttext = stripslashes( htmlspecialchars ($image['alttext'], ENT_QUOTES));
+		$description = stripslashes (htmlspecialchars($image['description'], ENT_QUOTES));
+		// here is no new line allowed
+		$clean_description = preg_replace("/\n|\r\n|\r$/", " ", $description);
 		$thumbcode = nggallery::get_thumbcode("");
 		$class="ngg-singlepic ngg-{$image['align']}";
 		// Build output
 		$html = "<img src='{$image['thumb']}' alt='$alttext' class='$class' />";
-		$html = "<a $thumbcode href='{$image['url']}' title='$description'>$html</a>";
+		$html = "<a $thumbcode href='{$image['url']}' title='$clean_description'>$html</a>";
 		media_upload_nextgen_save_image();
 		// Return it to TinyMCE
 		return media_send_to_editor($html);
