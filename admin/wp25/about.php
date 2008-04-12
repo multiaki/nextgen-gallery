@@ -100,7 +100,8 @@ function ngg_list_contributors()	{
 	"Zdenek Hatas (Czech Translation)" => "",
 	"David Potter (Documentation and Help)" => "http://dpotter.net/",
 	"Carlale Chen (Chinese Translation)" => "http://0-o-0.cc/",
-	"Nica Luigi Cristian (Romanian Translation)" => "http://www.cristiannica.com/"
+	"Nica Luigi Cristian (Romanian Translation)" => "http://www.cristiannica.com/",
+	"Igor Shevkoplyas (Russian Translation)" => "http://www.russian-translation-matters.com"
 	);
 	
 	ksort($contributors);
@@ -196,7 +197,12 @@ function ngg_list_support()	{
 	"Florian Seuret" => "",
 	"Petri Teittinen" => "",
 	"Deval Shah" => "http://www.LuvPix.net ",
-	"Simply Charlotte Mason, LLC"  => ""
+	"Simply Charlotte Mason, LLC"  => "",
+	"John Williams" => "",
+	"George Branchflower" => "",
+	"Douglas J Barnum" => "",
+	"Bradford Weir" => "http://www.bweir.com",	
+	"Almost Anything Desktop Publishing" => "http://www.almost-anything.com.au/"
 	);
 	
 	ksort($supporter);

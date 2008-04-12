@@ -5,6 +5,7 @@ V0.93
 - Added : Select Full-Size or Singlepic in Media Upload
 - Added : Check for minimum 8 MB Memory
 - Changed : Priority from wpautop must be before gallery
+- Bugfix : Added Screencolor to Widgets
 - Bugfix : Clean CSS class in setup.php
 - Bugfix : Change PHP short tag (Thx to Archedition)
 - Bugfix : Remove tab.png from CSS (Thx to Frisco)
