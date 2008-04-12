@@ -447,19 +447,15 @@ class nggAdmin{
 
 	// **************************************************************
 	function unzip($dir, $file) {
-	// thx to Gregor at http://blog.scoutpress.de/forum/topic/45
 		
 		if(! class_exists('PclZip'))
-			require_once(NGGALLERY_ABSPATH.'/lib/pclzip.lib.php');
+			require_once(ABSPATH . 'wp-admin/includes/class-pclzip.php');
 				
 		$archive = new PclZip($file);
 
 		// extract all files in one folder
 		if ($archive->extract(PCLZIP_OPT_PATH, $dir, PCLZIP_OPT_REMOVE_ALL_PATH, PCLZIP_CB_PRE_EXTRACT, 'ngg_getOnlyImages') == 0) {
-			if ($archive->error_code == -22)
-				nggallery::show_error(__('The Zip-file is too large. Exceed Memory limit !','nggallery'));
-			else
-				nggallery::show_error("Error : ".$archive->errorInfo(true));
+			nggallery::show_error("Error : ".$archive->errorInfo(true));
 			return false;
 		}
 
