@@ -1,6 +1,9 @@
 NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
+V1.00
+- Removed : Wordpress 2.1 - 2.3 files
+
 V0.93
 - Added : Select Full-Size or Singlepic in Media Upload
 - Added : Check for minimum 8 MB Memory

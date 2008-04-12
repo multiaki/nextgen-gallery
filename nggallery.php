@@ -4,7 +4,7 @@ Plugin Name: NextGEN Gallery
 Plugin URI: http://alexrabe.boelinger.com/?page_id=80
 Description: A NextGENeration Photo gallery for the WEB2.0(beta).
 Author: NextGEN DEV-Team
-Version: 0.93a
+Version: 1.00a
 
 Author URI: http://alexrabe.boelinger.com/
 
@@ -43,14 +43,12 @@ global $wpdb, $wp_version, $wpmu_version, $wp_roles;
 
 // Check for WPMU installation
 define('IS_WPMU', version_compare($wpmu_version, '1.3', '>=') );
-// Check for WP2.1 or higher
-define('IS_WP21_COMPATIBLE', version_compare($wp_version, '2.1', '>=') );
 // Check for WP2.5 installation
 define('IS_WP25', version_compare($wp_version, '2.4', '>=') );
 
 //This works only in WP2.1 or higher
-if ( (IS_WP21_COMPATIBLE == FALSE) and (IS_WPMU != TRUE) ){
-	add_action('admin_notices', create_function('', 'echo \'<div id="message" class="error fade"><p><strong>' . __('Sorry, NextGEN Gallery works only under WordPress 2.1 or higher',"nggallery") . '</strong></p></div>\';'));
+if ( (IS_WP25 == FALSE) and (IS_WPMU != TRUE) ){
+	add_action('admin_notices', create_function('', 'echo \'<div id="message" class="error fade"><p><strong>' . __('Sorry, NextGEN Gallery works only under WordPress 2.5 or higher',"nggallery") . '</strong></p></div>\';'));
 	return;
 }
 
@@ -62,7 +60,7 @@ if ( ($memory_limit != 0) && ($memory_limit < 12 ) ) {
 }
 
 // Version and path to check version
-define('NGGVERSION', "0.93a");
+define('NGGVERSION', "1.00a");
 // Minimum required database version
 define('NGG_DBVERSION', "0.84");
 define('NGGURL', "http://nextgen.boelinger.com/version.php");
@@ -114,10 +112,7 @@ if (is_admin()) {
 	if( get_option( "ngg_db_version" ) != NGG_DBVERSION ) 
 		ngg_upgrade();
 	
-	if (IS_WP25)
-		include_once (dirname (__FILE__)."/admin/wp25/admin.php");
-	else
-		include_once (dirname (__FILE__)."/admin/admin.php");
+	include_once (dirname (__FILE__)."/admin/wp25/admin.php");
 		
 } else {
 	
@@ -163,15 +158,8 @@ function ngg_addjs() {
 	if ($ngg_options['thumbEffect'] == "thickbox") {
 		echo "\n".'<script type="text/javascript"> var tb_pathToImage = "'.NGGALLERY_URLPATH.'thickbox/'.$ngg_options['thickboxImage'].'";</script>';
 		echo "\n".'<style type="text/css" media="screen">@import "'.NGGALLERY_URLPATH.'thickbox/thickbox.css";</style>'."\n";
-	    if ($wp_version < "2.5") {
-	    	if ($wp_version > "2.1.3") wp_deregister_script('jquery'); 
-	    	wp_enqueue_script('jquery', NGGALLERY_URLPATH .'admin/js/jquery.js', FALSE, '1.2.2');
-		} 
-			if (IS_WP25)
-	    		wp_enqueue_script('ngg-thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.1.1');
-	    	else
-	    		wp_enqueue_script('thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.1.1');
-	    }
+   		wp_enqueue_script('ngg-thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.1.1');
+    }
 	    
 	// test for wordTube function
 	if (!function_exists('integrate_swfobject')) {
