@@ -461,147 +461,13 @@ class nggallery {
  * nggallery.lib.php
  * 
  * @author 		Alex Rabe 
- * @copyright 	Copyright 2007
+ * @copyright 	Copyright 2007-2008
  * 
  */
  
-class ngg_Tags {
+class nggTags {
 	
-	var $sluglist = array ();
-	var $img_slugs = array ();
-	var $img_tags = array ();
-	var $taglist = "";
-	
-	function ngg_Tags() {
-		return $this->__construct();
-	}
-
-	function __construct() {
-		// First get all slugs in a array
-		$this->get_sluglist();
-	}
-	
-	function __destruct() {
-		// Clean varlist
-		unset ($this->sluglist, $this->img_slugs, $this->img_tags, $this->taglist );
-	}
-
-	function get_sluglist() {
-		// read the slugs and cache the array
-		global $wpdb;
-		
-		$slugarray = $wpdb->get_results("SELECT id, slug FROM $wpdb->nggtags");
-		if (is_array($slugarray)){
-			foreach($slugarray as $element)
-				$this->sluglist[$element->id] = $element->slug;
-		}
-		
-		return $this->sluglist;
-	}
-	
-	function get_tags_from_image($id) {
-		// read the tags and slugs
-		global $wpdb;
-		
-		$this->taglist = "";
-		$this->img_slugs = $this->img_tags = array();
-	
-		$tagarray = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggpic2tags AS t INNER JOIN $wpdb->nggtags AS tt ON t.tagid = tt.id WHERE t.picid = '$id' ORDER BY tt.slug ASC ");
-	
-		if (is_array($tagarray)){
-			foreach($tagarray as $element) {
-				$this->img_slugs[$element->id] = $element->slug;
-				$this->img_tags[$element->id] = $element->name;
-			}
-			$this->taglist = implode(", ", $this->img_tags);
-		}
-		
-		return $this->taglist;
-	}
-	
-	function add_tag($tag) {
-		// add a tag if not exist and return the id
-		global $wpdb;
-
-		$tagid = false;
-		
-		$tag = trim($tag);
-		$slug = sanitize_title($tag);
-
-		// look for tag in the cached list and get id
-		$tagid = array_search($slug, $this->sluglist);
-		
-		// if tag is not found add to database
-		if (!$tagid) {
-			if (!empty ($tag)) {
-				$wpdb->query("INSERT INTO $wpdb->nggtags (name, slug) VALUES ('$tag', '$slug')");
-				$tagid = (int) $wpdb->insert_id;
-				// Update also sluglist
-				if ($tagid)	$this->sluglist[$tagid] = $slug;
-			}
-		}
-		
-		return $tagid;
-	}
-	
-	function add_relationship($pic_id = 0, $tag_id = 0) {
-		// add the relation between image and tag
-		global $wpdb;
-
-		if (($pic_id != 0) && ($tag_id != 0)){
-			// checkfor duplicate first
-			$exist = $wpdb->get_var("SELECT picid FROM $wpdb->nggpic2tags WHERE picid = '$pic_id' AND tagid = '$tag_id' ");
-			if (!$exist)
-				$wpdb->query("INSERT INTO $wpdb->nggpic2tags (picid, tagid) VALUES ('$pic_id', '$tag_id')");
-		}
-	}
-
-	function remove_relationship($pic_id = 0, $slugarray, $cached = false) {
-		// remove the relation between image and tag
-		global $wpdb;
-
-		if (!is_array($slugarray))
-			$slugarray = array($slugarray);
-		
-		// get all tags if we didnt chaed them already
-		if (!$cached)
-			$this->get_tags_from_image($pic_id);
-		
-		$delete_ids = array();
-			
-		foreach ($slugarray as $slug) {
-			// look for tag in the cached list and get ids
-			// require frst get_tags_from_image()
-			$tagid = array_search($slug, $this->sluglist);
-			if ($tagid)
-				$delete_ids[] = $tagid;
-		}
-
-		$delete_list = "'" . implode("', '", $delete_ids) . "'";
-		$wpdb->query("DELETE FROM $wpdb->nggpic2tags WHERE picid = '$pic_id' AND tagid IN ($delete_list)");
-
-	}
-
-	function remove_unused_tags() {
-		// remove tags which are not longer used
-		global $wpdb;
-		
-		// get all used tags
-		$tagarray = $wpdb->get_results("SELECT tt.* FROM $wpdb->nggpic2tags AS t INNER JOIN $wpdb->nggtags AS tt ON t.tagid = tt.id ");
-		if (is_array($tagarray)){
-			// remove used items from sluglist
-			foreach($tagarray as $element)
-				unset ($this->sluglist[$element->id]);
-			// remove now all unused tags	
-			$delete_ids = array();
-			foreach($this->sluglist as $key=>$value)
-				$delete_ids[] = $key;
-			$delete_list = "'" . implode("', '", $delete_ids) . "'";
-			$wpdb->query("DELETE FROM $wpdb->nggtags WHERE id IN ($delete_list)");		
-		}
-	}
-	
-	function get_images($taglist) {
+	function get_images($taglist, $mode = "ASC") {
 		// return the images based on the tag
 		global $wpdb;
 		
@@ -617,16 +483,17 @@ class ngg_Tags {
 		$sluglist   = "'" . implode("', '", $new_slugarray) . "'";
 			
 		$picarray = array();
-		
-		// first get all picture with this tag //
-		$picids = $wpdb->get_col("SELECT t.picid FROM $wpdb->nggpic2tags AS t INNER JOIN $wpdb->nggtags AS tt ON t.tagid = tt.id WHERE tt.slug IN ($sluglist) ORDER BY t.picid ASC ");
+		// first get all $trem_ids with this tag
+		$term_ids = $wpdb->get_col( $wpdb->prepare("SELECT term_id FROM $wpdb->terms WHERE slug IN ($sluglist) ORDER BY term_id ASC "));
+		$picids = get_objects_in_term($term_ids, 'ngg_tag');
 
 		if (is_array($picids)){
 			// now get all pictures
 			$piclist = "'" . implode("', '", $picids) . "'";
-			//TODO: Use thumbnail sort order ? v0.80 Use now random function
-			//$picarray = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggpictures AS t INNER JOIN $wpdb->nggallery AS tt ON t.galleryid = tt.gid WHERE t.pid IN ($piclist) ORDER BY t.pid ASC ");
-			$picarray = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggpictures AS t INNER JOIN $wpdb->nggallery AS tt ON t.galleryid = tt.gid WHERE t.pid IN ($piclist) ORDER BY rand() ");			
+			if ($mode == 'ASC')
+				$picarray = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggpictures AS t INNER JOIN $wpdb->nggallery AS tt ON t.galleryid = tt.gid WHERE t.pid IN ($piclist) ORDER BY t.pid ASC ");
+			if ($mode == 'RAND')
+				$picarray = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggpictures AS t INNER JOIN $wpdb->nggallery AS tt ON t.galleryid = tt.gid WHERE t.pid IN ($piclist) ORDER BY rand() ");			
 		}
 		
 		return $picarray;
@@ -650,6 +517,7 @@ class ngg_Tags {
 		
 		foreach($new_slugarray as $slug) {
 			// get random picture of tag
+			//TODO:Switch to taxonmy scheme
 			$picture = $wpdb->get_row("SELECT t.picid, t.tagid, tt.name, tt.slug FROM $wpdb->nggpic2tags AS t INNER JOIN $wpdb->nggtags AS tt ON t.tagid = tt.id WHERE tt.slug = '$slug' ORDER BY rand() limit 1 ");	
 			if ($picture) {
 				$picdata = $wpdb->get_row("SELECT t.*, tt.* FROM $wpdb->nggpictures AS t INNER JOIN $wpdb->nggallery AS tt ON t.galleryid = tt.gid WHERE t.pid = $picture->picid");		

@@ -2,9 +2,11 @@ NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
 V1.00
-- Removed : Wordpress 2.1 - 2.3 files
+- Removed : Convert tags to WP-Taxonomy tables, no more need for ngg_tags, ngg_pic2tags 
+- Removed : Wordpress 2.1 - 2.3 files deleted
+- Bugfix : Fixed width for Thickbox in Manage gallery
 
-V0.93
+V0.93 - 12.04.2008
 - Added : Select Full-Size or Singlepic in Media Upload
 - Added : Check for minimum 8 MB Memory
 - Changed : Priority from wpautop must be before gallery

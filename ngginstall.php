@@ -25,10 +25,7 @@ function nggallery_install () {
 	$role->add_cap('NextGEN Change options');
 	
 	// upgrade function changed in WordPress 2.3	
-	if (version_compare($wp_version, '2.3', '>='))		
-		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-	else
-		require_once(ABSPATH . 'wp-admin/upgrade-functions.php');
+	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 	
 	// add charset & collate like wp core
 	$charset_collate = '';
@@ -43,8 +40,6 @@ function nggallery_install () {
    	$nggpictures					= $wpdb->prefix . 'ngg_pictures';
 	$nggallery						= $wpdb->prefix . 'ngg_gallery';
 	$nggalbum						= $wpdb->prefix . 'ngg_album';
-	$nggtags						= $wpdb->prefix . 'ngg_tags';
-	$nggpic2tags					= $wpdb->prefix . 'ngg_pic2tags';
    
 	if($wpdb->get_var("show tables like '$nggpictures'") != $nggpictures) {
       
@@ -75,6 +70,7 @@ function nggallery_install () {
 		galdesc MEDIUMTEXT NULL ,
 		pageid BIGINT(20) NULL DEFAULT '0' ,
 		previewpic BIGINT(20) NULL DEFAULT '0' ,
+		author BIGINT(20) NOT NULL DEFAULT '0' ,
 		PRIMARY KEY gid (gid)
 		) $charset_collate;";
 	
@@ -92,32 +88,6 @@ function nggallery_install () {
 	
       dbDelta($sql);
     }
-    
-    // new since version 0.70
-    if($wpdb->get_var("show tables like '$nggtags'") != $nggtags) {
-      
-		$sql = "CREATE TABLE " . $nggtags . " (
-		id BIGINT(20) NOT NULL AUTO_INCREMENT ,
-		name VARCHAR(55) NOT NULL ,
-		slug VARCHAR(200) NOT NULL,
-		PRIMARY KEY id (id),
-		UNIQUE KEY slug (slug)
-		) $charset_collate;";
-	
-      dbDelta($sql);
-    }
-    
-    if($wpdb->get_var("show tables like '$nggpic2tags'") != $nggpic2tags) {
-      
-		$sql = "CREATE TABLE " . $nggpic2tags . " (
-		 picid BIGINT(20) NOT NULL DEFAULT 0,
-		 tagid BIGINT(20) NOT NULL DEFAULT 0,
-		 PRIMARY KEY  (picid, tagid),
-		 KEY tagid (tagid)
-		) $charset_collate;";
-	
-      dbDelta($sql);
-    }
 
 	// check one table again, to be sure
 	if($wpdb->get_var("show tables like '$nggpictures'")!= $nggpictures) {
@@ -125,38 +95,6 @@ function nggallery_install () {
 		return;
 	}
 
-}
-	
-// update routine
-function ngg_upgrade() {
-	
-	global $wpdb;
-	
-	$nggpictures					= $wpdb->prefix . 'ngg_pictures';
-	$nggallery						= $wpdb->prefix . 'ngg_gallery';
-
-	// Be sure that the tables exist
-	if($wpdb->get_var("show tables like '$nggpictures'") == $nggpictures) {
-
-		$installed_ver = get_option( "ngg_db_version" );
-
-		// v0.33 -> v.071
-		if (version_compare($installed_ver, '0.71', '<')) {
-			$wpdb->query("ALTER TABLE ".$nggpictures." CHANGE pid pid BIGINT(20) NOT NULL AUTO_INCREMENT ");
-			$wpdb->query("ALTER TABLE ".$nggpictures." CHANGE galleryid galleryid BIGINT(20) NOT NULL ");
-			$wpdb->query("ALTER TABLE ".$nggallery." CHANGE gid gid BIGINT(20) NOT NULL AUTO_INCREMENT ");
-			$wpdb->query("ALTER TABLE ".$nggallery." CHANGE pageid pageid BIGINT(20) NULL DEFAULT '0'");
-			$wpdb->query("ALTER TABLE ".$nggallery." CHANGE previewpic previewpic BIGINT(20) NULL DEFAULT '0'");
-			$wpdb->query("ALTER TABLE ".$nggallery." CHANGE gid gid BIGINT(20) NOT NULL AUTO_INCREMENT ");
-			$wpdb->query("ALTER TABLE ".$nggallery." CHANGE description galdesc MEDIUMTEXT NULL");
-		}
-		// v0.71 -> v0.84
-		if (version_compare($installed_ver, '0.84', '<')) {
-			$wpdb->query("ALTER TABLE ".$nggpictures." ADD sortorder BIGINT(20) DEFAULT '0' NOT NULL AFTER exclude");
-		}
-
-		update_option( "ngg_db_version", NGG_DBVERSION );
-	}
 }
 
 function ngg_default_options() {
@@ -246,7 +184,7 @@ function ngg_default_options() {
 	// special overrides for WPMU	
 	if (IS_WPMU) {
 		// get the site options
-		$ngg_wpmu_options=get_site_option('ngg_options');
+		$ngg_wpmu_options = get_site_option('ngg_options');
 		
 		// get the default value during installation
 		if (!is_array($ngg_wpmu_options)) {

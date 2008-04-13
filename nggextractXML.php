@@ -2,7 +2,7 @@
 
 /*
 +----------------------------------------------------------------+
-+	imageRotartor-XML V1.21
++	imageRotartor-XML V1.22
 +	by Alex Rabe
 +   	required for NextGEN Gallery
 +----------------------------------------------------------------+
@@ -22,13 +22,13 @@ $ngg_options = get_option ('ngg_options');
 $siteurl	 = get_option ('siteurl');
 
 // get the gallery id
-$galleryID = (int) attribute_escape($_GET['gid']);
+$galleryID = (int) $_GET['gid'];
 
 // get the pictures
 if ($galleryID == 0) {
-	$thepictures = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE tt.exclude != 1 ORDER BY tt.$ngg_options[galSort] $ngg_options[galSortDir] ");
+	$thepictures = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE tt.exclude != 1 ORDER BY tt.{$ngg_options['galSort']} {$ngg_options['galSortDir']} ");
 } else {
-	$thepictures = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = '$galleryID' AND tt.exclude != 1 ORDER BY tt.$ngg_options[galSort] $ngg_options[galSortDir] ");
+	$thepictures = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = '$galleryID' AND tt.exclude != 1 ORDER BY tt.{$ngg_options['galSort']} {$ngg_options['galSortDir']} ");
 }
 
 // Create XML output

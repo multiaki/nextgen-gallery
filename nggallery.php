@@ -36,7 +36,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 //#################################################################
 // Let's Go
 	
-global $wpdb, $wp_version, $wpmu_version, $wp_roles;
+global $wpdb, $wp_version, $wpmu_version, $wp_roles, $wp_taxonomies;
 
 // ini_set('display_errors', '1');
 // ini_set('error_reporting', E_ALL);
@@ -46,7 +46,7 @@ define('IS_WPMU', version_compare($wpmu_version, '1.3', '>=') );
 // Check for WP2.5 installation
 define('IS_WP25', version_compare($wp_version, '2.4', '>=') );
 
-//This works only in WP2.1 or higher
+//This works only in WP2.5 or higher
 if ( (IS_WP25 == FALSE) and (IS_WPMU != TRUE) ){
 	add_action('admin_notices', create_function('', 'echo \'<div id="message" class="error fade"><p><strong>' . __('Sorry, NextGEN Gallery works only under WordPress 2.5 or higher',"nggallery") . '</strong></p></div>\';'));
 	return;
@@ -94,25 +94,23 @@ $ngg_options = get_option('ngg_options');
 $wpdb->nggpictures					= $wpdb->prefix . 'ngg_pictures';
 $wpdb->nggallery					= $wpdb->prefix . 'ngg_gallery';
 $wpdb->nggalbum						= $wpdb->prefix . 'ngg_album';
+//TODO:obsolete
 $wpdb->nggtags						= $wpdb->prefix . 'ngg_tags';
 $wpdb->nggpic2tags					= $wpdb->prefix . 'ngg_pic2tags';
+
+// Register the NextGEN taxonomy	
+register_taxonomy( 'ngg_tag', 'nggallery' );
 
 // Load language
 function nggallery_init ()
 {
-	load_plugin_textdomain('nggallery','wp-content/plugins/' . NGGFOLDER.'/lang');
+	load_plugin_textdomain('nggallery','wp-content/plugins/' . NGGFOLDER . '/lang');
 }
 
 // Load the admin panel
 if (is_admin()) {
 	
-	include_once (dirname (__FILE__)."/ngginstall.php");
-
-	// check for upgrade
-	if( get_option( "ngg_db_version" ) != NGG_DBVERSION ) 
-		ngg_upgrade();
-	
-	include_once (dirname (__FILE__)."/admin/wp25/admin.php");
+	include_once (dirname (__FILE__)."/admin/admin.php");
 		
 } else {
 	
@@ -133,10 +131,7 @@ if (is_admin()) {
 }
 
 // Load tinymce button 
-if (IS_WP25)
-	include_once (dirname (__FILE__)."/tinymce3/tinymce.php");
-else
-	include_once (dirname (__FILE__)."/tinymce/tinymce.php");
+include_once (dirname (__FILE__)."/tinymce3/tinymce.php");
 	
 // Load gallery class
 require_once (dirname (__FILE__).'/lib/nggallery.lib.php');
@@ -171,8 +166,6 @@ function ngg_addjs() {
 add_action('init', 'nggallery_init');
 
 // Init options & tables during activation 
-// add_action('activate_' . NGGFOLDER.'/nggallery.php', 'ngg_install');
-// WP recommended function, not used until 2.2.3
 register_activation_hook(NGGFOLDER.'/nggallery.php','ngg_install');
 register_deactivation_hook(NGGFOLDER.'/nggallery.php','ngg_deinstall');
 

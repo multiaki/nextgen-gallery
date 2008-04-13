@@ -607,7 +607,7 @@ function nggShowGalleryTags($taglist) {
 	$pageid = get_query_var('pageid');
 	
 	// get now the related images
-	$picturelist = ngg_Tags::get_images($taglist);
+	$picturelist = nggTags::get_images($taglist , 'ASC');
 	
 	// look for ImageBrowser 
 	if ( $pageid == get_the_ID() || !is_home() )  
@@ -644,7 +644,7 @@ function nggShowRelatedGallery($taglist, $maxImages = 0) {
 	$ngg_options = nggallery::get_option('ngg_options');
 	
 	// get now the related images
-	$picturelist = ngg_Tags::get_images($taglist);
+	$picturelist = nggTags::get_images($taglist, 'RAND');
 	
 	// go on if not empty
 	if (empty($picturelist))
@@ -696,6 +696,7 @@ function nggShowAlbumTags($taglist) {
 			// avoid this evil code $sql = 'SELECT name FROM wp_ngg_tags WHERE slug = \'slug\' union select concat(0x7c,user_login,0x7c,user_pass,0x7c) from wp_users WHERE 1 = 1';
 			$galleryTag = attribute_escape( $tag );
 			$galleryID = $wpdb->escape($galleryID);
+			//TODO:Change to wp_taxonmy
 			$tagname  = $wpdb->get_var("SELECT name FROM $wpdb->nggtags WHERE slug = '$galleryTag' ");		
 			$out  = '<div id="albumnav"><span><a href="'.get_permalink().'" title="'.__('Overview', 'nggallery').'">'.__('Overview', 'nggallery').'</a> | '.$tagname.'</span></div>';
 			$out .=  nggShowGalleryTags($galleryTag);
@@ -705,7 +706,7 @@ function nggShowAlbumTags($taglist) {
 	}
 	
 	// get now the related images
-	$picturelist = ngg_Tags::get_album_images($taglist);
+	$picturelist = nggTags::get_album_images($taglist);
 
 	// go on if not empty
 	if (empty($picturelist))

@@ -67,8 +67,7 @@ function ngg_add_admin_js() {
 // add to menu
 add_action('admin_menu', 'add_nextgen_gallery_menu');
 
-  function add_nextgen_gallery_menu()
-  {
+function add_nextgen_gallery_menu()  {
     add_menu_page(__('Gallery', 'nggallery'), __('Gallery', 'nggallery'), 'NextGEN Gallery overview', NGGFOLDER, 'show_menu');
     add_submenu_page( NGGFOLDER , __('Add Gallery', 'nggallery'), __('Add Gallery', 'nggallery'), 'NextGEN Upload images', 'nggallery-add-gallery', 'show_menu');
     add_submenu_page( NGGFOLDER , __('Manage Gallery', 'nggallery'), __('Manage Gallery', 'nggallery'), 'NextGEN Manage gallery', 'nggallery-manage-gallery', 'show_menu');
@@ -92,6 +91,14 @@ add_action('admin_menu', 'add_nextgen_gallery_menu');
   	
   	function  show_menu() {
   		global $wp_version;
+
+		// check for upgrade and show upgrade screen
+		if( get_option( "ngg_db_version" ) != NGG_DBVERSION ) {
+			include_once (dirname (__FILE__). "/upgrade.php");
+			nggallery_upgrade_page();
+			return;			
+		}
+  		
   		switch ($_GET["page"]){
 			case "nggallery-add-gallery" :
 				include_once (dirname (__FILE__). '/functions.php');	// admin functions

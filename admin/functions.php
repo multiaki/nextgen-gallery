@@ -411,15 +411,7 @@ class nggAdmin{
 				// add the tags
 				if ($meta['keywords']) {
 					$taglist = explode(",", $meta['keywords']);
-					$taglist = array_map('trim', $taglist);
-					// load tag list
-					$nggTags = new ngg_Tags();
-					foreach($taglist as $tag) {
-						// get the tag id
-						$tagid = $nggTags->add_tag($tag);
-						if ( $tagid )
-							$nggTags->add_relationship($pic_id, $tagid);
-					}
+					wp_set_object_terms($pic_id, $taglist, 'ngg_tag');
 				} // add tags
 			}// error check
 		} // foreach

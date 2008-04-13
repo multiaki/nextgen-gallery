@@ -156,10 +156,6 @@ function nggallery_admin_manage_gallery() {
 		$pic_ids = explode(",", $_POST['TB_imagelist']);
 		$taglist = explode(",", $_POST['taglist']);
 		$taglist = array_map('trim', $taglist);
-		$slugarray = array_map('sanitize_title', $taglist);
-
-		// load tag list
-		$nggTags = new ngg_Tags();
 		
 		foreach($pic_ids as $pic_id) {
 			
@@ -170,27 +166,24 @@ function nggallery_admin_manage_gallery() {
 					break;
 				case 7:
 				// Overwrite tags
-					// remove all binding
-					$wpdb->query("DELETE FROM $wpdb->nggpic2tags WHERE picid = '$pic_id'");
-					// and add now the new tags
+					wp_set_object_terms($pic_id, $taglist, 'ngg_tag');
+					break;					
 				case 5:
 				// Add / append tags
-					foreach($taglist as $tag) {
-						// get the tag id
-						$tagid = $nggTags->add_tag($tag);
-						if ( $tagid )
-							$nggTags->add_relationship($pic_id, $tagid);
-					}
+					wp_set_object_terms($pic_id, $taglist, 'ngg_tag', TRUE);
 					break;
 				case 6:
 				// Delete tags
-					$nggTags->remove_relationship($pic_id, $slugarray, false);
+					$oldtags = wp_get_object_terms($pic_id, 'ngg_tag', 'fields=names');
+					// get the slugs, to vaoid  case sensitive problems
+					$slugarray = array_map('sanitize_title', $taglist);
+					$oldtags = array_map('sanitize_title', $oldtags);
+					// compare them and return the diff
+					$newtags = array_diff($oldtags, $slugarray);
+					wp_set_object_terms($pic_id, $newtags, 'ngg_tag');
 					break;
 			}
 		}
-		
-		// remove not longer used tag
-		$nggTags->remove_unused_tags();
 
 		nggallery::show_message(__('Tags changed',"nggallery"));
 	}
@@ -364,7 +357,7 @@ function nggallery_picturelist($hideThumbs = false,$showTags = false) {
 		jQuery("#TB_tagaction").val(jQuery("#bulkaction").val());
 		jQuery("#TB_imagelist").val(elementlist);
 		// console.log (jQuery("#TB_imagelist").val());
-		jQuery.tb_show("", "#TB_inline?width=640&height=110&inlineId=tags&modal=true", false);
+		jQuery.tb_show("", "#TB_inline?width=640&height=120&inlineId=tags&modal=true", false);
 	}
 </script>
 <script type="text/javascript"> var tb_pathToImage = '<?php echo NGGALLERY_URLPATH ?>thickbox/loadingAnimationv3.gif';</script>
@@ -525,8 +518,6 @@ function getNumChecked(form)
 	</thead>
 	<tbody>
 <?php
-// load tags
-if ($showTags) $nggTags = new ngg_Tags();
 if($picturelist) {
 	foreach($picturelist as $picture) {
 		//TODO: Ajax delete version , looks better
@@ -549,7 +540,7 @@ if($picturelist) {
 			<td><input name="alttext[<?php echo $pid ?>]" type="text" size="20"   value="<?php echo stripslashes($picture->alttext) ?>" /></td>
 			<td><input name="exclude[<?php echo $pid ?>]" type="checkbox" value="1" <?php echo $exclude ?> /></td>
 			<?php } else {?>
-			<td ><input name="tags[<?php echo $pid ?>]" type="text" style="width:95%" value="<?php echo $nggTags->get_tags_from_image($pid); ?>" /></td>
+			<td ><input name="tags[<?php echo $pid ?>]" type="text" style="width:95%" value="<?php echo implode(', ',wp_get_object_terms($pid, 'ngg_tag', 'fields=names')); ?>" /></td>
 			<?php } ?>
 			<td><a href="<?php echo $act_gallery_url.$picture->filename ?>" class="thickbox" title="<?php echo $picture->alttext ?>" ><?php _e('View') ?></a></td>
 			<td><a href="<?php echo NGGALLERY_URLPATH."admin/showmeta.php?id=".$pid ?>" class="thickbox" title="<?php _e("Show Meta data",'nggallery')?>" ><?php _e('Meta') ?></a></td>
@@ -640,52 +631,16 @@ function ngg_update_pictures( $nggdescription, $nggalttext, $nggexclude, $nggall
 /**************************************************************************/
 function ngg_update_tags( $taglist ) {
 // update all tags
-//TODO:Move to class nggTags
-	
-	global $wpdb;
-	
-	// load tag list
-	$nggTags = new ngg_Tags();
-	
-	// the taglist contain as key the pic_id
+
 	if (is_array($taglist)){
 		foreach($taglist as $key=>$value) {
-			
-			// First, get all of the original tags
-			$nggTags->get_tags_from_image($key);
-			
 			$tags = explode(",", $value);
-			$new_slugarray = array();
-			
-			foreach($tags as $tag) {
-				if ( !empty($tag) ) {
-					// create the slug
-					$tag = trim($tag);
-					$slug = sanitize_title($tag);
-					// do not proceed empty slugs
-					if ( !empty($slug) ) {
-						$new_slugarray[] = $slug;
-						// look if we have a new tag in POST
-						if (!in_array($slug, $nggTags->img_slugs )) {
-							$tagid = $nggTags->add_tag($tag);
-							$nggTags->add_relationship($key, $tagid);
-							// add now to image list 
-							$nggTags->img_slugs[] = $slug;
-						}
-					}
-				}
-			}
-								
-			//do we need to remove some tags?
-			$delete_tags = array_diff($nggTags->img_slugs, $new_slugarray);
-			$nggTags->remove_relationship($key, $delete_tags, TRUE);
+			wp_set_object_terms($key, $tags, 'ngg_tag');
 		}
-		
-		// remove not longer used tag
-		$nggTags->remove_unused_tags();
 	}
-	
+
 	return;
+
 }
 
 ?>
