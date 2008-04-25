@@ -7,9 +7,15 @@ V1.00
 - Removed : Convert tags to WP-Taxonomy tables, no more need for ngg_tags, ngg_pic2tags 
 - Removed : Wordpress 2.1 - 2.3 files deleted
 
-V0.94
+V0.95 - 25.04.2008
+- Bugfix : Correction in media-upload to fit with Wordpress 2.5.1
+- Bugfix : Attribute_escape all objects in media-upload
+- Bugfix : Correct sortorder for albums
+- Bugfix : Typo correction (THX to Momo-I)
+
+V0.94 - 20.04.2008
 - Added : New filter option ngg_create_gallery_link
-- Changed : Reduce Amount of DB queries in albums (Big THX to Alexandr Kindras)
+- Changed : Reduce amount of DB queries in albums (Big THX to Alexandr Kindras)
 - Changed : Revert wpautop priority change. Doesn't good for other plugins
 
 V0.93 - 12.04.2008

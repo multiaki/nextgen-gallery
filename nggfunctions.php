@@ -338,8 +338,8 @@ function nggCreateGallery($picturelist,$galleryID = false) {
 		$link =($ngg_options['galImgBrowser']) ? $nggRewrite->get_permalink(array('pid'=>$picture->pid)) : $folder_url.$picture->filename;
 
 		// add filter for the link
-		$link 		= apply_filters('ngg_create_gallery_link', $link, $galleryID, $picture);
-		$thumbcode  = apply_filters('ngg_create_gallery_thumbcode', $thumbcode, $galleryID, $picture);
+		$link 		= apply_filters('ngg_create_gallery_link', $link, $picture);
+		$thumbcode  = apply_filters('ngg_create_gallery_thumbcode', $thumbcode, $picture);
 
 		// create output
 		$out .= '<div id="ngg-image-'. $picture->pid .'" class="ngg-gallery-thumbnail-box '. $class_desc .'">'."\n\t";
@@ -406,14 +406,15 @@ function nggCreateAlbum( $galleriesID, $mode = "extend", $albumID = 0) {
 	global $wpdb, $nggRewrite;
 	
 	$ngg_options = nggallery::get_option('ngg_options');
+	$sortorder = $galleriesID;
 	
  	foreach ($galleriesID as $i => $value) {
    		$galleriesID[$i] = addslashes($value);
  	}
  	
- 	$galleriesOfAlbum = $wpdb->get_results('SELECT * FROM '.$wpdb->nggallery.' WHERE gid IN (\''.implode('\',\'', $galleriesID).'\')');
+ 	$galleriesOfAlbum = $wpdb->get_results('SELECT * FROM '.$wpdb->nggallery.' WHERE gid IN (\''.implode('\',\'', $galleriesID).'\')', OBJECT_K);
  	$picturesCounter = $wpdb->get_results('SELECT galleryid, COUNT(*) as counter FROM '.$wpdb->nggpictures.' WHERE galleryid IN (\''.implode('\',\'', $galleriesID).'\') AND exclude != 1 GROUP BY galleryid', OBJECT_K);
- 	
+
  	$imagesID = array();
  	
  	foreach ($galleriesOfAlbum as $gallery_row)
@@ -422,9 +423,8 @@ function nggCreateAlbum( $galleriesID, $mode = "extend", $albumID = 0) {
  	
  	$out = '';
  	
- 	foreach ($galleriesOfAlbum as $gallery_row) {
- 		$gallerycontent = $gallery_row;
- 		$galleryID = $gallerycontent->gid;
+ 	foreach ($sortorder as $galleryID) {
+ 		$gallerycontent = $galleriesOfAlbum[$galleryID];
 
 		// choose between variable and page link
 		if ($ngg_options['galNoPages']) {
