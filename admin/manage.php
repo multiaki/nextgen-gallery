@@ -196,14 +196,20 @@ function nggallery_admin_manage_gallery() {
 		$gallery_title   = attribute_escape($_POST['title']);
 		$gallery_path    = attribute_escape($_POST['path']);
 		$gallery_desc    = attribute_escape($_POST['gallerydesc']);
-		$gallery_pageid  = attribute_escape($_POST['pageid']);
-		$gallery_preview = attribute_escape($_POST['previewpic']);
+		$gallery_pageid  = (int) $_POST['pageid'];
+		$gallery_preview = (int) $_POST['previewpic'];
 		
-		$result = $wpdb->query("UPDATE $wpdb->nggallery SET title= '$gallery_title', path= '$gallery_path', galdesc = '$gallery_desc', pageid = '$gallery_pageid', previewpic = '$gallery_preview' WHERE gid = '$act_gid'");
+		$wpdb->query("UPDATE $wpdb->nggallery SET title= '$gallery_title', path= '$gallery_path', galdesc = '$gallery_desc', pageid = '$gallery_pageid', previewpic = '$gallery_preview' WHERE gid = '$act_gid'");
+
+		if (isset ($_POST['author']))  {		
+			$gallery_author  = (int) $_POST['author'];
+			$wpdb->query("UPDATE $wpdb->nggallery SET author = '$gallery_author' WHERE gid = '$act_gid'");
+		}
+
 		if ($showTags)
-			$result = ngg_update_tags(attribute_escape($_POST['tags']));			
+			ngg_update_tags(attribute_escape($_POST['tags']));			
 		else 
-			$result = ngg_update_pictures(attribute_escape($_POST['description']), attribute_escape($_POST['alttext']), attribute_escape($_POST['exclude']), $act_gid );
+			ngg_update_pictures(attribute_escape($_POST['description']), attribute_escape($_POST['alttext']), attribute_escape($_POST['exclude']), $act_gid );
 
 		nggallery::show_message(__('Update successful',"nggallery"));
 	}
@@ -279,9 +285,9 @@ function nggallery_manage_gallery_main() {
 			<thead>
 			<tr>
 				<th scope="col" ><?php _e('ID') ?></th>
-				<th scope="col" ><?php _e('Gallery name', 'nggallery') ?></th>
 				<th scope="col" ><?php _e('Title', 'nggallery') ?></th>
 				<th scope="col" ><?php _e('Description', 'nggallery') ?></th>
+				<th scope="col" ><?php _e('Author', 'nggallery') ?></th>
 				<th scope="col" ><?php _e('Page ID', 'nggallery') ?></th>
 				<th scope="col" ><?php _e('Quantity', 'nggallery') ?></th>
 				<th scope="col" ><?php _e('Action'); ?></th>
@@ -295,16 +301,17 @@ if($gallerylist) {
 		$class = ( $class == 'class="alternate"' ) ? '' : 'class="alternate"';
 		$gid = $gallery->gid;
 		$counter = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggpictures WHERE galleryid = '$gid'");
+		$author_user = get_userdata( (int) $gallery->author );
 		?>
 		<tr id="gallery-<?php echo $gid ?>" <?php echo $class; ?> >
 			<th scope="row"><?php echo $gid; ?></th>
-			<td><?php echo $gallery->name; ?></td>
 			<td><?php echo $gallery->title; ?></td>
 			<td><?php echo $gallery->galdesc; ?></td>
+			<td><?php echo $author_user->display_name; ?></td>
 			<td><?php echo $gallery->pageid; ?></td>
 			<td><?php echo $counter; ?></td>
-			<td><a href="<?php echo wp_nonce_url("admin.php?page=nggallery-manage-gallery&amp;mode=edit&amp;gid=".$gid, 'ngg_editgallery')?>" class='edit'> <?php _e('Edit') ?></a>
-			| <a href="<?php echo wp_nonce_url("admin.php?page=nggallery-manage-gallery&amp;mode=delete&amp;gid=".$gid, 'ngg_editgallery')?>" class="delete" onclick="javascript:check=confirm( '<?php _e("Delete this gallery ?",'nggallery')?>');if(check==false) return false;"><?php _e('Delete') ?></a></td>
+			<td><?php if(nggAdmin::can_manage_this_gallery($gallery->author)) : ?><a href="<?php echo wp_nonce_url("admin.php?page=nggallery-manage-gallery&amp;mode=edit&amp;gid=".$gid, 'ngg_editgallery')?>" class='edit'> <?php _e('Edit') ?></a>
+			| <a href="<?php echo wp_nonce_url("admin.php?page=nggallery-manage-gallery&amp;mode=delete&amp;gid=".$gid, 'ngg_editgallery')?>" class="delete" onclick="javascript:check=confirm( '<?php _e("Delete this gallery ?",'nggallery')?>');if(check==false) return false;"><?php _e('Delete') ?></a><?php endif; ?></td>
 		</tr>
 		<?php
 	}
@@ -320,10 +327,10 @@ if($gallerylist) {
 
 function nggallery_picturelist($hideThumbs = false,$showTags = false) {
 // *** show picture list
-	global $wpdb;
+	global $wpdb, $user_ID;
 	
 	// GET variables
-	$act_gid = trim(attribute_escape($_GET['gid']));
+	$act_gid = (int)$_GET['gid'];
 	
 	// get the options
 	$ngg_options=get_option('ngg_options');	
@@ -456,6 +463,21 @@ function getNumChecked(form)
 			<input type="submit" name="addnewpage" value="<?php _e ('Add page', 'nggallery'); ?>" id="group"/>
 			</th>
 		</tr>
+
+		<?php
+			//TODO:// Move one field up
+			$editable_ids = ngg_get_editable_user_ids( $user_ID );
+			if ( $editable_ids && count( $editable_ids ) > 1 ) :
+			?>
+			<tr>
+				<th align="left">&nbsp;</th>
+				<th align="left">&nbsp;</th>
+				<th align="right"><?php _e('Author', 'nggallery'); ?>:</th>
+				<th align="left"> 
+					<?php wp_dropdown_users( array('include' => $editable_ids, 'name' => 'author', 'selected' => empty( $act_gallery->author ) ? 0 : $act_gallery->author ) ); ?>
+				</th>
+			</tr>
+		<?php endif; ?>
 
 	</table>
 	

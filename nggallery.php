@@ -8,7 +8,7 @@ Version: 1.00a
 
 Author URI: http://alexrabe.boelinger.com/
 
-Copyright 2007 by Alex Rabe & NextGEN DEV-Team
+Copyright 2007-2008 by Alex Rabe & NextGEN DEV-Team
 
 The NextGEN button is taken from the Silk set of FamFamFam. See more at 
 http://www.famfamfam.com/lab/icons/silk/

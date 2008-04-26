@@ -13,6 +13,7 @@ if ( isset($_POST['update_cap']) ) {
 	ngg_set_capability($_POST['tinymce'],"NextGEN Use TinyMCE");
 	ngg_set_capability($_POST['add_gallery'],"NextGEN Upload images");
 	ngg_set_capability($_POST['manage_gallery'],"NextGEN Manage gallery");
+	ngg_set_capability($_POST['manage_others'],"NextGEN Manage others gallery");
 	ngg_set_capability($_POST['edit_album'],"NextGEN Edit album");
 	ngg_set_capability($_POST['change_style'],"NextGEN Change style");
 	ngg_set_capability($_POST['change_options'],"NextGEN Change options");
@@ -43,6 +44,10 @@ if ( isset($_POST['update_cap']) ) {
 			<tr valign="top"> 
 				<th scope="row"><?php _e('Manage gallery', 'nggallery') ;?>:</th> 
 				<td><label for="manage_gallery"><select name="manage_gallery" id="manage_gallery"><?php wp_dropdown_roles( ngg_get_role('NextGEN Manage gallery') ); ?></select></label></td>
+			</tr>
+			<tr valign="top"> 
+				<th scope="row"><?php _e('Manage others gallery', 'nggallery') ;?>:</th> 
+				<td><label for="manage_others"><select name="manage_others" id="manage_others"><?php wp_dropdown_roles( ngg_get_role('NextGEN Manage others gallery') ); ?></select></label></td>
 			</tr>
 			<tr valign="top"> 
 				<th scope="row"><?php _e('Edit Album', 'nggallery') ;?>:</th> 

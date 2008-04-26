@@ -197,7 +197,7 @@ function ngg_list_support()	{
 	"Colossal Pups" => "",
 	"Florian Seuret" => "",
 	"Petri Teittinen" => "",
-	"Deval Shah" => "http://www.LuvPix.net ",
+	"Deval Shah" => "http://www.LuvPix.net",
 	"Simply Charlotte Mason, LLC"  => "",
 	"John Williams" => "",
 	"George Branchflower" => "",

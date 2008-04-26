@@ -5,10 +5,13 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 // update routine for older version
 function ngg_upgrade() {
 	
-	global $wpdb;
+	global $wpdb, $user_ID;
 	
 	$nggpictures					= $wpdb->prefix . 'ngg_pictures';
 	$nggallery						= $wpdb->prefix . 'ngg_gallery';
+
+	// get the current user ID
+	get_currentuserinfo();
 
 	// Be sure that the tables exist
 	if($wpdb->get_var("show tables like '$nggpictures'") == $nggpictures) {
@@ -28,6 +31,15 @@ function ngg_upgrade() {
 		// v0.71 -> v0.84
 		if (version_compare($installed_ver, '0.84', '<')) {
 			$wpdb->query("ALTER TABLE ".$nggpictures." ADD sortorder BIGINT(20) DEFAULT '0' NOT NULL AFTER exclude");
+		}
+
+		// v0.84 -> v0.95
+		if (version_compare($installed_ver, '0.95', '<')) {
+			var_dump($user_ID);
+			// first add the author field and set it to the current administrator
+			$wpdb->query("ALTER TABLE ".$nggallery." ADD author BIGINT(20) NOT NULL DEFAULT '$user_ID' AFTER previewpic");
+			// switch back to zero
+			$wpdb->query("ALTER TABLE ".$nggallery." CHANGE author author BIGINT(20) NOT NULL DEFAULT '0'");
 		}
 
 		update_option( "ngg_db_version", NGG_DBVERSION );

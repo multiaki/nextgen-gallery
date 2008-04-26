@@ -7,7 +7,10 @@ class nggAdmin{
 	// **************************************************************
 	function create_gallery($gallerytitle, $defaultpath) {
 		// create a new gallery & folder
-		global $wpdb;
+		global $wpdb, $user_ID;
+ 
+		// get the current user ID
+		get_currentuserinfo();
 
 		//cleanup pathname
 		$galleryname = apply_filters('ngg_gallery_name', $gallerytitle);
@@ -78,7 +81,7 @@ class nggAdmin{
 			nggallery::show_error(__('Gallery', 'nggallery').' <strong>'.$galleryname.'</strong> '.__('already exists', 'nggallery'));
 			return false;			
 		} else { 
-			$result = $wpdb->query("INSERT INTO $wpdb->nggallery (name, path, title) VALUES ('$galleryname', '$nggpath', '$gallerytitle') ");
+			$result = $wpdb->query("INSERT INTO $wpdb->nggallery (name, path, title, author) VALUES ('$galleryname', '$nggpath', '$gallerytitle' , '$user_ID') ");
 			if ($result) nggallery::show_message(__('Gallery', 'nggallery').' <strong>'.$wpdb->insert_id." : ".$galleryname.'</strong> '.__('successfully created!','nggallery')."<br />".__('You can show this gallery with the tag','nggallery').'<strong> [gallery='.$wpdb->insert_id.']</strong>'); 
 			return true;;
 		} 
@@ -90,7 +93,10 @@ class nggAdmin{
 		
 		//TODO: Check permission of existing thumb folder & images
 		
-		global $wpdb;
+		global $wpdb, $user_ID;
+
+		// get the current user ID
+		get_currentuserinfo();
 		
 		$created_msg = "";
 		
@@ -120,7 +126,7 @@ class nggAdmin{
 		$gallery_id = $wpdb->get_var("SELECT gid FROM $wpdb->nggallery WHERE path = '$galleryfolder' ");
 
 		if (!$gallery_id) {
-			$result = $wpdb->query("INSERT INTO $wpdb->nggallery (name, path) VALUES ('$galleryname', '$galleryfolder') ");
+			$result = $wpdb->query("INSERT INTO $wpdb->nggallery (name, path, title, author) VALUES ('$galleryname', '$galleryfolder', '$galleryname', '$user_ID') ");
 			if (!$result) {
 				nggallery::show_error(__('Database error. Could not add gallery!','nggallery'));
 				return;
@@ -733,6 +739,21 @@ class nggAdmin{
 		}
 		
 		return true;
+	}
+	
+	function can_manage_this_gallery($check_ID) {
+		// check is the ID fit's to the user_ID'
+		global $user_ID, $wp_roles;
+		
+		// get the current user ID
+		get_currentuserinfo();
+		
+		if ( !current_user_can('NextGEN Manage others gallery') )
+			if ( $user_ID != $check_ID)
+				return false;
+		
+		return true;
+	
 	}
 
 } // END class nggAdmin

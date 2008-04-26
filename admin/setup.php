@@ -6,6 +6,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				
 		if (isset($_POST['resetdefault'])) {	
 			check_admin_referer('ngg_uninstall');
+						
+			include_once (NGGFOLDER . "/ngginstall.php");
 			
 			ngg_default_options();
 			nggallery::show_message(__('Reset all settings to default parameter','nggallery'));
