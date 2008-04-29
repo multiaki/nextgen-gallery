@@ -665,4 +665,25 @@ function ngg_update_tags( $taglist ) {
 
 }
 
+// Check if user can select a author
+function ngg_get_editable_user_ids( $user_id, $exclude_zeros = true ) {
+	global $wpdb;
+
+	$user = new WP_User( $user_id );
+
+	if ( ! $user->has_cap('NextGEN Manage others gallery') ) {
+		if ( $user->has_cap('NextGEN Manage gallery') || $exclude_zeros == false )
+			return array($user->id);
+		else
+			return false;
+	}
+
+	$level_key = $wpdb->prefix . 'user_level';
+	$query = "SELECT user_id FROM $wpdb->usermeta WHERE meta_key = '$level_key'";
+	if ( $exclude_zeros )
+		$query .= " AND meta_value != '0'";
+
+	return $wpdb->get_col( $query );
+}
+
 ?>
