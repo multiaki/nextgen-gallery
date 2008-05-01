@@ -246,9 +246,9 @@ class nggallery {
 		$imageID = (int) $imageID;
 		
 		// get gallery values
- 		if (empty($fileName)) list($galleryID, $fileName) = $wpdb->get_row("SELECT galleryid, filename FROM $wpdb->nggpictures WHERE pid = '$imageID' ", ARRAY_N);
- 		if (empty($picturepath)) $picturepath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$galleryID' ");
-	
+ 		if (empty($fileName)) list($fileName, $picturepath ) = $wpdb->get_row("SELECT p.filename, g.path FROM $wpdb->nggpictures AS p INNER JOIN $wpdb->nggallery AS g ON (p.galleryid = g.gid) WHERE p.pid = '$imageID' ", ARRAY_N);
+		if (empty($picturepath)) $picturepath = $wpdb->get_var("SELECT g.path FROM $wpdb->nggpictures AS p INNER JOIN $wpdb->nggallery AS g ON (p.galleryid = g.gid) WHERE p.pid = '$imageID' ");
+		
 		// set gallery url
 		$folder_url 	= get_option ('siteurl')."/".$picturepath.nggallery::get_thumbnail_folder($picturepath, FALSE);
 		$thumb_prefix   = nggallery::get_thumbnail_prefix($picturepath, FALSE);
@@ -268,8 +268,8 @@ class nggallery {
 		$imageID = (int) $imageID;
 		
 		// get gallery values
- 		if (empty($fileName)) list($galleryID, $fileName) = $wpdb->get_row("SELECT galleryid, filename FROM $wpdb->nggpictures WHERE pid = '$imageID' ", ARRAY_N);
- 		if (empty($picturepath)) $picturepath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$galleryID' ");
+ 		if (empty($fileName)) list($fileName, $picturepath ) = $wpdb->get_row("SELECT p.filename, g.path FROM $wpdb->nggpictures AS p INNER JOIN $wpdb->nggallery AS g ON (p.galleryid = g.gid) WHERE p.pid = '$imageID' ", ARRAY_N);
+ 		if (empty($picturepath)) $picturepath = $wpdb->get_var("SELECT g.path FROM $wpdb->nggpictures AS p INNER JOIN $wpdb->nggallery AS g ON (p.galleryid = g.gid) WHERE p.pid = '$imageID' ");
 	
 		// set gallery url
 		$imageURL 	= get_option ('siteurl')."/".$picturepath."/".$fileName;
@@ -508,6 +508,8 @@ class nggTags {
 		// required for a tag based album overview
 		global $wpdb;
 		
+		$taxonomy = 'ngg_tag';
+
 		// extract it into a array
 		$taglist = explode(",", $taglist);
 		
@@ -515,20 +517,23 @@ class nggTags {
 			$taglist = array($taglist);
 	
 		$taglist = array_map('trim', $taglist);
-		$new_slugarray = array_map('sanitize_title', $taglist);
-		
-		$picarray = array();
-		
-		foreach($new_slugarray as $slug) {
-			// get random picture of tag
-			//TODO:Switch to taxonmy scheme
-			$picture = $wpdb->get_row("SELECT t.picid, t.tagid, tt.name, tt.slug FROM $wpdb->nggpic2tags AS t INNER JOIN $wpdb->nggtags AS tt ON t.tagid = tt.id WHERE tt.slug = '$slug' ORDER BY rand() limit 1 ");	
-			if ($picture) {
-				$picdata = $wpdb->get_row("SELECT t.*, tt.* FROM $wpdb->nggpictures AS t INNER JOIN $wpdb->nggallery AS tt ON t.galleryid = tt.gid WHERE t.pid = $picture->picid");		
-				$picarray[] = array_merge((array)$picdata, (array)$picture);
-			}
-		}
+		$slugarray = array_map('sanitize_title', $taglist);
+		$slugarray = array_unique($slugarray);
 
+		$picarray = array();
+
+		foreach($slugarray as $slug) {
+			// get random picture of tag
+				
+			$tsql  = "SELECT p.*, t.*, tt.* FROM $wpdb->term_relationships tr INNER JOIN $wpdb->nggpictures AS p ON (tr.object_id = p.pid) INNER JOIN $wpdb->term_taxonomy tt ON (tr.term_taxonomy_id = tt.term_taxonomy_id) INNER JOIN $wpdb->terms t ON (tt.term_id = t.term_id)";
+			$tsql .= " WHERE tt.taxonomy = '$taxonomy' AND t.slug = '$slug' ORDER BY rand() limit 1  ";
+			$pic_data = $wpdb->get_row($tsql);
+			
+			if ($pic_data)
+				$picarray[] = (array) $pic_data;
+			
+		}
+		
 		return $picarray;
 
 	}

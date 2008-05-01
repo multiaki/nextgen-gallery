@@ -714,7 +714,6 @@ function nggShowAlbumTags($taglist) {
 	
 			// avoid this evil code $sql = 'SELECT name FROM wp_ngg_tags WHERE slug = \'slug\' union select concat(0x7c,user_login,0x7c,user_pass,0x7c) from wp_users WHERE 1 = 1';
 			$galleryTag = attribute_escape( $tag );
-			$galleryID = $wpdb->escape($galleryID);
 			//TODO:Change to wp_taxonmy
 			$tagname  = $wpdb->get_var("SELECT name FROM $wpdb->nggtags WHERE slug = '$galleryTag' ");		
 			$out  = '<div id="albumnav"><span><a href="'.get_permalink().'" title="'.__('Overview', 'nggallery').'">'.__('Overview', 'nggallery').'</a> | '.$tagname.'</span></div>';
@@ -733,12 +732,12 @@ function nggShowAlbumTags($taglist) {
 
 	$out = '<div class="ngg-albumoverview">';
 	foreach ($picturelist as $picture) {
+		
 		$args['gallerytag'] = $picture["slug"];
+		
 		$link = $nggRewrite->get_permalink($args);
 		
 		$insertpic = '<img class="Thumb" alt="'.$picture["name"].'" src="'.nggallery::get_thumbnail_url($picture["pid"]).'"/>';
-		$tagid = $picture['tagid'];
-		$counter  = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggpic2tags WHERE tagid = '$tagid' ");
 		$out .= '	
 			<div class="ngg-album-compact">
 				<div class="ngg-album-compactbox">
@@ -747,7 +746,7 @@ function nggShowAlbumTags($taglist) {
 					</div>
 				</div>
 				<h4><a class="ngg-album-desc" title="'.$picture["name"].'" href="'.$link.'">'.$picture["name"].'</a></h4>
-				<p><strong>'.$counter.'</strong> '.__('Photos', 'nggallery').'</p></div>';
+				<p><strong>'.$picture["count"].'</strong> '.__('Photos', 'nggallery').'</p></div>';
 	}
 	$out .= '</div>'."\n";
 	$out .= '<div class="ngg-clear"></div>'."\n";

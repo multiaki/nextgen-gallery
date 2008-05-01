@@ -35,7 +35,6 @@ function ngg_upgrade() {
 
 		// v0.84 -> v0.95
 		if (version_compare($installed_ver, '0.95', '<')) {
-			var_dump($user_ID);
 			// first add the author field and set it to the current administrator
 			$wpdb->query("ALTER TABLE ".$nggallery." ADD author BIGINT(20) NOT NULL DEFAULT '$user_ID' AFTER previewpic");
 			// switch back to zero
@@ -85,6 +84,7 @@ function nggallery_upgrade_page()  {
 <div class="wrap">
 	<h2><?php _e('Upgrade NextGEN Gallery', 'nggallery') ;?></h2>
 	<?php ngg_convert_tags(); ?>
+	<?php ngg_upgrade(); ?>
 </div>
 	
 <?php
