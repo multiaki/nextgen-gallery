@@ -2,9 +2,10 @@ NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
 V1.00
+- Added : New filter function to add custom columns
+- Changed : Convert tags to WP-Taxonomy tables, no more need for ngg_tags, ngg_pic2tags 
 - Bugfix : Fixed width for Thickbox in Manage gallery
 - Removed : Use now PclZip from WP Core
-- Removed : Convert tags to WP-Taxonomy tables, no more need for ngg_tags, ngg_pic2tags 
 - Removed : Wordpress 2.1 - 2.3 files deleted
 
 V0.95 - 25.04.2008

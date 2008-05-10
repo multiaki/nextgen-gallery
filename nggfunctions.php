@@ -42,7 +42,7 @@ function searchnggallerytags($content) {
 
 					if($albumID) {
 						$search = $matches[0][$key];
-						$replace= nggShowAlbum($albumID, $albumSortOrder, $matches[2][$key]);
+						$replace= nggShowAlbum($albumID, $matches[2][$key], $albumSortOrder);
 						$content= str_replace ($search, $replace, $content);
 					}
 				}	
@@ -60,6 +60,7 @@ function searchnggallerytags($content) {
 					// check for gallery id
 					$galleryID = $wpdb->get_var("SELECT gid FROM $wpdb->nggallery WHERE gid = '$v0' ");
 					if(!$galleryID) $galleryID = $wpdb->get_var("SELECT gid FROM $wpdb->nggallery WHERE name = '$v0' ");
+
 					if($galleryID) {
 						$search = $matches[0][$key];
 						$replace= nggShowGallery($galleryID);
@@ -351,7 +352,10 @@ function nggCreateGallery($picturelist,$galleryID = false) {
 			$out .= '<span>'.html_entity_decode(stripslashes($picture->alttext)).'</span>'."\n";
 		if ($ngg_options['galShowDesc'] == "desc")
 			$out .= '<span>'.html_entity_decode(stripslashes($picture->description)).'</span>'."\n";
-		$out .= '</div>'."\n".'</div>'."\n";
+		// add filter for the output
+		$out  = apply_filters('ngg_inner_gallery_thumbnail', $out, $picture);		
+		$out .= '</div>'. "\n" .'</div>'."\n";
+		$out  = apply_filters('ngg_after_gallery_thumbnail', $out, $picture);
 		}
 	$out .= '</div>'."\n";
  	$out .= ($maxElement > 0) ? $navigation : '<div class="ngg-clear"></div>'."\n";
@@ -361,7 +365,7 @@ function nggCreateGallery($picturelist,$galleryID = false) {
 }
 
 /**********************************************************/
-function nggShowAlbum($albumID, $sortorder, $mode = "extend") {
+function nggShowAlbum($albumID, $mode = "extend", $sortorder = "") {
 	
 	global $wpdb;
 	
@@ -605,9 +609,11 @@ function nggSinglePicture($imageID,$width=250,$height=250,$mode="",$float="") {
 		$out .= '<img class="ngg-singlepic" src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$imageID.'&amp;width='.$width.'&amp;height='.$height.'&amp;mode='.$mode.'" alt="'.stripslashes($picture->alttext).'" title="'.stripslashes($picture->alttext).'" />';
 	else
 		$out .= '<img class="ngg-singlepic" src="'.$cache_url.'" alt="'.stripslashes($picture->alttext).'" title="'.stripslashes($picture->alttext).'" />';
-	$out .= '</a></div>';
+	$out .= '</a>';
+	$out  = apply_filters('ngg_inner_singlepic_content', $out, $picture );		
+	$out .= '</div>';
 	
-	$out = apply_filters('ngg_show_singlepic_content', $out, intval( $imageID ) );
+	$out = apply_filters('ngg_show_singlepic_content', $out, $picture );
 	
 	return $out;
 }
@@ -713,11 +719,10 @@ function nggShowAlbumTags($taglist) {
 		if (!empty( $tag ))  {
 	
 			// avoid this evil code $sql = 'SELECT name FROM wp_ngg_tags WHERE slug = \'slug\' union select concat(0x7c,user_login,0x7c,user_pass,0x7c) from wp_users WHERE 1 = 1';
-			$galleryTag = attribute_escape( $tag );
-			//TODO:Change to wp_taxonmy
-			$tagname  = $wpdb->get_var("SELECT name FROM $wpdb->nggtags WHERE slug = '$galleryTag' ");		
+			$slug = attribute_escape( $tag );
+			$tagname = $wpdb->get_var( $wpdb->prepare( "SELECT name FROM $wpdb->terms WHERE slug = %s", $slug ) );
 			$out  = '<div id="albumnav"><span><a href="'.get_permalink().'" title="'.__('Overview', 'nggallery').'">'.__('Overview', 'nggallery').'</a> | '.$tagname.'</span></div>';
-			$out .=  nggShowGalleryTags($galleryTag);
+			$out .=  nggShowGalleryTags($slug);
 			return $out;
 	
 		} 

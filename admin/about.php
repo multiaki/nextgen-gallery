@@ -132,7 +132,6 @@ function ngg_list_support()	{
 	"Kelter" => "http://www.badcat.com",
 	"Martin Bahr" => "http://www.law-vodcast.de/",
 	"Marcel Kneuer" => "",
-	"Martin Bahr" => "http://www.law-vodcast.de/",
 	"Alakhnor" => "http://www.alakhnor.info",
 	"Rod" => "http://www.le-hiboo.com",
 	"Ttancm" => "http://www.ttancm.com/",
@@ -203,7 +202,10 @@ function ngg_list_support()	{
 	"George Branchflower" => "",
 	"Douglas J Barnum" => "",
 	"Bradford Weir" => "http://www.bweir.com",	
-	"Almost Anything Desktop Publishing" => "http://www.almost-anything.com.au/"
+	"Almost Anything Desktop Publishing" => "http://www.almost-anything.com.au/",
+	"Aengus Moran" => "",
+	"Fias Co Farm" => "http://www.fiascofarm.com",
+	"Overdrive Design Labs" => "http://www.overdrivedesign.biz"	
 	);
 	
 	ksort($supporter);

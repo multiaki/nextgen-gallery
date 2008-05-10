@@ -396,7 +396,7 @@ class nggWidget {
 	
 		if (is_array($imageList)){
 			foreach($imageList as $image) {
-	
+				//TODO:For mixed portrait/landscape it's better to use only the height setting, if widht is 0 or vice versa
 				$out = '<a href="'.nggallery::get_image_url($image->pid).'" title="'.stripslashes($image->description).'" '.$thumbcode.'>';
 				if ( $options[$number]['show'] == "orginal" )
 					$out .= '<img src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$image->pid.'&amp;width='.$options[$number]['width'].'&amp;height='.$options[$number]['height'].'" title="'.$image->alttext.'" alt="'.$image->alttext.'" />';
