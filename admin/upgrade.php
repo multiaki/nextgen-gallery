@@ -41,14 +41,29 @@ function ngg_upgrade() {
 			$wpdb->query("ALTER TABLE ".$nggallery." CHANGE author author BIGINT(20) NOT NULL DEFAULT '0'");
 		}
 
+		// v0.95 -> v1.00 
+		if (version_compare($installed_ver, '1.00', '<')) {
+			ngg_convert_tags();
+			// Drop tables, we don't need them anymore
+			//$wpdb->query("DROP TABLE " . $wpdb->prefix . "ngg_tags");
+			//$wpdb->query("DROP TABLE " . $wpdb->prefix . "ngg_pic2tags");
+		}
+
 		update_option( "ngg_db_version", NGG_DBVERSION );
+		return __('Update database structure', 'nggallery');
 	}
 }
 
 // Import the tags into the wp tables
+/**
+ * ngg_convert_tags()
+ * Import the tags into the wp tables (only required for pre V1.00 versions)
+ * 
+ * @return Success Message
+ */
 function ngg_convert_tags() {
 	global $wpdb, $wp_taxonomies;
-	
+		
 	// get the obsolete tables
 	$wpdb->nggtags						= $wpdb->prefix . 'ngg_tags';
 	$wpdb->nggpic2tags					= $wpdb->prefix . 'ngg_pic2tags';
@@ -66,28 +81,42 @@ function ngg_convert_tags() {
 			}
 		}
 	}
-	
-	// Update tags
-	// $act_tags 	= addslashes(trim($_POST['act_tags']));
-	// $tags = explode(',',$act_tags);
-	// wp_set_object_terms($act_vid, $tags, WORDTUBE_TAXONOMY);
-	
-	// Retrieve tags to display
-	// $act_tags = implode(',',wp_get_object_terms($act_vid, WORDTUBE_TAXONOMY, 'fields=names'));
 }
 
+/**
+ * nggallery_upgrade_page()
+ * This page showsup , when the database version doesn't fir to the script NGG_DBVERSION constant.
+ * 
+ */
 function nggallery_upgrade_page()  {	
-	global $wpdb;
+	$filepath    = get_option('siteurl') . '/wp-admin/admin.php?page='.$_GET['page'];
 	
+	if ($_GET['upgrade'] == 'now') {
+		nggallery_start_upgarde($filepath);
+		return;
+	}
 ?>
-
 <div class="wrap">
 	<h2><?php _e('Upgrade NextGEN Gallery', 'nggallery') ;?></h2>
-	<?php ngg_convert_tags(); ?>
-	<?php ngg_upgrade(); ?>
+	<p><?php _e('The script detect that you upgrade from a older version.', 'nggallery') ;?>
+	   <?php _e('Your database tables for NextGEN Gallery is out-of-date, and must be upgraded before you can continue.', 'nggallery'); ?>
+       <?php _e('If you would like to downgrade later, please make first a complete backup of your database and the images.', 'nggallery') ;?></p>
+	<p><?php _e('The upgrade process may take a while, so please be patient.', 'nggallery'); ?></p>
+	<h3><a href="<?php echo $filepath;?>&amp;upgrade=now"><?php _e('Start upgrade now', 'nggallery'); ?>...</a></h3>      
 </div>
-	
 <?php
 }
+
+function nggallery_start_upgarde($filepath) {
+	global $wpdb;
+?>
+<div class="wrap">
+	<h2><?php _e('Upgrade NextGEN Gallery', 'nggallery') ;?></h2>
+	<p><?php echo ngg_upgrade();?></p>
+	<p><?php _e('Upgrade sucessfull', 'nggallery') ;?></p>
+	<h3><a href="<?php echo $filepath;?>"><?php _e('Continue', 'nggallery'); ?>...</a></h3>
+</div>
+<?php
+} 
 
 ?>

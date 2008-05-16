@@ -387,99 +387,112 @@ function getNumChecked(form)
 	}
 	return num;
 }
+
+jQuery(document).ready( function() {
+	// close postboxes that should be closed
+	jQuery('.if-js-closed').removeClass('if-js-closed').addClass('closed');
+	// postboxes
+	add_postbox_toggles('ngg-manage-gallery');
+});
+
 //-->
 </script>
 <div class="wrap">
+
 <h2><?php _e('Gallery', 'nggallery') ?> : <?php echo $act_gallery->title; ?></h2>
-<p id="ngg-inlinebutton">
-	<input type="submit" class="button-secondary" title="<?php _e('Edit gallery', 'nggallery') ?>" value="<?php _e('Edit gallery', 'nggallery') ?>" onclick="jQuery('#manage-gallery').toggle()" />
-</p>
+
+<br style="clear: both;"/>
 
 <form id="updategallery" method="POST" action="<?php echo 'admin.php?page=nggallery-manage-gallery&amp;mode=edit&amp;gid='.$act_gid ?>" accept-charset="utf-8">
 <?php wp_nonce_field('ngg_updategallery') ?>
 
 <?php if ($showTags) { ?><input type="hidden" name="showTags" value="true" /><?php } ?>
 <?php if ($hideThumbs) { ?><input type="hidden" name="hideThumbs" value="true" /><?php } ?>
-<div id="manage-gallery" style="display:none;">
-	<table class="form-table" >
-		<tr>
-			<th align="left"><?php _e('Title') ?>:</th>
-			<th align="left"><input type="text" size="50" name="title" value="<?php echo $act_gallery->title; ?>"  /></th>
-			<th align="right"><?php _e('Page Link to', 'nggallery') ?>:</th>
-			<th align="left">
-			<select name="pageid" style="width:95%">
-				<option value="0" ><?php _e('Not linked', 'nggallery') ?></option>
-			<?php
-				$pageids = get_all_page_ids();
-				foreach($pageids as $pageid) {
-					$post= get_post($pageid); 				
-					if ($pageid == $act_gallery->pageid) $selected = 'selected="selected" ';
-					else $selected = '';
-					echo '<option value="'.$pageid.'" '.$selected.'>'.$post->post_title.'</option>'."\n";
-				}
-			?>
-			</select>
-			</th>
-		</tr>
-		<tr>
-			<th align="left"><?php _e('Description') ?>:</th> 
-			<th align="left"><textarea name="gallerydesc" cols="30" rows="3" style="width: 95%"  ><?php echo $act_gallery->galdesc; ?></textarea></th>
-			<th align="right"><?php _e('Preview image', 'nggallery') ?>:</th>
-			<th align="left">
-				<select name="previewpic" >
-					<option value="0" ><?php _e('No Picture', 'nggallery') ?></option>
+<div id="poststuff">
+	<?php wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>
+	<div id="gallerydiv" class="postbox <?php echo postbox_classes('gallerydiv', 'ngg-manage-gallery'); ?>" >
+		<h3><a class="togbox">+</a> <?php _e('Gallery settings', 'nggallery') ?></h3>
+		<div class="inside">
+			<table class="form-table" >
+				<tr>
+					<th align="left"><?php _e('Title') ?>:</th>
+					<th align="left"><input type="text" size="50" name="title" value="<?php echo $act_gallery->title; ?>"  /></th>
+					<th align="right"><?php _e('Page Link to', 'nggallery') ?>:</th>
+					<th align="left">
+					<select name="pageid" style="width:95%">
+						<option value="0" ><?php _e('Not linked', 'nggallery') ?></option>
 					<?php
-						$picturelist = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures WHERE galleryid = '$act_gid' ORDER BY $ngg_options[galSort] $ngg_options[galSortDir]");
-						if(is_array($picturelist)) {
-							foreach($picturelist as $picture) {
-								if ($picture->pid == $act_gallery->previewpic) $selected = 'selected="selected" ';
-								else $selected = '';
-								echo '<option value="'.$picture->pid.'" '.$selected.'>'.$picture->filename.'</option>'."\n";
-							}
+						$pageids = get_all_page_ids();
+						foreach($pageids as $pageid) {
+							$post= get_post($pageid); 				
+							if ($pageid == $act_gallery->pageid) $selected = 'selected="selected" ';
+							else $selected = '';
+							echo '<option value="'.$pageid.'" '.$selected.'>'.$post->post_title.'</option>'."\n";
 						}
 					?>
-				</select>
-			</th>
-		</tr>
-		<tr>
-			<th align="left"><?php _e('Path', 'nggallery') ?>:</th> 
-			<th align="left"><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="text" size="50" name="path" value="<?php echo $act_gallery->path; ?>"  /></th>
+					</select>
+					</th>
+				</tr>
+				<tr>
+					<th align="left"><?php _e('Description') ?>:</th> 
+					<th align="left"><textarea name="gallerydesc" cols="30" rows="3" style="width: 95%"  ><?php echo $act_gallery->galdesc; ?></textarea></th>
+					<th align="right"><?php _e('Preview image', 'nggallery') ?>:</th>
+					<th align="left">
+						<select name="previewpic" >
+							<option value="0" ><?php _e('No Picture', 'nggallery') ?></option>
+							<?php
+								$picturelist = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures WHERE galleryid = '$act_gid' ORDER BY $ngg_options[galSort] $ngg_options[galSortDir]");
+								if(is_array($picturelist)) {
+									foreach($picturelist as $picture) {
+										if ($picture->pid == $act_gallery->previewpic) $selected = 'selected="selected" ';
+										else $selected = '';
+										echo '<option value="'.$picture->pid.'" '.$selected.'>'.$picture->filename.'</option>'."\n";
+									}
+								}
+							?>
+						</select>
+					</th>
+				</tr>
+				<tr>
+					<th align="left"><?php _e('Path', 'nggallery') ?>:</th> 
+					<th align="left"><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="text" size="50" name="path" value="<?php echo $act_gallery->path; ?>"  /></th>
+				
+					<th align="right"><?php _e('Create new page', 'nggallery') ?>:</th>
+					<th align="left"> 
+					<select name="parent_id" style="width:95%">
+						<option value="0"><?php _e ('Main page (No parent)', 'nggallery'); ?></option>
+						<?php parent_dropdown ($group->page_id); ?>
+					</select>
+					<input type="submit" name="addnewpage" value="<?php _e ('Add page', 'nggallery'); ?>" id="group"/>
+					</th>
+				</tr>
 		
-			<th align="right"><?php _e('Create new page', 'nggallery') ?>:</th>
-			<th align="left"> 
-			<select name="parent_id" style="width:95%">
-				<option value="0"><?php _e ('Main page (No parent)', 'nggallery'); ?></option>
-				<?php parent_dropdown ($group->page_id); ?>
-			</select>
-			<input type="submit" name="addnewpage" value="<?php _e ('Add page', 'nggallery'); ?>" id="group"/>
-			</th>
-		</tr>
+				<?php
+					//TODO:// Move one field up
+					$editable_ids = ngg_get_editable_user_ids( $user_ID );
+					if ( $editable_ids && count( $editable_ids ) > 1 ) :
+					?>
+					<tr>
+						<th align="left">&nbsp;</th>
+						<th align="left">&nbsp;</th>
+						<th align="right"><?php _e('Author', 'nggallery'); ?>:</th>
+						<th align="left"> 
+							<?php wp_dropdown_users( array('include' => $editable_ids, 'name' => 'author', 'selected' => empty( $act_gallery->author ) ? 0 : $act_gallery->author ) ); ?>
+						</th>
+					</tr>
+				<?php endif; ?>
+		
+			</table>
+			
+			<div class="submit">
+				<input type="submit" name="scanfolder" value="<?php _e("Scan Folder for new images",'nggallery')?> " />
+				<input type="submit" name="updatepictures" value="<?php _e("Save Changes",'nggallery')?> &raquo;" />
+			</div>
 
-		<?php
-			//TODO:// Move one field up
-			$editable_ids = ngg_get_editable_user_ids( $user_ID );
-			if ( $editable_ids && count( $editable_ids ) > 1 ) :
-			?>
-			<tr>
-				<th align="left">&nbsp;</th>
-				<th align="left">&nbsp;</th>
-				<th align="right"><?php _e('Author', 'nggallery'); ?>:</th>
-				<th align="left"> 
-					<?php wp_dropdown_users( array('include' => $editable_ids, 'name' => 'author', 'selected' => empty( $act_gallery->author ) ? 0 : $act_gallery->author ) ); ?>
-				</th>
-			</tr>
-		<?php endif; ?>
-
-	</table>
-	
-	<div class="submit">
-		<input type="submit" name="scanfolder" value="<?php _e("Scan Folder for new images",'nggallery')?> " />
-		<input type="submit" name="updatepictures" value="<?php _e("Save Changes",'nggallery')?> &raquo;" />
+		</div>
 	</div>
-	
-</div>
-<br style="clear: both;"/>
-<?php wp_nonce_field('ngg_updategallery') ?>
+</div> <!-- poststuff -->
+
 <div class="tablenav ngg-tablenav">
 	<div style="float: left;">
 	<select id="bulkaction" name="bulkaction">
