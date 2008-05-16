@@ -331,11 +331,12 @@ function nggallery_picturelist($hideThumbs = false,$showTags = false) {
 	// get gallery values
 	$act_gallery = $wpdb->get_row("SELECT * FROM $wpdb->nggallery WHERE gid = '$act_gid' ");
 
+	//TODO:Redundant, Redundant, Redundant... REWORK
 	// set gallery url
 	$act_gallery_url 	= get_option ('siteurl')."/".$act_gallery->path."/";
 	$act_thumbnail_url 	= get_option ('siteurl')."/".$act_gallery->path.nggallery::get_thumbnail_folder($act_gallery->path, FALSE);
 	$act_thumb_prefix   = nggallery::get_thumbnail_prefix($act_gallery->path, FALSE);
-
+	$act_thumb_abs_src	= WINABSPATH.$act_gallery->path.nggallery::get_thumbnail_folder($act_gallery->path, FALSE);
 ?>
 
 <script type="text/javascript"> 
@@ -468,7 +469,7 @@ jQuery(document).ready( function() {
 				</tr>
 		
 				<?php
-					//TODO:// Move one field up
+					//TODO:// Move one field up, could be hidden, take care
 					$editable_ids = ngg_get_editable_user_ids( $user_ID );
 					if ( $editable_ids && count( $editable_ids ) > 1 ) :
 					?>
@@ -575,13 +576,16 @@ if($picturelist) {
 						<?php						
 					break;
 					case 'thumbnail' :
+						//TODO:Could be better, simpler
+						$src = $act_thumb_abs_src.$act_thumb_prefix.$picture->filename;
+						list( $width, $height ) = nggallery::scale_image($src, 80, 60) ;
 						?>
-						<td><img class="thumb" src="<?php echo $act_thumbnail_url.$act_thumb_prefix.$picture->filename ?>" /></td>
+						<td><img class="thumb" src="<?php echo $act_thumbnail_url.$act_thumb_prefix.$picture->filename ?>" width="<?php echo $width ?>" height="<?php echo $height ?>" /></td>
 						<?php						
 					break;
 					case 'description' :
 						?>
-						<td><textarea name="description[<?php echo $pid ?>]" class="textarea1" cols="30" rows="3" ><?php echo stripslashes($picture->description) ?></textarea></td>
+						<td><textarea name="description[<?php echo $pid ?>]" class="textarea1" cols="30" rows="2" ><?php echo stripslashes($picture->description) ?></textarea></td>
 						<?php						
 					break;
 					case 'alt_title_text' :
@@ -780,5 +784,4 @@ function ngg_manage_gallery_columns() {
 
 	return $gallery_columns;
 }
-
 ?>

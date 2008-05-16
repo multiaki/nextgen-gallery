@@ -458,6 +458,36 @@ class nggallery {
 		
 		return $options;
 	}
+	
+  /**
+   * nggallery::scale_image() - Scale down a image
+   * 
+   * @param mixed $location (filename)
+   * @param int $maxw - max width
+   * @param int $maxh -  max height
+   * @return array (width, heigth) 
+   */
+	function scale_image($location, $maxw = 0, $maxh = 0){
+	    $img = @getimagesize($location);
+	    if($img){
+	        $w = $img[0];
+	        $h = $img[1];
+	
+	        $dim = array('w','h');
+	        foreach($dim AS $val){
+	            $max = "max{$val}";
+	            if(${$val} > ${$max} && ${$max}){
+	                $alt = ($val == 'w') ? 'h' : 'w';
+	                $ratio = ${$alt} / ${$val};
+	                ${$val} = ${$max};
+	                ${$alt} = ${$val} * $ratio;
+	            }
+	        }
+	
+	        return array( $w, $h );
+	    }
+	    return false;
+	} 
 }
 
 /**

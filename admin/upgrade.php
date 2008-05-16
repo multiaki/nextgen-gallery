@@ -2,7 +2,11 @@
 
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
 
-// update routine for older version
+/**
+ * ngg_upgrade() - update routine for older version
+ * 
+ * @return Success message
+ */
 function ngg_upgrade() {
 	
 	global $wpdb, $user_ID;
@@ -54,10 +58,8 @@ function ngg_upgrade() {
 	}
 }
 
-// Import the tags into the wp tables
 /**
- * ngg_convert_tags()
- * Import the tags into the wp tables (only required for pre V1.00 versions)
+ * ngg_convert_tags() - Import the tags into the wp tables (only required for pre V1.00 versions)
  * 
  * @return Success Message
  */
@@ -84,15 +86,15 @@ function ngg_convert_tags() {
 }
 
 /**
- * nggallery_upgrade_page()
- * This page showsup , when the database version doesn't fir to the script NGG_DBVERSION constant.
+ * nggallery_upgrade_page() - This page showsup , when the database version doesn't fir to the script NGG_DBVERSION constant.
  * 
+ * @return Upgrade Message
  */
 function nggallery_upgrade_page()  {	
 	$filepath    = get_option('siteurl') . '/wp-admin/admin.php?page='.$_GET['page'];
 	
 	if ($_GET['upgrade'] == 'now') {
-		nggallery_start_upgarde($filepath);
+		nggallery_start_upgrade($filepath);
 		return;
 	}
 ?>
@@ -107,7 +109,7 @@ function nggallery_upgrade_page()  {
 <?php
 }
 
-function nggallery_start_upgarde($filepath) {
+function nggallery_start_upgrade($filepath) {
 	global $wpdb;
 ?>
 <div class="wrap">
