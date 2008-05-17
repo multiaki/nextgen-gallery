@@ -235,12 +235,11 @@ function getgallerycontainer($galleryid = 0, $used = false) {
 
 		// set image url
 		$act_thumbnail_url 	= get_option ('siteurl')."/".$gallery->path.nggallery::get_thumbnail_folder($gallery->path, FALSE);
-		$act_thumb_prefix   = nggallery::get_thumbnail_prefix($gallery->path, FALSE);
 		
 		$post= get_post($gallery->pageid); 	
 		$pagename = $post->post_title;	
 		$filename = $wpdb->get_var("SELECT filename FROM $wpdb->nggpictures WHERE pid = '$gallery->previewpic'");
-		if ($filename) $img = '<img src="'.$act_thumbnail_url.$act_thumb_prefix.$filename.'" />';
+		if ($filename) $img = '<img src="'.$act_thumbnail_url. "thumbs_" .$filename.'" />';
 		else $img = '';
 		// add class if it's in use in other albums
 		$used = $used ? " inUse" : "";

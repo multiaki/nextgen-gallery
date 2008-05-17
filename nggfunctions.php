@@ -333,7 +333,6 @@ function nggCreateGallery($picturelist,$galleryID = false) {
 		// set image url
 		$folder_url 	= get_option ('siteurl')."/".$picture->path."/";
 		$thumbnailURL 	= get_option ('siteurl')."/".$picture->path.nggallery::get_thumbnail_folder($picture->path, FALSE);
-		$thumb_prefix   = nggallery::get_thumbnail_prefix($picture->path, FALSE);
 
 		// choose link between imagebrowser or effect
 		$link =($ngg_options['galImgBrowser']) ? $nggRewrite->get_permalink(array('pid'=>$picture->pid)) : $folder_url.$picture->filename;
@@ -346,7 +345,7 @@ function nggCreateGallery($picturelist,$galleryID = false) {
 		$out .= '<div id="ngg-image-'. $picture->pid .'" class="ngg-gallery-thumbnail-box '. $class_desc .'">'."\n\t";
 		$out .= '<div class="ngg-gallery-thumbnail" '.$setwidth.' >'."\n\t";
 		$out .= '<a href="'.$link.'" title="'.stripslashes($picture->description).'" '.$thumbcode.' >';
-		$out .= '<img title="'.stripslashes($picture->alttext).'" alt="'.stripslashes($picture->alttext).'" src="'.$thumbnailURL.$thumb_prefix.$picture->filename.'" '.$thumbsize.' />';
+		$out .= '<img title="'.stripslashes($picture->alttext).'" alt="'.stripslashes($picture->alttext).'" src="'.$thumbnailURL. "thumbs_" .$picture->filename.'" '.$thumbsize.' />';
 		$out .= '</a>'."\n";
 		if ($ngg_options['galShowDesc'] == "alttext")
 			$out .= '<span>'.html_entity_decode(stripslashes($picture->alttext)).'</span>'."\n";
@@ -688,10 +687,9 @@ function nggShowRelatedGallery($taglist, $maxImages = 0) {
 		// set gallery url
 		$folder_url 	= get_option ('siteurl')."/".$picture->path."/";
 		$thumbnailURL 	= get_option ('siteurl')."/".$picture->path.nggallery::get_thumbnail_folder($picture->path, FALSE);
-		$thumb_prefix   = nggallery::get_thumbnail_prefix($picture->path, FALSE);
 
 		$out .= '<a href="'.$folder_url.$picture->filename.'" title="'.stripslashes($picture->description).'" '.$thumbcode.' >';
-		$out .= '<img title="'.stripslashes($picture->alttext).'" alt="'.stripslashes($picture->alttext).'" src="'.$thumbnailURL.$thumb_prefix.$picture->filename.'" '.$thumbsize.' />';
+		$out .= '<img title="'.stripslashes($picture->alttext).'" alt="'.stripslashes($picture->alttext).'" src="'.$thumbnailURL. "thumbs_" .$picture->filename.'" '.$thumbsize.' />';
 		$out .= '</a>'."\n";
 	}
 

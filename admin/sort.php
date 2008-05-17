@@ -42,7 +42,6 @@ function nggallery_sortorder($galleryID = 0){
 	// set gallery url
 	$act_gallery_url 	= get_option ('siteurl')."/".$act_gallery->path."/";
 	$act_thumbnail_url 	= get_option ('siteurl')."/".$act_gallery->path.nggallery::get_thumbnail_folder($act_gallery->path, FALSE);
-	$act_thumb_prefix   = nggallery::get_thumbnail_prefix($act_gallery->path, FALSE);
 
 	$picturelist = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures WHERE galleryid = '$galleryID' ORDER BY sortorder ASC");
 
@@ -64,7 +63,7 @@ function nggallery_sortorder($galleryID = 0){
 			foreach($picturelist as $picture) {
 				?>
 				<div class="imageBox" id="pid-<?php echo $picture->pid ?>">
-					<div class="imageBox_theImage" style="background-image:url('<?php echo $act_thumbnail_url.$act_thumb_prefix.$picture->filename ?>')"></div>	
+					<div class="imageBox_theImage" style="background-image:url('<?php echo $act_thumbnail_url ."thumbs_" .$picture->filename ?>')"></div>	
 					<div class="imageBox_label"><span><?php echo stripslashes($picture->alttext) ?></span></div>
 				</div>
 				<?php

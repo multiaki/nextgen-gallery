@@ -28,14 +28,13 @@ function nggallery_admin_manage_gallery() {
 		$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$act_gid' ");
 		if ($gallerypath){
 			$thumb_folder = nggallery::get_thumbnail_folder($gallerypath, FALSE);
-			$thumb_prefix = nggallery::get_thumbnail_prefix($gallerypath, FALSE);
 	
 			// delete pictures
 			$imagelist = $wpdb->get_col("SELECT filename FROM $wpdb->nggpictures WHERE galleryid = '$act_gid' ");
 			if ($ngg_options['deleteImg']) {
 				if (is_array($imagelist)) {
 					foreach ($imagelist as $filename) {
-						@unlink(WINABSPATH.$gallerypath.'/'.$thumb_folder.'/'.$thumb_prefix.$filename);
+						@unlink(WINABSPATH.$gallerypath.'/'.$thumb_folder.'/'. "thumbs_" .$filename);
 						@unlink(WINABSPATH.$gallerypath.'/'.$filename);
 					}
 				}
@@ -61,9 +60,8 @@ function nggallery_admin_manage_gallery() {
 			$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$act_gid' ");
 			if ($gallerypath){
 				$thumb_folder = nggallery::get_thumbnail_folder($gallerypath, FALSE);
-				$thumb_prefix = nggallery::get_thumbnail_prefix($gallerypath, FALSE);
 				if ($ngg_options['deleteImg']) {
-					@unlink(WINABSPATH.$gallerypath.'/'.$thumb_folder.'/'.$thumb_prefix.$filename);
+					@unlink(WINABSPATH.$gallerypath.'/'.$thumb_folder.'/'. "thumbs_" .$filename);
 					@unlink(WINABSPATH.$gallerypath.'/'.$filename);
 				}
 			}		
@@ -113,11 +111,10 @@ function nggallery_admin_manage_gallery() {
 				if ( is_array($_POST['doaction']) ) {
 				if ($gallerypath){
 					$thumb_folder = nggallery::get_thumbnail_folder($gallerypath, FALSE);
-					$thumb_prefix = nggallery::get_thumbnail_prefix($gallerypath, FALSE);
 					foreach ( $_POST['doaction'] as $imageID ) {
 						$filename = $wpdb->get_var("SELECT filename FROM $wpdb->nggpictures WHERE pid = '$imageID' ");
 						if ($ngg_options['deleteImg']) {
-							@unlink(WINABSPATH.$gallerypath.'/'.$thumb_folder.'/'.$thumb_prefix.$filename);
+							@unlink(WINABSPATH.$gallerypath.'/'.$thumb_folder.'/'. "thumbs_" .$filename);
 							@unlink(WINABSPATH.$gallerypath.'/'.$filename);	
 						} 
 						$delete_pic = $wpdb->query("DELETE FROM $wpdb->nggpictures WHERE pid = $imageID");
@@ -335,7 +332,7 @@ function nggallery_picturelist($hideThumbs = false,$showTags = false) {
 	// set gallery url
 	$act_gallery_url 	= get_option ('siteurl')."/".$act_gallery->path."/";
 	$act_thumbnail_url 	= get_option ('siteurl')."/".$act_gallery->path.nggallery::get_thumbnail_folder($act_gallery->path, FALSE);
-	$act_thumb_prefix   = nggallery::get_thumbnail_prefix($act_gallery->path, FALSE);
+	$act_thumb_prefix   = "thumbs_" ;
 	$act_thumb_abs_src	= WINABSPATH.$act_gallery->path.nggallery::get_thumbnail_folder($act_gallery->path, FALSE);
 ?>
 
@@ -574,10 +571,10 @@ if($picturelist) {
 					break;
 					case 'thumbnail' :
 						//TODO:Could be better, simpler
-						$src = $act_thumb_abs_src.$act_thumb_prefix.$picture->filename;
+						$src = $act_thumb_abs_src. "thumbs_" .$picture->filename;
 						list( $width, $height ) = nggallery::scale_image($src, 80, 60) ;
 						?>
-						<td><img class="thumb" src="<?php echo $act_thumbnail_url.$act_thumb_prefix.$picture->filename ?>" width="<?php echo $width ?>" height="<?php echo $height ?>" /></td>
+						<td><img class="thumb" src="<?php echo $act_thumbnail_url. "thumbs_" .$picture->filename ?>" width="<?php echo $width ?>" height="<?php echo $height ?>" /></td>
 						<?php						
 					break;
 					case 'description' :

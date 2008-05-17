@@ -283,7 +283,7 @@ class nggAdmin{
 		$ngg_options = get_option('ngg_options');
 		
 		$thumbfolder = nggallery::get_thumbnail_folder($gallery_absfolder);
-		$prefix = nggallery::get_thumbnail_prefix($gallery_absfolder);
+		$prefix = "thumbs_";
 		
 		if (!$thumbfolder)
 			return;

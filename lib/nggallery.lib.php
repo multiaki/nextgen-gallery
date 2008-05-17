@@ -237,8 +237,7 @@ class nggallery {
 		
 		// set gallery url
 		$folder_url 	= get_option ('siteurl')."/".$picturepath.nggallery::get_thumbnail_folder($picturepath, FALSE);
-		$thumb_prefix   = nggallery::get_thumbnail_prefix($picturepath, FALSE);
-		$thumbnailURL	= $folder_url.$thumb_prefix.$fileName;
+		$thumbnailURL	= $folder_url. "thumbs_" .$fileName;
 		
 		return $thumbnailURL;
 	}
@@ -304,7 +303,7 @@ class nggallery {
    */
 	function get_thumbnail_folder($gallerypath, $include_Abspath = TRUE) {
 
-		return create_thumbnail_folder($gallerypath, $include_Abspath);
+		return nggallery::create_thumbnail_folder($gallerypath, $include_Abspath);
 		
 	}
 	
