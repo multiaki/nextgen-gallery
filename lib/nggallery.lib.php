@@ -221,20 +221,6 @@ class nggallery {
 	}
 
 	/**********************************************************/
-	// remove some umlauts - deprecated
-	/**********************************************************/
-	function remove_umlauts($filename) {
-	
-		$cleanname = str_replace(
-		array('ä',   'ö',   'ü',   'Ä',   'Ö',   'Ü',   'ß',   ' '), 
-		array('%E4', '%F6', '%FC', '%C4', '%D6', '%DC', '%DF', '%20'),
-		utf8_decode($filename)
-		);
-		
-		return $cleanname;
-	}
-	
-	/**********************************************************/
 	// get the thumbnail url to the image
 	//TODO:Combine in one class
 	/**********************************************************/
@@ -277,18 +263,19 @@ class nggallery {
 		return $imageURL;	
 	}
 
-	/**********************************************************/
-	// get the thumbnail folder
-	/**********************************************************/
-	function get_thumbnail_folder($gallerypath, $include_Abspath = TRUE) {
-		//required for myGallery import :-)
+  /**
+   * nggallery::get_thumbnail_folder()
+   * 
+   * @param mixed $gallerypath
+   * @param bool $include_Abspath
+   * @return string $foldername
+   */
+	function create_thumbnail_folder($gallerypath, $include_Abspath = TRUE) {
 		
 		if (!$include_Abspath) $gallerypath = WINABSPATH.$gallerypath;
 		if (!file_exists($gallerypath))
 			return FALSE;
 		if (is_dir($gallerypath."/thumbs")) return "/thumbs/";
-		// old mygallery check
-		if (is_dir($gallerypath."/tumbs")) return "/tumbs/";
 		
 		if (is_admin()) {
 			if (!is_dir($gallerypath."/thumbs")) {
@@ -306,19 +293,32 @@ class nggallery {
 		return FALSE;
 		
 	}
+
+  /**
+   * nggallery::get_thumbnail_folder()
+   * 
+   * @param mixed $gallerypath
+   * @param bool $include_Abspath
+   * @deprecated use create_thumbnail_folder() if needed;
+   * @return string $foldername
+   */
+	function get_thumbnail_folder($gallerypath, $include_Abspath = TRUE) {
+
+		return create_thumbnail_folder($gallerypath, $include_Abspath);
+		
+	}
 	
-	/**********************************************************/
-	// get the thumbnail prefix
-	/**********************************************************/
+  /**
+   * nggallery::get_thumbnail_prefix() - obsolete
+   * 
+   * @param string $gallerypath
+   * @param bool   $include_Abspath
+   * @deprecated prefix is no fixed to "thumbs_";
+   * @return string  "thumbs_";
+   */
 	function get_thumbnail_prefix($gallerypath, $include_Abspath = TRUE) {
-		//required for myGallery import :-)
-	
-		if (!$include_Abspath) $gallerypath = WINABSPATH.$gallerypath;
-		if (is_dir($gallerypath."/thumbs")) return "thumbs_";
-		// old mygallery check
-		if (is_dir($gallerypath."/tumbs")) return "tmb_";
-	
-		return FALSE;
+
+		 return "thumbs_";
 		
 	}
 

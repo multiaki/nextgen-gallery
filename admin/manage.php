@@ -412,7 +412,7 @@ jQuery(document).ready( function() {
 <div id="poststuff">
 	<?php wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>
 	<div id="gallerydiv" class="postbox <?php echo postbox_classes('gallerydiv', 'ngg-manage-gallery'); ?>" >
-		<h3><a class="togbox">+</a> <?php _e('Gallery settings', 'nggallery') ?></h3>
+		<h3><?php _e('Gallery settings', 'nggallery') ?></h3>
 		<div class="inside">
 			<table class="form-table" >
 				<tr>
@@ -457,7 +457,20 @@ jQuery(document).ready( function() {
 				<tr>
 					<th align="left"><?php _e('Path', 'nggallery') ?>:</th> 
 					<th align="left"><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="text" size="50" name="path" value="<?php echo $act_gallery->path; ?>"  /></th>
-				
+					<th align="right"><?php _e('Author', 'nggallery'); ?>:</th>
+					<th align="left"> 
+					<?php
+						$editable_ids = ngg_get_editable_user_ids( $user_ID );
+						if ( $editable_ids && count( $editable_ids ) > 1 )
+							wp_dropdown_users( array('include' => $editable_ids, 'name' => 'author', 'selected' => empty( $act_gallery->author ) ? 0 : $act_gallery->author ) ); 
+						else
+							echo $act_gallery->author;
+					?>
+					</th>
+				</tr>
+				<tr>
+					<th align="left">&nbsp;</th>
+					<th align="left">&nbsp;</th>				
 					<th align="right"><?php _e('Create new page', 'nggallery') ?>:</th>
 					<th align="left"> 
 					<select name="parent_id" style="width:95%">
@@ -467,22 +480,6 @@ jQuery(document).ready( function() {
 					<input type="submit" name="addnewpage" value="<?php _e ('Add page', 'nggallery'); ?>" id="group"/>
 					</th>
 				</tr>
-		
-				<?php
-					//TODO:// Move one field up, could be hidden, take care
-					$editable_ids = ngg_get_editable_user_ids( $user_ID );
-					if ( $editable_ids && count( $editable_ids ) > 1 ) :
-					?>
-					<tr>
-						<th align="left">&nbsp;</th>
-						<th align="left">&nbsp;</th>
-						<th align="right"><?php _e('Author', 'nggallery'); ?>:</th>
-						<th align="left"> 
-							<?php wp_dropdown_users( array('include' => $editable_ids, 'name' => 'author', 'selected' => empty( $act_gallery->author ) ? 0 : $act_gallery->author ) ); ?>
-						</th>
-					</tr>
-				<?php endif; ?>
-		
 			</table>
 			
 			<div class="submit">

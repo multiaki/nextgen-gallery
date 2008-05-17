@@ -310,3 +310,12 @@ DIV that shows the image as you drag it
 	display:none;
 		
 }	
+
+/* UPGRADE PAGE */
+
+.error_inline {
+	background:#FFEBE8 none repeat scroll 0%;
+	border:1px solid #CC0000;
+	margin:5px auto;
+	padding:10px;
+}

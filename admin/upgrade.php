@@ -51,8 +51,8 @@ function ngg_upgrade() {
 			// Drop tables, we don't need them anymore
 			//$wpdb->query("DROP TABLE " . $wpdb->prefix . "ngg_tags");
 			//$wpdb->query("DROP TABLE " . $wpdb->prefix . "ngg_pic2tags");
+			ngg_convert_filestructure();
 		}
-
 		update_option( "ngg_db_version", NGG_DBVERSION );
 		return __('Update database structure', 'nggallery');
 	}
@@ -86,6 +86,45 @@ function ngg_convert_tags() {
 }
 
 /**
+ * ngg_convert_filestructure() - converter for old thumnail folder structure
+ * 
+ * @return void
+ */
+function ngg_convert_filestructure() {
+	global $wpdb;
+	
+	$gallerylist = $wpdb->get_results("SELECT * FROM $wpdb->nggallery ORDER BY gid ASC", OBJECT_K);
+	if ( is_array($gallerylist) ) {
+		$errors = array();
+		foreach($gallerylist as $gallery) {
+			$gallerypath = WINABSPATH.$gallery->path;
+
+			// old mygallery check, convert the wrong folder/ file name now
+			if (@is_dir($gallerypath."/tumbs")) {
+				if ( !rename($gallerypath."/tumbs", $gallerypath."/thumbs") )
+					$errors[] = $gallery->path . "/thumbs";
+				// read list of images
+				$imageslist = nggAdmin::scandir($gallerypath."/thumbs");
+				if ( !empty($imageslist)) {
+					foreach($imageslist as $image) {
+						$purename = substr($image, 4);
+						if ( !rename($gallerypath."/thumbs/".$image, $gallerypath."/thumbs/"."thumbs_".$purename ))
+							$errors[] = $gallery->path . "/thumbs/"."thumbs_".$purename ;
+					}
+				}
+			}
+		}
+		if (!empty($errors)) {
+			echo "<div class='error_inline'><p>". __('Some folders/files could not renamed, please recheck the permission and rescan the folder in the manage gallery section.', 'nggallery') ."</p>";
+			foreach($errors as $value) {
+				echo __('Rename failed', 'nggallery') . " : <strong>" . $value . "</strong><br />\n";
+			}
+			echo "</div>";
+		}
+	}
+}
+
+/**
  * nggallery_upgrade_page() - This page showsup , when the database version doesn't fir to the script NGG_DBVERSION constant.
  * 
  * @return Upgrade Message
@@ -109,6 +148,12 @@ function nggallery_upgrade_page()  {
 <?php
 }
 
+/**
+ * nggallery_start_upgrade() - Proceed the upgrade routine
+ * 
+ * @param mixed $filepath
+ * @return void
+ */
 function nggallery_start_upgrade($filepath) {
 	global $wpdb;
 ?>
