@@ -3,14 +3,20 @@ by Alex Rabe & NextGEN DEV Team
 
 V1.00
 - NEW : Extended role system. Each gallery has now a author
-- Added : New filter function to add custom columns
 - Changed : Convert tags to WP-Taxonomy tables, no more need for ngg_tags, ngg_pic2tags
-- Changed : Arrange fields in a new way, use postbox for settings 
-- Bugfix : Fixed width for Thickbox in Manage gallery
-- Bugfix : Correct format of shutter speed 
+- Changed : Arrange fields in a new way
 - Removed : Do not longer check for myGallery folders
 - Removed : Use now PclZip from WP Core
 - Removed : Wordpress 2.1 - 2.3 files deleted
+
+V0.96 - 18.05.2008
+- Changed : Use postbox for gallery settings 
+- Added : New filter function to add custom columns
+- Bugfix : Fixed width for Thickbox in Manage gallery
+- Bugfix : fixed width for media upload select box
+- Bugfix : Remove <p> tag in singlepic regex
+- Bugfix : Correct format of shutter speed 
+- Bugfix : Album name in Short code not useable  
 
 V0.95 - 25.04.2008
 - Bugfix : Correction in media-upload to fit with Wordpress 2.5.1

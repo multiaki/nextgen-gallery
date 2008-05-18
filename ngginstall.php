@@ -56,10 +56,7 @@ function nggallery_install () {
 		) $charset_collate;";
 	
       dbDelta($sql);
- 
- 		ngg_default_options();
-		add_option("ngg_db_version", NGG_DBVERSION);
-   }
+    }
 
 	if($wpdb->get_var("show tables like '$nggallery'") != $nggallery) {
       
@@ -95,6 +92,11 @@ function nggallery_install () {
 		update_option( "ngg_init_check", __('NextGEN Gallery : Tables could not created, please check your database settings',"nggallery") );
 		return;
 	}
+	
+	// set the default settings		
+ 	ngg_default_options();
+	// if all is passed , save the DBVERSION
+	add_option("ngg_db_version", NGG_DBVERSION);
 
 }
 

@@ -11,7 +11,7 @@ function searchnggallerytags($content) {
 	
 	if ( stristr( $content, '[singlepic' )) {
 		
-		$search = "@\[singlepic=(\d+)(|,\d+|,)(|,\d+|,)(|,watermark|,web20|,)(|,right|,center|,left|,)\]@i";
+		$search = "@(?:<p>)*\s*\[singlepic=(\d+)(|,\d+|,)(|,\d+|,)(|,watermark|,web20|,)(|,right|,center|,left|,)\]\s*(?:</p>)*@i";
 		
 		if	(preg_match_all($search, $content, $matches)) {
 			
@@ -38,7 +38,7 @@ function searchnggallerytags($content) {
 				foreach ($matches[1] as $key =>$v0) {
 					// check for album id
  					list($albumID, $albumSortOrder) = $wpdb->get_row("SELECT id, sortorder FROM $wpdb->nggalbum WHERE id = '$v0' ", ARRAY_N);
- 					if(!$albumID) list($albumID, $albumSortOrder) = $wpdb->get_var("SELECT id, sortorder FROM $wpdb->nggalbum WHERE name = '$v0' ", ARRAY_N);
+ 					if(!$albumID) list($albumID, $albumSortOrder) = $wpdb->get_row("SELECT id, sortorder FROM $wpdb->nggalbum WHERE name = '$v0' ", ARRAY_N);
 
 					if($albumID) {
 						$search = $matches[0][$key];
