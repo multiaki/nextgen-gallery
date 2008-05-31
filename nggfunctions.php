@@ -11,7 +11,7 @@ function searchnggallerytags($content) {
 	
 	if ( stristr( $content, '[singlepic' )) {
 		
-		$search = "@(?:<p>)*\s*\[singlepic=(\d+)(|,\d+|,)(|,\d+|,)(|,watermark|,web20|,)(|,right|,center|,left|,)\]\s*(?:</p>)*@i";
+		$search = "@\[singlepic=(\d+)(|,\d+|,)(|,\d+|,)(|,watermark|,web20|,)(|,right|,center|,left|,)\]\@i";
 		
 		if	(preg_match_all($search, $content, $matches)) {
 			
@@ -154,17 +154,20 @@ function searchnggallerytags($content) {
 /**********************************************************/
 function nggShowSlideshow($galleryID,$irWidth,$irHeight) {
 	
-	global $wpdb;
-	
+	global $wpdb, $post;
+
 	$ngg_options = nggallery::get_option('ngg_options');
 	
+	// if you use this outside the loop
+	if (empty($post)) $post->ID = rand(10,1000);
+	
 	//TODO: bad intermediate solution until refactor to class
-	$obj = 'so' . $galleryID . rand(10,1000);
+	$obj = 'so' . $galleryID . '_' . $post->ID;
 	
 	if (empty($irWidth) ) $irWidth = (int) $ngg_options['irWidth'];
 	if (empty($irHeight)) $irHeight = (int) $ngg_options['irHeight'];
 
-	$out  = "\n".'<div class="slideshow" id="ngg_slideshow'.$galleryID.'">';
+	$out  = "\n".'<div class="slideshow" id="ngg_'.$obj.'">';
 	$out .= '<p>The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and <a href="http://www.mozilla.com/firefox/">a browser with Javascript support</a> are needed..</p></div>';
     $out .= "\n\t".'<script type="text/javascript" defer="defer">';
 	if ($ngg_options['irXHTMLvalid']) $out .= "\n\t".'<!--';
@@ -194,12 +197,13 @@ function nggShowSlideshow($galleryID,$irWidth,$irHeight) {
 	$out .= "\n\t\t".$obj.'.addVariable("transition", "'.$ngg_options['irTransition'].'");';	
 	$out .= "\n\t\t".$obj.'.addVariable("width", "'.$irWidth.'");';
 	$out .= "\n\t\t".$obj.'.addVariable("height", "'.$irHeight.'");'; 
-	$out .= "\n\t\t".$obj.'.write("ngg_slideshow'.$galleryID.'");';
+	$out .= "\n\t\t".$obj.'.write("ngg_'.$obj.'");';
 	if ($ngg_options['irXHTMLvalid']) $out .= "\n\t".'//]]>';
 	if ($ngg_options['irXHTMLvalid']) $out .= "\n\t".'-->';
 	$out .= "\n\t".'</script>';
 
-	$out = apply_filters('ngg_show_slideshow_content', $out);		
+	$out = apply_filters('ngg_show_slideshow_content', $out);
+			
 	return $out;
 }
 
@@ -603,15 +607,13 @@ function nggSinglePicture($imageID,$width=250,$height=250,$mode="",$float="") {
 		$cache_url = $picture->cached_singlepic_file($width, $height, $mode );
 
 	// add fullsize picture as link
-	$out  = '<div class="ngg-singlepic-wrapper'. $float .'"><a href="'.$picture->imagePath.'" title="'.stripslashes($picture->description).'" '.$picture->get_thumbcode("singlepic".$imageID).' >';
+	$out  = '<a href="'.$picture->imagePath.'" title="'.stripslashes($picture->description).'" '.$picture->get_thumbcode("singlepic".$imageID).' >';
 	if (!$cache_url)
-		$out .= '<img class="ngg-singlepic" src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$imageID.'&amp;width='.$width.'&amp;height='.$height.'&amp;mode='.$mode.'" alt="'.stripslashes($picture->alttext).'" title="'.stripslashes($picture->alttext).'" />';
+		$out .= '<img class="ngg-singlepic'. $float .'" src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$imageID.'&amp;width='.$width.'&amp;height='.$height.'&amp;mode='.$mode.'" alt="'.stripslashes($picture->alttext).'" title="'.stripslashes($picture->alttext).'" />';
 	else
-		$out .= '<img class="ngg-singlepic" src="'.$cache_url.'" alt="'.stripslashes($picture->alttext).'" title="'.stripslashes($picture->alttext).'" />';
+		$out .= '<img class="ngg-singlepic'. $float .'" src="'.$cache_url.'" alt="'.stripslashes($picture->alttext).'" title="'.stripslashes($picture->alttext).'" />';
 	$out .= '</a>';
-	$out  = apply_filters('ngg_inner_singlepic_content', $out, $picture );		
-	$out .= '</div>';
-	
+
 	$out = apply_filters('ngg_show_singlepic_content', $out, $picture );
 	
 	return $out;

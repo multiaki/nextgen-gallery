@@ -5,6 +5,7 @@ V1.00
 - NEW : Extended role system. Each gallery has now a author
 - Changed : Convert tags to WP-Taxonomy tables, no more need for ngg_tags, ngg_pic2tags
 - Changed : Arrange fields in a new way
+- Removed : Revert singlepic wrapper, breaks validation
 - Removed : Do not longer check for myGallery folders
 - Removed : Use now PclZip from WP Core
 - Removed : Wordpress 2.1 - 2.3 files deleted
