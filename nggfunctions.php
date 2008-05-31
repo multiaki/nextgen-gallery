@@ -508,6 +508,8 @@ function nggCreateImageBrowser($picarray) {
 
 	global $nggRewrite;
 	
+	require_once(dirname (__FILE__).'/lib/nggmeta.lib.php');
+	
 	// $_GET from wp_query
 	$pid  = get_query_var('pid');
 
@@ -536,6 +538,25 @@ function nggCreateImageBrowser($picarray) {
 	// get the picture data
 	$picture = new nggImage($act_pid);
 	
+	// add more variables for render output
+	$picture->href_link = $picture->get_href_link();
+	$picture->previous_image_link = $nggRewrite->get_permalink(array ('pid' => $back_pid));
+	$picture->next_image_link  = $nggRewrite->get_permalink(array ('pid' => $next_pid));
+	$picture->number = $key + 1;
+	$picture->total = $total;
+	$picture->alttext = html_entity_decode(stripslashes($picture->alttext));
+	$picture->description = html_entity_decode(stripslashes($picture->description));
+	
+	// let's get the meta data
+	$meta = new nggMeta($picture->absPath);
+	$exif = $meta->get_EXIF();
+	$iptc = $meta->get_IPTC();
+	$xmp  = $meta->get_XMP();
+		
+	// create the output
+	$out = nggallery::capture ('imagebrowser', array ('image' => $picture , 'meta' => $meta, 'exif' => $exif, 'iptc' => $iptc, 'xmp' => $xmp) );
+	
+	/*
 	if ($picture) {
 		$out = '
 		<div class="ngg-imagebrowser" >
@@ -556,6 +577,7 @@ function nggCreateImageBrowser($picarray) {
 			</div>	
 		</div>';
 	}
+	*/ 
 	
 	return $out;
 	

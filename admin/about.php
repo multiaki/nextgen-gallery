@@ -102,7 +102,9 @@ function ngg_list_contributors()	{
 	"Carlale Chen (Chinese Translation)" => "http://0-o-0.cc/",
 	"Nica Luigi Cristian (Romanian Translation)" => "http://www.cristiannica.com/",
 	"Igor Shevkoplyas (Russian Translation)" => "http://www.russian-translation-matters.com",
-	"Alexandr Kindras (Code contributor)" => "http://www.fixdev.com"
+	"Alexandr Kindras (Code contributor)" => "http://www.fixdev.com",
+	"Manabu Togawa (Japanese Translation)" => "http://www.churadesign.com/",
+	"Serhiy Tretyak (Ukrainian Translation)" => "http://designpoint.com.ua/"
 	);
 	
 	ksort($contributors);
@@ -125,7 +127,6 @@ function ngg_list_support()	{
 /* The list of my supporters. Thanks to all of them !*/
 	
 	$supporter = array(
-	
 	"Mike DAmbrose" => "http://www.videovisions.com/",
 	"Ideablogger" => "http://www.ablogofideas.net/",
 	"Chuck Coury" => "",
@@ -205,7 +206,11 @@ function ngg_list_support()	{
 	"Almost Anything Desktop Publishing" => "http://www.almost-anything.com.au/",
 	"Aengus Moran" => "",
 	"Fias Co Farm" => "http://www.fiascofarm.com",
-	"Overdrive Design Labs" => "http://www.overdrivedesign.biz"	
+	"Overdrive Design Labs" => "http://www.overdrivedesign.biz",
+	"Lincoln Hardwood and Tool Company, Inc." => "http://www.lhtcinc.com",
+	"Kurt Perschke" => "http://www.redballproject.com",
+	"Christian Hoegl" => "http://www.creativbox.at",	
+	"John Swartz" => "http://www.jswartz.net"		
 	);
 	
 	ksort($supporter);

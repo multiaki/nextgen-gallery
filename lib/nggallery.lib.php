@@ -139,7 +139,7 @@ class nggImage{
 		$cachename   	= $this->imageID. "_". $mode . "_". $width. "x". $height ."_". $this->filename;
 		$cachefolder 	= WINABSPATH .$ngg_options['gallerypath'] . "cache/";
 		$cached_url  	= get_option ('siteurl') ."/". $ngg_options['gallerypath'] . "cache/" . $cachename;
-		$cached_file	 = $cachefolder . $cachename;
+		$cached_file	= $cachefolder . $cachename;
 		
 		// check first for the file
 		if ( file_exists($cached_file) ) 
@@ -487,6 +487,50 @@ class nggallery {
 	    }
 	    return false;
 	} 
+	
+	/**
+	 * Renders a section of user display code.  The code is first checked for in the current theme display directory
+	 * before defaulting to the plugin
+	 * Call the function :	nggallery::render ('template_name', array ('var1' => $var1, 'var2' => $var2));
+	 *
+	 * @autor John Godley
+	 * @param string $template_name Name of the template file (without extension)
+	 * @param string $vars Array of variable name=>value that is available to the display code (optional)
+	 * @return void
+	 **/
+	
+	function render ($template_name, $vars = array ())
+	{
+		foreach ($vars AS $key => $val)
+			$$key = $val;
+	
+		if (file_exists (TEMPLATEPATH . "/nggallery/$template_name.php"))
+			include (TEMPLATEPATH . "/nggallery/$template_name.php");
+		elseif (file_exists (NGGALLERY_ABSPATH . "/view/$template_name.php"))
+			include (NGGALLERY_ABSPATH . "/view/$template_name.php");
+		else
+			echo "<p>Rendering of template $template_name.php failed</p>";
+	}
+	
+	/**
+	 * Captures an section of user display code.
+	 *
+	 * @autor John Godley
+	 * @param string $template_name Name of the template file (without extension)
+	 * @param string $vars Array of variable name=>value that is available to the display code (optional)
+	 * @return void
+	 **/
+
+	function capture ($template_name, $vars = array ())
+	{
+		ob_start ();
+		nggallery::render ($template_name, $vars);
+		$output = ob_get_contents ();
+		ob_end_clean ();
+		
+		return $output;
+	}
+	
 }
 
 /**
