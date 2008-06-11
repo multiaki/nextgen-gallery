@@ -250,7 +250,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<h2><?php _e('Gallery settings','nggallery'); ?></h2>
 			<form name="galleryform" method="POST" action="<?php echo $filepath.'#gallery'; ?>" >
 			<?php wp_nonce_field('ngg_settings') ?>
-			<input type="hidden" name="page_options" value="galUsejQuery,galNoPages,galImages,galShowSlide,galTextSlide,galTextGallery,galShowOrder,galShowDesc,galImgBrowser,galSort,galSortDir" />
+			<input type="hidden" name="page_options" value="galUsejQuery,galNoPages,galImages,galShowSlide,galTextSlide,galTextGallery,galShowOrder,galImgBrowser,galSort,galSortDir" />
 				<table class="form-table">
 					<!--TODO:  Do better... -->
 					<!--
@@ -284,13 +284,6 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						<th valign="top"><?php _e('Show first','nggallery') ?>:</th>
 						<td><label><input name="galShowOrder" type="radio" value="gallery" <?php checked('gallery', $ngg_options['galShowOrder']); ?> /> <?php _e('Thumbnails', 'nggallery') ;?></label><br />
 						<label><input name="galShowOrder" type="radio" value="slide" <?php checked('slide', $ngg_options['galShowOrder']); ?> /> <?php _e('Slideshow', 'nggallery') ;?></label>
-						</td>
-					</tr>
-					<tr>
-						<th valign="top"><?php _e('Show thumbnail description','nggallery') ?>:</th>
-						<td><label><input name="galShowDesc" type="radio" value="none" <?php checked('none', $ngg_options['galShowDesc']); ?> /> <?php _e('None', 'nggallery') ;?></label><br />
-						<label><input name="galShowDesc" type="radio" value="desc" <?php checked('desc', $ngg_options['galShowDesc']); ?> /> <?php _e('Description text', 'nggallery') ;?></label><br />
-						<label><input name="galShowDesc" type="radio" value="alttext" <?php checked('alttext', $ngg_options['galShowDesc']); ?> /> <?php _e('Alt / Title text', 'nggallery') ;?></label>
 						</td>
 					</tr>
 					<tr>

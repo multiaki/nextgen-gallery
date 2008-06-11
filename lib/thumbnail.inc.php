@@ -767,7 +767,8 @@ class ngg_Thumbnail {
 			}
 			if(isset($imageData['FocalLength'])) {
 				$focus = explode('/',$imageData['FocalLength']);
-				$this->imageMeta['focalLength'] = round($focus[0]/$focus[1],2) . ' mm';
+				if ($focus[1] > 0)
+					$this->imageMeta['focalLength'] = round($focus[0]/$focus[1],2) . ' mm';
 			}
 			if(isset($imageData['DateTime'])) {
 				$date = $imageData['DateTime'];

@@ -262,7 +262,7 @@ function nggShowGallery($galleryID) {
 }
 
 /**********************************************************/
-function nggCreateGallery($picturelist,$galleryID = false) {
+function nggCreateGallery($picturelist, $galleryID = false) {
 	/** 
 	* @array  	$picturelist
 	* @int		$galleryID
@@ -272,7 +272,8 @@ function nggCreateGallery($picturelist,$galleryID = false) {
     
     
     $ngg_options = nggallery::get_option('ngg_options');
-    
+	$siteurl = get_option ('siteurl');
+	    
     // $_GET from wp_query
 	$nggpage  = get_query_var('nggpage');
 	$pageid   = get_query_var('pageid');
@@ -280,9 +281,13 @@ function nggCreateGallery($picturelist,$galleryID = false) {
     if (!is_array($picturelist))
 		$picturelist = array($picturelist);
 	
-	$maxElement = $ngg_options['galImages'];
-	$thumbwidth = $ngg_options['thumbwidth'];
-	$thumbheight = $ngg_options['thumbheight'];
+	$gallery = new stdclass;
+	$gallery->ID = (int) $galleryID;
+	$gallery->show_slideshow = false;
+	
+	$maxElement  = $ngg_options['galImages'];
+	$thumbwidth  = $ngg_options['thumbwidth'];
+	$thumbheight = $ngg_options['thumbheight'];		
 	
 	// set thumb size 
 	$thumbsize = "";
@@ -294,6 +299,14 @@ function nggCreateGallery($picturelist,$galleryID = false) {
 		$thumbcode = ($ngg_options['galImgBrowser']) ? "" : nggallery::get_thumbcode($picturelist[0]->name);
 	else
 		$thumbcode = ($ngg_options['galImgBrowser']) ? "" : nggallery::get_thumbcode(get_the_title());
+
+	// show slideshow link
+	if ($galleryID)
+		if (($ngg_options['galShowSlide']) AND (NGGALLERY_IREXIST)) {
+			$gallery->show_slideshow = true;
+			$gallery->slideshow_link = $nggRewrite->get_permalink(array ('show' => "slide"));
+			$gallery->slideshow_link_text = $ngg_options['galTextSlide'];
+		}
 	
  	// check for page navigation
  	if ($maxElement > 0) {
@@ -315,8 +328,29 @@ function nggCreateGallery($picturelist,$galleryID = false) {
 		array_splice($picturelist, $maxElement);
 	
 		$navigation = nggallery::create_navigation($page, $total, $maxElement);
-	} 	
-	
+	} else {
+		$navigation = '<div class="ngg-clear">&nbsp;</div>';
+	}	
+
+	foreach ($picturelist as $key => $picture) {
+		// set image url
+		$folder_url		= $siteurl."/".$picture->path."/";
+		
+		// choose link between imagebrowser or effect
+		$link = ($ngg_options['galImgBrowser']) ? $nggRewrite->get_permalink(array('pid'=>$picture->pid)) : $folder_url.$picture->filename;		
+		// add a filter for the link
+		$picturelist[$key]->imageURL = apply_filters('ngg_create_gallery_link', $link, $picture);
+		$picturelist[$key]->thumbnailURL = $folder_url . "thumbs/thumbs_" . $picture->filename;
+		$picturelist[$key]->size = $thumbsize;
+		$picturelist[$key]->$thumbcode  = apply_filters('ngg_create_gallery_thumbcode', $thumbcode, $picture);
+
+	}
+
+	// create the output
+	$out = nggallery::capture ('gallery', array ('gallery' => $gallery, 'images' => $picturelist, 'thumbcode' => $thumbcode, 'pagination' => $navigation) );
+
+	return $out;
+/*	
 	if (is_array($picturelist)) {
 	$out  = '<div class="ngg-galleryoverview" id="ngg-gallery-'. $galleryID .'">';
 	
@@ -365,6 +399,7 @@ function nggCreateGallery($picturelist,$galleryID = false) {
 	}		
 	
 	return $out;
+*/	
 }
 
 /**********************************************************/

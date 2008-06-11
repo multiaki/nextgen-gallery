@@ -141,7 +141,6 @@ function ngg_default_options() {
 	$ngg_options['galSortDir']			= "ASC";						// Sort direction
 	$ngg_options['galUsejQuery']   		= false;						// use the jQuery plugin
 	$ngg_options['galNoPages']   		= true;							// use no subpages for gallery
-	$ngg_options['galShowDesc']			= "none";						// Show a text below the thumbnail
 	$ngg_options['galImgBrowser']   	= false;						// Show ImageBrowser, instead effect
 
 	// Thumbnail Effect

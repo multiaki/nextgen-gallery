@@ -210,7 +210,9 @@ function ngg_list_support()	{
 	"Lincoln Hardwood and Tool Company, Inc." => "http://www.lhtcinc.com",
 	"Kurt Perschke" => "http://www.redballproject.com",
 	"Christian Hoegl" => "http://www.creativbox.at",	
-	"John Swartz" => "http://www.jswartz.net"		
+	"John Swartz" => "http://www.jswartz.net",
+	"Michael Kubala" => "",	
+	"Kyle Meyers" => ""			
 	);
 	
 	ksort($supporter);
