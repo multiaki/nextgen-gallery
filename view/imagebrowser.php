@@ -28,7 +28,7 @@ Follow variables are useable :
 		<div class="next">
 			<a href="<?php echo $image->next_image_link ?>"><?php _e('Next', 'nggallery') ?> &#9658;</a>
 		</div>
-		<div class="counter"><?php _e('Picture', 'nggallery') ?> <?php echo $image->number ?> <?php _e('from', 'nggallery')?> <?php echo $image->total ?></div>
+		<div class="counter"><?php _e('Picture', 'nggallery') ?> <?php echo $image->number ?> <?php _e('of', 'nggallery')?> <?php echo $image->total ?></div>
 		<div class="ngg-imagebrowser-desc"><p><?php echo $image->description ?></p></div>
 	</div>	
 

@@ -110,6 +110,8 @@ class nggImage{
 		if ($ngg_options['thumbEffect'] == "highslide") $this->thumbcode = str_replace("%GALLERY_NAME%", "'".$galleryname."'", $this->thumbcode);
 		else $this->thumbcode = str_replace("%GALLERY_NAME%", $galleryname, $this->thumbcode);
 		
+		$this->thumbcode = apply_filter('ngg_create_gallery_thumbcode', $this->thumbcode, $this);
+		
 		return $this->thumbcode;
 	}
 	
@@ -312,7 +314,7 @@ class nggallery {
    * 
    * @param string $gallerypath
    * @param bool   $include_Abspath
-   * @deprecated prefix is no fixed to "thumbs_";
+   * @deprecated prefix is now fixed to "thumbs_";
    * @return string  "thumbs_";
    */
 	function get_thumbnail_prefix($gallerypath, $include_Abspath = TRUE) {

@@ -13,7 +13,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	$filepath    = get_option('siteurl') . '/wp-admin/admin.php?page='.$_GET['page'];
 	
 	// link for the flash file
-	$swf_upload_link = NGGALLERY_URLPATH . 'admin/wp25/upload.php';
+	$swf_upload_link = NGGALLERY_URLPATH . 'admin/upload.php';
 	$swf_upload_link = wp_nonce_url($swf_upload_link, 'ngg_swfupload');
 	//flash doesn't seem to like encoded ampersands, so convert them back here
 	$swf_upload_link = str_replace('&#038;', '&', $swf_upload_link);

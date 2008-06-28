@@ -1,12 +1,14 @@
 <?php
 
-require_once('../../../../../wp-config.php');
+require_once('../../../../wp-config.php');
 
 // Flash often fails to send cookies with the POST or upload, so we need to pass it in GET or POST instead
-if ( empty($_COOKIE[AUTH_COOKIE]) && !empty($_REQUEST['auth_cookie']) )
+if ( is_ssl() && empty($_COOKIE[SECURE_AUTH_COOKIE]) && !empty($_REQUEST['auth_cookie']) )
+	$_COOKIE[SECURE_AUTH_COOKIE] = $_REQUEST['auth_cookie'];
+elseif ( empty($_COOKIE[AUTH_COOKIE]) && !empty($_REQUEST['auth_cookie']) )
 	$_COOKIE[AUTH_COOKIE] = $_REQUEST['auth_cookie'];
 
-// don't ask me why, sometime needed, taken from wp core
+// don't ask me why, sometimes needed, taken from wp core
 unset($current_user);
 
 // admin.php require a proper login cookie
@@ -32,7 +34,7 @@ check_admin_referer('ngg_swfupload');
 if ( !defined('NGGALLERY_ABSPATH') )
 	die('NextGEN Gallery not available. -3');
 	
-include_once (NGGALLERY_ABSPATH. 'admin/wp25/functions.php');
+include_once (NGGALLERY_ABSPATH. 'admin/functions.php');
 
 // get the gallery
 $galleryID = (int) $_POST['galleryselect'];

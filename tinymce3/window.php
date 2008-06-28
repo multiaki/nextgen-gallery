@@ -1,6 +1,7 @@
 <?php
 
 $wpconfig = realpath("../../../../wp-config.php");
+$wpload = realpath("../../../../wp-load.php");
 
 if (!file_exists($wpconfig))  {
 	echo "Could not found wp-config.php. Error in path :\n\n".$wpconfig ;	
@@ -8,10 +9,10 @@ if (!file_exists($wpconfig))  {
 }// stop when wp-config is not there
 
 require_once($wpconfig);
-require_once(ABSPATH.'/wp-admin/admin.php');
 
 // check for rights
-if(!current_user_can('edit_posts')) die;
+if ( !is_user_logged_in() || !current_user_can('edit_posts') ) 
+	wp_die(__("You are not allowed to be here"));
 
 global $wpdb;
 
