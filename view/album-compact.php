@@ -13,7 +13,9 @@ Follow variables are useable :
 **/
 ?>
 <?php if (!defined ('ABSPATH')) die ('No direct access allowed'); ?><?php if (!empty ($galleries)) : ?>
-	
+
+<div class="ngg-albumoverview">		
+
 	<!-- List of galleries -->
 	<?php foreach ($galleries as $gallery) : ?>
 	
@@ -30,5 +32,8 @@ Follow variables are useable :
 	</div>
 
  	<?php endforeach; ?>
+
+</div>
+<div class="ngg-clear"></div>
 
 <?php endif; ?>

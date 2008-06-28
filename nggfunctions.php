@@ -378,14 +378,9 @@ function nggShowAlbum($albumID, $mode = "extend", $sortorder = "") {
 	if (!empty($sortorder)) {
 		$gallery_array = unserialize($sortorder);
 	} 
-
-	$out = '<div class="ngg-albumoverview">';
 	
  	if ( is_array($gallery_array) )
  		$out .= nggCreateAlbum( $gallery_array, $mode, $albumID );
-	
-	$out .= '</div>'."\n";
-	$out .= '<div class="ngg-clear"></div>'."\n";
 	
 	$out = apply_filters('ngg_show_album_content', $out, intval($albumID));
 	return $out;
@@ -447,7 +442,7 @@ function nggCreateAlbum( $galleriesID, $mode = "extend", $albumID = 0) {
 		$galleries[$key]->galdesc = html_entity_decode ( stripslashes($galleries[$key]->galdesc) ) ;
 
 	}
-	
+	var_dump($galleries);
  	$out = '';
  	
 	// create the output
@@ -713,28 +708,20 @@ function nggShowAlbumTags($taglist) {
 	// go on if not empty
 	if (empty($picturelist))
 		return;
+	
+	// re-structure the object that we can use the standard template	
+	foreach ($picturelist as $key => $picture) {
+		$picturelist[$key]->previewpic  = $picture->pid;
+		$picturelist[$key]->previewname = $picture->filename;
+		$picturelist[$key]->previewurl  = get_option ('siteurl')."/".$picture->path."/thumbs/thumbs_".$picture->filename;
+		$picturelist[$key]->counter     = $picture->count;
+		$picturelist[$key]->title     	= $picture->name;
+		$picturelist[$key]->pagelink    = $nggRewrite->get_permalink(array('gallerytag'=>$picture->slug));
+	}	
 
-	$out = '<div class="ngg-albumoverview">';
-	foreach ($picturelist as $picture) {
-		
-		$args['gallerytag'] = $picture["slug"];
-		
-		$link = $nggRewrite->get_permalink($args);
-		
-		$insertpic = '<img class="Thumb" alt="'.$picture["name"].'" src="'.nggallery::get_thumbnail_url($picture["pid"]).'"/>';
-		$out .= '	
-			<div class="ngg-album-compact">
-				<div class="ngg-album-compactbox">
-					<div class="ngg-album-link">
-						<a class="Link" href="'.$link.'">'.$insertpic.'</a>
-					</div>
-				</div>
-				<h4><a class="ngg-album-desc" title="'.$picture["name"].'" href="'.$link.'">'.$picture["name"].'</a></h4>
-				<p><strong>'.$picture["count"].'</strong> '.__('Photos', 'nggallery').'</p></div>';
-	}
-	$out .= '</div>'."\n";
-	$out .= '<div class="ngg-clear"></div>'."\n";
-
+	// create the output
+	$out = nggallery::capture ('album-compact', array ('albumID' => '0', 'galleries' => $picturelist, 'mode' => 'compact') );
+	
 	$out = apply_filters('ngg_show_album_tags_content', $out, $taglist);
 	
 	return $out;
