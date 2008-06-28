@@ -84,16 +84,16 @@ define('NGGALLERY_URLPATH', get_option('siteurl').'/wp-content/plugins/' . NGGFO
 define('NGGALLERY_IREXIST', file_exists(NGGALLERY_ABSPATH.'imagerotator.swf'));
 
 // get value for safe mode
-if ((gettype(ini_get('safe_mode')) == 'string')) {
+if ( (gettype( ini_get('safe_mode') ) == 'string') ) {
 	// if sever did in in a other way
-	if (ini_get('safe_mode') == 'off') define('SAFE_MODE', FALSE);
-	else define('SAFE_MODE', ini_get('safe_mode'));
+	if ( ini_get('safe_mode') == 'off' ) define('SAFE_MODE', FALSE);
+	else define( 'SAFE_MODE', ini_get('safe_mode') );
 } else
-define('SAFE_MODE', ini_get('safe_mode'));
+define( 'SAFE_MODE', ini_get('safe_mode') );
 
 //pass the init check or show a message
 if (get_option( "ngg_init_check" ) != false )
-	add_action('admin_notices', create_function('', 'echo \'<div id="message" class="error fade"><p><strong>' . get_option( "ngg_init_check" ) . '</strong></p></div>\';'));
+	add_action( 'admin_notices', create_function('', 'echo \'<div id="message" class="error fade"><p><strong>' . get_option( "ngg_init_check" ) . '</strong></p></div>\';') );
 
 //read the options
 $ngg_options = get_option('ngg_options');
