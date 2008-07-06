@@ -1,6 +1,16 @@
 <?php
 
-require_once('../../../../wp-config.php');
+$root = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
+
+if (file_exists($root.'/wp-load.php')) {
+	// WP 2.6
+	require_once($root.'/wp-load.php');
+} else {
+	// Before 2.6
+	if (!file_exists($root.'/wp-config.php'))
+		die; // stop when wp-config is not there
+	require_once($root.'/wp-config.php');
+}
 
 // Flash often fails to send cookies with the POST or upload, so we need to pass it in GET or POST instead
 if ( is_ssl() && empty($_COOKIE[SECURE_AUTH_COOKIE]) && !empty($_REQUEST['auth_cookie']) )

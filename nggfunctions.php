@@ -175,26 +175,27 @@ function nggShowSlideshow($galleryID,$irWidth,$irHeight) {
 	$out .= "\n\t\t".'var '. $obj .' = new SWFObject("'.NGGALLERY_URLPATH.'imagerotator.swf", "ngg_slideshow'.$galleryID.'", "'.$irWidth.'", "'.$irHeight.'", "7", "#'.$ngg_options[irBackcolor].'");';
 	$out .= "\n\t\t".$obj.'.addParam("wmode", "opaque");';
 	$out .= "\n\t\t".$obj.'.addVariable("file", "'.NGGALLERY_URLPATH.'nggextractXML.php?gid='.$galleryID.'");';
-	if (!$ngg_options['irShuffle']) $out .= "\n\t\t".$obj.'.addVariable("shuffle", "false");';
-	// default value changed in 3.15 : linkfromdisplay, shownavigation, showicons
-	if (!$ngg_options['irLinkfromdisplay']) $out .= "\n\t\t".$obj.'.addVariable("linkfromdisplay", "false");';
-	if (!$ngg_options['irShownavigation']) $out .= "\n\t\t".$obj.'.addVariable("shownavigation", "false");';
-	if (!$ngg_options['irShowicons']) $out .= "\n\t\t".$obj.'.addVariable("showicons", "false");';
-	// keep compatible to older version, remove later
-	if ($ngg_options['irLinkfromdisplay']) $out .= "\n\t\t".$obj.'.addVariable("linkfromdisplay", "true");';
-	if ($ngg_options['irShownavigation']) $out .= "\n\t\t".$obj.'.addVariable("shownavigation", "true");';
-	if ($ngg_options['irShowicons']) $out .= "\n\t\t".$obj.'.addVariable("showicons", "true");';
-	// hidden feature since 3.14
-	if ($ngg_options['irKenburns']) $out .= "\n\t\t".$obj.'.addVariable("kenburns", "true");';
-	if ($ngg_options['irWatermark']) $out .= "\n\t\t".$obj.'.addVariable("logo", "'.$ngg_options['wmPath'].'");';
-	if (!empty($ngg_options['irAudio'])) $out .= "\n\t\t".$obj.'.addVariable("audio", "'.$ngg_options['irAudio'].'");';
-	$out .= "\n\t\t".$obj.'.addVariable("overstretch", "'.$ngg_options['irOverstretch'].'");';
-	$out .= "\n\t\t".$obj.'.addVariable("backcolor", "0x'.$ngg_options['irBackcolor'].'");';
-	$out .= "\n\t\t".$obj.'.addVariable("frontcolor", "0x'.$ngg_options['irFrontcolor'].'");';
-	$out .= "\n\t\t".$obj.'.addVariable("lightcolor", "0x'.$ngg_options['irLightcolor'].'");';
-	if (!empty($ngg_options['irScreencolor'])) $out .= "\n\t\t".$obj.'.addVariable("screencolor", "0x'.$ngg_options['irScreencolor'].'");';
-	$out .= "\n\t\t".$obj.'.addVariable("rotatetime", "'.$ngg_options['irRotatetime'].'");';
-	$out .= "\n\t\t".$obj.'.addVariable("transition", "'.$ngg_options['irTransition'].'");';	
+	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irShuffle');
+	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irLinkfromdisplay');
+	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irShownavigation');
+	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irShowicons');
+	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irLinkfromdisplay');
+	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irShownavigation');
+	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irShowicons');
+	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irKenburns');
+	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irOverstretch');
+	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irRotatetime' );
+	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irTransition' );
+	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irBackcolor', '0x');
+	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irFrontcolor', '0x');
+	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irLightcolor', '0x');
+	if (!empty($ngg_options['irScreencolor']))
+	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irScreencolor', '0x');
+	if ($ngg_options['irWatermark']) 
+	$out .= "\n\t\t".$obj.'.addVariable("logo", "'.$ngg_options['wmPath'].'");';
+	if (!empty($ngg_options['irAudio'])) 
+	$out .= "\n\t\t".$obj.'.addVariable("audio", "'.$ngg_options['irAudio'].'");';
+	
 	$out .= "\n\t\t".$obj.'.addVariable("width", "'.$irWidth.'");';
 	$out .= "\n\t\t".$obj.'.addVariable("height", "'.$irHeight.'");'; 
 	$out .= "\n\t\t".$obj.'.write("ngg_'.$obj.'");';
@@ -207,12 +208,26 @@ function nggShowSlideshow($galleryID,$irWidth,$irHeight) {
 	return $out;
 }
 
+function ngg_addVariable($options, $optionname, $prefix = '') {
+	
+	$value = $options[$optionname];
+	$purename = strtolower ( substr($optionname, 2) );
+	
+	if ( is_bool($value) )
+		$out = ($value) ? '.addVariable("'.$purename.'", "true");' : '.addVariable("'.$purename.'", "false");';
+	else
+		$out = '.addVariable("'.$purename.'", "'.$prefix.$value.'");';
+		
+	return $out;	
+}
+
 /**********************************************************/
 function nggShowGallery($galleryID) {
 	
 	global $wpdb, $nggRewrite;
 	
 	$ngg_options = nggallery::get_option('ngg_options');
+	$galleryID = (int) $galleryID;
 
 	// $_GET from wp_query
 	$show    = get_query_var('show');
@@ -251,7 +266,6 @@ function nggShowGallery($galleryID) {
 	$ngg_options['galSortDir'] = ($ngg_options['galSortDir'] == "DESC") ? "DESC" : "ASC";
 
 	// get all picture with this galleryid
-	$galleryID = $wpdb->escape($galleryID);
 	$picturelist = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = '$galleryID' AND tt.exclude != 1 ORDER BY tt.$ngg_options[galSort] $ngg_options[galSortDir] ");
 	if (is_array($picturelist)) { 
 		$out = nggCreateGallery($picturelist,$galleryID);
@@ -442,7 +456,7 @@ function nggCreateAlbum( $galleriesID, $mode = "extend", $albumID = 0) {
 		$galleries[$key]->galdesc = html_entity_decode ( stripslashes($galleries[$key]->galdesc) ) ;
 
 	}
-	var_dump($galleries);
+
  	$out = '';
  	
 	// create the output

@@ -1,14 +1,18 @@
 <?php
 
-$wpconfig = realpath("../../../../wp-config.php");
-$wpload = realpath("../../../../wp-load.php");
+$root = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
 
-if (!file_exists($wpconfig))  {
-	echo "Could not found wp-config.php. Error in path :\n\n".$wpconfig ;	
-	die;	
-}// stop when wp-config is not there
-
-require_once($wpconfig);
+if (file_exists($root.'/wp-load.php')) {
+	// WP 2.6
+	require_once($root.'/wp-load.php');
+} else {
+	// Before 2.6
+	if (!file_exists($root.'/wp-config.php'))  {
+		echo "Could not found wp-config.php";	
+		die;	
+	}// stop when wp-config is not there
+	require_once($root.'/wp-config.php');
+}
 
 // check for rights
 if ( !is_user_logged_in() || !current_user_can('edit_posts') ) 

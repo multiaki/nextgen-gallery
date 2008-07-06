@@ -76,12 +76,19 @@ define('NGGURL', "http://nextgen.boelinger.com/version.php");
 // define URL
 $myabspath = str_replace("\\","/",ABSPATH);  // required for Windows & XAMPP
 define('WINABSPATH', $myabspath);
-define('NGGFOLDER', dirname(plugin_basename(__FILE__)));
-define('NGGALLERY_ABSPATH', $myabspath.'wp-content/plugins/' . NGGFOLDER .'/');
-define('NGGALLERY_URLPATH', get_option('siteurl').'/wp-content/plugins/' . NGGFOLDER.'/');
+
+// Pre-2.6 compatibility
+if ( !defined('WP_CONTENT_URL') )
+	define( 'WP_CONTENT_URL', get_option('siteurl') . '/wp-content');
+if ( !defined('WP_CONTENT_DIR') )
+	define( 'WP_CONTENT_DIR', WINABSPATH . 'wp-content' );
+
+define('NGGFOLDER', plugin_basename( dirname(__FILE__)) );
+define('NGGALLERY_ABSPATH', WP_CONTENT_DIR.'/plugins/'.plugin_basename( dirname(__FILE__)).'/' );
+define('NGGALLERY_URLPATH', WP_CONTENT_URL.'/plugins/'.plugin_basename( dirname(__FILE__)).'/' );
 
 // look for imagerotator
-define('NGGALLERY_IREXIST', file_exists(NGGALLERY_ABSPATH.'imagerotator.swf'));
+define('NGGALLERY_IREXIST', file_exists( NGGALLERY_ABSPATH.'imagerotator.swf' ));
 
 // get value for safe mode
 if ( (gettype( ini_get('safe_mode') ) == 'string') ) {
@@ -112,7 +119,14 @@ register_taxonomy( 'ngg_tag', 'nggallery' );
 // Load language
 function nggallery_init ()
 {
-	load_plugin_textdomain('nggallery','wp-content/plugins/' . NGGFOLDER . '/lang');
+	if (function_exists('load_plugin_textdomain')) {
+		if ( !defined('WP_PLUGIN_DIR') ) {
+			load_plugin_textdomain('nggallery','wp-content/plugins/' . NGGFOLDER . '/lang');
+			//load_plugin_textdomain('nggallery', str_replace( ABSPATH, '', dirname(__FILE__) ) . '/lang');
+		} else {
+			load_plugin_textdomain('nggallery', false, dirname(plugin_basename(__FILE__)) . '/lang');
+		}
+	}
 }
 
 // Load the admin panel
@@ -173,12 +187,12 @@ function ngg_addjs() {
 add_action('init', 'nggallery_init');
 
 // Init options & tables during activation 
-register_activation_hook(NGGFOLDER.'/nggallery.php','ngg_install');
-register_deactivation_hook(NGGFOLDER.'/nggallery.php','ngg_deinstall');
+register_activation_hook( NGGFOLDER.'/nggallery.php','ngg_install' );
+register_deactivation_hook( NGGFOLDER.'/nggallery.php','ngg_deinstall' );
 
 // init tables in wp-database if plugin is activated
 function ngg_install() {
-	// Check for tables
+	include_once (dirname (__FILE__)."/ngginstall.php");
 	nggallery_install();
 }
 

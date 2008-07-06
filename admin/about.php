@@ -212,7 +212,10 @@ function ngg_list_support()	{
 	"Christian Hoegl" => "http://www.creativbox.at",	
 	"John Swartz" => "http://www.jswartz.net",
 	"Michael Kubala" => "",	
-	"Kyle Meyers" => ""			
+	"Kyle Meyers" => "",
+	"DF Design" => "",
+	"Olivia Loh" => "",
+	"Henner Guenter" => "http://www.rvweser.de"					
 	);
 	
 	ksort($supporter);
