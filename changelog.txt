@@ -4,6 +4,10 @@ by Alex Rabe & NextGEN DEV Team
 V1.00
 - NEW : Create output via template files, more flexible
 - NEW : Extended role system. Each gallery has now a author
+- NEW : [thumb id="4,5,12,..." caption="none|alttext|desc" group="thumbnail-group" float="|left|right"/] 
+  shortcode. You can now insert thumbnails for one or more images (that are not necessarly inside the 
+  same gallery).
+- Changed : Renammed the filter 'ngg_create_gallery_thumbcode' to 'ngg_get_thumbcode'.
 - Changed : Convert tags to WP-Taxonomy tables, no more need for ngg_tags, ngg_pic2tags
 - Changed : Arrange fields in a new way
 - Bugfix : Check for zero in Exif Focal Length
