@@ -7,6 +7,7 @@ V1.00
 - Changed : Convert tags to WP-Taxonomy tables, no more need for ngg_tags, ngg_pic2tags
 - Changed : Arrange fields in a new way
 - Bugfix : Check for zero in Exif Focal Length
+- Bugfix : Limit the length of the title in the media-upload
 - Removed : Revert singlepic wrapper, breaks validation
 - Removed : Do not longer check for myGallery folders
 - Removed : Use now PclZip from WP Core
