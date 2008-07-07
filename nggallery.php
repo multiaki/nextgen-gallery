@@ -155,7 +155,13 @@ if (is_admin()) {
 include_once (dirname (__FILE__)."/tinymce3/tinymce.php");
 	
 // Load gallery class
-require_once (dirname (__FILE__).'/lib/nggallery.lib.php');
+require_once (dirname (__FILE__).'/lib/ngg-gallery.lib.php');
+require_once (dirname (__FILE__).'/lib/ngg-rewrite.lib.php');
+require_once (dirname (__FILE__).'/lib/ngg-image.lib.php');
+require_once (dirname (__FILE__).'/lib/ngg-meta.lib.php');
+require_once (dirname (__FILE__).'/lib/ngg-thumbnail.lib.php');
+require_once (dirname (__FILE__).'/lib/ngg-tags.lib.php');
+require_once (dirname (__FILE__).'/lib/ngg-shortcodes.lib.php');
 
 // Init the gallery class
 $nggallery = new nggallery();

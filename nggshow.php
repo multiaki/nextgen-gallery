@@ -10,8 +10,8 @@ global $wpdb;
 $ngg_options=get_option('ngg_options');	
 
 //reference thumbnail class
-include_once('lib/thumbnail.inc.php');
-include_once('lib/nggallery.lib.php');
+include_once('lib/ngg-thumbnail.lib.php');
+include_once('lib/ngg-gallery.lib.php');
 
 $pictureID = (int) $_GET['pid'];
 $mode = attribute_escape($_GET['mode']);

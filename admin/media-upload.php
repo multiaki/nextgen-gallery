@@ -24,19 +24,25 @@ function media_upload_nextgen() {
 		$image = $_POST['image'][$send_id];
 		$alttext = stripslashes( htmlspecialchars ($image['alttext'], ENT_QUOTES));
 		$description = stripslashes (htmlspecialchars($image['description'], ENT_QUOTES));
+		
 		// here is no new line allowed
 		$clean_description = preg_replace("/\n|\r\n|\r$/", " ", $description);
-		$thumbcode = nggallery::get_thumbcode("");
+		$img = new nggImage($send_id);
+		$thumbcode = $img->get_thumbcode();
 		$class="ngg-singlepic ngg-{$image['align']}";
+		
 		// Build output
 		if ($image['size'] == "thumbnail") 
 			$html = "<img src='{$image['thumb']}' alt='$alttext' class='$class' />";
 		if ($image['size'] == "full") 
 			$html = "<img src='{$image['url']}' alt='$alttext' class='$class' />";
 		$html = "<a $thumbcode href='{$image['url']}' title='$clean_description'>$html</a>";
+		
 		if ($image['size'] == "singlepic") 
 			$html = "[singlepic=$send_id,320,240,,{$image['align']}]";
+			
 		media_upload_nextgen_save_image();
+		
 		// Return it to TinyMCE
 		return media_send_to_editor($html);
 	}

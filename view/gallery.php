@@ -17,7 +17,7 @@ Follow variables are useable :
 
 <div class="ngg-galleryoverview" id="ngg-gallery-<?php echo $gallery->ID ?>">
 
-<?php if ($gallery['show_slideshow']) ?>
+<?php if ($gallery->show_slideshow) ?>
 	<div class="slideshowlink"><a class="slideshowlink" href="<?php echo $gallery->slideshow_link ?>"><?php echo $gallery->slideshow_link_text ?></a></div>
 	
 	<!-- Thumbnails -->
@@ -25,7 +25,7 @@ Follow variables are useable :
 	
 	<div id="ngg-image-<?php echo $image->pid ?>" class="ngg-gallery-thumbnail-box">
 		<div class="ngg-gallery-thumbnail" >
-			<a href="<?php echo $image->imageURL ?>" title="<?php echo $image->title ?>" <?php echo $image->$thumbcode ?> >
+			<a href="<?php echo $image->imageURL ?>" title="<?php echo $image->title ?>" <?php echo $image->thumbcode ?> >
 				<img title="<?php echo $image->title ?>" alt="<?php echo $image->alttext ?>" src="<?php echo $image->thumbnailURL ?>" <?php echo $image->size ?> />
 			</a>
 		</div>

@@ -12,7 +12,8 @@ if (file_exists($root.'/wp-load.php')) {
 	require_once($root.'/wp-config.php');
 }
 
-require_once(NGGALLERY_ABSPATH.'/lib/nggmeta.lib.php');
+require_once(NGGALLERY_ABSPATH.'/lib/ngg-meta.lib.php');
+require_once(NGGALLERY_ABSPATH.'/lib/ngg-image.lib.php');
 
 if ( !is_user_logged_in() )
 	die(__('Cheatin&#8217; uh?'));

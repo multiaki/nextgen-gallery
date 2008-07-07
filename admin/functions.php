@@ -172,7 +172,7 @@ class nggAdmin{
 		// ** $gallery_absfolder must contain abspath !!
 
 		if(! class_exists('ngg_Thumbnail'))
-			require_once(NGGALLERY_ABSPATH.'/lib/thumbnail.inc.php');
+			require_once(NGGALLERY_ABSPATH.'/lib/ngg-thumbnail.lib.php');
 		
 		$ngg_options = get_option('ngg_options');
 		
@@ -221,7 +221,7 @@ class nggAdmin{
 		// ** $gallery_absfolder must contain abspath !!
 
 		if(! class_exists('ngg_Thumbnail'))
-			require_once(NGGALLERY_ABSPATH.'/lib/thumbnail.inc.php');
+			require_once(NGGALLERY_ABSPATH.'/lib/ngg-thumbnail.lib.php');
 		
 		$ngg_options = get_option('ngg_options');
 		
@@ -278,7 +278,7 @@ class nggAdmin{
 		// ** $gallery_absfolder must contain abspath !!
 		
 		if(! class_exists('ngg_Thumbnail'))
-			require_once(NGGALLERY_ABSPATH.'/lib/thumbnail.inc.php');
+			require_once(NGGALLERY_ABSPATH.'/lib/ngg-thumbnail.lib.php');
 		
 		$ngg_options = get_option('ngg_options');
 		
@@ -396,6 +396,8 @@ class nggAdmin{
 		// add images to database		
 		global $wpdb;
 		
+		require_once(NGGALLERY_ABSPATH.'/lib/ngg-image.lib.php');
+		
 		if (!is_array($imagesIds))
 			$imagesIds = array($imagesIds);
 		
@@ -430,7 +432,7 @@ class nggAdmin{
 	function get_MetaData($picPath) {
 		// must be Gallery absPath + filename
 		
-		require_once(NGGALLERY_ABSPATH.'/lib/nggmeta.lib.php');
+		require_once(NGGALLERY_ABSPATH.'/lib/ngg-meta.lib.php');
 		
 		$meta = array();
 
