@@ -167,7 +167,7 @@ function nggShowSlideshow($galleryID,$irWidth,$irHeight) {
 	if (empty($irWidth) ) $irWidth = (int) $ngg_options['irWidth'];
 	if (empty($irHeight)) $irHeight = (int) $ngg_options['irHeight'];
 
-	$out  = "\n".'<div class="slideshow" id="ngg_'.$obj.'">';
+	$out  = "\n".'<div class="slideshow" id="ngg_'.$obj.'" style="width:' . $irWidth . 'px; height:' . $irHeight . 'px;">';
 	$out .= '<p>The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and <a href="http://www.mozilla.com/firefox/">a browser with Javascript support</a> are needed..</p></div>';
     $out .= "\n\t".'<script type="text/javascript" defer="defer">';
 	if ($ngg_options['irXHTMLvalid']) $out .= "\n\t".'<!--';
