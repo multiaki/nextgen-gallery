@@ -73,8 +73,8 @@ define('NGGVERSION', "1.00a");
 define('NGG_DBVERSION', "0.95");
 define('NGGURL', "http://nextgen.boelinger.com/version.php");
 
-// define URL
-$myabspath = str_replace("\\","/",ABSPATH);  // required for Windows & XAMPP
+// required for Windows & XAMPP
+$myabspath = str_replace("\\","/",ABSPATH);  
 define('WINABSPATH', $myabspath);
 
 // Pre-2.6 compatibility
@@ -82,7 +82,8 @@ if ( !defined('WP_CONTENT_URL') )
 	define( 'WP_CONTENT_URL', get_option('siteurl') . '/wp-content');
 if ( !defined('WP_CONTENT_DIR') )
 	define( 'WP_CONTENT_DIR', WINABSPATH . 'wp-content' );
-
+	
+// define URL
 define('NGGFOLDER', plugin_basename( dirname(__FILE__)) );
 define('NGGALLERY_ABSPATH', WP_CONTENT_DIR.'/plugins/'.plugin_basename( dirname(__FILE__)).'/' );
 define('NGGALLERY_URLPATH', WP_CONTENT_URL.'/plugins/'.plugin_basename( dirname(__FILE__)).'/' );
