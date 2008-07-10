@@ -17,7 +17,7 @@ V1.00
 - Removed : Use now PclZip from WP Core
 - Removed : Wordpress 2.1 - 2.3 files deleted
 
-V0.97
+V0.97 - 10.07.2008
 - Changed : Get new path contstant from WP2.6
 - Changed : Minor updates for WP2.6
 - Changed : Added new filters (THX to Vincent Prat) 
