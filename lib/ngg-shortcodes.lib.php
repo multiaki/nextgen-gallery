@@ -27,6 +27,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
 // Include the shortcode files
 
 require_once(dirname (__FILE__) . '/ngg-shortcode-thumb.php');
+require_once(dirname (__FILE__) . '/ngg-shortcode-picture.php');
 
 //############################################################################
 
@@ -36,6 +37,10 @@ require_once(dirname (__FILE__) . '/ngg-shortcode-thumb.php');
 add_shortcode(
 	'thumb', 
 	'ngg_do_thumb_shortcode');
+
+add_shortcode(
+	'picture', 
+	'ngg_do_picture_shortcode');
 		
 //############################################################################
 

@@ -1,60 +1,76 @@
 <?php
+/*  Copyright 2008 Alex Rabe
 
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
+
+// Load wp-config
+//--
 $wpconfig = realpath("../../../wp-config.php");
-if (!file_exists($wpconfig)) die; // stop when wp-config is not there
+if (!file_exists($wpconfig)) {
+	die('wp-config is not there');
+}
 require_once($wpconfig);
-
 global $wpdb;
 
-// get the options
-$ngg_options=get_option('ngg_options');	
-
-//reference thumbnail class
+// reference thumbnail class
+//--
 include_once('lib/ngg-thumbnail.lib.php');
 include_once('lib/ngg-gallery.lib.php');
 
+// get the plugin options
+//--
+$ngg_options = get_option('ngg_options');	
+
+// Some parameters from the URL
+//--
 $pictureID = (int) $_GET['pid'];
 $mode = attribute_escape($_GET['mode']);
+$height = $_GET['height'];
+$width = $_GET['width'];
 
 // let's get the image data
+//--
 $picture  = new nggImage($pictureID);
-
 $thumb = new ngg_Thumbnail($picture->absPath);
-if ( isset($_GET['height']) and isset($_GET['width']))
-	$thumb->resize($_GET['width'],$_GET['height']);
+
+// Resize if necessary
+//--
+if (isset($height) && isset($width) && $width!='' && $height!='') {
+	$thumb->resize($_GET['width'], $_GET['height']);
+}
+
+// Apply effects according to the mode parameter
+//--
 if ($mode == 'watermark') {
 	if ($ngg_options['wmType'] == 'image') {
 		$thumb->watermarkImgPath = $ngg_options['wmPath'];
 		$thumb->watermarkImage($ngg_options['wmPos'], $ngg_options['wmXpos'], $ngg_options['wmYpos']); 
-	}
-	if ($ngg_options['wmType'] == 'text') {
+	} else if ($ngg_options['wmType'] == 'text') {
 		$thumb->watermarkText = $ngg_options['wmText'];
 		$thumb->watermarkCreateText($ngg_options['wmColor'], $ngg_options['wmFont'], $ngg_options['wmSize'], $ngg_options['wmOpaque']);
 		$thumb->watermarkImage($ngg_options['wmPos'], $ngg_options['wmXpos'], $ngg_options['wmYpos']);  
 	}
-}
-if ($mode == 'web20')
+} else if ($mode == 'web20') {
 	$thumb->createReflection(40,40,50,false,'#a4a4a4');
-	
+}
+
+// Show thumbnail
+//--
 $thumb->show();
 $thumb->destruct();
 
 exit;
-
-/*
-createReflection($percent,$reflection,$white,$border,$borderColor)
-
-i.e. $thumb->createReflection(40,40,80,true,'#a4a4a4');
-
-Creates an Apple™-style reflection (it’s more of a web 2.0 thing now, I know…) 
-from an image. This one’s a bit weird to explain, but here goes:
-
-$percent - What percentage of the image to create the reflection from 
-$reflection - What percentage of the image height should the reflection height be. 
-i.e. If your image is 100 pixels high, and you set reflection to 40, the reflection would be 40 pixels high. 
-
-$white - How transparent (using white as the background) the reflection should be, as a percent 
-$border - Whether a border should be drawn around the original image (default is true) 
-$borderColor - The hex value of the color you would like your border to be (default is #a4a4a4)
-*/
 ?>

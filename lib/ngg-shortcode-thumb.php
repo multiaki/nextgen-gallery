@@ -84,6 +84,26 @@ function ngg_do_thumb_shortcode($atts, $content=null) {
 	//--
 	$setwidth = ($caption!="none") ? 'style="width:' . $thumbwidth . 'px;"' : '';
 	$class_desc = ($caption!="none") ? 'desc' : '';
+
+	// add float to img
+	//--
+	switch ($float) {
+		case 'left': 
+			$float=' ngg-left';
+			break;
+
+		case 'right': 
+			$float=' ngg-right';
+			break;
+
+		case 'center': 
+			$float=' ngg-center';
+			break;
+
+		default: 
+			$float='';
+			break;
+	}
 		
 	// Start building the output HTML
 	//--
@@ -111,13 +131,9 @@ function ngg_do_thumb_shortcode($atts, $content=null) {
 		//--
 		$thumbcode = $picture->get_thumbcode($group);
 		
-		// The float code
-		//--
-		$style = ($float=='') ? '' : ' style="float:' . $float . ';" ';
-		
 		// create output
 		//--
-		$out .= '<div id="ngg-image-' . $picture->pid . '" class="ngg-gallery-thumbnail-box ' . $class_desc . '" ' . $style . '>' . "\n\t";
+		$out .= '<div id="ngg-image-' . $picture->pid . '" class="ngg-gallery-thumbnail-box ' . $class_desc . ' ' . $float . '">' . "\n\t";
 		$out .= '<div class="ngg-gallery-thumbnail" ' . $setwidth . ' >' . "\n\t";
 		$out .= '<a id="thumb' . $picture->pid . '" href="' . $link . '" title="' . stripslashes($picture->description) . '" ' . $thumbcode . ' >';
 		$out .= '<img title="' . stripslashes($picture->alttext) . '" alt="' . stripslashes($picture->alttext) . '" ';
@@ -125,9 +141,9 @@ function ngg_do_thumb_shortcode($atts, $content=null) {
 		$out .= '</a>' . "\n";
 		
 		if ($caption == "alttext") {
-			$out .= '<span>' . html_entity_decode(stripslashes($picture->alttext)) . '</span>' . "\n";
+			$out .= '<div>' . html_entity_decode(stripslashes($picture->alttext)) . '</div>' . "\n";
 		} else if ($caption == "desc") {
-			$out .= '<span>' . html_entity_decode(stripslashes($picture->description)) . '</span>' . "\n";
+			$out .= '<div>' . html_entity_decode(stripslashes($picture->description)) . '</div>' . "\n";
 		}
 		
 		// add filter for the output
