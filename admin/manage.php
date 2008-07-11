@@ -599,12 +599,12 @@ if($picturelist) {
 					break;
 					case 'description' :
 						?>
-						<td><textarea name="description[<?php echo $pid ?>]" class="textarea1" cols="30" rows="2" ><?php echo stripslashes($picture->description) ?></textarea></td>
+						<td><textarea name="description[<?php echo $pid ?>]" class="textarea1" cols="42" rows="2" ><?php echo stripslashes($picture->description) ?></textarea></td>
 						<?php						
 					break;
 					case 'alt_title_text' :
 						?>
-						<td><input name="alttext[<?php echo $pid ?>]" type="text" size="20"   value="<?php echo stripslashes($picture->alttext) ?>" /></td>
+						<td><input name="alttext[<?php echo $pid ?>]" type="text" size="30" value="<?php echo stripslashes($picture->alttext) ?>" /></td>
 						<?php						
 					break;
 					case 'exclude' :
