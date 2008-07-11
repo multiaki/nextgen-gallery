@@ -12,6 +12,7 @@ V1.00
             width="" height="" mode="|watermark|web20"]extra caption here[/picture]
   shortcode. You can now insert single picture with some effect, resized or not, with 
   or without caption.
+- Changed : improved the gallery management page.
 - Changed : Renammed the filter 'ngg_create_gallery_thumbcode' to 'ngg_get_thumbcode'.
 - Changed : Convert tags to WP-Taxonomy tables, no more need for ngg_tags, ngg_pic2tags
 - Changed : Arrange fields in a new way

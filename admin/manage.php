@@ -544,12 +544,28 @@ jQuery(document).ready( function() {
 	<tbody>
 <?php
 if($picturelist) {
+	$ngg_options = nggallery::get_option('ngg_options');
+	$thumbwidth = $ngg_options['thumbwidth'];
+	$thumbheight = $ngg_options['thumbheight'];	
+	
+	$thumbsize = "";
+	if ($ngg_options['thumbfix']) {
+		$thumbsize = 'width="'.$thumbwidth.'" height="'.$thumbheight.'"';
+	}
+	
+	if ($ngg_options['thumbcrop']) {
+		$thumbsize = 'width="'.$thumbwidth.'" height="'.$thumbwidth.'"';
+	}
+		
 	foreach($picturelist as $picture) {
 
 		$pid     = $picture->pid;
 		$class   = ( $class == 'class="alternate"' ) ? '' : 'class="alternate"';	
 		$exclude = ( $picture->exclude ) ? 'checked="checked"' : '';
-
+		$image	 = new nggImage($pid);
+		$thumbnailURL 	= get_option ('siteurl') . "/" . $image->path . nggallery::get_thumbnail_folder($image->path, FALSE);
+		$thumb_prefix   = nggallery::get_thumbnail_prefix($image->path, FALSE);
+		
 		?>
 		<tr id="picture-<?php echo $pid ?>" <?php echo $class ?> style="text-align:center">
 			<?php foreach($gallery_columns as $gallery_column_key => $column_display_name) {
@@ -566,15 +582,19 @@ if($picturelist) {
 					break;
 					case 'filename' :
 						?>
-						<td class="media-icon" ><?php echo $picture->filename ?></td>
+						<td class="media-icon" style="text-align: left;">
+							<a href="<?php echo $image->imagePath; ?>" class="thickbox" title="<?php echo $picture->filename ?>">
+								<?php echo $picture->filename ?>
+							</a>
+						</td>
 						<?php						
 					break;
 					case 'thumbnail' :
-						//TODO:Could be better, simpler
-						$src = $act_thumb_abs_src. "thumbs_" .$picture->filename;
-						list( $width, $height ) = nggallery::scale_image($src, 80, 60) ;
 						?>
-						<td><img class="thumb" src="<?php echo $act_thumbnail_url. "thumbs_" .$picture->filename ?>" width="<?php echo $width ?>" height="<?php echo $height ?>" /></td>
+						<td><a href="<?php echo $image->imagePath; ?>" class="thickbox" title="<?php echo $picture->filename ?>">
+								<img class="thumb" src="<?php echo $thumbnailURL . $thumb_prefix . $picture->filename; ?>" <?php echo $thumbsize ?> />
+							</a>
+						</td>
 						<?php						
 					break;
 					case 'description' :
@@ -761,10 +781,13 @@ function ngg_manage_gallery_columns() {
 	
 	$gallery_columns['cb'] = '<input name="checkall" type="checkbox" onclick="checkAll(document.getElementById(\'updategallery\'));" />';
 	$gallery_columns['id'] = __('ID');
-	$gallery_columns['filename'] = __('File name', 'nggallery');
 	
-	if ( !ngg_hide_thumb() )
+	if ( !ngg_hide_thumb() ) {
 		$gallery_columns['thumbnail'] = __('Thumbnail', 'nggallery');
+	} else {
+		$gallery_columns['filename'] = __('File name', 'nggallery');
+	}
+	
 	if ( !ngg_show_tags() )	{
 		$gallery_columns['description'] = __('Description', 'nggallery');
 		$gallery_columns['alt_title_text'] = __('Alt &amp; Title Text', 'nggallery');
