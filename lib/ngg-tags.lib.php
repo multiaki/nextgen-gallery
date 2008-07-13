@@ -77,16 +77,18 @@ class nggTags {
 
 		$picarray = array();
 
-		foreach($slugarray as $slug) {
-			// get random picture of tag			
-			$tsql  = "SELECT p.*, t.*, tt.* FROM $wpdb->term_relationships tr INNER JOIN $wpdb->nggpictures AS p ON (tr.object_id = p.pid) INNER JOIN $wpdb->term_taxonomy tt ON (tr.term_taxonomy_id = tt.term_taxonomy_id) INNER JOIN $wpdb->terms t ON (tt.term_id = t.term_id)";
-			$tsql .= " WHERE tt.taxonomy = '$taxonomy' AND t.slug = '$slug' ORDER BY rand() limit 1  ";
-			$pic_data = $wpdb->get_row($tsql);
+		foreach($slugarray as $slug) {  
+			// get random picture of tag 
+			$tsql  = "SELECT p.*, g.*, t.*, tt.* FROM $wpdb->term_relationships AS tr";  
+			$tsql .= " INNER JOIN $wpdb->nggpictures AS p ON (tr.object_id = p.pid)"; 
+			$tsql .= " INNER JOIN $wpdb->nggallery AS g ON (g.gid = p.galleryid)"; 
+			$tsql .= " INNER JOIN $wpdb->term_taxonomy AS tt ON (tr.term_taxonomy_id = tt.term_taxonomy_id)"; 
+			$tsql .= " INNER JOIN $wpdb->terms AS t ON (tt.term_id = t.term_id)"; 
+			$tsql .= " WHERE tt.taxonomy = '$taxonomy' AND t.slug = '$slug' ORDER BY rand() limit 1 "; 
+			$pic_data = $wpdb->get_row($tsql, OBJECT);  
 			
-			if ($pic_data) {
-				$picarray[] = (array) $pic_data;
-			}
-		}
+			if ($pic_data) $picarray[] = $pic_data;  
+		} 
 		
 		return $picarray;
 	}
