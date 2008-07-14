@@ -48,7 +48,7 @@ class nggTags {
 			
 			$i = 0;
 			foreach ($picarray as $pid) {
-				$result[$i] = new nggImage($pid);
+				$result[$i] = nggImageDAO::find_image($pid);
 				$i++;
 			}
 		}

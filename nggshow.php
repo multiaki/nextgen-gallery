@@ -28,7 +28,7 @@ global $wpdb;
 // reference thumbnail class
 //--
 include_once('lib/ngg-thumbnail.lib.php');
-include_once('lib/ngg-gallery.lib.php');
+include_once('lib/ngg-gallery-plugin.lib.php');
 
 // get the plugin options
 //--
@@ -43,7 +43,7 @@ $width = $_GET['width'];
 
 // let's get the image data
 //--
-$picture  = new nggImage($pictureID);
+$picture  = nggImageDAO::find_image($pictureID);
 $thumb = new ngg_Thumbnail($picture->absPath);
 
 // Resize if necessary

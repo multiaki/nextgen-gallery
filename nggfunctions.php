@@ -7,7 +7,7 @@ function searchnggallerytags($content) {
 	global $wpdb;
 	
 	//TODO:Refactor this to a class
-	$ngg_options = nggallery::get_option('ngg_options');
+	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
 	
 	if ( stristr( $content, '[singlepic' )) {
 		
@@ -156,7 +156,7 @@ function nggShowSlideshow($galleryID,$irWidth,$irHeight) {
 	
 	global $wpdb, $post;
 
-	$ngg_options = nggallery::get_option('ngg_options');
+	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
 	
 	// if you use this outside the loop
 	if (empty($post)) $post->ID = rand(10,1000);
@@ -226,7 +226,7 @@ function nggShowGallery($galleryID) {
 	
 	global $wpdb, $nggRewrite;
 	
-	$ngg_options = nggallery::get_option('ngg_options');
+	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
 	$galleryID = (int) $galleryID;
 
 	// $_GET from wp_query
@@ -283,7 +283,7 @@ function nggShowGallery($galleryID) {
 function nggCreateGallery($picturelist, $galleryID = false) {
     global $nggRewrite;
     
-    $ngg_options = nggallery::get_option('ngg_options');
+    $ngg_options = nggGalleryPlugin::get_option('ngg_options');
 	$siteurl = get_option ('siteurl');
 	    
     // $_GET from wp_query
@@ -336,14 +336,14 @@ function nggCreateGallery($picturelist, $galleryID = false) {
 		// return the list of images we need
 		array_splice($picturelist, $maxElement);
 	
-		$navigation = nggallery::create_navigation($page, $total, $maxElement);
+		$navigation = nggGalleryPlugin::create_navigation($page, $total, $maxElement);
 	} else {
 		$navigation = '<div class="ngg-clear">&nbsp;</div>';
 	}	
 
 	foreach ($picturelist as $key => $picture) {
 		// Get image
-		$image = new nggImage($picture->pid);
+		$image = nggImageDAO::find_image($picture->pid);
 	
 		// set image url
 		$folder_url		= $siteurl."/".$picture->path."/";
@@ -366,7 +366,7 @@ function nggCreateGallery($picturelist, $galleryID = false) {
 	}
 
 	// create the output
-	$out = nggallery::capture ('gallery', array ('gallery' => $gallery, 'images' => $picturelist, 'pagination' => $navigation) );
+	$out = nggGalleryPlugin::capture ('gallery', array ('gallery' => $gallery, 'images' => $picturelist, 'pagination' => $navigation) );
 
 	return $out;
 }
@@ -412,7 +412,7 @@ function nggCreateAlbum( $galleriesID, $mode = "extend", $albumID = 0) {
 	
 	global $wpdb, $nggRewrite;
 	
-	$ngg_options = nggallery::get_option('ngg_options');
+	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
 	$sortorder = $galleriesID;
 	$galleries = array();
 	// if sombod didn't enter any mode , take the extend version
@@ -467,7 +467,7 @@ function nggCreateAlbum( $galleriesID, $mode = "extend", $albumID = 0) {
  	$out = '';
  	
 	// create the output
-	$out = nggallery::capture ('album-'.$mode, array ('albumID' => $albumID, 'galleries' => $galleries, 'mode' => $mode) );
+	$out = nggGalleryPlugin::capture ('album-'.$mode, array ('albumID' => $albumID, 'galleries' => $galleries, 'mode' => $mode) );
 
 	return $out;
  	
@@ -482,7 +482,7 @@ function nggShowImageBrowser($galleryID) {
 	
 	global $wpdb;
 	
-	$ngg_options = nggallery::get_option('ngg_options');
+	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
 	
 	// get the pictures
 	$galleryID = $wpdb->escape($galleryID);
@@ -532,7 +532,7 @@ function nggCreateImageBrowser($picarray) {
 	$next_pid = ( $key < ($total-1) ) ? $picarray[$key+1] : reset($picarray) ;
 	
 	// get the picture data
-	$picture = new nggImage($act_pid);
+	$picture = nggImageDAO::find_image($act_pid);
 	
 	// add more variables for render output
 	$picture->href_link = $picture->get_href_link();
@@ -550,7 +550,7 @@ function nggCreateImageBrowser($picarray) {
 	$xmp  = $meta->get_XMP();
 		
 	// create the output
-	$out = nggallery::capture ('imagebrowser', array ('image' => $picture , 'meta' => $meta, 'exif' => $exif, 'iptc' => $iptc, 'xmp' => $xmp) );
+	$out = nggGalleryPlugin::capture ('imagebrowser', array ('image' => $picture , 'meta' => $meta, 'exif' => $exif, 'iptc' => $iptc, 'xmp' => $xmp) );
 	
 	return $out;
 	
@@ -568,7 +568,7 @@ function nggCreateImageBrowser($picarray) {
 function nggSinglePicture($imageID,$width=250,$height=250,$mode="",$float="") {
 	global $wpdb, $post;
 	
-	$ngg_options = nggallery::get_option('ngg_options');
+	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
 	
 	// remove the comma
 	$float = ltrim($float,',');
@@ -577,7 +577,7 @@ function nggSinglePicture($imageID,$width=250,$height=250,$mode="",$float="") {
 	$height = ltrim($height,',');
 
 	// get picturedata
-	$picture = new nggImage($imageID);
+	$picture = nggImageDAO::find_image($imageID);
 	
 	// add float to img
 	if (!empty($float)) {
@@ -663,7 +663,7 @@ function nggShowGalleryTags($taglist) {
 function nggShowRelatedGallery($taglist, $maxImages = 0) {
 	global $wpdb;
 	
-	$ngg_options = nggallery::get_option('ngg_options');
+	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
 	
 	// get now the related images
 	$picturelist = nggTags::get_images($taglist, 'RAND');
@@ -683,7 +683,7 @@ function nggShowRelatedGallery($taglist, $maxImages = 0) {
 	foreach ($picturelist as $picture) {
 		// set gallery url
 		$folder_url 	= get_option ('siteurl')."/".$picture->path."/";
-		$thumbnailURL 	= get_option ('siteurl')."/".$picture->path.nggallery::get_thumbnail_folder($picture->path, FALSE);
+		$thumbnailURL 	= get_option ('siteurl')."/".$picture->path.nggGalleryPlugin::get_thumbnail_folder($picture->path, FALSE);
 
 		// get the effect code
 		$thumbcode = $picture->get_thumbcode("Related images for " . get_the_title());
@@ -744,7 +744,7 @@ function nggShowAlbumTags($taglist) {
 	}	
 
 	// create the output
-	$out = nggallery::capture ('album-compact', array ('albumID' => '0', 'galleries' => $picturelist, 'mode' => 'compact') );
+	$out = nggGalleryPlugin::capture ('album-compact', array ('albumID' => '0', 'galleries' => $picturelist, 'mode' => 'compact') );
 	
 	$out = apply_filters('ngg_show_album_tags_content', $out, $taglist);
 	
@@ -755,7 +755,7 @@ function nggShowAlbumTags($taglist) {
 * return related images based on category or tags
 */
 function nggShowRelatedImages($type = '', $maxImages = 0) {
-	$ngg_options = nggallery::get_option('ngg_options');
+	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
 
 	if ($type == '') {
 		$type = $ngg_options['appendType'];

@@ -2,11 +2,9 @@
 
 /**
 * Image PHP class for the WordPress plugin NextGEN Gallery
-* nggallery.lib.php
 * 
 * @author 		Alex Rabe 
 * @copyright 	Copyright 2007-2008
-* 
 */
 class nggImage{
 	
@@ -22,7 +20,8 @@ class nggImage{
 	
 	/**** Image Data ****/
 	var $galleryid		=	0;			// Gallery ID
-	var $imageID		=	0;			// Image ID	
+	var $imageID		=	0;			// TODO: remove Image ID	
+	var $pid			=	0;			// Image ID	
 	var $filename		=	"";			// Image filename
 	var $description	=	"";			// Image description	
 	var $alttext		=	"";			// Image alttext	
@@ -30,44 +29,43 @@ class nggImage{
 	var $thumbcode		=	"";			// Image effect code
 
 	/**** Gallery Data ****/
+	var $gallery 		= 	null;		// TODO: remove the fields below
 	var $name			=	"";			// Gallery name
 	var $path			=	"";			// Gallery path	
 	var $title			=	"";			// Gallery title
 	var $pageid			=	0;			// Gallery page ID
 	var $previewpic		=	0;			// Gallery preview pic				
-	
+		
 	/**
 	* Constructor
+	* 
+	* @gallery The nggGallery object representing the gallery containing this image
+	* @row The database row from which to initialise the object fields
 	*/
-	function nggImage($imageID = '0') {		
-		global $wpdb;
-		
-		//initialize variables
-		$this->imageID = (int) $imageID;
-		
-		// get image values
-		$imageData = $wpdb->get_row("SELECT * FROM $wpdb->nggpictures WHERE pid = '$this->imageID' ") or $this->error = true;
-		if($this->error == false) {
-			foreach ($imageData as $key => $value) {
-				$this->$key = $value ;
-			}
+	function nggImage($gallery, $row) {			
+		// Copy fields from database row
+		//--
+		foreach ($row as $key => $value) {
+			$this->$key = $value ;
 		}
 		
-		// get gallery values
-		$galleryData = $wpdb->get_row("SELECT * FROM $wpdb->nggallery WHERE gid = '$this->galleryid' ") or $this->error = true;
-		if($this->error == false) {
-			foreach ($galleryData as $key => $value) {
-				$this->$key = $value ;	
-			}
-		}
+		// Finish initialisation
+		//--
+		$this->imageID 		= $this->pid;
 		
-		if($this->error == false) {
-			// set gallery url
-			$this->get_thumbnail_folder($this->path, FALSE);
-			$this->imagePath 	= get_option ('siteurl')."/".$this->path."/".$this->filename;
-			$this->thumbPath 	= get_option ('siteurl')."/".$this->path.$this->thumbFolder.$this->thumbPrefix.$this->filename;
-			$this->absPath 		= WINABSPATH.$this->path."/".$this->filename;
-		}
+		$this->gallery 		= $gallery;
+		$this->name			= $gallery->name;
+		$this->path			= $gallery->path;
+		$this->title		= $gallery->title;
+		$this->pageid		= $gallery->pageid;		
+		$this->previewpic	= $gallery->previewpic;
+	
+		// set urls and paths
+		//--
+		$this->get_thumbnail_folder($this->path, FALSE);
+		$this->imagePath 	= get_option ('siteurl')."/".$this->path."/".$this->filename;
+		$this->thumbPath 	= get_option ('siteurl')."/".$this->path.$this->thumbFolder.$this->thumbPrefix.$this->filename;
+		$this->absPath 		= WINABSPATH.$this->path."/".$this->filename;
 	}
 	
 	/**********************************************************/

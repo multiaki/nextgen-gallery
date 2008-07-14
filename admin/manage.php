@@ -1,6 +1,8 @@
 <?php  
 
-if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
+if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { 
+	die('You are not allowed to call this page directly.'); 
+}
 
 function nggallery_admin_manage_gallery() {
 	global $wpdb;
@@ -27,7 +29,7 @@ function nggallery_admin_manage_gallery() {
 		// get the path to the gallery
 		$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$act_gid' ");
 		if ($gallerypath){
-			$thumb_folder = nggallery::get_thumbnail_folder($gallerypath, FALSE);
+			$thumb_folder = nggGalleryPlugin::get_thumbnail_folder($gallerypath, FALSE);
 	
 			// delete pictures
 			$imagelist = $wpdb->get_col("SELECT filename FROM $wpdb->nggpictures WHERE galleryid = '$act_gid' ");
@@ -59,7 +61,7 @@ function nggallery_admin_manage_gallery() {
 		if ($filename) {
 			$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$act_gid' ");
 			if ($gallerypath){
-				$thumb_folder = nggallery::get_thumbnail_folder($gallerypath, FALSE);
+				$thumb_folder = nggGalleryPlugin::get_thumbnail_folder($gallerypath, FALSE);
 				if ($ngg_options['deleteImg']) {
 					@unlink(WINABSPATH.$gallerypath.'/'.$thumb_folder.'/'. "thumbs_" .$filename);
 					@unlink(WINABSPATH.$gallerypath.'/'.$filename);
@@ -94,23 +96,23 @@ function nggallery_admin_manage_gallery() {
 			case 1:
 			// Set watermark
 				nggAdmin::generateWatermark(WINABSPATH.$gallerypath,$imageslist);
-				nggallery::show_message(__('Watermark successfully added',"nggallery"));
+				nggGalleryPlugin::show_message(__('Watermark successfully added',"nggallery"));
 				break;
 			case 2:
 			// Create new thumbnails
 				nggAdmin::generateThumbnail(WINABSPATH.$gallerypath,$imageslist);
-				nggallery::show_message(__('Thumbnails successfully created. Please refresh your browser cache.',"nggallery"));
+				nggGalleryPlugin::show_message(__('Thumbnails successfully created. Please refresh your browser cache.',"nggallery"));
 				break;
 			case 3:
 			// Resample images
 				nggAdmin::resizeImages(WINABSPATH.$gallerypath,$imageslist);
-				nggallery::show_message(__('Images successfully resized',"nggallery"));
+				nggGalleryPlugin::show_message(__('Images successfully resized',"nggallery"));
 				break;
 			case 4:
 			// Delete images
 				if ( is_array($_POST['doaction']) ) {
 				if ($gallerypath){
-					$thumb_folder = nggallery::get_thumbnail_folder($gallerypath, FALSE);
+					$thumb_folder = nggGalleryPlugin::get_thumbnail_folder($gallerypath, FALSE);
 					foreach ( $_POST['doaction'] as $imageID ) {
 						$filename = $wpdb->get_var("SELECT filename FROM $wpdb->nggpictures WHERE pid = '$imageID' ");
 						if ($ngg_options['deleteImg']) {
@@ -121,13 +123,13 @@ function nggallery_admin_manage_gallery() {
 					}
 				}		
 				if($delete_pic)
-					nggallery::show_message(__('Pictures deleted successfully ',"nggallery"));
+					nggGalleryPlugin::show_message(__('Pictures deleted successfully ',"nggallery"));
 				}
 				break;
 			case 8:
 			// Import Metadata
 				nggAdmin::import_MetaData($_POST['doaction']);
-				nggallery::show_message(__('Import metadata finished',"nggallery"));
+				nggGalleryPlugin::show_message(__('Import metadata finished',"nggallery"));
 				break;
 		}
 	}
@@ -170,7 +172,7 @@ function nggallery_admin_manage_gallery() {
 			}
 		}
 
-		nggallery::show_message(__('Tags changed',"nggallery"));
+		nggGalleryPlugin::show_message(__('Tags changed',"nggallery"));
 	}
 
 	if (isset ($_POST['updatepictures']))  {
@@ -199,7 +201,7 @@ function nggallery_admin_manage_gallery() {
 		//hook for other plugin to update the fields
 		do_action('ngg_update_gallery', $act_gid, $_POST);
 
-		nggallery::show_message(__('Update successful',"nggallery"));
+		nggGalleryPlugin::show_message(__('Update successful',"nggallery"));
 	}
 
 	if (isset ($_POST['scanfolder']))  {
@@ -283,7 +285,8 @@ function nggallery_manage_gallery_main() {
 			</thead>
 			<tbody>
 <?php			
-$gallerylist = $wpdb->get_results("SELECT * FROM $wpdb->nggallery ORDER BY gid ASC");
+$gallerylist = nggGalleryDAO::find_all_galleries('gid', 'asc');
+
 if($gallerylist) {
 	foreach($gallerylist as $gallery) {
 		$class = ( $class == 'class="alternate"' ) ? '' : 'class="alternate"';
@@ -334,17 +337,18 @@ function nggallery_picturelist($hideThumbs = false,$showTags = false) {
 	// get the options
 	$ngg_options = get_option('ngg_options');	
 	
-	//TODO:A unique gallery call must provide me with this information, like $gallery  = new nggGallery($id);
-	
 	// get gallery values
-	$act_gallery = $wpdb->get_row("SELECT * FROM $wpdb->nggallery WHERE gid = '$act_gid' ");
-
+	$act_gallery = nggGalleryDAO::find_gallery($act_gid);
+	if ($act_gallery==null) {
+		nggGalleryPlugin::show_error(__('Gallery not found.', 'nggallery'));
+	}
+	
 	//TODO:Redundant, Redundant, Redundant... REWORK
 	// set gallery url
 	$act_gallery_url 	= get_option ('siteurl')."/".$act_gallery->path."/";
-	$act_thumbnail_url 	= get_option ('siteurl')."/".$act_gallery->path.nggallery::get_thumbnail_folder($act_gallery->path, FALSE);
+	$act_thumbnail_url 	= get_option ('siteurl')."/".$act_gallery->path.nggGalleryPlugin::get_thumbnail_folder($act_gallery->path, FALSE);
 	$act_thumb_prefix   = "thumbs_" ;
-	$act_thumb_abs_src	= WINABSPATH.$act_gallery->path.nggallery::get_thumbnail_folder($act_gallery->path, FALSE);
+	$act_thumb_abs_src	= WINABSPATH.$act_gallery->path.nggGalleryPlugin::get_thumbnail_folder($act_gallery->path, FALSE);
 ?>
 
 <script type="text/javascript"> 
@@ -450,7 +454,7 @@ jQuery(document).ready( function() {
 						<select name="previewpic" >
 							<option value="0" ><?php _e('No Picture', 'nggallery') ?></option>
 							<?php
-								$picturelist = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures WHERE galleryid = '$act_gid' ORDER BY $ngg_options[galSort] $ngg_options[galSortDir]");
+								$picturelist = nggImageDAO::find_images_in_gallery($act_gallery, $ngg_options[galSort], $ngg_options[galSortDir]);
 								if(is_array($picturelist)) {
 									foreach($picturelist as $picture) {
 										if ($picture->pid == $act_gallery->previewpic) $selected = 'selected="selected" ';
@@ -555,7 +559,7 @@ jQuery(document).ready( function() {
 	<tbody>
 <?php
 if($picturelist) {
-	$ngg_options = nggallery::get_option('ngg_options');
+	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
 	$thumbwidth = $ngg_options['thumbwidth'];
 	$thumbheight = $ngg_options['thumbheight'];	
 	
@@ -573,9 +577,8 @@ if($picturelist) {
 		$pid     = $picture->pid;
 		$class   = ( $class == 'class="alternate"' ) ? '' : 'class="alternate"';	
 		$exclude = ( $picture->exclude ) ? 'checked="checked"' : '';
-		$image	 = new nggImage($pid);
-		$thumbnailURL 	= get_option ('siteurl') . "/" . $image->path . nggallery::get_thumbnail_folder($image->path, FALSE);
-		$thumb_prefix   = nggallery::get_thumbnail_prefix($image->path, FALSE);
+		$thumbnailURL 	= get_option ('siteurl') . "/" . $picture->path . nggGalleryPlugin::get_thumbnail_folder($picture->path, FALSE);
+		$thumb_prefix   = nggGalleryPlugin::get_thumbnail_prefix($picture->path, FALSE);
 		
 		?>
 		<tr id="picture-<?php echo $pid ?>" <?php echo $class ?> style="text-align:center">
@@ -594,7 +597,7 @@ if($picturelist) {
 					case 'filename' :
 						?>
 						<td class="media-icon" style="text-align: left;">
-							<a href="<?php echo $image->imagePath; ?>" class="thickbox" title="<?php echo $picture->filename ?>">
+							<a href="<?php echo $picture->imagePath; ?>" class="thickbox" title="<?php echo $picture->filename ?>">
 								<?php echo $picture->filename ?>
 							</a>
 						</td>
@@ -602,7 +605,7 @@ if($picturelist) {
 					break;
 					case 'thumbnail' :
 						?>
-						<td><a href="<?php echo $image->imagePath; ?>" class="thickbox" title="<?php echo $picture->filename ?>">
+						<td><a href="<?php echo $picture->imagePath; ?>" class="thickbox" title="<?php echo $picture->filename ?>">
 								<img class="thumb" src="<?php echo $thumbnailURL . $thumb_prefix . $picture->filename; ?>" <?php echo $thumbsize ?> />
 							</a>
 						</td>
@@ -632,7 +635,6 @@ if($picturelist) {
 					break;
 					case 'action' :
 						?>
-						<td><a href="<?php echo $act_gallery_url.$picture->filename ?>" class="thickbox" title="<?php echo $picture->alttext ?>" ><?php _e('View') ?></a></td>
 						<td><a href="<?php echo NGGALLERY_URLPATH."admin/showmeta.php?id=".$pid ?>" class="thickbox" title="<?php _e("Show Meta data",'nggallery')?>" ><?php _e('Meta') ?></a></td>
 						<td><a href="<?php echo wp_nonce_url("admin.php?page=nggallery-manage-gallery&amp;mode=delpic&amp;gid=".$act_gid."&amp;pid=".$pid, 'ngg_delpicture')?>" class="delete" onclick="javascript:check=confirm( '<?php _e("Delete this file ?",'nggallery')?>');if(check==false) return false;" ><?php _e('Delete') ?></a></td>
 						<?php

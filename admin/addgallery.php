@@ -32,7 +32,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		if ($_FILES['zipfile']['error'] == 0) 
 			$messagetext = nggAdmin::import_zipfile($defaultpath);
 		else
-			nggallery::show_error(__('Upload failed!','nggallery'));
+			nggGalleryPlugin::show_error(__('Upload failed!','nggallery'));
 	}
 	
 	if ($_POST['importfolder']){
@@ -48,12 +48,12 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			$messagetext = nggAdmin::upload_images();
 		}
 		else
-			nggallery::show_error(__('Upload failed!','nggallery'));	
+			nggGalleryPlugin::show_error(__('Upload failed!','nggallery'));	
 	}
 	
 	if (isset($_POST['swf_callback'])){
 		if ($_POST['galleryselect'] == "0" )
-			nggallery::show_error(__('No gallery selected !','nggallery'));
+			nggGalleryPlugin::show_error(__('No gallery selected !','nggallery'));
 		else {
 			// get the path to the gallery
 			$galleryID = (int) $_POST['galleryselect'];

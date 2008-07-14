@@ -27,7 +27,7 @@ function media_upload_nextgen() {
 		
 		// here is no new line allowed
 		$clean_description = preg_replace("/\n|\r\n|\r$/", " ", $description);
-		$img = new nggImage($send_id);
+		$img = nggImageDAO::find_image($send_id);
 		$thumbcode = $img->get_thumbcode();
 		$class="ngg-singlepic ngg-{$image['align']}";
 		
@@ -172,7 +172,7 @@ function media_upload_nextgen_form($errors) {
 	if(is_array($picarray)) {
 		foreach ($picarray as $picid) {
 			//TODO:Reduce SQL Queries
-			$picture  = new nggImage($picid);
+			$picture = nggImageDAO::find_image($picid);
 			?>
 			<div id='media-item-<?php echo $picid ?>' class='media-item preloaded'>
 			  <div class='filename'></div>

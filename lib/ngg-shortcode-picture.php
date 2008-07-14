@@ -75,7 +75,7 @@ function ngg_do_picture_shortcode($atts, $content=null) {
 
 	// get picture data
 	//--
-	$picture = new nggImage($id);
+	$picture = nggImageDAO::find_image($id);
 
 	// check for cached picture
 	//--

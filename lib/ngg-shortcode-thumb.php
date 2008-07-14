@@ -65,7 +65,7 @@ function ngg_do_thumb_shortcode($atts, $content=null) {
 	
 	// Get ngg options
 	//--
-	$ngg_options = nggallery::get_option('ngg_options');
+	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
 	
 	// set thumb size 
 	//--
@@ -114,13 +114,13 @@ function ngg_do_thumb_shortcode($atts, $content=null) {
 	foreach ($pids as $pid) {	
 		// Get picture
 		//--
-		$picture = new nggImage($pid);
+		$picture = nggImageDAO::find_image($pid);
 	
 		// set image url
 		//--
 		$folder_url 	= get_option ('siteurl') . "/" . $picture->path . "/";
-		$thumbnailURL 	= get_option ('siteurl') . "/" . $picture->path . nggallery::get_thumbnail_folder($picture->path, FALSE);
-		$thumb_prefix   = nggallery::get_thumbnail_prefix($picture->path, FALSE);
+		$thumbnailURL 	= get_option ('siteurl') . "/" . $picture->path . nggGalleryPlugin::get_thumbnail_folder($picture->path, FALSE);
+		$thumb_prefix   = nggGalleryPlugin::get_thumbnail_prefix($picture->path, FALSE);
 
 		// choose link between imagebrowser or effect
 		//--

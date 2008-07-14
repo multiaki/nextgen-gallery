@@ -16,7 +16,7 @@ function nggallery_admin_manage_album()  {
 		if ($_POST['newalbum']){ 
 			$newalbum = attribute_escape($_POST['newalbum']);
 			$result = $wpdb->query(" INSERT INTO $wpdb->nggalbum (name, sortorder) VALUES ('$newalbum','0')");
-			if ($result) nggallery::show_message(__('Update Successfully','nggallery'));
+			if ($result) nggGalleryPlugin::show_message(__('Update Successfully','nggallery'));
 		} 
 		
 		if ($albumID > 0){
@@ -33,7 +33,7 @@ function nggallery_admin_manage_album()  {
 			} else {
 				$wpdb->query("UPDATE $wpdb->nggalbum SET sortorder = '0' WHERE id = $albumID ");
 			}
-			nggallery::show_message(__('Update Successfully','nggallery'));
+			nggGalleryPlugin::show_message(__('Update Successfully','nggallery'));
 		} 
 	}
 	
@@ -41,7 +41,7 @@ function nggallery_admin_manage_album()  {
 		check_admin_referer('ngg_album');
 
 		$result = $wpdb->query("DELETE FROM $wpdb->nggalbum WHERE id = '$albumID' ");
-		if ($result) nggallery::show_message(__('Album deleted','nggallery'));
+		if ($result) nggGalleryPlugin::show_message(__('Album deleted','nggallery'));
 	}
 	
 ?>
@@ -234,7 +234,7 @@ function getgallerycontainer($galleryid = 0, $used = false) {
 	if ($gallery) {
 
 		// set image url
-		$act_thumbnail_url 	= get_option ('siteurl')."/".$gallery->path.nggallery::get_thumbnail_folder($gallery->path, FALSE);
+		$act_thumbnail_url 	= get_option ('siteurl')."/".$gallery->path.nggGalleryPlugin::get_thumbnail_folder($gallery->path, FALSE);
 		
 		$post= get_post($gallery->pageid); 	
 		$pagename = $post->post_title;	

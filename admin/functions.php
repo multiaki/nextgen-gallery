@@ -20,7 +20,7 @@ class nggAdmin{
 		
 		// No gallery name ?
 		if (empty($galleryname)) {	
-			nggallery::show_error( __('No valid gallery name!', 'nggallery') );
+			nggGalleryPlugin::show_error( __('No valid gallery name!', 'nggallery') );
 			return false;
 		}
 		
@@ -29,7 +29,7 @@ class nggAdmin{
 			if ( !wp_mkdir_p($nggRoot) ) {
 				$txt  = __('Directory', 'nggallery').' <strong>'.$defaultpath.'</strong> '.__('didn\'t exist. Please create first the main gallery folder ', 'nggallery').'!<br />';
 				$txt .= __('Check this link, if you didn\'t know how to set the permission :', 'nggallery').' <a href="http://codex.wordpress.org/Changing_File_Permissions">http://codex.wordpress.org/Changing_File_Permissions</a> ';
-				nggallery::show_error($txt);
+				nggGalleryPlugin::show_error($txt);
 				return false;
 			}
 		}
@@ -38,7 +38,7 @@ class nggAdmin{
 		if ( !is_writeable($nggRoot ) ) {
 			$txt  = __('Directory', 'nggallery').' <strong>'.$defaultpath.'</strong> '.__('is not writeable !', 'nggallery').'<br />';
 			$txt .= __('Check this link, if you didn\'t know how to set the permission :', 'nggallery').' <a href="http://codex.wordpress.org/Changing_File_Permissions">http://codex.wordpress.org/Changing_File_Permissions</a> ';
-			nggallery::show_error($txt);
+			nggGalleryPlugin::show_error($txt);
 			return false;
 		}
 		
@@ -62,7 +62,7 @@ class nggAdmin{
 			$help  = __('The server setting Safe-Mode is on !', 'nggallery');	
 			$help .= '<br />'.__('If you have problems, please create directory', 'nggallery').' <strong>'.$nggpath.'</strong> ';	
 			$help .= __('and the thumbnails directory', 'nggallery').' <strong>'.$nggpath.'/thumbs</strong> '.__('with permission 777 manually !', 'nggallery');
-			nggallery::show_message($help);
+			nggGalleryPlugin::show_message($help);
 		}
 		
 		// show a error message			
@@ -72,17 +72,17 @@ class nggAdmin{
 				@rmdir(WINABSPATH.$nggpath.'/thumbs');
 				@rmdir(WINABSPATH.$nggpath);
 			}
-			nggallery::show_error($txt);
+			nggGalleryPlugin::show_error($txt);
 			return false;
 		}
 		
 		$result=$wpdb->get_var("SELECT name FROM $wpdb->nggallery WHERE name = '$galleryname' ");
 		if ($result) {
-			nggallery::show_error(__('Gallery', 'nggallery').' <strong>'.$galleryname.'</strong> '.__('already exists', 'nggallery'));
+			nggGalleryPlugin::show_error(__('Gallery', 'nggallery').' <strong>'.$galleryname.'</strong> '.__('already exists', 'nggallery'));
 			return false;			
 		} else { 
 			$result = $wpdb->query("INSERT INTO $wpdb->nggallery (name, path, title, author) VALUES ('$galleryname', '$nggpath', '$gallerytitle' , '$user_ID') ");
-			if ($result) nggallery::show_message(__('Gallery', 'nggallery').' <strong>'.$wpdb->insert_id." : ".$galleryname.'</strong> '.__('successfully created!','nggallery')."<br />".__('You can show this gallery with the tag','nggallery').'<strong> [gallery='.$wpdb->insert_id.']</strong>'); 
+			if ($result) nggGalleryPlugin::show_message(__('Gallery', 'nggallery').' <strong>'.$wpdb->insert_id." : ".$galleryname.'</strong> '.__('successfully created!','nggallery')."<br />".__('You can show this gallery with the tag','nggallery').'<strong> [gallery='.$wpdb->insert_id.']</strong>'); 
 			return true;;
 		} 
 	}
@@ -105,18 +105,18 @@ class nggAdmin{
 		$gallerypath = WINABSPATH.$galleryfolder;
 		
 		if (!is_dir($gallerypath)) {
-			nggallery::show_error(__('Directory', 'nggallery').' <strong>'.$gallerypath.'</strong> '.__('doesn&#96;t exist!', 'nggallery'));
+			nggGalleryPlugin::show_error(__('Directory', 'nggallery').' <strong>'.$gallerypath.'</strong> '.__('doesn&#96;t exist!', 'nggallery'));
 			return ;
 		}
 		
 		// read list of images
 		$new_imageslist = nggAdmin::scandir($gallerypath);
 		if (empty($new_imageslist)) {
-			nggallery::show_message(__('Directory', 'nggallery').' <strong>'.$gallerypath.'</strong> '.__('contains no pictures', 'nggallery'));
+			nggGalleryPlugin::show_message(__('Directory', 'nggallery').' <strong>'.$gallerypath.'</strong> '.__('contains no pictures', 'nggallery'));
 			return;
 		}
 		// check & create thumbnail folder
-		if ( !nggallery::get_thumbnail_folder($gallerypath) )
+		if ( !nggGalleryPlugin::get_thumbnail_folder($gallerypath) )
 			return;
 		
 		// take folder name as gallery name		
@@ -128,7 +128,7 @@ class nggAdmin{
 		if (!$gallery_id) {
 			$result = $wpdb->query("INSERT INTO $wpdb->nggallery (name, path, title, author) VALUES ('$galleryname', '$galleryfolder', '$galleryname', '$user_ID') ");
 			if (!$result) {
-				nggallery::show_error(__('Database error. Could not add gallery!','nggallery'));
+				nggGalleryPlugin::show_error(__('Database error. Could not add gallery!','nggallery'));
 				return;
 			}
 			$created_msg =__('Gallery','nggallery').' <strong>'.$galleryname.'</strong> '.__('successfully created!','nggallery').'<br />';
@@ -147,7 +147,7 @@ class nggAdmin{
 		// add images to database		
 		$count_pic = nggAdmin::add_Images($gallery_id, $gallerypath, $new_images);
 				
-		nggallery::show_message($created_msg.$count_pic.__(' picture(s) successfully added','nggallery'));
+		nggGalleryPlugin::show_message($created_msg.$count_pic.__(' picture(s) successfully added','nggallery'));
 		return;
 
 	}
@@ -212,7 +212,7 @@ class nggAdmin{
 			}
 		}
 		
-		if(!empty($messagetext)) nggallery::show_error('<strong>'.__('Some pictures are not writeable :','nggallery').'</strong><br /><ul>'.$messagetext.'</ul>');
+		if(!empty($messagetext)) nggGalleryPlugin::show_error('<strong>'.__('Some pictures are not writeable :','nggallery').'</strong><br /><ul>'.$messagetext.'</ul>');
 		return;
 	}
 	
@@ -269,7 +269,7 @@ class nggAdmin{
 			}
 		}
 		
-		if(!empty($messagetext)) nggallery::show_error('<strong>'.__('Some pictures are not writeable :','nggallery').'</strong><br /><ul>'.$messagetext.'</ul>');
+		if(!empty($messagetext)) nggGalleryPlugin::show_error('<strong>'.__('Some pictures are not writeable :','nggallery').'</strong><br /><ul>'.$messagetext.'</ul>');
 		return;
 	}
 
@@ -282,7 +282,7 @@ class nggAdmin{
 		
 		$ngg_options = get_option('ngg_options');
 		
-		$thumbfolder = nggallery::get_thumbnail_folder($gallery_absfolder);
+		$thumbfolder = nggGalleryPlugin::get_thumbnail_folder($gallery_absfolder);
 		$prefix = "thumbs_";
 		
 		if (!$thumbfolder)
@@ -363,8 +363,8 @@ class nggAdmin{
 			}
 		}
 
-		if(!empty($errortext)) nggallery::show_error('<strong>'.__('Follow thumbnails could not created.','nggallery').'</strong><br /><ul>'.$errortext.'</ul>');		
-		if(!empty($messagetext)) nggallery::show_error('<strong>'.__('Some thumbnails are not writeable :','nggallery').'</strong><br /><ul>'.$messagetext.'</ul>');
+		if(!empty($errortext)) nggGalleryPlugin::show_error('<strong>'.__('Follow thumbnails could not created.','nggallery').'</strong><br /><ul>'.$errortext.'</ul>');		
+		if(!empty($messagetext)) nggGalleryPlugin::show_error('<strong>'.__('Some thumbnails are not writeable :','nggallery').'</strong><br /><ul>'.$messagetext.'</ul>');
 		
 		return;
 	}
@@ -402,8 +402,7 @@ class nggAdmin{
 			$imagesIds = array($imagesIds);
 		
 		foreach($imagesIds as $pic_id) {
-			
-			$picture  = new nggImage($pic_id );
+			$picture = nggImageDAO::find_image($pic_id);
 			if (!$picture->error) {
 
 				$meta = nggAdmin::get_MetaData($picture->absPath);
@@ -455,7 +454,7 @@ class nggAdmin{
 
 		// extract all files in one folder
 		if ($archive->extract(PCLZIP_OPT_PATH, $dir, PCLZIP_OPT_REMOVE_ALL_PATH, PCLZIP_CB_PRE_EXTRACT, 'ngg_getOnlyImages') == 0) {
-			nggallery::show_error("Error : ".$archive->errorInfo(true));
+			nggGalleryPlugin::show_error("Error : ".$archive->errorInfo(true));
 			return false;
 		}
 
@@ -494,7 +493,7 @@ class nggAdmin{
 			// on whatever reason MAC shows "application/download"
 			if (!eregi('download', $_FILES['zipfile']['type'])) {
 				@unlink($temp_zipfile); // del temp file
-				nggallery::show_error(__('Uploaded file was no or a faulty zip file ! The server recognize : ','nggallery').$_FILES['zipfile']['type']);
+				nggGalleryPlugin::show_error(__('Uploaded file was no or a faulty zip file ! The server recognize : ','nggallery').$_FILES['zipfile']['type']);
 				return; 
 			}
 		
@@ -514,11 +513,11 @@ class nggAdmin{
 			// create new directories
 			if (!wp_mkdir_p ($newfolder)) {
 				$message = sprintf(__('Unable to create directory %s. Is its parent directory writable by the server?', 'nggallery'), $newfolder);
-				nggallery::show_error($message);
+				nggGalleryPlugin::show_error($message);
 				return false;
 			}
 			if (!wp_mkdir_p ($newfolder.'/thumbs')) {
-				nggallery::show_error(__('Unable to create directory ', 'nggallery').$newfolder.'/thumbs !');
+				nggGalleryPlugin::show_error(__('Unable to create directory ', 'nggallery').$newfolder.'/thumbs !');
 				return false;
 			}
 		} 
@@ -533,7 +532,7 @@ class nggAdmin{
 			// parse now the folder and add to database
 			$message .= nggAdmin::import_gallery($defaultpath.$foldername);
 	
-			nggallery::show_message($message);
+			nggGalleryPlugin::show_message($message);
 		}
 		
 		return;
@@ -556,7 +555,7 @@ class nggAdmin{
 		$galleryID = (int) $_POST['galleryselect'];
 
 		if ($galleryID == 0) {
-			nggallery::show_error(__('No gallery selected !','nggallery'));
+			nggGalleryPlugin::show_error(__('No gallery selected !','nggallery'));
 			return;	
 		}
 
@@ -564,7 +563,7 @@ class nggAdmin{
 		$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$galleryID' ");
 
 		if (!$gallerypath){
-			nggallery::show_error(__('Failure in database, no gallery path set !','nggallery'));
+			nggGalleryPlugin::show_error(__('Failure in database, no gallery path set !','nggallery'));
 			return;
 		} 
 				
@@ -585,7 +584,7 @@ class nggAdmin{
 				// check for allowed extension
 				$ext = array("jpeg", "jpg", "png", "gif"); 
 				if (!in_array($filepart['extension'],$ext)){ 
-					nggallery::show_error('<strong>'.$_FILES[$key]['name'].' </strong>'.__('is no valid image file!','nggallery'));
+					nggGalleryPlugin::show_error('<strong>'.$_FILES[$key]['name'].' </strong>'.__('is no valid image file!','nggallery'));
 					continue;
 				}
 
@@ -600,18 +599,18 @@ class nggAdmin{
 				//check for folder permission
 				if (!is_writeable(WINABSPATH.$gallerypath)) {
 					$message = sprintf(__('Unable to write to directory %s. Is this directory writable by the server?', 'nggallery'), WINABSPATH.$gallerypath);
-					nggallery::show_error($message);
+					nggGalleryPlugin::show_error($message);
 					return;				
 				}
 				
 				// save temp file to gallery
 				if (!@move_uploaded_file($_FILES[$key]['tmp_name'], $dest_file)){
-					nggallery::show_error(__('Error, the file could not moved to : ','nggallery').$dest_file);
+					nggGalleryPlugin::show_error(__('Error, the file could not moved to : ','nggallery').$dest_file);
 					nggAdmin::check_safemode(WINABSPATH.$gallerypath);		
 					continue;
 				} 
 				if (!nggAdmin::chmod ($dest_file)) {
-					nggallery::show_error(__('Error, the file permissions could not set','nggallery'));
+					nggGalleryPlugin::show_error(__('Error, the file permissions could not set','nggallery'));
 					continue;
 				}
 				
@@ -630,7 +629,7 @@ class nggAdmin{
 			// add images to database		
 			$count_pic = nggAdmin::add_Images($galleryID, $gallerypath, $imageslist);
 		
-			nggallery::show_message($count_pic.__(' Image(s) successfully added','nggallery'));
+			nggGalleryPlugin::show_message($count_pic.__(' Image(s) successfully added','nggallery'));
 		}
 		
 		return;
@@ -706,7 +705,7 @@ class nggAdmin{
 		// Only for WPMU
 			if ( (IS_WPMU) && wpmu_enable_function('wpmuQuotaCheck'))
 				if( $error = upload_is_user_over_quota( false ) ) {
-					nggallery::show_error( __( 'Sorry, you have used your space allocation. Please delete some files to upload more files.','nggallery' ) );
+					nggGalleryPlugin::show_error( __( 'Sorry, you have used your space allocation. Please delete some files to upload more files.','nggallery' ) );
 					return true;
 				}
 			return false;
@@ -735,7 +734,7 @@ class nggAdmin{
 			if ($script_uid != $folder_uid) {
 				$message  = sprintf(__('SAFE MODE Restriction in effect! You need to create the folder <strong>%s</strong> manually','nggallery'), $foldername);
 				$message .= '<br />' . sprintf(__('When safe_mode is on, PHP checks to see if the owner (%s) of the current script matches the owner (%s) of the file to be operated on by a file function or its directory','nggallery'), $script_uid, $folder_uid );
-				nggallery::show_error($message);
+				nggGalleryPlugin::show_error($message);
 				return false;
 			}
 		}
