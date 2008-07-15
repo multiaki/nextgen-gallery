@@ -60,7 +60,6 @@ class nggImageDAO {
 		
 		return null;
 	}
-	
 }
 
 ?>

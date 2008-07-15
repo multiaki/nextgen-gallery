@@ -14,13 +14,14 @@ class nggImage{
 	var $imagePath		=	"";			// URL Path to the image
 	var $thumbPath		=	"";			// URL Path to the thumbnail
 	var $absPath		=	"";			// Server Path to the image
+	var $href			=	"";			// A href link code
+	
+	// TODO: remove thumbPrefix and thumbFolder (constants)
 	var $thumbPrefix	=	"";			// FolderPrefix to the thumbnail
 	var $thumbFolder	=	"";			// Foldername to the thumbnail
-	var $href			=	"";			// A href link code
 	
 	/**** Image Data ****/
 	var $galleryid		=	0;			// Gallery ID
-	var $imageID		=	0;			// TODO: remove Image ID	
 	var $pid			=	0;			// Image ID	
 	var $filename		=	"";			// Image filename
 	var $description	=	"";			// Image description	
@@ -51,8 +52,6 @@ class nggImage{
 		
 		// Finish initialisation
 		//--
-		$this->imageID 		= $this->pid;
-		
 		$this->gallery 		= $gallery;
 		$this->name			= $gallery->name;
 		$this->path			= $gallery->path;
@@ -62,10 +61,10 @@ class nggImage{
 	
 		// set urls and paths
 		//--
-		$this->get_thumbnail_folder($this->path, FALSE);
-		$this->imagePath 	= get_option ('siteurl')."/".$this->path."/".$this->filename;
-		$this->thumbPath 	= get_option ('siteurl')."/".$this->path.$this->thumbFolder.$this->thumbPrefix.$this->filename;
-		$this->absPath 		= WINABSPATH.$this->path."/".$this->filename;
+		$this->get_thumbnail_folder($this->gallery->path, FALSE);
+		$this->imagePath 	= get_option ('siteurl') . "/" . $this->gallery->path . "/" . $this->filename;
+		$this->thumbPath 	= get_option ('siteurl') . "/" . $this->gallery->path . $this->thumbFolder . $this->thumbPrefix . $this->filename;
+		$this->absPath 		= WINABSPATH.$this->path . "/" . $this->filename;
 	}
 	
 	/**********************************************************/
@@ -92,8 +91,9 @@ class nggImage{
 		
 		if (is_admin()) {
 			if (!is_dir($gallerypath."/thumbs")) {
-				if ( !wp_mkdir_p($gallerypath."/thumbs") )
-				return FALSE;
+				if ( !wp_mkdir_p($gallerypath."/thumbs") ) {
+					return FALSE;
+				}
 				$this->thumbFolder	= "/thumbs/";
 				$this->thumbPrefix 	= "thumbs_";			
 				return TRUE;
@@ -147,7 +147,7 @@ class nggImage{
 		include_once(NGGALLERY_ABSPATH.'/lib/ngg-thumbnail.lib.php');
 		
 		// cache filename should be unique
-		$cachename   	= $this->imageID. "_". $mode . "_". $width. "x". $height ."_". $this->filename;
+		$cachename   	= $this->pid . "_" . $mode . "_". $width . "x" . $height . "_" . $this->filename;
 		$cachefolder 	= WINABSPATH .$ngg_options['gallerypath'] . "cache/";
 		$cached_url  	= get_option ('siteurl') ."/". $ngg_options['gallerypath'] . "cache/" . $cachename;
 		$cached_file	= $cachefolder . $cachename;

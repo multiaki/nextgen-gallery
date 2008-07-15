@@ -633,7 +633,7 @@ function nggShowGalleryTags($taglist) {
 	if ( $pageid == get_the_ID() || !is_home() )  
 		if (!empty( $pid ))  {
 			foreach ($picturelist as $picture) {
-				$picarray[] = $picture->imageID;
+				$picarray[] = $picture->pid;
 			}
 			$out = nggCreateImageBrowser($picarray);
 			return $out;
