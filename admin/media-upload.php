@@ -57,10 +57,6 @@ function media_upload_nextgen() {
 
 add_action('media_upload_nextgen', 'media_upload_nextgen');
 
-// not longer needed for wp2.6
-if ( !function_exists('wp_enqueue_style') )
-	add_action('admin_head_media_upload_nextgen_form', 'media_admin_css');
-
 function media_upload_nextgen_save_image() {
 		
 		global $wpdb;

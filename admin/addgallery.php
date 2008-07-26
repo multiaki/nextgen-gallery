@@ -10,7 +10,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	$ngg_options = get_option('ngg_options');
 	
 	// same as $_SERVER['REQUEST_URI'], but should work under IIS 6.0
-	$filepath    = get_option('siteurl') . '/wp-admin/admin.php?page='.$_GET['page'];
+	$filepath    = admin_url() . 'admin.php?page='.$_GET['page'];
 	
 	// link for the flash file
 	$swf_upload_link = NGGALLERY_URLPATH . 'admin/upload.php';

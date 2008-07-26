@@ -52,10 +52,10 @@ global $wpdb, $wp_version, $wpmu_version, $wp_roles, $wp_taxonomies;
 // Check for WPMU installation
 define('IS_WPMU', version_compare($wpmu_version, '1.3', '>=') );
 // Check for WP2.5 installation
-define('IS_WP25', version_compare($wp_version, '2.4', '>=') );
+define('IS_WP26', version_compare($wp_version, '2.6', '>=') );
 
-//This works only in WP2.5 or higher
-if ( (IS_WP25 == FALSE) and (IS_WPMU != TRUE) ){
+//This works only in WP2.6 or higher
+if ( (IS_WP26 == FALSE) and (IS_WPMU != TRUE) ){
 	add_action('admin_notices', create_function('', 'echo \'<div id="message" class="error fade"><p><strong>' . __('Sorry, NextGEN Gallery works only under WordPress 2.5 or higher',"nggallery") . '</strong></p></div>\';'));
 	return;
 }
@@ -76,12 +76,6 @@ define('NGGURL', "http://nextgen.boelinger.com/version.php");
 // required for Windows & XAMPP
 $myabspath = str_replace("\\","/",ABSPATH);  
 define('WINABSPATH', $myabspath);
-
-// Pre-2.6 compatibility
-if ( !defined('WP_CONTENT_URL') )
-	define( 'WP_CONTENT_URL', get_option('siteurl') . '/wp-content');
-if ( !defined('WP_CONTENT_DIR') )
-	define( 'WP_CONTENT_DIR', WINABSPATH . 'wp-content' );
 	
 // define URL
 define('NGGFOLDER', plugin_basename( dirname(__FILE__)) );
@@ -120,14 +114,7 @@ register_taxonomy( 'ngg_tag', 'nggallery' );
 // Load language
 function nggallery_init ()
 {
-	if (function_exists('load_plugin_textdomain')) {
-		if ( !defined('WP_PLUGIN_DIR') ) {
-			load_plugin_textdomain('nggallery','wp-content/plugins/' . NGGFOLDER . '/lang');
-			//load_plugin_textdomain('nggallery', str_replace( ABSPATH, '', dirname(__FILE__) ) . '/lang');
-		} else {
-			load_plugin_textdomain('nggallery', false, dirname(plugin_basename(__FILE__)) . '/lang');
-		}
-	}
+	load_plugin_textdomain('nggallery', false, dirname(plugin_basename(__FILE__)) . '/lang');
 }
 
 // Load the admin panel

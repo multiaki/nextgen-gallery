@@ -10,7 +10,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	$old_state = $ngg_options['usePermalinks'];
 	
 	// same as $_SERVER['REQUEST_URI'], but should work under IIS 6.0
-	$filepath    = get_option('siteurl'). '/wp-admin/admin.php?page='.$_GET['page'];
+	$filepath    = admin_url() . 'admin.php?page='.$_GET['page'];
 
 	if ( isset($_POST['updateoption']) ) {	
 		check_admin_referer('ngg_settings');

@@ -216,7 +216,10 @@ function ngg_list_support()	{
 	"Kyle Meyers" => "",
 	"DF Design" => "",
 	"Olivia Loh" => "",
-	"Henner Guenter" => "http://www.rvweser.de"					
+	"Henner Guenter" => "http://www.rvweser.de",
+	"Fadli Fadli" => "",
+	"Philippe Vanhoolandt" => "http://www.ramdam.com",
+	"Solak Mario" => ""		
 	);
 	
 	ksort($supporter);

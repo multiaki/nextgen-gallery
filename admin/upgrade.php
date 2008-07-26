@@ -130,7 +130,7 @@ function ngg_convert_filestructure() {
  * @return Upgrade Message
  */
 function nggallery_upgrade_page()  {	
-	$filepath    = get_option('siteurl') . '/wp-admin/admin.php?page='.$_GET['page'];
+	$filepath    = admin_url() . 'admin.php?page='.$_GET['page'];
 	
 	if ($_GET['upgrade'] == 'now') {
 		nggallery_start_upgrade($filepath);
