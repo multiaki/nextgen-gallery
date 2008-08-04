@@ -19,6 +19,7 @@ function nggallery_admin_overview()  {
 	$nggCheck->URL 		= NGGURL;
 	$nggCheck->version 	= NGGVERSION;
 	$nggCheck->name 	= "ngg";
+	
 ?>
   <div class="wrap ngg-wrap">
     <h2><?php _e('NextGEN Gallery Overview', 'nggallery') ?></h2>
@@ -408,6 +409,31 @@ class ngg_SpaceManager {
 		return $out;
 	}
 
+}
+
+/**
+ * ngg_get_phpinfo() - Extract all of the data from phpinfo into a nested array
+ * 
+ * @author jon@sitewizard.ca
+ * @return array
+ */
+function ngg_get_phpinfo() {
+
+	ob_start();
+	phpinfo();
+	$phpinfo = array('phpinfo' => array());
+	
+	if ( preg_match_all('#(?:<h2>(?:<a name=".*?">)?(.*?)(?:</a>)?</h2>)|(?:<tr(?: class=".*?")?><t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>)?)?</tr>)#s', ob_get_clean(), $matches, PREG_SET_ORDER) )
+	    foreach($matches as $match) {
+	        if(strlen($match[1]))
+	            $phpinfo[$match[1]] = array();
+	        elseif(isset($match[3]))
+	            $phpinfo[end(array_keys($phpinfo))][$match[2]] = isset($match[4]) ? array($match[3], $match[4]) : $match[3];
+	        else
+	            $phpinfo[end(array_keys($phpinfo))][] = $match[2];
+	    }
+	    
+	return $phpinfo;
 }
 
 ?>

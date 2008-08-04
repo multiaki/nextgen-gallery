@@ -50,8 +50,8 @@ global $wpdb, $wp_version, $wpmu_version, $wp_roles, $wp_taxonomies;
 // ini_set('error_reporting', E_ALL);
 
 // Check for WPMU installation
-define('IS_WPMU', version_compare($wpmu_version, '1.3', '>=') );
-// Check for WP2.5 installation
+define('IS_WPMU', version_compare($wpmu_version, '2.6', '>=') );
+// Check for WP2.6 installation
 define('IS_WP26', version_compare($wp_version, '2.6', '>=') );
 
 //This works only in WP2.6 or higher
@@ -76,7 +76,7 @@ define('NGGURL', "http://nextgen.boelinger.com/version.php");
 // required for Windows & XAMPP
 $myabspath = str_replace("\\","/",ABSPATH);  
 define('WINABSPATH', $myabspath);
-	
+
 // define URL
 define('NGGFOLDER', plugin_basename( dirname(__FILE__)) );
 define('NGGALLERY_ABSPATH', WP_CONTENT_DIR.'/plugins/'.plugin_basename( dirname(__FILE__)).'/' );
@@ -104,9 +104,6 @@ $ngg_options = get_option('ngg_options');
 $wpdb->nggpictures					= $wpdb->prefix . 'ngg_pictures';
 $wpdb->nggallery					= $wpdb->prefix . 'ngg_gallery';
 $wpdb->nggalbum						= $wpdb->prefix . 'ngg_album';
-//TODO:obsolete
-$wpdb->nggtags						= $wpdb->prefix . 'ngg_tags';
-$wpdb->nggpic2tags					= $wpdb->prefix . 'ngg_pic2tags';
 
 // Register the NextGEN taxonomy	
 register_taxonomy( 'ngg_tag', 'nggallery' );
@@ -125,18 +122,9 @@ if (is_admin()) {
 } else {
 	
 	// Load the gallery generator
-	include_once (dirname (__FILE__)."/nggfunctions.php");
-	
-	// required in WP 2.5, NextGEN should have higher priority than the shortcode
-	// see also http://trac.wordpress.org/ticket/6436 	
-	remove_filter('the_content', 'do_shortcode', 9);
-	add_filter('the_content', 'do_shortcode', 11);
-	
-	// Action calls for all functions 
-	// required in WP 2.5, NextGEN should have higher priority than 9
-	// see also http://trac.wordpress.org/ticket/6436 
-	add_filter('the_content', 'searchnggallerytags', 10);
-	add_filter('the_excerpt', 'searchnggallerytags', 10);
+	require_once (dirname (__FILE__).'/lib/shortcodes.php');
+	require_once (dirname (__FILE__)."/nggfunctions.php");
+
 }
 
 // Load tinymce button 
@@ -152,7 +140,7 @@ require_once (dirname (__FILE__).'/lib/ngg-image-dao.lib.php');
 require_once (dirname (__FILE__).'/lib/ngg-meta.lib.php');
 require_once (dirname (__FILE__).'/lib/ngg-thumbnail.lib.php');
 require_once (dirname (__FILE__).'/lib/ngg-tags.lib.php');
-require_once (dirname (__FILE__).'/lib/ngg-shortcodes.lib.php');
+
 
 // Init the gallery class
 $nggallery = new nggGalleryPlugin();
@@ -161,22 +149,24 @@ $nggallery = new nggGalleryPlugin();
 $nggRewrite = new nggRewrite();
 
 // add javascript to header
-add_action('wp_head', 'ngg_addjs', 1);
+add_action('wp_head', 'ngg_addjs');
 function ngg_addjs() {
     global $wp_version, $ngg_options;
     
 	echo "<meta name='NextGEN' content='".NGGVERSION."' />\n";
 	if ($ngg_options['activateCSS']) 
-		echo "\n".'<style type="text/css" media="screen">@import "'.NGGALLERY_URLPATH.'css/'.$ngg_options['CSSfile'].'";</style>';
+		echo '<style type="text/css" media="screen">@import "'.NGGALLERY_URLPATH.'css/'.$ngg_options['CSSfile'].'";</style>'."\n";
 	if ($ngg_options['thumbEffect'] == "thickbox") {
-		echo "\n".'<script type="text/javascript"> var tb_pathToImage = "'.NGGALLERY_URLPATH.'thickbox/'.$ngg_options['thickboxImage'].'";</script>';
-		echo "\n".'<style type="text/css" media="screen">@import "'.NGGALLERY_URLPATH.'thickbox/thickbox.css";</style>'."\n";
-   		wp_enqueue_script('ngg-thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.1.1');
+		echo '<style type="text/css" media="screen">@import "'.NGGALLERY_URLPATH.'thickbox/thickbox.css";</style>'."\n";
+ 		echo '<script type="text/javascript"> var tb_pathToImage = "'.NGGALLERY_URLPATH.'thickbox/'.$ngg_options['thickboxImage'].'";</script>'."\n";
+  		wp_register_script('ngg-thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.1.1');
+   		wp_print_scripts('ngg-thickbox');
     }
 	    
 	// test for wordTube function
 	if (!function_exists('integrate_swfobject')) {
-		wp_enqueue_script('swfobject', NGGALLERY_URLPATH .'admin/js/swfobject.js', FALSE, '1.5');
+		wp_register_script('swfobject', NGGALLERY_URLPATH .'admin/js/swfobject.js', FALSE, '1.5');
+		wp_print_scripts('swfobject');
 	}
 }
 
@@ -189,7 +179,7 @@ register_deactivation_hook( NGGFOLDER.'/nggallery.php','ngg_deinstall' );
 
 // init tables in wp-database if plugin is activated
 function ngg_install() {
-	include_once (dirname (__FILE__)."/ngginstall.php");
+	include_once (dirname (__FILE__)."/admin/install.php");
 	nggallery_install();
 }
 

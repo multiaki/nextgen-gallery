@@ -49,8 +49,8 @@ function ngg_upgrade() {
 		if (version_compare($installed_ver, '1.00', '<')) {
 			ngg_convert_tags();
 			// Drop tables, we don't need them anymore
-			//$wpdb->query("DROP TABLE " . $wpdb->prefix . "ngg_tags");
-			//$wpdb->query("DROP TABLE " . $wpdb->prefix . "ngg_pic2tags");
+			$wpdb->query("DROP TABLE " . $wpdb->prefix . "ngg_tags");
+			$wpdb->query("DROP TABLE " . $wpdb->prefix . "ngg_pic2tags");
 			ngg_convert_filestructure();
 		}
 		update_option( "ngg_db_version", NGG_DBVERSION );

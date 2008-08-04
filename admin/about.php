@@ -219,7 +219,8 @@ function ngg_list_support()	{
 	"Henner Guenter" => "http://www.rvweser.de",
 	"Fadli Fadli" => "",
 	"Philippe Vanhoolandt" => "http://www.ramdam.com",
-	"Solak Mario" => ""		
+	"Gary Verhoff" => "",
+	"Detlev Danner" => "http://www.mcdd.ch"		
 	);
 	
 	ksort($supporter);

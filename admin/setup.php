@@ -7,7 +7,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		if (isset($_POST['resetdefault'])) {	
 			check_admin_referer('ngg_uninstall');
 						
-			include_once (NGGFOLDER . "/ngginstall.php");
+			include_once (NGGFOLDER . "/admin/install.php");
 			
 			ngg_default_options();
 			nggGalleryPlugin::show_message(__('Reset all settings to default parameter','nggallery'));
@@ -20,8 +20,6 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			$wpdb->query("DROP TABLE $wpdb->nggpictures");
 			$wpdb->query("DROP TABLE $wpdb->nggallery");
 			$wpdb->query("DROP TABLE $wpdb->nggalbum");
-			$wpdb->query("DROP TABLE $wpdb->nggtags");
-			$wpdb->query("DROP TABLE $wpdb->nggpic2tags");
 		
 			delete_option( "ngg_options" );
 			delete_option( "ngg_db_version");
