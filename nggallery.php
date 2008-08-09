@@ -4,7 +4,7 @@ Plugin Name: NextGEN Gallery
 Plugin URI: http://alexrabe.boelinger.com/?page_id=80
 Description: A NextGENeration Photo gallery for the WEB2.0(beta).
 Author: NextGEN DEV-Team
-Version: 1.00a
+Version: 1.0.0a
 
 Author URI: http://alexrabe.boelinger.com/
 
@@ -37,158 +37,203 @@ For commercial use please look at the Jeroen's homepage : http://www.jeroenwijer
 
 */ 
 
-//#################################################################
 // Stop direct call
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
-
-//#################################################################
-// Let's Go
-	
-global $wpdb, $wp_version, $wpmu_version, $wp_roles, $wp_taxonomies;
 
 // ini_set('display_errors', '1');
 // ini_set('error_reporting', E_ALL);
 
-// Check for WPMU installation
-if (!defined ('IS_WPMU'))
-	define('IS_WPMU', version_compare($wpmu_version, '1.3', '>=') );
-// Check for WP2.5 installation
-if (!defined ('IS_WP26'))
-	define('IS_WP26', version_compare($wp_version, '2.6', '>=') );
-
-//This works only in WP2.6 or higher
-if ( (IS_WP26 == FALSE) and (IS_WPMU != TRUE) ){
-	add_action('admin_notices', create_function('', 'echo \'<div id="message" class="error fade"><p><strong>' . __('Sorry, NextGEN Gallery works only under WordPress 2.6 or higher',"nggallery") . '</strong></p></div>\';'));
-	return;
-}
-
-$memory_limit = (int) substr( ini_get('memory_limit'), 0, -1);
-//This works only with enough memory, 8MB is silly, wordpress requires already 7.9999
-if ( ($memory_limit != 0) && ($memory_limit < 12 ) ) {
-	add_action('admin_notices', create_function('', 'echo \'<div id="message" class="error fade"><p><strong>' . __('Sorry, NextGEN Gallery works only with a Memory Limit of 16 MB higher',"nggallery") . '</strong></p></div>\';'));
-	return;
-}
-
-// Version and path to check version
-define('NGGVERSION', "1.00a");
-// Minimum required database version
-define('NGG_DBVERSION', "0.95");
-define('NGGURL', "http://nextgen.boelinger.com/version.php");
-
-// required for Windows & XAMPP
-$myabspath = str_replace("\\","/",ABSPATH);  
-define('WINABSPATH', $myabspath);
+class nggLoader {
 	
-// define URL
-define('NGGFOLDER', plugin_basename( dirname(__FILE__)) );
-define('NGGALLERY_ABSPATH', WP_CONTENT_DIR.'/plugins/'.plugin_basename( dirname(__FILE__)).'/' );
-define('NGGALLERY_URLPATH', WP_CONTENT_URL.'/plugins/'.plugin_basename( dirname(__FILE__)).'/' );
-
-// look for imagerotator
-define('NGGALLERY_IREXIST', file_exists( NGGALLERY_ABSPATH.'imagerotator.swf' ));
-
-// get value for safe mode
-if ( (gettype( ini_get('safe_mode') ) == 'string') ) {
-	// if sever did in in a other way
-	if ( ini_get('safe_mode') == 'off' ) define('SAFE_MODE', FALSE);
-	else define( 'SAFE_MODE', ini_get('safe_mode') );
-} else
-define( 'SAFE_MODE', ini_get('safe_mode') );
-
-//pass the init check or show a message
-if (get_option( "ngg_init_check" ) != false )
-	add_action( 'admin_notices', create_function('', 'echo \'<div id="message" class="error fade"><p><strong>' . get_option( "ngg_init_check" ) . '</strong></p></div>\';') );
-
-//read the options
-$ngg_options = get_option('ngg_options');
-
-// add database pointer 
-$wpdb->nggpictures					= $wpdb->prefix . 'ngg_pictures';
-$wpdb->nggallery					= $wpdb->prefix . 'ngg_gallery';
-$wpdb->nggalbum						= $wpdb->prefix . 'ngg_album';
-
-// Register the NextGEN taxonomy	
-register_taxonomy( 'ngg_tag', 'nggallery' );
-
-// Load language
-function nggallery_init ()
-{
-	load_plugin_textdomain('nggallery', false, dirname(plugin_basename(__FILE__)) . '/lang');
-}
-
-// Load the admin panel
-if (is_admin()) {
+	var $version     = '1.0.0.a';
+	var $dbversion   = '0.9.5';
+	var $minium_WP   = '2.6';
+	var $minium_WPMU = '2.6';
+	var $updateURL   = 'http://nextgen.boelinger.com/version.php';
+	var $options     = '';
 	
-	include_once (dirname (__FILE__)."/admin/admin.php");
+	function nggLoader() {
 		
-} else {
-	
-	// Load the gallery generator
-	include_once (dirname (__FILE__)."/nggfunctions.php");
+		global $nggRewrite;
 		
-	// Add the script files
-	add_action('wp_print_scripts', 'ngg_addjs');
-}
+		if ( ( !$this->requiredVersion() ) && ( !$this->checkMemoryLimit() ) )
+			return;
 
-// Load tinymce button 
-include_once (dirname (__FILE__)."/tinymce3/tinymce.php");
+		// define some variables
+		$this->defineConstant();
+		$this->defineTables();
+
+		// Load the options
+		$this->options = get_option('ngg_options');
+
+		// Pass the init check or show a message
+		if (get_option( "ngg_init_check" ) != false )
+			add_action( 'admin_notices', create_function('', 'echo \'<div id="message" class="error fade"><p><strong>' . get_option( "ngg_init_check" ) . '</strong></p></div>\';') );
+
+		// Load tinymce button 
+		include_once (dirname (__FILE__)."/tinymce3/tinymce.php");
+			
+		// Load gallery class
+		require_once (dirname (__FILE__).'/lib/ngg-gallery-plugin.lib.php');
+		require_once (dirname (__FILE__).'/lib/ngg-gallery.lib.php');
+		require_once (dirname (__FILE__).'/lib/ngg-gallery-dao.lib.php');
+		require_once (dirname (__FILE__).'/lib/ngg-image.lib.php');
+		require_once (dirname (__FILE__).'/lib/ngg-image-dao.lib.php');
+		require_once (dirname (__FILE__).'/lib/ngg-meta.lib.php');
+		require_once (dirname (__FILE__).'/lib/ngg-thumbnail.lib.php');
+		require_once (dirname (__FILE__).'/lib/ngg-tags.lib.php');
+
+		// Load the language file
+		add_action('init', array(&$this, 'load_textdomain') );
+		
+		// Content Filters
+		add_filter('ngg_gallery_name', 'sanitize_title');
+		
+		// Init options & tables during activation 
+		register_activation_hook( NGGFOLDER.'/nggallery.php', array(&$this, 'actiavte') );
+		register_deactivation_hook( NGGFOLDER.'/nggallery.php', array(&$this, 'deactivate') );
+		
+		// Load the admin panel or the frontend functions
+		if (is_admin()) {
+			
+			require_once (dirname (__FILE__)."/admin/admin.php");
+				
+		} else {
+			
+			// Load the gallery generator
+			require_once (dirname (__FILE__)."/nggfunctions.php");
+			require_once (dirname (__FILE__).'/lib/shortcodes.php');
+			require_once (dirname (__FILE__).'/lib/rewrite.php');
+			
+			// Add rewrite rules
+			$nggRewrite = new nggRewrite();
+				
+			// Add the script files
+			add_action('wp_print_scripts', array(&$this, 'load_scripts') );
+		}	
+
+		// Init the gallery class
+		$nggallery = new nggGalleryPlugin();
 	
-// Load gallery class
-require_once (dirname (__FILE__).'/lib/ngg-gallery-plugin.lib.php');
-require_once (dirname (__FILE__).'/lib/ngg-gallery.lib.php');
-require_once (dirname (__FILE__).'/lib/ngg-gallery-dao.lib.php');
-require_once (dirname (__FILE__).'/lib/ngg-rewrite.lib.php');
-require_once (dirname (__FILE__).'/lib/ngg-image.lib.php');
-require_once (dirname (__FILE__).'/lib/ngg-image-dao.lib.php');
-require_once (dirname (__FILE__).'/lib/ngg-meta.lib.php');
-require_once (dirname (__FILE__).'/lib/ngg-thumbnail.lib.php');
-require_once (dirname (__FILE__).'/lib/ngg-tags.lib.php');
-require_once (dirname (__FILE__).'/lib/shortcodes.php');
+	}
+	
+	function requiredVersion() {
+		
+		global $wp_version, $wpmu_version;
+		
+		// Check for WPMU installation
+		if (!defined ('IS_WPMU'))
+			define('IS_WPMU', version_compare($wpmu_version, $this->minium_WPMU, '>=') );
+			
+		// Check for WP version installation
+		$wp_ok  =  version_compare($wp_version, $this->minium_WP, '>=');		
+		
+		if ( ($wp_ok == FALSE) and (IS_WPMU != TRUE) ) {
+			add_action('admin_notices', create_function('', 'printf \'<div id="message" class="error fade"><p><strong>' . __('Sorry, NextGEN Gallery works only under WordPress %s or higher',"nggallery") . '</strong></p></div>\', $this->minium_WP;'));
+			return false;
+		}
+		
+		return true;
+		
+	}
+	
+	function checkMemoryLimit() {
+		
+		$memory_limit = (int) substr( ini_get('memory_limit'), 0, -1);
+		//This works only with enough memory, 8MB is silly, wordpress requires already 7.9999
+		if ( ($memory_limit != 0) && ($memory_limit < 12 ) ) {
+			add_action('admin_notices', create_function('', 'echo \'<div id="message" class="error fade"><p><strong>' . __('Sorry, NextGEN Gallery works only with a Memory Limit of 16 MB higher',"nggallery") . '</strong></p></div>\';'));
+			return false;
+		}
+		
+		return true;
+		
+	}
+	
+	function defineTables() {
+		
+		global $wpdb, $wp_taxonomies;
+		
+		// add database pointer 
+		$wpdb->nggpictures					= $wpdb->prefix . 'ngg_pictures';
+		$wpdb->nggallery					= $wpdb->prefix . 'ngg_gallery';
+		$wpdb->nggalbum						= $wpdb->prefix . 'ngg_album';
+		
+		// Register the NextGEN taxonomy	
+		register_taxonomy( 'ngg_tag', 'nggallery' );
+		
+	}
 
-// Init the gallery class
-$nggallery = new nggGalleryPlugin();
+	function defineConstant() {
+		
+		//TODO:SHOULD BE REMOVED LATER
+		define('NGGVERSION', $this->version);
+		// Minimum required database version
+		define('NGG_DBVERSION', $this->dbversion);
+		define('NGGURL', $this->updateURL);
 
-// Add rewrite rules
-$nggRewrite = new nggRewrite();
+		// required for Windows & XAMPP
+		$myabspath = str_replace("\\","/",ABSPATH);  
+		define('WINABSPATH', $myabspath);
+			
+		// define URL
+		define('NGGFOLDER', plugin_basename( dirname(__FILE__)) );
+		define('NGGALLERY_ABSPATH', WP_CONTENT_DIR.'/plugins/'.plugin_basename( dirname(__FILE__)).'/' );
+		define('NGGALLERY_URLPATH', WP_CONTENT_URL.'/plugins/'.plugin_basename( dirname(__FILE__)).'/' );
+		
+		// look for imagerotator
+		define('NGGALLERY_IREXIST', file_exists( NGGALLERY_ABSPATH.'imagerotator.swf' ));
 
-// add javascript to header
-function ngg_addjs() {
-    global $wp_version, $ngg_options;
-    
-	echo "<meta name='NextGEN' content='".NGGVERSION."' />\n";
-	if ($ngg_options['activateCSS']) 
-		echo "\n".'<style type="text/css" media="screen">@import "'.NGGALLERY_URLPATH.'css/'.$ngg_options['CSSfile'].'";</style>';
-	if ($ngg_options['thumbEffect'] == "thickbox") {
-		echo "\n".'<script type="text/javascript"> var tb_pathToImage = "'.NGGALLERY_URLPATH.'thickbox/'.$ngg_options['thickboxImage'].'";</script>';
-		echo "\n".'<style type="text/css" media="screen">@import "'.NGGALLERY_URLPATH.'thickbox/thickbox.css";</style>'."\n";
-   		wp_enqueue_script('ngg-thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.1.1');
-    }
-	    
-	// test for wordTube function
-	if (!function_exists('integrate_swfobject')) {
-		wp_enqueue_script('swfobject', NGGALLERY_URLPATH .'admin/js/swfobject.js', FALSE, '1.5');
+		// get value for safe mode
+		if ( (gettype( ini_get('safe_mode') ) == 'string') ) {
+			// if sever did in in a other way
+			if ( ini_get('safe_mode') == 'off' ) define('SAFE_MODE', FALSE);
+			else define( 'SAFE_MODE', ini_get('safe_mode') );
+		} else
+		define( 'SAFE_MODE', ini_get('safe_mode') );
+		
+	}
+	
+	function load_textdomain() {
+		
+		load_plugin_textdomain('nggallery', false, dirname( plugin_basename(__FILE__) ) . '/lang');
+
+	}
+	
+	function load_scripts() {
+
+		echo "<meta name='NextGEN' content='" . $this->version . "' />\n";
+		if ($this->options['activateCSS']) 
+			echo "\n".'<style type="text/css" media="screen">@import "'.NGGALLERY_URLPATH.'css/'.$this->options['CSSfile'].'";</style>';
+		if ($this->options['thumbEffect'] == "thickbox") {
+			echo "\n".'<script type="text/javascript"> var tb_pathToImage = "'.NGGALLERY_URLPATH.'thickbox/'.$this->options['thickboxImage'].'";</script>';
+			echo "\n".'<style type="text/css" media="screen">@import "'.NGGALLERY_URLPATH.'thickbox/thickbox.css";</style>'."\n";
+	   		wp_enqueue_script('ngg-thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.1.1');
+	    }
+		    
+		// test for wordTube function
+		if (!function_exists('integrate_swfobject')) {
+			wp_enqueue_script('swfobject', NGGALLERY_URLPATH .'admin/js/swfobject.js', FALSE, '1.5');
+		}
+
+	}
+	
+	function activate() {
+		
+		include_once (dirname (__FILE__)."/admin/install.php");
+		nggallery_install();
+		
+	}
+	
+	function deactivate() {
+		
+		// remove & reset the init check option
+		delete_option( "ngg_init_check" );
+		
 	}
 }
 
-// load language file
-add_action('init', 'nggallery_init');
-
-// Init options & tables during activation 
-register_activation_hook( NGGFOLDER.'/nggallery.php','ngg_install' );
-register_deactivation_hook( NGGFOLDER.'/nggallery.php','ngg_deinstall' );
-
-// init tables in wp-database if plugin is activated
-function ngg_install() {
-	include_once (dirname (__FILE__)."/admin/install.php");
-	nggallery_install();
-}
-
-function ngg_deinstall() {
-	// remove & reset the init check option
-	delete_option( "ngg_init_check" );
-}
-
-// Content Filters
-add_filter('ngg_gallery_name', 'sanitize_title');
+// Start this plugin once all other plugins are fully loaded
+add_action( 'plugins_loaded', create_function( '', 'global $ngg; $ngg = new nggLoader();' ) );
 
 ?>

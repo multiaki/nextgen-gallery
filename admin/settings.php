@@ -3,7 +3,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 
 	function nggallery_admin_options()  {
 	
-	global $wpdb, $nggRewrite;
+	global $wpdb, $wp_rewrite;
 
 	// get the options
 	$ngg_options = get_option('ngg_options');	
@@ -27,7 +27,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		}
 		// Flush ReWrite rules
 		if ( $old_state != $ngg_options['usePermalinks'] )
-			$nggRewrite->flush();
+			$wp_rewrite->flush_rules();
 		// Save options
 		update_option('ngg_options', $ngg_options);
 	 	nggGalleryPlugin::show_message(__('Update Successfully','nggallery'));

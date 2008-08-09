@@ -7,11 +7,7 @@
 // add to header in admin area
 add_action('admin_head', 'ngg_header');
 function ngg_header() {
-	global $wp_version;
-	echo "\n".'<meta name="NextGEN" content="'.NGGVERSION.'" />';
-	echo "\n".'<meta http-equiv="pragma" content="no-cache" />'."\n";
 
-	// since WP2.5 redesign we need a different CSS
 	switch ($_GET['page']) {
 		case NGGFOLDER :
 			echo '<link rel="stylesheet" href="'.NGGALLERY_URLPATH.'admin/css/nggadmin.wp25.css" type="text/css" media="screen" />'."\n";
