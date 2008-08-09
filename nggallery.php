@@ -106,9 +106,6 @@ $ngg_options = get_option('ngg_options');
 $wpdb->nggpictures					= $wpdb->prefix . 'ngg_pictures';
 $wpdb->nggallery					= $wpdb->prefix . 'ngg_gallery';
 $wpdb->nggalbum						= $wpdb->prefix . 'ngg_album';
-//TODO:obsolete
-$wpdb->nggtags						= $wpdb->prefix . 'ngg_tags';
-$wpdb->nggpic2tags					= $wpdb->prefix . 'ngg_pic2tags';
 
 // Register the NextGEN taxonomy	
 register_taxonomy( 'ngg_tag', 'nggallery' );
@@ -128,18 +125,7 @@ if (is_admin()) {
 	
 	// Load the gallery generator
 	include_once (dirname (__FILE__)."/nggfunctions.php");
-	
-	// required in WP 2.5, NextGEN should have higher priority than the shortcode
-	// see also http://trac.wordpress.org/ticket/6436 	
-	remove_filter('the_content', 'do_shortcode', 9);
-	add_filter('the_content', 'do_shortcode', 11);
-	
-	// Action calls for all functions 
-	// required in WP 2.5, NextGEN should have higher priority than 9
-	// see also http://trac.wordpress.org/ticket/6436 
-	add_filter('the_content', 'searchnggallerytags', 10);
-	add_filter('the_excerpt', 'searchnggallerytags', 10);
-	
+		
 	// Add the script files
 	add_action('wp_print_scripts', 'ngg_addjs');
 }
@@ -157,7 +143,7 @@ require_once (dirname (__FILE__).'/lib/ngg-image-dao.lib.php');
 require_once (dirname (__FILE__).'/lib/ngg-meta.lib.php');
 require_once (dirname (__FILE__).'/lib/ngg-thumbnail.lib.php');
 require_once (dirname (__FILE__).'/lib/ngg-tags.lib.php');
-require_once (dirname (__FILE__).'/lib/ngg-shortcodes.lib.php');
+require_once (dirname (__FILE__).'/lib/shortcodes.php');
 
 // Init the gallery class
 $nggallery = new nggGalleryPlugin();
@@ -193,7 +179,7 @@ register_deactivation_hook( NGGFOLDER.'/nggallery.php','ngg_deinstall' );
 
 // init tables in wp-database if plugin is activated
 function ngg_install() {
-	include_once (dirname (__FILE__)."/ngginstall.php");
+	include_once (dirname (__FILE__)."/admin/install.php");
 	nggallery_install();
 }
 
