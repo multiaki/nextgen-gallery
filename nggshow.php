@@ -18,17 +18,9 @@
 
 // Load wp-config
 //--
-$root = dirname(dirname(dirname(dirname(__FILE__))));
 
-if (file_exists($root.'/wp-load.php')) {
-	// WP 2.6
-	require_once($root.'/wp-load.php');
-} else {
-	// Before 2.6
-	if (!file_exists($root.'/wp-config.php'))
-		die; // stop when wp-config is not there
-	require_once($root.'/wp-config.php');
-}
+// look up for the path
+require_once( dirname(__FILE__) . '/ngg-config.php');
 
 global $wpdb;
 

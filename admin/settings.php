@@ -3,7 +3,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 
 	function nggallery_admin_options()  {
 	
-	global $wpdb, $wp_version, $nggRewrite;
+	global $wpdb, $nggRewrite;
 
 	// get the options
 	$ngg_options = get_option('ngg_options');	
@@ -147,7 +147,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<tr>
 						<th valign="top"><?php _e('Match with','nggallery') ?>:</th>
 						<td><label><input name="appendType" type="radio" value="category" <?php checked('category', $ngg_options['appendType']); ?> /> <?php _e('Categories', 'nggallery') ;?></label><br />
-						<label><input name="appendType" type="radio" value="tags" <?php checked('tags', $ngg_options['appendType']); ?> /> <?php _e('Tags', 'nggallery') ;?><?php if (version_compare($wp_version, '2.3.alpha', '<')) _e(' (require WordPress 2.3 or higher)', 'nggallery'); ?></label>
+						<label><input name="appendType" type="radio" value="tags" <?php checked('tags', $ngg_options['appendType']); ?> /> <?php _e('Tags', 'nggallery') ;?></label>
 						</td>
 					</tr>
 					<tr>
