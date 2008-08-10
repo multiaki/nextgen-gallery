@@ -286,12 +286,12 @@ This is a template stylesheet which doesn't support description below the thumbn
 
 .ngg-left {
 	float: left;
-	padding-right:10px;
+	margin-right:10px;
 }
 
 .ngg-right {
 	float: right;
-	padding-left:10px;
+	margin-left:10px;
 }
 
 .ngg-center {
