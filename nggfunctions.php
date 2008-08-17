@@ -394,7 +394,7 @@ function nggCreateImageBrowser($picarray) {
 	$picture->description = html_entity_decode(stripslashes($picture->description));
 	
 	// let's get the meta data
-	$meta = new nggMeta($picture->absPath);
+	$meta = new nggMeta($picture->imagePath);
 	$exif = $meta->get_EXIF();
 	$iptc = $meta->get_IPTC();
 	$xmp  = $meta->get_XMP();
@@ -452,7 +452,7 @@ function nggSinglePicture($imageID,$width=250,$height=250,$mode="",$float="") {
 		$cache_url = $picture->cached_singlepic_file($width, $height, $mode );
 
 	// add fullsize picture as link
-	$out  = '<a href="'.$picture->imagePath.'" title="'.stripslashes($picture->description).'" '.$picture->get_thumbcode("singlepic".$imageID).' >';
+	$out  = '<a href="'.$picture->imageURL.'" title="'.stripslashes($picture->description).'" '.$picture->get_thumbcode("singlepic".$imageID).' >';
 	if (!$cache_url)
 		$out .= '<img class="ngg-singlepic'. $float .'" src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$imageID.'&amp;width='.$width.'&amp;height='.$height.'&amp;mode='.$mode.'" alt="'.stripslashes($picture->alttext).'" title="'.stripslashes($picture->alttext).'" />';
 	else

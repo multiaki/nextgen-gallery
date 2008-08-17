@@ -20,7 +20,7 @@ class nggGalleryPlugin {
 	* Show a error messages
 	*/
 	function show_error($message) {
-		echo '<div class="fade error" id="message"><p>'.$message.'</p></div>'."\n";
+		echo '<div class="error" id="error"><p>'.$message.'</p></div>'."\n";
 	}
 	
 	/**

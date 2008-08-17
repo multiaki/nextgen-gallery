@@ -32,7 +32,7 @@ function insertNGGLink() {
 		var galleryid = document.getElementById('gallerytag').value;
 		var showtype = getCheckedValue(document.getElementsByName('showtype'));
 		if (galleryid != 0 )
-			tagtext = "["+ showtype + "=" + galleryid + "]";
+			tagtext = "["+ showtype + " id=" + galleryid + "]";
 		else
 			tinyMCEPopup.close();
 	}
@@ -41,7 +41,7 @@ function insertNGGLink() {
 		var albumid = document.getElementById('albumtag').value;
 		var showtype = getCheckedValue(document.getElementsByName('albumtype'));
 		if (albumid != 0 )
-			tagtext = "[album=" + albumid + "," + showtype + "]";
+			tagtext = "[album id=" + albumid + "," + showtype + "]";
 		else
 			tinyMCEPopup.close();
 	}
@@ -55,9 +55,9 @@ function insertNGGLink() {
 
 		if (singlepicid != 0 ) {
 			if (imgeffect == "none")
-				tagtext = "[singlepic=" + singlepicid + "," + imgWidth + "," + imgHeight + ",," + imgfloat + "]";
+				tagtext = "[singlepic id=" + singlepicid + " w=" + imgWidth + " h=" + imgHeight + " float=" + imgfloat + "]";
 			else
-				tagtext = "[singlepic=" + singlepicid + "," + imgWidth + "," + imgHeight + "," + imgeffect + "," + imgfloat + "]";
+				tagtext = "[singlepic id=" + singlepicid + " w=" + imgWidth + " h=" + imgHeight + " mode=" + imgeffect + " float=" + imgfloat + "]";
 		} else {
 			tinyMCEPopup.close();
 		}

@@ -43,7 +43,7 @@ $width = $_GET['width'];
 // let's get the image data
 //--
 $picture  = nggImageDAO::find_image($pictureID);
-$thumb = new ngg_Thumbnail($picture->absPath);
+$thumb = new ngg_Thumbnail($picture->imagePath);
 
 // Resize if necessary
 //--

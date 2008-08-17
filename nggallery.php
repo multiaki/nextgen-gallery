@@ -56,6 +56,7 @@ class nggLoader {
 		
 		global $nggRewrite;
 		
+		// Stop the plugin if we missed the requirements
 		if ( ( !$this->requiredVersion() ) && ( !$this->checkMemoryLimit() ) )
 			return;
 
@@ -82,6 +83,7 @@ class nggLoader {
 		require_once (dirname (__FILE__).'/lib/ngg-meta.lib.php');
 		require_once (dirname (__FILE__).'/lib/ngg-thumbnail.lib.php');
 		require_once (dirname (__FILE__).'/lib/ngg-tags.lib.php');
+		require_once (dirname (__FILE__).'/admin/ajax.php');
 
 		// Load the language file
 		add_action('init', array(&$this, 'load_textdomain') );

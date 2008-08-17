@@ -272,7 +272,174 @@ class nggAdmin{
 		if(!empty($messagetext)) nggGalleryPlugin::show_error('<strong>'.__('Some pictures are not writeable :','nggallery').'</strong><br /><ul>'.$messagetext.'</ul>');
 		return;
 	}
+	
 
+	/**
+	 * nggAdmin::createThumbnail() - function to create or recreate a thumbnail
+	 * 
+	 * @param object | int $image  $image contail all information about the image or the id
+	 * @return string result code
+	 * @since v1.0.0
+	 */
+	function create_thumbnail($image) {
+		
+		if(! class_exists('ngg_Thumbnail'))
+			require_once(NGGALLERY_ABSPATH.'/lib/ngg-thumbnail.lib.php');
+		
+		if ( is_numeric($image) )
+			$image = nggImageDAO::find_image( $image );
+
+		if ( !is_object($image) ) 
+			return __('Object didn\'t contain correct data','nggallery');
+
+		$ngg_options = get_option('ngg_options');
+		
+		// check for existing thumbnail
+		if (file_exists($image->thumbPath))
+			if (!is_writable($image->thumbPath))
+				return $image->filename . __(' is not writeable ','nggallery');
+
+		$thumb = new ngg_Thumbnail($image->imagePath, TRUE);
+
+		// skip if file is not there
+		if (!$thumb->error) {
+			if ($ngg_options['thumbcrop']) {
+				
+				// THX to Kees de Bruin, better thumbnails if portrait format
+				$width = $ngg_options['thumbwidth'];
+				$height = $ngg_options['thumbheight'];
+				$curwidth = $thumb->currentDimensions['width'];
+				$curheight = $thumb->currentDimensions['height'];
+				if ($curwidth > $curheight) {
+					$aspect = (100 * $curwidth) / $curheight;
+				} else {
+					$aspect = (100 * $curheight) / $curwidth;
+				}
+				$width = intval(($width * $aspect) / 100);
+				$height = intval(($height * $aspect) / 100);
+				$thumb->resize($width,$height,$ngg_options['thumbResampleMode']);
+				$thumb->cropFromCenter($width,$ngg_options['thumbResampleMode']);
+			} 
+			elseif ($ngg_options['thumbfix'])  {
+				// check for portrait format
+				if ($thumb->currentDimensions['height'] > $thumb->currentDimensions['width']) {
+					$thumb->resize($ngg_options['thumbwidth'], 0,$ngg_options['thumbResampleMode']);
+					// get optimal y startpos
+					$ypos = ($thumb->currentDimensions['height'] - $ngg_options['thumbheight']) / 2;
+					$thumb->crop(0, $ypos, $ngg_options['thumbwidth'],$ngg_options['thumbheight'],$ngg_options['thumbResampleMode']);	
+				} else {
+					$thumb->resize(0,$ngg_options['thumbheight'],$ngg_options['thumbResampleMode']);	
+					// get optimal x startpos
+					$xpos = ($thumb->currentDimensions['width'] - $ngg_options['thumbwidth']) / 2;
+					$thumb->crop($xpos, 0, $ngg_options['thumbwidth'],$ngg_options['thumbheight'],$ngg_options['thumbResampleMode']);	
+				}
+			} else {
+				$thumb->resize($ngg_options['thumbwidth'],$ngg_options['thumbheight'],$ngg_options['thumbResampleMode']);	
+			}
+			
+			// save the new thumbnail
+			$thumb->save($image->thumbPath, $ngg_options['thumbquality']);
+			nggAdmin::chmod ($image->thumbPath); 
+		} 
+				
+		$thumb->destruct();
+		
+		if ( !empty($thumb->errmsg) )
+			return ' <strong>' . $image->filename . ' (Error : '.$thumb->errmsg .')</strong>';
+		
+		// success
+		return '1'; 
+	}
+	
+	/**
+	 * nggAdmin::resize_image() - create a new image, based on the height /width
+	 * 
+	 * @param object | int $image  $image contail all information about the image or the id
+	 * @param integer $width optional 
+	 * @param integer $height optional
+	 * @return string result code
+	 */
+	function resize_image($image, $width = 0, $height = 0) {
+		
+		if(! class_exists('ngg_Thumbnail'))
+			require_once(NGGALLERY_ABSPATH.'/lib/ngg-thumbnail.lib.php');
+
+		if ( is_numeric($image) )
+			$image = nggImageDAO::find_image( $image );
+		
+		if ( !is_object($image) ) 
+			return __('Object didn\'t contain correct data','nggallery');	
+		
+		$ngg_options = get_option('ngg_options');
+
+		$width  = ($width  != 0) ? $ngg_options['imgWidth']  : $width;
+		$height = ($height != 0) ? $ngg_options['imgHeight'] : $height;
+		
+		if (!is_writable($image->imagePath))
+			return ' <strong>' . $image->filename . __(' is not writeable','nggallery') . '</strong>';
+		
+		$file = new ngg_Thumbnail($image->imagePath, TRUE);
+
+		// skip if file is not there
+		if (!$file->error) {
+			$file->resize($width, $height, $ngg_options['imgResampleMode']);
+			$file->save($image->imagePath, $ngg_options['imgQuality']);
+		}
+		
+		$file->destruct();
+
+		if ( !empty($file->errmsg) )
+			return ' <strong>' . $image->filename . ' (Error : '.$file->errmsg .')</strong>';		
+
+		return '1';
+	}
+
+	/**
+	 * nggAdmin::set_watermark() - set the watermarl for the image
+	 * 
+	 * @param object | int $image  $image contail all information about the image or the id
+	 * @return string result code
+	 */
+	function set_watermark($image) {
+
+		if(! class_exists('ngg_Thumbnail'))
+			require_once(NGGALLERY_ABSPATH.'/lib/ngg-thumbnail.lib.php');
+		
+		if ( is_numeric($image) )
+			$image = nggImageDAO::find_image( $image );
+		
+		if ( !is_object($image) ) 
+			return __('Object didn\'t contain correct data','nggallery');		
+		
+		$ngg_options = get_option('ngg_options');
+	
+		if (!is_writable($image->imagePath))
+			return ' <strong>' . $image->filename . __(' is not writeable','nggallery') . '</strong>';
+		
+		$file = new ngg_Thumbnail( $image->imagePath, TRUE );
+
+		// skip if file is not there
+		if (!$file->error) {
+			if ($ngg_options['wmType'] == 'image') {
+				$file->watermarkImgPath = $ngg_options['wmPath'];
+				$file->watermarkImage($ngg_options['wmPos'], $ngg_options['wmXpos'], $ngg_options['wmYpos']); 
+			}
+			if ($ngg_options['wmType'] == 'text') {
+				$file->watermarkText = $ngg_options['wmText'];
+				$file->watermarkCreateText($ngg_options['wmColor'], $ngg_options['wmFont'], $ngg_options['wmSize'], $ngg_options['wmOpaque']);
+				$file->watermarkImage($ngg_options['wmPos'], $ngg_options['wmXpos'], $ngg_options['wmYpos']);  
+			}
+			$file->save($image->imagePath, $ngg_options['imgQuality']);
+		}
+		
+		$file->destruct();
+
+		if ( !empty($file->errmsg) )
+			return ' <strong>' . $image->filename . ' (Error : '.$file->errmsg .')</strong>';		
+
+		return '1';
+	}
+	
 	// **************************************************************
 	function generateThumbnail($gallery_absfolder, $pictures) {
 		// ** $gallery_absfolder must contain abspath !!
@@ -405,7 +572,7 @@ class nggAdmin{
 			$picture = nggImageDAO::find_image($pic_id);
 			if (!$picture->error) {
 
-				$meta = nggAdmin::get_MetaData($picture->absPath);
+				$meta = nggAdmin::get_MetaData($picture->imagePath);
 				
 				// get the title
 				if (!$alttext = $meta['title'])
@@ -755,6 +922,44 @@ class nggAdmin{
 		
 		return true;
 	
+	}
+	
+	function do_ajax_operation( $operation, $image_array, $title = '' ) {
+		
+		if ( !is_array($image_array) )
+			return;
+
+		$js_array  = implode('","', $image_array);
+
+		?>
+		<script type="text/javascript">
+
+			Images = new Array("<?php echo $js_array; ?>");
+			
+			nggAjaxSetup = {
+				url: "<?php echo admin_url('admin-ajax.php'); ?>",
+				action: "ngg_ajax_operation",
+				operation: "<?php echo $operation; ?>",
+				nonce: "<?php echo wp_create_nonce( 'ngg-ajax' )?>",
+				ids: Images				
+			};
+
+			nggOptions = {
+			  header: "<?php echo $title; ?>",
+			  maxStep: Images.length
+			};
+			
+			jQuery(document).ready( function(){ 
+				nggProgressBar.init( nggOptions );
+				nggAjax.init();
+			} );
+		</script>
+		<script type="text/javascript" src="<?php echo NGGALLERY_URLPATH ?>admin/js/ngg.ajax.js"></script>
+		<script type="text/javascript" src="<?php echo NGGALLERY_URLPATH ?>admin/js/ngg.progressbar.js"></script>
+		
+		<div id="progressbar_container" class="wrap"></div>
+		
+		<?php	
 	}
 
 } // END class nggAdmin

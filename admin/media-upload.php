@@ -218,8 +218,8 @@ function media_upload_nextgen_form($errors) {
 					</tr>
 				   <tr class="submit">
 						<td>
-							<input type="hidden"  name="image[<?php echo $picid ?>][thumb]" value="<?php echo $picture->thumbPath ?>" />
-							<input type="hidden"  name="image[<?php echo $picid ?>][url]" value="<?php echo $picture->imagePath ?>" />
+							<input type="hidden"  name="image[<?php echo $picid ?>][thumb]" value="<?php echo $picture->thumbURL ?>" />
+							<input type="hidden"  name="image[<?php echo $picid ?>][url]" value="<?php echo $picture->imageURL ?>" />
 						</td>
 						<td class="savesend"><button type="submit" class="button" value="1" name="send[<?php echo $picid ?>]"><?php echo attribute_escape( __('Insert into Post') ); ?></button></td>
 				   </tr>

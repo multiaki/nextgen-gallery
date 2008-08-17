@@ -53,7 +53,7 @@ global $wpdb;
           </tr>
           <tr>
             <td nowrap="nowrap" valign="top"><label for="showtype"><?php _e("Show as", 'nggallery'); ?></label></td>
-            <td><label><input name="showtype" type="radio" value="gallery" checked="checked" /> <?php _e('Image list', 'nggallery') ;?></label><br />
+            <td><label><input name="showtype" type="radio" value="nggallery" checked="checked" /> <?php _e('Image list', 'nggallery') ;?></label><br />
 			<label><input name="showtype" type="radio" value="slideshow"  /> <?php _e('Slideshow', 'nggallery') ;?></label></td>
           </tr>
         </table>

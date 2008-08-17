@@ -95,18 +95,21 @@ function nggallery_admin_manage_gallery() {
 				break;
 			case 1:
 			// Set watermark
-				nggAdmin::generateWatermark(WINABSPATH.$gallerypath,$imageslist);
-				nggGalleryPlugin::show_message(__('Watermark successfully added',"nggallery"));
+				//nggAdmin::generateWatermark(WINABSPATH.$gallerypath,$imageslist);
+				nggAdmin::do_ajax_operation( 'set_watermark' , $_POST['doaction'], __('Set watermark','nggallery') );
+				//nggGalleryPlugin::show_message(__('Watermark successfully added',"nggallery")); 
 				break;
 			case 2:
 			// Create new thumbnails
-				nggAdmin::generateThumbnail(WINABSPATH.$gallerypath,$imageslist);
-				nggGalleryPlugin::show_message(__('Thumbnails successfully created. Please refresh your browser cache.',"nggallery"));
+				//nggAdmin::generateThumbnail(WINABSPATH.$gallerypath,$imageslist);
+				nggAdmin::do_ajax_operation( 'create_thumbnail' , $_POST['doaction'], __('Create new thumbnails','nggallery') );
+				//nggGalleryPlugin::show_message(__('Thumbnails successfully created. Please refresh your browser cache.',"nggallery"));
 				break;
 			case 3:
 			// Resample images
-				nggAdmin::resizeImages(WINABSPATH.$gallerypath,$imageslist);
-				nggGalleryPlugin::show_message(__('Images successfully resized',"nggallery"));
+				//nggAdmin::resizeImages(WINABSPATH.$gallerypath,$imageslist);
+				nggAdmin::do_ajax_operation( 'resize_image' , $_POST['doaction'], __('Resize images','nggallery') );
+				//nggGalleryPlugin::show_message(__('Images successfully resized',"nggallery"));
 				break;
 			case 4:
 			// Delete images
@@ -132,6 +135,13 @@ function nggallery_admin_manage_gallery() {
 				nggGalleryPlugin::show_message(__('Import metadata finished',"nggallery"));
 				break;
 		}
+	}
+	
+	// will be called after a ajax operation
+	if (isset ($_POST['ajax_callback']))  {
+			if ($_POST['ajax_callback'] == 1)
+				nggGalleryPlugin::show_message(__('Operation successfull. Please clear your browser cache.',"nggallery"));
+		$mode = 'edit';		
 	}
 	
 	if (isset ($_POST['TB_tagaction']) && isset ($_POST['TB_doaction']))  {
@@ -410,13 +420,14 @@ jQuery(document).ready( function() {
 
 //-->
 </script>
+
 <div class="wrap">
 
 <h2><?php _e('Gallery', 'nggallery') ?> : <?php echo $act_gallery->title; ?></h2>
 
 <br style="clear: both;"/>
 
-<form id="updategallery" method="POST" action="<?php echo 'admin.php?page=nggallery-manage-gallery&amp;mode=edit&amp;gid='.$act_gid ?>" accept-charset="utf-8">
+<form id="updategallery" class="nggform" method="POST" action="<?php echo 'admin.php?page=nggallery-manage-gallery&amp;mode=edit&amp;gid='.$act_gid ?>" accept-charset="utf-8">
 <?php wp_nonce_field('ngg_updategallery') ?>
 
 <?php if ($showTags) { ?><input type="hidden" name="showTags" value="true" /><?php } ?>
@@ -559,6 +570,7 @@ jQuery(document).ready( function() {
 	<tbody>
 <?php
 if($picturelist) {
+	
 	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
 	$thumbwidth = $ngg_options['thumbwidth'];
 	$thumbheight = $ngg_options['thumbheight'];	
@@ -577,8 +589,6 @@ if($picturelist) {
 		$pid     = $picture->pid;
 		$class   = ( $class == 'class="alternate"' ) ? '' : 'class="alternate"';	
 		$exclude = ( $picture->exclude ) ? 'checked="checked"' : '';
-		$thumbnailURL 	= get_option ('siteurl') . "/" . $picture->path . nggGalleryPlugin::get_thumbnail_folder($picture->path, FALSE);
-		$thumb_prefix   = nggGalleryPlugin::get_thumbnail_prefix($picture->path, FALSE);
 		
 		?>
 		<tr id="picture-<?php echo $pid ?>" <?php echo $class ?> style="text-align:center">
@@ -597,7 +607,7 @@ if($picturelist) {
 					case 'filename' :
 						?>
 						<td class="media-icon" style="text-align: left;">
-							<a href="<?php echo $picture->imagePath; ?>" class="thickbox" title="<?php echo $picture->filename ?>">
+							<a href="<?php echo $picture->imageURL; ?>" class="thickbox" title="<?php echo $picture->filename ?>">
 								<?php echo $picture->filename ?>
 							</a>
 						</td>
@@ -605,8 +615,8 @@ if($picturelist) {
 					break;
 					case 'thumbnail' :
 						?>
-						<td><a href="<?php echo $picture->imagePath; ?>" class="thickbox" title="<?php echo $picture->filename ?>">
-								<img class="thumb" src="<?php echo $thumbnailURL . $thumb_prefix . $picture->filename; ?>" <?php echo $thumbsize ?> />
+						<td><a href="<?php echo $picture->imageURL; ?>" class="thickbox" title="<?php echo $picture->filename ?>">
+								<img class="thumb" src="<?php echo $picture->thumbURL; ?>" <?php echo $thumbsize ?> />
 							</a>
 						</td>
 						<?php						

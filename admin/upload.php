@@ -27,7 +27,7 @@ if ( !is_user_logged_in() )
 	die('Login failure. -1');
 
 //check for correct capability
-if ( !current_user_can('NextGEN Manage gallery') ) 
+if ( !current_user_can('NextGEN Upload images') ) 
 	die('You do not have permission to upload files. -2');
 
 function get_out_now() { exit; }

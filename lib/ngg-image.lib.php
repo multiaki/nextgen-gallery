@@ -11,9 +11,10 @@ class nggImage{
 	/**** Public variables ****/	
 	var $errmsg			=	"";			// Error message to display, if any
 	var $error			=	FALSE; 		// Error state
-	var $imagePath		=	"";			// URL Path to the image
-	var $thumbPath		=	"";			// URL Path to the thumbnail
-	var $absPath		=	"";			// Server Path to the image
+	var $imageURL		=	"";			// URL Path to the image
+	var $thumbURL		=	"";			// URL Path to the thumbnail
+	var $imagePath		=	"";			// Server Path to the image
+	var $thumbPath		=	"";			// Server Path to the thumbnail
 	var $href			=	"";			// A href link code
 	
 	// TODO: remove thumbPrefix and thumbFolder (constants)
@@ -62,9 +63,10 @@ class nggImage{
 		// set urls and paths
 		//--
 		$this->get_thumbnail_folder($this->gallery->path, FALSE);
-		$this->imagePath 	= get_option ('siteurl') . "/" . $this->gallery->path . "/" . $this->filename;
-		$this->thumbPath 	= get_option ('siteurl') . "/" . $this->gallery->path . $this->thumbFolder . $this->thumbPrefix . $this->filename;
-		$this->absPath 		= WINABSPATH.$this->path . "/" . $this->filename;
+		$this->imageURL		= get_option ('siteurl') . "/" . $this->path . "/" . $this->filename;
+		$this->thumbURL 	= get_option ('siteurl') . "/" . $this->path . $this->thumbFolder . $this->thumbPrefix . $this->filename;
+		$this->imagePath	= WINABSPATH.$this->path . "/" . $this->filename;
+		$this->thumbPath	= WINABSPATH.$this->path . "/" . $this->thumbFolder . $this->thumbPrefix . $this->filename;
 	}
 	
 	/**********************************************************/
@@ -79,13 +81,6 @@ class nggImage{
 		if (is_dir($gallerypath."/thumbs")) {
 			$this->thumbFolder 	= "/thumbs/";
 			$this->thumbPrefix 	= "thumbs_";		
-			return TRUE;
-		}
-		
-		// old mygallery check
-		if (is_dir($gallerypath."/tumbs")) {
-			$this->thumbFolder	= "/tumbs/";
-			$this->thumbPrefix 	= "tmb_";
 			return TRUE;
 		}
 		
@@ -126,16 +121,16 @@ class nggImage{
 	
 	function get_href_link() {
 		// create the a href link from the picture
-		$this->href  = "\n".'<a href="'.$this->imagePath.'" title="'.stripslashes($this->description).'" '.$this->get_thumbcode($this->name).'>'."\n\t";
-		$this->href .= '<img alt="'.$this->alttext.'" src="'.$this->imagePath.'"/>'."\n".'</a>'."\n";
+		$this->href  = "\n".'<a href="'.$this->imageURL.'" title="'.stripslashes($this->description).'" '.$this->get_thumbcode($this->name).'>'."\n\t";
+		$this->href .= '<img alt="'.$this->alttext.'" src="'.$this->imageURL.'"/>'."\n".'</a>'."\n";
 
 		return $this->href;
 	}
 
 	function get_href_thumb_link() {
 		// create the a href link with the thumbanil
-		$this->href  = "\n".'<a href="'.$this->imagePath.'" title="'.stripslashes($this->description).'" '.$this->get_thumbcode($this->name).'>'."\n\t";
-		$this->href .= '<img alt="'.$this->alttext.'" src="'.$this->thumbPath.'"/>'."\n".'</a>'."\n";
+		$this->href  = "\n".'<a href="'.$this->imageURL.'" title="'.stripslashes($this->description).'" '.$this->get_thumbcode($this->name).'>'."\n\t";
+		$this->href .= '<img alt="'.$this->alttext.'" src="'.$this->thumbURL.'"/>'."\n".'</a>'."\n";
 
 		return $this->href;
 	}
@@ -164,7 +159,7 @@ class nggImage{
 			}
 		}
 		
-		$thumb = new ngg_Thumbnail($this->absPath, TRUE);
+		$thumb = new ngg_Thumbnail($this->imagePath, TRUE);
 		// echo $thumb->errmsg;
 		
 		if (!$thumb->error) {	

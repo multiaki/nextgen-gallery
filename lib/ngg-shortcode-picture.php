@@ -109,7 +109,7 @@ function ngg_do_picture_shortcode($atts, $content=null) {
 
 	// add fullsize picture as link if original size was not requested
 	//--
-	$out .= '<a href="' . $picture->imagePath . '" title="' . stripslashes($picture->description)
+	$out .= '<a href="' . $picture->imageURL . '" title="' . stripslashes($picture->description)
 			  . '" ' . $picture->get_thumbcode("singlepic".$id) . ' >';
 
 	if (!$cache_url) {

@@ -21,7 +21,7 @@ $id = (int) $_GET['id'];
 // let's get the image data
 $picture = nggImageDAO::find_image($id);
 // let's get the meta data'
-$meta = new nggMeta($picture->absPath);
+$meta = new nggMeta($picture->imagePath);
 $exifdata = $meta->get_EXIF();
 $iptcdata = $meta->get_IPTC();
 $xmpdata = $meta->get_XMP();
