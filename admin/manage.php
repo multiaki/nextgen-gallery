@@ -50,7 +50,8 @@ function nggallery_admin_manage_gallery() {
 		$delete_galllery = $wpdb->query("DELETE FROM $wpdb->nggallery WHERE gid = $act_gid");
 		
 		if($delete_galllery)
-			$messagetext = '<font color="green">'.__('Gallery','nggallery').' \''.$act_gid.'\' '.__('deleted successfully','nggallery').'</font>';
+			nggGalleryPlugin::show_message( __('Gallery','nggallery').' \''.$act_gid.'\' '.__('deleted successfully','nggallery'));
+			
 	 	$mode = 'main'; // show mainpage
 	}
 
@@ -70,7 +71,8 @@ function nggallery_admin_manage_gallery() {
 			$delete_pic = $wpdb->query("DELETE FROM $wpdb->nggpictures WHERE pid = $act_pid");
 		}
 		if($delete_pic)
-			$messagetext = '<font color="green">'.__('Picture','nggallery').' \''.$act_pid.'\' '.__('deleted successfully','nggallery').'</font>';
+			nggGalleryPlugin::show_message( __('Picture','nggallery').' \''.$act_pid.'\' '.__('deleted successfully','nggallery') );
+			
 	 	$mode = 'edit'; // show pictures
 
 	}
@@ -95,21 +97,15 @@ function nggallery_admin_manage_gallery() {
 				break;
 			case 1:
 			// Set watermark
-				//nggAdmin::generateWatermark(WINABSPATH.$gallerypath,$imageslist);
 				nggAdmin::do_ajax_operation( 'set_watermark' , $_POST['doaction'], __('Set watermark','nggallery') );
-				//nggGalleryPlugin::show_message(__('Watermark successfully added',"nggallery")); 
 				break;
 			case 2:
 			// Create new thumbnails
-				//nggAdmin::generateThumbnail(WINABSPATH.$gallerypath,$imageslist);
 				nggAdmin::do_ajax_operation( 'create_thumbnail' , $_POST['doaction'], __('Create new thumbnails','nggallery') );
-				//nggGalleryPlugin::show_message(__('Thumbnails successfully created. Please refresh your browser cache.',"nggallery"));
 				break;
 			case 3:
 			// Resample images
-				//nggAdmin::resizeImages(WINABSPATH.$gallerypath,$imageslist);
 				nggAdmin::do_ajax_operation( 'resize_image' , $_POST['doaction'], __('Resize images','nggallery') );
-				//nggGalleryPlugin::show_message(__('Images successfully resized',"nggallery"));
 				break;
 			case 4:
 			// Delete images
@@ -244,7 +240,7 @@ function nggallery_admin_manage_gallery() {
 		$gallery_pageid = wp_insert_post ($page);
 		if ($gallery_pageid != 0) {
 			$result = $wpdb->query("UPDATE $wpdb->nggallery SET title= '$gallery_title', pageid = '$gallery_pageid' WHERE gid = '$act_gid'");
-			$messagetext = '<font color="green">'.__('New gallery page ID','nggallery'). ' ' . $pageid . ' -> <strong>' . $gallery_title . '</strong> ' .__('created','nggallery').'</font>';
+			nggGalleryPlugin::show_message( __('New gallery page ID','nggallery'). ' ' . $pageid . ' -> <strong>' . $gallery_title . '</strong> ' .__('created','nggallery') );
 		}
 	}
 	
@@ -259,9 +255,6 @@ function nggallery_admin_manage_gallery() {
 		nggallery_sortorder($act_gid);
 		return;
 	}
-	
-	// message windows
-	if(!empty($messagetext)) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$messagetext.'</p></div>'; }
 
 	if (($mode == '') or ($mode == "main"))
 		nggallery_manage_gallery_main();

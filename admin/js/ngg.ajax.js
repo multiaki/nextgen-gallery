@@ -30,13 +30,13 @@ nggAjax = {
 						break;
 						default:
 							// Return the message
-							nggProgressBar.addNote( "A failure occured", msg );
+							nggProgressBar.addNote( "<strong>ID " + nggAjax.settings.ids[index] + ":</strong> A failure occurred", msg );
 						break; 			   			
 			   		}
 
 			    },
 			    error: function (msg) {
-					nggProgressBar.addNote( "A failure occured", msg );
+					nggProgressBar.addNote( "<strong>ID " + nggAjax.settings.ids[index] + ":</strong> A failure occurred", msg );
 				},
 				complete: function () {
 					index++;

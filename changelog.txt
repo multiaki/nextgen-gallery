@@ -3,6 +3,7 @@ by Alex Rabe & NextGEN DEV Team
 
 V1.00
 - NEW : Convert all shortcodes to WP shortcodes API
+- NEW : AJAX based thumbnail generator
 - NEW : Create output via template files, more flexible
 - NEW : Extended role system. Each gallery has now a author
 - NEW : [thumb id="4,5,12,..." caption="none|alttext|desc" 

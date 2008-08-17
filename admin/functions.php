@@ -82,8 +82,9 @@ class nggAdmin{
 			return false;			
 		} else { 
 			$result = $wpdb->query("INSERT INTO $wpdb->nggallery (name, path, title, author) VALUES ('$galleryname', '$nggpath', '$gallerytitle' , '$user_ID') ");
-			if ($result) nggGalleryPlugin::show_message(__('Gallery', 'nggallery').' <strong>'.$wpdb->insert_id." : ".$galleryname.'</strong> '.__('successfully created!','nggallery')."<br />".__('You can show this gallery with the tag','nggallery').'<strong> [gallery='.$wpdb->insert_id.']</strong>'); 
-			return true;;
+			if ($result) 
+				nggGalleryPlugin::show_message(__('Gallery', 'nggallery').' <strong>'.$wpdb->insert_id." : ".$galleryname.'</strong> '.__('successfully created!','nggallery')."<br />".__('You can show this gallery with the tag','nggallery').'<strong> [gallery='.$wpdb->insert_id.']</strong>'); 
+			return true;
 		} 
 	}
 	
@@ -141,13 +142,14 @@ class nggAdmin{
 		if ($old_imageslist == NULL) $old_imageslist = array();
 		// check difference
 		$new_images = array_diff($new_imageslist, $old_imageslist);
-		// now create thumbnails
-		nggAdmin::generateThumbnail($gallerypath,$new_images);
 		
 		// add images to database		
-		$count_pic = nggAdmin::add_Images($gallery_id, $gallerypath, $new_images);
+		$image_ids = nggAdmin::add_Images($gallery_id, $new_images);
+		
+		// now create thumbnails
+		nggAdmin::do_ajax_operation( 'create_thumbnail' , $image_ids, __('Create new thumbnails','nggallery') );
 				
-		nggGalleryPlugin::show_message($created_msg.$count_pic.__(' picture(s) successfully added','nggallery'));
+		nggGalleryPlugin::show_message($created_msg . count($image_ids) .__(' picture(s) successfully added','nggallery'));
 		return;
 
 	}
@@ -167,113 +169,6 @@ class nggAdmin{
 		return ($files); 
 	} 
 	
-	// **************************************************************
-	function resizeImages($gallery_absfolder, $pictures) {
-		// ** $gallery_absfolder must contain abspath !!
-
-		if(! class_exists('ngg_Thumbnail'))
-			require_once(NGGALLERY_ABSPATH.'/lib/ngg-thumbnail.lib.php');
-		
-		$ngg_options = get_option('ngg_options');
-		
-		if (is_array($pictures)) {
-			
-			$bar = new wpProgressBar(__('Running... Please wait','nggallery'));
-			$bar->setHeader(__('Resize images','nggallery'));
-			//total number of elements to process
-			$elements = count($pictures); 
-			// wait a little bit after finished
-			if ($elements > 5) $bar->setSleepOnFinish(2);
-			//print the empty bar
-			$bar->initialize($elements); 
-			
-			foreach($pictures as $picture) {
-	
-				if (!is_writable($gallery_absfolder."/".$picture)) {
-					$messagetext .= $gallery_absfolder."/".$picture."<br />";
-					$bar->increase();
-					continue;
-				}
-				
-				$thumb = new ngg_Thumbnail($gallery_absfolder."/".$picture, TRUE);
-				// echo $thumb->errmsg;	
-				// skip if file is not there
-				if (!$thumb->error) {
-					$thumb->resize($ngg_options['imgWidth'],$ngg_options['imgHeight'],$ngg_options['imgResampleMode']);
-					if ( $thumb->save($gallery_absfolder."/".$picture,$ngg_options['imgQuality']) ) {
-						// do not flush the buffer with useless messages
-						if ($elements  < 100)
-							$bar->addNote($picture. __(' : Image resized...','nggallery'));
-					} else
-						$bar->addNote($picture . "  : Error : <strong>".$thumb->errmsg."</strong>");
-					$bar->increase();
-				}
-				$thumb->destruct();
-			}
-		}
-		
-		if(!empty($messagetext)) nggGalleryPlugin::show_error('<strong>'.__('Some pictures are not writeable :','nggallery').'</strong><br /><ul>'.$messagetext.'</ul>');
-		return;
-	}
-	
-	// **************************************************************
-	function generateWatermark($gallery_absfolder, $pictures) {
-		// ** $gallery_absfolder must contain abspath !!
-
-		if(! class_exists('ngg_Thumbnail'))
-			require_once(NGGALLERY_ABSPATH.'/lib/ngg-thumbnail.lib.php');
-		
-		$ngg_options = get_option('ngg_options');
-		
-		if (is_array($pictures)) {
-			
-			$bar = new wpProgressBar(__('Running... Please wait','nggallery'));
-			$bar->setHeader(__('Set watermark','nggallery'));
-			//total number of elements to process
-			$elements = count($pictures); 
-			// wait a little bit after finished
-			if ($elements > 5) $bar->setSleepOnFinish(2);
-			//print the empty bar
-			$bar->initialize($elements); 
-						
-			foreach($pictures as $picture) {
-	
-			if (!is_writable($gallery_absfolder."/".$picture)) {
-				$messagetext .= $gallery_absfolder."/".$picture."<br />";
-				$bar->increase();
-				continue;
-			}
-			
-			$thumb = new ngg_Thumbnail($gallery_absfolder."/".$picture, TRUE);
-			// echo $thumb->errmsg;	
-			// skip if file is not there
-			if (!$thumb->error) {
-				if ($ngg_options['wmType'] == 'image') {
-					$thumb->watermarkImgPath = $ngg_options['wmPath'];
-					$thumb->watermarkImage($ngg_options['wmPos'], $ngg_options['wmXpos'], $ngg_options['wmYpos']); 
-				}
-				if ($ngg_options['wmType'] == 'text') {
-					$thumb->watermarkText = $ngg_options['wmText'];
-					$thumb->watermarkCreateText($ngg_options['wmColor'], $ngg_options['wmFont'], $ngg_options['wmSize'], $ngg_options['wmOpaque']);
-					$thumb->watermarkImage($ngg_options['wmPos'], $ngg_options['wmXpos'], $ngg_options['wmYpos']);  
-				}
-				if ( $thumb->save($gallery_absfolder."/".$picture,$ngg_options['imgQuality']) ) {
-					// do not flush the buffer with useless messages
-					if ($elements  < 100)
-						$bar->addNote($picture. __(' : Watermark created...','nggallery'));
-				 } else
-					$bar->addNote($picture . "  : Error : <strong>".$thumb->errmsg."</strong>");
-				$bar->increase();
-			}
-			$thumb->destruct();
-			}
-		}
-		
-		if(!empty($messagetext)) nggGalleryPlugin::show_error('<strong>'.__('Some pictures are not writeable :','nggallery').'</strong><br /><ul>'.$messagetext.'</ul>');
-		return;
-	}
-	
-
 	/**
 	 * nggAdmin::createThumbnail() - function to create or recreate a thumbnail
 	 * 
@@ -439,113 +334,20 @@ class nggAdmin{
 
 		return '1';
 	}
-	
-	// **************************************************************
-	function generateThumbnail($gallery_absfolder, $pictures) {
-		// ** $gallery_absfolder must contain abspath !!
-		
-		if(! class_exists('ngg_Thumbnail'))
-			require_once(NGGALLERY_ABSPATH.'/lib/ngg-thumbnail.lib.php');
-		
-		$ngg_options = get_option('ngg_options');
-		
-		$thumbfolder = nggGalleryPlugin::get_thumbnail_folder($gallery_absfolder);
-		$prefix = "thumbs_";
-		
-		if (!$thumbfolder)
-			return;
-		
-		if (is_array($pictures)) {
-			
-			$bar = new wpProgressBar(__('Running... Please wait','nggallery'));
-			$bar->setHeader(__('Create new thumbnails','nggallery'));
-			//total number of elements to process
-			$elements = count($pictures); 
-			// wait a little bit after finished
-			if ($elements > 10) $bar->setSleepOnFinish(2);
-			//print the empty bar
-			$bar->initialize($elements); 
-		
-			foreach($pictures as $picture) {
-				// check for existing thumbnail
-				if (file_exists($gallery_absfolder.$thumbfolder.$prefix.$picture)) {
-					if (!is_writable($gallery_absfolder.$thumbfolder.$prefix.$picture)) {
-						$messagetext .= $gallery_absfolder."/".$picture."<br />";
-						$bar->increase();
-						continue;
-					}
-				}
-	
-				$thumb = new ngg_Thumbnail($gallery_absfolder."/".utf8_decode($picture), TRUE);
-
-				// skip if file is not there
-				if (!$thumb->error) {
-					if ($ngg_options['thumbcrop']) {
-						
-						// THX to Kees de Bruin, better thumbnails if portrait format
-						$width = $ngg_options['thumbwidth'];
-						$height = $ngg_options['thumbheight'];
-						$curwidth = $thumb->currentDimensions['width'];
-						$curheight = $thumb->currentDimensions['height'];
-						if ($curwidth > $curheight) {
-							$aspect = (100 * $curwidth) / $curheight;
-						} else {
-							$aspect = (100 * $curheight) / $curwidth;
-						}
-						$width = intval(($width * $aspect) / 100);
-						$height = intval(($height * $aspect) / 100);
-						$thumb->resize($width,$height,$ngg_options['thumbResampleMode']);
-						$thumb->cropFromCenter($width,$ngg_options['thumbResampleMode']);
-					} 
-					elseif ($ngg_options['thumbfix'])  {
-						// check for portrait format
-						if ($thumb->currentDimensions['height'] > $thumb->currentDimensions['width']) {
-							$thumb->resize($ngg_options['thumbwidth'], 0,$ngg_options['thumbResampleMode']);
-							// get optimal y startpos
-							$ypos = ($thumb->currentDimensions['height'] - $ngg_options['thumbheight']) / 2;
-							$thumb->crop(0, $ypos, $ngg_options['thumbwidth'],$ngg_options['thumbheight'],$ngg_options['thumbResampleMode']);	
-						} else {
-							$thumb->resize(0,$ngg_options['thumbheight'],$ngg_options['thumbResampleMode']);	
-							// get optimal x startpos
-							$xpos = ($thumb->currentDimensions['width'] - $ngg_options['thumbwidth']) / 2;
-							$thumb->crop($xpos, 0, $ngg_options['thumbwidth'],$ngg_options['thumbheight'],$ngg_options['thumbResampleMode']);	
-						}
-					} else {
-						$thumb->resize($ngg_options['thumbwidth'],$ngg_options['thumbheight'],$ngg_options['thumbResampleMode']);	
-					}
-					if ( !$thumb->save($gallery_absfolder.$thumbfolder.$prefix.$picture,$ngg_options['thumbquality'])) {
-							$errortext .= $picture . " <strong>(Error : ".$thumb->errmsg .")</strong><br />";
-							$bar->addNote($picture . "  : Error : <strong>".$thumb->errmsg)."</strong>";
-					}
-					nggAdmin::chmod ($gallery_absfolder.$thumbfolder.$prefix.$picture); 
-				} else {
-					$errortext .= $picture . " <strong>(Error : ".$thumb->errmsg .")</strong><br />";
-					$bar->addNote($picture . "  : Error : <strong>".$thumb->errmsg."</strong>");
-				}
-				$thumb->destruct();
-				// do not flush the buffer with useless messages
-				if ($elements  < 100)
-					$bar->addNote($picture. __(' : Thumbnail created...','nggallery'));
-				$bar->increase();
-			}
-		}
-
-		if(!empty($errortext)) nggGalleryPlugin::show_error('<strong>'.__('Follow thumbnails could not created.','nggallery').'</strong><br /><ul>'.$errortext.'</ul>');		
-		if(!empty($messagetext)) nggGalleryPlugin::show_error('<strong>'.__('Some thumbnails are not writeable :','nggallery').'</strong><br /><ul>'.$messagetext.'</ul>');
-		
-		return;
-	}
 
 	// **************************************************************
-	function add_Images($galleryID, $gallerypath, $imageslist) {
+	function add_Images($galleryID, $imageslist) {
 		// add images to database		
 		global $wpdb;
-		$count_pic = 0;
-		if (is_array($imageslist)) {
+		
+		$image_ids = array();
+		
+		if ( is_array($imageslist) ) {
 			foreach($imageslist as $picture) {
 				$result = $wpdb->query("INSERT INTO $wpdb->nggpictures (galleryid, filename, alttext, exclude) VALUES ('$galleryID', '$picture', '$picture', 0) ");
 				$pic_id = (int) $wpdb->insert_id;
-				if ($result) $count_pic++;
+				if ($result) 
+					$image_ids[] = $pic_id;
 
 				// add the metadata
 				if ($_POST['addmetadata']) 
@@ -554,7 +356,7 @@ class nggAdmin{
 			} 
 		} // is_array
 		
-		return $count_pic;
+		return $image_ids;
 		
 	}
 
@@ -656,13 +458,11 @@ class nggAdmin{
 		$filename = $_FILES['zipfile']['name']; 
 					
 		// check if file is a zip file
-		if (!eregi('zip', $_FILES['zipfile']['type']))
-			// on whatever reason MAC shows "application/download"
-			if (!eregi('download', $_FILES['zipfile']['type'])) {
-				@unlink($temp_zipfile); // del temp file
-				nggGalleryPlugin::show_error(__('Uploaded file was no or a faulty zip file ! The server recognize : ','nggallery').$_FILES['zipfile']['type']);
-				return; 
-			}
+		if (!eregi('zip|download|octet-stream', $_FILES['zipfile']['type'])) {
+			@unlink($temp_zipfile); // del temp file
+			nggGalleryPlugin::show_error(__('Uploaded file was no or a faulty zip file ! The server recognize : ','nggallery').$_FILES['zipfile']['type']);
+			return; 
+		}
 		
 		// get foldername if selected
 		$foldername = $_POST['zipgalselect'];
@@ -672,7 +472,7 @@ class nggAdmin{
 			//$foldername = preg_replace ("/(\s+)/", '-', strtolower(strtok ($filename,'.')));					
 		}
 
-		//TODO:FORM must get the path from the tables not from defaultpath	!!!
+		//TODO:FORM must get the path from the tables not from defaultpath !!!
 		// set complete folder path		
 		$newfolder = WINABSPATH.$defaultpath.$foldername;
 
@@ -790,13 +590,13 @@ class nggAdmin{
 		
 		if (count($imageslist) > 0) {
 			
-			//create thumbnails
-			nggAdmin::generatethumbnail(WINABSPATH.$gallerypath,$imageslist);
-		
 			// add images to database		
-			$count_pic = nggAdmin::add_Images($galleryID, $gallerypath, $imageslist);
-		
-			nggGalleryPlugin::show_message($count_pic.__(' Image(s) successfully added','nggallery'));
+			$image_ids = nggAdmin::add_Images($galleryID, $imageslist);
+
+			//create thumbnails
+			nggAdmin::do_ajax_operation( 'create_thumbnail' , $image_ids, __('Create new thumbnails','nggallery') );
+			
+			nggGalleryPlugin::show_message( count($image_ids) . __(' Image(s) successfully added','nggallery'));
 		}
 		
 		return;
@@ -926,7 +726,7 @@ class nggAdmin{
 	
 	function do_ajax_operation( $operation, $image_array, $title = '' ) {
 		
-		if ( !is_array($image_array) )
+		if ( !is_array($image_array) || empty($image_array) )
 			return;
 
 		$js_array  = implode('","', $image_array);

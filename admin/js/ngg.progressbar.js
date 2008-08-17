@@ -68,6 +68,7 @@
 	      			jQuery('.nggform').submit();
 	    		});
 	    	} else {
+	    		div.hide("slow");
 				jQuery('.nggform').prepend("<input type=\"hidden\" name=\"ajax_callback\" value=\"1\">");
 	    		jQuery('.nggform').submit();
 	    	}
