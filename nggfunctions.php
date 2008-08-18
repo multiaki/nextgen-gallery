@@ -154,8 +154,8 @@ function nggCreateGallery($picturelist, $galleryID = false) {
 	
 	// set thumb size 
 	$thumbsize = "";
-	if ($ngg_options['thumbfix'])  $thumbsize = 'style="width:'.$thumbwidth.'px; height:'.$thumbheight.'px;"';
-	if ($ngg_options['thumbcrop']) $thumbsize = 'style="width:'.$thumbwidth.'px; height:'.$thumbwidth.'px;"';
+	if ($ngg_options['thumbfix'])  $thumbsize = 'width="'.$thumbwidth.'" height="'.$thumbheight.'"';
+	if ($ngg_options['thumbcrop']) $thumbsize = 'width="'.$thumbwidth.'" height="'.$thumbwidth.'"';
 	
 	// show slideshow link
 	if ($galleryID) {
