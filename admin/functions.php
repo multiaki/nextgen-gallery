@@ -172,7 +172,7 @@ class nggAdmin{
 	/**
 	 * nggAdmin::createThumbnail() - function to create or recreate a thumbnail
 	 * 
-	 * @param object | int $image  $image contail all information about the image or the id
+	 * @param object | int $image contain all information about the image or the id
 	 * @return string result code
 	 * @since v1.0.0
 	 */
@@ -249,7 +249,7 @@ class nggAdmin{
 	/**
 	 * nggAdmin::resize_image() - create a new image, based on the height /width
 	 * 
-	 * @param object | int $image  $image contail all information about the image or the id
+	 * @param object | int $image contain all information about the image or the id
 	 * @param integer $width optional 
 	 * @param integer $height optional
 	 * @return string result code
@@ -292,7 +292,7 @@ class nggAdmin{
 	/**
 	 * nggAdmin::set_watermark() - set the watermarl for the image
 	 * 
-	 * @param object | int $image  $image contail all information about the image or the id
+	 * @param object | int $image contain all information about the image or the id
 	 * @return string result code
 	 */
 	function set_watermark($image) {
@@ -607,6 +607,7 @@ class nggAdmin{
 	function swfupload_image($galleryID = 0) {
 		// This function is called by the swfupload
 		global $wpdb;
+		
 		$ngg_options = get_option('ngg_options');
 		
 		if ($galleryID == 0) {
@@ -619,9 +620,8 @@ class nggAdmin{
 			return;
 
 		// Check the upload
-		if (!isset($_FILES["Filedata"]) || !is_uploaded_file($_FILES["Filedata"]["tmp_name"]) || $_FILES["Filedata"]["error"] != 0) {
+		if (!isset($_FILES["Filedata"]) || !is_uploaded_file($_FILES["Filedata"]["tmp_name"]) || $_FILES["Filedata"]["error"] != 0) 
 			return __('Invalid upload. Error Code : ','nggallery').$_FILES["Filedata"]["error"];
-		}
 
 		// get the filename and extension
 		$temp_file = $_FILES["Filedata"]['tmp_name'];
@@ -632,9 +632,8 @@ class nggAdmin{
 
 		// check for allowed extension
 		$ext = array("jpeg", "jpg", "png", "gif"); 
-		if (!in_array($filepart['extension'],$ext)){ 
+		if (!in_array($filepart['extension'],$ext))
 			return $_FILES[$key]['name'].__('is no valid image file!','nggallery');
-		}
 
 		// get the path to the gallery	
 		$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$galleryID' ");
@@ -644,7 +643,7 @@ class nggAdmin{
 		} 
 
 		// read list of images
-		$imageslist = nggAdmin::scandir(WINABSPATH.$gallerypath);
+		$imageslist = nggAdmin::scandir( WINABSPATH.$gallerypath );
 
 		// check if this filename already exist
 		$i = 0;
@@ -660,9 +659,8 @@ class nggAdmin{
 			return __('Error, the file could not moved to : ','nggallery').$dest_file;
 		} 
 		
-		if ( !nggAdmin::chmod($dest_file) ) {
+		if ( !nggAdmin::chmod($dest_file) )
 			return __('Error, the file permissions could not set','nggallery');
-		}
 		
 		return "0";
 	}	
@@ -735,27 +733,19 @@ class nggAdmin{
 		<script type="text/javascript">
 
 			Images = new Array("<?php echo $js_array; ?>");
-			
-			nggAjaxSetup = {
-				url: "<?php echo admin_url('admin-ajax.php'); ?>",
-				action: "ngg_ajax_operation",
-				operation: "<?php echo $operation; ?>",
-				nonce: "<?php echo wp_create_nonce( 'ngg-ajax' )?>",
-				ids: Images				
-			};
 
-			nggOptions = {
-			  header: "<?php echo $title; ?>",
-			  maxStep: Images.length
+			nggAjaxOptions = {
+				operation: "<?php echo $operation; ?>",
+				ids: Images,		
+			  	header: "<?php echo $title; ?>",
+			  	maxStep: Images.length
 			};
 			
 			jQuery(document).ready( function(){ 
-				nggProgressBar.init( nggOptions );
-				nggAjax.init();
+				nggProgressBar.init( nggAjaxOptions );
+				nggAjax.init( nggAjaxOptions );
 			} );
 		</script>
-		<script type="text/javascript" src="<?php echo NGGALLERY_URLPATH ?>admin/js/ngg.ajax.js"></script>
-		<script type="text/javascript" src="<?php echo NGGALLERY_URLPATH ?>admin/js/ngg.progressbar.js"></script>
 		
 		<div id="progressbar_container" class="wrap"></div>
 		
@@ -763,187 +753,6 @@ class nggAdmin{
 	}
 
 } // END class nggAdmin
-
-/**
- * Class wpProgressBar for WordPress & NextGEN Gallery 
- * Easy to use progress bar in html and css.
- *
- * @author Based on ProgressBar from David Bongard (mail@bongard.net | www.bongard.net)
- *		   and Phillip Berndt (standards.webmasterpro.de)
- * @mixed by Alex Rabe
- * @version 1.0 - 20071201
- * @license http://www.opensource.org/licenses/mit-license.php MIT License
- * @copyright Copyright &copy; 2007, David Bongard , Phillip Berndt
- *
- */
-class wpProgressBar {
-
-	/**
-	 * Constructor
-	 *
-	 * @param str $message Message shown above the bar eg. "Please wait...". Default: ''
-	 * @param bool $hide Hide the bar after completion (with JavaScript). Default: true
-	 * @param int $sleepOnFinish Seconds to sleep after bar completion. Default: 0
-	 * @param int $barLength Length in percent. Default: 100
-	 * @param str $domID Html-Attribute "id" for the bar
-	 * @param str $header the header title
-	 */
-    function wpProgressBar($message='', $hide=true, $sleepOnFinish=0, $domID='progressbar', $header='')
-    {
-		global $pb_instance;
-    	$this->instance = $pb_instance++;
-    	$this->setAutohide($hide);
-    	$this->setSleepOnFinish($sleepOnFinish);
-		$this->setDomIDs($domID);
-    	$this->setMessage($message);
-		$this->setheader($header);
-    }
-
-
-	/**
-	 * Print the empty progress bar
-	 * @param int $numElements Number of Elements to be processed and number of times $bar->initialize() will be called while processing
-	 */
-	function initialize($numElements)
-	{
-		$this->StepCount = 0;
-		$this->ListCount = 0;
-
-		$numElements = (int) $numElements ;
-
-    	if($numElements == 0)
-    		return;
-    	
-    	$this->numSteps = $numElements;
-		
-		//calculate the % per Step
-		$this->percentPerStep = round (100 / $numElements, 2); 
-
-		//stop buffering
-    	ob_end_flush();
-    	//start buffering
-    	ob_start();
-		
-		echo '<div id="'.$this->domID.'_container" class="wrap">
-				  <h2>'.$this->header.'</h2>
-				  <div id="'.$this->domID.'" class="progressborder"><div class="progressbar"><span>0%</span></div></div>
-			  	  <div class="progressbar_message"><span style="display:block" id="'.$this->domIDMessage.'">'.$this->message.'</span></div>
-			  	  <ul id="'.$this->domIDProgressNote.'">&nbsp;</ul>
-			  </div>
-			  
-			  <script type="text/javascript">
-				<!--
-				oProgressbar = document.getElementById("'.$this->domID.'").firstChild;
-				function progress(value)
-				{
-				  oProgressbar.firstChild.firstChild.nodeValue = oProgressbar.style.width = value + "%";
-				}
-				// -->
-			  </script>';	
-
-		ob_flush();
-		flush();
-
-		$this->initialized = true;
-	}
-
-	/**
-	 * Count steps and increase bar length
-	 *
-	 */
-	function increase()
-	{
-		if($this->StepCount < $this->numSteps) {
-			//add a step
-			$this->StepCount++;
-
-			$value = $this->StepCount * $this->percentPerStep;
-			echo('<script type="text/javascript">progress('.intval($value).');</script>');
-
-			ob_flush();
-			flush();
-		}
-
-		if(!$this->finished && $this->StepCount == $this->numSteps){
-			// to be sure that based on round we reached 100%
-			if ($value != 100){
-				echo('<script type="text/javascript">progress('.intval(100).');</script>');
-				ob_flush();
-				flush();
-			}
-			$this->stop();
-		}
-	}
-
-	function stop($error=false)
-	{
-
-			//sleep x seconds before ending the script
-			if(!$error){
-				if($this->sleepOnFinish > 0){
-					sleep($this->sleepOnFinish);
-				}
-
-				//hide the bar
-				if($this->hide){
-					echo '<script type="text/javascript">document.getElementById("'.$this->domID.'_container").style.display = "none";</script>';
-					ob_flush();
-					flush();
-				}
-			}
-			$this->finished = true;
-	}
-
-	function setMessage($text)
-	{
-		if($this->initialized){
-			echo '<script type="text/javascript">document.getElementById("'.$this->domIDMessage.'").innerHTML = "'.$text.'";</script>';
-			ob_flush();flush();
-		}else{
-			$this->message = $text;
-		}
-	}
-
-	function addNote($text)
-	{
-		if($this->initialized){
-			echo '<script type="text/javascript">
-					var newLI = document.createElement("li");
-					var note = document.createTextNode("'.$text.'");
-					document.getElementById("'.$this->domIDProgressNote.'").appendChild(newLI);
-  					document.getElementById("'.$this->domIDProgressNote.'").getElementsByTagName("li")['.$this->ListCount.'].appendChild(note);
-			      </script>';      
-			$this->ListCount++;
-			if ($this->numSteps < 150) {
-				ob_flush();
-				flush();
-			}
-		}
-	}
-
-	function setAutohide($hide)
-	{
-    	$this->hide = (bool) $hide;
-    }
-
-	function setHeader($header)
-	{
-    	$this->header = $header;
-    }
-
-    function setSleepOnFinish($sleepOnFinish)
-    {
-    	$this->sleepOnFinish = (int) $sleepOnFinish;
-    }
-
-    function setDomIDs($domID)
-    {
-    	$this->domID = strip_tags($domID).$this->instance;
-    	$this->domIDMessage = $this->domID.'_message';
-    	$this->domIDProgressNote = $this->domID.'_note';
-    }
-
-}
 
 // **************************************************************
 //TODO: Cannot be member of a class ? Check PCLZIP later...

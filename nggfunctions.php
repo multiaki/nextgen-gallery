@@ -52,6 +52,10 @@ function nggShowSlideshow($galleryID,$irWidth,$irHeight) {
 	if ($ngg_options['irXHTMLvalid']) $out .= "\n\t".'//]]>';
 	if ($ngg_options['irXHTMLvalid']) $out .= "\n\t".'-->';
 	$out .= "\n\t".'</script>';
+	
+	// remove media file from RSS feed
+	if ( is_feed() )
+		$out = '[' . $ngg_options['galTextSlide'] . ']'; 
 
 	$out = apply_filters('ngg_show_slideshow_content', $out);
 			
@@ -454,9 +458,9 @@ function nggSinglePicture($imageID,$width=250,$height=250,$mode="",$float="") {
 	// add fullsize picture as link
 	$out  = '<a href="'.$picture->imageURL.'" title="'.stripslashes($picture->description).'" '.$picture->get_thumbcode("singlepic".$imageID).' >';
 	if (!$cache_url)
-		$out .= '<img class="ngg-singlepic'. $float .'" src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$imageID.'&amp;width='.$width.'&amp;height='.$height.'&amp;mode='.$mode.'" alt="'.stripslashes($picture->alttext).'" title="'.stripslashes($picture->alttext).'" />';
+		$out .= '<img class="ngg-singlepic'. $float .'" src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$imageID.'&amp;width='.$width.'&amp;height='.$height.'&amp;mode='.$mode.'" alt="'.stripslashes($picture->alttext).'" title="'.stripslashes($picture->alttext).'" width="'. $width .'" height="'. $height.'" />';
 	else
-		$out .= '<img class="ngg-singlepic'. $float .'" src="'.$cache_url.'" alt="'.stripslashes($picture->alttext).'" title="'.stripslashes($picture->alttext).'" />';
+		$out .= '<img class="ngg-singlepic'. $float .'" src="'.$cache_url.'" alt="'.stripslashes($picture->alttext).'" title="'.stripslashes($picture->alttext).'" width="'. $width .'" height="'. $height.'" />';
 	$out .= '</a>';
 
 	$out = apply_filters('ngg_show_singlepic_content', $out, $picture );

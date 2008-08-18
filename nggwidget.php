@@ -401,9 +401,9 @@ class nggWidget {
 				//TODO:For mixed portrait/landscape it's better to use only the height setting, if widht is 0 or vice versa
 				$out = '<a href="'.nggGalleryPlugin::get_image_url($image->pid).'" title="'.stripslashes($image->description).'" '.$thumbcode.'>';
 				if ( $options[$number]['show'] == "orginal" )
-					$out .= '<img src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$image->pid.'&amp;width='.$options[$number]['width'].'&amp;height='.$options[$number]['height'].'" title="'.$image->alttext.'" alt="'.$image->alttext.'" />';
+					$out .= '<img src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$image->pid.'&amp;width='.$options[$number]['width'].'&amp;height='.$options[$number]['height']. '" width="'.$options[$number]['width'].'" height="'.$options[$number]['height'].'" title="'.$image->alttext.'" alt="'.$image->alttext.'" />';
 				else	
-					$out .= '<img src="'.nggGalleryPlugin::get_thumbnail_url($image->pid).'" style="width:'.$options[$number]['width'].'px;height:'.$options[$number]['height'].'px;" title="'.$image->alttext.'" alt="'.$image->alttext.'" />';			
+					$out .= '<img src="'.nggGalleryPlugin::get_thumbnail_url($image->pid).'" width="'.$options[$number]['width'].'" height="'.$options[$number]['height'].'" title="'.$image->alttext.'" alt="'.$image->alttext.'" />';			
 				
 				echo $out . '</a>'."\n";
 				

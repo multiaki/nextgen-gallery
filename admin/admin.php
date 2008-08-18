@@ -38,13 +38,25 @@ add_action('init', 'ngg_add_admin_js',1);
 function ngg_add_admin_js() {
 	global $wp_version;
 	
-	wp_enqueue_script('jquery', NGGALLERY_URLPATH .'admin/js/jquery.js', FALSE, '1.2.2');
-
+	wp_register_script('ngg-ajax', NGGALLERY_URLPATH .'admin/js/ngg.ajax.js', array('jquery'), '1.0.0');
+	wp_localize_script('ngg-ajax', 'nggAjaxSetup', array(
+				'url' => admin_url('admin-ajax.php'),
+				'action' => 'ngg_ajax_operation',
+				'operation' => '',
+				'nonce' => wp_create_nonce( 'ngg-ajax' ),
+				'ids' => '',
+				'permission' => __('You do not have the correct permission', 'nggallery'),
+				'error' => __('Unexpected Error', 'nggallery'),
+				'failure' => __('A failure occurred', 'nggallery')				
+	) );
+	wp_register_script('ngg-progressbar', NGGALLERY_URLPATH .'admin/js/ngg.progressbar.js', array('jquery'), '1.0.0');
+	
 	switch ($_GET['page']) {
 		case "nggallery-manage-gallery" :
 			wp_enqueue_script('postbox');
-			wp_enqueue_script('interface', NGGALLERY_URLPATH .'admin/js/interface.js', array('jquery'), '1.2.1');
 			wp_enqueue_script('ngg-thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.1.1');
+			wp_enqueue_script('ngg-ajax');
+			wp_enqueue_script('ngg-progressbar');
 		break;
 		case "nggallery-manage-album" :
 			wp_enqueue_script('interface', NGGALLERY_URLPATH .'admin/js/interface.js', array('jquery'), '1.2.1');
@@ -57,6 +69,8 @@ function ngg_add_admin_js() {
 			wp_enqueue_script('mutlifile', NGGALLERY_URLPATH .'admin/js/jquery.MultiFile.js', array('jquery'), '1.1.1');
 			wp_enqueue_script('ngg-swfupload', NGGALLERY_URLPATH .'admin/js/swfupload.js', array('jquery'), '2.0.1');
 			wp_enqueue_script('ngg-swfupload-handler', NGGALLERY_URLPATH .'admin/js/swfupload.handler.js', array('swfupload'), '1.0.0');
+			wp_enqueue_script('ngg-ajax');
+			wp_enqueue_script('ngg-progressbar');
 		break;
 	}
 }

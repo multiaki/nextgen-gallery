@@ -1,6 +1,6 @@
 /*
  * Progress bar Plugin for NextGEN gallery
- * Version:  0.01
+ * Version:  1.0.0
  * Author : Alex Rabe
  */ 
 (function($) {
@@ -18,7 +18,7 @@
 			s = this.settings = $.extend( {}, this.settings, {}, s || {} );
 			
 			div = $('#' + s.id + '_container');
-			width = Math.round (100 / s.maxStep ); 
+			width = Math.round( ( 100 / s.maxStep ) * 100 ) /100;			
 			
 			if ( div.find("#" + s.id).length == 0) {
 				if (s.header.length > 0)
@@ -50,8 +50,9 @@
 		increase: function( step ) {
 			s = this.settings;
 			var value = step * width + "%";
+			var rvalue = Math.round (step * width) + "%" ;
 			$("#" + s.id + " div").width( value );
-			$("#" + s.id + " span").html( value );
+			$("#" + s.id + " span").html( rvalue );
 		},
 
 		finished: function() {

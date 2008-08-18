@@ -1,3 +1,8 @@
+/*
+ * Ajax Plugin for NextGEN gallery
+ * Version:  1.0.0
+ * Author : Alex Rabe
+ */ 
 (function($) {
 nggAjax = {
 		settings: {
@@ -7,36 +12,40 @@ nggAjax = {
 			operation : nggAjaxSetup.operation,
 			nonce: nggAjaxSetup.nonce,
 			ids: nggAjaxSetup.ids,
+			permission: nggAjaxSetup.permission,
+			error: nggAjaxSetup.error,
+			failure: nggAjaxSetup.failure,
 			timeout: 10000
 		},
 	
 		run: function( index ) {
+			s = this.settings;
 			var req = $.ajax({
 				type: "POST",
-			   	url: this.settings.url,
-			   	data:"action=" + this.settings.action + "&operation=" + this.settings.operation + "&_wpnonce=" + this.settings.nonce + "&image=" + this.settings.ids[index],
+			   	url: s.url,
+			   	data:"action=" + s.action + "&operation=" + s.operation + "&_wpnonce=" + s.nonce + "&image=" + s.ids[index],
 			   	cache: false,
 			   	timeout: 10000,
 			   	success: function(msg){
 			   		switch (msg) {
 			   			case "-1":
-					   		nggProgressBar.addNote( "You do not have the correct permission" );
+					   		nggProgressBar.addNote( nggAjax.settings.permission );
 						break;
 			   			case "0":
-					   		nggProgressBar.addNote( "Unexpected Error" );
+					   		nggProgressBar.addNote( nggAjax.settings.error );
 						break;
 			   			case "1":
 					   		// show nothing, its better
 						break;
 						default:
 							// Return the message
-							nggProgressBar.addNote( "<strong>ID " + nggAjax.settings.ids[index] + ":</strong> A failure occurred", msg );
+							nggProgressBar.addNote( "<strong>ID " + nggAjax.settings.ids[index] + ":</strong> " + nggAjax.settings.failure, msg );
 						break; 			   			
 			   		}
 
 			    },
 			    error: function (msg) {
-					nggProgressBar.addNote( "<strong>ID " + nggAjax.settings.ids[index] + ":</strong> A failure occurred", msg );
+					nggProgressBar.addNote( "<strong>ID " + nggAjax.settings.ids[index] + ":</strong> " + nggAjax.settings.failure, msg );
 				},
 				complete: function () {
 					index++;
@@ -50,9 +59,13 @@ nggAjax = {
 			});
 		},
 	
-		init: function() {
-			percentPerStep = Math.round (100 / this.settings.ids.length ); 
-			var index = 0;
+		init: function( s ) {
+
+			var index = 0;	
+					
+			// get the settings
+			this.settings = $.extend( {}, this.settings, {}, s || {} );
+
 			// start the ajax process
 			this.run( index );			
 		}
