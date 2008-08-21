@@ -139,7 +139,7 @@ class nggImage{
 		// This function creates a cache for all singlepics to reduce the CPU load
 		$ngg_options = get_option('ngg_options');
 		
-		include_once(NGGALLERY_ABSPATH.'/lib/ngg-thumbnail.lib.php');
+		include_once( nggGalleryPlugin::graphic_library() );
 		
 		// cache filename should be unique
 		$cachename   	= $this->pid . "_" . $mode . "_". $width . "x" . $height . "_" . $this->filename;

@@ -179,7 +179,7 @@ class nggAdmin{
 	function create_thumbnail($image) {
 		
 		if(! class_exists('ngg_Thumbnail'))
-			require_once(NGGALLERY_ABSPATH.'/lib/ngg-thumbnail.lib.php');
+			require_once( nggGalleryPlugin::graphic_library() );
 		
 		if ( is_numeric($image) )
 			$image = nggImageDAO::find_image( $image );
@@ -257,7 +257,7 @@ class nggAdmin{
 	function resize_image($image, $width = 0, $height = 0) {
 		
 		if(! class_exists('ngg_Thumbnail'))
-			require_once(NGGALLERY_ABSPATH.'/lib/ngg-thumbnail.lib.php');
+			require_once( nggGalleryPlugin::graphic_library() );
 
 		if ( is_numeric($image) )
 			$image = nggImageDAO::find_image( $image );
@@ -298,7 +298,7 @@ class nggAdmin{
 	function set_watermark($image) {
 
 		if(! class_exists('ngg_Thumbnail'))
-			require_once(NGGALLERY_ABSPATH.'/lib/ngg-thumbnail.lib.php');
+			require_once( nggGalleryPlugin::graphic_library() );
 		
 		if ( is_numeric($image) )
 			$image = nggImageDAO::find_image( $image );

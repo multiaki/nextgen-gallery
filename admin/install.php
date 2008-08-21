@@ -104,15 +104,17 @@ function ngg_default_options() {
 	
 	global $blog_id;
 
-	$ngg_options['gallerypath']			= "wp-content/gallery/";  		// set default path to the gallery
+	$ngg_options['gallerypath']			= 'wp-content/gallery/';  		// set default path to the gallery
 	$ngg_options['scanfolder']			= false;						// search for new images  (not used)
 	$ngg_options['deleteImg']			= true;							// delete Images
 	$ngg_options['swfUpload']			= false;						// activate the batch upload
 	$ngg_options['usePermalinks']		= false;						// use permalinks for parameters
+	$ngg_options['graphicLibrary']		= 'gd';							// default graphic library
+
 	
 	// Tags / categories
 	$ngg_options['activateTags']		= false;						// append related images
-	$ngg_options['appendType']			= "category";					// look for category or tags
+	$ngg_options['appendType']			= 'tags';						// look for category or tags
 	$ngg_options['maxImages']			= 7;  							// number of images toshow
 	
 	// Thumbnail Settings
@@ -132,37 +134,37 @@ function ngg_default_options() {
 	$ngg_options['imgCacheSinglePic']	= false;						// cached the singlepic	
 	
 	// Gallery Settings
-	$ngg_options['galImages']			= "20";		  					// Number Of images per page
+	$ngg_options['galImages']			= '20';		  					// Number Of images per page
 	$ngg_options['galShowSlide']		= true;							// Show slideshow
 	$ngg_options['galTextSlide']		= __('[Show as slideshow]','nggallery'); // Text for slideshow
 	$ngg_options['galTextGallery']		= __('[Show picture list]','nggallery'); // Text for gallery
-	$ngg_options['galShowOrder']		= "gallery";					// Show order
-	$ngg_options['galSort']				= "sortorder";					// Sort order
-	$ngg_options['galSortDir']			= "ASC";						// Sort direction
+	$ngg_options['galShowOrder']		= 'gallery';					// Show order
+	$ngg_options['galSort']				= 'sortorder';					// Sort order
+	$ngg_options['galSortDir']			= 'ASC';						// Sort direction
 	$ngg_options['galUsejQuery']   		= false;						// use the jQuery plugin
 	$ngg_options['galNoPages']   		= true;							// use no subpages for gallery
 	$ngg_options['galImgBrowser']   	= false;						// Show ImageBrowser, instead effect
 
 	// Thumbnail Effect
-	$ngg_options['thumbEffect']			= "thickbox";  					// select effect
+	$ngg_options['thumbEffect']			= 'thickbox';  					// select effect
 	$ngg_options['thumbCode']			= "class=\"thickbox\" rel=\"%GALLERY_NAME%\""; 
-	$ngg_options['thickboxImage']		= "loadingAnimationv3.gif";  	// thickbox Loading Image
+	$ngg_options['thickboxImage']		= 'loadingAnimationv3.gif';  	// thickbox Loading Image
 
 	// Watermark settings
-	$ngg_options['wmPos']				= "botRight";					// Postion
+	$ngg_options['wmPos']				= 'botRight';					// Postion
 	$ngg_options['wmXpos']				= 5;  							// X Pos
 	$ngg_options['wmYpos']				= 5;  							// Y Pos
-	$ngg_options['wmType']				= "text";  						// Type : 'image' / 'text'
-	$ngg_options['wmPath']				= "";  							// Path to image
-	$ngg_options['wmFont']				= "arial.ttf";  				// Font type
+	$ngg_options['wmType']				= 'text';  						// Type : 'image' / 'text'
+	$ngg_options['wmPath']				= '';  							// Path to image
+	$ngg_options['wmFont']				= 'arial.ttf';  				// Font type
 	$ngg_options['wmSize']				= 10;  							// Font Size
 	$ngg_options['wmText']				= get_option('blogname');		// Text
-	$ngg_options['wmColor']				= "000000";  					// Font Color
-	$ngg_options['wmOpaque']			= "100";  						// Font Opaque
+	$ngg_options['wmColor']				= '000000';  					// Font Color
+	$ngg_options['wmOpaque']			= '100';  						// Font Opaque
 
 	// Image Rotator settings
 	$ngg_options['irXHTMLvalid']		= false;
-	$ngg_options['irAudio']				= "";
+	$ngg_options['irAudio']				= '';
 	$ngg_options['irWidth']				= 320; 
 	$ngg_options['irHeight']			= 240;
  	$ngg_options['irShuffle']			= true;
@@ -170,18 +172,18 @@ function ngg_default_options() {
 	$ngg_options['irShownavigation']	= false;
 	$ngg_options['irShowicons']			= false;
 	$ngg_options['irWatermark']			= false;
-	$ngg_options['irOverstretch']		= "true";
+	$ngg_options['irOverstretch']		= 'true';
 	$ngg_options['irRotatetime']		= 10;
-	$ngg_options['irTransition']		= "random";
+	$ngg_options['irTransition']		= 'random';
 	$ngg_options['irKenburns']			= false;
-	$ngg_options['irBackcolor']			= "000000";
-	$ngg_options['irFrontcolor']		= "FFFFFF";
-	$ngg_options['irLightcolor']		= "CC0000";
-	$ngg_options['irScreencolor']		= "000000";		
+	$ngg_options['irBackcolor']			= '000000';
+	$ngg_options['irFrontcolor']		= 'FFFFFF';
+	$ngg_options['irLightcolor']		= 'CC0000';
+	$ngg_options['irScreencolor']		= '000000';		
 
 	// CSS Style
 	$ngg_options['activateCSS']			= true;							// activate the CSS file
-	$ngg_options['CSSfile']				= "nggallery.css";  			// set default css filename
+	$ngg_options['CSSfile']				= 'nggallery.css';  			// set default css filename
 	
 	// special overrides for WPMU	
 	if (IS_WPMU) {
@@ -190,8 +192,8 @@ function ngg_default_options() {
 		
 		// get the default value during installation
 		if (!is_array($ngg_wpmu_options)) {
-			$ngg_wpmu_options['gallerypath'] = "wp-content/blogs.dir/%BLOG_ID%/files/";
-			$ngg_wpmu_options['wpmuCSSfile'] = "nggallery.css";
+			$ngg_wpmu_options['gallerypath'] = 'wp-content/blogs.dir/%BLOG_ID%/files/';
+			$ngg_wpmu_options['wpmuCSSfile'] = 'nggallery.css';
 			update_site_option('ngg_options', $ngg_wpmu_options);
 		}
 		

@@ -110,11 +110,11 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<h2><?php _e('General Options','nggallery'); ?></h2>
 			<form name="generaloptions" method="post">
 			<?php wp_nonce_field('ngg_settings') ?>
-			<input type="hidden" name="page_options" value="gallerypath,scanfolder,deleteImg,usePermalinks,activateTags,appendType,maxImages" />
+			<input type="hidden" name="page_options" value="gallerypath,scanfolder,deleteImg,usePermalinks,graphicLibrary,activateTags,appendType,maxImages" />
 				<table class="form-table">
 					<tr valign="top">
 						<th align="left"><?php _e('Gallery path','nggallery') ?></th>
-						<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="text" size="35" name="gallerypath" value="<?php echo $ngg_options['gallerypath']; ?>" title="TEST" /><br />
+						<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="text" size="35" name="gallerypath" value="<?php echo $ngg_options['gallerypath']; ?>" /><br />
 						<?php _e('This is the default path for all galleries','nggallery') ?></td>
 					</tr>
 					<!--TODO:  Later... -->
@@ -134,6 +134,12 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						<th align="left"><?php _e('Activate permalinks','nggallery') ?></th>
 						<td><input type="checkbox" name="usePermalinks" value="1" <?php checked('1', $ngg_options['usePermalinks']); ?> /><br />
 						<?php _e('When you activate this option, you need to update your permalink structure one time.','nggallery') ?></td>
+					</tr>
+					<tr>
+						<th valign="top"><?php _e('Select graphic library','nggallery') ?>:</th>
+						<td><label><input name="graphicLibrary" type="radio" value="gd" <?php checked('gd', $ngg_options['graphicLibrary']); ?> /> <?php _e('GD Library', 'nggallery') ;?></label><br />
+						<label><input name="graphicLibrary" type="radio" value="im" <?php checked('im', $ngg_options['graphicLibrary']); ?> /> <?php _e('ImageMagick', 'nggallery') ;?></label>
+						</td>
 					</tr>
 				</table>
 			<h3><?php _e('Tags / Categories','nggallery') ?></h3>

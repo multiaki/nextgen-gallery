@@ -26,7 +26,7 @@ global $wpdb;
 
 // reference thumbnail class
 //--
-include_once('lib/ngg-thumbnail.lib.php');
+include_once( nggGalleryPlugin::graphic_library() );
 include_once('lib/ngg-gallery-plugin.lib.php');
 
 // get the plugin options

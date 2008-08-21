@@ -42,11 +42,11 @@ class nggGalleryPlugin {
 		$imageID = (int) $imageID;
 		
 		// get gallery values
-		if (empty($fileName)) {
+		if ( empty($fileName) ) {
 			list($fileName, $picturepath ) = $wpdb->get_row("SELECT p.filename, g.path FROM $wpdb->nggpictures AS p INNER JOIN $wpdb->nggallery AS g ON (p.galleryid = g.gid) WHERE p.pid = '$imageID' ", ARRAY_N);
 		}
 		
-		if (empty($picturepath)) {
+		if ( empty($picturepath) ) {
 			$picturepath = $wpdb->get_var("SELECT g.path FROM $wpdb->nggpictures AS p INNER JOIN $wpdb->nggallery AS g ON (p.galleryid = g.gid) WHERE p.pid = '$imageID' ");
 		}
 		
@@ -136,7 +136,7 @@ class nggGalleryPlugin {
 	* 
 	* @param string $gallerypath
 	* @param bool   $include_Abspath
-	* @deprecated prefix is no fixed to "thumbs_";
+	* @deprecated prefix is now fixed to "thumbs_";
 	* @return string  "thumbs_";
 	*/
 	function get_thumbnail_prefix($gallerypath, $include_Abspath = TRUE) {
@@ -340,6 +340,22 @@ class nggGalleryPlugin {
 		ob_end_clean ();
 		
 		return $output;
+	}
+	
+	/**
+	 * nggGalleryPlugin::graphic_library() - switch between GD and ImageMagick
+	 * 
+	 * @return path to the selected library
+	 */
+	function graphic_library() {
+		
+		$ngg_options = get_option('ngg_options');
+		
+		if ( $ngg_options['graphicLibrary'] == 'im')
+			return NGGALLERY_ABSPATH . '/lib/imagemagick.inc.php';
+		else
+			return NGGALLERY_ABSPATH . '/lib/gd.thumbnail.inc.php';
+		
 	}
 }
 

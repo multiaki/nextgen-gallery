@@ -1,6 +1,6 @@
 <?php
 /**
- * thumbnail.inc.php
+ * gd.thumbnail.inc.php
  * 
  * @author 		Ian Selby (ian@gen-x-design.com)
  * @copyright 	Copyright 2006-2008

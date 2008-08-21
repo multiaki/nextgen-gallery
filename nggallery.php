@@ -81,7 +81,6 @@ class nggLoader {
 		require_once (dirname (__FILE__).'/lib/ngg-image.lib.php');
 		require_once (dirname (__FILE__).'/lib/ngg-image-dao.lib.php');
 		require_once (dirname (__FILE__).'/lib/ngg-meta.lib.php');
-		require_once (dirname (__FILE__).'/lib/ngg-thumbnail.lib.php');
 		require_once (dirname (__FILE__).'/lib/ngg-tags.lib.php');
 		require_once (dirname (__FILE__).'/admin/ajax.php');
 
