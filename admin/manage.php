@@ -633,7 +633,7 @@ if($picturelist) {
 						$picture->tags = wp_get_object_terms($pid, 'ngg_tag', 'fields=names');
 						if (is_array ($picture->tags) ) $picture->tags = implode(', ', $picture->tags); 
 						?>
-						<td><input name="tags[<?php echo $pid ?>]" type="text" style="width:95%" value="<?php echo $picture->tags ?>" /></td>
+						<td><textarea name="tags[<?php echo $pid ?>]" class="textarea1" cols="68" rows="2"><?php echo $picture->tags ?></textarea></td>
 						<?php						
 					break;
 					case 'action' :
