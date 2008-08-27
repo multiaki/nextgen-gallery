@@ -220,7 +220,11 @@ function ngg_list_support()	{
 	"Fadli Fadli" => "",
 	"Philippe Vanhoolandt" => "http://www.ramdam.com",
 	"Gary Verhoff" => "",
-	"Detlev Danner" => "http://www.mcdd.ch"		
+	"Detlev Danner" => "http://www.mcdd.ch",
+	"Laaß / Brembs GbR" => "http://www.camoart.com",
+	"Dean Cowan" => "http://www.deanandlinda.com",
+	"Ross Calloway" => "",
+	"Scott Kyle" => ""		
 	);
 	
 	ksort($supporter);

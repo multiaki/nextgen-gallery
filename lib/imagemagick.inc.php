@@ -4,7 +4,7 @@
 *
 * @author 		Frederic De Ranter
 * @copyright	Copyright 2008
-* @version 		0.1 (PHP4)
+* @version 		0.2 (PHP4)
 * @based 		on thumbnail.inc.php by Ian Selby (gen-x-design.com)
 * @since		NextGEN V1.0.0
 *
@@ -26,11 +26,6 @@ var $errmsg;
 */
 var $error;
 /**
-* Format of the image file
-* @var string
-*/
-var $format;
-/**
 * File name and path of the image file
 * @var string
 */
@@ -50,24 +45,6 @@ var $currentDimensions;
 * @var array
 */
 var $newDimensions;
-/**
-* Image resource for newly manipulated image
-* @var resource
-* @access private
-*/
-var $newImage;
-/**
-* Image resource for image before previous manipulation
-* @var resource
-* @access private
-*/
-var $oldImage;
-/**
-* Image resource for image being currently manipulated
-* @var resource
-* @access private
-*/
-var $workingImage;
 /**
 * Percentage to resize image b
 * @var int
@@ -106,7 +83,11 @@ var $imageMagickExec;
 * @var string
 */
 var $imageMagickComp;
-
+/**
+* String to execute ImageMagick (before the filename).
+* @var string
+*/
+var $imageMagickBefore;
 
   /*
    * in: filename, error
@@ -124,19 +105,21 @@ var $imageMagickComp;
       }
 
     	//initialize variables
-      $this->errmsg               = '';
-      $this->error                = false;
-      $this->currentDimensions    = array();
-      $this->newDimensions        = array();
-      $this->fileName             = $fileName;
-      $this->imageMeta			    = array();
-      $this->percent              = 100;
-      $this->maxWidth             = 0;
-      $this->maxHeight            = 0;
+      $this->errmsg              = '';
+      $this->error               = false;
+      $this->currentDimensions   = array();
+      $this->newDimensions       = array();
+      $this->fileName            = $fileName;
+      $this->imageMeta			  	 = array();
+      $this->percent             = 100;
+      $this->maxWidth            = 0;
+      $this->maxHeight           = 0;
       $this->watermarkImgPath		 = '';
-      $this->watermarkText		    = '';
+      $this->watermarkText		   = '';
       $this->imageMagickExec		 = '';
       $this->imageMagickComp		 = '';
+      $this->imageMagickBefore	 = '';
+      
       
         //check to see if file exists
       if(!file_exists($this->fileName)) {
@@ -264,18 +247,13 @@ var $imageMagickComp;
         }
     }
 
-
-
-
 /* here start the rewritten functions for ImageMagick
 *******************************************************************************
 * the functions create a string to be executed when the save command is executed
-* 'show' function: temp image that can be displayed?
+* 'show' function: streaming possible with Imagemagick and passthru php-command
 * 
 *******************************************************************************
 */
-
-
 
     /**
      * Resizes image to maxWidth x maxHeight
@@ -357,74 +335,29 @@ var $imageMagickComp;
 	 * @param string $borderColor
 	 */
 	function createReflection($percent,$reflection,$white,$border = true,$borderColor = '#a4a4a4') {
-        $width = $this->currentDimensions['width'];
-        $height = $this->currentDimensions['height'];
+    $width = $this->currentDimensions['width'];
+    $height = $this->currentDimensions['height'];
 
-        $reflectionHeight = intval($height * ($reflection / 100));
-        $newHeight = $height + $reflectionHeight;
-        $reflectedPart = $height * ($percent / 100);
-/*
-Creates an Apple™-style reflection (it’s more of a web 2.0 thing now, I know…) 
-from an image. This one’s a bit weird to explain, but here goes:
-
-$percent - What percentage of the image to create the reflection from 
-$reflection - What percentage of the image height should the reflection height be. 
-i.e. If your image is 100 pixels high, and you set reflection to 40, the reflection would be 40 pixels high. 
-
-$white - How transparent (using white as the background) the reflection should be, as a percent 
-$border - Whether a border should be drawn around the original image (default is true) 
-$borderColor - The hex value of the color you would like your border to be (default is #a4a4a4)*/
-
-			$this->imageMagickExec .= '';
+    $reflectionHeight = intval($height * ($reflection / 100));
+    $newHeight = $height + $reflectionHeight;
+        //$reflectedPart = $height * ((100-$percent) / 100);
+    $reflectedsize = intval($height * ((100 - (100 - $percent) + $reflection) / 100)); 
 			
-        /*$this->workingImage = ImageCreateTrueColor($width,$newHeight);
+		$this->imageMagickBefore = "-size $width" . "x" ."$newHeight xc:white ";
+			
+		if($border == true) {
+			$this->imageMagickBefore .= " \( ";	 
+			$this->imageMagickExec = " -bordercolor '$borderColor' -border 1 \) ";
+		}
+		$this->imageMagickExec .= " -geometry +0+0 -composite ";
+		$gradientWhite = 100-$white;
+		$this->imageMagickExec .= " \( '$this->fileName' -flip -resize $width"."x"."$reflectedsize\! \( -size $width"."x"."$reflectionHeight gradient: -fill black -colorize $gradientWhite \) +matte -compose copy_opacity -composite \) -geometry +0+$height -composite ";
 
-        ImageAlphaBlending($this->workingImage,true);
-
-        $colorToPaint = ImageColorAllocateAlpha($this->workingImage,255,255,255,0);
-        ImageFilledRectangle($this->workingImage,0,0,$width,$newHeight,$colorToPaint);
-
-        imagecopyresampled(
-                            $this->workingImage,
-                            $this->newImage,
-                            0,
-                            0,
-                            0,
-                            $reflectedPart,
-                            $width,
-                            $reflectionHeight,
-                            $width,
-                            ($height - $reflectedPart));
-        $this->imageFlipVertical();
-
-        imagecopy($this->workingImage,$this->newImage,0,0,0,0,$width,$height);
-
-        imagealphablending($this->workingImage,true);
-
-        for($i=0;$i<$reflectionHeight;$i++) {
-            $colorToPaint = imagecolorallocatealpha($this->workingImage,255,255,255,($i/$reflectionHeight*-1+1)*$white);
-            imagefilledrectangle($this->workingImage,0,$height+$i,$width,$height+$i,$colorToPaint);
-        }
-
-        if($border == true) {
-            $rgb = $this->hex2rgb($borderColor,false);
-            $colorToPaint = imagecolorallocate($this->workingImage,$rgb[0],$rgb[1],$rgb[2]);
-            imageline($this->workingImage,0,0,$width,0,$colorToPaint); //top line
-            imageline($this->workingImage,0,$height,$width,$height,$colorToPaint); //bottom line
-            imageline($this->workingImage,0,0,0,$height,$colorToPaint); //left line
-            imageline($this->workingImage,$width-1,0,$width-1,$height,$colorToPaint); //right line
-        }
-
-      $this->oldImage = $this->workingImage;
-		$this->newImage = $this->workingImage;*/
 		$this->currentDimensions['width'] = $width;
 		$this->currentDimensions['height'] = $newHeight;
 	}
 	
 	/**
-     * Based on the Watermark function by Marek Malcherek  
-     * http://www.malcherek.de
-     *
  	 * @param string $color
 	 * @param string $wmFont
 	 * @param int $wmSize
@@ -459,8 +392,6 @@ $borderColor - The hex value of the color you would like your border to be (defa
 	}
     
     /**
-     * Modfied Watermark function by Steve Peart 
-     * http://parasitehosting.com/
      *
  	 * @param string $relPOS
 	 * @param int $xPOS
@@ -533,25 +464,15 @@ $borderColor - The hex value of the color you would like your border to be (defa
 	 * @param string $name
 	 */
 	function show($quality=85,$name = '') {
-		//execute the ImageMagick command and save it to a temp file when name is empty.	
-	   //important: resizing and crop to center : http://www.imagemagick.org/Usage/resize/#space_fill
-	   
-	   /*resulting string should be like:
-	    * convert filename 
-	    * 		 - (watermark)	    
-	    * 		 -size (what size of the original file should be read) optional
-	    * 		 -resize (-thumbnail)    
-	    * 		 -gravity center	    
-	    * 		 -crop  
-	    * 		 +repage	    
-	    */
+		//execute the ImageMagick command and stream it when name is empty.	
+	  	   
 		if($name != '') {
-				$execString = "convert '$this->fileName' $this->imageMagickExec $this->imageMagickComp -quality $quality '$name'";
+				$execString = "convert $this->imageMagickBefore '$this->fileName' $this->imageMagickExec $this->imageMagickComp -quality $quality '$name'";
 				//print $execString;
 				$make_magick = system($execString);
 	  } else {
 	  	//return a raw image stream
-				$execString = "convert '$this->fileName' $this->imageMagickExec $this->imageMagickComp -quality $quality JPG:-"; 
+				$execString = "convert $this->imageMagickBefore '$this->fileName' $this->imageMagickExec $this->imageMagickComp -quality $quality JPG:-"; 
 				//print $execString;
 				header('Content-type: image/jpeg');
 				passthru($execString);

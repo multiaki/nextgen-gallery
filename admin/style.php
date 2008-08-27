@@ -94,9 +94,9 @@ if(!empty($messagetext)) { echo '<!-- Last Action --><div id="message" class="up
 	<div class="tablenav" style="margin-right: 210px;"> 
 	  <?php
 		if ( is_writeable($real_file) ) {
-			echo '<big>' . sprintf(__('Editing <strong>%s</strong>'), $file_show) . '</big>';
+			echo '<big>' . sprintf(__('Editing <strong>%s</strong>','nggallery'), $file_show) . '</big>';
 		} else {
-			echo '<big>' . sprintf(__('Browsing <strong>%s</strong>'), $file_show) . '</big>';
+			echo '<big>' . sprintf(__('Browsing <strong>%s</strong>','nggallery'), $file_show) . '</big>';
 		}
 		?>
 	</div>
