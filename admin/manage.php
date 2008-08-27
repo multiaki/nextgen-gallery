@@ -463,7 +463,7 @@ jQuery(document).ready( function() {
 									foreach($picturelist as $picture) {
 										if ($picture->pid == $act_gallery->previewpic) $selected = 'selected="selected" ';
 										else $selected = '';
-										echo '<option value="'.$picture->pid.'" '.$selected.'>'.$picture->filename.'</option>'."\n";
+										echo '<option value="'.$picture->pid.'" '.$selected.'>'.$picture->pid.' - '.$picture->filename.'</option>'."\n";
 									}
 								}
 							?>
