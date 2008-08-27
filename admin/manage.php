@@ -614,6 +614,14 @@ if($picturelist) {
 						</td>
 						<?php						
 					break;
+					case 'desc_alt_title' :
+						?>
+						<td style="width:500px">
+							<input name="alttext[<?php echo $pid ?>]" type="text" style="width:95%; margin-bottom: 2px;" value="<?php echo stripslashes($picture->alttext) ?>" /><br/>
+							<textarea name="description[<?php echo $pid ?>]" style="width:95%; margin-top: 2px;" rows="2" ><?php echo stripslashes($picture->description) ?></textarea>
+						</td>
+						<?php						
+					break;
 					case 'description' :
 						?>
 						<td><textarea name="description[<?php echo $pid ?>]" class="textarea1" cols="42" rows="2" ><?php echo stripslashes($picture->description) ?></textarea></td>
@@ -633,7 +641,7 @@ if($picturelist) {
 						$picture->tags = wp_get_object_terms($pid, 'ngg_tag', 'fields=names');
 						if (is_array ($picture->tags) ) $picture->tags = implode(', ', $picture->tags); 
 						?>
-						<td><textarea name="tags[<?php echo $pid ?>]" class="textarea1" cols="68" rows="2"><?php echo $picture->tags ?></textarea></td>
+						<td style="width:500px"><textarea name="tags[<?php echo $pid ?>]" style="width:95%;" rows="2"><?php echo $picture->tags ?></textarea></td>
 						<?php						
 					break;
 					case 'action' :
@@ -805,8 +813,9 @@ function ngg_manage_gallery_columns() {
 	}
 	
 	if ( !ngg_show_tags() )	{
-		$gallery_columns['description'] = __('Description', 'nggallery');
-		$gallery_columns['alt_title_text'] = __('Alt &amp; Title Text', 'nggallery');
+		$gallery_columns['desc_alt_title'] = __('Description', 'nggallery') . '/' . __('Alt &amp; Title Text', 'nggallery');
+		// $gallery_columns['description'] = __('Description', 'nggallery');
+		// $gallery_columns['alt_title_text'] = __('Alt &amp; Title Text', 'nggallery');
 		$gallery_columns['exclude'] = __('exclude', 'nggallery');
 	} else {
 		$gallery_columns['tags'] = __('Tags (comma separated list)', 'nggallery');
