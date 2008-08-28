@@ -133,9 +133,9 @@ function ngg_do_thumb_shortcode($atts, $content=null) {
 		
 		// create output
 		//--
-		$out .= '<div id="ngg-image-' . $picture->pid . '" class="ngg-gallery-thumbnail-box ' . $class_desc . ' ' . $float . '">' . "\n\t";
+		$out .= '<div class="ngg-gallery-thumbnail-box ' . $class_desc . ' ' . $float . '">' . "\n\t";
 		$out .= '<div class="ngg-gallery-thumbnail" ' . $setwidth . ' >' . "\n\t";
-		$out .= '<a id="thumb' . $picture->pid . '" href="' . $link . '" title="' . stripslashes($picture->description) . '" ' . $thumbcode . ' >';
+		$out .= '<a href="' . $link . '" title="' . stripslashes($picture->description) . '" ' . $thumbcode . ' >';
 		$out .= '<img title="' . stripslashes($picture->alttext) . '" alt="' . stripslashes($picture->alttext) . '" ';
 		$out .= 'src="' . $thumbnailURL . $thumb_prefix . $picture->filename . '" ' . $thumbsize . ' />';
 		$out .= '</a>' . "\n";

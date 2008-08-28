@@ -14,6 +14,7 @@ if ( isset($_POST['update_cap']) ) {
 	ngg_set_capability($_POST['add_gallery'],"NextGEN Upload images");
 	ngg_set_capability($_POST['manage_gallery'],"NextGEN Manage gallery");
 	ngg_set_capability($_POST['manage_others'],"NextGEN Manage others gallery");
+	ngg_set_capability($_POST['manage_tags'],"NextGEN Manage tags");
 	ngg_set_capability($_POST['edit_album'],"NextGEN Edit album");
 	ngg_set_capability($_POST['change_style'],"NextGEN Change style");
 	ngg_set_capability($_POST['change_options'],"NextGEN Change options");
@@ -48,6 +49,10 @@ if ( isset($_POST['update_cap']) ) {
 			<tr valign="top"> 
 				<th scope="row"><?php _e('Manage others gallery', 'nggallery') ;?>:</th> 
 				<td><label for="manage_others"><select name="manage_others" id="manage_others"><?php wp_dropdown_roles( ngg_get_role('NextGEN Manage others gallery') ); ?></select></label></td>
+			</tr>
+			<tr valign="top"> 
+				<th scope="row"><?php _e('Manage tags', 'nggallery') ;?>:</th> 
+				<td><label for="manage_tags"><select name="manage_tags" id="manage_tags"><?php wp_dropdown_roles( ngg_get_role('NextGEN Manage tags') ); ?></select></label></td>
 			</tr>
 			<tr valign="top"> 
 				<th scope="row"><?php _e('Edit Album', 'nggallery') ;?>:</th> 

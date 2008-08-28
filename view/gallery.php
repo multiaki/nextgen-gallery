@@ -5,9 +5,8 @@ Template Page for the gallery overview
 Follow variables are useable :
 
 	$gallery     : Contain all about the gallery
-	$images      : Contain all aimages, path, title
+	$images      : Contain all images, path, title
 	$pagination  : Contain 
-	$thumbcode	 : Contain 
 
  You can check the content when you insert the tag <?php var_dump($variable) ?>
  If you would like to show the timestamp of the image ,you can use <?php echo $exif['created_timestamp'] ?>

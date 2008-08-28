@@ -52,6 +52,10 @@ function ngg_upgrade() {
 			$wpdb->query("DROP TABLE " . $wpdb->prefix . "ngg_tags");
 			$wpdb->query("DROP TABLE " . $wpdb->prefix . "ngg_pic2tags");
 			ngg_convert_filestructure();
+			
+			// New capability for administrator role
+			$role = get_role('administrator');
+			$role->add_cap('NextGEN Manage tags');
 		}
 		update_option( "ngg_db_version", NGG_DBVERSION );
 		return __('Update database structure', 'nggallery');

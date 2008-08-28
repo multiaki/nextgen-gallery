@@ -63,6 +63,7 @@ class nggLoader {
 		// define some variables
 		$this->defineConstant();
 		$this->defineTables();
+		$this->registerTaxonomy();
 
 		// Load the options
 		$this->options = get_option('ngg_options');
@@ -95,12 +96,9 @@ class nggLoader {
 		register_deactivation_hook( NGGFOLDER.'/nggallery.php', array(&$this, 'deactivate') );
 		
 		// Load the admin panel or the frontend functions
-		if (is_admin()) {
-			
-			require_once (dirname (__FILE__)."/admin/admin.php");
-				
-		} else {
-			
+		if (is_admin()) {			
+			require_once (dirname (__FILE__)."/admin/admin.php");				
+		} else {			
 			// Load the gallery generator
 			require_once (dirname (__FILE__)."/nggfunctions.php");
 			require_once (dirname (__FILE__).'/lib/shortcodes.php');
@@ -130,7 +128,12 @@ class nggLoader {
 		$wp_ok  =  version_compare($wp_version, $this->minium_WP, '>=');		
 		
 		if ( ($wp_ok == FALSE) and (IS_WPMU != TRUE) ) {
-			add_action('admin_notices', create_function('', 'printf \'<div id="message" class="error fade"><p><strong>' . __('Sorry, NextGEN Gallery works only under WordPress %s or higher',"nggallery") . '</strong></p></div>\', $this->minium_WP;'));
+//			add_action(
+//				'admin_notices', 
+//				create_function(
+//					'', 
+//					'printf (\'<div id="message" class="error fade"><p><strong>\' . __(\'Sorry, NextGEN Gallery works only under WordPress %s or higher\',"nggallery") . \'</strong></p></div>\', $this->minium_WP);'
+//				));
 			return false;
 		}
 		
@@ -151,8 +154,7 @@ class nggLoader {
 		
 	}
 	
-	function defineTables() {
-		
+	function defineTables() {		
 		global $wpdb, $wp_taxonomies;
 		
 		// add database pointer 
@@ -160,8 +162,24 @@ class nggLoader {
 		$wpdb->nggallery					= $wpdb->prefix . 'ngg_gallery';
 		$wpdb->nggalbum						= $wpdb->prefix . 'ngg_album';
 		
+	}
+	
+	function registerTaxonomy() {		
 		// Register the NextGEN taxonomy	
-		register_taxonomy( 'ngg_tag', 'nggallery' );
+		//--
+		register_taxonomy( 
+			'ngg_tag', 
+			'nggallery',
+			array(
+ 	            'label' => __('Picture tag', 'nggallery'),
+ 	            'template' => __('Picture tag: %2$l.', 'nggallery'),
+	            'helps' => __('Separate picture tags with commas.', 'nggallery'),
+	            'sort' => true,
+ 	            'args' => array('orderby' => 'term_order'),
+	            'rewrite' => array('slug' => 'picture-tag'),
+ 	            'query_var' => 'picture-tag'
+			)
+		);
 		
 	}
 

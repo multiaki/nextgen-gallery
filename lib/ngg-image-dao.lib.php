@@ -15,12 +15,17 @@ class nggImageDAO {
 	 * 
 	 * @return An array containing the nggImage objects representing the images in the gallery.
 	 */
-	function find_images_in_gallery($gallery, $order_by = 'sortorder', $order_dir = 'ASC') {
+	function find_images_in_gallery($gallery, $orderby = 'sortorder', $order = 'ASC', $use_exclude = false) {
 		global $wpdb;
 		
 		// Query database
 		//--
-		$rows = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures WHERE galleryid = $gallery->gid ORDER BY $order_by $order_dir");
+		if ($use_exclude) {
+			$exclude_clause = ' AND exclude<>1 ';
+		} else {
+			$exclude_clause = '';
+		}
+		$rows = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures WHERE galleryid=$gallery->gid $exclude_clause ORDER BY $orderby $order");
 		
 		// Build the object from the query result
 		//--

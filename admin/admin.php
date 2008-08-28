@@ -24,6 +24,9 @@ function ngg_header() {
 		case "nggallery-manage-album" :
 			echo '<link rel="stylesheet" href="'.NGGALLERY_URLPATH.'admin/css/nggadmin.wp25.css" type="text/css" media="screen" />'."\n";			
 		break;
+		case "nggallery-tags" :
+			echo '<link rel="stylesheet" href="'.NGGALLERY_URLPATH.'admin/css/tags-admin.css" type="text/css" media="screen" />'."\n";	
+			break;
 		case "nggallery-style" :
 			wp_admin_css( 'css/theme-editor' );
 		break;
@@ -83,15 +86,16 @@ function add_nextgen_gallery_menu()  {
     add_submenu_page( NGGFOLDER , __('Add Gallery', 'nggallery'), __('Add Gallery', 'nggallery'), 'NextGEN Upload images', 'nggallery-add-gallery', 'show_menu');
     add_submenu_page( NGGFOLDER , __('Manage Gallery', 'nggallery'), __('Manage Gallery', 'nggallery'), 'NextGEN Manage gallery', 'nggallery-manage-gallery', 'show_menu');
     add_submenu_page( NGGFOLDER , __('Album', 'nggallery'), __('Album', 'nggallery'), 'NextGEN Edit album', 'nggallery-manage-album', 'show_menu');
+    add_submenu_page( NGGFOLDER , __('Tags', 'nggallery'), __('Tags', 'nggallery'), 'NextGEN Manage tags', 'nggallery-tags', 'show_menu');
     add_submenu_page( NGGFOLDER , __('Options', 'nggallery'), __('Options', 'nggallery'), 'NextGEN Change options', 'nggallery-options', 'show_menu');
     if (wpmu_enable_function('wpmuStyle'))
-	add_submenu_page( NGGFOLDER , __('Style', 'nggallery'), __('Style', 'nggallery'), 'NextGEN Change style', 'nggallery-style', 'show_menu');
+		add_submenu_page( NGGFOLDER , __('Style', 'nggallery'), __('Style', 'nggallery'), 'NextGEN Change style', 'nggallery-style', 'show_menu');
     add_submenu_page( NGGFOLDER , __('Setup Gallery', 'nggallery'), __('Setup', 'nggallery'), 'activate_plugins', 'nggallery-setup', 'show_menu');
     if (wpmu_enable_function('wpmuRoles'))
-	add_submenu_page( NGGFOLDER , __('Roles', 'nggallery'), __('Roles', 'nggallery'), 'activate_plugins', 'nggallery-roles', 'show_menu');
+		add_submenu_page( NGGFOLDER , __('Roles', 'nggallery'), __('Roles', 'nggallery'), 'activate_plugins', 'nggallery-roles', 'show_menu');
     add_submenu_page( NGGFOLDER , __('About this Gallery', 'nggallery'), __('About', 'nggallery'), 'NextGEN Gallery overview', 'nggallery-about', 'show_menu');
 	if (wpmu_site_admin())
-	add_submenu_page( 'wpmu-admin.php' , __('NextGEN Gallery', 'nggallery'), __('NextGEN Gallery', 'nggallery'), 'activate_plugins', 'nggallery-wpmu', 'show_menu');
+		add_submenu_page( 'wpmu-admin.php' , __('NextGEN Gallery', 'nggallery'), __('NextGEN Gallery', 'nggallery'), 'activate_plugins', 'nggallery-wpmu', 'show_menu');
 
 }
   
@@ -129,6 +133,9 @@ function add_nextgen_gallery_menu()  {
 			case "nggallery-options" :
 				include_once (dirname (__FILE__). '/settings.php');		// nggallery_admin_options
 				nggallery_admin_options();
+				break;
+			case "nggallery-tags" :
+				include_once (dirname (__FILE__). '/tags.php');			// nggallery_admin_tags
 				break;
 			case "nggallery-style" :
 				include_once (dirname (__FILE__). '/style.php');		// nggallery_admin_style

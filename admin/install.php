@@ -20,6 +20,7 @@ function nggallery_install () {
 	$role->add_cap('NextGEN Use TinyMCE');
 	$role->add_cap('NextGEN Upload images');
 	$role->add_cap('NextGEN Manage gallery');
+	$role->add_cap('NextGEN Manage tags');
 	$role->add_cap('NextGEN Manage others gallery');
 	$role->add_cap('NextGEN Edit album');
 	$role->add_cap('NextGEN Change style');

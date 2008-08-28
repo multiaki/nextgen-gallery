@@ -481,7 +481,7 @@ function nggShowGalleryTags($taglist) {
 	$pageid = get_query_var('pageid');
 	
 	// get now the related images
-	$picturelist = nggTags::get_images($taglist , 'ASC');
+	$picturelist = nggTags::find_images_for_tags($taglist , 'ASC');
 	
 	// look for ImageBrowser 
 	if ( $pageid == get_the_ID() || !is_home() )  
@@ -520,7 +520,7 @@ function nggShowRelatedGallery($taglist, $maxImages = 0) {
 	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
 	
 	// get now the related images
-	$picturelist = nggTags::get_images($taglist, 'RAND');
+	$picturelist = nggTags::find_images_for_tags($taglist, 'RAND');
 	
 	// go on if not empty
 	if (empty($picturelist)) {
