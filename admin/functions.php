@@ -82,8 +82,15 @@ class nggAdmin{
 			return false;			
 		} else { 
 			$result = $wpdb->query("INSERT INTO $wpdb->nggallery (name, path, title, author) VALUES ('$galleryname', '$nggpath', '$gallerytitle' , '$user_ID') ");
-			if ($result) 
-				nggGalleryPlugin::show_message(__('Gallery', 'nggallery').' <strong>'.$wpdb->insert_id." : ".$galleryname.'</strong> '.__('successfully created!','nggallery')."<br />".__('You can show this gallery with the tag','nggallery').'<strong> [gallery='.$wpdb->insert_id.']</strong>'); 
+			if ($result) {
+				$message  = __('Gallery %1$s successfully created.<br/>You can show this gallery with the tag %2$s.<br/>','nggallery');
+				$message  = sprintf($message, $galleryname, '[gallery=' . $wpdb->insert_id . ']');
+				$message .= '<a href="' . get_option('siteurl') . '/wp-admin/admin.php?page=nggallery-manage-gallery&mode=edit&gid=' . $wpdb->insert_id . '" >';
+				$message .= __('Edit gallery','nggallery');
+				$message .= '</a>';
+				
+				nggGalleryPlugin::show_message($message); 
+			}
 			return true;
 		} 
 	}
