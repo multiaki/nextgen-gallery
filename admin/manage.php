@@ -342,16 +342,17 @@ function nggallery_picturelist($hideThumbs = false,$showTags = false) {
 	
 	// get gallery values
 	$act_gallery = nggGalleryDAO::find_gallery($act_gid);
-	if ($act_gallery==null) {
-		nggGalleryPlugin::show_error(__('Gallery not found.', 'nggallery'));
-	}
 	
+	if ($act_gallery == null)
+		nggGalleryPlugin::show_error(__('Gallery not found.', 'nggallery'));
+
 	//TODO:Redundant, Redundant, Redundant... REWORK
 	// set gallery url
 	$act_gallery_url 	= get_option ('siteurl')."/".$act_gallery->path."/";
 	$act_thumbnail_url 	= get_option ('siteurl')."/".$act_gallery->path.nggGalleryPlugin::get_thumbnail_folder($act_gallery->path, FALSE);
 	$act_thumb_prefix   = "thumbs_" ;
 	$act_thumb_abs_src	= WINABSPATH.$act_gallery->path.nggGalleryPlugin::get_thumbnail_folder($act_gallery->path, FALSE);
+	$act_author_user    = get_userdata( (int) $act_gallery->author );
 ?>
 
 <script type="text/javascript"> 
@@ -458,7 +459,7 @@ jQuery(document).ready( function() {
 						<select name="previewpic" >
 							<option value="0" ><?php _e('No Picture', 'nggallery') ?></option>
 							<?php
-								$picturelist = nggImageDAO::find_images_in_gallery($act_gallery, $ngg_options[galSort], $ngg_options[galSortDir]);
+								$picturelist = nggImageDAO::find_images_in_gallery($act_gallery, $ngg_options['galSort'], $ngg_options['galSortDir']);
 								if(is_array($picturelist)) {
 									foreach($picturelist as $picture) {
 										if ($picture->pid == $act_gallery->previewpic) $selected = 'selected="selected" ';
@@ -480,7 +481,7 @@ jQuery(document).ready( function() {
 						if ( $editable_ids && count( $editable_ids ) > 1 )
 							wp_dropdown_users( array('include' => $editable_ids, 'name' => 'author', 'selected' => empty( $act_gallery->author ) ? 0 : $act_gallery->author ) ); 
 						else
-							echo $act_gallery->author;
+							echo $act_author_user->display_name;
 					?>
 					</th>
 				</tr>

@@ -128,12 +128,13 @@ class nggLoader {
 		$wp_ok  =  version_compare($wp_version, $this->minium_WP, '>=');		
 		
 		if ( ($wp_ok == FALSE) and (IS_WPMU != TRUE) ) {
-//			add_action(
-//				'admin_notices', 
-//				create_function(
-//					'', 
-//					'printf (\'<div id="message" class="error fade"><p><strong>\' . __(\'Sorry, NextGEN Gallery works only under WordPress %s or higher\',"nggallery") . \'</strong></p></div>\', $this->minium_WP);'
-//				));
+			add_action(
+				'admin_notices', 
+				create_function(
+					'', 
+					'printf (\'<div id="message" class="error fade"><p><strong>\' . __(\'Sorry, NextGEN Gallery works only under WordPress %s or higher\',"nggallery") . \'</strong></p></div>\', $this->minium_WP);'
+				)
+			);
 			return false;
 		}
 		
@@ -146,7 +147,13 @@ class nggLoader {
 		$memory_limit = (int) substr( ini_get('memory_limit'), 0, -1);
 		//This works only with enough memory, 8MB is silly, wordpress requires already 7.9999
 		if ( ($memory_limit != 0) && ($memory_limit < 12 ) ) {
-			add_action('admin_notices', create_function('', 'echo \'<div id="message" class="error fade"><p><strong>' . __('Sorry, NextGEN Gallery works only with a Memory Limit of 16 MB higher',"nggallery") . '</strong></p></div>\';'));
+			add_action(
+				'admin_notices', 
+				create_function(
+					'', 
+					'echo \'<div id="message" class="error fade"><p><strong>' . __('Sorry, NextGEN Gallery works only with a Memory Limit of 16 MB higher',"nggallery") . '</strong></p></div>\';'
+				)
+			);
 			return false;
 		}
 		

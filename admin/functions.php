@@ -85,7 +85,7 @@ class nggAdmin{
 			if ($result) {
 				$message  = __('Gallery %1$s successfully created.<br/>You can show this gallery with the tag %2$s.<br/>','nggallery');
 				$message  = sprintf($message, $galleryname, '[gallery=' . $wpdb->insert_id . ']');
-				$message .= '<a href="' . get_option('siteurl') . '/wp-admin/admin.php?page=nggallery-manage-gallery&mode=edit&gid=' . $wpdb->insert_id . '" >';
+				$message .= '<a href="' . admin_url() . 'admin.php?page=nggallery-manage-gallery&mode=edit&gid=' . $wpdb->insert_id . '" >';
 				$message .= __('Edit gallery','nggallery');
 				$message .= '</a>';
 				
@@ -130,7 +130,7 @@ class nggAdmin{
 		// take folder name as gallery name		
 		$galleryname = basename($galleryfolder);
 		
-		// check for existing galleryfolder
+		// check for existing gallery folder
 		$gallery_id = $wpdb->get_var("SELECT gid FROM $wpdb->nggallery WHERE path = '$galleryfolder' ");
 
 		if (!$gallery_id) {
@@ -155,6 +155,8 @@ class nggAdmin{
 		
 		// now create thumbnails
 		nggAdmin::do_ajax_operation( 'create_thumbnail' , $image_ids, __('Create new thumbnails','nggallery') );
+		//add the preview image if needed
+		nggAdmin::set_gallery_preview ( $gallery_id );
 				
 		nggGalleryPlugin::show_message($created_msg . count($image_ids) .__(' picture(s) successfully added','nggallery'));
 		return;
@@ -602,6 +604,8 @@ class nggAdmin{
 
 			//create thumbnails
 			nggAdmin::do_ajax_operation( 'create_thumbnail' , $image_ids, __('Create new thumbnails','nggallery') );
+			//add the preview image if needed
+			nggAdmin::set_gallery_preview ( $galleryID );
 			
 			nggGalleryPlugin::show_message( count($image_ids) . __(' Image(s) successfully added','nggallery'));
 		}
@@ -757,6 +761,28 @@ class nggAdmin{
 		<div id="progressbar_container" class="wrap"></div>
 		
 		<?php	
+	}
+	
+	/**
+	 * nggAdmin::set_gallery_preview() - define a preview pic after the first upload, can be changed in the gallery settings
+	 * 
+	 * @param int $galleryID
+	 * @return
+	 */
+	function set_gallery_preview( $galleryID ) {
+		
+		global $wpdb;
+		
+		$imageID = $wpdb->get_var("SELECT previewpic FROM $wpdb->nggallery WHERE gid = '$galleryID' ");
+		
+		// in the case no preview image is setup, we do this now
+		if ($imageID == 0) {
+			$firstImage = $wpdb->get_var("SELECT pid FROM $wpdb->nggpictures WHERE exclude != 1 AND galleryid = '$galleryID' ORDER by pid DESC limit 0,1");
+			if ($firstImage)
+				$wpdb->query("UPDATE $wpdb->nggallery SET previewpic = '$firstImage' WHERE gid = '$galleryID'");
+		}
+		
+		return;
 	}
 
 } // END class nggAdmin
