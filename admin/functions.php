@@ -219,8 +219,9 @@ class nggAdmin{
 				} else {
 					$aspect = (100 * $curheight) / $curwidth;
 				}
-				$width = intval(($width * $aspect) / 100);
-				$height = intval(($height * $aspect) / 100);
+				$width = round(($width * $aspect) / 100);
+				$height = round(($height * $aspect) / 100);
+
 				$thumb->resize($width,$height,$ngg_options['thumbResampleMode']);
 				$thumb->cropFromCenter($width,$ngg_options['thumbResampleMode']);
 			} 
