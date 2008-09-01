@@ -116,6 +116,15 @@ function ngg_do_thumb_shortcode($atts, $content=null) {
 		//--
 		$picture = nggImageDAO::find_image($pid);
 	
+		// Check picture existance
+		//--
+		if ($picture==null) {
+			$out .= '<div class="ngg-gallery-thumbnail-box" style="color: red;">' 
+				.  sprintf(__("[thumb id='%s' /] &raquo; Image does not exist!", 'nggallery'), $pid)  
+				. '</div>';
+			continue;
+		}
+		
 		// set image url
 		//--
 		$folder_url 	= get_option ('siteurl') . "/" . $picture->path . "/";

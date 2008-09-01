@@ -77,6 +77,15 @@ function ngg_do_picture_shortcode($atts, $content=null) {
 	//--
 	$picture = nggImageDAO::find_image($id);
 
+	// Check picture existance
+	//--
+	if ($picture==null) {
+		$out .= '<div class="ngg-singlepic" style="color: red;">' 
+			.  sprintf(__("[picture id='%s' /] &raquo; Image does not exist!", 'nggallery'), $id)  
+			. '</div>';
+		return $out;
+	}
+
 	// check for cached picture
 	//--
 	if (($ngg_options['imgCacheSinglePic']) && ($post->post_status == 'publish') && ($width!='') && ($height!='')) {
