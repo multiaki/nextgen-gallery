@@ -629,7 +629,7 @@ class nggAdmin{
 
 		// WPMU action
 		if (nggAdmin::check_quota())
-			return;
+			return "0";
 
 		// Check the upload
 		if (!isset($_FILES["Filedata"]) || !is_uploaded_file($_FILES["Filedata"]["tmp_name"]) || $_FILES["Filedata"]["error"] != 0) 
@@ -738,20 +738,18 @@ class nggAdmin{
 	 * Copy images to another gallery
 	 */
 	function copy_images($pic_ids, $dest_gid) {
-		if (!is_array($pic_ids)) {
+		
+		if (!is_array($pic_ids))
 			$pic_ids = array($pic_ids);
-		}
 		
 		// Get destination gallery
-		//--
 		$destination = nggGalleryDAO::find_gallery($dest_gid);
-		if ($destination==null) {
+		if ( $destination == null ) {
 			nggGalleryPlugin::show_error(__('The destination gallery does not exist','nggallery'));
 			return;
 		}
 		
 		// Check for folder permission
-		//--
 		if (!is_writeable(WINABSPATH.$destination->path)) {
 			$message = sprintf(__('Unable to write to directory %s. Is this directory writable by the server?', 'nggallery'), WINABSPATH.$destination->path);
 			nggGalleryPlugin::show_error($message);
@@ -759,7 +757,6 @@ class nggAdmin{
 		}
 				
 		// Get pictures
-		//--
 		$errors = '';
 		$messages = '';
 		$images = nggImageDAO::find_images_in_list($pic_ids);
@@ -767,10 +764,8 @@ class nggAdmin{
 		
 		foreach ($images as $image) {		
 			// WPMU action
-			//--
-			if (nggAdmin::check_quota()) {
+			if (nggAdmin::check_quota())
 				return;
-			}
 			
 			$i = 0;
 			$tmp_prefix = ""; 
@@ -784,54 +779,49 @@ class nggAdmin{
 			$destination_file_path = $destination_path . "/" . $destination_file_name;
 
 			// Copy files
-			//--
-			if (!copy($image->thumbPath, $destination_file_path)) {
+			if ( !copy($image->thumbPath, $destination_file_path) ) {
 				$errors .= sprintf(__('Failed to copy image %1$s to %2$s','nggallery'), 
-					$image->filename, $destination_file_path) . '<br/>';
+					$image->filename, $destination_file_path) . '<br />';
 				continue;				
 			}
 			
-			if (!copy($image->thumbPath, $destination_thumb_file_path)) {
+			if ( !copy($image->thumbPath, $destination_thumb_file_path) ) {
 				$errors .= sprintf(__('Failed to copy image thumb %1$s to %2$s','nggallery'), 
-					$image->thumbPrefix . $image->filename, $destination_thumb_file_path) . '<br/>';
+					$image->thumbPrefix . $image->filename, $destination_thumb_file_path) . '<br />';
 				continue;				
 			}
 			
 			// Create new database entry for image
-			//--
 			$new_pid = nggImageDAO::insert_image(
 				$destination->gid, $destination_file_name, 
 				$image->alttext, $image->description, 
 				$image->exclude);
 
 			if (!isset($new_pid)) {				
-				$errors .= sprintf(__('Failed to copy database row for picture %s','nggallery'), $image->pid) . '<br/>';
+				$errors .= sprintf(__('Failed to copy database row for picture %s','nggallery'), $image->pid) . '<br />';
 				continue;				
 			}
 				
 			// Copy tags
-			//--
 			nggTags::copy_tags($image->pid, $new_pid);
 			
 			// Copied file
-			//--
-			if ($tmp_prefix!='') {
+			if ( $tmp_prefix != '' ) {
 				$messages .= sprintf(__('Image %1$s (%2$s) copied as image %3$s (%4$s) &raquo; The file already existed in the destination gallery.','nggallery'),
-					 $image->pid, $image->filename, $new_pid, $destination_file_name) . '<br/>';
+					 $image->pid, $image->filename, $new_pid, $destination_file_name) . '<br />';
 			} else {
 				$messages .= sprintf(__('Image %1$s (%2$s) copied as image %3$s (%4$s)','nggallery'),
-					 $image->pid, $image->filename, $new_pid, $destination_file_name) . '<br/>';
+					 $image->pid, $image->filename, $new_pid, $destination_file_name) . '<br />';
 			}
 		}
 		
 		// Finish by showing errors or success
-		//--
-		if ($errors=='') {
-			$messages .= '<hr/>';
+		if ( $errors == '' ) {
+			$messages .= '<hr />';
 			$messages .= sprintf(__('Copied %1$s picture(s) to gallery: %2$s.','nggallery'), count($images), $destination->name) . '&nbsp;';	
-			$messages .= '<a href="' . get_option('siteurl') . '/wp-admin/admin.php?page=nggallery-manage-gallery&mode=edit&gid=' . $destination->gid . '" >';
+			$messages .= '<a href="' . admin_url() . 'admin.php?page=nggallery-manage-gallery&mode=edit&gid=' . $destination->gid . '" >';
 			$messages .= __('Edit gallery','nggallery');
-			$messages .= '</a><br/>';
+			$messages .= '</a><br />';
 		} 
 
 		if ($messages!='') {

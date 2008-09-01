@@ -140,25 +140,33 @@ function nggallery_admin_manage_gallery() {
 		$mode = 'edit';		
 	}
 	
-	if (isset ($_POST['TB_sg_bulkaction']) && isset ($_POST['TB_doaction']))  {
+	if (isset ($_POST['TB_bulkaction']) && isset ($_POST['TB_SelectGallery']))  {
 		
-		check_admin_referer('ngg_form-selectgallery');
+		check_admin_referer('ngg_thickbox_form');
 		
-		$pic_ids = explode(",", $_POST['TB_sg_imagelist']);
-		$dest_gid = $_POST['dest_gid'];
+		$pic_ids  = explode(",", $_POST['TB_imagelist']);
+		$dest_gid = (int) $_POST['dest_gid'];
 		
-		switch ($_POST['TB_sg_bulkaction']) {
-			case 0:
+		switch ($_POST['TB_bulkaction']) {
+			case 9:
 			// Copy images
 				nggAdmin::copy_images( $pic_ids, $dest_gid );
+				break;
+			case 10:
+			// Move images
+				//TODO:Placeholder for Move images
+				//nggAdmin::move_images( $pic_ids, $dest_gid );
 				break;
 		}
 	}
 	
-	if (isset ($_POST['TB_tagaction']) && isset ($_POST['TB_doaction']))  {
+	if (isset ($_POST['TB_bulkaction']) && isset ($_POST['TB_EditTags']))  {
 		// do tags update
 
-		check_admin_referer('ngg_form-tags');
+		check_admin_referer('ngg_thickbox_form');
+
+		switch ($_POST['TB_bulkaction']) {
+		}
 
 		// get the images list		
 		$pic_ids = explode(",", $_POST['TB_imagelist']);
@@ -168,7 +176,7 @@ function nggallery_admin_manage_gallery() {
 		foreach($pic_ids as $pic_id) {
 			
 			// which action should be performed ?
-			switch ($_POST['TB_tagaction']) {
+			switch ($_POST['TB_bulkaction']) {
 				case 0;
 				// No action
 					break;
@@ -371,8 +379,8 @@ function nggallery_picturelist($hideThumbs = false,$showTags = false) {
 ?>
 
 <script type="text/javascript"> 
-	function enterTags(form) {
-
+	function showDialog( windowId ) {
+		var form = document.getElementById('updategallery');
 		var elementlist = "";
 		for (i = 0, n = form.elements.length; i < n; i++) {
 			if(form.elements[i].type == "checkbox") {
@@ -384,28 +392,10 @@ function nggallery_picturelist($hideThumbs = false,$showTags = false) {
 							elementlist += "," + form.elements[i].value ;
 			}
 		}
-		jQuery("#TB_tagaction").val(jQuery("#bulkaction").val());
-		jQuery("#TB_imagelist").val(elementlist);
+		jQuery("#" + windowId + "_bulkaction").val(jQuery("#bulkaction").val());
+		jQuery("#" + windowId + "_imagelist").val(elementlist);
 		// console.log (jQuery("#TB_imagelist").val());
-		jQuery.tb_show("", "#TB_inline?width=640&height=120&inlineId=tags&modal=true", false);
-	}
-	
-	function selectGallery(form) {
-		var elementlist = "";
-		for (i = 0, n = form.elements.length; i < n; i++) {
-			if(form.elements[i].type == "checkbox") {
-				if(form.elements[i].name == "doaction[]")
-					if(form.elements[i].checked == true)
-						if (elementlist == "")
-							elementlist = form.elements[i].value
-						else
-							elementlist += "," + form.elements[i].value ;
-			}
-		}
-		jQuery("#TB_sg_bulkaction").val('0');
-		jQuery("#TB_sg_imagelist").val(elementlist);
-		// console.log (jQuery("#TB_imagelist").val());
-		jQuery.tb_show("", "#TB_inline?width=640&height=120&inlineId=selectgallery&modal=true", false);
+		jQuery.tb_show("", "#TB_inline?width=640&height=120&inlineId=" + windowId + "&modal=true", false);
 	}
 </script>
 <script type="text/javascript"> var tb_pathToImage = '<?php echo NGGALLERY_URLPATH ?>thickbox/loadingAnimationv3.gif';</script>
@@ -436,6 +426,27 @@ function getNumChecked(form)
 		}
 	}
 	return num;
+}
+
+// this function checl for a the number of seleted images, sumbmit false when no one selected
+function checkSelected() {
+
+	var numchecked = getNumChecked(document.getElementById('updategallery'));
+	 
+	if(numchecked < 1) { 
+		alert('<?php echo js_escape(__("No images selected",'nggallery')); ?>');
+		return false; 
+	} 
+	//TODO: For copy to and move to we need some better way around
+	if (jQuery('#bulkaction').val() == 9) {
+		showDialog('selectgallery');
+		return false;
+	}
+	
+	if (jQuery('#bulkaction').val() == 10)
+		return false;	
+		
+	return confirm('<?php echo sprintf(js_escape(__("You are about to start the bulk edit for %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>');
 }
 
 jQuery(document).ready( function() {
@@ -551,6 +562,8 @@ jQuery(document).ready( function() {
 		<option value="3" ><?php _e("Resize images",'nggallery')?></option>
 		<option value="4" ><?php _e("Delete images",'nggallery')?></option>
 		<option value="8" ><?php _e("Import metadata",'nggallery')?></option>
+		<option value="9" ><?php _e("Copy to...",'nggallery')?></option>
+		<option value="10"><?php _e("Move to...",'nggallery')?></option>
 	<?php } else { ?>	
 		<option value="5" ><?php _e("Add tags",'nggallery')?></option>
 		<option value="6" ><?php _e("Delete tags",'nggallery')?></option>
@@ -559,9 +572,9 @@ jQuery(document).ready( function() {
 	</select>
 	
 	<?php if (!$showTags) { ?> 
-		<input class="button-secondary" type="submit" name="doaction" value="<?php _e("OK",'nggallery')?>" onclick="var numchecked = getNumChecked(document.getElementById('updategallery')); if(numchecked < 1) { alert('<?php echo js_escape(__("No images selected",'nggallery')); ?>'); return false } return confirm('<?php echo sprintf(js_escape(__("You are about to start the bulk edit for %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>')" />
+		<input class="button-secondary" type="submit" name="doaction" value="<?php _e("OK",'nggallery')?>" onclick="if ( !checkSelected() ) return false;" />
 	<?php } else {?>
-		<input class="button-secondary" type="submit" name="showThickbox" value="<?php _e("OK",'nggallery')?>" onclick="enterTags(document.getElementById('updategallery')); return false;" />
+		<input class="button-secondary" type="submit" name="showThickbox" value="<?php _e("OK",'nggallery')?>" onclick="showDialog('tags'); return false;" />
 	<?php } ?>
 	
 	<?php if (!$hideThumbs) { ?> 
@@ -579,9 +592,7 @@ jQuery(document).ready( function() {
 	<?php if ($ngg_options['galSort'] == "sortorder") { ?>
 		<input class="button-secondary" type="submit" name="sortGallery" value="<?php _e("Sort gallery",'nggallery')?>" />
 	<?php } ?>
-	
-	<input class="button-secondary" type="submit" name="showThickbox2" value="<?php _e("Copy to...",'nggallery')?>" onclick="selectGallery(document.getElementById('updategallery')); return false;" title="<?php _e("Copy images to another gallery",'nggallery')?>" />
-	
+
 	</div>
 	<span style="float:right;"><input type="submit" name="updatepictures" class="button-secondary"  value="<?php _e("Save Changes",'nggallery')?> &raquo;" /></span>
 </div>
@@ -725,18 +736,18 @@ if($picturelist) {
 	<!-- #entertags -->
 	<div id="tags" style="display: none;" >
 		<form id="form-tags" method="POST" accept-charset="utf-8">
-		<?php wp_nonce_field('ngg_form-tags') ?>
+		<?php wp_nonce_field('ngg_thickbox_form') ?>
 		<?php if ($showTags) { ?><input type="hidden" name="showTags" value="true" /><?php } ?>
 		<?php if ($hideThumbs) { ?><input type="hidden" name="hideThumbs" value="true" /><?php } ?>
-		<input type="hidden" id="TB_imagelist" name="TB_imagelist" value="" />
-		<input type="hidden" id="TB_tagaction" name="TB_tagaction" value="" />
+		<input type="hidden" id="tags_imagelist" name="TB_imagelist" value="" />
+		<input type="hidden" id="tags_bulkaction" name="TB_bulkaction" value="" />
 		<table width="100%" border="0" cellspacing="3" cellpadding="3" >
 		  	<tr>
 		    	<th><?php _e("Enter the tags",'nggallery')?> : <input name="taglist" type="text" style="width:99%" value="" /></th>
 		  	</tr>
 		  	<tr align="right">
 		    	<td class="submit">
-		    		<input type="submit" name="TB_doaction" value="<?php _e("OK",'nggallery')?>" onclick="var numchecked = getNumChecked(document.getElementById('updategallery')); if(numchecked < 1) { alert('<?php echo js_escape(__("No images selected",'nggallery')); ?>'); jQuery.tb_remove(); return false } return confirm('<?php echo sprintf(js_escape(__("You are about to start the bulk edit for %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>')" />
+		    		<input type="submit" name="TB_EditTags" value="<?php _e("OK",'nggallery')?>" onclick="var numchecked = getNumChecked(document.getElementById('updategallery')); if(numchecked < 1) { alert('<?php echo js_escape(__("No images selected",'nggallery')); ?>'); jQuery.tb_remove(); return false } return confirm('<?php echo sprintf(js_escape(__("You are about to start the bulk edit for %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>')" />
 		    		&nbsp;
 		    		<input type="reset" value="&nbsp;<?php _e("Cancel",'nggallery')?>&nbsp;" onclick="jQuery.tb_remove()"/>
 		    	</td>
@@ -749,11 +760,11 @@ if($picturelist) {
 	<!-- #selectgallery -->
 	<div id="selectgallery" style="display: none;" >
 		<form id="form-select-gallery" method="POST" accept-charset="utf-8">
-		<?php wp_nonce_field('ngg_form-selectgallery') ?>
+		<?php wp_nonce_field('ngg_thickbox_form') ?>
 		<?php if ($showTags) { ?><input type="hidden" name="showTags" value="true" /><?php } ?>
 		<?php if ($hideThumbs) { ?><input type="hidden" name="hideThumbs" value="true" /><?php } ?>
-		<input type="hidden" id="TB_sg_imagelist" name="TB_sg_imagelist" value="" />
-		<input type="hidden" id="TB_sg_bulkaction" name="TB_sg_bulkaction" value="" />
+		<input type="hidden" id="selectgallery_imagelist" name="TB_imagelist" value="" />
+		<input type="hidden" id="selectgallery_bulkaction" name="TB_bulkaction" value="" />
 		<table width="100%" border="0" cellspacing="3" cellpadding="3" >
 		  	<tr>
 		    	<th>
@@ -761,12 +772,12 @@ if($picturelist) {
 		    			_e("Select the destination gallery:", 'nggallery');
 		    			$gallerylist = nggGalleryDAO::find_all_galleries();
 		    		?>&nbsp;
-		    		<select name="dest_gid" style="width:95%">
+		    		<select name="dest_gid" style="width:95%" >
 		    			<?php 
 		    				foreach ($gallerylist as $gallery) { 
 		    					if ($gallery->gid != $act_gid) { 
 		    			?>
-						<option value="<?php echo $gallery->gid; ?>" ><?php echo $gallery->gid; ?> . " - " . <?php echo stripslashes($gallery->name); ?></option>
+						<option value="<?php echo $gallery->gid; ?>" ><?php echo $gallery->gid; ?> - <?php echo stripslashes($gallery->name); ?></option>
 						<?php 
 		    					} 
 		    				}
@@ -776,7 +787,7 @@ if($picturelist) {
 		  	</tr>
 		  	<tr align="right">
 		    	<td class="submit">
-		    		<input type="submit" name="TB_doaction" value="<?php _e("OK",'nggallery')?>" onclick="var numchecked = getNumChecked(document.getElementById('updategallery')); if(numchecked < 1) { alert('<?php echo js_escape(__("No images selected",'nggallery')); ?>'); jQuery.tb_remove(); return false } return confirm('<?php echo sprintf(js_escape(__("You are about to copy %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>')" />
+		    		<input type="submit" name="TB_SelectGallery" value="<?php _e("OK",'nggallery')?>" onclick="var numchecked = getNumChecked(document.getElementById('updategallery')); if(numchecked < 1) { alert('<?php echo js_escape(__("No images selected",'nggallery')); ?>'); jQuery.tb_remove(); return false } return confirm('<?php echo sprintf(js_escape(__("You are about to copy %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>')" />
 		    		&nbsp;
 		    		<input type="reset" value="<?php _e("Cancel",'nggallery')?>" onclick="jQuery.tb_remove()"/>
 		    	</td>
