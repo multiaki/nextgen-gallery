@@ -76,9 +76,7 @@ function media_upload_nextgen_save_image() {
 
 function media_upload_nextgen_form($errors) {
 
-	global $wpdb, $wp_query, $wp_locale, $type, $tab, $post_mime_types;
-	
-	$ngg_options = get_option('ngg_options');
+	global $wpdb, $wp_query, $wp_locale, $type, $tab, $post_mime_types, $ngg;
 	
 	media_upload_header();
 
@@ -105,7 +103,7 @@ function media_upload_nextgen_form($errors) {
 		
 	// Get the images
 	if ( $galleryID != 0 )
-		$picarray = $wpdb->get_col("SELECT pid FROM $wpdb->nggpictures WHERE galleryid = '$galleryID' AND exclude != 1 ORDER BY $ngg_options[galSort] $ngg_options[galSortDir] LIMIT $start, 10 ");	
+		$picarray = $wpdb->get_col("SELECT pid FROM $wpdb->nggpictures WHERE galleryid = '$galleryID' AND exclude != 1 ORDER BY $ngg->options[galSort] $ngg->options[galSortDir] LIMIT $start, 10 ");	
 
 ?>
 

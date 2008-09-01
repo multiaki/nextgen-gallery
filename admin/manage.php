@@ -5,7 +5,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
 }
 
 function nggallery_admin_manage_gallery() {
-	global $wpdb;
+	global $wpdb, $ngg;
 
 	//TODO:GID & Mode should the hidden post variables
 
@@ -13,9 +13,6 @@ function nggallery_admin_manage_gallery() {
 	$act_gid = (int) $_GET['gid'];
 	$act_pid = (int) $_GET['pid'];	
 	$mode = trim(attribute_escape($_GET['mode']));
-
-	// get the options
-	$ngg_options = get_option('ngg_options');	
 
 	//TODO: Reomove this vars
 	$hideThumbs = ngg_hide_thumb();
@@ -33,7 +30,7 @@ function nggallery_admin_manage_gallery() {
 	
 			// delete pictures
 			$imagelist = $wpdb->get_col("SELECT filename FROM $wpdb->nggpictures WHERE galleryid = '$act_gid' ");
-			if ($ngg_options['deleteImg']) {
+			if ($ngg->options['deleteImg']) {
 				if (is_array($imagelist)) {
 					foreach ($imagelist as $filename) {
 						@unlink(WINABSPATH.$gallerypath.'/'.$thumb_folder.'/'. "thumbs_" .$filename);
@@ -63,7 +60,7 @@ function nggallery_admin_manage_gallery() {
 			$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$act_gid' ");
 			if ($gallerypath){
 				$thumb_folder = nggGalleryPlugin::get_thumbnail_folder($gallerypath, FALSE);
-				if ($ngg_options['deleteImg']) {
+				if ($ngg->options['deleteImg']) {
 					@unlink(WINABSPATH.$gallerypath.'/'.$thumb_folder.'/'. "thumbs_" .$filename);
 					@unlink(WINABSPATH.$gallerypath.'/'.$filename);
 				}
@@ -114,7 +111,7 @@ function nggallery_admin_manage_gallery() {
 					$thumb_folder = nggGalleryPlugin::get_thumbnail_folder($gallerypath, FALSE);
 					foreach ( $_POST['doaction'] as $imageID ) {
 						$filename = $wpdb->get_var("SELECT filename FROM $wpdb->nggpictures WHERE pid = '$imageID' ");
-						if ($ngg_options['deleteImg']) {
+						if ($ngg->options['deleteImg']) {
 							@unlink(WINABSPATH.$gallerypath.'/'.$thumb_folder.'/'. "thumbs_" .$filename);
 							@unlink(WINABSPATH.$gallerypath.'/'.$filename);	
 						} 
@@ -355,13 +352,10 @@ if($gallerylist) {
 
 function nggallery_picturelist($hideThumbs = false,$showTags = false) {
 // *** show picture list
-	global $wpdb, $user_ID;
+	global $wpdb, $user_ID, $ngg;
 	
 	// GET variables
 	$act_gid = (int) $_GET['gid'];
-	
-	// get the options
-	$ngg_options = get_option('ngg_options');	
 	
 	// get gallery values
 	$act_gallery = nggGalleryDAO::find_gallery($act_gid);
@@ -503,7 +497,7 @@ jQuery(document).ready( function() {
 						<select name="previewpic" >
 							<option value="0" ><?php _e('No Picture', 'nggallery') ?></option>
 							<?php
-								$picturelist = nggImageDAO::find_images_in_gallery($act_gallery, $ngg_options['galSort'], $ngg_options['galSortDir']);
+								$picturelist = nggImageDAO::find_images_in_gallery($act_gallery, $ngg->options['galSort'], $ngg->options['galSortDir']);
 								if(is_array($picturelist)) {
 									foreach($picturelist as $picture) {
 										if ($picture->pid == $act_gallery->previewpic) $selected = 'selected="selected" ';
@@ -589,7 +583,7 @@ jQuery(document).ready( function() {
 		<input class="button-secondary" type="submit" name="toggletags" value="<?php _e("Hide tags",'nggallery')?>" />
 	<?php } ?>
 	
-	<?php if ($ngg_options['galSort'] == "sortorder") { ?>
+	<?php if ($ngg->options['galSort'] == "sortorder") { ?>
 		<input class="button-secondary" type="submit" name="sortGallery" value="<?php _e("Sort gallery",'nggallery')?>" />
 	<?php } ?>
 
@@ -624,17 +618,13 @@ jQuery(document).ready( function() {
 <?php
 if($picturelist) {
 	
-	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
-	$thumbwidth = $ngg_options['thumbwidth'];
-	$thumbheight = $ngg_options['thumbheight'];	
-	
 	$thumbsize = "";
-	if ($ngg_options['thumbfix']) {
-		$thumbsize = 'width="'.$thumbwidth.'" height="'.$thumbheight.'"';
+	if ($ngg->options['thumbfix']) {
+		$thumbsize = 'width="'.$ngg->options['thumbwidth'].'" height="'.$ngg->options['thumbheight'].'"';
 	}
 	
-	if ($ngg_options['thumbcrop']) {
-		$thumbsize = 'width="'.$thumbwidth.'" height="'.$thumbwidth.'"';
+	if ($ngg->options['thumbcrop']) {
+		$thumbsize = 'width="'.$ngg->options['thumbwidth'].'" height="'.$ngg->options['thumbwidth'].'"';
 	}
 		
 	foreach($picturelist as $picture) {

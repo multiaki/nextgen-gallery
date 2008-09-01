@@ -6,8 +6,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 
 	function nggallery_admin_add_gallery()  {
 
-	global $wpdb;
-	$ngg_options = get_option('ngg_options');
+	global $wpdb, $ngg;
 	
 	// same as $_SERVER['REQUEST_URI'], but should work under IIS 6.0
 	$filepath    = admin_url() . 'admin.php?page='.$_GET['page'];
@@ -18,7 +17,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	//flash doesn't seem to like encoded ampersands, so convert them back here
 	$swf_upload_link = str_replace('&#038;', '&', $swf_upload_link);
 
-	$defaultpath = $ngg_options['gallerypath'];	
+	$defaultpath = $ngg->options['gallerypath'];	
 
 	if ($_POST['addgallery']){
 		check_admin_referer('ngg_addgallery');
@@ -64,21 +63,21 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 
 	if ( isset($_POST['disable_flash']) ){
 		check_admin_referer('ngg_addgallery');
-		$ngg_options['swfUpload'] = false;	
-		update_option('ngg_options', $ngg_options);
+		$ngg->options['swfUpload'] = false;	
+		update_option('ngg_options', $ngg->options);
 	}
 
 	if ( isset($_POST['enable_flash']) ){
 		check_admin_referer('ngg_addgallery');
-		$ngg_options['swfUpload'] = true;	
-		update_option('ngg_options', $ngg_options);
+		$ngg->options['swfUpload'] = true;	
+		update_option('ngg_options', $ngg->options);
 	}
 	
 	// message windows
 	if(!empty($messagetext)) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$messagetext.'</p></div>'; }
 	?>
 	
-	<?php if($ngg_options['swfUpload']) { ?>
+	<?php if($ngg->options['swfUpload']) { ?>
 	<!-- SWFUpload script -->
 	<script type="text/javascript">
 		var ngg_swf_upload;
@@ -279,7 +278,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				</tr>
 				</table>
 				<div class="submit">
-					<?php if ($ngg_options['swfUpload']) { ?>
+					<?php if ($ngg->options['swfUpload']) { ?>
 					<input type="submit" name="disable_flash" id="disable_flash" title="<?php _e('The batch upload requires Adobe Flash 9, disable it if you have problems','nggallery') ?>" value="<?php _e('Disable flash upload', 'nggallery') ;?>" />
 					<?php } else { ?>
 					<input type="submit" name="enable_flash" id="enable_flash" title="<?php _e('Upload multiple files at once by ctrl/shift-selecting in dialog','nggallery') ?>" value="<?php _e('Enable flash based upload', 'nggallery') ;?>" />

@@ -6,15 +6,12 @@
  */
 
 function nggallery_sortorder($galleryID = 0){
-	global $wpdb;
+	global $wpdb, $ngg;
 	
 	if ($galleryID == 0) return;
 
 	$galleryID = (int) $galleryID;
 	
-	// get the options
-	$ngg_options=get_option('ngg_options');	
-
 	if (isset ($_POST['updateSortorder']))  {
 		check_admin_referer('ngg_updatesortorder');
 		// get variable new sortorder 

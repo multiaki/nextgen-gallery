@@ -187,6 +187,8 @@ class nggAdmin{
 	 */
 	function create_thumbnail($image) {
 		
+		global $ngg;
+		
 		if(! class_exists('ngg_Thumbnail'))
 			require_once( nggGalleryPlugin::graphic_library() );
 		
@@ -195,8 +197,6 @@ class nggAdmin{
 
 		if ( !is_object($image) ) 
 			return __('Object didn\'t contain correct data','nggallery');
-
-		$ngg_options = get_option('ngg_options');
 		
 		// check for existing thumbnail
 		if (file_exists($image->thumbPath))
@@ -207,11 +207,11 @@ class nggAdmin{
 
 		// skip if file is not there
 		if (!$thumb->error) {
-			if ($ngg_options['thumbcrop']) {
+			if ($ngg->options['thumbcrop']) {
 				
 				// THX to Kees de Bruin, better thumbnails if portrait format
-				$width = $ngg_options['thumbwidth'];
-				$height = $ngg_options['thumbheight'];
+				$width = $ngg->options['thumbwidth'];
+				$height = $ngg->options['thumbheight'];
 				$curwidth = $thumb->currentDimensions['width'];
 				$curheight = $thumb->currentDimensions['height'];
 				if ($curwidth > $curheight) {
@@ -222,28 +222,28 @@ class nggAdmin{
 				$width = round(($width * $aspect) / 100);
 				$height = round(($height * $aspect) / 100);
 
-				$thumb->resize($width,$height,$ngg_options['thumbResampleMode']);
-				$thumb->cropFromCenter($width,$ngg_options['thumbResampleMode']);
+				$thumb->resize($width,$height,$ngg->options['thumbResampleMode']);
+				$thumb->cropFromCenter($width,$ngg->options['thumbResampleMode']);
 			} 
-			elseif ($ngg_options['thumbfix'])  {
+			elseif ($ngg->options['thumbfix'])  {
 				// check for portrait format
 				if ($thumb->currentDimensions['height'] > $thumb->currentDimensions['width']) {
-					$thumb->resize($ngg_options['thumbwidth'], 0,$ngg_options['thumbResampleMode']);
+					$thumb->resize($ngg->options['thumbwidth'], 0,$ngg->options['thumbResampleMode']);
 					// get optimal y startpos
-					$ypos = ($thumb->currentDimensions['height'] - $ngg_options['thumbheight']) / 2;
-					$thumb->crop(0, $ypos, $ngg_options['thumbwidth'],$ngg_options['thumbheight'],$ngg_options['thumbResampleMode']);	
+					$ypos = ($thumb->currentDimensions['height'] - $ngg->options['thumbheight']) / 2;
+					$thumb->crop(0, $ypos, $ngg->options['thumbwidth'],$ngg->options['thumbheight'],$ngg->options['thumbResampleMode']);	
 				} else {
-					$thumb->resize(0,$ngg_options['thumbheight'],$ngg_options['thumbResampleMode']);	
+					$thumb->resize(0,$ngg->options['thumbheight'],$ngg->options['thumbResampleMode']);	
 					// get optimal x startpos
-					$xpos = ($thumb->currentDimensions['width'] - $ngg_options['thumbwidth']) / 2;
-					$thumb->crop($xpos, 0, $ngg_options['thumbwidth'],$ngg_options['thumbheight'],$ngg_options['thumbResampleMode']);	
+					$xpos = ($thumb->currentDimensions['width'] - $ngg->options['thumbwidth']) / 2;
+					$thumb->crop($xpos, 0, $ngg->options['thumbwidth'],$ngg->options['thumbheight'],$ngg->options['thumbResampleMode']);	
 				}
 			} else {
-				$thumb->resize($ngg_options['thumbwidth'],$ngg_options['thumbheight'],$ngg_options['thumbResampleMode']);	
+				$thumb->resize($ngg->options['thumbwidth'],$ngg->options['thumbheight'],$ngg->options['thumbResampleMode']);	
 			}
 			
 			// save the new thumbnail
-			$thumb->save($image->thumbPath, $ngg_options['thumbquality']);
+			$thumb->save($image->thumbPath, $ngg->options['thumbquality']);
 			nggAdmin::chmod ($image->thumbPath); 
 		} 
 				
@@ -266,6 +266,8 @@ class nggAdmin{
 	 */
 	function resize_image($image, $width = 0, $height = 0) {
 		
+		global $ngg;
+		
 		if(! class_exists('ngg_Thumbnail'))
 			require_once( nggGalleryPlugin::graphic_library() );
 
@@ -274,11 +276,9 @@ class nggAdmin{
 		
 		if ( !is_object($image) ) 
 			return __('Object didn\'t contain correct data','nggallery');	
-		
-		$ngg_options = get_option('ngg_options');
 
-		$width  = ($width  != 0) ? $ngg_options['imgWidth']  : $width;
-		$height = ($height != 0) ? $ngg_options['imgHeight'] : $height;
+		$width  = ($width  != 0) ? $ngg->options['imgWidth']  : $width;
+		$height = ($height != 0) ? $ngg->options['imgHeight'] : $height;
 		
 		if (!is_writable($image->imagePath))
 			return ' <strong>' . $image->filename . __(' is not writeable','nggallery') . '</strong>';
@@ -287,8 +287,8 @@ class nggAdmin{
 
 		// skip if file is not there
 		if (!$file->error) {
-			$file->resize($width, $height, $ngg_options['imgResampleMode']);
-			$file->save($image->imagePath, $ngg_options['imgQuality']);
+			$file->resize($width, $height, $ngg->options['imgResampleMode']);
+			$file->save($image->imagePath, $ngg->options['imgQuality']);
 		}
 		
 		$file->destruct();
@@ -306,6 +306,8 @@ class nggAdmin{
 	 * @return string result code
 	 */
 	function set_watermark($image) {
+		
+		global $ngg;
 
 		if(! class_exists('ngg_Thumbnail'))
 			require_once( nggGalleryPlugin::graphic_library() );
@@ -315,8 +317,6 @@ class nggAdmin{
 		
 		if ( !is_object($image) ) 
 			return __('Object didn\'t contain correct data','nggallery');		
-		
-		$ngg_options = get_option('ngg_options');
 	
 		if (!is_writable($image->imagePath))
 			return ' <strong>' . $image->filename . __(' is not writeable','nggallery') . '</strong>';
@@ -325,16 +325,16 @@ class nggAdmin{
 
 		// skip if file is not there
 		if (!$file->error) {
-			if ($ngg_options['wmType'] == 'image') {
-				$file->watermarkImgPath = $ngg_options['wmPath'];
-				$file->watermarkImage($ngg_options['wmPos'], $ngg_options['wmXpos'], $ngg_options['wmYpos']); 
+			if ($ngg->options['wmType'] == 'image') {
+				$file->watermarkImgPath = $ngg->options['wmPath'];
+				$file->watermarkImage($ngg->options['wmPos'], $ngg->options['wmXpos'], $ngg->options['wmYpos']); 
 			}
-			if ($ngg_options['wmType'] == 'text') {
-				$file->watermarkText = $ngg_options['wmText'];
-				$file->watermarkCreateText($ngg_options['wmColor'], $ngg_options['wmFont'], $ngg_options['wmSize'], $ngg_options['wmOpaque']);
-				$file->watermarkImage($ngg_options['wmPos'], $ngg_options['wmXpos'], $ngg_options['wmYpos']);  
+			if ($ngg->options['wmType'] == 'text') {
+				$file->watermarkText = $ngg->options['wmText'];
+				$file->watermarkCreateText($ngg->options['wmColor'], $ngg->options['wmFont'], $ngg->options['wmSize'], $ngg->options['wmOpaque']);
+				$file->watermarkImage($ngg->options['wmPos'], $ngg->options['wmXpos'], $ngg->options['wmYpos']);  
 			}
-			$file->save($image->imagePath, $ngg_options['imgQuality']);
+			$file->save($image->imagePath, $ngg->options['imgQuality']);
 		}
 		
 		$file->destruct();
@@ -620,8 +620,6 @@ class nggAdmin{
 		// This function is called by the swfupload
 		global $wpdb;
 		
-		$ngg_options = get_option('ngg_options');
-		
 		if ($galleryID == 0) {
 			@unlink($temp_file);		
 			return __('No gallery selected !','nggallery');;
@@ -633,7 +631,7 @@ class nggAdmin{
 
 		// Check the upload
 		if (!isset($_FILES["Filedata"]) || !is_uploaded_file($_FILES["Filedata"]["tmp_name"]) || $_FILES["Filedata"]["error"] != 0) 
-			return __('Invalid upload. Error Code : ','nggallery').$_FILES["Filedata"]["error"];
+			return __('Invalid upload. Error Code : ','nggallery') . $_FILES["Filedata"]["error"];
 
 		// get the filename and extension
 		$temp_file = $_FILES["Filedata"]['tmp_name'];
@@ -824,11 +822,11 @@ class nggAdmin{
 			$messages .= '</a><br />';
 		} 
 
-		if ($messages!='') {
+		if ( $messages != '' ) {
 			nggGalleryPlugin::show_message($messages);
 		}
 
-		if ($errors!='') {
+		if ( $errors != '' ) {
 			nggGalleryPlugin::show_error($errors);
 		}
 	}
