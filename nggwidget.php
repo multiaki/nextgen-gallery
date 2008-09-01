@@ -45,7 +45,7 @@ function nggSlideshowWidget($galleryID,$irWidth,$irHeight) {
 	$out .= "\n\t".'//<![CDATA[';
 	$out .= "\n\t\t".'var sbsl = new SWFObject("'.NGGALLERY_URLPATH.'imagerotator.swf", "ngg_slideshow'.$galleryID.'", "'.$irWidth.'", "'.$irHeight.'", "7", "#'.$ngg_options['irBackcolor'].'");';
 	$out .= "\n\t\t".'sbsl.addParam("wmode", "opaque");';
-	$out .= "\n\t\t".'sbsl.addVariable("file", "'.NGGALLERY_URLPATH.'nggextractXML.php?gid='.$galleryID.'");';
+	$out .= "\n\t\t".'sbsl.addVariable("file", "'.NGGALLERY_URLPATH.'xml/imagerotator-playlist.php?gid='.$galleryID.'");';
 	$out .= "\n\t\t".'sbsl.addVariable("linkfromdisplay", "false");';
 	$out .= "\n\t\t".'sbsl.addVariable("shownavigation", "false");';
 	// default value changed in 3.15 : linkfromdisplay, shownavigation, showicons

@@ -24,7 +24,7 @@ function nggShowSlideshow($galleryID,$irWidth,$irHeight) {
 	if ($ngg_options['irXHTMLvalid']) $out .= "\n\t".'//<![CDATA[';
 	$out .= "\n\t\t".'var '. $obj .' = new SWFObject("'.NGGALLERY_URLPATH.'imagerotator.swf", "ngg_slideshow'.$galleryID.'", "'.$irWidth.'", "'.$irHeight.'", "7", "#'.$ngg_options[irBackcolor].'");';
 	$out .= "\n\t\t".$obj.'.addParam("wmode", "opaque");';
-	$out .= "\n\t\t".$obj.'.addVariable("file", "'.NGGALLERY_URLPATH.'nggextractXML.php?gid='.$galleryID.'");';
+	$out .= "\n\t\t".$obj.'.addVariable("file", "'.NGGALLERY_URLPATH.'xml/imagerotator-playlist.php?gid='.$galleryID.'");';
 	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irShuffle');
 	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irLinkfromdisplay');
 	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irShownavigation');
