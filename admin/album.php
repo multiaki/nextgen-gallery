@@ -22,13 +22,8 @@ function nggallery_admin_manage_album()  {
 		if ($albumID > 0){
 			// get variable galleryContainer 
 			parse_str($_POST['sortorder']); 
-			if (is_array($galleryContainer)){ 
-				$sortorder = array();
-				foreach($galleryContainer as $gallery) {		
-					$gid = substr($gallery, 4); // get id from "gid-x"
-					$sortorder[] = $gid;
-				}
-				$serial_sort = serialize($sortorder); 
+			if (is_array($gid)){ 
+				$serial_sort = serialize($gid); 
 				$wpdb->query("UPDATE $wpdb->nggalbum SET sortorder = '$serial_sort' WHERE id = $albumID ");
 			} else {
 				$wpdb->query("UPDATE $wpdb->nggalbum SET sortorder = '0' WHERE id = $albumID ");
@@ -52,14 +47,23 @@ jQuery(document).ready(
 	function()
 	{
 
-		jQuery('div.groupWrapper').Sortable(
-			{
-				accept: 'groupItem',
-				helperclass: 'sort_placeholder',
-				opacity: 0.7,
-				tolerance: 'intersect'
-			}
-		);
+		jQuery('#selectContainer').sortable( {
+			items: '.groupItem',
+			placeholder: 'sort_placeholder',
+			opacity: 0.7,
+			tolerance: 'intersect',
+			distance: 2,
+			connectWith: ["#galleryContainer"] 
+		} );
+
+		jQuery('#galleryContainer').sortable( {
+			items: '.groupItem',
+			placeholder: 'sort_placeholder',
+			opacity: 0.7,
+			tolerance: 'intersect',
+			distance: 2,
+			connectWith: ["#selectContainer"] 
+		} );
 		
 		jQuery('a.min').bind('click', toggleContent);
 
@@ -111,13 +115,14 @@ var toggleContent = function(e)
 
 function ngg_serialize(s)
 {
-	serial = jQuery.SortSerialize(s);
-	jQuery('input[@name=sortorder]').val(serial.hash);
+	//serial = jQuery.SortSerialize(s);
+	serial = jQuery('#galleryContainer').sortable('serialize');
+	jQuery('input[@name=sortorder]').val(serial);
 }
 </script>
 <div class="wrap album" id="wrap" >
 	<h2><?php _e('Manage Albums', 'nggallery') ?></h2>
-	<form id="selectalbum" method="POST" onsubmit="ngg_serialize('galleryContainer')" accept-charset="utf-8">
+	<form id="selectalbum" method="POST" onsubmit="ngg_serialize()" accept-charset="utf-8">
 		<?php wp_nonce_field('ngg_album') ?>
 		<input name="sortorder" type="hidden" />
 		<table class="ngg-albumnav">
@@ -209,7 +214,7 @@ function ngg_serialize(s)
 					$sort_array = unserialize($album->sortorder);
 					if (is_array($sort_array)) {
 						foreach($sort_array as $galleryid) {
-							getgallerycontainer($galleryid,false);
+							getgallerycontainer($galleryid, false);
 						}
 					}
 				}
@@ -230,7 +235,7 @@ function getgallerycontainer($galleryid = 0, $used = false) {
 	global $wpdb;
 	
 	$gallery = $wpdb->get_row("SELECT * FROM $wpdb->nggallery WHERE gid = '$galleryid'");
-
+	
 	if ($gallery) {
 
 		// set image url

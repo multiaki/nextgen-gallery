@@ -56,24 +56,24 @@ function ngg_add_admin_js() {
 	
 	switch ($_GET['page']) {
 		case "nggallery-manage-gallery" :
-			wp_enqueue_script('postbox');
-			wp_enqueue_script('ngg-thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.1.1');
-			wp_enqueue_script('ngg-ajax');
-			wp_enqueue_script('ngg-progressbar');
+			wp_enqueue_script( 'postbox' );
+			wp_enqueue_script( 'ngg-thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.1.1' );
+			wp_enqueue_script( 'ngg-ajax' );
+			wp_enqueue_script( 'ngg-progressbar' );
 		break;
 		case "nggallery-manage-album" :
-			wp_enqueue_script('interface', NGGALLERY_URLPATH .'admin/js/interface.js', array('jquery'), '1.2.1');
+			wp_enqueue_script( 'jquery-ui-sortable' );
 		break;
 		case "nggallery-options" :
-			wp_enqueue_script('ui-tabs', NGGALLERY_URLPATH .'admin/js/jquery.ui.tabs.pack.js', array('jquery'), '2.7.4');
+			wp_enqueue_script( 'jquery-ui-tabs' );
 		break;		
 		case "nggallery-add-gallery" :
-			wp_enqueue_script('ui-tabs', NGGALLERY_URLPATH .'admin/js/jquery.ui.tabs.pack.js', array('jquery'), '2.7.4');
-			wp_enqueue_script('mutlifile', NGGALLERY_URLPATH .'admin/js/jquery.MultiFile.js', array('jquery'), '1.1.1');
-			wp_enqueue_script('ngg-swfupload', NGGALLERY_URLPATH .'admin/js/swfupload.js', array('jquery'), '2.0.1');
-			wp_enqueue_script('ngg-swfupload-handler', NGGALLERY_URLPATH .'admin/js/swfupload.handler.js', array('swfupload'), '1.0.0');
-			wp_enqueue_script('ngg-ajax');
-			wp_enqueue_script('ngg-progressbar');
+			wp_enqueue_script( 'jquery-ui-tabs' );
+			wp_enqueue_script( 'mutlifile', NGGALLERY_URLPATH .'admin/js/jquery.MultiFile.js', array('jquery'), '1.1.1' );
+			wp_enqueue_script( 'ngg-swfupload', NGGALLERY_URLPATH .'admin/js/swfupload.js', array('jquery'), '2.0.1' );
+			wp_enqueue_script( 'ngg-swfupload-handler', NGGALLERY_URLPATH .'admin/js/swfupload.handler.js', array('swfupload'), '1.0.0' );
+			wp_enqueue_script( 'ngg-ajax' );
+			wp_enqueue_script( 'ngg-progressbar' );
 		break;
 	}
 }
