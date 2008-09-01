@@ -36,7 +36,10 @@ class nggImage{
 	var $path			=	"";			// Gallery path	
 	var $title			=	"";			// Gallery title
 	var $pageid			=	0;			// Gallery page ID
-	var $previewpic		=	0;			// Gallery preview pic				
+	var $previewpic		=	0;			// Gallery preview pic		
+
+	var $permalink		=	'';
+	var $tags			=   '';
 		
 	/**
 	* Constructor
@@ -67,6 +70,10 @@ class nggImage{
 		$this->thumbURL 	= get_option ('siteurl') . "/" . $this->path . $this->thumbFolder . $this->thumbPrefix . $this->filename;
 		$this->imagePath	= WINABSPATH.$this->path . "/" . $this->filename;
 		$this->thumbPath	= WINABSPATH.$this->path . "/" . $this->thumbFolder . $this->thumbPrefix . $this->filename;
+		
+		// Get tags only if necessary
+		//--
+		unset($this->tags);
 	}
 	
 	/**********************************************************/
@@ -192,6 +199,27 @@ class nggImage{
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Get the tags associated to this image
+	 */
+	function get_tags() {
+		if (!isset($this->tags)) {
+			$this->tags = wp_get_object_terms($this->pid, 'ngg_tag', 'fields=all');
+		}
+		return $this->tags;
+	}
+	
+	/**
+	 * Get the permalink to the image
+	 * TODO Get a permalink to a page presenting the image
+	 */
+	function get_permalink() {
+		if ($this->permalink=='') {
+			$this->permalink = $this->imageURL;
+		}
+		return $this->permalink; 
 	}
 }
 

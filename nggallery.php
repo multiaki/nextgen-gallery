@@ -83,6 +83,7 @@ class nggLoader {
 		require_once (dirname (__FILE__).'/lib/ngg-image-dao.lib.php');
 		require_once (dirname (__FILE__).'/lib/ngg-meta.lib.php');
 		require_once (dirname (__FILE__).'/lib/ngg-tags.lib.php');
+		require_once (dirname (__FILE__).'/lib/ngg-media-rss.lib.php');
 		require_once (dirname (__FILE__).'/admin/ajax.php');
 
 		// Load the language file
@@ -103,6 +104,16 @@ class nggLoader {
 			require_once (dirname (__FILE__)."/nggfunctions.php");
 			require_once (dirname (__FILE__).'/lib/shortcodes.php');
 			require_once (dirname (__FILE__).'/lib/rewrite.php');
+			
+			// Add MRSS to wp_head
+			//--
+			// add_action('wp_head', array('nggMediaRss', 'add_mrss_alternate_links'));
+			
+			// If activated, add PicLens/Cooliris javascript to footer
+			//--
+			if ($this->options['usePicLens']) {
+				add_action('wp_head', array('nggMediaRss', 'add_piclens_javascript'));
+			}
 			
 			// Add rewrite rules
 			$nggRewrite = new nggRewrite();

@@ -108,7 +108,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<h2><?php _e('General Options','nggallery'); ?></h2>
 			<form name="generaloptions" method="post">
 			<?php wp_nonce_field('ngg_settings') ?>
-			<input type="hidden" name="page_options" value="gallerypath,scanfolder,deleteImg,usePermalinks,graphicLibrary,activateTags,appendType,maxImages" />
+			<input type="hidden" name="page_options" value="gallerypath,scanfolder,deleteImg,usePicLens,usePermalinks,graphicLibrary,activateTags,appendType,maxImages" />
 				<table class="form-table">
 					<tr valign="top">
 						<th align="left"><?php _e('Gallery path','nggallery') ?></th>
@@ -138,6 +138,11 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						<td><label><input name="graphicLibrary" type="radio" value="gd" <?php checked('gd', $ngg->options['graphicLibrary']); ?> /> <?php _e('GD Library', 'nggallery') ;?></label><br />
 						<label><input name="graphicLibrary" type="radio" value="im" <?php checked('im', $ngg->options['graphicLibrary']); ?> /> <?php _e('ImageMagick', 'nggallery') ;?></label>
 						</td>
+					</tr>
+					<tr>
+						<th align="left"><?php _e('Activate PicLens/CoolIris support','nggallery') ?> (<a href="http://www.cooliris.com">CoolIris</a>)</th>
+						<td><input type="checkbox" name="usePicLens" value="1" <?php checked('1', $ngg_options['usePicLens']); ?> /><br />
+						<?php _e('When you activate this option, some javascript is added to your site footer. Make sure that wp_footer is called in your theme.','nggallery') ?></td>
 					</tr>
 				</table>
 			<h3><?php _e('Tags / Categories','nggallery') ?></h3>

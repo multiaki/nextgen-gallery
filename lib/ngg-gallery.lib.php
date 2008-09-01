@@ -17,6 +17,9 @@ class nggGallery {
 	var $pageid = -1;
 	var $previewpic = -1;
 	var $author = "";
+	
+	/** Other fields */
+	var $permalink = '';
 		
 	/**
 	 * Constructor from database row
@@ -43,6 +46,21 @@ class nggGallery {
 	 */
 	function get_images() {		
 		return nggImageDAO::find_images_in_gallery($this);
+	}
+	
+	/**
+	 * Get the url where we can see the gallery
+	 * TODO Get a permalink to a page presenting the gallery
+	 */
+	function get_permalink() {
+		if ($this->permalink=='') {
+			if ($this->pageid==-1) {
+				$this->permalink = get_option('siteurl');
+			} else {
+				$this->permalink = get_permalink($this->pageid);
+			}
+		}
+		return $this->permalink;
 	}
 }
 

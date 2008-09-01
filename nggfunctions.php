@@ -168,6 +168,12 @@ function nggCreateGallery($picturelist, $galleryID = false) {
 			$gallery->slideshow_link = $nggRewrite->get_permalink(array ('show' => "slide"));
 			$gallery->slideshow_link_text = $ngg_options['galTextSlide'];
 		}
+		
+		if ($ngg_options['usePicLens']) {
+			$gallery->show_piclens = true;
+			$gallery->piclens_link = "javascript:PicLensLite.start({feedUrl:'" . nggMediaRss::get_gallery_mrss_url($gallery->ID) . "'});";
+			$gallery->piclens_link_text = __('View with PicLens','nggallery');
+		}
 	}
 	
  	// check for page navigation

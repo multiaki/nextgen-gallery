@@ -16,8 +16,21 @@ Follow variables are useable :
 
 <div class="ngg-galleryoverview" id="ngg-gallery-<?php echo $gallery->ID ?>">
 
-<?php if ($gallery->show_slideshow) ?>
-	<div class="slideshowlink"><a class="slideshowlink" href="<?php echo $gallery->slideshow_link ?>"><?php echo $gallery->slideshow_link_text ?></a></div>
+<?php if ($gallery->show_slideshow) { ?>
+	<div class="slideshowlink">
+		<a class="slideshowlink" href="<?php echo $gallery->slideshow_link ?>">
+			<?php echo $gallery->slideshow_link_text ?>
+		</a>
+	</div>
+<?php } ?>
+
+<?php if ($gallery->show_piclens) { ?>
+	<div class="slideshowlink">
+		<a class="slideshowlink" href="<?php echo $gallery->piclens_link ?>">
+			<?php echo $gallery->piclens_link_text ?>
+		</a>
+	</div>
+<?php } ?>
 	
 	<!-- Thumbnails -->
 	<?php foreach ($images as $image) : ?>
