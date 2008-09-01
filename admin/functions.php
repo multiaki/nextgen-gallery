@@ -734,6 +734,115 @@ class nggAdmin{
 	
 	}
 	
+	/**
+	 * Copy images to another gallery
+	 */
+	function copy_images($pic_ids, $dest_gid) {
+		if (!is_array($pic_ids)) {
+			$pic_ids = array($pic_ids);
+		}
+		
+		// Get destination gallery
+		//--
+		$destination = nggGalleryDAO::find_gallery($dest_gid);
+		if ($destination==null) {
+			nggGalleryPlugin::show_error(__('The destination gallery does not exist','nggallery'));
+			return;
+		}
+		
+		// Check for folder permission
+		//--
+		if (!is_writeable(WINABSPATH.$destination->path)) {
+			$message = sprintf(__('Unable to write to directory %s. Is this directory writable by the server?', 'nggallery'), WINABSPATH.$destination->path);
+			nggGalleryPlugin::show_error($message);
+			return;				
+		}
+				
+		// Get pictures
+		//--
+		$errors = '';
+		$messages = '';
+		$images = nggImageDAO::find_images_in_list($pic_ids);
+		$destination_path = WINABSPATH . $destination->path;
+		
+		foreach ($images as $image) {		
+			// WPMU action
+			//--
+			if (nggAdmin::check_quota()) {
+				return;
+			}
+			
+			$i = 0;
+			$tmp_prefix = ""; 
+			$destination_file_name = $image->filename;
+			while (file_exists($destination_path . "/" . $destination_file_name)) {
+				$tmp_prefix = "copy_" . ($i++) . "_";
+				$destination_file_name = $tmp_prefix . $image->filename;
+			}
+			
+			$destination_thumb_file_path = $destination_path . "/" . $image->thumbFolder . $image->thumbPrefix . $destination_file_name;
+			$destination_file_path = $destination_path . "/" . $destination_file_name;
+
+			// Copy files
+			//--
+			if (!copy($image->thumbPath, $destination_file_path)) {
+				$errors .= sprintf(__('Failed to copy image %1$s to %2$s','nggallery'), 
+					$image->filename, $destination_file_path) . '<br/>';
+				continue;				
+			}
+			
+			if (!copy($image->thumbPath, $destination_thumb_file_path)) {
+				$errors .= sprintf(__('Failed to copy image thumb %1$s to %2$s','nggallery'), 
+					$image->thumbPrefix . $image->filename, $destination_thumb_file_path) . '<br/>';
+				continue;				
+			}
+			
+			// Create new database entry for image
+			//--
+			$new_pid = nggImageDAO::insert_image(
+				$destination->gid, $destination_file_name, 
+				$image->alttext, $image->description, 
+				$image->exclude);
+
+			if (!isset($new_pid)) {				
+				$errors .= sprintf(__('Failed to copy database row for picture %s','nggallery'), $image->pid) . '<br/>';
+				continue;				
+			}
+				
+			// Copy tags
+			//--
+			nggTags::copy_tags($image->pid, $new_pid);
+			
+			// Copied file
+			//--
+			if ($tmp_prefix!='') {
+				$messages .= sprintf(__('Image %1$s (%2$s) copied as image %3$s (%4$s) &raquo; The file already existed in the destination gallery.','nggallery'),
+					 $image->pid, $image->filename, $new_pid, $destination_file_name) . '<br/>';
+			} else {
+				$messages .= sprintf(__('Image %1$s (%2$s) copied as image %3$s (%4$s)','nggallery'),
+					 $image->pid, $image->filename, $new_pid, $destination_file_name) . '<br/>';
+			}
+		}
+		
+		// Finish by showing errors or success
+		//--
+		if ($errors=='') {
+			$messages .= '<hr/>';
+			$messages .= sprintf(__('Copied %1$s picture(s) to gallery: %2$s.','nggallery'), count($images), $destination->name) . '&nbsp;';	
+			$messages .= '<a href="' . get_option('siteurl') . '/wp-admin/admin.php?page=nggallery-manage-gallery&mode=edit&gid=' . $destination->gid . '" >';
+			$messages .= __('Edit gallery','nggallery');
+			$messages .= '</a><br/>';
+		} 
+
+		if ($messages!='') {
+			nggGalleryPlugin::show_message($messages);
+		}
+
+		if ($errors!='') {
+			nggGalleryPlugin::show_error($errors);
+		}
+	}
+	
 	function do_ajax_operation( $operation, $image_array, $title = '' ) {
 		
 		if ( !is_array($image_array) || empty($image_array) )

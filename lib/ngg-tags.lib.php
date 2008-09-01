@@ -11,6 +11,17 @@
 class nggTags {
 	
 	/**
+	 * Copy tags
+	 */
+	function copy_tags($src_pid, $dest_pid) {		
+		$tags = wp_get_object_terms( $src_pid, 'ngg_tag', 'fields=ids' );
+		$tags = array_map('intval', $tags);
+		wp_set_object_terms( $dest_pid, $tags, 'ngg_tag', true );
+		
+		return implode(',', $tags);
+	}
+	
+	/**
 	 * Rename tags
 	 */
 	function rename_tags($old = '', $new = '') {

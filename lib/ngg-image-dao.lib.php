@@ -9,6 +9,22 @@
 class nggImageDAO {
 	
 	/**
+	 * Insert an image in the database
+	 * 
+	 * @return the ID of the inserted image
+	 */
+	function insert_image($gid, $filename, $alttext, $desc, $exclude) {
+		global $wpdb;
+		
+		$result = $wpdb->query(
+			  "INSERT INTO $wpdb->nggpictures (galleryid, filename, description, alttext, exclude) VALUES "
+			. "('$gid', '$filename', '$desc', '$alttext', '$exclude');");
+		$pid = (int) $wpdb->insert_id;
+		
+		return $pid;
+	}
+	
+	/**
 	 * Get all the images from a given gallery
 	 * 
 	 * @gid The gallery object
@@ -64,6 +80,47 @@ class nggImageDAO {
 		} 
 		
 		return null;
+	}
+	
+	/**
+	 * Get images given a list of IDs 
+	 * 
+	 * @pids The image IDs
+	 * 
+	 * @return An array of nggImage objects representing the images
+	 */
+	function find_images_in_list($pids) {
+		global $wpdb;
+		
+		$result = array();
+		$id_list = implode(",", $pids);
+		$gallery_cache = array();
+		
+		// Query database
+		//--
+		$rows = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures WHERE pid in ($id_list)");
+		
+		// Build the object from the query result
+		//--
+		if ($rows) {	
+			$i = 0;
+			foreach ($rows as $row) {
+				$gallery = $gallery_cache[$row->galleryid];
+				if (!isset($gallery)) {
+					$gallery = nggGalleryDAO::find_gallery($row->galleryid);
+					if ($gallery) {
+						$gallery_cache[$row->galleryid] = $gallery;
+					}
+				}
+				
+				if ($gallery) {
+					$result[$i] = new nggImage($gallery, $row);
+					$i++;
+				}
+			}
+		} 
+		
+		return $result;
 	}
 }
 
