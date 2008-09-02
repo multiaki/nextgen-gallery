@@ -27,16 +27,17 @@ class nggMediaRss {
 		$thumbwidth = $ngg_options['thumbwidth'];
 		$thumbheight = ($ngg_options['thumbfix'] ? $ngg_options['thumbheight'] : $thumbwidth); 	
 		
-		$out  = '<item>';
-		$out .= '<title><![CDATA[' . $title . ']]></title>';
-		$out .= '<description><![CDATA[' . $desc . ']]></description>';
-		$out .= '<link>' . $image->get_permalink() . '</link>';		
-		$out .= '<media:content url="' . $image->imageURL . '" medium="image" />';
-		$out .= '<media:title><![CDATA[' . $title . ']]></media:title>';
-		$out .= '<media:description><![CDATA[' . $desc . ']]></media:description>';
-		$out .= '<media:thumbnail url="' . $image->thumbURL . '" width="' . $thumbwidth . '" height="' . $thumbheight . '" />';
-		$out .= '<media:keywords>' . $tag_names . '</media:keywords>';
-		$out .= '</item>';
+		$out  = "    <item>\n";
+		$out .= "      <title><![CDATA[" . $title . "]]></title>\n";
+		$out .= "      <description><![CDATA[" . $desc . "]]></description>\n";
+		$out .= "      <link>" . $image->get_permalink() . "</link>\n";		
+		$out .= "      <media:content url='" . $image->imageURL . "' medium='image' />\n";
+		$out .= "      <media:title><![CDATA[" . $title . "]]></media:title>\n";
+		$out .= "      <media:description><![CDATA[" . $desc . "]]></media:description>\n";
+		$out .= "      <media:thumbnail url='" . $image->thumbURL . "' width='" . $thumbwidth . "' height='" . $thumbheight . "' />\n";
+		$out .= "      <media:keywords><![CDATA[" . $tag_names . "]]></media:keywords>\n";
+		$out .= "      <media:copyright><![CDATA[Copyright (c) " . get_option("blogname") . " (" . get_option("siteurl") . ")]]></media:copyright>\n";
+		$out .= "    </item>\n";
 
 		return $out;
 	}	
@@ -44,18 +45,25 @@ class nggMediaRss {
 	/**
 	 * Function called by the wp_head action to output the RSS link for medias
 	 */
-	function add_mrss_alternate_links() {
-		
-		echo '<link id="Gallery" rel="alternate" type="application/rss+xml" title="" href="' . nggMediaRss::get_gallery_mrss_url(1) . '" />';
-		
+	function add_mrss_alternate_link() {
+		echo "<link id='MediaRSS' rel='alternate' type='application/rss+xml' title='' href='" . nggMediaRss::get_mrss_url() . "' />";		
 	}
 	
 	/**
 	 * Get the URL of a gallery media RSS
 	 */
-	function get_gallery_mrss_url($gid) {
-		
-		return NGGALLERY_URLPATH . 'xml/media-rss.php?gid=' . $gid;
+	function get_gallery_mrss_url($gid) {		
+		return NGGALLERY_URLPATH . 'xml/gallery-media-rss.php?gid=' . $gid;
+	}
+	
+	/**
+	 * Get the URL of the general media RSS
+	 */
+	function get_mrss_url($gid='') {		
+		if ($gid!='') {
+			return NGGALLERY_URLPATH . 'xml/all-media-rss.php?gid=' . $gid;
+		}
+		return NGGALLERY_URLPATH . 'xml/all-media-rss.php';
 	}
 	
 	/**

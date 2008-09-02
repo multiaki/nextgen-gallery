@@ -147,12 +147,11 @@ function nggallery_admin_manage_gallery() {
 		switch ($_POST['TB_bulkaction']) {
 			case 9:
 			// Copy images
-				nggAdmin::copy_images( $pic_ids, $dest_gid );
+				nggAdmin::copy_images( $pic_ids, $dest_gid, false );
 				break;
 			case 10:
 			// Move images
-				//TODO:Placeholder for Move images
-				//nggAdmin::move_images( $pic_ids, $dest_gid );
+				nggAdmin::copy_images( $pic_ids, $dest_gid, true );
 				break;
 		}
 	}
@@ -437,8 +436,10 @@ function checkSelected() {
 		return false;
 	}
 	
-	if (jQuery('#bulkaction').val() == 10)
-		return false;	
+	if (jQuery('#bulkaction').val() == 10) {
+		showDialog('selectgallery');
+		return false;
+	}
 		
 	return confirm('<?php echo sprintf(js_escape(__("You are about to start the bulk edit for %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>');
 }
@@ -777,7 +778,7 @@ if($picturelist) {
 		  	</tr>
 		  	<tr align="right">
 		    	<td class="submit">
-		    		<input type="submit" name="TB_SelectGallery" value="<?php _e("OK",'nggallery')?>" onclick="var numchecked = getNumChecked(document.getElementById('updategallery')); if(numchecked < 1) { alert('<?php echo js_escape(__("No images selected",'nggallery')); ?>'); jQuery.tb_remove(); return false } return confirm('<?php echo sprintf(js_escape(__("You are about to copy %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>')" />
+		    		<input type="submit" name="TB_SelectGallery" value="<?php _e("OK",'nggallery')?>" onclick="var numchecked = getNumChecked(document.getElementById('updategallery')); if(numchecked < 1) { alert('<?php echo js_escape(__("No images selected",'nggallery')); ?>'); jQuery.tb_remove(); return false } return confirm('<?php echo sprintf(js_escape(__("You are about to copy or move %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>')" />
 		    		&nbsp;
 		    		<input type="reset" value="<?php _e("Cancel",'nggallery')?>" onclick="jQuery.tb_remove()"/>
 		    	</td>

@@ -735,7 +735,7 @@ class nggAdmin{
 	/**
 	 * Copy images to another gallery
 	 */
-	function copy_images($pic_ids, $dest_gid) {
+	function copy_images($pic_ids, $dest_gid, $move=false) {
 		
 		if (!is_array($pic_ids))
 			$pic_ids = array($pic_ids);
@@ -777,7 +777,7 @@ class nggAdmin{
 			$destination_file_path = $destination_path . "/" . $destination_file_name;
 
 			// Copy files
-			if ( !copy($image->thumbPath, $destination_file_path) ) {
+			if ( !copy($image->imagePath, $destination_file_path) ) {
 				$errors .= sprintf(__('Failed to copy image %1$s to %2$s','nggallery'), 
 					$image->filename, $destination_file_path) . '<br />';
 				continue;				
@@ -803,20 +803,41 @@ class nggAdmin{
 			// Copy tags
 			nggTags::copy_tags($image->pid, $new_pid);
 			
+			// If we are asked to move images, delete the original
+			if ($move) {
+				@unlink($image->imagePath);
+				@unlink($image->thumbPath);
+				nggImageDAO::delete_image($image->pid);
+			}
+			
 			// Copied file
-			if ( $tmp_prefix != '' ) {
-				$messages .= sprintf(__('Image %1$s (%2$s) copied as image %3$s (%4$s) &raquo; The file already existed in the destination gallery.','nggallery'),
-					 $image->pid, $image->filename, $new_pid, $destination_file_name) . '<br />';
+			if ($move) {
+				if ( $tmp_prefix != '' ) {
+					$messages .= sprintf(__('Image %1$s (%2$s) moved as image %3$s (%4$s) &raquo; The file already existed in the destination gallery.','nggallery'),
+						 $image->pid, $image->filename, $new_pid, $destination_file_name) . '<br />';
+				} else {
+					$messages .= sprintf(__('Image %1$s (%2$s) moved as image %3$s (%4$s)','nggallery'),
+						 $image->pid, $image->filename, $new_pid, $destination_file_name) . '<br />';
+				}
 			} else {
-				$messages .= sprintf(__('Image %1$s (%2$s) copied as image %3$s (%4$s)','nggallery'),
-					 $image->pid, $image->filename, $new_pid, $destination_file_name) . '<br />';
+				if ( $tmp_prefix != '' ) {
+					$messages .= sprintf(__('Image %1$s (%2$s) copied as image %3$s (%4$s) &raquo; The file already existed in the destination gallery.','nggallery'),
+						 $image->pid, $image->filename, $new_pid, $destination_file_name) . '<br />';
+				} else {
+					$messages .= sprintf(__('Image %1$s (%2$s) copied as image %3$s (%4$s)','nggallery'),
+						 $image->pid, $image->filename, $new_pid, $destination_file_name) . '<br />';
+				}
 			}
 		}
 		
 		// Finish by showing errors or success
 		if ( $errors == '' ) {
 			$messages .= '<hr />';
-			$messages .= sprintf(__('Copied %1$s picture(s) to gallery: %2$s.','nggallery'), count($images), $destination->name) . '&nbsp;';	
+			if ($move) {
+				$messages .= sprintf(__('Copied %1$s picture(s) to gallery: %2$s.','nggallery'), count($images), $destination->name) . '&nbsp;';
+			} else {
+				$messages .= sprintf(__('Moved %1$s picture(s) to gallery: %2$s.','nggallery'), count($images), $destination->name) . '&nbsp;';
+			}
 			$messages .= '<a href="' . admin_url() . 'admin.php?page=nggallery-manage-gallery&mode=edit&gid=' . $destination->gid . '" >';
 			$messages .= __('Edit gallery','nggallery');
 			$messages .= '</a><br />';

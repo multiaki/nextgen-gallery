@@ -77,6 +77,8 @@ class nggLoader {
 			
 		// Load gallery class
 		require_once (dirname (__FILE__).'/lib/ngg-gallery-plugin.lib.php');
+		require_once (dirname (__FILE__).'/lib/ngg-album.lib.php');
+		require_once (dirname (__FILE__).'/lib/ngg-album-dao.lib.php');
 		require_once (dirname (__FILE__).'/lib/ngg-gallery.lib.php');
 		require_once (dirname (__FILE__).'/lib/ngg-gallery-dao.lib.php');
 		require_once (dirname (__FILE__).'/lib/ngg-image.lib.php');
@@ -107,7 +109,7 @@ class nggLoader {
 			
 			// Add MRSS to wp_head
 			//--
-			// add_action('wp_head', array('nggMediaRss', 'add_mrss_alternate_links'));
+			add_action('wp_head', array('nggMediaRss', 'add_mrss_alternate_link'));
 			
 			// If activated, add PicLens/Cooliris javascript to footer
 			//--

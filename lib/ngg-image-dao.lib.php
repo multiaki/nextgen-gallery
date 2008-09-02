@@ -56,6 +56,42 @@ class nggImageDAO {
 	}
 	
 	/**
+	 * Get all the images from a given album
+	 * 
+	 * @gid The album object
+	 * 
+	 * @return An array containing the nggImage objects representing the images in the album.
+	 */
+	function find_images_in_album($album, $orderby = 'galleryid, sortorder', $order = 'ASC', $use_exclude = false) {
+		global $wpdb;
+		
+		// Get gallery list
+		//--
+		$gallery_list = implode(",", $album->gallery_ids);
+		$galleries = $album->get_galleries();
+		
+		// Query database
+		//--
+		if ($use_exclude) {
+			$exclude_clause = ' AND exclude<>1 ';
+		} else {
+			$exclude_clause = '';
+		}
+		$rows = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures WHERE galleryid IN ($gallery_list) $exclude_clause ORDER BY $orderby $order");
+		
+		// Build the object from the query result
+		//--
+		$images = array(count($rows));
+		$i = 0;
+		foreach ($rows as $row) {
+			$images[$i] = new nggImage($galleries[$row->galleryid], $row);
+			$i++;
+		}
+		
+		return $images;
+	}
+	
+	/**
 	 * Get an image given its ID
 	 * 
 	 * @pid The image ID
@@ -121,6 +157,21 @@ class nggImageDAO {
 		} 
 		
 		return $result;
+	}
+	
+	/**
+	* Delete an image entry from the database
+	*/
+	function delete_image($pid) {
+		global $wpdb;
+		
+		// Delete the image row
+		//--
+		$wpdb->query("DELETE FROM $wpdb->nggpictures WHERE pid = $pid");
+		
+		// Delete tag references
+		//--
+		wp_delete_object_term_relationships($pid, 'ngg_tag');
 	}
 }
 
