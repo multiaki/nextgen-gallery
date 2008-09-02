@@ -76,7 +76,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			    jQuery('#tbImage').hide("slow");
 			    break;
 			  case "shutter":
-			    effectcode = 'class="shutterset"';
+			    effectcode = 'class="shutterset_%GALLERY_NAME%"';
 			    jQuery('#tbImage').hide("slow");
 			    break;
 			  default:

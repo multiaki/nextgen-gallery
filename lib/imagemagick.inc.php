@@ -277,6 +277,24 @@ var $imageMagickBefore;
 		$this->currentDimensions['height'] = $this->newDimensions['newHeight'];
 		
 	}
+	
+	    /**
+     * Rotates image either 90 degrees clockwise or counter-clockwise
+     *
+     * @param string $direction
+     */
+  function rotateImage($direction = 'CW') {
+  	if($direction == 'CW') {
+   		$this->imageMagickExec .= " -rotate -90 ";
+   	}
+   	else {
+   		$this->imageMagickExec .= " -rotate 90 ";
+   	}
+   	$newWidth = $this->currentDimensions['height'];
+   	$newHeight = $this->currentDimensions['width'];
+		$this->currentDimensions['width'] = $newWidth;
+		$this->currentDimensions['height'] = $newHeight;
+  }
 
    /**
 	 * Crops the image from calculated center in a square of $cropSize pixels

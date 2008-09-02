@@ -10,13 +10,13 @@ class nggGallery {
 	
 	/** Database fields */
 	var $gid = -1;
-	var $name = "";
-	var $path = "";
-	var $title = "";
-	var $galdesc = "";
+	var $name = '';
+	var $path = '';
+	var $title = '';
+	var $galdesc = '';
 	var $pageid = -1;
 	var $previewpic = -1;
-	var $author = "";
+	var $author = '';
 	
 	/** Other fields */
 	var $permalink = '';
@@ -53,8 +53,8 @@ class nggGallery {
 	 * TODO Get a permalink to a page presenting the gallery
 	 */
 	function get_permalink() {
-		if ($this->permalink=='') {
-			if ($this->pageid==-1) {
+		if ($this->permalink == '') {
+			if ($this->pageid == -1) {
 				$this->permalink = get_option('siteurl');
 			} else {
 				$this->permalink = get_permalink($this->pageid);

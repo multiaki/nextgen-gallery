@@ -115,13 +115,14 @@ class nggImage{
 		$ngg_options = get_option('ngg_options');
 		
 		// get the effect code
-		if ($ngg_options['thumbEffect'] != "none") {
-			$this->thumbcode = stripslashes($ngg_options['thumbCode']);
-		} else if ($ngg_options['thumbEffect'] == "highslide") {
+		if ($ngg_options['thumbEffect'] != "none")
+			$this->thumbcode = stripslashes($ngg_options['thumbCode']);		
+		
+		// for highslide to a different approach	
+		if ($ngg_options['thumbEffect'] == "highslide")
 			$this->thumbcode = str_replace("%GALLERY_NAME%", "'".$galleryname."'", $this->thumbcode);
-		} else {
+		else
 			$this->thumbcode = str_replace("%GALLERY_NAME%", $galleryname, $this->thumbcode);
-		}
 				
 		return apply_filters('ngg_get_thumbcode', $this->thumbcode, $this);
 	}
