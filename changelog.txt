@@ -2,6 +2,7 @@ NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
 V1.00
+- NEW : Media RSS / Piclens integration
 - NEW : Image tag management
 - NEW : Convert all shortcodes to WP shortcodes API
 - NEW : AJAX based thumbnail generator

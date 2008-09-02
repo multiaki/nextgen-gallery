@@ -25,8 +25,8 @@ Follow variables are useable :
 <?php } ?>
 
 <?php if ($gallery->show_piclens) { ?>
-	<div class="slideshowlink">
-		<a class="slideshowlink" href="<?php echo $gallery->piclens_link ?>">
+	<div class="piclenselink">
+		<a class="piclenselink" href="<?php echo $gallery->piclens_link ?>">
 			<?php echo $gallery->piclens_link_text ?>
 		</a>
 	</div>

@@ -45,24 +45,26 @@ class nggMediaRss {
 	 * Function called by the wp_head action to output the RSS link for medias
 	 */
 	function add_mrss_alternate_links() {
+		
 		echo '<link id="Gallery" rel="alternate" type="application/rss+xml" title="" href="' . nggMediaRss::get_gallery_mrss_url(1) . '" />';
+		
 	}
 	
 	/**
 	 * Get the URL of a gallery media RSS
 	 */
 	function get_gallery_mrss_url($gid) {
-		$ngg_options = get_option('ngg_options');
-		return NGGALLERY_URLPATH . 'xml/gallery-media-rss.php?gid=' . $gid;
+		
+		return NGGALLERY_URLPATH . 'xml/media-rss.php?gid=' . $gid;
 	}
 	
 	/**
 	 * Add the javascript required to enable PicLens/CoolIris support 
 	 */
 	function add_piclens_javascript() {
-		echo '<!-- NextGen Gallery CoolIris/PicLens support -->';
-		echo '<script type="text/javascript" src="http://lite.piclens.com/current/piclens_optimized.js"></script>';
-		echo '<!-- /NextGen Gallery CoolIris/PicLens support -->';
+		echo "\n" . '<!-- NextGen Gallery CoolIris/PicLens support -->';
+		echo "\n" . '<script type="text/javascript" src="http://lite.piclens.com/current/piclens_optimized.js"></script>';
+		echo "\n" . '<!-- /NextGen Gallery CoolIris/PicLens support -->';
 	}
 }
 

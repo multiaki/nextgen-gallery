@@ -11,10 +11,7 @@
 require_once(dirname(__FILE__) . '/../ngg-config.php');
 require_once(dirname(__FILE__) . '/../lib/ngg-media-rss.lib.php');
 
-$site_url = get_option ('siteurl');
-
 // Check we have the required GET parameters
-//--
 $gid = (int) $_GET['gid'];
 
 if (!isset($gid) || $gid=='' || $gid==0) {
@@ -24,7 +21,6 @@ if (!isset($gid) || $gid=='' || $gid==0) {
 }
 
 // Get the gallery object
-//--
 $gallery = nggGalleryDAO::find_gallery($gid);
 
 if (!isset($gallery) || $gallery==null) {
@@ -34,22 +30,23 @@ if (!isset($gallery) || $gallery==null) {
 }
 
 // Get the images for current gallery
-//--
 $images = nggImageDAO::find_images_in_gallery($gallery);
 
-// Output header for media RSS
-//--
-?><?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss">
-<channel>
-	<title><?php echo $gallery->title; ?></title>
-	<link><?php echo $gallery->get_permalink(); ?></link>
-	<description><?php echo $gallery->galdesc; ?></description>
-	<generator>NextGen Gallery [http://alexrabe.boelinger.com]</generator>
-<?php
-	foreach ($images as $image) {
-		echo nggMediaRss::get_image_mrss_node($image);
-	}
-?>		
-</channel>
-</rss>
+// Output header for media RSS 
+// Direct outpout will not work if short_open_tag = ON
+header("content-type:text/xml;charset=utf-8");
+
+echo "<?xml version='1.0' encoding='UTF-8' standalone='yes'?>\n";
+echo "<rss version='2.0' xmlns:media='http://search.yahoo.com/mrss'>\n";
+echo "\t<channel>\n";
+echo "\t\t<title>" . $gallery->title . "</title>\n";
+echo "\t\t<link>" .  $gallery->get_permalink() ."</link>\n";
+echo "\t\t<description>" . $gallery->galdesc . "</description>\n";
+echo "\t\t<generator>NextGen Gallery [http://alexrabe.boelinger.com]</generator>\n";
+
+foreach ($images as $image)
+	echo "\t\t" . nggMediaRss::get_image_mrss_node($image) ."\n";
+		
+echo "\t</channel>\n";
+echo "</rss>\n";
+?>

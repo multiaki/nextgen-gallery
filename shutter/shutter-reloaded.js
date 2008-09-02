@@ -1,4 +1,14 @@
-// initial idea from Shutter by Andrew Sutherland, http://code.jalenack.com/
+/*
+Shutter Reloaded
+http://www.laptoptips.ca/javascripts/shutter-reloaded/
+Version: 1.2.0
+Copyright (C) 2007  Andrew Ozz
+Released under the GPL, http://www.gnu.org/copyleft/gpl.html
+
+Acknowledgement: some ideas are from: Shutter by Andrew Sutherland - http://code.jalenack.com, WordPress - http://wordpress.org, Lightbox by Lokesh Dhakar - http://www.huddletogether.com, the icons are from Crystal Project Icons, Everaldo Coelho, http://www.everaldo.com
+
+*/
+
 function mkShutter( shlink, setid, inset ) {
 
 // edit the variables below to change the "Loading" and the "Click to close" text

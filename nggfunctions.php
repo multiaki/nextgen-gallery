@@ -22,9 +22,9 @@ function nggShowSlideshow($galleryID,$irWidth,$irHeight) {
     $out .= "\n\t".'<script type="text/javascript" defer="defer">';
 	if ($ngg_options['irXHTMLvalid']) $out .= "\n\t".'<!--';
 	if ($ngg_options['irXHTMLvalid']) $out .= "\n\t".'//<![CDATA[';
-	$out .= "\n\t\t".'var '. $obj .' = new SWFObject("'.NGGALLERY_URLPATH.'imagerotator.swf", "ngg_slideshow'.$galleryID.'", "'.$irWidth.'", "'.$irHeight.'", "7", "#'.$ngg_options[irBackcolor].'");';
+	$out .= "\n\t\t".'var '. $obj .' = new SWFObject("'.NGGALLERY_URLPATH.'imagerotator.swf", "ngg_slideshow'.$galleryID.'", "'.$irWidth.'", "'.$irHeight.'", "7", "#'.$ngg_options['irBackcolor'].'");';
 	$out .= "\n\t\t".$obj.'.addParam("wmode", "opaque");';
-	$out .= "\n\t\t".$obj.'.addVariable("file", "'.NGGALLERY_URLPATH.'xml/imagerotator-playlist.php?gid='.$galleryID.'");';
+	$out .= "\n\t\t".$obj.'.addVariable("file", "'.NGGALLERY_URLPATH.'xml/imagerotator.php?gid='.$galleryID.'");';
 	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irShuffle');
 	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irLinkfromdisplay');
 	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irShownavigation');
@@ -172,7 +172,7 @@ function nggCreateGallery($picturelist, $galleryID = false) {
 		if ($ngg_options['usePicLens']) {
 			$gallery->show_piclens = true;
 			$gallery->piclens_link = "javascript:PicLensLite.start({feedUrl:'" . nggMediaRss::get_gallery_mrss_url($gallery->ID) . "'});";
-			$gallery->piclens_link_text = __('View with PicLens','nggallery');
+			$gallery->piclens_link_text = __('[View with PicLens]','nggallery');
 		}
 	}
 	
