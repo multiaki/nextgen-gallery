@@ -87,6 +87,7 @@ class nggLoader {
 		require_once (dirname (__FILE__).'/lib/ngg-tags.lib.php');
 		require_once (dirname (__FILE__).'/lib/ngg-media-rss.lib.php');
 		require_once (dirname (__FILE__).'/admin/ajax.php');
+		require_once (dirname (__FILE__).'/widgets/widgets.php');
 
 		// Load the language file
 		add_action('init', array(&$this, 'load_textdomain') );

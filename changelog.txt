@@ -2,6 +2,7 @@ NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
 V1.00
+- NEW : Widget to show links to Media RSS feeds
 - NEW : PicLens support for galleries
 - NEW : Copy/move images between galleries 
 - NEW : Media RSS feeds (either for galleries, albums or global)

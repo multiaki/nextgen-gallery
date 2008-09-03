@@ -173,6 +173,65 @@ class nggImageDAO {
 		//--
 		wp_delete_object_term_relationships($pid, 'ngg_tag');
 	}
+	
+	/**
+	 * Count images registered in the database
+	 */
+	function count_images($use_exclude = false) {
+		global $wpdb;
+	
+		if ($use_exclude) {
+			$exclude_clause = ' AND exclude<>1 ';
+		} else {
+			$exclude_clause = '';
+		}
+		
+		return $wpdb->get_result("SELECT count(pid) FROM $wpdb->nggpictures WHERE 1=1 $exclude_clause");
+	}
+	
+	/**
+	 * Get the last images registered in the database with a maximum number of $limit results 
+	 */
+	function find_last_images($page = 0, $limit = 30, $use_exclude = false) {
+		global $wpdb;
+		
+		if ($use_exclude) {
+			$exclude_clause = ' AND exclude<>1 ';
+		} else {
+			$exclude_clause = '';
+		}
+		
+		$offset = $page * $limit;
+		
+		$result = array();
+		$gallery_cache = array();
+		
+		// Query database
+		//--
+		$rows = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures WHERE 1=1 $exclude_clause ORDER BY pid DESC LIMIT $offset, $limit");
+		
+		// Build the object from the query result
+		//--
+		if ($rows) {	
+			$i = 0;
+			foreach ($rows as $row) {
+				$gallery = $gallery_cache[$row->galleryid];
+				if (!isset($gallery)) {
+					$gallery = nggGalleryDAO::find_gallery($row->galleryid);
+					if ($gallery) {
+						$gallery_cache[$row->galleryid] = $gallery;
+					}
+				}
+				
+				if ($gallery) {
+					$result[$i] = new nggImage($gallery, $row);
+					$i++;
+				}
+			}
+		} 
+		
+		return $result;
+	}
 }
 
 ?>

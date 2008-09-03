@@ -54,7 +54,7 @@ class nggGallery {
 	 */
 	function get_permalink() {
 		if ($this->permalink == '') {
-			if ($this->pageid == -1) {
+			if ($this->pageid <= 0) {
 				$this->permalink = get_option('siteurl');
 			} else {
 				$this->permalink = get_permalink($this->pageid);
