@@ -120,9 +120,15 @@ class nggLoader {
 			
 			// Add rewrite rules
 			$nggRewrite = new nggRewrite();
+			
+			// Why is this not core ?
+			add_action('wp_head', 'wp_print_styles');
 				
-			// Add the script files
+			// Add the script and style files
 			add_action('wp_print_scripts', array(&$this, 'load_scripts') );
+			add_action('wp_print_styles', array(&$this, 'load_styles') );
+
+
 		}	
 
 		// Init the gallery class
@@ -243,19 +249,13 @@ class nggLoader {
 	function load_scripts() {
 
 		echo "<meta name='NextGEN' content='" . $this->version . "' />\n";
-		if ($this->options['activateCSS']) 
-			echo "\n".'<style type="text/css" media="screen">@import "'.NGGALLERY_URLPATH.'css/'.$this->options['CSSfile'].'";</style>';
 		
 		//	activate Thickbox
-		if ($this->options['thumbEffect'] == "thickbox") {
-			echo "\n".'<script type="text/javascript"> var tb_pathToImage = "'.NGGALLERY_URLPATH.'thickbox/'.$this->options['thickboxImage'].'";</script>';
-			echo "\n".'<style type="text/css" media="screen">@import "'.NGGALLERY_URLPATH.'thickbox/thickbox.css";</style>'."\n";
-	   		wp_enqueue_script('ngg-thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.1.1');
-	    }
+		if ($this->options['thumbEffect'] == "thickbox") 
+			wp_enqueue_script( 'thickbox' );
 
 		// activate modified Shutter reloaded if not use the Shutter plugin
 		if ( ($this->options['thumbEffect'] == "shutter") && !function_exists('srel_makeshutter') ) {
-			echo "\n".'<style type="text/css" media="screen">@import "'.NGGALLERY_URLPATH.'shutter/shutter-reloaded.css?ver=1.3";</style>'."\n";
 			wp_register_script('shutter', NGGALLERY_URLPATH .'shutter/shutter-reloaded.js', false ,'1.3.0');
 			wp_localize_script('shutter', 'shutterSettings', array(
 						'msgLoading' => __('L O A D I N G', 'nggallery'),
@@ -270,6 +270,21 @@ class nggLoader {
 			wp_enqueue_script('swfobject', NGGALLERY_URLPATH .'admin/js/swfobject.js', FALSE, '1.5');
 		}
 
+	}
+	
+	function load_styles() {
+		
+		if ($this->options['activateCSS'])
+			wp_enqueue_style('NextGEN', NGGALLERY_URLPATH.'css/'.$this->options['CSSfile'], false, '1.0.0', 'screen'); 
+		
+		//	activate Thickbox
+		if ($this->options['thumbEffect'] == "thickbox") 
+			wp_enqueue_style( 'thickbox');
+
+		// activate modified Shutter reloaded if not use the Shutter plugin
+		if ( ($this->options['thumbEffect'] == "shutter") && !function_exists('srel_makeshutter') )
+			wp_enqueue_style('shutter', NGGALLERY_URLPATH .'shutter/shutter-reloaded.css', false, '1.3.0', 'screen');
+		
 	}
 	
 	function activate() {

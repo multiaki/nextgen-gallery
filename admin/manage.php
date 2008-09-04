@@ -290,7 +290,6 @@ function nggallery_manage_gallery_main() {
 	global $wpdb;
 	
 	?>
-	<script type="text/javascript"> var tb_pathToImage = '<?php echo NGGALLERY_URLPATH ?>thickbox/loadingAnimationv3.gif';</script>
 	<div class="wrap">
 		<h2><?php _e('Gallery Overview', 'nggallery') ?></h2>
 		<br style="clear: both;"/>
@@ -391,10 +390,9 @@ function nggallery_picturelist($hideThumbs = false,$showTags = false) {
 		jQuery("#" + windowId + "_bulkaction").val(jQuery("#bulkaction").val());
 		jQuery("#" + windowId + "_imagelist").val(elementlist);
 		// console.log (jQuery("#TB_imagelist").val());
-		jQuery.tb_show("", "#TB_inline?width=640&height=120&inlineId=" + windowId + "&modal=true", false);
+		tb_show("", "#TB_inline?width=640&height=120&inlineId=" + windowId + "&modal=true", false);
 	}
 </script>
-<script type="text/javascript"> var tb_pathToImage = '<?php echo NGGALLERY_URLPATH ?>thickbox/loadingAnimationv3.gif';</script>
 <script type="text/javascript">
 <!--
 function checkAll(form)
@@ -741,9 +739,9 @@ if($picturelist) {
 		  	</tr>
 		  	<tr align="right">
 		    	<td class="submit">
-		    		<input type="submit" name="TB_EditTags" value="<?php _e("OK",'nggallery')?>" onclick="var numchecked = getNumChecked(document.getElementById('updategallery')); if(numchecked < 1) { alert('<?php echo js_escape(__("No images selected",'nggallery')); ?>'); jQuery.tb_remove(); return false } return confirm('<?php echo sprintf(js_escape(__("You are about to start the bulk edit for %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>')" />
+		    		<input type="submit" name="TB_EditTags" value="<?php _e("OK",'nggallery')?>" onclick="var numchecked = getNumChecked(document.getElementById('updategallery')); if(numchecked < 1) { alert('<?php echo js_escape(__("No images selected",'nggallery')); ?>'); tb_remove(); return false } return confirm('<?php echo sprintf(js_escape(__("You are about to start the bulk edit for %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>')" />
 		    		&nbsp;
-		    		<input type="reset" value="&nbsp;<?php _e("Cancel",'nggallery')?>&nbsp;" onclick="jQuery.tb_remove()"/>
+		    		<input type="reset" value="&nbsp;<?php _e("Cancel",'nggallery')?>&nbsp;" onclick="tb_remove()"/>
 		    	</td>
 			</tr>
 		</table>
@@ -781,9 +779,9 @@ if($picturelist) {
 		  	</tr>
 		  	<tr align="right">
 		    	<td class="submit">
-		    		<input type="submit" name="TB_SelectGallery" value="<?php _e("OK",'nggallery')?>" onclick="var numchecked = getNumChecked(document.getElementById('updategallery')); if(numchecked < 1) { alert('<?php echo js_escape(__("No images selected",'nggallery')); ?>'); jQuery.tb_remove(); return false } return confirm('<?php echo sprintf(js_escape(__("You are about to copy or move %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>')" />
+		    		<input type="submit" name="TB_SelectGallery" value="<?php _e("OK",'nggallery')?>" onclick="var numchecked = getNumChecked(document.getElementById('updategallery')); if(numchecked < 1) { alert('<?php echo js_escape(__("No images selected",'nggallery')); ?>'); tb_remove(); return false } return confirm('<?php echo sprintf(js_escape(__("You are about to copy or move %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>')" />
 		    		&nbsp;
-		    		<input type="reset" value="<?php _e("Cancel",'nggallery')?>" onclick="jQuery.tb_remove()"/>
+		    		<input type="reset" value="<?php _e("Cancel",'nggallery')?>" onclick="tb_remove()"/>
 		    	</td>
 			</tr>
 		</table>

@@ -330,7 +330,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<h2><?php _e('Effects','nggallery'); ?></h2>
 			<form name="effectsform" method="POST" action="<?php echo $filepath.'#effects'; ?>" >
 			<?php wp_nonce_field('ngg_settings') ?>
-			<input type="hidden" name="page_options" value="thumbEffect,thumbCode,thickboxImage" />
+			<input type="hidden" name="page_options" value="thumbEffect,thumbCode" />
 			<p><?php _e('Here you can select the thumbnail effect, NextGEN Gallery will integrate the required HTML code in the images. Please note that only the Thickbox effect will automatic added to your theme.','nggallery'); ?>
 			<?php _e('With the placeholder','nggallery'); ?><strong> %GALLERY_NAME% </strong> <?php _e('you can activate a navigation through the images (depend on the effect). Change the code line only , when you use a different thumbnail effect or you know what you do.','nggallery'); ?></p>
 				<table class="form-table">
@@ -352,19 +352,6 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						<td><textarea id="thumbCode" name="thumbCode" cols="50" rows="5"><?php echo htmlspecialchars(stripslashes($ngg->options['thumbCode'])); ?></textarea></td>
 					</tr>
 				</table>
-				
-				<div id="tbImage" <?php if ($ngg->options['thumbEffect'] != 'thickbox') echo 'style="display:none"'?> >
-				<table class="form-table">
-					<tr valign="top">
-						<th><?php _e('Select loading image','nggallery') ?> :</th>
-						<td>
-						<label><input name="thickboxImage" id="v2" type="radio" title="Version 2" value="loadingAnimationv2.gif" <?php checked('loadingAnimationv2.gif', $ngg->options['thickboxImage']); ?> /></label> <img src="<?php echo NGGALLERY_URLPATH.'thickbox/loadingAnimationv2.gif' ?>" alt="Version 2" />
-						<label><input name="thickboxImage" id="v3" type="radio" title="Version 3" value="loadingAnimationv3.gif" <?php checked('loadingAnimationv3.gif', $ngg->options['thickboxImage']); ?> /></label> <img src="<?php echo NGGALLERY_URLPATH.'thickbox/loadingAnimationv3.gif' ?>" alt="Version 3" />
-						</td>
-					</tr>
-				</table>
-				</div>
-				
 			<div class="submit"><input type="submit" name="updateoption" value="<?php _e('Update') ;?> &raquo;"/></div>
 			</form>	
 		</div>

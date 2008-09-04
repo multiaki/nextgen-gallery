@@ -147,9 +147,8 @@ function ngg_default_options() {
 	$ngg_options['galImgBrowser']   	= false;						// Show ImageBrowser, instead effect
 
 	// Thumbnail Effect
-	$ngg_options['thumbEffect']			= 'thickbox';  					// select effect
-	$ngg_options['thumbCode']			= "class=\"thickbox\" rel=\"%GALLERY_NAME%\""; 
-	$ngg_options['thickboxImage']		= 'loadingAnimationv3.gif';  	// thickbox Loading Image
+	$ngg_options['thumbEffect']			= 'shutter';  					// select effect
+	$ngg_options['thumbCode']			= 'class="shutterset_%GALLERY_NAME%"'; 
 
 	// Watermark settings
 	$ngg_options['wmPos']				= 'botRight';					// Postion

@@ -47,6 +47,7 @@ function ngg_upgrade() {
 
 		// v0.95 -> v1.00 
 		if (version_compare($installed_ver, '1.00', '<')) {
+			// Convert into WordPress Core taxonomy scheme
 			ngg_convert_tags();
 			// Drop tables, we don't need them anymore
 			$wpdb->query("DROP TABLE " . $wpdb->prefix . "ngg_tags");
