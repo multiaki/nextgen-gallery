@@ -259,7 +259,8 @@ class nggLoader {
 			wp_register_script('shutter', NGGALLERY_URLPATH .'shutter/shutter-reloaded.js', false ,'1.3.0');
 			wp_localize_script('shutter', 'shutterSettings', array(
 						'msgLoading' => __('L O A D I N G', 'nggallery'),
-						'msgClose' => __('Click to Close', 'nggallery')			
+						'msgClose' => __('Click to Close', 'nggallery'),
+						'imageCount' => '1'				
 			) );
 			wp_enqueue_script( 'shutter' );
 	    }
