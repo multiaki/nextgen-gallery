@@ -245,10 +245,23 @@ class nggLoader {
 		echo "<meta name='NextGEN' content='" . $this->version . "' />\n";
 		if ($this->options['activateCSS']) 
 			echo "\n".'<style type="text/css" media="screen">@import "'.NGGALLERY_URLPATH.'css/'.$this->options['CSSfile'].'";</style>';
+		
+		//	activate Thickbox
 		if ($this->options['thumbEffect'] == "thickbox") {
 			echo "\n".'<script type="text/javascript"> var tb_pathToImage = "'.NGGALLERY_URLPATH.'thickbox/'.$this->options['thickboxImage'].'";</script>';
 			echo "\n".'<style type="text/css" media="screen">@import "'.NGGALLERY_URLPATH.'thickbox/thickbox.css";</style>'."\n";
 	   		wp_enqueue_script('ngg-thickbox', NGGALLERY_URLPATH .'thickbox/thickbox-pack.js', array('jquery'), '3.1.1');
+	    }
+
+		// activate modified Shutter reloaded if not use the Shutter plugin
+		if ( ($this->options['thumbEffect'] == "shutter") && !function_exists('srel_makeshutter') ) {
+			echo "\n".'<style type="text/css" media="screen">@import "'.NGGALLERY_URLPATH.'shutter/shutter-reloaded.css?ver=1.3";</style>'."\n";
+			wp_register_script('shutter', NGGALLERY_URLPATH .'shutter/shutter-reloaded.js', false ,'1.3.0');
+			wp_localize_script('shutter', 'shutterSettings', array(
+						'msgLoading' => __('L O A D I N G', 'nggallery'),
+						'msgClose' => __('Click to Close', 'nggallery')			
+			) );
+			wp_enqueue_script( 'shutter' );
 	    }
 		    
 		// test for wordTube function

@@ -26,20 +26,20 @@ function nggallery_admin_manage_gallery() {
 		// get the path to the gallery
 		$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$act_gid' ");
 		if ($gallerypath){
-			$thumb_folder = nggGalleryPlugin::get_thumbnail_folder($gallerypath, FALSE);
 	
 			// delete pictures
+			//TODO:Remove also Tag reference
 			$imagelist = $wpdb->get_col("SELECT filename FROM $wpdb->nggpictures WHERE galleryid = '$act_gid' ");
 			if ($ngg->options['deleteImg']) {
 				if (is_array($imagelist)) {
 					foreach ($imagelist as $filename) {
-						@unlink(WINABSPATH.$gallerypath.'/'.$thumb_folder.'/'. "thumbs_" .$filename);
-						@unlink(WINABSPATH.$gallerypath.'/'.$filename);
+						@unlink(WINABSPATH . $gallerypath . '/thumbs/thumbs_' . $filename);
+						@unlink(WINABSPATH . $gallerypath .'/'. $filename);
 					}
 				}
 				// delete folder
-					@rmdir(WINABSPATH.$gallerypath.'/'.$thumb_folder);
-					@rmdir(WINABSPATH.$gallerypath);
+					@rmdir( WINABSPATH . $gallerypath . '/thumbs' );
+					@rmdir( WINABSPATH . $gallerypath );
 			}
 		}
 
@@ -54,6 +54,7 @@ function nggallery_admin_manage_gallery() {
 
 	if ($mode == 'delpic') {
 	// Delete a picture
+	//TODO:Remove also Tag reference
 		check_admin_referer('ngg_delpicture');
 		$filename = $wpdb->get_var("SELECT filename FROM $wpdb->nggpictures WHERE pid = '$act_pid' ");
 		if ($filename) {
@@ -61,8 +62,8 @@ function nggallery_admin_manage_gallery() {
 			if ($gallerypath){
 				$thumb_folder = nggGalleryPlugin::get_thumbnail_folder($gallerypath, FALSE);
 				if ($ngg->options['deleteImg']) {
-					@unlink(WINABSPATH.$gallerypath.'/'.$thumb_folder.'/'. "thumbs_" .$filename);
-					@unlink(WINABSPATH.$gallerypath.'/'.$filename);
+					@unlink(WINABSPATH . $gallerypath. '/thumbs/thumbs_' .$filename);
+					@unlink(WINABSPATH . $gallerypath . '/' . $filename);
 				}
 			}		
 			$delete_pic = $wpdb->query("DELETE FROM $wpdb->nggpictures WHERE pid = $act_pid");
@@ -359,8 +360,10 @@ function nggallery_picturelist($hideThumbs = false,$showTags = false) {
 	// get gallery values
 	$act_gallery = nggGalleryDAO::find_gallery($act_gid);
 	
-	if ($act_gallery == null)
+	if ($act_gallery == null) {
 		nggGalleryPlugin::show_error(__('Gallery not found.', 'nggallery'));
+		return;
+	}
 
 	//TODO:Redundant, Redundant, Redundant... REWORK
 	// set gallery url
