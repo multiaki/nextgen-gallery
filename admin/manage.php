@@ -148,11 +148,11 @@ function nggallery_admin_manage_gallery() {
 		switch ($_POST['TB_bulkaction']) {
 			case 9:
 			// Copy images
-				nggAdmin::copy_images( $pic_ids, $dest_gid, false );
+				nggAdmin::copy_images( $pic_ids, $dest_gid );
 				break;
 			case 10:
 			// Move images
-				nggAdmin::copy_images( $pic_ids, $dest_gid, true );
+				nggAdmin::move_images( $pic_ids, $dest_gid );
 				break;
 		}
 	}
@@ -769,7 +769,7 @@ if($picturelist) {
 		    				foreach ($gallerylist as $gallery) { 
 		    					if ($gallery->gid != $act_gid) { 
 		    			?>
-						<option value="<?php echo $gallery->gid; ?>" ><?php echo $gallery->gid; ?> - <?php echo stripslashes($gallery->name); ?></option>
+						<option value="<?php echo $gallery->gid; ?>" ><?php echo $gallery->gid; ?> - <?php echo stripslashes($gallery->title); ?></option>
 						<?php 
 		    					} 
 		    				}

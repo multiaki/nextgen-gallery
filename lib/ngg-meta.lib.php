@@ -327,6 +327,7 @@ class nggMeta{
 	function setArrayValue(&$array, $stack, $value) {
 		if ($stack) {
 			$key = array_shift($stack);
+			//TODO:Review this, reports sometimes a error "Fatal error: Only variables can be passed by reference" (PHP 5.2.6)
 	    	$this->setArrayValue($array[$key], $stack, $value);
 	    	return $array;
 	  	} else {

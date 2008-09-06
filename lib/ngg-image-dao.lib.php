@@ -23,6 +23,47 @@ class nggImageDAO {
 		
 		return $pid;
 	}
+
+	/**
+	 * nggImageDAO::update_image() - Insert an image in the database
+	 * 
+	 * @param int $pid   id of the image
+	 * @param (optional) string|int $galleryid
+	 * @param (optional) string $filename
+	 * @param (optional) string $description
+	 * @param (optional) string $alttext
+	 * @param (optional) int $exclude (0 or 1)
+	 * @param (optional) int $sortorder
+	 * @return bool result of the ID of the inserted image
+	 */
+	function update_image($pid, $galleryid = false, $filename = false, $description = false, $alttext = false, $exclude = false, $sortorder = false) {
+
+		global $wpdb;
+		
+		$sql = array();
+		$pid = (int) $pid;
+		
+		$update = array(
+		    'galleryid'   => $galleryid,
+		    'filename' 	  => $filename,
+		    'description' => $description,
+		    'alttext' 	  => $alttext,
+		    'exclude' 	  => $exclude,
+			'sortorder'   => $sortorder);
+		
+		// create the sql parameter "name = value"
+		foreach ($update as $key => $value)
+			if ($value)
+				$sql[] = $key . " = '" . $value . "'";
+		
+		// create the final string
+		$sql = implode(', ', $sql);
+		
+		if ( !empty($sql) && $pid != 0)
+			$result = $wpdb->query( "UPDATE $wpdb->nggpictures SET $sql WHERE pid = $pid" );
+
+		return $result;
+	}
 	
 	/**
 	 * Get all the images from a given gallery
