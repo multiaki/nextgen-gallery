@@ -2,7 +2,7 @@
 
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
 
-function nggShowSlideshow($galleryID,$irWidth,$irHeight) {
+function nggShowSlideshow_old($galleryID, $irWidth, $irHeight) {
 	
 	global $wpdb, $post;
 
@@ -26,9 +26,6 @@ function nggShowSlideshow($galleryID,$irWidth,$irHeight) {
 	$out .= "\n\t\t".$obj.'.addParam("wmode", "opaque");';
 	$out .= "\n\t\t".$obj.'.addVariable("file", "'.NGGALLERY_URLPATH.'xml/imagerotator.php?gid='.$galleryID.'");';
 	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irShuffle');
-	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irLinkfromdisplay');
-	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irShownavigation');
-	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irShowicons');
 	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irLinkfromdisplay');
 	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irShownavigation');
 	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irShowicons');
@@ -60,6 +57,81 @@ function nggShowSlideshow($galleryID,$irWidth,$irHeight) {
 	$out = apply_filters('ngg_show_slideshow_content', $out);
 			
 	return $out;
+}
+
+function nggShowSlideshow($galleryID, $irWidth, $irHeight) {
+	
+	require_once (dirname (__FILE__).'/lib/swfobject.php');
+	
+	global $wpdb, $post;
+
+	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
+
+	// remove media file from RSS feed
+	if ( is_feed() ) {
+		$out = '[' . $ngg_options['galTextSlide'] . ']'; 
+		return $out;
+	}
+
+	if (empty($irWidth) ) $irWidth = (int) $ngg_options['irWidth'];
+	if (empty($irHeight)) $irHeight = (int) $ngg_options['irHeight'];
+
+	// init the flash output
+	$swfobject = new swfobject( NGGALLERY_URLPATH.'imagerotator.swf', 'so' . $galleryID, $irWidth, $irHeight, '7.0.0', 'false');
+
+	$swfobject->message = '<p>'. __('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and <a href="http://www.mozilla.com/firefox/">a browser with Javascript support</a> are needed..', 'nggallery').'</p>';
+	$swfobject->add_params('wmode', 'opaque');
+
+	// adding the flash parameter	
+	$swfobject->add_flashvars( 'file', NGGALLERY_URLPATH.'xml/imagerotator.php?gid='.$galleryID );
+	$swfobject->add_flashvars( 'shuffle', $ngg_options['irShuffle'], 'false', 'bool');
+	$swfobject->add_flashvars( 'linkfromdisplay', $ngg_options['irLinkfromdisplay'], 'false', 'bool');
+	$swfobject->add_flashvars( 'shownavigation', $ngg_options['irShownavigation'], 'false', 'bool');
+	$swfobject->add_flashvars( 'showicons', $ngg_options['irShowicons'], 'true', 'bool');
+	$swfobject->add_flashvars( 'kenburns', $ngg_options['irKenburns'], 'false', 'bool');
+	$swfobject->add_flashvars( 'overstretch', $ngg_options['irOverstretch'], 'false', 'bool');
+	$swfobject->add_flashvars( 'rotatetime', $ngg_options['irRotatetime'], 5, 'int');
+	$swfobject->add_flashvars( 'transition', $ngg_options['irTransition'], 'random', 'string');
+	$swfobject->add_flashvars( 'backcolor', $ngg_options['irBackcolor'], 'FFFFFF', 'string', '0x');
+	$swfobject->add_flashvars( 'frontcolor', $ngg_options['irFrontcolor'], '000000', 'string', '0x');
+	$swfobject->add_flashvars( 'lightcolor', $ngg_options['irLightcolor'], '000000', 'string', '0x');
+	$swfobject->add_flashvars( 'screencolor', $ngg_options['irScreencolor'], '000000', 'string', '0x');
+	if ($ngg_options['irWatermark'])
+		$swfobject->add_flashvars( 'logo', $ngg_options['wmPath'], '', 'string'); 
+	$swfobject->add_flashvars( 'audio', $ngg_options['irAudio'], '', 'string');
+	$swfobject->add_flashvars( 'width', $irWidth, '260');
+	$swfobject->add_flashvars( 'height', $irHeight, '320');	
+	// create the output
+	$out  = $swfobject->output();
+	// add now the script code
+    $out .= "\n".'<script type="text/javascript" defer="defer">';
+	if ($ngg_options['irXHTMLvalid']) $out .= "\n".'<!--';
+	if ($ngg_options['irXHTMLvalid']) $out .= "\n".'//<![CDATA[';
+	$out .= $swfobject->javascript();
+	if ($ngg_options['irXHTMLvalid']) $out .= "\n".'//]]>';
+	if ($ngg_options['irXHTMLvalid']) $out .= "\n".'-->';
+	$out .= "\n".'</script>';
+
+	$out = apply_filters('ngg_show_slideshow_content', $out);
+			
+	return $out;	
+}
+
+function ngg_addFlashVar( $array, $name = "none", $value = false, $default = '', $type = '', $prefix = '' ) {
+
+	if ( is_bool( $value ) )
+		$value = ( $value ) ? "true" : "false";
+	
+	if ( $type == "bool" )
+		$value = ( $value == "1" ) ? "true" : "false";
+	
+	// do not add the variable if we hit the default setting 	
+	if ( $value == $default )	
+		return $array;
+		
+	$array[$name] = $prefix . $value;
+
+	return $array;		
 }
 
 function ngg_addVariable($options, $optionname, $prefix = '') {

@@ -109,14 +109,11 @@ class nggLoader {
 			require_once (dirname (__FILE__).'/lib/rewrite.php');
 			
 			// Add MRSS to wp_head
-			//--
 			add_action('wp_head', array('nggMediaRss', 'add_mrss_alternate_link'));
 			
 			// If activated, add PicLens/Cooliris javascript to footer
-			//--
-			if ($this->options['usePicLens']) {
+			if ($this->options['usePicLens'])
 				add_action('wp_head', array('nggMediaRss', 'add_piclens_javascript'));
-			}
 			
 			// Add rewrite rules
 			$nggRewrite = new nggRewrite();
@@ -127,7 +124,6 @@ class nggLoader {
 			// Add the script and style files
 			add_action('wp_print_scripts', array(&$this, 'load_scripts') );
 			add_action('wp_print_styles', array(&$this, 'load_styles') );
-
 
 		}	
 
@@ -267,7 +263,7 @@ class nggLoader {
 		    
 		// test for wordTube function
 		if (!function_exists('integrate_swfobject')) {
-			wp_enqueue_script('swfobject', NGGALLERY_URLPATH .'admin/js/swfobject.js', FALSE, '1.5');
+			wp_enqueue_script('swfobject', NGGALLERY_URLPATH .'admin/js/swfobject.js', FALSE, '2.1');
 		}
 
 	}

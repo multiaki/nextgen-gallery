@@ -735,6 +735,7 @@ class nggAdmin{
 	function move_images($pic_ids, $dest_gid) {
 
 		$errors = '';
+		$count = 0;
 
 		if (!is_array($pic_ids))
 			$pic_ids = array($pic_ids);
@@ -773,37 +774,29 @@ class nggAdmin{
 			$destination_path = $dest_abspath . '/' . $destination_file_name;
 			$destination_thumbnail = $dest_abspath . '/thumbs/thumbs_' . $destination_file_name;
 
-			// Copy files
-			if ( !rename($image->imagePath, $destination_path) ) {
+			// Move files
+			if ( !@rename($image->imagePath, $destination_path) ) {
 				$errors .= sprintf(__('Failed to move image %1$s to %2$s','nggallery'), 
 					"<strong>" . $image->filename . "</strong>", $destination_path) . '<br />';
 				continue;				
 			}
 			
-			if ( !rename($image->thumbPath, $destination_thumbnail) ) {
-				$errors .= sprintf(__('Failed to move image thumbnail %1$s to %2$s','nggallery'), 
-					$image->thumbPrefix . $image->filename, $destination_thumbnail) . '<br />';
-				continue;				
-			}
+			// Move the thumbnail, if possible
+			!@rename($image->thumbPath, $destination_thumbnail);
 			
 			// Change the gallery id in the database , maybe the filename
-			$result = nggImageDAO::update_image($image->pid, $dest_gid, $destination_file_name);
+			if ( nggImageDAO::update_image($image->pid, $dest_gid, $destination_file_name) )
+				$count++;
 
 		}
-		
-		// Finish by showing errors or success
-		if ( $errors == '' ) {
-			$link = '<a href="' . admin_url() . 'admin.php?page=nggallery-manage-gallery&mode=edit&gid=' . $destination->gid . '" >' . $destination->title . '</a>';
-			$messages  = sprintf(__('Moved %1$s picture(s) to gallery : %2$s .','nggallery'), count($images), $link) . '&nbsp;';
-		} 
 
-		if ( $errors != '' ) {
+		if ( $errors != '' )
 			nggGalleryPlugin::show_error($errors);
-		}	
 
-		if ( $messages != '' ) {
-			nggGalleryPlugin::show_message($messages);
-		}
+		$link = '<a href="' . admin_url() . 'admin.php?page=nggallery-manage-gallery&mode=edit&gid=' . $destination->gid . '" >' . $destination->title . '</a>';
+		$messages  = sprintf(__('Moved %1$s picture(s) to gallery : %2$s .','nggallery'), $count, $link);
+		nggGalleryPlugin::show_message($messages);
+		
 	}
 	
 	/**
@@ -857,11 +850,8 @@ class nggAdmin{
 				continue;				
 			}
 			
-			if ( !@copy($image->thumbPath, $destination_thumb_file_path) ) {
-				$errors .= sprintf(__('Failed to copy image thumb %1$s to %2$s','nggallery'), 
-					$image->thumbPrefix . $image->filename, $destination_thumb_file_path) . '<br />';
-				continue;				
-			}
+			// Copy the thumbnail if possible
+			!@copy($image->thumbPath, $destination_thumb_file_path);
 			
 			// Create new database entry for the image
 			$new_pid = nggImageDAO::insert_image( $destination->gid, $destination_file_name, $image->alttext, $image->description, $image->exclude);

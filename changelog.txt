@@ -25,6 +25,7 @@ V1.00
 - Changed : Arrange fields in a new way
 - Changed : Support now SSL 
 - Changed : Use JQuery UI instead of interface lib
+- Changed : Updated to swfobject 2.1
 - Bugfix : Changed CSS for singlepic padding to margin
 - Bugfix : Check for zero in Exif Focal Length
 - Bugfix : Round instead inval for square thumbnails
