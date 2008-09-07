@@ -2,63 +2,6 @@
 
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
 
-function nggShowSlideshow_old($galleryID, $irWidth, $irHeight) {
-	
-	global $wpdb, $post;
-
-	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
-	
-	// if you use this outside the loop
-	if (empty($post)) $post->ID = rand(10,1000);
-	
-	//TODO: bad intermediate solution until refactor to class
-	$obj = 'so' . $galleryID . '_' . $post->ID;
-	
-	if (empty($irWidth) ) $irWidth = (int) $ngg_options['irWidth'];
-	if (empty($irHeight)) $irHeight = (int) $ngg_options['irHeight'];
-
-	$out  = "\n".'<div class="slideshow" id="ngg_'.$obj.'" style="width:' . $irWidth . 'px; height:' . $irHeight . 'px;">';
-	$out .= '<p>The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and <a href="http://www.mozilla.com/firefox/">a browser with Javascript support</a> are needed..</p></div>';
-    $out .= "\n\t".'<script type="text/javascript" defer="defer">';
-	if ($ngg_options['irXHTMLvalid']) $out .= "\n\t".'<!--';
-	if ($ngg_options['irXHTMLvalid']) $out .= "\n\t".'//<![CDATA[';
-	$out .= "\n\t\t".'var '. $obj .' = new SWFObject("'.NGGALLERY_URLPATH.'imagerotator.swf", "ngg_slideshow'.$galleryID.'", "'.$irWidth.'", "'.$irHeight.'", "7", "#'.$ngg_options['irBackcolor'].'");';
-	$out .= "\n\t\t".$obj.'.addParam("wmode", "opaque");';
-	$out .= "\n\t\t".$obj.'.addVariable("file", "'.NGGALLERY_URLPATH.'xml/imagerotator.php?gid='.$galleryID.'");';
-	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irShuffle');
-	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irLinkfromdisplay');
-	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irShownavigation');
-	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irShowicons');
-	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irKenburns');
-	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irOverstretch');
-	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irRotatetime' );
-	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irTransition' );
-	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irBackcolor', '0x');
-	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irFrontcolor', '0x');
-	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irLightcolor', '0x');
-	if (!empty($ngg_options['irScreencolor']))
-	$out .= "\n\t\t".$obj.ngg_addVariable($ngg_options, 'irScreencolor', '0x');
-	if ($ngg_options['irWatermark']) 
-	$out .= "\n\t\t".$obj.'.addVariable("logo", "'.$ngg_options['wmPath'].'");';
-	if (!empty($ngg_options['irAudio'])) 
-	$out .= "\n\t\t".$obj.'.addVariable("audio", "'.$ngg_options['irAudio'].'");';
-	
-	$out .= "\n\t\t".$obj.'.addVariable("width", "'.$irWidth.'");';
-	$out .= "\n\t\t".$obj.'.addVariable("height", "'.$irHeight.'");'; 
-	$out .= "\n\t\t".$obj.'.write("ngg_'.$obj.'");';
-	if ($ngg_options['irXHTMLvalid']) $out .= "\n\t".'//]]>';
-	if ($ngg_options['irXHTMLvalid']) $out .= "\n\t".'-->';
-	$out .= "\n\t".'</script>';
-	
-	// remove media file from RSS feed
-	if ( is_feed() )
-		$out = '[' . $ngg_options['galTextSlide'] . ']'; 
-
-	$out = apply_filters('ngg_show_slideshow_content', $out);
-			
-	return $out;
-}
-
 function nggShowSlideshow($galleryID, $irWidth, $irHeight) {
 	
 	require_once (dirname (__FILE__).'/lib/swfobject.php');
@@ -114,36 +57,6 @@ function nggShowSlideshow($galleryID, $irWidth, $irHeight) {
 
 	$out = apply_filters('ngg_show_slideshow_content', $out);
 			
-	return $out;	
-}
-
-function ngg_addFlashVar( $array, $name = "none", $value = false, $default = '', $type = '', $prefix = '' ) {
-
-	if ( is_bool( $value ) )
-		$value = ( $value ) ? "true" : "false";
-	
-	if ( $type == "bool" )
-		$value = ( $value == "1" ) ? "true" : "false";
-	
-	// do not add the variable if we hit the default setting 	
-	if ( $value == $default )	
-		return $array;
-		
-	$array[$name] = $prefix . $value;
-
-	return $array;		
-}
-
-function ngg_addVariable($options, $optionname, $prefix = '') {
-	
-	$value = $options[$optionname];
-	$purename = strtolower ( substr($optionname, 2) );
-	
-	if ( is_bool($value) )
-		$out = ($value) ? '.addVariable("'.$purename.'", "true");' : '.addVariable("'.$purename.'", "false");';
-	else
-		$out = '.addVariable("'.$purename.'", "'.$prefix.$value.'");';
-		
 	return $out;	
 }
 
