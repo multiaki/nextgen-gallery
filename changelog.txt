@@ -2,7 +2,7 @@ NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
 V1.00
-- NEW : Widget to show links to Media RSS feeds
+- NEW : Multi Widgets to show links to Media RSS feeds
 - NEW : PicLens support for galleries
 - NEW : Copy/move images between galleries 
 - NEW : Media RSS feeds (either for galleries, albums or global)
@@ -19,6 +19,7 @@ V1.00
             width="" height="" mode="|watermark|web20"]extra caption here[/picture]
         shortcode. You can now insert single picture with some effect, resized or not, 
         with or without caption.
+- Changed : Widgets are now core and doesn't need to be activate, rework as Multi Widgets		
 - Changed : Improved the gallery management page.
 - Changed : Renammed the filter 'ngg_create_gallery_thumbcode' to 'ngg_get_thumbcode'.
 - Changed : Convert tags to WP-Taxonomy tables, no more need for ngg_tags, ngg_pic2tags

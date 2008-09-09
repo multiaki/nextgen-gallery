@@ -19,7 +19,9 @@ class nggMediaRssWidget {
 	* Constructor
 	*/
 	function nggMediaRssWidget() {
+		
 		$this->load_options();
+		add_action('widgets_init', array(&$this, 'register_widget'));
 	}
 		
 	/**
@@ -289,5 +291,8 @@ class nggMediaRssWidget {
 } // class nggMediaRssWidget
 
 } // if (!class_exists("nggMediaRssWidget"))
+
+// let's start it
+$ngg_mrss_widget = new nggMediaRssWidget();
 
 ?>
