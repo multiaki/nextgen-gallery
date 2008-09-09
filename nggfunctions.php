@@ -6,7 +6,7 @@ function nggShowSlideshow($galleryID, $irWidth, $irHeight) {
 	
 	require_once (dirname (__FILE__).'/lib/swfobject.php');
 	
-	global $wpdb, $post;
+	global $wpdb;
 
 	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
 
@@ -24,6 +24,7 @@ function nggShowSlideshow($galleryID, $irWidth, $irHeight) {
 
 	$swfobject->message = '<p>'. __('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and <a href="http://www.mozilla.com/firefox/">a browser with Javascript support</a> are needed..', 'nggallery').'</p>';
 	$swfobject->add_params('wmode', 'opaque');
+	$swfobject->add_params('allowfullscreen', 'true');
 
 	// adding the flash parameter	
 	$swfobject->add_flashvars( 'file', NGGALLERY_URLPATH.'xml/imagerotator.php?gid='.$galleryID );

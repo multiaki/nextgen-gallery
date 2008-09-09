@@ -5,19 +5,9 @@
 * @author Vincent Prat
 */
 
-
-//#################################################################
 // Stop direct call
-if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { 
-	die('You are not allowed to call this page directly.'); 
-}
-//#################################################################
+if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { 	die('You are not allowed to call this page directly.'); }
 
-//#################################################################
-// Some constants 
-//#################################################################
-
-//#################################################################
 // The Widget class
 if (!class_exists("nggMediaRssWidget")) {
 
@@ -299,8 +289,5 @@ class nggMediaRssWidget {
 } // class nggMediaRssWidget
 
 } // if (!class_exists("nggMediaRssWidget"))
-//#################################################################
-
-
 
 ?>

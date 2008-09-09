@@ -5,7 +5,7 @@ if ( !class_exists('swfobject') ) :
  * 
  * @author Alex Rabe
  * @package NextGEN Gallery
- * @copyrigh V0.1
+ * @copyrigh V0.2
  * @access public
  * @example http://code.google.com/p/swfobject/
  */
@@ -42,7 +42,12 @@ class swfobject {
      * @var string
      */
     var $message = 'The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and <a href="http://www.mozilla.com/firefox/">a browser with Javascript support</a> are needed..';			
-
+	/**
+     * the classname for the div element
+     *
+     * @var string
+     */
+    var $classname = 'swfobject';			
 	/**
      * array of flashvars
      *
@@ -102,7 +107,7 @@ class swfobject {
 		// count up if we have more than one swfobject
 		$swfCounter++;
 		
-		$out  = "\n" . '<div class="slideshow" id="'. $this->id  .'" style="width:'.$this->width .'px; height:'. $this->height .'px;">';
+		$out  = "\n" . '<div class="'. $this->classname .'" id="'. $this->id  .'" style="width:'.$this->width .'px; height:'. $this->height .'px;">';
 		$out .= "\n" . $this->message;
 		$out .= "\n" . '</div>';
 		
