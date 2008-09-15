@@ -49,8 +49,9 @@ class nggSlideshowWidget {
 	
 		// init the flash output
 		$swfobject = new swfobject( NGGALLERY_URLPATH.'imagerotator.swf', 'sbsl' . $galleryID, $irWidth, $irHeight, '7.0.0', 'false');
-	
-		$swfobject->message =  __('<a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see the slideshow.</div>', 'nggallery');
+		
+		$swfobject->classname = 'ngg-widget-slideshow';
+		$swfobject->message =  __('<a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see the slideshow.', 'nggallery');
 		$swfobject->add_params('wmode', 'opaque');
 	
 		// adding the flash parameter	
