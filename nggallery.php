@@ -57,37 +57,15 @@ class nggLoader {
 		global $nggRewrite;
 		
 		// Stop the plugin if we missed the requirements
-		if ( ( !$this->requiredVersion() ) && ( !$this->checkMemoryLimit() ) )
+		if ( ( !$this->required_version() ) && ( !$this->check_memory_limit() ) )
 			return;
 
 		// define some variables
-		$this->defineConstant();
-		$this->defineTables();
-		$this->registerTaxonomy();
-
-		// Load the options
-		$this->options = get_option('ngg_options');
-
-		// Pass the init check or show a message
-		if (get_option( "ngg_init_check" ) != false )
-			add_action( 'admin_notices', create_function('', 'echo \'<div id="message" class="error fade"><p><strong>' . get_option( "ngg_init_check" ) . '</strong></p></div>\';') );
-
-		// Load tinymce button 
-		include_once (dirname (__FILE__)."/tinymce3/tinymce.php");
-			
-		// Load gallery class
-		require_once (dirname (__FILE__).'/lib/ngg-gallery-plugin.lib.php');
-		require_once (dirname (__FILE__).'/lib/ngg-album.lib.php');
-		require_once (dirname (__FILE__).'/lib/ngg-album-dao.lib.php');
-		require_once (dirname (__FILE__).'/lib/ngg-gallery.lib.php');
-		require_once (dirname (__FILE__).'/lib/ngg-gallery-dao.lib.php');
-		require_once (dirname (__FILE__).'/lib/ngg-image.lib.php');
-		require_once (dirname (__FILE__).'/lib/ngg-image-dao.lib.php');
-		require_once (dirname (__FILE__).'/lib/ngg-meta.lib.php');
-		require_once (dirname (__FILE__).'/lib/ngg-tags.lib.php');
-		require_once (dirname (__FILE__).'/lib/ngg-media-rss.lib.php');
-		require_once (dirname (__FILE__).'/admin/ajax.php');
-		require_once (dirname (__FILE__).'/widgets/widgets.php');
+		$this->define_constant();
+		$this->define_tables();
+		$this->register_taxonomy();
+		$this->load_options();
+		$this->load_dependencies();
 
 		// Load the language file
 		add_action('init', array(&$this, 'load_textdomain') );
@@ -95,24 +73,20 @@ class nggLoader {
 		// Content Filters
 		add_filter('ngg_gallery_name', 'sanitize_title');
 		
-		// Init options & tables during activation 
-		register_activation_hook( NGGFOLDER.'/nggallery.php', array(&$this, 'actiavte') );
-		register_deactivation_hook( NGGFOLDER.'/nggallery.php', array(&$this, 'deactivate') );
-		
 		// Load the admin panel or the frontend functions
-		if (is_admin()) {			
-			require_once (dirname (__FILE__)."/admin/admin.php");				
+		if ( is_admin() ) {	
+			
+			// Pass the init check or show a message
+			if (get_option( "ngg_init_check" ) != false )
+				add_action( 'admin_notices', create_function('', 'echo \'<div id="message" class="error fade"><p><strong>' . get_option( "ngg_init_check" ) . '</strong></p></div>\';') );
+				
 		} else {			
-			// Load the gallery generator
-			require_once (dirname (__FILE__)."/nggfunctions.php");
-			require_once (dirname (__FILE__).'/lib/shortcodes.php');
-			require_once (dirname (__FILE__).'/lib/rewrite.php');
 			
 			// Add MRSS to wp_head
 			add_action('wp_head', array('nggMediaRss', 'add_mrss_alternate_link'));
 			
 			// If activated, add PicLens/Cooliris javascript to footer
-			if ($this->options['usePicLens'])
+			if ( $this->options['usePicLens'] )
 				add_action('wp_head', array('nggMediaRss', 'add_piclens_javascript'));
 			
 			// Add rewrite rules
@@ -132,7 +106,7 @@ class nggLoader {
 	
 	}
 	
-	function requiredVersion() {
+	function required_version() {
 		
 		global $wp_version, $wpmu_version;
 		
@@ -158,7 +132,7 @@ class nggLoader {
 		
 	}
 	
-	function checkMemoryLimit() {
+	function check_memory_limit() {
 		
 		$memory_limit = (int) substr( ini_get('memory_limit'), 0, -1);
 		//This works only with enough memory, 8MB is silly, wordpress requires already 7.9999
@@ -177,8 +151,8 @@ class nggLoader {
 		
 	}
 	
-	function defineTables() {		
-		global $wpdb, $wp_taxonomies;
+	function define_tables() {		
+		global $wpdb;
 		
 		// add database pointer 
 		$wpdb->nggpictures					= $wpdb->prefix . 'ngg_pictures';
@@ -187,9 +161,9 @@ class nggLoader {
 		
 	}
 	
-	function registerTaxonomy() {		
+	function register_taxonomy() {		
+
 		// Register the NextGEN taxonomy	
-		//--
 		register_taxonomy( 
 			'ngg_tag', 
 			'nggallery',
@@ -206,7 +180,7 @@ class nggLoader {
 		
 	}
 
-	function defineConstant() {
+	function define_constant() {
 		
 		//TODO:SHOULD BE REMOVED LATER
 		define('NGGVERSION', $this->version);
@@ -236,6 +210,40 @@ class nggLoader {
 		
 	}
 	
+	function load_dependencies() {
+		
+		// Init options & tables during activation 
+		register_activation_hook( NGGFOLDER.'/nggallery.php', array(&$this, 'actiavte') );
+		register_deactivation_hook( NGGFOLDER.'/nggallery.php', array(&$this, 'deactivate') );		
+		
+		// Load global libraries
+		include_once (dirname (__FILE__)."/tinymce3/tinymce.php");
+		require_once (dirname (__FILE__).'/lib/ngg-gallery-plugin.lib.php');
+		require_once (dirname (__FILE__).'/lib/ngg-album.lib.php');
+		require_once (dirname (__FILE__).'/lib/ngg-album-dao.lib.php');
+		require_once (dirname (__FILE__).'/lib/ngg-gallery.lib.php');
+		require_once (dirname (__FILE__).'/lib/ngg-gallery-dao.lib.php');
+		require_once (dirname (__FILE__).'/lib/ngg-image.lib.php');
+		require_once (dirname (__FILE__).'/lib/ngg-image-dao.lib.php');
+		require_once (dirname (__FILE__).'/lib/ngg-meta.lib.php');
+		require_once (dirname (__FILE__).'/lib/ngg-tags.lib.php');
+		require_once (dirname (__FILE__).'/lib/ngg-media-rss.lib.php');
+		require_once (dirname (__FILE__).'/admin/ajax.php');
+		require_once (dirname (__FILE__).'/widgets/widgets.php');
+
+		// Load backend libraries
+		if ( is_admin() ) {	
+			require_once (dirname (__FILE__)."/admin/admin.php");	
+			
+		// Load frontend libraries							
+		} else {
+			require_once (dirname (__FILE__)."/nggfunctions.php");
+			require_once (dirname (__FILE__).'/lib/shortcodes.php');
+			require_once (dirname (__FILE__).'/lib/rewrite.php');
+		}			
+
+	}
+	
 	function load_textdomain() {
 		
 		load_plugin_textdomain('nggallery', false, dirname( plugin_basename(__FILE__) ) . '/lang');
@@ -262,9 +270,8 @@ class nggLoader {
 	    }
 		    
 		// test for wordTube function
-		if (!function_exists('integrate_swfobject')) {
+		if (!function_exists('integrate_swfobject'))
 			wp_enqueue_script('swfobject', NGGALLERY_URLPATH .'admin/js/swfobject.js', FALSE, '2.1');
-		}
 
 	}
 	
@@ -281,6 +288,11 @@ class nggLoader {
 		if ( ($this->options['thumbEffect'] == "shutter") && !function_exists('srel_makeshutter') )
 			wp_enqueue_style('shutter', NGGALLERY_URLPATH .'shutter/shutter-reloaded.css', false, '1.3.0', 'screen');
 		
+	}
+	
+	function load_options() {
+		// Load the options
+		$this->options = get_option('ngg_options');
 	}
 	
 	function activate() {

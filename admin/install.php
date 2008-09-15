@@ -103,7 +103,7 @@ function nggallery_install () {
 
 function ngg_default_options() {
 	
-	global $blog_id;
+	global $blog_id, $ngg;
 
 	$ngg_options['gallerypath']			= 'wp-content/gallery/';  		// set default path to the gallery
 	$ngg_options['scanfolder']			= false;						// search for new images  (not used)
@@ -203,6 +203,7 @@ function ngg_default_options() {
 	} 
 	
 	update_option('ngg_options', $ngg_options);
+	$ngg->load_options();
 
 }
 

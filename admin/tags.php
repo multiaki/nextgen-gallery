@@ -4,13 +4,12 @@
 * http://code.google.com/p/simple-tags/
 */
 
-if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { 
-	die('You are not allowed to call this page directly.'); 
-}
+if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { 	die('You are not allowed to call this page directly.'); }
 
 $action_status = array('message' => '', 'status' => 'ok');
 
 if ( isset($_POST['tag_action']) ) {
+	//TODO:Include nonce field
 	if ( $_POST['tag_action'] == 'renametag' ) {
 		$oldtag = (isset($_POST['renametag_old'])) ? $_POST['renametag_old'] : '';
 		$newtag = (isset($_POST['renametag_new'])) ? $_POST['renametag_new'] : '';
@@ -26,7 +25,7 @@ if ( isset($_POST['tag_action']) ) {
 }
 
 // Som useful variables
-$admin_base_url = get_option('siteurl') . '/wp-admin/admin.php?page=';
+$admin_base_url = admin_url() . 'admin.php?page=';
 $nb_tags = 50; // Number of tags to show on a single page
 
 // Manage URL
