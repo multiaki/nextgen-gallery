@@ -55,11 +55,11 @@ class nggLoader {
 	function nggLoader() {
 		
 		global $nggRewrite;
-		
+				
 		// Stop the plugin if we missed the requirements
 		if ( ( !$this->required_version() ) && ( !$this->check_memory_limit() ) )
 			return;
-
+	
 		// define some variables
 		$this->define_constant();
 		$this->define_tables();
@@ -213,7 +213,7 @@ class nggLoader {
 	function load_dependencies() {
 		
 		// Init options & tables during activation 
-		register_activation_hook( NGGFOLDER.'/nggallery.php', array(&$this, 'actiavte') );
+		register_activation_hook( NGGFOLDER.'/nggallery.php', array(&$this, 'activate') );
 		register_deactivation_hook( NGGFOLDER.'/nggallery.php', array(&$this, 'deactivate') );		
 		
 		// Load global libraries
@@ -241,7 +241,6 @@ class nggLoader {
 			require_once (dirname (__FILE__).'/lib/shortcodes.php');
 			require_once (dirname (__FILE__).'/lib/rewrite.php');
 		}			
-
 	}
 	
 	function load_textdomain() {
