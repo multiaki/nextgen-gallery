@@ -16,6 +16,7 @@ function nggallery_install () {
 		update_option( "ngg_init_check", __('Sorry, NextGEN Gallery works only with a role called administrator',"nggallery") );
 		return;
 	}
+	
 	$role->add_cap('NextGEN Gallery overview');
 	$role->add_cap('NextGEN Use TinyMCE');
 	$role->add_cap('NextGEN Upload images');
@@ -96,6 +97,7 @@ function nggallery_install () {
 	
 	// set the default settings		
  	ngg_default_options();
+ 	
 	// if all is passed , save the DBVERSION
 	add_option("ngg_db_version", NGG_DBVERSION);
 
@@ -203,7 +205,6 @@ function ngg_default_options() {
 	} 
 	
 	update_option('ngg_options', $ngg_options);
-	$ngg->load_options();
 
 }
 

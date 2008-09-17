@@ -42,7 +42,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 
 // ini_set('display_errors', '1');
 // ini_set('error_reporting', E_ALL);
-
+if (!class_exists('nggLoader')) {
 class nggLoader {
 	
 	var $version     = '1.0.0.a';
@@ -53,15 +53,28 @@ class nggLoader {
 	var $options     = '';
 	
 	function nggLoader() {
-		
-		global $nggRewrite;
-				
+
 		// Stop the plugin if we missed the requirements
 		if ( ( !$this->required_version() ) && ( !$this->check_memory_limit() ) )
 			return;
-	
-		// define some variables
+			
+		// Get some constants first
 		$this->define_constant();
+		
+		// Init options & tables during activation & deregister init option
+		register_activation_hook( dirname(__FILE__) . '/nggallery.php', array(&$this, 'activate') );
+		register_deactivation_hook( dirname(__FILE__) . '/nggallery.php', array(&$this, 'deactivate') );	
+		
+		// Start this plugin once all other plugins are fully loaded
+		add_action( 'plugins_loaded', array(&$this, 'start_plugin') );
+
+	}
+	
+	function start_plugin() {
+
+		global $nggRewrite;
+				
+		// define some variables
 		$this->define_tables();
 		$this->register_taxonomy();
 		$this->load_options();
@@ -78,7 +91,7 @@ class nggLoader {
 			
 			// Pass the init check or show a message
 			if (get_option( "ngg_init_check" ) != false )
-				add_action( 'admin_notices', create_function('', 'echo \'<div id="message" class="error fade"><p><strong>' . get_option( "ngg_init_check" ) . '</strong></p></div>\';') );
+				add_action( 'admin_notices', create_function('', 'echo \'<div id="message" class="error"><p><strong>' . get_option( "ngg_init_check" ) . '</strong></p></div>\';') );
 				
 		} else {			
 			
@@ -103,8 +116,9 @@ class nggLoader {
 
 		// Init the gallery class
 		$nggallery = new nggGalleryPlugin();
-	
+		
 	}
+	
 	
 	function required_version() {
 		
@@ -211,11 +225,7 @@ class nggLoader {
 	}
 	
 	function load_dependencies() {
-		
-		// Init options & tables during activation 
-		register_activation_hook( NGGFOLDER.'/nggallery.php', array(&$this, 'activate') );
-		register_deactivation_hook( NGGFOLDER.'/nggallery.php', array(&$this, 'deactivate') );		
-		
+	
 		// Load global libraries
 		include_once (dirname (__FILE__)."/tinymce3/tinymce.php");
 		require_once (dirname (__FILE__).'/lib/ngg-gallery-plugin.lib.php');
@@ -308,8 +318,8 @@ class nggLoader {
 		
 	}
 }
-
-// Start this plugin once all other plugins are fully loaded
-add_action( 'plugins_loaded', create_function( '', 'global $ngg; $ngg = new nggLoader();' ) );
+	// Let's start the holy plugin
+	$ngg = new nggLoader();
+}
 
 ?>
