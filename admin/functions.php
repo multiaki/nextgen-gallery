@@ -895,7 +895,8 @@ class nggAdmin{
 			return;
 
 		$js_array  = implode('","', $image_array);
-
+		
+		// send out some JavaScript, which initate the ajax operation
 		?>
 		<script type="text/javascript">
 

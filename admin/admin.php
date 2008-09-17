@@ -1,110 +1,47 @@
 <?php
-// ************************************
-// ** Admin Section for NextGEN Gallery
-// ** by Alex Rabe
-// ************************************
+/**
+ * nggAdminPanel - Admin Section for NextGEN Gallery
+ * 
+ * @package NextGEN Gallery
+ * @author Alex Rabe
+ * @copyright 2008
+ * @since 1.0.0
+ */
+class nggAdminPanel {
+	
+	// constructor
+	function nggAdminPanel() {
 
-// add to header in admin area
-add_action('admin_head', 'ngg_header');
-function ngg_header() {
-
-	switch ($_GET['page']) {
-		case NGGFOLDER :
-			echo '<link rel="stylesheet" href="'.NGGALLERY_URLPATH.'admin/css/nggadmin.wp25.css" type="text/css" media="screen" />'."\n";
-			wp_admin_css( 'css/dashboard' );
-		break;
-		case "nggallery-add-gallery" :
-		case "nggallery-options" :
-			echo '<link rel="stylesheet" href="'.NGGALLERY_URLPATH.'admin/css/nggadmin.wp25.css" type="text/css" media="screen" />'."\n";
-			echo '<link rel="stylesheet" href="'.NGGALLERY_URLPATH.'admin/css/jquery.ui.tabs.css" type="text/css" media="print, projection, screen" />'."\n";
-		break;
-		case "nggallery-manage-gallery" :
-		case "nggallery-roles" :
-		case "nggallery-manage-album" :
-			echo '<link rel="stylesheet" href="'.NGGALLERY_URLPATH.'admin/css/nggadmin.wp25.css" type="text/css" media="screen" />'."\n";			
-		break;
-		case "nggallery-tags" :
-			echo '<link rel="stylesheet" href="'.NGGALLERY_URLPATH.'admin/css/tags-admin.css" type="text/css" media="screen" />'."\n";	
-			break;
-		case "nggallery-style" :
-			wp_admin_css( 'css/theme-editor' );
-		break;
+		// Add the admin menu
+		add_action( 'admin_menu', array (&$this, 'add_menu') );
+		
+		// Add the script and style files
+		add_action('admin_print_scripts', array(&$this, 'load_scripts') );
+		add_action('admin_print_styles', array(&$this, 'load_styles') );
+	
 	}
-}
 
-// Load the NextGEN Gallery Media Upload Tab
-include_once (dirname (__FILE__)."/media-upload.php");
-
-// load script files depend on page
-add_action('init', 'ngg_add_admin_js',1);
-function ngg_add_admin_js() {
-	global $wp_version;
-	
-	wp_register_script('ngg-ajax', NGGALLERY_URLPATH .'admin/js/ngg.ajax.js', array('jquery'), '1.0.0');
-	wp_localize_script('ngg-ajax', 'nggAjaxSetup', array(
-				'url' => admin_url('admin-ajax.php'),
-				'action' => 'ngg_ajax_operation',
-				'operation' => '',
-				'nonce' => wp_create_nonce( 'ngg-ajax' ),
-				'ids' => '',
-				'permission' => __('You do not have the correct permission', 'nggallery'),
-				'error' => __('Unexpected Error', 'nggallery'),
-				'failure' => __('A failure occurred', 'nggallery')				
-	) );
-	wp_register_script('ngg-progressbar', NGGALLERY_URLPATH .'admin/js/ngg.progressbar.js', array('jquery'), '1.0.0');
-	
-	switch ($_GET['page']) {
-		case "nggallery-manage-gallery" :
-			wp_enqueue_script( 'postbox' );
-			wp_enqueue_script( 'ngg-ajax' );
-			wp_enqueue_script( 'ngg-progressbar' );
-			add_thickbox();
-		break;
-		case "nggallery-manage-album" :
-			wp_enqueue_script( 'jquery-ui-sortable' );
-		break;
-		case "nggallery-options" :
-			wp_enqueue_script( 'jquery-ui-tabs' );
-		break;		
-		case "nggallery-add-gallery" :
-			wp_enqueue_script( 'jquery-ui-tabs' );
-			wp_enqueue_script( 'mutlifile', NGGALLERY_URLPATH .'admin/js/jquery.MultiFile.js', array('jquery'), '1.1.1' );
-			wp_enqueue_script( 'ngg-swfupload', NGGALLERY_URLPATH .'admin/js/swfupload.js', array('jquery'), '2.0.1' );
-			wp_enqueue_script( 'ngg-swfupload-handler', NGGALLERY_URLPATH .'admin/js/swfupload.handler.js', array('swfupload'), '1.0.0' );
-			wp_enqueue_script( 'ngg-ajax' );
-			wp_enqueue_script( 'ngg-progressbar' );
-		break;
+	// integrate the menu	
+	function add_menu()  {
+		
+		add_menu_page(__('Gallery', 'nggallery'), __('Gallery', 'nggallery'), 'NextGEN Gallery overview', NGGFOLDER, array (&$this, 'show_menu'));
+	    add_submenu_page( NGGFOLDER , __('Add Gallery', 'nggallery'), __('Add Gallery', 'nggallery'), 'NextGEN Upload images', 'nggallery-add-gallery', array (&$this, 'show_menu'));
+	    add_submenu_page( NGGFOLDER , __('Manage Gallery', 'nggallery'), __('Manage Gallery', 'nggallery'), 'NextGEN Manage gallery', 'nggallery-manage-gallery', array (&$this, 'show_menu'));
+	    add_submenu_page( NGGFOLDER , __('Album', 'nggallery'), __('Album', 'nggallery'), 'NextGEN Edit album', 'nggallery-manage-album', array (&$this, 'show_menu'));
+	    add_submenu_page( NGGFOLDER , __('Tags', 'nggallery'), __('Tags', 'nggallery'), 'NextGEN Manage tags', 'nggallery-tags', array (&$this, 'show_menu'));
+	    add_submenu_page( NGGFOLDER , __('Options', 'nggallery'), __('Options', 'nggallery'), 'NextGEN Change options', 'nggallery-options', array (&$this, 'show_menu'));
+	    if (wpmu_enable_function('wpmuStyle'))
+			add_submenu_page( NGGFOLDER , __('Style', 'nggallery'), __('Style', 'nggallery'), 'NextGEN Change style', 'nggallery-style', array (&$this, 'show_menu'));
+	    add_submenu_page( NGGFOLDER , __('Setup Gallery', 'nggallery'), __('Setup', 'nggallery'), 'activate_plugins', 'nggallery-setup', array (&$this, 'show_menu'));
+	    if (wpmu_enable_function('wpmuRoles'))
+			add_submenu_page( NGGFOLDER , __('Roles', 'nggallery'), __('Roles', 'nggallery'), 'activate_plugins', 'nggallery-roles', array (&$this, 'show_menu'));
+	    add_submenu_page( NGGFOLDER , __('About this Gallery', 'nggallery'), __('About', 'nggallery'), 'NextGEN Gallery overview', 'nggallery-about', array (&$this, 'show_menu'));
+		if (wpmu_site_admin())
+			add_submenu_page( 'wpmu-admin.php' , __('NextGEN Gallery', 'nggallery'), __('NextGEN Gallery', 'nggallery'), 'activate_plugins', 'nggallery-wpmu', array (&$this, 'show_menu'));
 	}
-}
-	
-// add to menu
-add_action('admin_menu', 'add_nextgen_gallery_menu');
 
-function add_nextgen_gallery_menu()  {
-    add_menu_page(__('Gallery', 'nggallery'), __('Gallery', 'nggallery'), 'NextGEN Gallery overview', NGGFOLDER, 'show_menu');
-    add_submenu_page( NGGFOLDER , __('Add Gallery', 'nggallery'), __('Add Gallery', 'nggallery'), 'NextGEN Upload images', 'nggallery-add-gallery', 'show_menu');
-    add_submenu_page( NGGFOLDER , __('Manage Gallery', 'nggallery'), __('Manage Gallery', 'nggallery'), 'NextGEN Manage gallery', 'nggallery-manage-gallery', 'show_menu');
-    add_submenu_page( NGGFOLDER , __('Album', 'nggallery'), __('Album', 'nggallery'), 'NextGEN Edit album', 'nggallery-manage-album', 'show_menu');
-    add_submenu_page( NGGFOLDER , __('Tags', 'nggallery'), __('Tags', 'nggallery'), 'NextGEN Manage tags', 'nggallery-tags', 'show_menu');
-    add_submenu_page( NGGFOLDER , __('Options', 'nggallery'), __('Options', 'nggallery'), 'NextGEN Change options', 'nggallery-options', 'show_menu');
-    if (wpmu_enable_function('wpmuStyle'))
-		add_submenu_page( NGGFOLDER , __('Style', 'nggallery'), __('Style', 'nggallery'), 'NextGEN Change style', 'nggallery-style', 'show_menu');
-    add_submenu_page( NGGFOLDER , __('Setup Gallery', 'nggallery'), __('Setup', 'nggallery'), 'activate_plugins', 'nggallery-setup', 'show_menu');
-    if (wpmu_enable_function('wpmuRoles'))
-		add_submenu_page( NGGFOLDER , __('Roles', 'nggallery'), __('Roles', 'nggallery'), 'activate_plugins', 'nggallery-roles', 'show_menu');
-    add_submenu_page( NGGFOLDER , __('About this Gallery', 'nggallery'), __('About', 'nggallery'), 'NextGEN Gallery overview', 'nggallery-about', 'show_menu');
-	if (wpmu_site_admin())
-		add_submenu_page( 'wpmu-admin.php' , __('NextGEN Gallery', 'nggallery'), __('NextGEN Gallery', 'nggallery'), 'activate_plugins', 'nggallery-wpmu', 'show_menu');
-
-}
-  
-  /************************************************************************/
-  
-  	// reduce footprint
-  	// Thx to http://weblogtoolscollection.com/archives/2007/07/09/reduce-the-size-of-your-wordpress-plugin-footprint/
-  	
-  	function  show_menu() {
-  		global $wp_version;
+	// load the script for the defined page and load only this code	
+	function  show_menu() {
 
 		// check for upgrade and show upgrade screen
 		if( get_option( "ngg_db_version" ) != NGG_DBVERSION ) {
@@ -113,7 +50,7 @@ function add_nextgen_gallery_menu()  {
 			nggallery_upgrade_page();
 			return;			
 		}
-  		
+		
   		switch ($_GET["page"]){
 			case "nggallery-add-gallery" :
 				include_once (dirname (__FILE__). '/functions.php');	// admin functions
@@ -167,25 +104,88 @@ function add_nextgen_gallery_menu()  {
 				nggallery_admin_overview();
 				break;
 		}
-
-	} 
-  
-	/**************************************************************************/
-	function wpmu_site_admin() {
-		// Check for site admin
-		if (function_exists(is_site_admin))
-			if (is_site_admin())
-				return true;
-				
-		return false;
 	}
 	
-	function wpmu_enable_function($value) {
-		if (IS_WPMU) {
-			$ngg_options = get_site_option('ngg_options');
-			return $ngg_options[$value];
+	function load_scripts() {
+		
+		wp_register_script('ngg-ajax', NGGALLERY_URLPATH .'admin/js/ngg.ajax.js', array('jquery'), '1.0.0');
+		wp_localize_script('ngg-ajax', 'nggAjaxSetup', array(
+					'url' => admin_url('admin-ajax.php'),
+					'action' => 'ngg_ajax_operation',
+					'operation' => '',
+					'nonce' => wp_create_nonce( 'ngg-ajax' ),
+					'ids' => '',
+					'permission' => __('You do not have the correct permission', 'nggallery'),
+					'error' => __('Unexpected Error', 'nggallery'),
+					'failure' => __('A failure occurred', 'nggallery')				
+		) );
+		wp_register_script('ngg-progressbar', NGGALLERY_URLPATH .'admin/js/ngg.progressbar.js', array('jquery'), '1.0.0');
+		
+		switch ($_GET['page']) {
+			case "nggallery-manage-gallery" :
+				wp_enqueue_script( 'postbox' );
+				wp_enqueue_script( 'ngg-ajax' );
+				wp_enqueue_script( 'ngg-progressbar' );
+				add_thickbox();
+			break;
+			case "nggallery-manage-album" :
+				wp_enqueue_script( 'jquery-ui-sortable' );
+			break;
+			case "nggallery-options" :
+				wp_enqueue_script( 'jquery-ui-tabs' );
+			break;		
+			case "nggallery-add-gallery" :
+				wp_enqueue_script( 'jquery-ui-tabs' );
+				wp_enqueue_script( 'mutlifile', NGGALLERY_URLPATH .'admin/js/jquery.MultiFile.js', array('jquery'), '1.1.1' );
+				wp_enqueue_script( 'ngg-swfupload-handler', NGGALLERY_URLPATH .'admin/js/swfupload.handler.js', array('swfupload'), '1.0.0' );
+				wp_enqueue_script( 'ngg-ajax' );
+				wp_enqueue_script( 'ngg-progressbar' );
+			break;
 		}
-		// if this is not WPMU, enable it !
-		return true;
+	}		
+	
+	function load_styles() {
+		
+		switch ($_GET['page']) {
+			case NGGFOLDER :
+				wp_enqueue_style('nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.5.0', 'screen');
+				wp_admin_css( 'css/dashboard' );
+			break;
+			case "nggallery-add-gallery" :
+			case "nggallery-options" :
+				wp_enqueue_style('nggtabs', NGGALLERY_URLPATH .'admin/css/jquery.ui.tabs.css', false, '2.5.0', 'screen');
+			case "nggallery-manage-gallery" :
+			case "nggallery-roles" :
+			case "nggallery-manage-album" :
+				wp_enqueue_style('nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.5.0', 'screen');			
+			break;
+			case "nggallery-tags" :
+				wp_enqueue_style('nggtags', NGGALLERY_URLPATH .'admin/css/tags-admin.css', false, '2.6.0', 'screen');
+				break;
+			case "nggallery-style" :
+				wp_admin_css( 'css/theme-editor' );
+			break;
+		}	
 	}
+
+}
+
+function wpmu_site_admin() {
+	// Check for site admin
+	if (function_exists('is_site_admin'))
+		if (is_site_admin())
+			return true;
+			
+	return false;
+}
+
+function wpmu_enable_function($value) {
+	if (IS_WPMU) {
+		$ngg_options = get_site_option('ngg_options');
+		return $ngg_options[$value];
+	}
+	// if this is not WPMU, enable it !
+	return true;
+}
+
 ?>

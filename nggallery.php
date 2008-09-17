@@ -243,7 +243,9 @@ class nggLoader {
 
 		// Load backend libraries
 		if ( is_admin() ) {	
-			require_once (dirname (__FILE__)."/admin/admin.php");	
+			require_once (dirname (__FILE__)."/admin/admin.php");
+			require_once (dirname (__FILE__)."/admin/media-upload.php");
+			$nggAdminPanel = new nggAdminPanel();
 			
 		// Load frontend libraries							
 		} else {
