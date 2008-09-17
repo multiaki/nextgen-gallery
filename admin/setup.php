@@ -2,7 +2,7 @@
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
 
 	function nggallery_admin_setup()  {	
-		global $wpdb;
+		global $wpdb, $ngg;
 				
 		if (isset($_POST['resetdefault'])) {	
 			check_admin_referer('ngg_uninstall');
@@ -10,6 +10,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			include_once (NGGFOLDER . "/admin/install.php");
 			
 			ngg_default_options();
+			$ngg->load_options();
+			
 			nggGalleryPlugin::show_message(__('Reset all settings to default parameter','nggallery'));
 		}
 

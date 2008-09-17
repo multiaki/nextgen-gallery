@@ -176,7 +176,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<h2><?php _e('Thumbnail settings','nggallery'); ?></h2>
 			<form name="thumbnailsettings" method="POST" action="<?php echo $filepath.'#thumbnails'; ?>" >
 			<?php wp_nonce_field('ngg_settings') ?>
-			<input type="hidden" name="page_options" value="thumbwidth,thumbheight,thumbfix,thumbcrop,thumbquality,thumbResampleMode" />
+			<input type="hidden" name="page_options" value="thumbwidth,thumbheight,thumbfix,thumbcrop,thumbquality" />
 				<p><?php _e('Please note : If you change the settings, you need to recreate the thumbnails under -> Manage Gallery .', 'nggallery') ?></p>
 				<table class="form-table">
 					<tr valign="top">
@@ -198,11 +198,6 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						<th align="left"><?php _e('Thumbnail quality','nggallery') ?></th>
 						<td><input type="text" size="3" maxlength="3" name="thumbquality" value="<?php echo $ngg->options['thumbquality']; ?>" /> %</td>
 					</tr>
-					<tr valign="top">
-						<th align="left"><?php _e('Resample Mode','nggallery') ?></th>
-						<td><input type="text" size="1" maxlength="1" name="thumbResampleMode" value="<?php echo $ngg->options['thumbResampleMode']; ?>" /><br />
-						<?php _e('Value between 1-5 (higher value, more CPU load)','nggallery') ?></td>
-					</tr>
 				</table>
 			<div class="submit"><input type="submit" name="updateoption" value="<?php _e('Update') ;?> &raquo;"/></div>
 			</form>	
@@ -214,7 +209,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<h2><?php _e('Image settings','nggallery'); ?></h2>
 			<form name="imagesettings" method="POST" action="<?php echo $filepath.'#images'; ?>" >
 			<?php wp_nonce_field('ngg_settings') ?>
-			<input type="hidden" name="page_options" value="imgResize,imgWidth,imgHeight,imgQuality,imgResampleMode,imgCacheSinglePic" />
+			<input type="hidden" name="page_options" value="imgResize,imgWidth,imgHeight,imgQuality,imgCacheSinglePic" />
 				<table class="form-table">
 					<tr valign="top">
 						<th scope="row"><label for="fixratio"><?php _e('Resize Images','nggallery') ?></label></th>
@@ -227,12 +222,6 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						<th align="left"><?php _e('Image quality','nggallery') ?></th>
 						<td></td>
 						<td><input type="text" size="3" maxlength="3" name="imgQuality" value="<?php echo $ngg->options['imgQuality']; ?>" /> %</td>
-					</tr>
-					<tr valign="top">
-						<th align="left"><?php _e('Resample Mode','nggallery') ?></th>
-						<td></td>
-						<td><input type="text" size="1" maxlength="1" name="imgResampleMode" value="<?php echo $ngg->options['imgResampleMode']; ?>" /><br />
-						<?php _e('Value between 1-5 (higher value, more CPU load)','nggallery') ?></td>
 					</tr>
 				</table>
 				<h3><?php _e('Single picture','nggallery') ?></h3>

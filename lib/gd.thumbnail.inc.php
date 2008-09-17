@@ -384,6 +384,7 @@ class ngg_Thumbnail {
      * 
      * @param int $Width
      * @param int $Height
+     * @param int $resampleMode
      */
     function resizeFix($Width = 0, $Height = 0, $resampleMode = 3) {
         $this->newWidth = $Width;
@@ -423,6 +424,7 @@ class ngg_Thumbnail {
      *
      * @param int $maxWidth
      * @param int $maxHeight
+     * @param int $resampleMode
      */
     function resize($maxWidth = 0, $maxHeight = 0, $resampleMode = 3) {
         $this->maxWidth = $maxWidth;
@@ -498,6 +500,7 @@ class ngg_Thumbnail {
 	 * Crops the image from calculated center in a square of $cropSize pixels
 	 *
 	 * @param int $cropSize
+	 * @param int $resampleMode
 	 */
 	function cropFromCenter($cropSize, $resampleMode = 3) {
 	    if($cropSize > $this->currentDimensions['width']) $cropSize = $this->currentDimensions['width'];

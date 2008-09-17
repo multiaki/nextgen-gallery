@@ -222,24 +222,24 @@ class nggAdmin{
 				$width = round(($width * $aspect) / 100);
 				$height = round(($height * $aspect) / 100);
 
-				$thumb->resize($width,$height,$ngg->options['thumbResampleMode']);
-				$thumb->cropFromCenter($width,$ngg->options['thumbResampleMode']);
+				$thumb->resize($width,$height);
+				$thumb->cropFromCenter($width);
 			} 
 			elseif ($ngg->options['thumbfix'])  {
 				// check for portrait format
 				if ($thumb->currentDimensions['height'] > $thumb->currentDimensions['width']) {
-					$thumb->resize($ngg->options['thumbwidth'], 0,$ngg->options['thumbResampleMode']);
+					$thumb->resize($ngg->options['thumbwidth'], 0);
 					// get optimal y startpos
 					$ypos = ($thumb->currentDimensions['height'] - $ngg->options['thumbheight']) / 2;
-					$thumb->crop(0, $ypos, $ngg->options['thumbwidth'],$ngg->options['thumbheight'],$ngg->options['thumbResampleMode']);	
+					$thumb->crop(0, $ypos, $ngg->options['thumbwidth']);	
 				} else {
-					$thumb->resize(0,$ngg->options['thumbheight'],$ngg->options['thumbResampleMode']);	
+					$thumb->resize(0,$ngg->options['thumbheight']);	
 					// get optimal x startpos
 					$xpos = ($thumb->currentDimensions['width'] - $ngg->options['thumbwidth']) / 2;
-					$thumb->crop($xpos, 0, $ngg->options['thumbwidth'],$ngg->options['thumbheight'],$ngg->options['thumbResampleMode']);	
+					$thumb->crop($xpos, 0, $ngg->options['thumbwidth'],$ngg->options['thumbheight']);	
 				}
 			} else {
-				$thumb->resize($ngg->options['thumbwidth'],$ngg->options['thumbheight'],$ngg->options['thumbResampleMode']);	
+				$thumb->resize($ngg->options['thumbwidth'],$ngg->options['thumbheight']);	
 			}
 			
 			// save the new thumbnail
@@ -287,7 +287,7 @@ class nggAdmin{
 
 		// skip if file is not there
 		if (!$file->error) {
-			$file->resize($width, $height, $ngg->options['imgResampleMode']);
+			$file->resize($width, $height, 4);
 			$file->save($image->imagePath, $ngg->options['imgQuality']);
 		}
 		
