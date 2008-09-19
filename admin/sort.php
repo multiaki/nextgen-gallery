@@ -76,7 +76,5 @@ function nggallery_sortorder($galleryID = 0){
 	</div>
 	
 <?php
-
 }
-
 ?>

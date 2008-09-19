@@ -951,5 +951,4 @@ function ngg_getOnlyImages($p_event, $p_header)	{
 	return nggAdmin::getOnlyImages($p_event, $p_header);
 	
 }
-
 ?>

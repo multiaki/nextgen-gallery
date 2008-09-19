@@ -435,5 +435,4 @@ function ngg_get_phpinfo() {
 	    
 	return $phpinfo;
 }
-
 ?>

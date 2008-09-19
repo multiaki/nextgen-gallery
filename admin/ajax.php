@@ -50,5 +50,4 @@ function ngg_ajax_operation() {
 		// The script should never stop here
 		die('0');
 }
-
 ?>

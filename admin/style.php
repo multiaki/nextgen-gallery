@@ -197,7 +197,6 @@ function ngg_get_cssfiles() {
 	return $cssfiles;
 }
 
-/**********************************************************/
 // parse the Header information
 function ngg_get_cssfiles_data($plugin_file) {
 	$plugin_data = implode('', file($plugin_file));
@@ -216,5 +215,4 @@ function ngg_get_cssfiles_data($plugin_file) {
 
 	return array ('Name' => $name, 'Description' => $description, 'Author' => $author, 'Version' => $version );
 }
-
 ?>

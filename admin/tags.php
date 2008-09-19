@@ -283,4 +283,3 @@ if ($nb_tags < $tag_count && $offset>0) {
 	// ]]>
 	</script>
 </div></div>
-

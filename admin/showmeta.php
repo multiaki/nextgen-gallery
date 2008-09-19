@@ -114,6 +114,3 @@ $xmpdata = $meta->get_XMP();
 
 </body>
 </html>
-<?php
-
-?>

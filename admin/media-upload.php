@@ -235,5 +235,4 @@ function media_upload_nextgen_form($errors) {
 
 <?php
 }
-
 ?>

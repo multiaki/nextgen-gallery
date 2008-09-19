@@ -170,5 +170,4 @@ function nggallery_start_upgrade($filepath) {
 </div>
 <?php
 } 
-
 ?>

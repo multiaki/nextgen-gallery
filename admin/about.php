@@ -224,7 +224,8 @@ function ngg_list_support()	{
 	"Laaß / Brembs GbR" => "http://www.camoart.com",
 	"Dean Cowan" => "http://www.deanandlinda.com",
 	"Ross Calloway" => "",
-	"Scott Kyle" => ""		
+	"Scott Kyle" => "",		
+	"Allan Corfix Lykke" => ""
 	);
 	
 	ksort($supporter);
