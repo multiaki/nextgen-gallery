@@ -149,7 +149,7 @@ jQuery(document).ready( function() {
 					<th align="left"><textarea name="gallerydesc" cols="30" rows="3" style="width: 95%"  ><?php echo $act_gallery->galdesc; ?></textarea></th>
 					<th align="right"><?php _e('Preview image', 'nggallery') ?>:</th>
 					<th align="left">
-						<select name="previewpic" >
+						<select name="previewpic" style="width:95%" >
 							<option value="0" ><?php _e('No Picture', 'nggallery') ?></option>
 							<?php
 								$picturelist = nggImageDAO::find_images_in_gallery($act_gallery, $ngg->options['galSort'], $ngg->options['galSortDir']);
@@ -185,7 +185,7 @@ jQuery(document).ready( function() {
 					<th align="left"> 
 					<select name="parent_id" style="width:95%">
 						<option value="0"><?php _e ('Main page (No parent)', 'nggallery'); ?></option>
-						<?php parent_dropdown ($group->page_id); ?>
+						<?php parent_dropdown (); ?>
 					</select>
 					<input type="submit" name="addnewpage" value="<?php _e ('Add page', 'nggallery'); ?>" id="group"/>
 					</th>
@@ -204,19 +204,19 @@ jQuery(document).ready( function() {
 <div class="tablenav ngg-tablenav">
 	<div style="float: left;">
 	<select id="bulkaction" name="bulkaction">
-		<option value="0" ><?php _e("No action",'nggallery')?></option>
+		<option value="no_action" ><?php _e("No action",'nggallery')?></option>
 	<?php if (!$showTags) { ?>
-		<option value="1" ><?php _e("Set watermark",'nggallery')?></option>
-		<option value="2" ><?php _e("Create new thumbnails",'nggallery')?></option>
-		<option value="3" ><?php _e("Resize images",'nggallery')?></option>
-		<option value="4" ><?php _e("Delete images",'nggallery')?></option>
-		<option value="8" ><?php _e("Import metadata",'nggallery')?></option>
-		<option value="9" ><?php _e("Copy to...",'nggallery')?></option>
-		<option value="10"><?php _e("Move to...",'nggallery')?></option>
+		<option value="set_watermark" ><?php _e("Set watermark",'nggallery')?></option>
+		<option value="new_thumbnail" ><?php _e("Create new thumbnails",'nggallery')?></option>
+		<option value="resize_images" ><?php _e("Resize images",'nggallery')?></option>
+		<option value="delete_images" ><?php _e("Delete images",'nggallery')?></option>
+		<option value="import_meta" ><?php _e("Import metadata",'nggallery')?></option>
+		<option value="copy_to" ><?php _e("Copy to...",'nggallery')?></option>
+		<option value="move_to"><?php _e("Move to...",'nggallery')?></option>
 	<?php } else { ?>	
-		<option value="5" ><?php _e("Add tags",'nggallery')?></option>
-		<option value="6" ><?php _e("Delete tags",'nggallery')?></option>
-		<option value="7" ><?php _e("Overwrite tags",'nggallery')?></option>
+		<option value="add_tags" ><?php _e("Add tags",'nggallery')?></option>
+		<option value="delete_tags" ><?php _e("Delete tags",'nggallery')?></option>
+		<option value="overwrite_tags" ><?php _e("Overwrite tags",'nggallery')?></option>
 	<?php } ?>	
 	</select>
 	

@@ -14,8 +14,6 @@ class nggManageGallery {
 	// initiate the manage page
 	function nggManageGallery() {
 
-		//TODO:GID & Mode should the hidden post variables
-	
 		// GET variables
 		$this->gid  = (int) $_GET['gid'];
 		$this->pid  = (int) $_GET['pid'];	
@@ -28,10 +26,26 @@ class nggManageGallery {
 		//Look for POST process
 		if ( !empty($_POST) || !empty($_GET) )
 			$this->processor();
-		
-		// Render the output
-		//$this->controller();	
 	
+	}
+
+	function controller() {
+
+		switch($this->mode) {
+			case 'sort':
+				include_once (dirname (__FILE__) . '/manage-sort.php');
+				nggallery_sortorder($this->gid);
+			break;
+			case 'edit':
+				include_once (dirname (__FILE__) . '/manage-images.php');
+				nggallery_picturelist();	
+			break;
+			case 'main':
+			default:
+				include_once (dirname (__FILE__) . '/manage-galleries.php');
+				nggallery_manage_gallery_main();
+			break;
+		}
 	}
 
 	function processor() {
@@ -110,22 +124,22 @@ class nggManageGallery {
 			}
 			
 			switch ($_POST['bulkaction']) {
-				case 0;
+				case 'no_action';
 				// No action
 					break;
-				case 1:
+				case 'set_watermark':
 				// Set watermark
 					nggAdmin::do_ajax_operation( 'set_watermark' , $_POST['doaction'], __('Set watermark','nggallery') );
 					break;
-				case 2:
+				case 'new_thumbnail':
 				// Create new thumbnails
 					nggAdmin::do_ajax_operation( 'create_thumbnail' , $_POST['doaction'], __('Create new thumbnails','nggallery') );
 					break;
-				case 3:
+				case 'resize_images':
 				// Resample images
 					nggAdmin::do_ajax_operation( 'resize_image' , $_POST['doaction'], __('Resize images','nggallery') );
 					break;
-				case 4:
+				case 'delete_images':
 				// Delete images
 					if ( is_array($_POST['doaction']) ) {
 					if ($gallerypath){
@@ -143,7 +157,7 @@ class nggManageGallery {
 						nggGalleryPlugin::show_message(__('Pictures deleted successfully ',"nggallery"));
 					}
 					break;
-				case 8:
+				case 'import_meta':
 				// Import Metadata
 					nggAdmin::import_MetaData($_POST['doaction']);
 					nggGalleryPlugin::show_message(__('Import metadata finished',"nggallery"));
@@ -166,11 +180,11 @@ class nggManageGallery {
 			$dest_gid = (int) $_POST['dest_gid'];
 			
 			switch ($_POST['TB_bulkaction']) {
-				case 9:
+				case 'copy_to':
 				// Copy images
 					nggAdmin::copy_images( $pic_ids, $dest_gid );
 					break;
-				case 10:
+				case 'move_to':
 				// Move images
 					nggAdmin::move_images( $pic_ids, $dest_gid );
 					break;
@@ -193,18 +207,18 @@ class nggManageGallery {
 					
 					// which action should be performed ?
 					switch ($_POST['TB_bulkaction']) {
-						case 0;
+						case 'no_action';
 						// No action
 							break;
-						case 7:
+						case 'overwrite_tags':
 						// Overwrite tags
 							wp_set_object_terms($pic_id, $taglist, 'ngg_tag');
 							break;					
-						case 5:
+						case 'add_tags':
 						// Add / append tags
 							wp_set_object_terms($pic_id, $taglist, 'ngg_tag', TRUE);
 							break;
-						case 6:
+						case 'delte_tags':
 						// Delete tags
 							$oldtags = wp_get_object_terms($pic_id, 'ngg_tag', 'fields=names');
 							// get the slugs, to vaoid  case sensitive problems
@@ -293,25 +307,6 @@ class nggManageGallery {
 		
 	}
 	
-	function controller() {
-
-		switch($this->mode) {
-			case 'sort':
-				include_once (dirname (__FILE__) . '/manage-sort.php');
-				nggallery_sortorder($this->gid);
-			break;
-			case 'edit':
-				include_once (dirname (__FILE__) . '/manage-images.php');
-				nggallery_picturelist();	
-			break;
-			case 'main':
-			default:
-				include_once (dirname (__FILE__) . '/manage-galleries.php');
-				nggallery_manage_gallery_main();
-			break;
-		}
-	}
-
 	function update_pictures() {
 		//TODO: Message when update failed
 		global $wpdb;

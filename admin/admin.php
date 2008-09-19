@@ -53,7 +53,7 @@ class nggAdminPanel{
 			return;			
 		}
 		
-  		switch ($_GET["page"]){
+  		switch ($_GET['page']){
 			case "nggallery-add-gallery" :
 				include_once (dirname (__FILE__). '/functions.php');	// admin functions
 				include_once (dirname (__FILE__). '/addgallery.php');	// nggallery_admin_add_gallery
@@ -64,7 +64,7 @@ class nggAdminPanel{
 				include_once (dirname (__FILE__). '/manage.php');		// nggallery_admin_manage_gallery
 				// Initate the Manage Gallery page
 				$ngg->manage_page = new nggManageGallery ();
-				// Render the output
+				// Render the output now, because you cannot access a object during the constructor is not finished
 				$ngg->manage_page->controller();
 				
 				break;
@@ -154,19 +154,20 @@ class nggAdminPanel{
 		
 		switch ($_GET['page']) {
 			case NGGFOLDER :
-				wp_enqueue_style('nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.5.0', 'screen');
+				wp_enqueue_style( 'nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.5.0', 'screen' );
 				wp_admin_css( 'css/dashboard' );
 			break;
 			case "nggallery-add-gallery" :
 			case "nggallery-options" :
-				wp_enqueue_style('nggtabs', NGGALLERY_URLPATH .'admin/css/jquery.ui.tabs.css', false, '2.5.0', 'screen');
+				wp_enqueue_style( 'nggtabs', NGGALLERY_URLPATH .'admin/css/jquery.ui.tabs.css', false, '2.5.0', 'screen' );
 			case "nggallery-manage-gallery" :
 			case "nggallery-roles" :
 			case "nggallery-manage-album" :
-				wp_enqueue_style('nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.5.0', 'screen');			
+				wp_enqueue_style( 'nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.5.0', 'screen' );
+				wp_enqueue_style( 'thickbox');			
 			break;
 			case "nggallery-tags" :
-				wp_enqueue_style('nggtags', NGGALLERY_URLPATH .'admin/css/tags-admin.css', false, '2.6.0', 'screen');
+				wp_enqueue_style( 'nggtags', NGGALLERY_URLPATH .'admin/css/tags-admin.css', false, '2.6.0', 'screen' );
 				break;
 			case "nggallery-style" :
 				wp_admin_css( 'css/theme-editor' );
