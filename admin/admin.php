@@ -7,7 +7,7 @@
  * @copyright 2008
  * @since 1.0.0
  */
-class nggAdminPanel {
+class nggAdminPanel{
 	
 	// constructor
 	function nggAdminPanel() {
@@ -41,7 +41,9 @@ class nggAdminPanel {
 	}
 
 	// load the script for the defined page and load only this code	
-	function  show_menu() {
+	function show_menu() {
+		
+		global $ngg;
 
 		// check for upgrade and show upgrade screen
 		if( get_option( 'ngg_db_version' ) != NGG_DBVERSION ) {
@@ -60,7 +62,11 @@ class nggAdminPanel {
 			case "nggallery-manage-gallery" :
 				include_once (dirname (__FILE__). '/functions.php');	// admin functions
 				include_once (dirname (__FILE__). '/manage.php');		// nggallery_admin_manage_gallery
-				nggallery_admin_manage_gallery();
+				// Initate the Manage Gallery page
+				$ngg->manage_page = new nggManageGallery ();
+				// Render the output
+				$ngg->manage_page->controller();
+				
 				break;
 			case "nggallery-manage-album" :
 				include_once (dirname (__FILE__). '/album.php');		// nggallery_admin_manage_album

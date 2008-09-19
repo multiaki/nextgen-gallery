@@ -7,7 +7,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		if (isset($_POST['resetdefault'])) {	
 			check_admin_referer('ngg_uninstall');
 						
-			include_once (NGGFOLDER . "/admin/install.php");
+			include_once ( dirname (__FILE__).  '/install.php');
 			
 			ngg_default_options();
 			$ngg->load_options();

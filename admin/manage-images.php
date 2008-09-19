@@ -2,12 +2,12 @@
 
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {	die('You are not allowed to call this page directly.');}
 
-function nggallery_picturelist($hideThumbs = false,$showTags = false) {
+function nggallery_picturelist() {
 // *** show picture list
 	global $wpdb, $user_ID, $ngg;
 	
 	// GET variables
-	$act_gid = (int) $_GET['gid'];
+	$act_gid = $ngg->manage_page->gid;
 	
 	// get gallery values
 	$act_gallery = nggGalleryDAO::find_gallery($act_gid);
@@ -117,8 +117,8 @@ jQuery(document).ready( function() {
 <form id="updategallery" class="nggform" method="POST" action="<?php echo 'admin.php?page=nggallery-manage-gallery&amp;mode=edit&amp;gid='.$act_gid ?>" accept-charset="utf-8">
 <?php wp_nonce_field('ngg_updategallery') ?>
 
-<?php if ($showTags) { ?><input type="hidden" name="showTags" value="true" /><?php } ?>
-<?php if ($hideThumbs) { ?><input type="hidden" name="hideThumbs" value="true" /><?php } ?>
+<?php if ($ngg->manage_page->showTags) { ?><input type="hidden" name="showTags" value="true" /><?php } ?>
+<?php if ($ngg->manage_page->hideThumbs) { ?><input type="hidden" name="hideThumbs" value="true" /><?php } ?>
 <div id="poststuff">
 	<?php wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>
 	<div id="gallerydiv" class="postbox <?php echo postbox_classes('gallerydiv', 'ngg-manage-gallery'); ?>" >
@@ -170,7 +170,7 @@ jQuery(document).ready( function() {
 					<th align="right"><?php _e('Author', 'nggallery'); ?>:</th>
 					<th align="left"> 
 					<?php
-						$editable_ids = ngg_get_editable_user_ids( $user_ID );
+						$editable_ids = $ngg->manage_page->get_editable_user_ids( $user_ID );
 						if ( $editable_ids && count( $editable_ids ) > 1 )
 							wp_dropdown_users( array('include' => $editable_ids, 'name' => 'author', 'selected' => empty( $act_gallery->author ) ? 0 : $act_gallery->author ) ); 
 						else
@@ -382,8 +382,8 @@ if($picturelist) {
 	<div id="tags" style="display: none;" >
 		<form id="form-tags" method="POST" accept-charset="utf-8">
 		<?php wp_nonce_field('ngg_thickbox_form') ?>
-		<?php if ($showTags) { ?><input type="hidden" name="showTags" value="true" /><?php } ?>
-		<?php if ($hideThumbs) { ?><input type="hidden" name="hideThumbs" value="true" /><?php } ?>
+		<?php if ($ngg->manage_page->showTags) { ?><input type="hidden" name="showTags" value="true" /><?php } ?>
+		<?php if ($ngg->manage_page->hideThumbs) { ?><input type="hidden" name="hideThumbs" value="true" /><?php } ?>
 		<input type="hidden" id="tags_imagelist" name="TB_imagelist" value="" />
 		<input type="hidden" id="tags_bulkaction" name="TB_bulkaction" value="" />
 		<table width="100%" border="0" cellspacing="3" cellpadding="3" >
@@ -406,8 +406,8 @@ if($picturelist) {
 	<div id="selectgallery" style="display: none;" >
 		<form id="form-select-gallery" method="POST" accept-charset="utf-8">
 		<?php wp_nonce_field('ngg_thickbox_form') ?>
-		<?php if ($showTags) { ?><input type="hidden" name="showTags" value="true" /><?php } ?>
-		<?php if ($hideThumbs) { ?><input type="hidden" name="hideThumbs" value="true" /><?php } ?>
+		<?php if ($ngg->manage_page->showTags) { ?><input type="hidden" name="showTags" value="true" /><?php } ?>
+		<?php if ($ngg->manage_page->hideThumbs) { ?><input type="hidden" name="hideThumbs" value="true" /><?php } ?>
 		<input type="hidden" id="selectgallery_imagelist" name="TB_imagelist" value="" />
 		<input type="hidden" id="selectgallery_bulkaction" name="TB_bulkaction" value="" />
 		<table width="100%" border="0" cellspacing="3" cellpadding="3" >
@@ -448,18 +448,20 @@ if($picturelist) {
 
 // define the columns to display, the syntax is 'internal name' => 'display name'
 function ngg_manage_gallery_columns() {
+	global $ngg;
+	
 	$gallery_columns = array();
 	
 	$gallery_columns['cb'] = '<input name="checkall" type="checkbox" onclick="checkAll(document.getElementById(\'updategallery\'));" />';
 	$gallery_columns['id'] = __('ID');
 	
-	if ( !ngg_hide_thumb() ) {
+	if ( !$ngg->manage_page->hideThumbs ) {
 		$gallery_columns['thumbnail'] = __('Thumbnail', 'nggallery');
 	} else {
 		$gallery_columns['filename'] = __('File name', 'nggallery');
 	}
 	
-	if ( !ngg_show_tags() )	{
+	if ( !$ngg->manage_page->showTags )	{
 		$gallery_columns['desc_alt_title'] = __('Description', 'nggallery') . '/' . __('Alt &amp; Title Text', 'nggallery');
 		// $gallery_columns['description'] = __('Description', 'nggallery');
 		// $gallery_columns['alt_title_text'] = __('Alt &amp; Title Text', 'nggallery');

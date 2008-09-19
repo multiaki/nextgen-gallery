@@ -2,10 +2,10 @@
 
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { 	die('You are not allowed to call this page directly.'); }
 
-function nggallery_manage_gallery_main() {
 // *** show main gallery list
+function nggallery_manage_gallery_main() {
 
-	global $wpdb;
+	global $wpdb, $ngg;
 	
 	?>
 	<div class="wrap">

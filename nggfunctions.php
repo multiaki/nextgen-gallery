@@ -2,6 +2,14 @@
 
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
 
+/**
+ * nggShowSlideshow()
+ * 
+ * @param integer $galleryID
+ * @param integer $irWidth
+ * @param integer $irHeight
+ * @return the content
+ */
 function nggShowSlideshow($galleryID, $irWidth, $irHeight) {
 	
 	require_once (dirname (__FILE__).'/lib/swfobject.php');
@@ -61,8 +69,13 @@ function nggShowSlideshow($galleryID, $irWidth, $irHeight) {
 	return $out;	
 }
 
-/**********************************************************/
-function nggShowGallery($galleryID) {
+/**
+ * nggShowGallery()
+ * 
+ * @param int $galleryID
+ * @return the content
+ */
+function nggShowGallery( $galleryID ) {
 	
 	global $wpdb, $nggRewrite;
 	
@@ -115,11 +128,13 @@ function nggShowGallery($galleryID) {
 	return $out;
 }
 
-/**********************************************************/
-/** 
-* @array  	$picturelist
-* @int		$galleryID
-**/
+/**
+ * nggCreateGallery()
+ * 
+ * @param mixed $picturelist
+ * @param bool $galleryID
+ * @return the content
+ */
 function nggCreateGallery($picturelist, $galleryID = false) {
     global $nggRewrite;
     
@@ -217,7 +232,14 @@ function nggCreateGallery($picturelist, $galleryID = false) {
 	return $out;
 }
 
-/**********************************************************/
+/**
+ * nggShowAlbum()
+ * 
+ * @param int $albumID
+ * @param string $mode
+ * @param string $sortorder
+ * @return the content
+ */
 function nggShowAlbum($albumID, $mode = "extend", $sortorder = "") {
 	
 	global $wpdb;
@@ -252,7 +274,14 @@ function nggShowAlbum($albumID, $mode = "extend", $sortorder = "") {
 	return $out;
 }
 
-/**********************************************************/
+/**
+ * nggCreateAlbum()
+ * 
+ * @param int $galleriesID
+ * @param string $mode
+ * @param integer $albumID
+ * @return the content
+ */
 function nggCreateAlbum( $galleriesID, $mode = "extend", $albumID = 0) {
 	// create a gallery overview div
 	
@@ -319,11 +348,12 @@ function nggCreateAlbum( $galleriesID, $mode = "extend", $albumID = 0) {
  	
 }
 
-/**********************************************************/
-/** 
-* show the ImageBrowser
-* @galleryID	int / gallery id
-*/
+/**
+ * nggShowImageBrowser()
+ * 
+ * @param int $galleryID
+ * @return the content
+ */
 function nggShowImageBrowser($galleryID) {
 	
 	global $wpdb;
@@ -342,10 +372,12 @@ function nggShowImageBrowser($galleryID) {
 	
 }
 
-/**********************************************************/
-/** 
-* @array  	$picarray with pid
-**/
+/**
+ * nggCreateImageBrowser()
+ * 
+ * @param array $picarray with pid
+ * @return the content
+ */
 function nggCreateImageBrowser($picarray) {
 
 	global $nggRewrite;
@@ -379,7 +411,10 @@ function nggCreateImageBrowser($picarray) {
 	
 	// get the picture data
 	$picture = nggImageDAO::find_image($act_pid);
-	
+	// if we didn't get some data, exit now
+	if ($picture == null)
+		return;
+		
 	// add more variables for render output
 	$picture->href_link = $picture->get_href_link();
 	$picture->previous_image_link = $nggRewrite->get_permalink(array ('pid' => $back_pid));
@@ -402,29 +437,33 @@ function nggCreateImageBrowser($picarray) {
 	
 }
 
-/**********************************************************/
-/** 
-* create a gallery based on the tags
-* @imageID		db-ID of the image
-* @width 		width of the image
-* @height 		height of the image
-* @mode 		none, watermark, web20
-* @float 		none, left, right
-*/
-function nggSinglePicture($imageID,$width=250,$height=250,$mode="",$float="") {
+/**
+ * nggSinglePicture() - create a gallery based on the tags
+ * 
+ * @param int $imageID, db-ID of the image
+ * @param int $width, width of the image
+ * @param int $height, height of the image
+ * @param string $mode could be none, watermark, web20
+ * @param string $float could be none, left, right
+ * @return the content
+ */
+function nggSinglePicture($imageID, $width=250, $height=250, $mode='', $float='') {
 	global $wpdb, $post;
 	
 	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
 	
 	// remove the comma
-	$float = ltrim($float,',');
-	$mode = ltrim($mode,',');
-	$width = ltrim($width,',');
-	$height = ltrim($height,',');
+	$float  = ltrim( $float, ',' );
+	$mode   = ltrim( $mode, ',' );
+	$width  = ltrim( $width, ',' );
+	$height = ltrim( $height, ',' );
 
 	// get picturedata
 	$picture = nggImageDAO::find_image($imageID);
-	
+	// if we didn't get some data, exit now
+	if ($picture == null)
+		return;
+			
 	// add float to img
 	if (!empty($float)) {
 		switch ($float) {
@@ -460,11 +499,12 @@ function nggSinglePicture($imageID,$width=250,$height=250,$mode="",$float="") {
 	return $out;
 }
 
-/**********************************************************/
-/** 
-* create a gallery based on the tags
-* @taglist		list of tags as csv
-*/
+/**
+ * nggShowGalleryTags() - create a gallery based on the tags
+ * 
+ * @param mixed $taglist list of tags as csv
+ * @return the content
+ */
 function nggShowGalleryTags($taglist) {	
 	global $wpdb;
 	
@@ -498,14 +538,13 @@ function nggShowGalleryTags($taglist) {
 	return $out;
 }
 
-
-/**********************************************************/
-
-/** 
-* create a gallery based on the tags
-* @taglist		list of tags as csv
-* @maxImages	limit the number of images to show
-*/
+/**
+ * nggShowRelatedGallery() - create a gallery based on the tags
+ * 
+ * @param string $taglist list of tags as csv
+ * @param integer $maxImages limit the number of images to show
+ * @return the content
+ */ 
 function nggShowRelatedGallery($taglist, $maxImages = 0) {
 	global $wpdb;
 	
@@ -544,11 +583,12 @@ function nggShowRelatedGallery($taglist, $maxImages = 0) {
 	return $out;
 }
 
-/**********************************************************/
-/** 
-* create a gallery based on the tags
-* @taglist		list of tags as csv
-*/
+/**
+ * nggShowAlbumTags() - create a gallery based on the tags
+ * 
+ * @param string $taglist list of tags as csv
+ * @return the content
+ */
 function nggShowAlbumTags($taglist) {
 	
 	global $wpdb, $nggRewrite;
@@ -575,9 +615,8 @@ function nggShowAlbumTags($taglist) {
 	$picturelist = nggTags::get_album_images($taglist);
 
 	// go on if not empty
-	if (empty($picturelist)) {
+	if ( empty($picturelist) )
 		return;
-	}
 	
 	// re-structure the object that we can use the standard template	
 	foreach ($picturelist as $key => $picture) {
@@ -598,8 +637,12 @@ function nggShowAlbumTags($taglist) {
 }
 
 /**
-* return related images based on category or tags
-*/
+ * nggShowRelatedImages() - return related images based on category or tags
+ * 
+ * @param string $type
+ * @param integer $maxImages
+ * @return the content
+ */
 function nggShowRelatedImages($type = '', $maxImages = 0) {
 	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
 
@@ -639,10 +682,12 @@ function nggShowRelatedImages($type = '', $maxImages = 0) {
 	return $out;
 }
 
-/**********************************************************/
 /**
-* function for theme authors
-*/
+ * the_related_images()
+ * function for theme authors
+ * 
+ * @return void
+ */
 function the_related_images($type = 'tags', $maxNumbers = 7) {
 	echo nggShowRelatedImages($type, $maxNumbers);
 }

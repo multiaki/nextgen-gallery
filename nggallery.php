@@ -51,6 +51,7 @@ class nggLoader {
 	var $minium_WPMU = '2.6';
 	var $updateURL   = 'http://nextgen.boelinger.com/version.php';
 	var $options     = '';
+	var $manage_page;
 	
 	function nggLoader() {
 
@@ -60,7 +61,11 @@ class nggLoader {
 			
 		// Get some constants first
 		$this->define_constant();
-		
+		$this->define_tables();
+		$this->register_taxonomy();
+		$this->load_options();
+		$this->load_dependencies();
+				
 		// Init options & tables during activation & deregister init option
 		register_activation_hook( dirname(__FILE__) . '/nggallery.php', array(&$this, 'activate') );
 		register_deactivation_hook( dirname(__FILE__) . '/nggallery.php', array(&$this, 'deactivate') );	
@@ -74,12 +79,6 @@ class nggLoader {
 
 		global $nggRewrite;
 				
-		// define some variables
-		$this->define_tables();
-		$this->register_taxonomy();
-		$this->load_options();
-		$this->load_dependencies();
-
 		// Load the language file
 		add_action('init', array(&$this, 'load_textdomain') );
 		
@@ -245,7 +244,7 @@ class nggLoader {
 		if ( is_admin() ) {	
 			require_once (dirname (__FILE__)."/admin/admin.php");
 			require_once (dirname (__FILE__)."/admin/media-upload.php");
-			$nggAdminPanel = new nggAdminPanel();
+			$this->nggAdminPanel = new nggAdminPanel();
 			
 		// Load frontend libraries							
 		} else {
@@ -321,6 +320,7 @@ class nggLoader {
 	}
 }
 	// Let's start the holy plugin
+	global $ngg;
 	$ngg = new nggLoader();
 }
 
