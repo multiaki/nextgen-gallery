@@ -38,7 +38,7 @@ if($gallerylist) {
 			<th scope="row"><?php echo $gid; ?></th>
 			<td>
 				<?php if(nggAdmin::can_manage_this_gallery($gallery->author)) { ?>
-					<a href="<?php echo wp_nonce_url("admin.php?page=nggallery-manage-gallery&amp;mode=edit&amp;gid=".$gid, 'ngg_editgallery')?>" class='edit' title="<?php _e('Edit') ?>" >
+					<a href="<?php echo wp_nonce_url( $ngg->manage_page->base_page . "&amp;mode=edit&amp;gid=" . $gid, 'ngg_editgallery')?>" class='edit' title="<?php _e('Edit') ?>" >
 						<?php echo $gallery->title; ?>
 					</a>
 				<?php } else { ?>
@@ -51,7 +51,7 @@ if($gallerylist) {
 			<td><?php echo $counter; ?></td>
 			<td>
 				<?php if(nggAdmin::can_manage_this_gallery($gallery->author)) : ?>
-					<a href="<?php echo wp_nonce_url("admin.php?page=nggallery-manage-gallery&amp;mode=delete&amp;gid=".$gid, 'ngg_editgallery')?>" class="delete" onclick="javascript:check=confirm( '<?php _e("Delete this gallery ?",'nggallery')?>');if(check==false) return false;"><?php _e('Delete') ?></a>
+					<a href="<?php echo wp_nonce_url( $ngg->manage_page->base_page . "&amp;mode=delete&amp;gid=" . $gid, 'ngg_editgallery')?>" class="delete" onclick="javascript:check=confirm( '<?php _e("Delete this gallery ?",'nggallery')?>');if(check==false) return false;"><?php _e('Delete') ?></a>
 				<?php endif; ?>
 			</td>
 		</tr>

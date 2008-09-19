@@ -237,9 +237,11 @@ class nggLoader {
 		require_once (dirname (__FILE__).'/lib/ngg-meta.lib.php');
 		require_once (dirname (__FILE__).'/lib/ngg-tags.lib.php');
 		require_once (dirname (__FILE__).'/lib/ngg-media-rss.lib.php');
-		require_once (dirname (__FILE__).'/admin/ajax.php');
 		require_once (dirname (__FILE__).'/widgets/widgets.php');
-
+		
+		if (DOING_AJAX)
+			require_once (dirname (__FILE__).'/admin/ajax.php');
+					
 		// Load backend libraries
 		if ( is_admin() ) {	
 			require_once (dirname (__FILE__)."/admin/admin.php");

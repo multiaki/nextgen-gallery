@@ -231,7 +231,7 @@ class nggAdmin{
 					$thumb->resize($ngg->options['thumbwidth'], 0);
 					// get optimal y startpos
 					$ypos = ($thumb->currentDimensions['height'] - $ngg->options['thumbheight']) / 2;
-					$thumb->crop(0, $ypos, $ngg->options['thumbwidth']);	
+					$thumb->crop(0, $ypos, $ngg->options['thumbwidth'],$ngg->options['thumbheight']);	
 				} else {
 					$thumb->resize(0,$ngg->options['thumbheight']);	
 					// get optimal x startpos
