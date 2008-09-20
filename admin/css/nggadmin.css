@@ -22,6 +22,63 @@ div.dashboard-widget-content .settings li {
 	padding:2px;
 }
 
+/* Right Now (not available in WP2.7) */
+
+#rightnow {
+	border-width: 1px;
+	border-style: solid;
+	padding: 2px;
+	margin-top: 10px;
+	margin-right: 7px;
+}
+
+#rightnow .reallynow {
+	padding: 6px;
+	font-size: 15px;
+	line-height: 2;
+	margin: 0;
+}
+
+#rightnow .rbutton {
+	font-weight: normal;
+	padding: 6px;
+	border-bottom: none;
+	-moz-border-radius: 2px;
+	-khtml-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	text-decoration: none;
+}
+
+#rightnow .reallynow span {
+	display: block;
+	text-align: left;
+	float: left;
+	padding: 0 6px;
+}
+
+#rightnow .reallynow a {
+	display: block;
+	text-align: right;
+	float: right;
+	padding: 0 6px;
+	font-size: 14px;
+	margin: 1px 6px 0 0;
+}
+
+#rightnow .youhave {
+	font-size:  14px;
+	padding: 10px;
+}
+
+#rightnow h3, #rightnow p {
+	padding: 0 10px;
+}
+
+#rightnow a {
+	font-weight: bold;
+}
+
 /* SETTINGS FOR THE OPTIONS TABLE */ 
 .form-table th {
 	width:33%;

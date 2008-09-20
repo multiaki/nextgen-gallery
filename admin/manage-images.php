@@ -101,8 +101,11 @@ function checkSelected() {
 jQuery(document).ready( function() {
 	// close postboxes that should be closed
 	jQuery('.if-js-closed').removeClass('if-js-closed').addClass('closed');
-	// postboxes
-	add_postbox_toggles('ngg-manage-gallery');
+
+	if (postboxes)
+		postboxes.add_postbox_toggles('ngg-manage-gallery'); // WP 2.7
+	else
+		add_postbox_toggles('ngg-manage-gallery'); 	// WP 2.6
 });
 
 //-->
