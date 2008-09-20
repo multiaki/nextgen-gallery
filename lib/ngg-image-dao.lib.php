@@ -242,7 +242,7 @@ class nggImageDAO {
 			$exclude_clause = '';
 		}
 		
-		$offset = $page * $limit;
+		$offset = (int) $page * $limit;
 		
 		$result = array();
 		$gallery_cache = array();
@@ -272,6 +272,38 @@ class nggImageDAO {
 		} 
 		
 		return $result;
+	}
+	
+	/**
+	 * nggImageDAO::get_random_images() - Get an random image from one ore more gally
+	 * 
+	 * @param integer $number of images
+	 * @param integer $galleryID optional a Gallery
+	 * @return A nggImage object representing the image (null if not found)
+	 */
+	function get_random_images($number = 1, $galleryID = 0) {
+		global $wpdb;
+		
+		$number = (int) $number;
+		$galleryID = (int) $galleryID;
+		$images = array();
+		
+		// Query database
+		if ($galleryID == 0)
+			$result = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE tt.exclude != 1 ORDER by rand() limit $number");
+		else
+			$result = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = $galleryID AND tt.exclude != 1 ORDER by rand() limit {$number}");
+		
+		// Return the object from the query result
+		if ($result) {
+			foreach ($result as $row) {
+				$images[] = new nggImage($row, $row);
+			}
+			return $images;
+		} 
+			
+		
+		return null;
 	}
 }
 

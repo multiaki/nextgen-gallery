@@ -9,32 +9,32 @@
 class nggImage{
 	
 	/**** Public variables ****/	
-	var $errmsg			=	"";			// Error message to display, if any
+	var $errmsg			=	'';			// Error message to display, if any
 	var $error			=	FALSE; 		// Error state
-	var $imageURL		=	"";			// URL Path to the image
-	var $thumbURL		=	"";			// URL Path to the thumbnail
-	var $imagePath		=	"";			// Server Path to the image
-	var $thumbPath		=	"";			// Server Path to the thumbnail
-	var $href			=	"";			// A href link code
+	var $imageURL		=	'';			// URL Path to the image
+	var $thumbURL		=	'';			// URL Path to the thumbnail
+	var $imagePath		=	'';			// Server Path to the image
+	var $thumbPath		=	'';			// Server Path to the thumbnail
+	var $href			=	'';			// A href link code
 	
 	// TODO: remove thumbPrefix and thumbFolder (constants)
-	var $thumbPrefix	=	"";			// FolderPrefix to the thumbnail
-	var $thumbFolder	=	"";			// Foldername to the thumbnail
+	var $thumbPrefix	=	'';			// FolderPrefix to the thumbnail
+	var $thumbFolder	=	'';			// Foldername to the thumbnail
 	
 	/**** Image Data ****/
 	var $galleryid		=	0;			// Gallery ID
 	var $pid			=	0;			// Image ID	
-	var $filename		=	"";			// Image filename
-	var $description	=	"";			// Image description	
-	var $alttext		=	"";			// Image alttext	
-	var $exclude		=	"";			// Image exclude
-	var $thumbcode		=	"";			// Image effect code
+	var $filename		=	'';			// Image filename
+	var $description	=	'';			// Image description	
+	var $alttext		=	'';			// Image alttext	
+	var $exclude		=	'';			// Image exclude
+	var $thumbcode		=	'';			// Image effect code
 
 	/**** Gallery Data ****/
 	var $gallery 		= 	null;		// TODO: remove the fields below
-	var $name			=	"";			// Gallery name
-	var $path			=	"";			// Gallery path	
-	var $title			=	"";			// Gallery title
+	var $name			=	'';			// Gallery name
+	var $path			=	'';			// Gallery path	
+	var $title			=	'';			// Gallery title
 	var $pageid			=	0;			// Gallery page ID
 	var $previewpic		=	0;			// Gallery preview pic		
 

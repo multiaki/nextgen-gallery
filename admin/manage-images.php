@@ -7,7 +7,9 @@ function nggallery_picturelist() {
 	global $wpdb, $user_ID, $ngg;
 	
 	// GET variables
-	$act_gid = $ngg->manage_page->gid;
+	$act_gid    = $ngg->manage_page->gid;
+	$showTags   = $ngg->manage_page->showTags;
+	$hideThumbs = $ngg->manage_page->hideThumbs;
 	
 	// get gallery values
 	$act_gallery = nggGalleryDAO::find_gallery($act_gid);
@@ -16,14 +18,11 @@ function nggallery_picturelist() {
 		nggGalleryPlugin::show_error(__('Gallery not found.', 'nggallery'));
 		return;
 	}
-
-	//TODO:Redundant, Redundant, Redundant... REWORK
-	// set gallery url
-	$act_gallery_url 	= get_option ('siteurl')."/".$act_gallery->path."/";
-	$act_thumbnail_url 	= get_option ('siteurl')."/".$act_gallery->path.nggGalleryPlugin::get_thumbnail_folder($act_gallery->path, FALSE);
-	$act_thumb_prefix   = "thumbs_" ;
-	$act_thumb_abs_src	= WINABSPATH.$act_gallery->path.nggGalleryPlugin::get_thumbnail_folder($act_gallery->path, FALSE);
+	// get the list of images
+	$picturelist = nggImageDAO::find_images_in_gallery($act_gallery, $ngg->options['galSort'], $ngg->options['galSortDir']);
+	// get the current author
 	$act_author_user    = get_userdata( (int) $act_gallery->author );
+
 ?>
 
 <script type="text/javascript"> 
@@ -75,7 +74,7 @@ function getNumChecked(form)
 	return num;
 }
 
-// this function checl for a the number of seleted images, sumbmit false when no one selected
+// this function check for a the number of selected images, sumbmit false when no one selected
 function checkSelected() {
 
 	var numchecked = getNumChecked(document.getElementById('updategallery'));
@@ -102,12 +101,12 @@ jQuery(document).ready( function() {
 	// close postboxes that should be closed
 	jQuery('.if-js-closed').removeClass('if-js-closed').addClass('closed');
 
-	if (postboxes)
+	if (typeof postboxes != "undefined")
 		postboxes.add_postbox_toggles('ngg-manage-gallery'); // WP 2.7
 	else
 		add_postbox_toggles('ngg-manage-gallery'); 	// WP 2.6
-});
 
+});
 //-->
 </script>
 
@@ -115,13 +114,13 @@ jQuery(document).ready( function() {
 
 <h2><?php _e('Gallery', 'nggallery') ?> : <?php echo $act_gallery->title; ?></h2>
 
-<br style="clear: both;"/>
+<br style="clear: both;" />
 
-<form id="updategallery" class="nggform" method="POST" action="<?php echo 'admin.php?page=nggallery-manage-gallery&amp;mode=edit&amp;gid='.$act_gid ?>" accept-charset="utf-8">
+<form id="updategallery" class="nggform" method="POST" action="<?php echo $ngg->manage_page->base_page . '&amp;mode=edit&amp;gid=' . $act_gid ?>" accept-charset="utf-8">
 <?php wp_nonce_field('ngg_updategallery') ?>
 
-<?php if ($ngg->manage_page->showTags) { ?><input type="hidden" name="showTags" value="true" /><?php } ?>
-<?php if ($ngg->manage_page->hideThumbs) { ?><input type="hidden" name="hideThumbs" value="true" /><?php } ?>
+<?php if ($showTags) { ?><input type="hidden" name="showTags" value="true" /><?php } ?>
+<?php if ($hideThumbs) { ?><input type="hidden" name="hideThumbs" value="true" /><?php } ?>
 <div id="poststuff">
 	<?php wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>
 	<div id="gallerydiv" class="postbox <?php echo postbox_classes('gallerydiv', 'ngg-manage-gallery'); ?>" >
@@ -155,7 +154,6 @@ jQuery(document).ready( function() {
 						<select name="previewpic" style="width:95%" >
 							<option value="0" ><?php _e('No Picture', 'nggallery') ?></option>
 							<?php
-								$picturelist = nggImageDAO::find_images_in_gallery($act_gallery, $ngg->options['galSort'], $ngg->options['galSortDir']);
 								if(is_array($picturelist)) {
 									foreach($picturelist as $picture) {
 										if ($picture->pid == $act_gallery->previewpic) $selected = 'selected="selected" ';
@@ -287,7 +285,7 @@ if($picturelist) {
 		
 	foreach($picturelist as $picture) {
 
-		$pid     = $picture->pid;
+		$pid     = (int) $picture->pid;
 		$class   = ( $class == 'class="alternate"' ) ? '' : 'class="alternate"';	
 		$exclude = ( $picture->exclude ) ? 'checked="checked"' : '';
 		
@@ -322,7 +320,7 @@ if($picturelist) {
 						</td>
 						<?php						
 					break;
-					case 'desc_alt_title' :
+					case 'alt_title_desc' :
 						?>
 						<td style="width:500px">
 							<input name="alttext[<?php echo $pid ?>]" type="text" style="width:95%; margin-bottom: 2px;" value="<?php echo stripslashes($picture->alttext) ?>" /><br/>
@@ -385,8 +383,8 @@ if($picturelist) {
 	<div id="tags" style="display: none;" >
 		<form id="form-tags" method="POST" accept-charset="utf-8">
 		<?php wp_nonce_field('ngg_thickbox_form') ?>
-		<?php if ($ngg->manage_page->showTags) { ?><input type="hidden" name="showTags" value="true" /><?php } ?>
-		<?php if ($ngg->manage_page->hideThumbs) { ?><input type="hidden" name="hideThumbs" value="true" /><?php } ?>
+		<?php if ($showTags) { ?><input type="hidden" name="showTags" value="true" /><?php } ?>
+		<?php if ($hideThumbs) { ?><input type="hidden" name="hideThumbs" value="true" /><?php } ?>
 		<input type="hidden" id="tags_imagelist" name="TB_imagelist" value="" />
 		<input type="hidden" id="tags_bulkaction" name="TB_bulkaction" value="" />
 		<table width="100%" border="0" cellspacing="3" cellpadding="3" >
@@ -409,8 +407,8 @@ if($picturelist) {
 	<div id="selectgallery" style="display: none;" >
 		<form id="form-select-gallery" method="POST" accept-charset="utf-8">
 		<?php wp_nonce_field('ngg_thickbox_form') ?>
-		<?php if ($ngg->manage_page->showTags) { ?><input type="hidden" name="showTags" value="true" /><?php } ?>
-		<?php if ($ngg->manage_page->hideThumbs) { ?><input type="hidden" name="hideThumbs" value="true" /><?php } ?>
+		<?php if ($showTags) { ?><input type="hidden" name="showTags" value="true" /><?php } ?>
+		<?php if ($hideThumbs) { ?><input type="hidden" name="hideThumbs" value="true" /><?php } ?>
 		<input type="hidden" id="selectgallery_imagelist" name="TB_imagelist" value="" />
 		<input type="hidden" id="selectgallery_bulkaction" name="TB_bulkaction" value="" />
 		<table width="100%" border="0" cellspacing="3" cellpadding="3" >
@@ -444,9 +442,7 @@ if($picturelist) {
 		</form>
 	</div>
 	<!-- /#selectgallery -->
-
 	<?php
-			
 }
 
 // define the columns to display, the syntax is 'internal name' => 'display name'
@@ -465,7 +461,7 @@ function ngg_manage_gallery_columns() {
 	}
 	
 	if ( !$ngg->manage_page->showTags )	{
-		$gallery_columns['desc_alt_title'] = __('Description', 'nggallery') . '/' . __('Alt &amp; Title Text', 'nggallery');
+		$gallery_columns['alt_title_desc'] = __('Alt &amp; Title Text', 'nggallery') . ' / ' . __('Description', 'nggallery');
 		// $gallery_columns['description'] = __('Description', 'nggallery');
 		// $gallery_columns['alt_title_text'] = __('Alt &amp; Title Text', 'nggallery');
 		$gallery_columns['exclude'] = __('exclude', 'nggallery');

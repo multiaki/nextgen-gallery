@@ -24,7 +24,8 @@ function nggallery_manage_gallery_main() {
 			</tr>
 			</thead>
 			<tbody>
-<?php			
+<?php
+			
 $gallerylist = nggGalleryDAO::find_all_galleries('gid', 'asc');
 
 if($gallerylist) {

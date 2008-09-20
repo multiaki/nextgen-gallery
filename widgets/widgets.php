@@ -372,7 +372,8 @@ function ngg_widget_control($widget_args = 1) {
 			if ($exclude == "allow")	
 				$exclude_list = "AND galleryid IN ($list)";
 		}
-
+		
+		//TODO:Too much queries
 		if ( $options[$number]['type'] == "random" ) 
 			$imageList = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures WHERE exclude != 1 $exclude_list ORDER by rand() limit $items");
 		else
@@ -383,6 +384,7 @@ function ngg_widget_control($widget_args = 1) {
 	
 		if (is_array($imageList)){
 			foreach($imageList as $image) {
+				//TODO:Too much queries
 				$image = nggImageDAO::find_image($image->pid);
 				
 				// get the effect code
@@ -431,11 +433,11 @@ function nggSlideshowWidget($galleryID, $width = '', $height = '') {
  *
  * @return echo the widget content
  */
-function nggDisplayRandomImages($number, $width = "75", $height = "50", $exclude = "all", $list = "") {
+function nggDisplayRandomImages($number, $width = '75', $height = '50', $exclude = 'all', $list = '', $show = 'thumbnail') {
 	
 	$options[1] = array('title'=>'', 
 						'items'=>$number,
-						'show'=>'thumbnail' ,
+						'show'=>$show ,
 						'type'=>'random',
 						'width'=>$width, 
 						'height'=>$height, 
@@ -451,11 +453,11 @@ function nggDisplayRandomImages($number, $width = "75", $height = "50", $exclude
  *
  * @return echo the widget content
  */
-function nggDisplayRecentImages($number, $width = "75", $height = "50", $exclude = "all", $list = "") {
+function nggDisplayRecentImages($number, $width = '75', $height = '50', $exclude = 'all', $list = '', $show = 'thumbnail') {
 
 	$options[1] = array('title'=>'', 
 						'items'=>$number,
-						'show'=>'thumbnail' ,
+						'show'=>$show ,
 						'type'=>'recent',
 						'width'=>$width, 
 						'height'=>$height, 
