@@ -20,6 +20,7 @@ function nggallery_picturelist() {
 	}
 	// get the list of images
 	$picturelist = nggImageDAO::find_images_in_gallery($act_gallery, $ngg->options['galSort'], $ngg->options['galSortDir']);
+
 	// get the current author
 	$act_author_user    = get_userdata( (int) $act_gallery->author );
 
@@ -288,6 +289,8 @@ if($picturelist) {
 		$pid     = (int) $picture->pid;
 		$class   = ( $class == 'class="alternate"' ) ? '' : 'class="alternate"';	
 		$exclude = ( $picture->exclude ) ? 'checked="checked"' : '';
+		$date = mysql2date(get_option('date_format'), $picture->imagedate);
+		$time = mysql2date(get_option('time_format'), $picture->imagedate);
 		
 		?>
 		<tr id="picture-<?php echo $pid ?>" <?php echo $class ?> style="text-align:center">
@@ -309,6 +312,7 @@ if($picturelist) {
 							<a href="<?php echo $picture->imageURL; ?>" class="thickbox" title="<?php echo $picture->filename ?>">
 								<?php echo $picture->filename ?>
 							</a>
+							<br /><?php echo $date?>
 						</td>
 						<?php						
 					break;
@@ -317,6 +321,7 @@ if($picturelist) {
 						<td><a href="<?php echo $picture->imageURL; ?>" class="thickbox" title="<?php echo $picture->filename ?>">
 								<img class="thumb" src="<?php echo $picture->thumbURL; ?>" <?php echo $thumbsize ?> />
 							</a>
+							<br /><?php echo $date?>
 						</td>
 						<?php						
 					break;
@@ -455,13 +460,13 @@ function ngg_manage_gallery_columns() {
 	$gallery_columns['id'] = __('ID');
 	
 	if ( !$ngg->manage_page->hideThumbs ) {
-		$gallery_columns['thumbnail'] = __('Thumbnail', 'nggallery');
+		$gallery_columns['thumbnail'] = __('Thumbnail', 'nggallery') . '<br />' . __('Date', 'nggallery');
 	} else {
-		$gallery_columns['filename'] = __('File name', 'nggallery');
+		$gallery_columns['filename'] = __('File name', 'nggallery') . '<br />' . __('Date', 'nggallery');
 	}
 	
 	if ( !$ngg->manage_page->showTags )	{
-		$gallery_columns['alt_title_desc'] = __('Alt &amp; Title Text', 'nggallery') . ' / ' . __('Description', 'nggallery');
+		$gallery_columns['alt_title_desc'] = __('Alt &amp; Title Text', 'nggallery') . '<br />' . __('Description', 'nggallery');
 		// $gallery_columns['description'] = __('Description', 'nggallery');
 		// $gallery_columns['alt_title_text'] = __('Alt &amp; Title Text', 'nggallery');
 		$gallery_columns['exclude'] = __('exclude', 'nggallery');

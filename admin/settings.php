@@ -248,17 +248,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<h2><?php _e('Gallery settings','nggallery'); ?></h2>
 			<form name="galleryform" method="POST" action="<?php echo $filepath.'#gallery'; ?>" >
 			<?php wp_nonce_field('ngg_settings') ?>
-			<input type="hidden" name="page_options" value="galUsejQuery,galNoPages,galImages,galShowSlide,galTextSlide,galTextGallery,galShowOrder,galImgBrowser,galSort,galSortDir" />
+			<input type="hidden" name="page_options" value="galNoPages,galImages,galShowSlide,galTextSlide,galTextGallery,galShowOrder,galImgBrowser,galSort,galSortDir" />
 				<table class="form-table">
-					<!--TODO:  Do better... -->
-					<!--
-					<tr>
-						<th valign="top"><?php //_e('Activate jQuery navigation','nggallery') ?>:</th>
-						<td><input name="galUsejQuery" type="checkbox" value="1" <?php // checked('1', $ngg->options['galUsejQuery']); ?> />
-						<?php //_e('Please note : This is still experimental. Requires the Thickbox effect','nggallery') ?>
-						</td>
-					</tr>
-					-->
 					<tr>
 						<th valign="top"><?php _e('Deactivate gallery page link','nggallery') ?>:</th>
 						<td><input name="galNoPages" type="checkbox" value="1" <?php checked('1', $ngg->options['galNoPages']); ?> />
@@ -299,7 +290,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						<label><input name="galSort" type="radio" value="sortorder" <?php checked('sortorder', $ngg->options['galSort']); ?> /> <?php _e('Custom order', 'nggallery') ;?></label><br />
 						<label><input name="galSort" type="radio" value="pid" <?php checked('pid', $ngg->options['galSort']); ?> /> <?php _e('Image ID', 'nggallery') ;?></label><br />
 						<label><input name="galSort" type="radio" value="filename" <?php checked('filename', $ngg->options['galSort']); ?> /> <?php _e('File name', 'nggallery') ;?></label><br />
-						<label><input name="galSort" type="radio" value="alttext" <?php checked('alttext', $ngg->options['galSort']); ?> /> <?php _e('Alt / Title text', 'nggallery') ;?></label>
+						<label><input name="galSort" type="radio" value="alttext" <?php checked('alttext', $ngg->options['galSort']); ?> /> <?php _e('Alt / Title text', 'nggallery') ;?></label><br />
+						<label><input name="galSort" type="radio" value="imagedate" <?php checked('imagedate', $ngg->options['galSort']); ?> /> <?php _e('Date / Time', 'nggallery') ;?></label>
 						</td>
 					</tr>
 					<tr>

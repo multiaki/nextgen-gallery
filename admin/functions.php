@@ -360,8 +360,7 @@ class nggAdmin{
 					$image_ids[] = $pic_id;
 
 				// add the metadata
-				if ($_POST['addmetadata']) 
-					nggAdmin::import_MetaData($pic_id);
+				nggAdmin::import_MetaData($pic_id);
 					
 			} 
 		} // is_array
@@ -392,8 +391,10 @@ class nggAdmin{
 				// get the caption / description field
 				if (!$description = $meta['caption'])
 					$description = $picture->description;
+				// get the file date/time from exif
+				$timestamp = $meta['timestamp'];
 				// update database
-				$result=$wpdb->query( "UPDATE $wpdb->nggpictures SET alttext = '$alttext', description = '$description'  WHERE pid = $pic_id");
+				$result=$wpdb->query( "UPDATE $wpdb->nggpictures SET alttext = '$alttext', description = '$description', imagedate = '$timestamp'  WHERE pid = $pic_id");
 				// add the tags
 				if ($meta['keywords']) {
 					$taglist = explode(",", $meta['keywords']);
@@ -417,7 +418,8 @@ class nggAdmin{
 		$pdata = new nggMeta($picPath);
 		$meta['title'] = $pdata->get_META('title');		
 		$meta['caption'] = $pdata->get_META('caption');	
-		$meta['keywords'] = $pdata->get_META('keywords');	
+		$meta['keywords'] = $pdata->get_META('keywords');
+		$meta['timestamp'] = $pdata->get_date_time();	
 		
 		return $meta;
 		

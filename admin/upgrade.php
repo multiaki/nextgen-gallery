@@ -45,8 +45,8 @@ function ngg_upgrade() {
 			$wpdb->query("ALTER TABLE ".$nggallery." CHANGE author author BIGINT(20) NOT NULL DEFAULT '0'");
 		}
 
-		// v0.95 -> v1.00 
-		if (version_compare($installed_ver, '1.00', '<')) {
+		// v0.95 -> v0.99 
+		if (version_compare($installed_ver, '0.96', '<')) {
 			// Convert into WordPress Core taxonomy scheme
 			ngg_convert_tags();
 			// Drop tables, we don't need them anymore
@@ -58,6 +58,12 @@ function ngg_upgrade() {
 			$role = get_role('administrator');
 			$role->add_cap('NextGEN Manage tags');
 		}
+		
+		if (version_compare($installed_ver, '0.97', '<')) {
+			$wpdb->query("ALTER TABLE ".$nggpictures." ADD imagedate DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER alttext");
+			ngg_import_date_time();
+		}
+		
 		update_option( "ngg_db_version", NGG_DBVERSION );
 		return __('Update database structure', 'nggallery');
 	}
@@ -127,6 +133,25 @@ function ngg_convert_filestructure() {
 			echo "</div>";
 		}
 	}
+}
+
+/**
+ * ngg_import_date_time() - Read the timestamp from exif and instert it into the database
+ * 
+ * @return void
+ */
+function ngg_import_date_time() {
+	global $wpdb;
+	
+	$imagelist = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid ORDER BY tt.pid ASC");
+	if ( is_array($imagelist) ) {
+		foreach ($imagelist as $image) {
+			$picture = new nggImage($image, $image);
+			$meta = new nggMeta($picture->imagePath);
+			$date = $meta->get_date_time();
+			$wpdb->query("UPDATE $wpdb->nggpictures SET imagedate = '$date' WHERE pid = '$picture->pid'");
+		}		
+	}	
 }
 
 /**

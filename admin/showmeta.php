@@ -34,7 +34,8 @@ $xmpdata = $meta->get_XMP();
 <link rel="stylesheet" href="<?php echo get_option( 'siteurl' ) ?>/wp-admin/wp-admin.css?version=<?php bloginfo('version'); ?>" type="text/css" />
 <style type="text/css">
 	#TB_title{
-		background-color:#E5F3FF !important;
+		background-color:#222222;
+		color:#CFCFCF;
 	}
 </style>
 </head>
@@ -42,7 +43,7 @@ $xmpdata = $meta->get_XMP();
 
 	<!-- EXIF DATA -->
 	<fieldset class="options nggallery">
-	<legend><?php _e('EXIF Data','nggallery'); ?></legend>
+	<h3><?php _e('EXIF Data','nggallery'); ?></h3>
 	<?php if ($exifdata) { ?>
 		<table id="the-list-x" width="100%" cellspacing="3" cellpadding="3">
 			<thead>
@@ -67,7 +68,7 @@ $xmpdata = $meta->get_XMP();
 	<!-- IPTC DATA -->
 	<?php if ($iptcdata) { ?>
 	<fieldset class="options nggallery">
-	<legend><?php _e('IPTC Data','nggallery'); ?></legend>
+	<h3><?php _e('IPTC Data','nggallery'); ?></h3>
 		<table id="the-list-x" width="100%" cellspacing="3" cellpadding="3">
 			<thead>
 				<tr>
@@ -91,7 +92,7 @@ $xmpdata = $meta->get_XMP();
 	<!-- XMP DATA -->
 	<?php if ($xmpdata) { ?>
 	<fieldset class="options nggallery">
-	<legend><?php _e('XMP Data','nggallery'); ?></legend>
+	<h3><?php _e('XMP Data','nggallery'); ?></h3>
 		<table id="the-list-x" width="100%" cellspacing="3" cellpadding="3">
 			<thead>
 				<tr>

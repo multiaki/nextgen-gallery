@@ -248,7 +248,7 @@ class nggMeta{
 			$this->xmp_array  	= array();	// The returned array
 			$stack        		= array();	// tmp array used for stacking
 		 	$list_array   		= array();	// tmp array for list elements
-		 	$list_element 		= false;		// rdf:li indicator
+		 	$list_element 		= false;	// rdf:li indicator
 		 	  
 			foreach($values as $val) {
 				
@@ -404,6 +404,27 @@ class nggMeta{
 		return($key);
 
 	}	
+
+	function get_date_time() {
+
+		// get exif - data
+		if ( $this->exif_data ) {
+			$date_time = $this->exif_data['EXIF']['DateTimeDigitized'];
+			// if we didn't get the correct exif value we take filetime
+			if ($date_time == null)
+				$date_time = $this->exif_data['FILE']['FileDateTime'];
+			else
+				$date_time = $this->exif_date2ts($date_time);
+		} else {
+			// if no other date available, get the filetime
+			$date_time = @filectime($this->imagePath);	
+		}
+		
+		// Return the MySQL format 
+		$date_time = date( 'Y-m-d H:i:s', $date_time );
+
+		return $date_time;
+	}
 
 }
 

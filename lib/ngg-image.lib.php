@@ -27,6 +27,7 @@ class nggImage{
 	var $filename		=	'';			// Image filename
 	var $description	=	'';			// Image description	
 	var $alttext		=	'';			// Image alttext	
+	var $imagedate		=	'';			// Image date/time	
 	var $exclude		=	'';			// Image exclude
 	var $thumbcode		=	'';			// Image effect code
 
@@ -69,7 +70,7 @@ class nggImage{
 		$this->imageURL		= get_option ('siteurl') . "/" . $this->path . "/" . $this->filename;
 		$this->thumbURL 	= get_option ('siteurl') . "/" . $this->path . $this->thumbFolder . $this->thumbPrefix . $this->filename;
 		$this->imagePath	= WINABSPATH.$this->path . "/" . $this->filename;
-		$this->thumbPath	= WINABSPATH.$this->path . "/" . $this->thumbFolder . $this->thumbPrefix . $this->filename;
+		$this->thumbPath	= WINABSPATH.$this->path . $this->thumbFolder . $this->thumbPrefix . $this->filename;
 		
 		// Get tags only if necessary
 		//--
