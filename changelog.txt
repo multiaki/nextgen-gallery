@@ -2,6 +2,7 @@ NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
 V1.00
+- NEW : Added a presort option to sort easier the images
 - NEW : Added Date/Time field to database and import it from EXIF, new sort option
 - NEW : Multi Widgets to show links to Media RSS feeds
 - NEW : PicLens support for galleries

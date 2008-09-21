@@ -255,16 +255,16 @@ jQuery(document).ready( function() {
 		<?php foreach($gallery_columns as $gallery_column_key => $column_display_name) {
 			switch ($gallery_column_key) {
 				case 'cb' :
-					$class = ' class="check-column"';
+					$class = ' class="check-column;"';
 				break;
 				case 'tags' :
-					$class = ' style="width:70%"';
+					$class = ' style="width:70%;"';
 				break;
 				case 'action' :
-					$class = ' colspan="3" style="text-align: center"';
+					$class = ' colspan="3" style="text-align: center;"';
 				break;
 				default : 
-					$class = ' style="text-align: center"';
+					$class = ' style="text-align: center;"';
 			}
 		?>
 			<th scope="col"<?php echo $class; ?>><?php echo $column_display_name; ?></th>
@@ -303,7 +303,7 @@ if($picturelist) {
 					break;
 					case 'id' :
 						?>
-						<td scope="row" style="text-align: center"><?php echo $pid ?></td>
+						<td class="id column-id" scope="row" style="text-align: center"><?php echo $pid ?></td>
 						<?php
 					break;
 					case 'filename' :
@@ -318,7 +318,7 @@ if($picturelist) {
 					break;
 					case 'thumbnail' :
 						?>
-						<td><a href="<?php echo $picture->imageURL; ?>" class="thickbox" title="<?php echo $picture->filename ?>">
+						<td class="thumbnail column-thumbnail"><a href="<?php echo $picture->imageURL; ?>" class="thickbox" title="<?php echo $picture->filename ?>">
 								<img class="thumb" src="<?php echo $picture->thumbURL; ?>" <?php echo $thumbsize ?> />
 							</a>
 							<br /><?php echo $date?>
@@ -327,7 +327,7 @@ if($picturelist) {
 					break;
 					case 'alt_title_desc' :
 						?>
-						<td style="width:500px">
+						<td class="altdesc column-altdesc" style="width:500px">
 							<input name="alttext[<?php echo $pid ?>]" type="text" style="width:95%; margin-bottom: 2px;" value="<?php echo stripslashes($picture->alttext) ?>" /><br/>
 							<textarea name="description[<?php echo $pid ?>]" style="width:95%; margin-top: 2px;" rows="2" ><?php echo stripslashes($picture->description) ?></textarea>
 						</td>
@@ -335,24 +335,24 @@ if($picturelist) {
 					break;
 					case 'description' :
 						?>
-						<td><textarea name="description[<?php echo $pid ?>]" class="textarea1" cols="42" rows="2" ><?php echo stripslashes($picture->description) ?></textarea></td>
+						<td class="description column-description"><textarea name="description[<?php echo $pid ?>]" class="textarea1" cols="42" rows="2" ><?php echo stripslashes($picture->description) ?></textarea></td>
 						<?php						
 					break;
 					case 'alt_title_text' :
 						?>
-						<td><input name="alttext[<?php echo $pid ?>]" type="text" size="30" value="<?php echo stripslashes($picture->alttext) ?>" /></td>
+						<td class="alttext column-alttext"><input name="alttext[<?php echo $pid ?>]" type="text" size="30" value="<?php echo stripslashes($picture->alttext) ?>" /></td>
 						<?php						
 					break;
 					case 'exclude' :
 						?>
-						<td><input name="exclude[<?php echo $pid ?>]" type="checkbox" value="1" <?php echo $exclude ?> /></td>
+						<td class="exclude column-exclude"><input name="exclude[<?php echo $pid ?>]" type="checkbox" value="1" <?php echo $exclude ?> /></td>
 						<?php						
 					break;
 					case 'tags' :
 						$picture->tags = wp_get_object_terms($pid, 'ngg_tag', 'fields=names');
 						if (is_array ($picture->tags) ) $picture->tags = implode(', ', $picture->tags); 
 						?>
-						<td style="width:500px"><textarea name="tags[<?php echo $pid ?>]" style="width:95%;" rows="2"><?php echo $picture->tags ?></textarea></td>
+						<td class="tags column-tags" style="width:500px;"><textarea name="tags[<?php echo $pid ?>]" style="width:95%;" rows="2"><?php echo $picture->tags ?></textarea></td>
 						<?php						
 					break;
 					case 'action' :

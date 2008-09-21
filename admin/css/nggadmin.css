@@ -309,10 +309,14 @@ div .progressbar span {
 /* SETTINGS FOR SORT GALLERY */
 
 #sortGallery {
-	bottom:25px;
-	float:right;
-	padding-right:5px;
 	position:relative;
+}
+
+p#sortButton{
+	margin:0;
+	position:absolute;
+	right:0;
+	top:0;
 }
 
 .imageBox,.imageBoxHighlighted{

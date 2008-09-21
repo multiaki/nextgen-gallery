@@ -367,35 +367,34 @@ function ngg_widget_control($widget_args = 1) {
 			$list = "'" . implode("', '", intval($list) ) . "'";
 			
 			if ($exclude == "denied")	
-				$exclude_list = "AND NOT galleryid IN ($list)";
+				$exclude_list = "AND NOT t.gid IN ($list)";
 
 			if ($exclude == "allow")	
-				$exclude_list = "AND galleryid IN ($list)";
+				$exclude_list = "AND t.gid IN ($list)";
 		}
 		
-		//TODO:Too much queries
 		if ( $options[$number]['type'] == "random" ) 
-			$imageList = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures WHERE exclude != 1 $exclude_list ORDER by rand() limit $items");
+			$imageList = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE tt.exclude != 1 $exclude_list ORDER by rand() limit {$items}");
 		else
-			$imageList = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures WHERE exclude != 1 $exclude_list ORDER by pid DESC limit 0,$items");
+			$imageList = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE tt.exclude != 1 $exclude_list ORDER by pid DESC limit 0,$items");
 
 		echo $before_widget . $before_title . $title . $after_title;
 		echo "\n".'<div class="ngg-widget">'."\n";
 	
 		if (is_array($imageList)){
 			foreach($imageList as $image) {
-				//TODO:Too much queries
-				$image = nggImageDAO::find_image($image->pid);
-				
+				// get the URL constructor
+				$image = new nggImage($image, $image);
+
 				// get the effect code
 				$thumbcode = $image->get_thumbcode("sidebar_".$number);
 				
 				//TODO:For mixed portrait/landscape it's better to use only the height setting, if widht is 0 or vice versa
-				$out = '<a href="'.nggGalleryPlugin::get_image_url($image->pid).'" title="'.stripslashes($image->description).'" '.$thumbcode.'>';
+				$out = '<a href="'.$image->imageURL.'" title="'.stripslashes($image->description).'" '.$thumbcode.'>';
 				if ( $options[$number]['show'] == "orginal" )
 					$out .= '<img src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$image->pid.'&amp;width='.$options[$number]['width'].'&amp;height='.$options[$number]['height']. '" width="'.$options[$number]['width'].'" height="'.$options[$number]['height'].'" title="'.$image->alttext.'" alt="'.$image->alttext.'" />';
 				else	
-					$out .= '<img src="'.nggGalleryPlugin::get_thumbnail_url($image->pid).'" width="'.$options[$number]['width'].'" height="'.$options[$number]['height'].'" title="'.$image->alttext.'" alt="'.$image->alttext.'" />';			
+					$out .= '<img src="'.$image->thumbURL.'" width="'.$options[$number]['width'].'" height="'.$options[$number]['height'].'" title="'.$image->alttext.'" alt="'.$image->alttext.'" />';			
 				
 				echo $out . '</a>'."\n";
 				
