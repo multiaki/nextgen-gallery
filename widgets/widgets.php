@@ -58,7 +58,7 @@ class nggSlideshowWidget {
 		$swfobject->add_flashvars( 'file', NGGALLERY_URLPATH.'xml/imagerotator.php?gid='.$galleryID );
 		$swfobject->add_flashvars( 'shuffle', $ngg_options['irShuffle'], 'false', 'bool');
 		$swfobject->add_flashvars( 'showicons', $ngg_options['irShowicons'], 'true', 'bool');
-		$swfobject->add_flashvars( 'overstretch', $ngg_options['irOverstretch'], 'false', 'bool');
+		$swfobject->add_flashvars( 'overstretch', $ngg_options['irOverstretch'], 'false', 'string');
 		$swfobject->add_flashvars( 'rotatetime', $ngg_options['irRotatetime'], 5, 'int');
 		$swfobject->add_flashvars( 'transition', $ngg_options['irTransition'], 'random', 'string');
 		$swfobject->add_flashvars( 'backcolor', $ngg_options['irBackcolor'], 'FFFFFF', 'string', '0x');

@@ -280,9 +280,9 @@ class nggLoader {
 			) );
 			wp_enqueue_script( 'shutter' );
 	    }
-		    
-		// test for wordTube function
-		if (!function_exists('integrate_swfobject'))
+		
+		// required for the slideshow
+		if ( $this->options['galShowSlide'] ) 
 			wp_enqueue_script('swfobject', NGGALLERY_URLPATH .'admin/js/swfobject.js', FALSE, '2.1');
 
 	}
