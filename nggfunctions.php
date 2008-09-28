@@ -33,6 +33,7 @@ function nggShowSlideshow($galleryID, $irWidth, $irHeight) {
 	$swfobject->message = '<p>'. __('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and <a href="http://www.mozilla.com/firefox/">a browser with Javascript support</a> are needed..', 'nggallery').'</p>';
 	$swfobject->add_params('wmode', 'opaque');
 	$swfobject->add_params('allowfullscreen', 'true');
+	$swfobject->add_attributes('styleclass', 'slideshow');
 
 	// adding the flash parameter	
 	$swfobject->add_flashvars( 'file', NGGALLERY_URLPATH.'xml/imagerotator.php?gid='.$galleryID );
@@ -54,7 +55,7 @@ function nggShowSlideshow($galleryID, $irWidth, $irHeight) {
 	$swfobject->add_flashvars( 'width', $irWidth, '260');
 	$swfobject->add_flashvars( 'height', $irHeight, '320');	
 	// create the output
-	$out  = $swfobject->output();
+	$out  = '<div class="slideshow">' . $swfobject->output() . '</div>';
 	// add now the script code
     $out .= "\n".'<script type="text/javascript" defer="defer">';
 	if ($ngg_options['irXHTMLvalid']) $out .= "\n".'<!--';
