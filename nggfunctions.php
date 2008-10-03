@@ -37,9 +37,9 @@ function nggShowSlideshow($galleryID, $irWidth, $irHeight) {
 
 	// adding the flash parameter	
 	$swfobject->add_flashvars( 'file', NGGALLERY_URLPATH.'xml/imagerotator.php?gid='.$galleryID );
-	$swfobject->add_flashvars( 'shuffle', $ngg_options['irShuffle'], 'false', 'bool');
+	$swfobject->add_flashvars( 'shuffle', $ngg_options['irShuffle'], 'true', 'bool');
 	$swfobject->add_flashvars( 'linkfromdisplay', $ngg_options['irLinkfromdisplay'], 'false', 'bool');
-	$swfobject->add_flashvars( 'shownavigation', $ngg_options['irShownavigation'], 'false', 'bool');
+	$swfobject->add_flashvars( 'shownavigation', $ngg_options['irShownavigation'], 'true', 'bool');
 	$swfobject->add_flashvars( 'showicons', $ngg_options['irShowicons'], 'true', 'bool');
 	$swfobject->add_flashvars( 'kenburns', $ngg_options['irKenburns'], 'false', 'bool');
 	$swfobject->add_flashvars( 'overstretch', $ngg_options['irOverstretch'], 'false', 'string');
@@ -448,7 +448,7 @@ function nggCreateImageBrowser($picarray) {
  * @param string $float could be none, left, right
  * @return the content
  */
-function nggSinglePicture($imageID, $width=250, $height=250, $mode='', $float='') {
+function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $float = '') {
 	global $wpdb, $post;
 	
 	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
@@ -485,15 +485,27 @@ function nggSinglePicture($imageID, $width=250, $height=250, $mode='', $float=''
 	
 	// check fo cached picture
 	if ( ($ngg_options['imgCacheSinglePic']) && ($post->post_status == 'publish') )
-		$cache_url = $picture->cached_singlepic_file($width, $height, $mode );
-
-	// add fullsize picture as link
-	$out  = '<a href="'.$picture->imageURL.'" title="'.stripslashes($picture->description).'" '.$picture->get_thumbcode("singlepic".$imageID).' >';
-	if (!$cache_url)
-		$out .= '<img class="ngg-singlepic'. $float .'" src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$imageID.'&amp;width='.$width.'&amp;height='.$height.'&amp;mode='.$mode.'" alt="'.stripslashes($picture->alttext).'" title="'.stripslashes($picture->alttext).'" width="'. $width .'" height="'. $height.'" />';
+		$picture->thumbnailURL = $picture->cached_singlepic_file($width, $height, $mode );
 	else
-		$out .= '<img class="ngg-singlepic'. $float .'" src="'.$cache_url.'" alt="'.stripslashes($picture->alttext).'" title="'.stripslashes($picture->alttext).'" width="'. $width .'" height="'. $height.'" />';
-	$out .= '</a>';
+		$picture->thumbnailURL = NGGALLERY_URLPATH . 'nggshow.php?pid=' . $imageID . '&amp;width=' . $width . '&amp;height=' . $height . '&amp;mode=' . $mode;
+
+	// add more variables for render output
+	$picture->href_link = $picture->get_href_link();
+	$picture->alttext = html_entity_decode(stripslashes($picture->alttext));
+	$picture->description = html_entity_decode(stripslashes($picture->description));
+	$picture->classname = 'ngg-singlepic'. $float;
+	$picture->thumbcode = $picture->get_thumbcode("singlepic".$imageID);
+	$picture->height = (int) $height;
+	$picture->width = (int) $width;
+	
+	// let's get the meta data
+	$meta = new nggMeta($picture->imagePath);
+	$exif = $meta->get_EXIF();
+	$iptc = $meta->get_IPTC();
+	$xmp  = $meta->get_XMP();
+		
+	// create the output
+	$out = nggGalleryPlugin::capture ('singlepic', array ('image' => $picture , 'meta' => $meta, 'exif' => $exif, 'iptc' => $iptc, 'xmp' => $xmp) );
 
 	$out = apply_filters('ngg_show_singlepic_content', $out, $picture );
 	

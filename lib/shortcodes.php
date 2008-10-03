@@ -148,7 +148,6 @@ class NextGEN_shortcodes {
 			'float'	 	=> ''
 		), $atts ));
 		
-		var_dump($atts);		
 		$result = $wpdb->get_var("SELECT filename FROM $wpdb->nggpictures WHERE pid = '$id' ");
 		
 		if( $result )

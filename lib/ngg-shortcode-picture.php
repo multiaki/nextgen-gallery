@@ -1,28 +1,10 @@
 <?php
-/*  Copyright 2006 Vincent Prat  (email : vpratfr@yahoo.fr)
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+/*  
+ * Copyright 2006 Vincent Prat  (email : vpratfr@yahoo.fr)
 */
 
-//############################################################################
 // Stop direct call
-if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
-	die('You are not allowed to call this page directly.');
-}
-//############################################################################
-
+if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
 
 if (!function_exists('ngg_do_picture_shortcode')) {
 
@@ -49,7 +31,6 @@ function ngg_do_picture_shortcode($atts, $content=null) {
 	$out = '';
 
 	// Extract attributes
-	//--
 	extract(shortcode_atts(array(
 		'id' 		=> '',
 		'caption' 	=> 'none',
@@ -60,25 +41,19 @@ function ngg_do_picture_shortcode($atts, $content=null) {
 	), $atts));
 
 	// Some error checks
-	//--
-	if ($id=='') {
+	if ($id=='')
 		return "<p style='color: red; border: 1px solid red;'>A picture ID must be supplied for the shortcode [picture]</p>";
-	}
 
-	if ($caption!='none' && $caption!='alttext' && $caption!='desc') {
-		return "<p style='color: red; border: 1px solid red;'>Invalid value for the caption parameter of the shortcode [picture]</p>";
-	}
+	if ($caption != 'none' && $caption != 'alttext' && $caption != 'desc')
+		$caption != 'none';
 
-	if ($mode!='' && $mode!='watermark' && $mode!='web20') {
-		return "<p style='color: red; border: 1px solid red;'>Invalid value for the mode parameter of the shortcode [picture]</p>";
-	}
+	if ($mode != '' && $mode != 'watermark' && $mode != 'web20')
+		$mode == '';
 
 	// get picture data
-	//--
 	$picture = nggImageDAO::find_image($id);
 
 	// Check picture existance
-	//--
 	if ($picture==null) {
 		$out .= '<div class="ngg-singlepic" style="color: red;">' 
 			.  sprintf(__("[picture id='%s' /] &raquo; Image does not exist!", 'nggallery'), $id)  
@@ -87,13 +62,10 @@ function ngg_do_picture_shortcode($atts, $content=null) {
 	}
 
 	// check for cached picture
-	//--
-	if (($ngg_options['imgCacheSinglePic']) && ($post->post_status == 'publish') && ($width!='') && ($height!='')) {
+	if (($ngg_options['imgCacheSinglePic']) && ($post->post_status == 'publish') && ($width!='') && ($height!=''))
 		$cache_url = $picture->cached_singlepic_file($width, $height, $mode );
-	} 
 
 	// add float to img
-	//--
 	switch ($float) {
 		case 'left': 
 			$float=' ngg-left';
@@ -113,19 +85,15 @@ function ngg_do_picture_shortcode($atts, $content=null) {
 	}
 
 	// Start building output
-	//--
 	$out = '<div class="ngg-singlepic '. $float .'">';
 
 	// add fullsize picture as link if original size was not requested
-	//--
-	$out .= '<a href="' . $picture->imageURL . '" title="' . stripslashes($picture->description)
-			  . '" ' . $picture->get_thumbcode("singlepic".$id) . ' >';
+	$out .= '<a href="' . $picture->imageURL . '" title="' . stripslashes($picture->description) . '" ' . $picture->get_thumbcode("singlepic".$id) . ' >';
 
-	if (!$cache_url) {
+	if (!$cache_url)
 		$out .= '<img src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$id.'&amp;width='.$width.'&amp;height='.$height.'&amp;mode='.$mode.'" alt="'.stripslashes($picture->alttext).'" title="'.stripslashes($picture->alttext).'" />';
-	} else {
+	else
 		$out .= '<img src="'.$cache_url.'" alt="'.stripslashes($picture->alttext).'" title="'.stripslashes($picture->alttext).'" />';
-	}
 
 	$out .= '</a>';
 
@@ -135,16 +103,13 @@ function ngg_do_picture_shortcode($atts, $content=null) {
 		$out .= '<div>' . html_entity_decode(stripslashes($picture->description)) . '</div> ' . "\n";
 	} 
 	
-	if ($content!=null) {
+	if ($content!=null)
 		$out .= '<div>' . $content . '</div>' . "\n";
-	}
 
 	// Apply filter
-	//--
 	$out = apply_filters('ngg_show_singlepic_content', $out, $picture );
 	
 	// End of output generation
-	//--
 	$out .= '</div>';
 
 	return $out;

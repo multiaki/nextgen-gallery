@@ -6,7 +6,7 @@ V1.00
 - NEW : Added Date/Time field to database and import it from EXIF, new sort option
 - NEW : Multi Widgets to show links to Media RSS feeds
 - NEW : PicLens support for galleries
-- NEW : Copy/move images between galleries 
+- NEW : Copy/Move images between galleries 
 - NEW : Media RSS feeds (either for galleries, albums or global)
 - NEW : Image tag management
 - NEW : Convert all shortcodes to WP shortcodes API
@@ -25,17 +25,25 @@ V1.00
 - Changed : Improved the gallery management page.
 - Changed : Renammed the filter 'ngg_create_gallery_thumbcode' to 'ngg_get_thumbcode'.
 - Changed : Convert tags to WP-Taxonomy tables, no more need for ngg_tags, ngg_pic2tags
-- Changed : Arrange fields in a new way
+- Changed : Arrange manage fields in a new way
 - Changed : Support now SSL 
 - Changed : Use JQuery UI instead of interface lib
 - Changed : Updated to swfobject 2.1
 - Bugfix : Changed CSS for singlepic padding to margin
 - Bugfix : Check for zero in Exif Focal Length
 - Bugfix : Round instead inval for square thumbnails
-- Bugfix : Limit the length of the title in the media-upload
 - Removed : Do not longer check for myGallery folders
 - Removed : Use now PclZip from WP Core
 - Removed : Wordpress 2.1 - 2.3 files deleted
+
+V0.99 - 27.09.2008
+- Changed : Included swfobject version 2.1 
+- Bugfix : Recognize the zip better
+- Bugfix : Limit the length of the title in the media-upload
+- Bugfix : Round instead inval for square thumbnails
+
+V0.98 - 15.07.2008
+- Bugfix : Removed all whitespaces at EOF
 
 V0.97 - 10.07.2008
 - Changed : Get new path contstant from WP2.6

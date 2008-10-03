@@ -1,28 +1,10 @@
 <?php
-/*  Copyright 2008 Vincent Prat  (email : vpratfr@yahoo.fr)
-
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+/*  
+ * Copyright 2008 Vincent Prat  (email : vpratfr@yahoo.fr)
 */
 
-//############################################################################
 // Stop direct call
-if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { 
-	die('You are not allowed to call this page directly.'); 
-}
-//############################################################################
-
+if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { 	die('You are not allowed to call this page directly.'); }
 
 if (!function_exists('ngg_do_thumb_shortcode')) {
 
@@ -41,7 +23,6 @@ function ngg_do_thumb_shortcode($atts, $content=null) {
 	$out = '';
 
 	// Extract attributes
-	//--
 	extract(shortcode_atts(array(
 		'id' 		=> '',
 		'caption' 	=> 'none',
@@ -50,12 +31,10 @@ function ngg_do_thumb_shortcode($atts, $content=null) {
 	), $atts));
 	
 	// make an array out of the ids
-	//--
 	$pids = explode(",", $id);
 	
 	// Some error checks
-	//--
-	if (count($pids)==0) {
+	if ( count($pids)==0 ) {
 		return "<p style='color: red; border: 1px solid red;'>At least one picture ID must be supplied for the shortcode [thumb]</p>";
 	}
 	
@@ -64,12 +43,10 @@ function ngg_do_thumb_shortcode($atts, $content=null) {
 	}
 	
 	// Get ngg options
-	//--
 	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
 	
 	// set thumb size 
-	//--
-	$thumbwidth = $ngg_options['thumbwidth'];
+ 	$thumbwidth  = $ngg_options['thumbwidth'];
 	$thumbheight = $ngg_options['thumbheight'];	
 	$thumbsize = "";
 	if ($ngg_options['thumbfix']) {
@@ -106,18 +83,14 @@ function ngg_do_thumb_shortcode($atts, $content=null) {
 	}
 		
 	// Start building the output HTML
-	//--
 	$out .= '<div class="ngg-galleryoverview">';
 	
 	// For each picture ID
-	//--
 	foreach ($pids as $pid) {	
 		// Get picture
-		//--
 		$picture = nggImageDAO::find_image($pid);
 	
 		// Check picture existance
-		//--
 		if ($picture==null) {
 			$out .= '<div class="ngg-gallery-thumbnail-box" style="color: red;">' 
 				.  sprintf(__("[thumb id='%s' /] &raquo; Image does not exist!", 'nggallery'), $pid)  
@@ -126,22 +99,18 @@ function ngg_do_thumb_shortcode($atts, $content=null) {
 		}
 		
 		// set image url
-		//--
 		$folder_url 	= get_option ('siteurl') . "/" . $picture->path . "/";
 		$thumbnailURL 	= get_option ('siteurl') . "/" . $picture->path . nggGalleryPlugin::get_thumbnail_folder($picture->path, FALSE);
 		$thumb_prefix   = nggGalleryPlugin::get_thumbnail_prefix($picture->path, FALSE);
 
 		// choose link between imagebrowser or effect
-		//--
 		$link = ($ngg_options['galImgBrowser']) ? $nggRewrite->get_permalink(array('pid'=>$picture->pid)) : $folder_url.$picture->filename;
 		$link = apply_filters('ngg_create_gallery_link', $link, $picture);
 		
 		// get the effect code
-		//--
 		$thumbcode = $picture->get_thumbcode($group);
 		
 		// create output
-		//--
 		$out .= '<div class="ngg-gallery-thumbnail-box ' . $class_desc . ' ' . $float . '">' . "\n\t";
 		$out .= '<div class="ngg-gallery-thumbnail" ' . $setwidth . ' >' . "\n\t";
 		$out .= '<a href="' . $link . '" title="' . stripslashes($picture->description) . '" ' . $thumbcode . ' >';
@@ -149,14 +118,12 @@ function ngg_do_thumb_shortcode($atts, $content=null) {
 		$out .= 'src="' . $thumbnailURL . $thumb_prefix . $picture->filename . '" ' . $thumbsize . ' />';
 		$out .= '</a>' . "\n";
 		
-		if ($caption == "alttext") {
+		if ($caption == "alttext")
 			$out .= '<div>' . html_entity_decode(stripslashes($picture->alttext)) . '</div>' . "\n";
-		} else if ($caption == "desc") {
+		else if ($caption == "desc")
 			$out .= '<div>' . html_entity_decode(stripslashes($picture->description)) . '</div>' . "\n";
-		}
-		
+
 		// add filter for the output
-		//--
 		$out  = apply_filters('ngg_inner_gallery_thumbnail', $out, $picture);		
 		$out .= '</div>'. "\n" .'</div>'."\n";
 		$out  = apply_filters('ngg_after_gallery_thumbnail', $out, $picture);
