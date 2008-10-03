@@ -34,9 +34,11 @@ function media_upload_nextgen() {
 		// Build output
 		if ($image['size'] == "thumbnail") 
 			$html = "<img src='{$image['thumb']}' alt='$alttext' class='$class' />";
+		// Wrap the link to the fullsize image around	
+		$html = "<a $thumbcode href='{$image['url']}' title='$clean_description'>$html</a>";
+
 		if ($image['size'] == "full") 
 			$html = "<img src='{$image['url']}' alt='$alttext' class='$class' />";
-		$html = "<a $thumbcode href='{$image['url']}' title='$clean_description'>$html</a>";
 		
 		if ($image['size'] == "singlepic") 
 			$html = "[singlepic=$send_id,320,240,,{$image['align']}]";
