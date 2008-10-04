@@ -357,6 +357,13 @@ class nggGalleryPlugin {
 			return NGGALLERY_ABSPATH . '/lib/gd.thumbnail.inc.php';
 		
 	}
+	
+	function get_theme_css_file() {
+		if ( file_exists (TEMPLATEPATH . "/nggallery.css") )
+			return get_template_directory_uri() . "/nggallery.css";
+		else
+			return false;		
+	}
 }
 
 ?>

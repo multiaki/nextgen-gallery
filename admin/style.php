@@ -3,29 +3,38 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 
 function nggallery_admin_style()  {
 
-$ngg_options = get_option('ngg_options');
+global $ngg;
 
-if (isset($_POST['css'])) {
-	check_admin_referer('ngg_style');
-	$act_cssfile = $_POST['css']; 
-	if (isset($_POST['activate'])) {
-		// save option now
-		$ngg_options[activateCSS] = $_POST['activateCSS']; 
-		$ngg_options[CSSfile] = $act_cssfile;
-		update_option('ngg_options', $ngg_options);
-		$messagetext = '<font color="green">'.__('Update successfully','nggallery').'</font>';
-	}
+if ( $theme_css_exists = file_exists (TEMPLATEPATH . "/nggallery.css") ) {
+
+	$real_file = TEMPLATEPATH . "/nggallery.css";
+	$file_show = 'nggallery.css ' . __('(From the theme folder)','nggallery');
+	
 } else {
-	// get the options
-	if (isset($_POST['file']))
-		$act_cssfile = $_POST['file'];
-	else
-		$act_cssfile = $ngg_options[CSSfile];	
+
+	if (isset($_POST['css'])) {
+		check_admin_referer('ngg_style');
+		$act_cssfile = $_POST['css']; 
+		
+		if ( isset( $_POST['activate'] ) ) {
+			// save option now
+			$ngg->options['activateCSS'] = $_POST['activateCSS']; 
+			$ngg->options['CSSfile'] = $act_cssfile;
+			update_option('ngg_options', $ngg->options);
+			nggGalleryPlugin::show_message(__('Update Successfully','nggallery'));
+		}
+	} else {
+		// get the options
+		if (isset($_POST['file']))
+			$act_cssfile = $_POST['file'];
+		else
+			$act_cssfile = $ngg->options['CSSfile'];	
+	}
+	
+	// set the path
+	$real_file = NGGALLERY_ABSPATH . "css/" . $act_cssfile;
 }
 
-// set the path
-$real_file = NGGALLERY_ABSPATH."css/".$act_cssfile;
-	
 if (isset($_POST['updatecss'])) {
 	
 	check_admin_referer('ngg_style');
@@ -40,7 +49,7 @@ if (isset($_POST['updatecss'])) {
 		fwrite($f, $newcontent);
 
 		fclose($f);
-		$messagetext = '<font color="green">'.__('CSS file successfully updated','nggallery').'</font>';
+		nggGalleryPlugin::show_message(__('CSS file successfully updated','nggallery'));
 	}
 }
 
@@ -55,14 +64,12 @@ if (!$error && filesize($real_file) > 0) {
 	$content = htmlspecialchars($content); 
 }
 
-// message window
-if(!empty($messagetext)) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$messagetext.'</p></div>'; }
-	
 ?>		
 <div class="wrap">
 
 	<div class="bordertitle">
 		<h2 style="border: medium none ; padding-bottom: 0px;"><?php _e('Style Editor','nggallery') ?></h2>
+		<?php if (!$theme_css_exists) : ?>
 		<form id="themeselector" name="cssfiles" method="post">
 		<?php wp_nonce_field('ngg_style') ?>
 		<strong><?php _e('Activate and use style sheet:','nggallery') ?></strong>
@@ -87,6 +94,7 @@ if(!empty($messagetext)) { echo '<!-- Last Action --><div id="message" class="up
 			</select>
 			<input class="button" type="submit" name="activate" value="<?php _e('Activate','nggallery') ?> &raquo;" class="button" />
 		</form>
+		<?php endif; ?>
 	</div>
 	<br style="clear: both;"/>
 	
@@ -103,13 +111,17 @@ if(!empty($messagetext)) { echo '<!-- Last Action --><div id="message" class="up
 	<br style="clear: both;"/>
 	
 	<div id="templateside">
+	<?php if (!$theme_css_exists) : ?>
 		<ul>
 			<li><strong><?php _e('Author','nggallery') ?> :</strong> <?php echo $act_css_author ?></li>
 			<li><strong><?php _e('Version','nggallery') ?> :</strong> <?php echo $act_css_version ?></li>
 			<li><strong><?php _e('Description','nggallery') ?> :<br /></strong> <?php echo $act_css_description ?></li>
 		</ul>
+		<p><?php _e('Tip : Copy your stylesheet (nggallery.css) to your theme folder, so it will be not lost during a upgrade','nggallery') ?></p>
+	<?php else: ?>
+		<p><?php _e('Your theme contain a NextGEN Gallery stylesheet (nggallery.css), this file will be used','nggallery') ?></p>
+	<?php endif; ?>
 	</div>
-	
 		<?php
 		if (!$error) {
 		?>
@@ -153,7 +165,7 @@ function ngg_get_cssfiles() {
 	$cssfiles = array ();
 	
 	// Files in wp-content/plugins/nggallery/css directory
-	$plugin_root = NGGALLERY_ABSPATH."css";
+	$plugin_root = NGGALLERY_ABSPATH . "css";
 	
 	$plugins_dir = @ dir($plugin_root);
 	if ($plugins_dir) {

@@ -289,7 +289,10 @@ class nggLoader {
 	
 	function load_styles() {
 		
-		if ($this->options['activateCSS'])
+		// check first the theme folder for a nggallery.css
+		if ( nggGalleryPlugin::get_theme_css_file() )
+			wp_enqueue_style('NextGEN', nggGalleryPlugin::get_theme_css_file() , false, '1.0.0', 'screen'); 
+		else if ($this->options['activateCSS'])
 			wp_enqueue_style('NextGEN', NGGALLERY_URLPATH.'css/'.$this->options['CSSfile'], false, '1.0.0', 'screen'); 
 		
 		//	activate Thickbox
