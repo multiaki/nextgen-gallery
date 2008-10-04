@@ -1,5 +1,45 @@
 <?php
 /**
+ * NextGEN Gallery Database Class
+ * 
+ * @author Alex Rabe
+ * @copyright 2008
+ * @since 1.0.0
+ */
+
+class nggdb {
+	
+	/**
+	 * PHP4 compatibility layer for calling the PHP5 constructor.
+	 * 
+	 */
+	function wpdb() {
+		return $this->__construct();
+	}
+
+	/**
+	 * Init the Database Abstraction layer for NextGEN Gallery
+	 * 
+	 */	
+	function __construct() {
+		global $wpdb;
+		
+		register_shutdown_function(array(&$this, "__destruct"));
+		
+	}
+	
+	/**
+	 * PHP5 style destructor and will run when database object is destroyed.
+	 *
+	 * @return bool Always true
+	 */
+	function __destruct() {
+		return true;
+	}	
+}
+
+
+/**
 * Data Access Object for the image object
 * 
 * @author 		Vincent Prat
@@ -304,6 +344,139 @@ class nggImageDAO {
 			
 		
 		return null;
+	}
+}
+
+/**
+* Data Access Object for the album object
+* 
+* @author 		Vincent Prat
+* @copyright 	Copyright 2008
+* 
+*/
+class nggAlbumDAO {
+	
+	/**
+	 * Get all the albums
+	 */
+	function find_all_albums($order_by = 'id', $order_dir = 'ASC') {		
+		global $wpdb;
+		
+		// Query database
+		//--
+		$rows = $wpdb->get_results("SELECT * FROM $wpdb->nggalbum ORDER BY $order_by $order_dir");
+		
+		// Build the object from the query result
+		//--
+		$albums = array(count($rows));
+		$i = 0;		
+		foreach ($rows as $row) {
+			$albums[$i] = new nggAlbum($row);
+			$i++;
+		}
+		
+		return $albums;
+	}
+	
+	/**
+	 * Get an album given its ID
+	 * 
+	 * @id The album ID
+	 * 
+	 * @return A nggGallery object (null if not found)
+	 */
+	function find_album($id) {		
+		global $wpdb;
+		
+		// Query database
+		//--
+		$row = $wpdb->get_row("SELECT * FROM $wpdb->nggalbum WHERE id = $id");
+		
+		// Build the object from the query result
+		//--
+		if ($row) {
+			$album = new nggAlbum($row);	
+			return $album;
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * Delete an album
+	 * 
+	 * @id The album ID
+	 */
+	function delete_album($id) {		
+		global $wpdb;		
+		$wpdb->query("DELETE FROM $wpdb->nggalbum WHERE id = $id");
+	}
+}
+
+/**
+* Data Access Object for the gallery object
+* 
+* @author 		Vincent Prat
+* @copyright 	Copyright 2008
+* 
+*/
+class nggGalleryDAO {
+	
+	/**
+	 * Get all the galleries
+	 */
+	function find_all_galleries($order_by = 'gid', $order_dir = 'ASC') {		
+		global $wpdb;
+		
+		// Query database
+		//--
+		$rows = $wpdb->get_results("SELECT * FROM $wpdb->nggallery ORDER BY $order_by $order_dir");
+		
+		// Build the object from the query result
+		//--
+		$galleries = array(count($rows));
+		$i = 0;		
+		foreach ($rows as $row) {
+			$galleries[$i] = new nggGallery($row);
+			$i++;
+		}
+		
+		return $galleries;
+	}
+	
+	/**
+	 * Get a gallery given its ID
+	 * 
+	 * @gid The gallery ID
+	 * 
+	 * @return A nggGallery object (null if not found)
+	 */
+	function find_gallery($gid) {		
+		global $wpdb;
+		
+		// Query database
+		//--
+		$row = $wpdb->get_row("SELECT * FROM $wpdb->nggallery WHERE gid = $gid");
+		
+		// Build the object from the query result
+		//--
+		if ($row) {
+			$gallery = new nggGallery($row);	
+			return $gallery;
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * Delete a gallery AND all the pictures associated to this gallery!
+	 * 
+	 * @gid The gallery ID
+	 */
+	function delete_gallery($gid) {		
+		global $wpdb;		
+		$wpdb->query("DELETE FROM $wpdb->nggpictures WHERE galleryid = $gid");
+		$wpdb->query("DELETE FROM $wpdb->nggallery WHERE gid = $gid");
 	}
 }
 

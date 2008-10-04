@@ -68,12 +68,12 @@ if (!$error && filesize($real_file) > 0) {
 <div class="wrap">
 
 	<div class="bordertitle">
-		<h2 style="border: medium none ; padding-bottom: 0px;"><?php _e('Style Editor','nggallery') ?></h2>
+		<h2><?php _e('Style Editor','nggallery') ?></h2>
 		<?php if (!$theme_css_exists) : ?>
 		<form id="themeselector" name="cssfiles" method="post">
 		<?php wp_nonce_field('ngg_style') ?>
 		<strong><?php _e('Activate and use style sheet:','nggallery') ?></strong>
-		<input type="checkbox" name="activateCSS" value="1" <?php checked('1', $ngg_options['activateCSS']); ?> /> 
+		<input type="checkbox" name="activateCSS" value="1" <?php checked('1', $ngg->options['activateCSS']); ?> /> 
 			<select name="css" id="theme" style="margin: 0pt; padding: 0pt;" onchange="this.form.submit();">
 			<?php
 				$csslist = ngg_get_cssfiles();
@@ -99,7 +99,7 @@ if (!$error && filesize($real_file) > 0) {
 	<br style="clear: both;"/>
 	
 <?php if (!IS_WPMU || wpmu_site_admin() ) { ?>
-	<div class="tablenav" style="margin-right: 210px;"> 
+	<div class="tablenav"> 
 	  <?php
 		if ( is_writeable($real_file) ) {
 			echo '<big>' . sprintf(__('Editing <strong>%s</strong>','nggallery'), $file_show) . '</big>';

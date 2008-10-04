@@ -83,8 +83,8 @@ function nggShowGallery( $galleryID ) {
 	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
 
 	//Set sort order value, if not used (upgrade issue)
-	$ngg_options['galSort'] = ($ngg_options['galSort']) ? $ngg_options['galSort'] : "pid";
-	$ngg_options['galSortDir'] = ($ngg_options['galSortDir'] == "DESC") ? "DESC" : "ASC";
+	$ngg_options['galSort'] = ($ngg_options['galSort']) ? $ngg_options['galSort'] : 'pid';
+	$ngg_options['galSortDir'] = ($ngg_options['galSortDir'] == 'DESC') ? 'DESC' : 'ASC';
 
 	// look for id or slug
 	if( is_numeric($galleryID) )
@@ -231,7 +231,7 @@ function nggCreateGallery($picturelist, $galleryID = false) {
 		
 		// add a filter for the link
 		$picturelist[$key]->imageURL = apply_filters('ngg_create_gallery_link', $link, $picture);
-		$picturelist[$key]->thumbnailURL = $folder_url . "thumbs/thumbs_" . $picture->filename;
+		$picturelist[$key]->thumbnailURL = $folder_url . 'thumbs/thumbs_' . $picture->filename;
 		$picturelist[$key]->size = $thumbsize;
 		$picturelist[$key]->thumbcode  = $thumbcode;
 	}
@@ -301,7 +301,7 @@ function nggShowAlbum($id, $mode = 'extend') {
  * @param integer $albumID
  * @return the content
  */
-function nggCreateAlbum( $galleriesID, $mode = "extend", $albumID = 0) {
+function nggCreateAlbum( $galleriesID, $mode = 'extend', $albumID = 0) {
 	// create a gallery overview div
 	
 	global $wpdb, $nggRewrite;
@@ -310,8 +310,8 @@ function nggCreateAlbum( $galleriesID, $mode = "extend", $albumID = 0) {
 	
 	$sortorder = $galleriesID;
 	$galleries = array();
-	// if sombod didn't enter any mode , take the extend version
-	$mode = ( empty($mode) ) ? "extend" : $mode ;
+	// if sombody didn't enter any mode , take the extend version
+	$mode = ( empty($mode) ) ? 'extend' : $mode ;
 	
 	// get the galleries information 	
  	foreach ($galleriesID as $i => $value)
@@ -379,8 +379,8 @@ function nggShowImageBrowser($galleryID) {
 	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
 	
 	//Set sort order value, if not used (upgrade issue)
-	$ngg_options['galSort'] = ($ngg_options['galSort']) ? $ngg_options['galSort'] : "pid";
-	$ngg_options['galSortDir'] = ($ngg_options['galSortDir'] == "DESC") ? "DESC" : "ASC";
+	$ngg_options['galSort'] = ($ngg_options['galSort']) ? $ngg_options['galSort'] : 'pid';
+	$ngg_options['galSortDir'] = ($ngg_options['galSortDir'] == 'DESC') ? 'DESC' : 'ASC';
 	
 	// get the pictures
 	$picturelist = $wpdb->get_col( $wpdb->prepare( "SELECT pid FROM $wpdb->nggpictures WHERE galleryid = '%d' AND exclude != 1 ORDER BY $ngg_options[galSort] $ngg_options[galSortDir]", $galleryID) );	
@@ -404,7 +404,7 @@ function nggCreateImageBrowser($picarray) {
 
 	global $nggRewrite;
 	
-	require_once(dirname (__FILE__).'/lib/ngg-meta.lib.php');
+	require_once( dirname (__FILE__) . '/lib/ngg-meta.lib.php' );
 	
 	// $_GET from wp_query
 	$pid  = get_query_var('pid');
@@ -516,7 +516,7 @@ function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $fl
 	$picture->alttext = html_entity_decode(stripslashes($picture->alttext));
 	$picture->description = html_entity_decode(stripslashes($picture->description));
 	$picture->classname = 'ngg-singlepic'. $float;
-	$picture->thumbcode = $picture->get_thumbcode("singlepic".$imageID);
+	$picture->thumbcode = $picture->get_thumbcode( 'singlepic' . $imageID);
 	$picture->height = (int) $height;
 	$picture->width = (int) $width;
 	
@@ -601,14 +601,14 @@ function nggShowRelatedGallery($taglist, $maxImages = 0) {
 	$out   = '<div class="ngg-related-gallery">';
 	foreach ($picturelist as $picture) {
 		// set gallery url
-		$folder_url 	= get_option ('siteurl')."/".$picture->path."/";
-		$thumbnailURL 	= get_option ('siteurl')."/".$picture->path.nggGalleryPlugin::get_thumbnail_folder($picture->path, FALSE);
+		$imageURL 	= get_option ('siteurl') . '/' . $picture->path . '/' . $picture->filename;
+		$thumbnailURL 	= $folder_url . 'thumbs/thumbs_' . $picture->filename;
 
 		// get the effect code
-		$thumbcode = $picture->get_thumbcode("Related images for " . get_the_title());
+		$thumbcode = $picture->get_thumbcode('Related images for ' . get_the_title());
 	
-		$out .= '<a href="'.$folder_url.$picture->filename.'" title="'.stripslashes($picture->description).'" '.$thumbcode.' >';
-		$out .= '<img title="'.stripslashes($picture->alttext).'" alt="'.stripslashes($picture->alttext).'" src="'.$thumbnailURL. "thumbs_" .$picture->filename.'" '.$thumbsize.' />';
+		$out .= '<a href="' . $imageURL . '" title="' . stripslashes($picture->description) . '" ' . $thumbcode . ' >';
+		$out .= '<img title="' . stripslashes($picture->alttext) . '" alt="' . stripslashes($picture->alttext) . '" src="' . $thumbnailURL . '" />';
 		$out .= '</a>'."\n";
 	}
 	$out .= '</div>'."\n";
@@ -657,10 +657,10 @@ function nggShowAlbumTags($taglist) {
 	foreach ($picturelist as $key => $picture) {
 		$picturelist[$key]->previewpic  = $picture->pid;
 		$picturelist[$key]->previewname = $picture->filename;
-		$picturelist[$key]->previewurl  = get_option ('siteurl')."/".$picture->path."/thumbs/thumbs_".$picture->filename;
+		$picturelist[$key]->previewurl  = get_option ('siteurl') . '/' . $picture->path . '/thumbs/thumbs_' . $picture->filename;
 		$picturelist[$key]->counter     = $picture->count;
 		$picturelist[$key]->title     	= $picture->name;
-		$picturelist[$key]->pagelink    = $nggRewrite->get_permalink(array('gallerytag'=>$picture->slug));
+		$picturelist[$key]->pagelink    = $nggRewrite->get_permalink( array('gallerytag'=>$picture->slug) );
 	}	
 
 	// create the output
@@ -711,7 +711,7 @@ function nggShowRelatedImages($type = '', $maxImages = 0) {
 		}
 	}
 	
-	$sluglist = implode(",", $sluglist);
+	$sluglist = implode(',', $sluglist);
 	$out = nggShowRelatedGallery($sluglist, $maxImages);
 	
 	return $out;
