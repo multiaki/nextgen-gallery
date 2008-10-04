@@ -14,23 +14,10 @@ function nggallery_admin_overview()  {
 	// get feed_messages
 	require_once(ABSPATH . WPINC . '/rss.php');
 	
-	// init PluginChecker
-	$nggCheck 			= new CheckPlugin();	
-	$nggCheck->URL 		= NGGURL;
-	$nggCheck->version 	= NGGVERSION;
-	$nggCheck->name 	= "ngg";
-	
 ?>
   <div class="wrap ngg-wrap">
     <h2><?php _e('NextGEN Gallery Overview', 'nggallery') ?></h2>
     <br class="clear"/>
-	<?php if ( $nggCheck->startCheck() && (!IS_WPMU) ) { ?>
-	<div id="newversion">
-		<h3 class="dashboard-widget-title"><?php _e('New Version available', 'nggallery') ?> !!!</h3>
-	   	<div class="dashboard-widget-content"><?php _e('The server reports that a new NextGEN Gallery Version is now available. Please visit the plugin homepage for more information.', 'nggallery') ?>
-		<a href="http://wordpress.org/extend/plugins/nextgen-gallery/download/" target="_blank"> <?php _e('Download here', 'nggallery') ?> </a></div>
-	</div>
-	<?php } ?>
 	<div id="rightnow">
 		<h3 class="reallynow">
 			<span><?php _e('Welcome to NextGEN Gallery !', 'nggallery') ?></span>
@@ -206,86 +193,6 @@ function ngg_get_serverinfo() {
 <?php
 }
 
-// ***************************************************************	
-
-/**
- * WordPress PHP class to check for a new version.
- * @author Alex Rabe & Joern Kretzschmar
- * @orginal from Per Søderlind
- *
- // Dashboard update notification example
-	function myPlugin_update_dashboard() {
-	  $Check = new CheckPlugin();	
-	  $Check->URL 	= "YOUR URL";
-	  $Check->version = "1.00";
-	  $Check->name 	= "myPlugin";
-	  if ($Check->startCheck()) {
- 	    echo '<h3>Update Information</h3>';
-	    echo '<p>A new version is available</p>';
-	  } 
-	}
-	
-	add_action('activity_box_end', 'myPlugin_update_dashboard', '0');
- *
- */
-if ( !class_exists( "CheckPlugin" ) ) {  
-	class CheckPlugin {
-		/**
-		 * URL with the version of the plugin
-		 * @var string
-		 */
-		var $URL = 'myURL';
-		/**
-		 * Version of thsi programm or plugin
-		 * @var string
-		 */
-		var $version = '1.00';
-		/**
-		 * Name of the plugin (will be used in the options table)
-		 * @var string
-		 */
-		var $name = 'myPlugin';
-		/**
-		 * Waiting period until the next check in seconds
-		 * @var int
-		 */
-		var $period = 86400;					
-					
-		function startCheck() {
-			/**
-			 * check for a new version, returns true if a version is avaiable
-			 */
-			
-			// use wordpress snoopy class
-			require_once(ABSPATH . WPINC . '/class-snoopy.php');
-			
-			$check_intervall = get_option( $this->name."_next_update" );
-
-			if ( ($check_intervall < time() ) or (empty($check_intervall)) ) {
-				if (class_exists(snoopy)) {
-					$client = new Snoopy();
-					$client->agent = 'NextGEN Gallery Version Checker (+http://www.nextgen.boelinger.com/)';
-					$client->_fp_timeout = 10;
-					if (@$client->fetch($this->URL) === false) {
-						return false;
-					}
-					
-				   	$remote = $client->results;
-				   	
-					$server_version = unserialize($remote);
-					if (is_array($server_version)) {
-						if ( version_compare($server_version[$this->name], $this->version, '>') )
-						 	return true;
-					} 
-					
-					$check_intervall = time() + $this->period;
-					update_option( $this->name."_next_update", $check_intervall );
-					return false;
-				}				
-			}
-		}
-	}
-}
 // ***************************************************************	
 
 /**

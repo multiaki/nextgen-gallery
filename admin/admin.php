@@ -46,6 +46,12 @@ class nggAdminPanel{
 	function show_menu() {
 		
 		global $ngg;
+		
+		// init PluginChecker
+		$nggCheck 			= new CheckPlugin();	
+		$nggCheck->URL 		= NGGURL;
+		$nggCheck->version 	= NGGVERSION;
+		$nggCheck->name 	= "ngg";
 
 		// check for upgrade and show upgrade screen
 		if( get_option( 'ngg_db_version' ) != NGG_DBVERSION ) {
@@ -53,6 +59,11 @@ class nggAdminPanel{
 			include_once (dirname (__FILE__). '/upgrade.php');
 			nggallery_upgrade_page();
 			return;			
+		}
+		
+		// Show update message
+		if ( $nggCheck->startCheck() && (!IS_WPMU) ) {
+			echo '<div class="plugin-update">' . __('A new version of NextGEN Gallery is available !', 'nggallery') . ' <a href="http://wordpress.org/extend/plugins/nextgen-gallery/download/" target="_blank">' . __('Download here', 'nggallery') . '</a></div>' ."\n";
 		}
 		
   		switch ($_GET['page']){
@@ -195,6 +206,86 @@ function wpmu_enable_function($value) {
 	}
 	// if this is not WPMU, enable it !
 	return true;
+}
+
+
+/**
+ * WordPress PHP class to check for a new version.
+ * @author Alex Rabe & Joern Kretzschmar
+ * @orginal from Per Søderlind
+ *
+ // Dashboard update notification example
+	function myPlugin_update_dashboard() {
+	  $Check = new CheckPlugin();	
+	  $Check->URL 	= "YOUR URL";
+	  $Check->version = "1.00";
+	  $Check->name 	= "myPlugin";
+	  if ($Check->startCheck()) {
+ 	    echo '<h3>Update Information</h3>';
+	    echo '<p>A new version is available</p>';
+	  } 
+	}
+	
+	add_action('activity_box_end', 'myPlugin_update_dashboard', '0');
+ *
+ */
+if ( !class_exists( "CheckPlugin" ) ) {  
+	class CheckPlugin {
+		/**
+		 * URL with the version of the plugin
+		 * @var string
+		 */
+		var $URL = 'myURL';
+		/**
+		 * Version of thsi programm or plugin
+		 * @var string
+		 */
+		var $version = '1.00';
+		/**
+		 * Name of the plugin (will be used in the options table)
+		 * @var string
+		 */
+		var $name = 'myPlugin';
+		/**
+		 * Waiting period until the next check in seconds
+		 * @var int
+		 */
+		var $period = 86400;					
+					
+		function startCheck() {
+			/**
+			 * check for a new version, returns true if a version is avaiable
+			 */
+			
+			// use wordpress snoopy class
+			require_once(ABSPATH . WPINC . '/class-snoopy.php');
+			
+			$check_intervall = get_option( $this->name . '_next_update' );
+
+			if ( ($check_intervall < time() ) or (empty($check_intervall)) ) {
+				if (class_exists(snoopy)) {
+					$client = new Snoopy();
+					$client->agent = 'NextGEN Gallery Version Checker V' . NGGVERSION . ' (+http://www.nextgen.boelinger.com/)';
+					$client->_fp_timeout = 10;
+					if (@$client->fetch($this->URL) === false) {
+						return false;
+					}
+					
+				   	$remote = $client->results;
+				   	
+					$server_version = unserialize($remote);
+					if (is_array($server_version)) {
+						if ( version_compare($server_version[$this->name], $this->version, '>') )
+						 	return true;
+					} 
+					
+					$check_intervall = time() + $this->period;
+					update_option( $this->name . '_next_update', $check_intervall );
+					return false;
+				}				
+			}
+		}
+	}
 }
 
 ?>
