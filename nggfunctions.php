@@ -24,7 +24,7 @@ function nggShowSlideshow($galleryID, $irWidth, $irHeight) {
 		return $out;
 	}
 
-	if (empty($irWidth) ) $irWidth = (int) $ngg_options['irWidth'];
+	if (empty($irWidth) ) $irWidth  = (int) $ngg_options['irWidth'];
 	if (empty($irHeight)) $irHeight = (int) $ngg_options['irHeight'];
 
 	// init the flash output
@@ -79,9 +79,23 @@ function nggShowSlideshow($galleryID, $irWidth, $irHeight) {
 function nggShowGallery( $galleryID ) {
 	
 	global $wpdb, $nggRewrite;
-	
+
 	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
-	$galleryID = (int) $galleryID;
+
+	//Set sort order value, if not used (upgrade issue)
+	$ngg_options['galSort'] = ($ngg_options['galSort']) ? $ngg_options['galSort'] : "pid";
+	$ngg_options['galSortDir'] = ($ngg_options['galSortDir'] == "DESC") ? "DESC" : "ASC";
+
+	// look for id or slug
+	if( is_numeric($galleryID) )
+		$picturelist = $wpdb->get_results( $wpdb->prepare( "SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = '%d' AND tt.exclude != 1 ORDER BY tt.$ngg_options[galSort] $ngg_options[galSortDir]", $galleryID )  );
+	else
+		$picturelist = $wpdb->get_results( $wpdb->prepare( "SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = '%s' AND tt.exclude != 1 ORDER BY tt.$ngg_options[galSort] $ngg_options[galSortDir]", $galleryID ) );
+	
+	if ( !$picturelist->gid )
+		__('[Gallery not found]','nggallery');
+	else
+		$galleryID = (int) $picturelist->gid;
 
 	// $_GET from wp_query
 	$show    = get_query_var('show');
@@ -99,7 +113,7 @@ function nggShowGallery( $galleryID ) {
 			
 		// 1st look for ImageBrowser link
 		if (!empty( $pid))  {
-			$out = nggShowImageBrowser($galleryID);
+			$out = nggShowImageBrowser( $galleryID );
 			return $out;
 		}
 		
@@ -108,19 +122,14 @@ function nggShowGallery( $galleryID ) {
 			$args['show'] = "gallery";
 			$out  = '<div class="ngg-galleryoverview">';
 			$out .= '<div class="slideshowlink"><a class="slideshowlink" href="' . $nggRewrite->get_permalink($args) . '">'.$ngg_options['galTextGallery'].'</a></div>';
-			$out .= nggShowSlideshow($galleryID,$ngg_options['irWidth'],$ngg_options['irHeight']);
+			$out .= nggShowSlideshow($galleryID, $ngg_options['irWidth'], $ngg_options['irHeight']);
 			$out .= '</div>'."\n";
 			$out .= '<div class="ngg-clear"></div>'."\n";
 			return $out;
 		}
 	}
-	
-	//Set sort order value, if not used (upgrade issue)
-	$ngg_options['galSort'] = ($ngg_options['galSort']) ? $ngg_options['galSort'] : "pid";
-	$ngg_options['galSortDir'] = ($ngg_options['galSortDir'] == "DESC") ? "DESC" : "ASC";
 
 	// get all picture with this galleryid
-	$picturelist = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = '$galleryID' AND tt.exclude != 1 ORDER BY tt.$ngg_options[galSort] $ngg_options[galSortDir]");
 	if (is_array($picturelist)) { 
 		$out = nggCreateGallery($picturelist,$galleryID);
 	}
@@ -159,7 +168,7 @@ function nggCreateGallery($picturelist, $galleryID = false) {
 	$thumbheight = $ngg_options['thumbheight'];		
 	
 	// set thumb size 
-	$thumbsize = "";
+	$thumbsize = '';
 	if ($ngg_options['thumbfix'])  $thumbsize = 'width="'.$thumbwidth.'" height="'.$thumbheight.'"';
 	if ($ngg_options['thumbcrop']) $thumbsize = 'width="'.$thumbwidth.'" height="'.$thumbwidth.'"';
 	
@@ -205,8 +214,8 @@ function nggCreateGallery($picturelist, $galleryID = false) {
 
 	foreach ($picturelist as $key => $picture) {
 		// Get image
-		$image = nggImageDAO::find_image($picture->pid);
-	
+		$image = new nggImage($picture, $picture);
+		
 		// set image url
 		$folder_url		= $siteurl."/".$picture->path."/";
 		
@@ -241,9 +250,18 @@ function nggCreateGallery($picturelist, $galleryID = false) {
  * @param string $sortorder
  * @return the content
  */
-function nggShowAlbum($albumID, $mode = "extend", $sortorder = "") {
+function nggShowAlbum($id, $mode = 'extend') {
 	
 	global $wpdb;
+	
+ 	// in the case it's not the id we look up for the name
+	if ( is_numeric($albumID) )
+		list( $albumID, $sortorder ) = $wpdb->get_row( $wpdb->prepare( "SELECT id, sortorder FROM $wpdb->nggalbum WHERE id = %d " , $albumID), ARRAY_N );
+	else 
+	 	list( $albumID, $sortorder ) = $wpdb->get_row( $wpdb->prepare( "SELECT id, sortorder FROM $wpdb->nggalbum WHERE name = '%s' ", $albumID), ARRAY_N);
+	// still no success ? , die !
+	if( !$albumID ) 
+		return __('[Album not found]','nggallery');
 	
 	// $_GET from wp_query
 	$gallery  = get_query_var('gallery');
@@ -263,14 +281,14 @@ function nggShowAlbum($albumID, $mode = "extend", $sortorder = "") {
 	$mode = ltrim($mode,',');
 	$albumID = $wpdb->escape($albumID);
 
-	if (!empty($sortorder)) {
+	if ( !empty($sortorder) ) {
 		$gallery_array = unserialize($sortorder);
 	} 
 	
  	if ( is_array($gallery_array) )
  		$out .= nggCreateAlbum( $gallery_array, $mode, $albumID );
 	
-	$out = apply_filters('ngg_show_album_content', $out, intval($albumID));
+	$out = apply_filters( 'ngg_show_album_content', $out, intval( $albumID ) );
 
 	return $out;
 }
@@ -289,6 +307,7 @@ function nggCreateAlbum( $galleriesID, $mode = "extend", $albumID = 0) {
 	global $wpdb, $nggRewrite;
 	
 	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
+	
 	$sortorder = $galleriesID;
 	$galleries = array();
 	// if sombod didn't enter any mode , take the extend version
@@ -333,15 +352,13 @@ function nggCreateAlbum( $galleriesID, $mode = "extend", $albumID = 0) {
 			$args['gallery'] = $key;
 			$galleries[$key]->pagelink = $nggRewrite->get_permalink($args);
 		} else {
-			$galleries[$key]->pagelink = get_permalink($galleries[$key]->pageid);
+			$galleries[$key]->pagelink = get_permalink( $galleries[$key]->pageid );
 		}
 		
 		// description can contain HTML tags
 		$galleries[$key]->galdesc = html_entity_decode ( stripslashes($galleries[$key]->galdesc) ) ;
 	}
-	
- 	$out = '';
- 	
+
 	// create the output
 	$out = nggGalleryPlugin::capture ('album-'.$mode, array ('albumID' => $albumID, 'galleries' => $galleries, 'mode' => $mode) );
 
@@ -361,14 +378,18 @@ function nggShowImageBrowser($galleryID) {
 	
 	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
 	
+	//Set sort order value, if not used (upgrade issue)
+	$ngg_options['galSort'] = ($ngg_options['galSort']) ? $ngg_options['galSort'] : "pid";
+	$ngg_options['galSortDir'] = ($ngg_options['galSortDir'] == "DESC") ? "DESC" : "ASC";
+	
 	// get the pictures
-	$galleryID = $wpdb->escape($galleryID);
-	$picturelist = $wpdb->get_col("SELECT pid FROM $wpdb->nggpictures WHERE galleryid = '$galleryID' AND exclude != 1 ORDER BY $ngg_options[galSort] $ngg_options[galSortDir]");	
+	$picturelist = $wpdb->get_col( $wpdb->prepare( "SELECT pid FROM $wpdb->nggpictures WHERE galleryid = '%d' AND exclude != 1 ORDER BY $ngg_options[galSort] $ngg_options[galSortDir]", $galleryID) );	
 	if (is_array($picturelist)) { 
 		$out = nggCreateImageBrowser($picturelist);
 	}
 	
 	$out = apply_filters('ngg_show_imagebrowser_content', $out, intval($galleryID));
+	
 	return $out;
 	
 }
@@ -388,7 +409,7 @@ function nggCreateImageBrowser($picarray) {
 	// $_GET from wp_query
 	$pid  = get_query_var('pid');
 
-    if (!is_array($picarray))
+    if ( !is_array($picarray) )
 		$picarray = array($picarray);
 
 	$total = count($picarray);
@@ -461,9 +482,10 @@ function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $fl
 
 	// get picturedata
 	$picture = nggImageDAO::find_image($imageID);
+	
 	// if we didn't get some data, exit now
 	if ($picture == null)
-		return;
+		return __('[SinglePic not found]','nggallery');
 			
 	// add float to img
 	if (!empty($float)) {
@@ -539,11 +561,11 @@ function nggShowGalleryTags($taglist) {
 		}
 
 	// go on if not empty
-	if (empty($picturelist))
+	if ( empty($picturelist) )
 		return;
 	
 	// show gallery
-	if (is_array($picturelist)) { 
+	if ( is_array($picturelist) ) { 
 		$out = nggCreateGallery($picturelist,false);
 	}
 	
@@ -567,12 +589,11 @@ function nggShowRelatedGallery($taglist, $maxImages = 0) {
 	$picturelist = nggTags::find_images_for_tags($taglist, 'RAND');
 	
 	// go on if not empty
-	if (empty($picturelist)) {
+	if ( empty($picturelist) )
 		return;
-	}
 	
 	// cut the list to maxImages
-	if ($maxImages > 0 ) {
+	if ( $maxImages > 0 ) {
 		array_splice($picturelist, $maxImages);
 	}
 	
@@ -593,6 +614,7 @@ function nggShowRelatedGallery($taglist, $maxImages = 0) {
 	$out .= '</div>'."\n";
 	
 	$out = apply_filters('ngg_show_related_gallery_content', $out, $taglist);
+	
 	return $out;
 }
 

@@ -137,8 +137,6 @@ class NextGEN_shortcodes {
 	}
 	
 	function show_singlepic( $atts ) {
-		
-		global $wpdb;
 	
 		extract(shortcode_atts(array(
 			'id' 		=> 0,
@@ -148,54 +146,30 @@ class NextGEN_shortcodes {
 			'float'	 	=> ''
 		), $atts ));
 		
-		$result = $wpdb->get_var("SELECT filename FROM $wpdb->nggpictures WHERE pid = '$id' ");
-		
-		if( $result )
-			$out = nggSinglePicture($id, $w, $h, $mode, $float);
-		else 
-			$out = __('[SinglePic not found]','nggallery');
+		$out = nggSinglePicture($id, $w, $h, $mode, $float);
 			
 		return $out;
 	}
 
 	function show_album( $atts ) {
-		
-		global $wpdb;
 	
 		extract(shortcode_atts(array(
 			'id' 		=> 0,
 			'mode'		=> 'extend'	
 		), $atts ));
 		
-		//TODO:Move this to the function nggShowAlbum, no need to fetch them here
-		// check for album id
-
-		list($albumID, $albumSortOrder) = $wpdb->get_row("SELECT id, sortorder FROM $wpdb->nggalbum WHERE id = '$id' ", ARRAY_N);
- 		if(!$albumID) list($albumID, $albumSortOrder) = $wpdb->get_row("SELECT id, sortorder FROM $wpdb->nggalbum WHERE name = '$id' ", ARRAY_N);
-
-		if( $albumID )
-			$out = nggShowAlbum($albumID, $mode, $albumSortOrder);
-		else 
-			$out = __('[Album not found]','nggallery');
+		$out = nggShowAlbum($id, $mode, $albumSortOrder);
 			
 		return $out;
 	}
 
 	function show_gallery( $atts ) {
-		
-		global $wpdb;
 	
 		extract(shortcode_atts(array(
 			'id' 		=> 0
 		), $atts ));
 		
-		$galleryID = $wpdb->get_var("SELECT gid FROM $wpdb->nggallery WHERE gid = '$id' ");
-		if(!$galleryID) $galleryID = $wpdb->get_var("SELECT gid FROM $wpdb->nggallery WHERE name = '$id' ");
-
-		if( $galleryID )
-			$out = nggShowGallery($galleryID);
-		else 
-			$out = __('[Gallery not found]','nggallery');
+		$out = nggShowGallery( $id );
 			
 		return $out;
 	}

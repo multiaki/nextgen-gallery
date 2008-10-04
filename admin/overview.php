@@ -7,7 +7,6 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
  * Add the admin overview wp.25 style 
  * @return mixed content
  */
-
 function nggallery_admin_overview()  {	
 	global $wpdb;
 	
@@ -193,15 +192,12 @@ function ngg_get_serverinfo() {
 <?php
 }
 
-// ***************************************************************	
-
 /**
  * WPMU feature taken from Z-Space Upload Quotas
  * @author Dylan Reeve
  * @url http://dylan.wibble.net/
  *
  */
-
 class ngg_SpaceManager {
  
  	function getQuota() {

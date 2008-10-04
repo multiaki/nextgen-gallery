@@ -312,16 +312,18 @@ class nggLoader {
 	
 	function activate() {
 		
-		include_once (dirname (__FILE__)."/admin/install.php");
+		include_once (dirname (__FILE__) . '/admin/install.php');
 		nggallery_install();
+		// remove the update message
+		delete_option( 'ngg_update_exists' );
 		
 	}
 	
 	function deactivate() {
 		
 		// remove & reset the init check option
-		delete_option( "ngg_init_check" );
-		
+		delete_option( 'ngg_init_check' );
+		delete_option( 'ngg_update_exists' );
 	}
 }
 	// Let's start the holy plugin

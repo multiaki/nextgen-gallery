@@ -208,7 +208,6 @@ function wpmu_enable_function($value) {
 	return true;
 }
 
-
 /**
  * WordPress PHP class to check for a new version.
  * @author Alex Rabe & Joern Kretzschmar
@@ -252,17 +251,26 @@ if ( !class_exists( "CheckPlugin" ) ) {
 		 */
 		var $period = 86400;					
 					
+		/**
+		 * check for a new version, returns true if a version is avaiable
+		 */
 		function startCheck() {
-			/**
-			 * check for a new version, returns true if a version is avaiable
-			 */
-			
-			// use wordpress snoopy class
-			require_once(ABSPATH . WPINC . '/class-snoopy.php');
-			
+
+			// If we know that a update exists, don't check it again
+			if (get_option( $this->name . '_update_exists' ) == 'true' )
+				return true;
+
 			$check_intervall = get_option( $this->name . '_next_update' );
 
 			if ( ($check_intervall < time() ) or (empty($check_intervall)) ) {
+				
+				// Do not bother the server to often
+				$check_intervall = time() + $this->period;
+				update_option( $this->name . '_next_update', $check_intervall );
+				
+				// use wordpress snoopy class
+				require_once(ABSPATH . WPINC . '/class-snoopy.php');
+				
 				if (class_exists(snoopy)) {
 					$client = new Snoopy();
 					$client->agent = 'NextGEN Gallery Version Checker V' . NGGVERSION . ' (+http://www.nextgen.boelinger.com/)';
@@ -270,17 +278,16 @@ if ( !class_exists( "CheckPlugin" ) ) {
 					if (@$client->fetch($this->URL) === false) {
 						return false;
 					}
-					
-				   	$remote = $client->results;
 				   	
-					$server_version = unserialize($remote);
+					$server_version = unserialize($client->results);
 					if (is_array($server_version)) {
-						if ( version_compare($server_version[$this->name], $this->version, '>') )
-						 	return true;
+						if ( version_compare($server_version[$this->name], $this->version, '>') ) {
+							update_option( $this->name . '_update_exists', 'true' );
+							return true;
+						}
 					} 
-					
-					$check_intervall = time() + $this->period;
-					update_option( $this->name . '_next_update', $check_intervall );
+						
+					delete_option( $this->name . '_update_exists' );					
 					return false;
 				}				
 			}
