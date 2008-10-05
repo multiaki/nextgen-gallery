@@ -63,7 +63,7 @@ class nggAlbum {
 		if ($this->galleries==null) {
 			$this->galleries = array();
 			foreach ($this->gallery_ids as $gid) {
-				$this->galleries[$gid] = nggGalleryDAO::find_gallery($gid); 
+				$this->galleries[$gid] = nggdb::find_gallery($gid); 
 			}
 		}
 		return $this->galleries;

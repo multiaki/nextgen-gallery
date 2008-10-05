@@ -26,13 +26,12 @@ function nggallery_manage_gallery_main() {
 			<tbody>
 <?php
 			
-$gallerylist = nggGalleryDAO::find_all_galleries('gid', 'asc');
+$gallerylist = nggdb::find_all_galleries('gid', 'asc', TRUE);
 
 if($gallerylist) {
 	foreach($gallerylist as $gallery) {
 		$class = ( $class == 'class="alternate"' ) ? '' : 'class="alternate"';
 		$gid = $gallery->gid;
-		$counter = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggpictures WHERE galleryid = '$gid'");
 		$author_user = get_userdata( (int) $gallery->author );
 		?>
 		<tr id="gallery-<?php echo $gid ?>" <?php echo $class; ?> >
@@ -49,7 +48,7 @@ if($gallerylist) {
 			<td><?php echo $gallery->galdesc; ?></td>
 			<td><?php echo $author_user->display_name; ?></td>
 			<td><?php echo $gallery->pageid; ?></td>
-			<td><?php echo $counter; ?></td>
+			<td><?php echo $gallery->counter; ?></td>
 			<td>
 				<?php if(nggAdmin::can_manage_this_gallery($gallery->author)) : ?>
 					<a href="<?php echo wp_nonce_url( $ngg->manage_page->base_page . "&amp;mode=delete&amp;gid=" . $gid, 'ngg_editgallery')?>" class="delete" onclick="javascript:check=confirm( '<?php _e("Delete this gallery ?",'nggallery')?>');if(check==false) return false;"><?php _e('Delete') ?></a>

@@ -57,8 +57,8 @@ if ($mode=='last_pictures') {
 		
 	// Get all galleries
 	//--
-	$galleries = nggGalleryDAO::find_all_galleries();
-	if (count($galleries)==0) {
+	$galleries = nggdb::find_all_galleries();
+	if ( count($galleries)==0 ) {
 		header('content-type:text/plain;charset=utf-8');
 		echo sprintf(__("No galleries have been yet created.","nggallery"), $gid);
 		exit;
@@ -80,7 +80,7 @@ if ($mode=='last_pictures') {
 
 	// Get the main gallery object
 	//--
-	$gallery = nggGalleryDAO::find_gallery($gid);	
+	$gallery = nggdb::find_gallery($gid);	
 	if (!isset($gallery) || $gallery==null) {
 		header('content-type:text/plain;charset=utf-8');
 		echo sprintf(__("The gallery ID=%s does not exist.","nggallery"), $gid);

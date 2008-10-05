@@ -12,7 +12,7 @@ function nggallery_picturelist() {
 	$hideThumbs = $ngg->manage_page->hideThumbs;
 	
 	// get gallery values
-	$act_gallery = nggGalleryDAO::find_gallery($act_gid);
+	$act_gallery = nggdb::find_gallery($act_gid);
 	
 	if ($act_gallery == null) {
 		nggGalleryPlugin::show_error(__('Gallery not found.', 'nggallery'));
@@ -23,6 +23,9 @@ function nggallery_picturelist() {
 
 	// get the current author
 	$act_author_user    = get_userdata( (int) $act_gallery->author );
+	
+	// list all galleries
+	$gallerylist = nggdb::find_all_galleries();
 
 ?>
 
@@ -419,10 +422,7 @@ if($picturelist) {
 		<table width="100%" border="0" cellspacing="3" cellpadding="3" >
 		  	<tr>
 		    	<th>
-		    		<?php 
-		    			_e("Select the destination gallery:", 'nggallery');
-		    			$gallerylist = nggGalleryDAO::find_all_galleries();
-		    		?>&nbsp;
+		    		<?php _e("Select the destination gallery:", 'nggallery'); ?>&nbsp;
 		    		<select name="dest_gid" style="width:95%" >
 		    			<?php 
 		    				foreach ($gallerylist as $gallery) { 

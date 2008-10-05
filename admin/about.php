@@ -225,7 +225,11 @@ function ngg_list_support()	{
 	"Dean Cowan" => "http://www.deanandlinda.com",
 	"Ross Calloway" => "",
 	"Scott Kyle" => "",		
-	"Allan Corfix Lykke" => ""
+	"Allan Corfix Lykke" => "",
+	"Marieke van de Pol" => "",
+	"Tobias Kern" => "http://www.tobikern.de",
+	"Sander van Loon" => "",
+	"Daniel Oliver Habenicht" => "http://www.audioschmiede.de" 
 	);
 	
 	ksort($supporter);

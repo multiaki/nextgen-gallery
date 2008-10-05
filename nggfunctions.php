@@ -316,7 +316,9 @@ function nggCreateAlbum( $galleriesID, $mode = 'extend', $albumID = 0) {
 	// get the galleries information 	
  	foreach ($galleriesID as $i => $value)
    		$galleriesID[$i] = addslashes($value);
+
  	$unsort_galleries = $wpdb->get_results('SELECT * FROM '.$wpdb->nggallery.' WHERE gid IN (\''.implode('\',\'', $galleriesID).'\')', OBJECT_K);
+
 	//TODO: Check this, problem exist when previewpic = 0 
 	//$galleries = $wpdb->get_results('SELECT t.*, tt.* FROM '.$wpdb->nggallery.' AS t INNER JOIN '.$wpdb->nggpictures.' AS tt ON t.previewpic = tt.pid WHERE t.gid IN (\''.implode('\',\'', $galleriesID).'\')', OBJECT_K);
 

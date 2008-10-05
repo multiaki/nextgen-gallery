@@ -743,7 +743,7 @@ class nggAdmin{
 			$pic_ids = array($pic_ids);
 		
 		// Get destination gallery
-		$destination  = nggGalleryDAO::find_gallery($dest_gid);
+		$destination  = nggdb::find_gallery( $dest_gid );
 		$dest_abspath = WINABSPATH . $destination->path;
 		
 		if ( $destination == null ) {
@@ -812,7 +812,7 @@ class nggAdmin{
 			$pic_ids = array($pic_ids);
 		
 		// Get destination gallery
-		$destination = nggGalleryDAO::find_gallery($dest_gid);
+		$destination = nggdb::find_gallery( $dest_gid );
 		if ( $destination == null ) {
 			nggGalleryPlugin::show_error(__('The destination gallery does not exist','nggallery'));
 			return;
