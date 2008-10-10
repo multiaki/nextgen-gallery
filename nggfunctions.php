@@ -250,7 +250,7 @@ function nggCreateGallery($picturelist, $galleryID = false) {
  * @param string $sortorder
  * @return the content
  */
-function nggShowAlbum($id, $mode = 'extend') {
+function nggShowAlbum($albumID, $mode = 'extend') {
 	
 	global $wpdb;
 	
