@@ -122,7 +122,7 @@ if ($mode=='last_pictures') {
 	
 	// Get the album object
 	//--
-	$album = nggAlbumDAO::find_album($aid);
+	$album = nggdb::find_album($aid);
 	if (!isset($album) || $album==null) {
 		header('content-type:text/plain;charset=utf-8');
 		echo sprintf(__("The album ID=%s does not exist.","nggallery"), $aid);

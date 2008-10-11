@@ -429,7 +429,7 @@ function nggSlideshowWidget($galleryID, $width = '', $height = '') {
 }
 
 /**
- * nggDisplayRandomImages($number,$width,$height,$exclude,$list)
+ * nggDisplayRandomImages($number,$width,$height,$exclude,$list,$show)
  * Function for templates without widget support
  *
  * @return echo the widget content
@@ -442,14 +442,14 @@ function nggDisplayRandomImages($number, $width = '75', $height = '50', $exclude
 						'type'=>'random',
 						'width'=>$width, 
 						'height'=>$height, 
-						'exclude'=>'all',
+						'exclude'=>$exclude,
 						'list'=>$list   );
 	
 	nggWidget::ngg_widget_output($args = array(), 1, $options);
 }
 
 /**
- * nggDisplayRecentImages($number,$width,$height,$exclude,$list)
+ * nggDisplayRecentImages($number,$width,$height,$exclude,$list,$show)
  * Function for templates without widget support
  *
  * @return echo the widget content
@@ -462,7 +462,7 @@ function nggDisplayRecentImages($number, $width = '75', $height = '50', $exclude
 						'type'=>'recent',
 						'width'=>$width, 
 						'height'=>$height, 
-						'exclude'=>'all',
+						'exclude'=>$exclude,
 						'list'=>$list   );
 	
 	nggWidget::ngg_widget_output($args = array(), 1, $options);

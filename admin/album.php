@@ -35,8 +35,9 @@ function nggallery_admin_manage_album()  {
 	if ($_POST['delete']){
 		check_admin_referer('ngg_album');
 
-		$result = $wpdb->query("DELETE FROM $wpdb->nggalbum WHERE id = '$albumID' ");
-		if ($result) nggGalleryPlugin::show_message(__('Album deleted','nggallery'));
+		$result = nggdb::delete_album($albumID);
+		if ($result) 
+			nggGalleryPlugin::show_message(__('Album deleted','nggallery'));
 	}
 	
 ?>

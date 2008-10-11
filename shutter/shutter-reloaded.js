@@ -66,7 +66,7 @@ shutterReloaded = {
 	},
 
 	make : function(ln,fs) {
-		var t = this, prev, next, prevlink = '', nextlink = '', D, S, W, fsarg = -1, imgNum, NavBar;
+		var t = this, prev, next, prevlink = '', nextlink = '', previmg, nextimg, D, S, W, fsarg = -1, imgNum, NavBar;
 
 		if ( ! t.Top ) {
 			if ( typeof window.pageYOffset != 'undefined' ) t.Top = window.pageYOffset;
@@ -108,6 +108,8 @@ shutterReloaded = {
 		if ( shutterLinks[ln].num > 1 ) {
 			prev = shutterSets[shutterLinks[ln].set][shutterLinks[ln].num - 2];
 			prevlink = '<a href="#" onclick="shutterReloaded.make('+prev+');return false">&lt;&lt;</a>'+dv;
+			previmg = new Image();
+			previmg.src = shutterLinks[prev].link;
 		} else {
 			prevlink = '';
 		}
@@ -115,6 +117,8 @@ shutterReloaded = {
 		if ( shutterLinks[ln].num != -1 && shutterLinks[ln].num < (shutterSets[shutterLinks[ln].set].length) ) {
 			next = shutterSets[shutterLinks[ln].set][shutterLinks[ln].num];
 			nextlink = '<a href="#" onclick="shutterReloaded.make('+next+');return false">&gt;&gt;</a>'+dv;
+			nextimg = new Image();
+			nextimg.src = shutterLinks[next].link;
 		} else {
 			nextlink = '';
 		}

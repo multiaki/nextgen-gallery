@@ -253,21 +253,12 @@ function nggCreateGallery($picturelist, $galleryID = false) {
 function nggShowAlbum($albumID, $mode = 'extend') {
 	
 	global $wpdb;
-	
- 	// in the case it's not the id we look up for the name
-	if ( is_numeric($albumID) )
-		list( $albumID, $sortorder ) = $wpdb->get_row( $wpdb->prepare( "SELECT id, sortorder FROM $wpdb->nggalbum WHERE id = %d " , $albumID), ARRAY_N );
-	else 
-	 	list( $albumID, $sortorder ) = $wpdb->get_row( $wpdb->prepare( "SELECT id, sortorder FROM $wpdb->nggalbum WHERE name = '%s' ", $albumID), ARRAY_N);
-	// still no success ? , die !
-	if( !$albumID ) 
-		return __('[Album not found]','nggallery');
-	
+
 	// $_GET from wp_query
 	$gallery  = get_query_var('gallery');
 	$album    = get_query_var('album');
 
-	// look for gallery variable 
+	// first look for gallery variable 
 	if (!empty( $gallery ))  {
 		
 		if ( $albumID != $album ) 
@@ -276,19 +267,21 @@ function nggShowAlbum($albumID, $mode = 'extend') {
 		$galleryID = (int) $gallery;
 		$out = nggShowGallery($galleryID);
 		return $out;
-	} 
+	}
+	 
+	// lookup in the database
+	$album = nggdb::find_album( $albumID );
 
-	$mode = ltrim($mode,',');
-	$albumID = $wpdb->escape($albumID);
-
-	if ( !empty($sortorder) ) {
-		$gallery_array = unserialize($sortorder);
-	} 
+ 	// still no success ? , die !
+	if( !$album ) 
+		return __('[Album not found]','nggallery');
 	
- 	if ( is_array($gallery_array) )
- 		$out .= nggCreateAlbum( $gallery_array, $mode, $albumID );
+	$mode = ltrim($mode, ',');
 	
-	$out = apply_filters( 'ngg_show_album_content', $out, intval( $albumID ) );
+ 	if ( is_array($album->gallery_ids) )
+ 		$out = nggCreateAlbum( $album->gallery_ids, $mode, $album->id );
+	
+	$out = apply_filters( 'ngg_show_album_content', $out, intval( $album->id ) );
 
 	return $out;
 }
