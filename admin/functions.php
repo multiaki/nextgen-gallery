@@ -411,7 +411,7 @@ class nggAdmin{
 	function get_MetaData($picPath) {
 		// must be Gallery absPath + filename
 		
-		require_once(NGGALLERY_ABSPATH.'/lib/ngg-meta.lib.php');
+		require_once(NGGALLERY_ABSPATH.'/lib/meta.php');
 		
 		$meta = array();
 

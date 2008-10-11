@@ -15,7 +15,7 @@ function nggallery_admin_manage_album()  {
 		
 		if ($_POST['newalbum']){ 
 			$newalbum = attribute_escape($_POST['newalbum']);
-			$result = $wpdb->query(" INSERT INTO $wpdb->nggalbum (name, sortorder) VALUES ('$newalbum','0')");
+			$result = $wpdb->query("INSERT INTO $wpdb->nggalbum (name, sortorder) VALUES ('$newalbum','0')");
 			if ($result) nggGalleryPlugin::show_message(__('Update Successfully','nggallery'));
 		} 
 		
@@ -175,7 +175,7 @@ function ngg_serialize(s)
 		<?php
 		$gallerylist = $wpdb->get_results("SELECT gid FROM $wpdb->nggallery");
 		
-		//TODO:Code MUST be optimized, how to flag a used galley better ?
+		//TODO:Code MUST be optimized, how to flag a used gallery better ?
 		$used_list = getallusedgalleries();
 		
 		if(is_array($gallerylist)) {

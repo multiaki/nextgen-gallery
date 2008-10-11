@@ -3,7 +3,7 @@
 // look up for the path
 require_once( dirname( dirname(__FILE__) ) . '/ngg-config.php');
 
-require_once(NGGALLERY_ABSPATH.'/lib/ngg-meta.lib.php');
+require_once(NGGALLERY_ABSPATH.'/lib/meta.php');
 require_once(NGGALLERY_ABSPATH.'/lib/ngg-image.lib.php');
 
 if ( !is_user_logged_in() )

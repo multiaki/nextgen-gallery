@@ -24,24 +24,19 @@
 */
 
 // Load required files and set some useful variables
-//--
 require_once(dirname(__FILE__) . "/../ngg-config.php");
-require_once(dirname(__FILE__) . "/../lib/ngg-media-rss.lib.php");
+require_once(dirname(__FILE__) . "/../lib/media-rss.php");
 
 // Check we have the required GET parameters
-//--
 $mode = $_GET["mode"];
-if (!isset($mode) || $mode=="") {
+if (!isset($mode) || $mode=="")
 	$mode = last_pictures;
-}
 
 // Act according to the required mode
-//--
 $rss = '';
 if ($mode=='last_pictures') {
 	
 	// Get additional parameters
-	//--
 	$page = (int) $_GET["page"];	
 	if (!isset($page) || $page=="") {
 		$page = 0;
@@ -56,7 +51,6 @@ if ($mode=='last_pictures') {
 } else if ($mode=='gallery') {
 		
 	// Get all galleries
-	//--
 	$galleries = nggdb::find_all_galleries();
 	if ( count($galleries)==0 ) {
 		header('content-type:text/plain;charset=utf-8');
@@ -65,7 +59,6 @@ if ($mode=='last_pictures') {
 	}
 	
 	// Get additional parameters
-	//--
 	$gid = (int) $_GET["gid"];	
 	if (!isset($gid) || $gid=="" || $gid==0) {
 		$gid = $galleries[0]->gid;
@@ -79,7 +72,6 @@ if ($mode=='last_pictures') {
 	}
 
 	// Get the main gallery object
-	//--
 	$gallery = nggdb::find_gallery($gid);	
 	if (!isset($gallery) || $gallery==null) {
 		header('content-type:text/plain;charset=utf-8');
@@ -88,7 +80,6 @@ if ($mode=='last_pictures') {
 	}
 	
 	// Get previous and next galleries if required
-	//--
 	$gallery = $galleries[0];
 	$prev_gallery = null;
 	$next_gallery = null;
@@ -112,7 +103,6 @@ if ($mode=='last_pictures') {
 } else if ($mode=='album') {
 	
 	// Get additional parameters
-	//--
 	$aid = (int) $_GET["aid"];	
 	if (!isset($aid) || $aid=="" || $aid==0) {
 		header('content-type:text/plain;charset=utf-8');
@@ -121,7 +111,6 @@ if ($mode=='last_pictures') {
 	}
 	
 	// Get the album object
-	//--
 	$album = nggdb::find_album($aid);
 	if (!isset($album) || $album==null) {
 		header('content-type:text/plain;charset=utf-8');
@@ -138,7 +127,6 @@ if ($mode=='last_pictures') {
 
 
 // Output header for media RSS
-//--
 header("content-type:text/xml;charset=utf-8");
 echo "<?xml version='1.0' encoding='UTF-8' standalone='yes'?>\n";
 echo $rss;

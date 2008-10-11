@@ -19,7 +19,7 @@ class nggManageGallery {
 		$this->pid  = (int) $_GET['pid'];	
 		$this->mode = trim ($_GET['mode']);
 	
-		//TODO: Reomove this vars
+		//TODO: Remove this vars
 		$this->hide_thumb();
 		$this->show_tags();
 

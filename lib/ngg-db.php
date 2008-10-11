@@ -3,7 +3,7 @@
 /**
  * NextGEN Gallery Database Class
  * 
- * @author Alex Rabe
+ * @author Alex Rabe, Vincent Prat
  * @copyright 2008
  * @since 1.0.0
  */
@@ -121,7 +121,7 @@ class nggdb {
 		// Unserialize the galleries inside the album
 		if ( $album ) {
 			if ( !empty( $album->sortorder ) ) 
-				$album->gallery_ids = unserialize($album->sortorder);
+				$album->gallery_ids = unserialize( $album->sortorder );
 			return $album;
 		} 
 		
@@ -432,7 +432,6 @@ class nggImageDAO {
 			return $images;
 		} 
 			
-		
 		return null;
 	}
 }

@@ -399,7 +399,7 @@ function nggCreateImageBrowser($picarray) {
 
 	global $nggRewrite;
 	
-	require_once( dirname (__FILE__) . '/lib/ngg-meta.lib.php' );
+	require_once( dirname (__FILE__) . '/lib/meta.php' );
 	
 	// $_GET from wp_query
 	$pid  = get_query_var('pid');

@@ -231,9 +231,9 @@ class nggLoader {
 		require_once (dirname (__FILE__).'/lib/ngg-db.php');
 		require_once (dirname (__FILE__).'/lib/ngg-gallery.lib.php');
 		require_once (dirname (__FILE__).'/lib/ngg-image.lib.php');
-		require_once (dirname (__FILE__).'/lib/ngg-meta.lib.php');
-		require_once (dirname (__FILE__).'/lib/ngg-tags.lib.php');
-		require_once (dirname (__FILE__).'/lib/ngg-media-rss.lib.php');
+		require_once (dirname (__FILE__).'/lib/meta.php');
+		require_once (dirname (__FILE__).'/lib/tags.php');
+		require_once (dirname (__FILE__).'/lib/media-rss.php');
 		require_once (dirname (__FILE__).'/widgets/widgets.php');
 		
 		if (DOING_AJAX)
