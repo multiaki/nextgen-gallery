@@ -32,7 +32,6 @@ class nggImage{
 	var $thumbcode		=	'';			// Image effect code
 
 	/**** Gallery Data ****/
-	var $gallery 		= 	null;		// TODO: remove the fields below
 	var $name			=	'';			// Gallery name
 	var $path			=	'';			// Gallery path	
 	var $title			=	'';			// Gallery title
@@ -43,19 +42,22 @@ class nggImage{
 	var $tags			=   '';
 		
 	/**
-	* Constructor
-	* 
-	* @gallery The nggGallery object representing the gallery containing this image
-	* @row The database row from which to initialise the object fields
-	*/
-	function nggImage($gallery, $row) {			
-		// Copy fields from database row
-		foreach ($row as $key => $value) {
+	 * Constructor
+	 * 
+	 * @param object $gallery The nggGallery object representing the gallery containing this image
+	 * @param object $row //TODO:Obsoltete ???
+	 * @return void
+	 */
+	function nggImage($gallery, $row = false) {			
+			
+		//This must be an object
+		$gallery = (object) $gallery;
+		
+		// Build up the object
+		foreach ($gallery as $key => $value)
 			$this->$key = $value ;
-		}
 		
 		// Finish initialisation
-		$this->gallery 		= $gallery;
 		$this->name			= $gallery->name;
 		$this->path			= $gallery->path;
 		$this->title		= $gallery->title;

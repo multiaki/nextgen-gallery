@@ -10,8 +10,9 @@
  */
 class add_nextgen_button {
 	
-	var $pluginname = "NextGEN";
-	var $path = "";
+	var $pluginname = 'NextGEN';
+	var $path = '';
+	var $internalVersion = 100;
 	
 	/**
 	 * add_nextgen_button::add_nextgen_button()
@@ -50,7 +51,7 @@ class add_nextgen_button {
 		if ( get_user_option('rich_editing') == 'true') {
 		 
 			// add the button for wp2.5 in a new way
-			add_filter("mce_external_plugins", array (&$this, "add_tinymce_plugin" ), 5);
+			add_filter("mce_external_plugins", array (&$this, 'add_tinymce_plugin' ), 5);
 			add_filter('mce_buttons', array (&$this, 'register_button' ), 5);
 		}
 	}
@@ -63,7 +64,7 @@ class add_nextgen_button {
 	 */
 	function register_button($buttons) {
 	
-		array_push($buttons, "separator", $this->pluginname );
+		array_push($buttons, 'separator', $this->pluginname );
 	
 		return $buttons;
 	}
@@ -88,7 +89,8 @@ class add_nextgen_button {
 	 * @return $versio
 	 */
 	function change_tinymce_version($version) {
-		return ++$version;
+			$version = $version + $internalVersion;
+		return $version;
 	}
 	
 }

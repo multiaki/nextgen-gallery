@@ -12,14 +12,15 @@ function nggallery_picturelist() {
 	$hideThumbs = $ngg->manage_page->hideThumbs;
 	
 	// get gallery values
-	$act_gallery = nggdb::find_gallery($act_gid);
+	$act_gallery = nggdb::get_gallery($act_gid, $ngg->options['galSort'], $ngg->options['galSortDir']);
 	
-	if ($act_gallery == null) {
+	if (!$act_gallery) {
 		nggGalleryPlugin::show_error(__('Gallery not found.', 'nggallery'));
 		return;
 	}
+	
 	// get the list of images
-	$picturelist = nggImageDAO::find_images_in_gallery($act_gallery, $ngg->options['galSort'], $ngg->options['galSortDir']);
+	$picturelist = $act_gallery->imagedata;
 
 	// get the current author
 	$act_author_user    = get_userdata( (int) $act_gallery->author );
@@ -88,12 +89,12 @@ function checkSelected() {
 		return false; 
 	} 
 	//TODO: For copy to and move to we need some better way around
-	if (jQuery('#bulkaction').val() == 9) {
+	if (jQuery('#bulkaction').val() == 'copy_to') {
 		showDialog('selectgallery');
 		return false;
 	}
 	
-	if (jQuery('#bulkaction').val() == 10) {
+	if (jQuery('#bulkaction').val() == 'move_to') {
 		showDialog('selectgallery');
 		return false;
 	}

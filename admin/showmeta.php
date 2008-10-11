@@ -19,7 +19,7 @@ global $wpdb;
 
 $id = (int) $_GET['id'];
 // let's get the image data
-$picture = nggImageDAO::find_image($id);
+$picture = nggdb::find_image($id);
 // let's get the meta data'
 $meta = new nggMeta($picture->imagePath);
 $exifdata = $meta->get_EXIF();

@@ -193,7 +193,7 @@ class nggAdmin{
 			require_once( nggGalleryPlugin::graphic_library() );
 		
 		if ( is_numeric($image) )
-			$image = nggImageDAO::find_image( $image );
+			$image = nggdb::find_image( $image );
 
 		if ( !is_object($image) ) 
 			return __('Object didn\'t contain correct data','nggallery');
@@ -272,7 +272,7 @@ class nggAdmin{
 			require_once( nggGalleryPlugin::graphic_library() );
 
 		if ( is_numeric($image) )
-			$image = nggImageDAO::find_image( $image );
+			$image = nggdb::find_image( $image );
 		
 		if ( !is_object($image) ) 
 			return __('Object didn\'t contain correct data','nggallery');	
@@ -313,7 +313,7 @@ class nggAdmin{
 			require_once( nggGalleryPlugin::graphic_library() );
 		
 		if ( is_numeric($image) )
-			$image = nggImageDAO::find_image( $image );
+			$image = nggdb::find_image( $image );
 		
 		if ( !is_object($image) ) 
 			return __('Object didn\'t contain correct data','nggallery');		
@@ -380,7 +380,7 @@ class nggAdmin{
 			$imagesIds = array($imagesIds);
 		
 		foreach($imagesIds as $pic_id) {
-			$picture = nggImageDAO::find_image($pic_id);
+			$picture = nggdb::find_image($pic_id);
 			if (!$picture->error) {
 
 				$meta = nggAdmin::get_MetaData($picture->imagePath);
@@ -759,8 +759,8 @@ class nggAdmin{
 		}
 				
 		// Get pictures
-		$images = nggImageDAO::find_images_in_list($pic_ids);
-		
+		$images = nggdb::find_images_in_list($pic_ids);
+
 		foreach ($images as $image) {		
 			
 			$i = 0;
@@ -768,8 +768,8 @@ class nggAdmin{
 			
 			$destination_file_name = $image->filename;
 			// check if the filename already exist, then we add a copy_ prefix
-			while (file_exists( $dest_abspath . "/" . $destination_file_name)) {
-				$tmp_prefix = "copy_" . ($i++) . "_";
+			while (file_exists( $dest_abspath . '/' . $destination_file_name)) {
+				$tmp_prefix = 'copy_' . ($i++) . '_';
 				$destination_file_name = $tmp_prefix . $image->filename;
 			}
 			
@@ -787,7 +787,7 @@ class nggAdmin{
 			!@rename($image->thumbPath, $destination_thumbnail);
 			
 			// Change the gallery id in the database , maybe the filename
-			if ( nggImageDAO::update_image($image->pid, $dest_gid, $destination_file_name) )
+			if ( nggdb::update_image($image->pid, $dest_gid, $destination_file_name) )
 				$count++;
 
 		}
@@ -826,7 +826,7 @@ class nggAdmin{
 		}
 				
 		// Get pictures
-		$images = nggImageDAO::find_images_in_list($pic_ids);
+		$images = nggdb::find_images_in_list($pic_ids);
 		$destination_path = WINABSPATH . $destination->path;
 		
 		foreach ($images as $image) {		
@@ -856,7 +856,7 @@ class nggAdmin{
 			!@copy($image->thumbPath, $destination_thumb_file_path);
 			
 			// Create new database entry for the image
-			$new_pid = nggImageDAO::insert_image( $destination->gid, $destination_file_name, $image->alttext, $image->description, $image->exclude);
+			$new_pid = nggdb::insert_image( $destination->gid, $destination_file_name, $image->alttext, $image->description, $image->exclude);
 
 			if (!isset($new_pid)) {				
 				$errors .= sprintf(__('Failed to copy database row for picture %s','nggallery'), $image->pid) . '<br />';

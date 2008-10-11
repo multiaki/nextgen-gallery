@@ -14,7 +14,7 @@ $pictureID = (int) $_GET['pid'];
 $mode = attribute_escape($_GET['mode']);
 
 // let's get the image data
-$picture  = nggImageDAO::find_image( $pictureID );
+$picture  = nggdb::find_image( $pictureID );
 $thumb = new ngg_Thumbnail( $picture->imagePath );
 
 // Resize if necessary

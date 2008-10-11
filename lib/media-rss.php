@@ -58,7 +58,7 @@ class nggMediaRss {
 	 * @param show The number of pictures to include in one field (default 30) 
 	 */
 	function get_last_pictures_mrss($page = 0, $show = 30) {
-		$images = nggImageDAO::find_last_images($page, $show);
+		$images = nggdb::find_last_images($page, $show);
 		
 		$title = stripslashes(get_option('blogname'));
 		$description = stripslashes(get_option('blogdescription'));

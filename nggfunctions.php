@@ -255,8 +255,6 @@ function nggCreateGallery($picturelist, $galleryID = false, $mode = '') {
  */
 function nggShowAlbum($albumID, $mode = 'extend') {
 	
-	global $wpdb;
-
 	// $_GET from wp_query
 	$gallery  = get_query_var('gallery');
 	$album    = get_query_var('album');
@@ -433,7 +431,7 @@ function nggCreateImageBrowser($picarray, $mode = '') {
 	$next_pid = ( $key < ($total-1) ) ? $picarray[$key+1] : reset($picarray) ;
 	
 	// get the picture data
-	$picture = nggImageDAO::find_image($act_pid);
+	$picture = nggdb::find_image($act_pid);
 	// if we didn't get some data, exit now
 	if ($picture == null)
 		return;
@@ -485,7 +483,7 @@ function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $fl
 	$height = ltrim( $height, ',' );
 
 	// get picturedata
-	$picture = nggImageDAO::find_image($imageID);
+	$picture = nggdb::find_image($imageID);
 	
 	// if we didn't get some data, exit now
 	if ($picture == null)

@@ -51,7 +51,7 @@ function ngg_do_picture_shortcode($atts, $content=null) {
 		$mode == '';
 
 	// get picture data
-	$picture = nggImageDAO::find_image($id);
+	$picture = nggdb::find_image($id);
 
 	// Check picture existance
 	if ($picture==null) {

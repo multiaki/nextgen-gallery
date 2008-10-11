@@ -82,10 +82,46 @@ class nggdb {
 		$gallery = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->nggallery WHERE gid = %d", $gid ) );
 		
 		// Build the object from the query result
-		if ($gallery)
+		if ($gallery) 
 			return $gallery;
 		else 
 			return null;
+	}
+	
+	/**
+	 * This function return all information about the gallery and the images inside
+	 * 
+	 * @param int $id
+	 * @param string $orderby 
+	 * @param string $order (ASC |DESC)
+	 * @param bool $exclude
+	 * @return An object containing the nggImage objects representing the images in the gallery.
+	 */
+	function get_gallery($id, $orderby = 'sortorder', $order = 'ASC', $exclude = false) {
+
+		global $wpdb;
+		
+		// Check for the exclude setting
+		$exclude_clause = ($exclude) ? ' AND tt.exclude<>1 ' : '';
+		
+		// Query database
+		$result = $wpdb->get_results( $wpdb->prepare( "SELECT tt.*, t.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = %d $exclude_clause ORDER BY %s %s", $id, $orderby, $order ) );
+		
+		// Build the object
+		if ($result) {
+			$gallery = new stdClass();
+			// Copy fields from the first database row into the array
+			foreach ($result[0] as $key => $value)
+				$gallery->$key = $value ;
+				
+			// Now added all image data
+			foreach ($result as $key => $value)
+				$gallery->imagedata[$key] = new nggImage( $value );
+			
+			return $gallery;
+		}
+		
+		return false;		
 	}
 	
 	/**
@@ -139,17 +175,6 @@ class nggdb {
 		return $result;
 	}
 
-}
-
-/**
-* Data Access Object for the image object
-* 
-* @author 		Vincent Prat
-* @copyright 	Copyright 2008
-* 
-*/
-class nggImageDAO {
-	
 	/**
 	 * Insert an image in the database
 	 * 
@@ -167,7 +192,7 @@ class nggImageDAO {
 	}
 
 	/**
-	 * nggImageDAO::update_image() - Insert an image in the database
+	 * nggdb::update_image() - Insert an image in the database
 	 * 
 	 * @param int $pid   id of the image
 	 * @param (optional) string|int $galleryid
@@ -208,124 +233,53 @@ class nggImageDAO {
 	}
 	
 	/**
-	 * Get all the images from a given gallery
-	 * 
-	 * @gid The gallery object
-	 * 
-	 * @return An array containing the nggImage objects representing the images in the gallery.
-	 */
-	function find_images_in_gallery($gallery, $orderby = 'sortorder', $order = 'ASC', $use_exclude = false) {
-		global $wpdb;
-		
-		// Query database
-		if ($use_exclude) {
-			$exclude_clause = ' AND exclude<>1 ';
-		} else {
-			$exclude_clause = '';
-		}
-		$rows = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures WHERE galleryid=$gallery->gid $exclude_clause ORDER BY $orderby $order");
-		
-		// Build the object from the query result
-		$images = array(count($rows));
-		$i = 0;
-		foreach ($rows as $row) {
-			$images[$i] = new nggImage($gallery, $row);
-			$i++;
-		}
-		
-		return $images;
-	}
-	
-	/**
-	 * Get all the images from a given album
-	 * 
-	 * @gid The album object
-	 * 
-	 * @return An array containing the nggImage objects representing the images in the album.
-	 */
-	function find_images_in_album($album, $orderby = 'galleryid, sortorder', $order = 'ASC', $use_exclude = false) {
-		global $wpdb;
-		
-		// Get gallery list
-		$gallery_list = implode(",", $album->gallery_ids);
-		$galleries = $album->get_galleries();
-		
-		// Query database
-		if ($use_exclude) {
-			$exclude_clause = ' AND exclude<>1 ';
-		} else {
-			$exclude_clause = '';
-		}
-		$rows = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures WHERE galleryid IN ($gallery_list) $exclude_clause ORDER BY $orderby $order");
-		
-		// Build the object from the query result
-		$images = array(count($rows));
-		$i = 0;
-		foreach ($rows as $row) {
-			$images[$i] = new nggImage($galleries[$row->galleryid], $row);
-			$i++;
-		}
-		
-		return $images;
-	}
-	
-	/**
 	 * Get an image given its ID
 	 * 
-	 * @pid The image ID
-	 * 
-	 * @return A nggImage object representing the image (null if not found)
+	 * @param int $id The image ID
+	 * @return object A nggImage object representing the image (false if not found)
 	 */
-	function find_image($pid) {
+	function find_image( $id ) {
 		global $wpdb;
 		
 		// Query database
-		$row = $wpdb->get_row("SELECT * FROM $wpdb->nggpictures WHERE pid = $pid");
+		$result = $wpdb->get_row( $wpdb->prepare( "SELECT tt.*, t.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE tt.pid = %d ", $id ) );
 		
 		// Build the object from the query result
-		if ($row) {
-			$gallery = nggdb::find_gallery($row->galleryid);	
-			if ($gallery) {
-				$image = new nggImage($gallery, $row);
-				return $image;
-			}
+		if ($result) {
+			$image = new nggImage($result);
+			return $image;
 		} 
 		
-		return null;
+		return false;
 	}
 	
 	/**
 	 * Get images given a list of IDs 
 	 * 
-	 * @pids array $pids The image IDs as an array
+	 * @param list of picture_ids
 	 * @return An array of nggImage objects representing the images
 	 */
 	function find_images_in_list($pids) {
 		global $wpdb;
 		
-		$result = array();
-		$id_list = implode(",", $pids);
-		$gallery_cache = array();
+		$result = $gallery_cache = array();
+		$id_list = implode(',', $pids);
 		
-		// Query database
-		$rows = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures WHERE pid in ($id_list)");
+		// Save Query database
+		$images = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->nggpictures WHERE pid in (%s)", $id_list ), OBJECT_K) ;
 		
 		// Build the object from the query result
-		if ($rows) {	
-			$i = 0;
-			foreach ($rows as $row) {
-				$gallery = $gallery_cache[$row->galleryid];
-				if (!isset($gallery)) {
-					$gallery = nggdb::find_gallery($row->galleryid);
-					if ($gallery) {
-						$gallery_cache[$row->galleryid] = $gallery;
-					}
-				}
+		if ($images) {	
+			foreach ($images as $key => $image) {
 				
-				if ($gallery) {
-					$result[$i] = new nggImage($gallery, $row);
-					$i++;
-				}
+				// cache a gallery , so we didn't need to lookup twice
+				if (!array_key_exists($image->galleryid, $gallery_cache))
+					$gallery_cache[$image->galleryid] = nggdb::find_gallery($image->galleryid);
+				
+				// Join gallery information with picture information	
+				$joined_result = array_merge($gallery_cache[$image->galleryid], $image);
+				// Now get the complete iamge data
+				$result[$key] = new nggImage( $joined_result );
 			}
 		} 
 		
@@ -346,16 +300,18 @@ class nggImageDAO {
 	}
 	
 	/**
-	 * Get the last images registered in the database with a maximum number of $limit results 
+	 * Get the last images registered in the database with a maximum number of $limit results
+	 * 
+	 * @param integer $page
+	 * @param integer $limit
+	 * @param bool $use_exclude
+	 * @return
 	 */
-	function find_last_images($page = 0, $limit = 30, $use_exclude = false) {
+	function find_last_images($page = 0, $limit = 30, $exclude = true) {
 		global $wpdb;
 		
-		if ($use_exclude) {
-			$exclude_clause = ' AND exclude<>1 ';
-		} else {
-			$exclude_clause = '';
-		}
+		// Check for the exclude setting
+		$exclude_clause = ($exclude) ? ' AND exclude<>1 ' : '';
 		
 		$offset = (int) $page * $limit;
 		
@@ -363,24 +319,20 @@ class nggImageDAO {
 		$gallery_cache = array();
 		
 		// Query database
-		$rows = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures WHERE 1=1 $exclude_clause ORDER BY pid DESC LIMIT $offset, $limit");
+		$images = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures WHERE 1=1 $exclude_clause ORDER BY pid DESC LIMIT $offset, $limit");
 		
 		// Build the object from the query result
-		if ($rows) {	
-			$i = 0;
-			foreach ($rows as $row) {
-				$gallery = $gallery_cache[$row->galleryid];
-				if (!isset($gallery)) {
-					$gallery = nggdb::find_gallery($row->galleryid);
-					if ($gallery) {
-						$gallery_cache[$row->galleryid] = $gallery;
-					}
-				}
+		if ($images) {	
+			foreach ($images as $key => $image) {
 				
-				if ($gallery) {
-					$result[$i] = new nggImage($gallery, $row);
-					$i++;
-				}
+				// cache a gallery , so we didn't need to lookup twice
+				if (!array_key_exists($image->galleryid, $gallery_cache))
+					$gallery_cache[$image->galleryid] = nggdb::find_gallery($image->galleryid);
+				
+				// Join gallery information with picture information	
+				$joined_result = array_merge($gallery_cache[$image->galleryid], $image);
+				// Now get the complete iamge data
+				$result[$key] = new nggImage( $joined_result );
 			}
 		} 
 		
@@ -388,7 +340,7 @@ class nggImageDAO {
 	}
 	
 	/**
-	 * nggImageDAO::get_random_images() - Get an random image from one ore more gally
+	 * nggdb::get_random_images() - Get an random image from one ore more gally
 	 * 
 	 * @param integer $number of images
 	 * @param integer $galleryID optional a Gallery
@@ -409,14 +361,14 @@ class nggImageDAO {
 		
 		// Return the object from the query result
 		if ($result) {
-			foreach ($result as $row) {
-				$images[] = new nggImage($row, $row);
+			foreach ($result as $image) {
+				$images[] = new nggImage( $image );
 			}
 			return $images;
 		} 
 			
 		return null;
 	}
-}
 
+}
 ?>

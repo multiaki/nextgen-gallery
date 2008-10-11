@@ -88,7 +88,7 @@ function ngg_do_thumb_shortcode($atts, $content=null) {
 	// For each picture ID
 	foreach ($pids as $pid) {	
 		// Get picture
-		$picture = nggImageDAO::find_image($pid);
+		$picture = nggdb::find_image($pid);
 	
 		// Check picture existance
 		if ($picture==null) {

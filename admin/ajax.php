@@ -29,7 +29,7 @@ function ngg_ajax_operation() {
 		if ( isset($_POST['image'])) {
 			$id = (int) $_POST['image'];
 			// let's get the image data
-			$picture = nggImageDAO::find_image($id);
+			$picture = nggdb::find_image($id);
 			// what do you want to do ?		
 			switch ( $_POST['operation'] ) {
 				case 'create_thumbnail' :

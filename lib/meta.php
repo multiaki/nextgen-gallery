@@ -34,7 +34,7 @@ class nggMeta{
  		if ( !file_exists( $this->imagePath ) )
 			return false;
 
- 		$size = getimagesize ( $this->imagePath, $metadata );
+ 		$size = @getimagesize ( $this->imagePath, $metadata );
 
 		if ($size && is_array($metadata)) {
 
