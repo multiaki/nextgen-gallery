@@ -226,29 +226,29 @@ class nggLoader {
 	function load_dependencies() {
 	
 		// Load global libraries
-		include_once (dirname (__FILE__)."/tinymce3/tinymce.php");
-		require_once (dirname (__FILE__).'/lib/core.php');
-		require_once (dirname (__FILE__).'/lib/ngg-db.php');
-		require_once (dirname (__FILE__).'/lib/image.php');
-		require_once (dirname (__FILE__).'/lib/meta.php');
-		require_once (dirname (__FILE__).'/lib/tags.php');
-		require_once (dirname (__FILE__).'/lib/media-rss.php');
-		require_once (dirname (__FILE__).'/widgets/widgets.php');
+		require_once (dirname (__FILE__) . '/lib/core.php');
+		require_once (dirname (__FILE__) . '/lib/ngg-db.php');
+		require_once (dirname (__FILE__) . '/lib/image.php');
+		require_once (dirname (__FILE__) . '/lib/meta.php');
+		require_once (dirname (__FILE__) . '/lib/tags.php');
+		require_once (dirname (__FILE__) . '/lib/media-rss.php');
+		require_once (dirname (__FILE__) . '/widgets/widgets.php');
+		include_once (dirname (__FILE__) . '/admin/tinymce/tinymce.php');
 		
 		if (DOING_AJAX)
-			require_once (dirname (__FILE__).'/admin/ajax.php');
+			require_once (dirname (__FILE__) . '/admin/ajax.php');
 					
 		// Load backend libraries
 		if ( is_admin() ) {	
-			require_once (dirname (__FILE__)."/admin/admin.php");
-			require_once (dirname (__FILE__)."/admin/media-upload.php");
+			require_once (dirname (__FILE__) . '/admin/admin.php');
+			require_once (dirname (__FILE__) . '/admin/media-upload.php');
 			$this->nggAdminPanel = new nggAdminPanel();
 			
 		// Load frontend libraries							
 		} else {
-			require_once (dirname (__FILE__)."/nggfunctions.php");
-			require_once (dirname (__FILE__).'/lib/shortcodes.php');
-			require_once (dirname (__FILE__).'/lib/rewrite.php');
+			require_once (dirname (__FILE__) . '/nggfunctions.php');
+			require_once (dirname (__FILE__) . '/lib/shortcodes.php');
+			require_once (dirname (__FILE__) . '/lib/rewrite.php');
 		}			
 	}
 	

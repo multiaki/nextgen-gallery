@@ -1,7 +1,7 @@
 <?php
 
 // look up for the path
-require_once( dirname( dirname(__FILE__) ) . '/ngg-config.php');
+require_once( dirname( dirname( dirname(__FILE__) ) ) . '/ngg-config.php');
 
 // check for rights
 if ( !is_user_logged_in() || !current_user_can('edit_posts') ) 
@@ -18,7 +18,7 @@ global $wpdb;
 	<script language="javascript" type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-includes/js/tinymce/tiny_mce_popup.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-includes/js/tinymce/utils/mctabs.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-includes/js/tinymce/utils/form_utils.js"></script>
-	<script language="javascript" type="text/javascript" src="<?php echo NGGALLERY_URLPATH ?>tinymce3/tinymce.js"></script>
+	<script language="javascript" type="text/javascript" src="<?php echo NGGALLERY_URLPATH ?>admin/tinymce/tinymce.js"></script>
 	<base target="_self" />
 </head>
 <body id="link" onload="tinyMCEPopup.executeOnLoad('init();');document.body.style.display='';document.getElementById('gallerytag').focus();" style="display: none">

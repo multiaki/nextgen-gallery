@@ -4,7 +4,7 @@
  * add_nextgen_button
  * 
  * @package NextGEN Gallery
- * @title TinyMCE V3 Button Integration (for Wp2.5)
+ * @title TinyMCE V3 Button Integration (for WP2.5 and higher)
  * @author Alex Rabe
  * @access public
  */
@@ -22,7 +22,7 @@ class add_nextgen_button {
 	function add_nextgen_button()  {
 		
 		// Set path to editor_plugin.js
-		$this->path = NGGALLERY_URLPATH.'tinymce3/';		
+		$this->path = NGGALLERY_URLPATH . 'admin/tinymce/';		
 		
 		// Modify the version when tinyMCE plugins are changed.
 		add_filter('tiny_mce_version', array (&$this, 'change_tinymce_version') );
