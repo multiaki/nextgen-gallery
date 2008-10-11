@@ -227,10 +227,9 @@ class nggLoader {
 	
 		// Load global libraries
 		include_once (dirname (__FILE__)."/tinymce3/tinymce.php");
-		require_once (dirname (__FILE__).'/lib/ngg-gallery-plugin.lib.php');
+		require_once (dirname (__FILE__).'/lib/core.php');
 		require_once (dirname (__FILE__).'/lib/ngg-db.php');
-		require_once (dirname (__FILE__).'/lib/ngg-gallery.lib.php');
-		require_once (dirname (__FILE__).'/lib/ngg-image.lib.php');
+		require_once (dirname (__FILE__).'/lib/image.php');
 		require_once (dirname (__FILE__).'/lib/meta.php');
 		require_once (dirname (__FILE__).'/lib/tags.php');
 		require_once (dirname (__FILE__).'/lib/media-rss.php');

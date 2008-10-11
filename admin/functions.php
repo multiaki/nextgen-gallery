@@ -374,7 +374,7 @@ class nggAdmin{
 		// add images to database		
 		global $wpdb;
 		
-		require_once(NGGALLERY_ABSPATH.'/lib/ngg-image.lib.php');
+		require_once(NGGALLERY_ABSPATH.'/lib/image.php');
 		
 		if (!is_array($imagesIds))
 			$imagesIds = array($imagesIds);

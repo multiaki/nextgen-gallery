@@ -166,10 +166,11 @@ class NextGEN_shortcodes {
 	function show_gallery( $atts ) {
 	
 		extract(shortcode_atts(array(
-			'id' 		=> 0
+			'id' 		=> 0,
+			'mode'		=> ''	
 		), $atts ));
 		
-		$out = nggShowGallery( $id );
+		$out = nggShowGallery( $id, $mode);
 			
 		return $out;
 	}
@@ -179,14 +180,15 @@ class NextGEN_shortcodes {
 		global $wpdb;
 	
 		extract(shortcode_atts(array(
-			'id' 		=> 0
+			'id' 		=> 0,
+			'mode'		=> ''	
 		), $atts ));
 		
 		$galleryID = $wpdb->get_var("SELECT gid FROM $wpdb->nggallery WHERE gid = '$id' ");
 		if(!$galleryID) $galleryID = $wpdb->get_var("SELECT gid FROM $wpdb->nggallery WHERE name = '$id' ");
 
 		if( $galleryID )
-			$out = nggShowImageBrowser($galleryID);
+			$out = nggShowImageBrowser($galleryID, $mode);
 		else 
 			$out = __('[Gallery not found]','nggallery');
 			

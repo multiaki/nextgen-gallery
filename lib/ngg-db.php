@@ -106,7 +106,6 @@ class nggdb {
 	 * Get an album given its ID
 	 * 
 	 * @id The album ID or name
-	 * 
 	 * @return A nggGallery object (false if not found)
 	 */
 	function find_album( $id ) {		
@@ -298,8 +297,7 @@ class nggImageDAO {
 	/**
 	 * Get images given a list of IDs 
 	 * 
-	 * @pids The image IDs
-	 * 
+	 * @pids array $pids The image IDs as an array
 	 * @return An array of nggImage objects representing the images
 	 */
 	function find_images_in_list($pids) {
@@ -345,21 +343,6 @@ class nggImageDAO {
 		
 		// Delete tag references
 		wp_delete_object_term_relationships($pid, 'ngg_tag');
-	}
-	
-	/**
-	 * Count images registered in the database
-	 */
-	function count_images($use_exclude = false) {
-		global $wpdb;
-	
-		if ($use_exclude) {
-			$exclude_clause = ' AND exclude<>1 ';
-		} else {
-			$exclude_clause = '';
-		}
-		
-		return $wpdb->get_result("SELECT count(pid) FROM $wpdb->nggpictures WHERE 1=1 $exclude_clause");
 	}
 	
 	/**

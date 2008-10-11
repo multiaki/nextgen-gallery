@@ -4,7 +4,7 @@ require_once( dirname(__FILE__) . '/ngg-config.php');
 
 // reference thumbnail class
 include_once( nggGalleryPlugin::graphic_library() );
-include_once('lib/ngg-gallery-plugin.lib.php');
+include_once('lib/core.php');
 
 // get the plugin options
 $ngg_options = get_option('ngg_options');	

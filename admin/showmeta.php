@@ -4,7 +4,7 @@
 require_once( dirname( dirname(__FILE__) ) . '/ngg-config.php');
 
 require_once(NGGALLERY_ABSPATH.'/lib/meta.php');
-require_once(NGGALLERY_ABSPATH.'/lib/ngg-image.lib.php');
+require_once(NGGALLERY_ABSPATH.'/lib/image.php');
 
 if ( !is_user_logged_in() )
 	die(__('Cheatin&#8217; uh?'));

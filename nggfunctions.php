@@ -74,9 +74,10 @@ function nggShowSlideshow($galleryID, $irWidth, $irHeight) {
  * nggShowGallery()
  * 
  * @param int $galleryID
+ * @param string $mode (optional) name for a template file, look for gallery-$mode
  * @return the content
  */
-function nggShowGallery( $galleryID ) {
+function nggShowGallery( $galleryID, $mode = '' ) {
 	
 	global $wpdb, $nggRewrite;
 
@@ -113,7 +114,7 @@ function nggShowGallery( $galleryID ) {
 			
 		// 1st look for ImageBrowser link
 		if (!empty( $pid))  {
-			$out = nggShowImageBrowser( $galleryID );
+			$out = nggShowImageBrowser( $galleryID, $mode );
 			return $out;
 		}
 		
@@ -130,9 +131,8 @@ function nggShowGallery( $galleryID ) {
 	}
 
 	// get all picture with this galleryid
-	if (is_array($picturelist)) { 
-		$out = nggCreateGallery($picturelist,$galleryID);
-	}
+	if ( is_array($picturelist) )
+		$out = nggCreateGallery($picturelist, $galleryID, $mode);
 	
 	$out = apply_filters('ngg_show_gallery_content', $out, intval($galleryID));
 	return $out;
@@ -143,9 +143,10 @@ function nggShowGallery( $galleryID ) {
  * 
  * @param mixed $picturelist
  * @param bool $galleryID
+ * @param string $mode (optional) name for a template file, look for gallery-$mode
  * @return the content
  */
-function nggCreateGallery($picturelist, $galleryID = false) {
+function nggCreateGallery($picturelist, $galleryID = false, $mode = '') {
     global $nggRewrite;
     
     $ngg_options = nggGalleryPlugin::get_option('ngg_options');
@@ -217,17 +218,16 @@ function nggCreateGallery($picturelist, $galleryID = false) {
 		$image = new nggImage($picture, $picture);
 		
 		// set image url
-		$folder_url		= $siteurl."/".$picture->path."/";
+		$folder_url		= $siteurl . '/' . $picture->path . '/';
 		
 		// choose link between imagebrowser or effect
 		$link = ($ngg_options['galImgBrowser']) ? $nggRewrite->get_permalink(array('pid'=>$picture->pid)) : $folder_url.$picture->filename;	
 		
 		// get the effect code
-		if ($galleryID) {
-			$thumbcode = ($ngg_options['galImgBrowser']) ? "" : $image->get_thumbcode($picturelist[0]->name);
-		} else {
-			$thumbcode = ($ngg_options['galImgBrowser']) ? "" : $image->get_thumbcode(get_the_title());
-		}
+		if ($galleryID)
+			$thumbcode = ($ngg_options['galImgBrowser']) ? '' : $image->get_thumbcode($picturelist[0]->name);
+		else
+			$thumbcode = ($ngg_options['galImgBrowser']) ? '' : $image->get_thumbcode(get_the_title());
 		
 		// add a filter for the link
 		$picturelist[$key]->imageURL = apply_filters('ngg_create_gallery_link', $link, $picture);
@@ -236,8 +236,11 @@ function nggCreateGallery($picturelist, $galleryID = false) {
 		$picturelist[$key]->thumbcode  = $thumbcode;
 	}
 
+	// look for gallery-$mode.php or pure gallery.php
+	$filename = ( empty($mode) ) ? 'gallery' : 'gallery-' . $mode;
+
 	// create the output
-	$out = nggGalleryPlugin::capture ('gallery', array ('gallery' => $gallery, 'images' => $picturelist, 'pagination' => $navigation) );
+	$out = nggGalleryPlugin::capture ( $filename, array ('gallery' => $gallery, 'images' => $picturelist, 'pagination' => $navigation) );
 
 	return $out;
 }
@@ -303,8 +306,6 @@ function nggCreateAlbum( $galleriesID, $mode = 'extend', $albumID = 0) {
 	
 	$sortorder = $galleriesID;
 	$galleries = array();
-	// if sombody didn't enter any mode , take the extend version
-	$mode = ( empty($mode) ) ? 'extend' : $mode ;
 	
 	// get the galleries information 	
  	foreach ($galleriesID as $i => $value)
@@ -333,12 +334,12 @@ function nggCreateAlbum( $galleriesID, $mode = 'extend', $albumID = 0) {
 		// add the file name and the link 
 		if ($galleries[$key]->previewpic  != 0) {
 			$galleries[$key]->previewname = $albumPreview[$galleries[$key]->previewpic]->filename;
-			$galleries[$key]->previewurl  = get_option ('siteurl')."/".$galleries[$key]->path."/thumbs/thumbs_".$albumPreview[$galleries[$key]->previewpic]->filename;
+			$galleries[$key]->previewurl  = get_option ('siteurl').'/' . $galleries[$key]->path . '/thumbs/thumbs_' . $albumPreview[$galleries[$key]->previewpic]->filename;
 		} else {
-			$first_image = $wpdb->get_row('SELECT * FROM '.$wpdb->nggpictures.' WHERE exclude != 1 AND galleryid = '. $key .' ORDER by pid DESC limit 0,1');
+			$first_image = $wpdb->get_row('SELECT * FROM '. $wpdb->nggpictures .' WHERE exclude != 1 AND galleryid = '. $key .' ORDER by pid DESC limit 0,1');
 			$galleries[$key]->previewpic  = $first_image->pid;
 			$galleries[$key]->previewname = $first_image->filename;
-			$galleries[$key]->previewurl  = get_option ('siteurl')."/".$galleries[$key]->path."/thumbs/thumbs_".$first_image->filename;
+			$galleries[$key]->previewurl  = get_option ('siteurl') . '/' . $galleries[$key]->path . '/thumbs/thumbs_' . $first_image->filename;
 		}
 
 		// choose between variable and page link
@@ -354,8 +355,11 @@ function nggCreateAlbum( $galleriesID, $mode = 'extend', $albumID = 0) {
 		$galleries[$key]->galdesc = html_entity_decode ( stripslashes($galleries[$key]->galdesc) ) ;
 	}
 
+	// if sombody didn't enter any mode , take the extend version
+	$filename = ( empty($mode) ) ? 'album-extend' : 'album-' . $mode ;
+
 	// create the output
-	$out = nggGalleryPlugin::capture ('album-'.$mode, array ('albumID' => $albumID, 'galleries' => $galleries, 'mode' => $mode) );
+	$out = nggGalleryPlugin::capture ( $filename, array ('albumID' => $albumID, 'galleries' => $galleries, 'mode' => $mode) );
 
 	return $out;
  	
@@ -365,9 +369,10 @@ function nggCreateAlbum( $galleriesID, $mode = 'extend', $albumID = 0) {
  * nggShowImageBrowser()
  * 
  * @param int $galleryID
+ * @param string $mode (optional) name for a template file, look for imagebrowser-$mode
  * @return the content
  */
-function nggShowImageBrowser($galleryID) {
+function nggShowImageBrowser($galleryID, $mode = '') {
 	
 	global $wpdb;
 	
@@ -379,9 +384,9 @@ function nggShowImageBrowser($galleryID) {
 	
 	// get the pictures
 	$picturelist = $wpdb->get_col( $wpdb->prepare( "SELECT pid FROM $wpdb->nggpictures WHERE galleryid = '%d' AND exclude != 1 ORDER BY $ngg_options[galSort] $ngg_options[galSortDir]", $galleryID) );	
-	if (is_array($picturelist)) { 
-		$out = nggCreateImageBrowser($picturelist);
-	}
+
+	if (is_array($picturelist))
+		$out = nggCreateImageBrowser($picturelist, $mode);
 	
 	$out = apply_filters('ngg_show_imagebrowser_content', $out, intval($galleryID));
 	
@@ -393,9 +398,10 @@ function nggShowImageBrowser($galleryID) {
  * nggCreateImageBrowser()
  * 
  * @param array $picarray with pid
+ * @param string $mode (optional) name for a template file, look for imagebrowser-$mode
  * @return the content
  */
-function nggCreateImageBrowser($picarray) {
+function nggCreateImageBrowser($picarray, $mode = '') {
 
 	global $nggRewrite;
 	
@@ -447,8 +453,11 @@ function nggCreateImageBrowser($picarray) {
 	$iptc = $meta->get_IPTC();
 	$xmp  = $meta->get_XMP();
 		
+	// look for gallery-$mode.php or pure gallery.php
+	$filename = ( empty($mode) ) ? 'imagebrowser' : 'imagebrowser-' . $mode;
+
 	// create the output
-	$out = nggGalleryPlugin::capture ('imagebrowser', array ('image' => $picture , 'meta' => $meta, 'exif' => $exif, 'iptc' => $iptc, 'xmp' => $xmp) );
+	$out = nggGalleryPlugin::capture ( $filename , array ('image' => $picture , 'meta' => $meta, 'exif' => $exif, 'iptc' => $iptc, 'xmp' => $xmp) );
 	
 	return $out;
 	
@@ -560,9 +569,8 @@ function nggShowGalleryTags($taglist) {
 		return;
 	
 	// show gallery
-	if ( is_array($picturelist) ) { 
-		$out = nggCreateGallery($picturelist,false);
-	}
+	if ( is_array($picturelist) )
+		$out = nggCreateGallery($picturelist, false);
 	
 	$out = apply_filters('ngg_show_gallery_tags_content', $out, $taglist);
 	return $out;
@@ -588,9 +596,8 @@ function nggShowRelatedGallery($taglist, $maxImages = 0) {
 		return;
 	
 	// cut the list to maxImages
-	if ( $maxImages > 0 ) {
+	if ( $maxImages > 0 )
 		array_splice($picturelist, $maxImages);
-	}
 	
  	// *** build the gallery output
 	$out   = '<div class="ngg-related-gallery">';
@@ -684,7 +691,7 @@ function nggShowRelatedImages($type = '', $maxImages = 0) {
 	$sluglist = array();
 	switch ($type) {
 		
-	case "tags":
+	case 'tags':
 		if (function_exists('get_the_tags')) { 
 			$taglist = get_the_tags();
 			
@@ -696,7 +703,7 @@ function nggShowRelatedImages($type = '', $maxImages = 0) {
 		}
 		break;
 		
-	case "category":
+	case 'category':
 		$catlist = get_the_category();
 		
 		if (is_array($catlist)) {

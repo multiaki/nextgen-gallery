@@ -18,8 +18,8 @@ class nggImage{
 	var $href			=	'';			// A href link code
 	
 	// TODO: remove thumbPrefix and thumbFolder (constants)
-	var $thumbPrefix	=	'';			// FolderPrefix to the thumbnail
-	var $thumbFolder	=	'';			// Foldername to the thumbnail
+	var $thumbPrefix	=	'thumbs_';	// FolderPrefix to the thumbnail
+	var $thumbFolder	=	'/thumbs/';	// Foldername to the thumbnail
 	
 	/**** Image Data ****/
 	var $galleryid		=	0;			// Gallery ID
@@ -50,13 +50,11 @@ class nggImage{
 	*/
 	function nggImage($gallery, $row) {			
 		// Copy fields from database row
-		//--
 		foreach ($row as $key => $value) {
 			$this->$key = $value ;
 		}
 		
 		// Finish initialisation
-		//--
 		$this->gallery 		= $gallery;
 		$this->name			= $gallery->name;
 		$this->path			= $gallery->path;
@@ -65,53 +63,21 @@ class nggImage{
 		$this->previewpic	= $gallery->previewpic;
 	
 		// set urls and paths
-		//--
-		$this->get_thumbnail_folder($this->gallery->path, FALSE);
-		$this->imageURL		= get_option ('siteurl') . "/" . $this->path . "/" . $this->filename;
-		$this->thumbURL 	= get_option ('siteurl') . "/" . $this->path . $this->thumbFolder . $this->thumbPrefix . $this->filename;
-		$this->imagePath	= WINABSPATH.$this->path . "/" . $this->filename;
-		$this->thumbPath	= WINABSPATH.$this->path . $this->thumbFolder . $this->thumbPrefix . $this->filename;
+		$this->imageURL		= get_option ('siteurl') . '/' . $this->path . '/' . $this->filename;
+		$this->thumbURL 	= get_option ('siteurl') . '/' . $this->path . '/thumbs/thumbs_' . $this->filename;
+		$this->imagePath	= WINABSPATH.$this->path . '/' . $this->filename;
+		$this->thumbPath	= WINABSPATH.$this->path . '/thumbs/thumbs_' . $this->filename;
 		
 		// Get tags only if necessary
-		//--
 		unset($this->tags);
-	}
-	
-	/**********************************************************/
-	function get_thumbnail_folder($gallerypath, $include_Abspath = TRUE) {
-		//TODO:Double coded, see also class nggallery, fix it !
-		if (!$include_Abspath) 
-			$gallerypath = WINABSPATH.$gallerypath;
-		
-		if (!file_exists($gallerypath))
-			return FALSE;
-		
-		if (is_dir($gallerypath."/thumbs")) {
-			$this->thumbFolder 	= "/thumbs/";
-			$this->thumbPrefix 	= "thumbs_";		
-			return TRUE;
-		}
-		
-		if (is_admin()) {
-			if (!is_dir($gallerypath."/thumbs")) {
-				if ( !wp_mkdir_p($gallerypath."/thumbs") ) {
-					return FALSE;
-				}
-				$this->thumbFolder	= "/thumbs/";
-				$this->thumbPrefix 	= "thumbs_";			
-				return TRUE;
-			}
-		}
-		
-		return FALSE;
 	}
 	
 	/**
 	* Get the thumbnail code (to add effects on thumbnail click)
 	*
-	* Applies the filter ''
+	* Applies the filter 'ngg_get_thumbcode'
 	*/
-	function get_thumbcode($galleryname = "") {
+	function get_thumbcode($galleryname = '') {
 		// read the option setting
 		$ngg_options = get_option('ngg_options');
 		
@@ -144,29 +110,26 @@ class nggImage{
 		return $this->href;
 	}
 	
-	function cached_singlepic_file($width = "", $height = "", $mode = "" ) {
+	function cached_singlepic_file($width = '', $height = '', $mode = '' ) {
 		// This function creates a cache for all singlepics to reduce the CPU load
 		$ngg_options = get_option('ngg_options');
 		
 		include_once( nggGalleryPlugin::graphic_library() );
 		
 		// cache filename should be unique
-		$cachename   	= $this->pid . "_" . $mode . "_". $width . "x" . $height . "_" . $this->filename;
-		$cachefolder 	= WINABSPATH .$ngg_options['gallerypath'] . "cache/";
-		$cached_url  	= get_option ('siteurl') ."/". $ngg_options['gallerypath'] . "cache/" . $cachename;
+		$cachename   	= $this->pid . '_' . $mode . '_'. $width . 'x' . $height . '_' . $this->filename;
+		$cachefolder 	= WINABSPATH .$ngg_options['gallerypath'] . 'cache/';
+		$cached_url  	= get_option ('siteurl') . '/' . $ngg_options['gallerypath'] . 'cache/' . $cachename;
 		$cached_file	= $cachefolder . $cachename;
 		
 		// check first for the file
-		if ( file_exists($cached_file) ) {
+		if ( file_exists($cached_file) )
 			return $cached_url;
-		}
 		
 		// create folder if needed
-		if ( !file_exists($cachefolder) ) {
-			if ( !wp_mkdir_p($cachefolder) ) {
+		if ( !file_exists($cachefolder) )
+			if ( !wp_mkdir_p($cachefolder) )
 				return false;
-			}
-		}
 		
 		$thumb = new ngg_Thumbnail($this->imagePath, TRUE);
 		// echo $thumb->errmsg;
@@ -196,9 +159,8 @@ class nggImage{
 		$thumb->destruct();
 		
 		// check again for the file
-		if (file_exists($cached_file)) {
+		if (file_exists($cached_file))
 			return $cached_url;
-		}
 		
 		return false;
 	}
