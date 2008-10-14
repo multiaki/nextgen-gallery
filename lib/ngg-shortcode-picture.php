@@ -1,6 +1,6 @@
 <?php
 /*  
- * Copyright 2006 Vincent Prat  (email : vpratfr@yahoo.fr)
+ * Copyright 2008 Vincent Prat  (email : vpratfr@yahoo.fr)
 */
 
 // Stop direct call
@@ -25,10 +25,8 @@ if (!function_exists('ngg_do_picture_shortcode')) {
  * This tag will show a picture with under it two HTML span elements containing respectively the alttext of the picture 
  * and the additional caption specified in the tag.   
  */
-function ngg_do_picture_shortcode($atts, $content=null) {
+function ngg_do_picture_shortcode( $atts, $content=null ) {
 	global $nggRewrite;
-
-	$out = '';
 
 	// Extract attributes
 	extract(shortcode_atts(array(
@@ -41,9 +39,6 @@ function ngg_do_picture_shortcode($atts, $content=null) {
 	), $atts));
 
 	// Some error checks
-	if ($id=='')
-		return "<p style='color: red; border: 1px solid red;'>A picture ID must be supplied for the shortcode [picture]</p>";
-
 	if ($caption != 'none' && $caption != 'alttext' && $caption != 'desc')
 		$caption != 'none';
 
@@ -54,12 +49,8 @@ function ngg_do_picture_shortcode($atts, $content=null) {
 	$picture = nggdb::find_image($id);
 
 	// Check picture existance
-	if ($picture==null) {
-		$out .= '<div class="ngg-singlepic" style="color: red;">' 
-			.  sprintf(__("[picture id='%s' /] &raquo; Image does not exist!", 'nggallery'), $id)  
-			. '</div>';
-		return $out;
-	}
+	if ($picture==null)
+		return __('[Picture not found]','nggallery');
 
 	// check for cached picture
 	if (($ngg_options['imgCacheSinglePic']) && ($post->post_status == 'publish') && ($width!='') && ($height!=''))
@@ -85,7 +76,7 @@ function ngg_do_picture_shortcode($atts, $content=null) {
 	}
 
 	// Start building output
-	$out = '<div class="ngg-singlepic '. $float .'">';
+	$out = '<div class="ngg-singlepic ' . $float . '">';
 
 	// add fullsize picture as link if original size was not requested
 	$out .= '<a href="' . $picture->imageURL . '" title="' . stripslashes($picture->description) . '" ' . $picture->get_thumbcode("singlepic".$id) . ' >';
@@ -97,13 +88,12 @@ function ngg_do_picture_shortcode($atts, $content=null) {
 
 	$out .= '</a>';
 
-	if ($caption == "alttext") {
+	if ($caption == "alttext") 
 		$out .= '<div>' . html_entity_decode(stripslashes($picture->alttext)) . '</div> ' . "\n";
-	} else if ($caption == "desc") {
+	else if ($caption == "desc")
 		$out .= '<div>' . html_entity_decode(stripslashes($picture->description)) . '</div> ' . "\n";
-	} 
-	
-	if ($content!=null)
+
+	if ( $content!=null )
 		$out .= '<div>' . $content . '</div>' . "\n";
 
 	// Apply filter

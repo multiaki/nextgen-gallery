@@ -91,13 +91,13 @@ class nggdb {
 	/**
 	 * This function return all information about the gallery and the images inside
 	 * 
-	 * @param int $id
+	 * @param int|string $id or $name
 	 * @param string $orderby 
 	 * @param string $order (ASC |DESC)
 	 * @param bool $exclude
-	 * @return An object containing the nggImage objects representing the images in the gallery.
+	 * @return An array containing the nggImage objects representing the images in the gallery.
 	 */
-	function get_gallery($id, $orderby = 'sortorder', $order = 'ASC', $exclude = false) {
+	function get_gallery($id, $orderby = 'sortorder', $order = 'ASC', $exclude = true) {
 
 		global $wpdb;
 		
@@ -105,18 +105,18 @@ class nggdb {
 		$exclude_clause = ($exclude) ? ' AND tt.exclude<>1 ' : '';
 		
 		// Query database
-		$result = $wpdb->get_results( $wpdb->prepare( "SELECT tt.*, t.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = %d $exclude_clause ORDER BY %s %s", $id, $orderby, $order ) );
-		
+		if( is_numeric($id) )
+			$result = $wpdb->get_results( $wpdb->prepare( "SELECT tt.*, t.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = %d $exclude_clause ORDER BY %s %s", $id, $orderby, $order ) );
+		else
+			$result = $wpdb->get_results( $wpdb->prepare( "SELECT tt.*, t.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.name = %s $exclude_clause ORDER BY %s %s", $id, $orderby, $order ) );
+
 		// Build the object
 		if ($result) {
-			$gallery = new stdClass();
-			// Copy fields from the first database row into the array
-			foreach ($result[0] as $key => $value)
-				$gallery->$key = $value ;
+			$gallery = array();
 				
 			// Now added all image data
 			foreach ($result as $key => $value)
-				$gallery->imagedata[$key] = new nggImage( $value );
+				$gallery[$key] = new nggImage( $value );
 			
 			return $gallery;
 		}
@@ -256,33 +256,32 @@ class nggdb {
 	/**
 	 * Get images given a list of IDs 
 	 * 
-	 * @param list of picture_ids
+	 * @param $pids array of picture_ids
 	 * @return An array of nggImage objects representing the images
 	 */
-	function find_images_in_list($pids) {
+	function find_images_in_list( $pids, $exclude = false, $order = 'ASC' ) {
 		global $wpdb;
+	
+		$result = array();
 		
-		$result = $gallery_cache = array();
-		$id_list = implode(',', $pids);
+		// Check for the exclude setting
+		$exclude_clause = ($exclude) ? ' AND t.exclude <> 1 ' : '';
+
+		// Check for the exclude setting
+		$order_clause = ($order == 'RAND') ? ' ORDER BY t.pid ASC' : 'ORDER BY rand() ';
 		
-		// Save Query database
-		$images = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->nggpictures WHERE pid in (%s)", $id_list ), OBJECT_K) ;
-		
-		// Build the object from the query result
-		if ($images) {	
-			foreach ($images as $key => $image) {
-				
-				// cache a gallery , so we didn't need to lookup twice
-				if (!array_key_exists($image->galleryid, $gallery_cache))
-					$gallery_cache[$image->galleryid] = nggdb::find_gallery($image->galleryid);
-				
-				// Join gallery information with picture information	
-				$joined_result = array_merge($gallery_cache[$image->galleryid], $image);
-				// Now get the complete iamge data
-				$result[$key] = new nggImage( $joined_result );
-			}
-		} 
-		
+		if ( is_array($pids) ) {
+			$id_list = "'" . implode("', '", $pids) . "'";
+			
+			// Save Query database
+			$images = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggpictures AS t INNER JOIN $wpdb->nggallery AS tt ON t.galleryid = tt.gid WHERE t.pid IN ($id_list) $exclude_clause $order_clause", OBJECT_K);
+	
+			// Build the image objects from the query result
+			if ($images) {	
+				foreach ($images as $key => $image)
+					$result[$key] = new nggImage( $image );
+			} 
+		}
 		return $result;
 	}
 	

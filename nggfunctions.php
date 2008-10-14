@@ -13,8 +13,6 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 function nggShowSlideshow($galleryID, $irWidth, $irHeight) {
 	
 	require_once (dirname (__FILE__).'/lib/swfobject.php');
-	
-	global $wpdb;
 
 	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
 
@@ -36,7 +34,7 @@ function nggShowSlideshow($galleryID, $irWidth, $irHeight) {
 	$swfobject->add_attributes('styleclass', 'slideshow');
 
 	// adding the flash parameter	
-	$swfobject->add_flashvars( 'file', NGGALLERY_URLPATH.'xml/imagerotator.php?gid='.$galleryID );
+	$swfobject->add_flashvars( 'file', NGGALLERY_URLPATH.'xml/imagerotator.php?gid=' . $galleryID );
 	$swfobject->add_flashvars( 'shuffle', $ngg_options['irShuffle'], 'true', 'bool');
 	$swfobject->add_flashvars( 'linkfromdisplay', $ngg_options['irLinkfromdisplay'], 'false', 'bool');
 	$swfobject->add_flashvars( 'shownavigation', $ngg_options['irShownavigation'], 'true', 'bool');
@@ -79,19 +77,16 @@ function nggShowSlideshow($galleryID, $irWidth, $irHeight) {
  */
 function nggShowGallery( $galleryID, $mode = '' ) {
 	
-	global $wpdb, $nggRewrite;
+	global $nggRewrite;
 
 	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
 
 	//Set sort order value, if not used (upgrade issue)
 	$ngg_options['galSort'] = ($ngg_options['galSort']) ? $ngg_options['galSort'] : 'pid';
 	$ngg_options['galSortDir'] = ($ngg_options['galSortDir'] == 'DESC') ? 'DESC' : 'ASC';
-
-	// look for id or slug
-	if( is_numeric($galleryID) )
-		$picturelist = $wpdb->get_results( $wpdb->prepare( "SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = '%d' AND tt.exclude != 1 ORDER BY tt.$ngg_options[galSort] $ngg_options[galSortDir]", $galleryID )  );
-	else
-		$picturelist = $wpdb->get_results( $wpdb->prepare( "SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = '%s' AND tt.exclude != 1 ORDER BY tt.$ngg_options[galSort] $ngg_options[galSortDir]", $galleryID ) );
+	
+	// get gallery values
+	$picturelist = nggdb::get_gallery($galleryID, $ngg->options['galSort'], $ngg->options['galSortDir']);
 	
 	if ( !$picturelist->gid )
 		__('[Gallery not found]','nggallery');
@@ -139,10 +134,10 @@ function nggShowGallery( $galleryID, $mode = '' ) {
 }
 
 /**
- * nggCreateGallery()
+ * Build a gallery output
  * 
- * @param mixed $picturelist
- * @param bool $galleryID
+ * @param array $picturelist
+ * @param bool $galleryID, if you supply a gallery ID, you can add a slideshow link
  * @param string $mode (optional) name for a template file, look for gallery-$mode
  * @return the content
  */
@@ -150,15 +145,13 @@ function nggCreateGallery($picturelist, $galleryID = false, $mode = '') {
     global $nggRewrite;
     
     $ngg_options = nggGalleryPlugin::get_option('ngg_options');
-	$siteurl = get_option ('siteurl');
 	    
     // $_GET from wp_query
 	$nggpage  = get_query_var('nggpage');
 	$pageid   = get_query_var('pageid');
     
-    if (!is_array($picturelist)) {
+    if ( !is_array($picturelist) )
 		$picturelist = array($picturelist);
-	}
 	
 	$gallery = new stdclass;
 	$gallery->ID = (int) $galleryID;
@@ -184,7 +177,6 @@ function nggCreateGallery($picturelist, $galleryID = false, $mode = '') {
 		if ($ngg_options['usePicLens']) {
 			$gallery->show_piclens = true;
 			$gallery->piclens_link = "javascript:PicLensLite.start({feedUrl:'" . nggMediaRss::get_gallery_mrss_url($gallery->ID) . "'});";
-			$gallery->piclens_link_text = __('[View with PicLens]','nggallery');
 		}
 	}
 	
@@ -212,26 +204,21 @@ function nggCreateGallery($picturelist, $galleryID = false, $mode = '') {
 	} else {
 		$navigation = '<div class="ngg-clear">&nbsp;</div>';
 	}	
-
+	//var_dump($picturelist);
 	foreach ($picturelist as $key => $picture) {
-		// Get image
-		$image = new nggImage($picture, $picture);
-		
-		// set image url
-		$folder_url		= $siteurl . '/' . $picture->path . '/';
 		
 		// choose link between imagebrowser or effect
-		$link = ($ngg_options['galImgBrowser']) ? $nggRewrite->get_permalink(array('pid'=>$picture->pid)) : $folder_url.$picture->filename;	
+		$link = ($ngg_options['galImgBrowser']) ? $nggRewrite->get_permalink( array('pid'=>$picture->pid) ) : $picture->imageURL;	
 		
 		// get the effect code
 		if ($galleryID)
-			$thumbcode = ($ngg_options['galImgBrowser']) ? '' : $image->get_thumbcode($picturelist[0]->name);
+			$thumbcode = ($ngg_options['galImgBrowser']) ? '' : $picture->get_thumbcode($picturelist[0]->name);
 		else
-			$thumbcode = ($ngg_options['galImgBrowser']) ? '' : $image->get_thumbcode(get_the_title());
+			$thumbcode = ($ngg_options['galImgBrowser']) ? '' : $picture->get_thumbcode(get_the_title());
 		
 		// add a filter for the link
 		$picturelist[$key]->imageURL = apply_filters('ngg_create_gallery_link', $link, $picture);
-		$picturelist[$key]->thumbnailURL = $folder_url . 'thumbs/thumbs_' . $picture->filename;
+		$picturelist[$key]->thumbnailURL = $picture->thumbURL;
 		$picturelist[$key]->size = $thumbsize;
 		$picturelist[$key]->thumbcode  = $thumbcode;
 	}
@@ -472,7 +459,7 @@ function nggCreateImageBrowser($picarray, $mode = '') {
  * @return the content
  */
 function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $float = '') {
-	global $wpdb, $post;
+	global $post;
 	
 	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
 	
@@ -543,15 +530,14 @@ function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $fl
  * @return the content
  */
 function nggShowGalleryTags($taglist) {	
-	global $wpdb;
-	
+
 	// $_GET from wp_query
 	$pid  	= get_query_var('pid');
 	$pageid = get_query_var('pageid');
 	
 	// get now the related images
 	$picturelist = nggTags::find_images_for_tags($taglist , 'ASC');
-	
+
 	// look for ImageBrowser 
 	if ( $pageid == get_the_ID() || !is_home() )  
 		if (!empty( $pid ))  {
@@ -582,13 +568,12 @@ function nggShowGalleryTags($taglist) {
  * @return the content
  */ 
 function nggShowRelatedGallery($taglist, $maxImages = 0) {
-	global $wpdb;
 	
 	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
 	
 	// get now the related images
 	$picturelist = nggTags::find_images_for_tags($taglist, 'RAND');
-	
+
 	// go on if not empty
 	if ( empty($picturelist) )
 		return;
@@ -609,9 +594,9 @@ function nggShowRelatedGallery($taglist, $maxImages = 0) {
 	
 		$out .= '<a href="' . $imageURL . '" title="' . stripslashes($picture->description) . '" ' . $thumbcode . ' >';
 		$out .= '<img title="' . stripslashes($picture->alttext) . '" alt="' . stripslashes($picture->alttext) . '" src="' . $thumbnailURL . '" />';
-		$out .= '</a>'."\n";
+		$out .= '</a>' . "\n";
 	}
-	$out .= '</div>'."\n";
+	$out .= '</div>' . "\n";
 	
 	$out = apply_filters('ngg_show_related_gallery_content', $out, $taglist);
 	

@@ -12,22 +12,25 @@ function nggallery_picturelist() {
 	$hideThumbs = $ngg->manage_page->hideThumbs;
 	
 	// get gallery values
-	$act_gallery = nggdb::get_gallery($act_gid, $ngg->options['galSort'], $ngg->options['galSortDir']);
-	
-	if (!$act_gallery) {
+	$picturelist = nggdb::get_gallery($act_gid, $ngg->options['galSort'], $ngg->options['galSortDir'], false);
+
+	if (!$picturelist) {
 		nggGalleryPlugin::show_error(__('Gallery not found.', 'nggallery'));
 		return;
 	}
 	
-	// get the list of images
-	$picturelist = $act_gallery->imagedata;
+	//Build the object
+	$gallery = new stdClass();
+	// Copy gallery fields from the first database row into the object
+	foreach ($picturelist[0] as $key => $value)
+		$gallery->$key = $value ;
 
 	// get the current author
-	$act_author_user    = get_userdata( (int) $act_gallery->author );
+	$act_author_user    = get_userdata( (int) $gallery->author );
 	
 	// list all galleries
 	$gallerylist = nggdb::find_all_galleries();
-
+	
 ?>
 
 <script type="text/javascript"> 
@@ -117,7 +120,7 @@ jQuery(document).ready( function() {
 
 <div class="wrap">
 
-<h2><?php _e('Gallery', 'nggallery') ?> : <?php echo $act_gallery->title; ?></h2>
+<h2><?php _e('Gallery', 'nggallery') ?> : <?php echo $gallery->title; ?></h2>
 
 <br style="clear: both;" />
 
@@ -134,26 +137,18 @@ jQuery(document).ready( function() {
 			<table class="form-table" >
 				<tr>
 					<th align="left"><?php _e('Title') ?>:</th>
-					<th align="left"><input type="text" size="50" name="title" value="<?php echo $act_gallery->title; ?>"  /></th>
+					<th align="left"><input type="text" size="50" name="title" value="<?php echo $gallery->title; ?>"  /></th>
 					<th align="right"><?php _e('Page Link to', 'nggallery') ?>:</th>
 					<th align="left">
 					<select name="pageid" style="width:95%">
 						<option value="0" ><?php _e('Not linked', 'nggallery') ?></option>
-					<?php
-						$pageids = get_all_page_ids();
-						foreach($pageids as $pageid) {
-							$post= get_post($pageid); 				
-							if ($pageid == $act_gallery->pageid) $selected = 'selected="selected" ';
-							else $selected = '';
-							echo '<option value="'.$pageid.'" '.$selected.'>'.$post->post_title.'</option>'."\n";
-						}
-					?>
+						<?php parent_dropdown($gallery->pageid); ?>
 					</select>
 					</th>
 				</tr>
 				<tr>
 					<th align="left"><?php _e('Description') ?>:</th> 
-					<th align="left"><textarea name="gallerydesc" cols="30" rows="3" style="width: 95%"  ><?php echo $act_gallery->galdesc; ?></textarea></th>
+					<th align="left"><textarea name="gallerydesc" cols="30" rows="3" style="width: 95%" ><?php echo $gallery->galdesc; ?></textarea></th>
 					<th align="right"><?php _e('Preview image', 'nggallery') ?>:</th>
 					<th align="left">
 						<select name="previewpic" style="width:95%" >
@@ -161,8 +156,7 @@ jQuery(document).ready( function() {
 							<?php
 								if(is_array($picturelist)) {
 									foreach($picturelist as $picture) {
-										if ($picture->pid == $act_gallery->previewpic) $selected = 'selected="selected" ';
-										else $selected = '';
+										$selected = ($picture->pid == $gallery->previewpic) ? 'selected="selected" ' : '';
 										echo '<option value="'.$picture->pid.'" '.$selected.'>'.$picture->pid.' - '.$picture->filename.'</option>'."\n";
 									}
 								}
@@ -172,13 +166,13 @@ jQuery(document).ready( function() {
 				</tr>
 				<tr>
 					<th align="left"><?php _e('Path', 'nggallery') ?>:</th> 
-					<th align="left"><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="text" size="50" name="path" value="<?php echo $act_gallery->path; ?>"  /></th>
+					<th align="left"><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="text" size="50" name="path" value="<?php echo $gallery->path; ?>"  /></th>
 					<th align="right"><?php _e('Author', 'nggallery'); ?>:</th>
 					<th align="left"> 
 					<?php
 						$editable_ids = $ngg->manage_page->get_editable_user_ids( $user_ID );
 						if ( $editable_ids && count( $editable_ids ) > 1 )
-							wp_dropdown_users( array('include' => $editable_ids, 'name' => 'author', 'selected' => empty( $act_gallery->author ) ? 0 : $act_gallery->author ) ); 
+							wp_dropdown_users( array('include' => $editable_ids, 'name' => 'author', 'selected' => empty( $gallery->author ) ? 0 : $gallery->author ) ); 
 						else
 							echo $act_author_user->display_name;
 					?>

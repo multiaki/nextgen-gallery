@@ -760,7 +760,7 @@ class nggAdmin{
 				
 		// Get pictures
 		$images = nggdb::find_images_in_list($pic_ids);
-
+		return;
 		foreach ($images as $image) {		
 			
 			$i = 0;

@@ -27,7 +27,7 @@ Follow variables are useable :
 <?php if ($gallery->show_piclens) { ?>
 	<div class="piclenselink">
 		<a class="piclenselink" href="<?php echo $gallery->piclens_link ?>">
-			<?php echo $gallery->piclens_link_text ?>
+			<?php _e('[View with PicLens]','nggallery'); ?>
 		</a>
 	</div>
 <?php } ?>

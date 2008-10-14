@@ -253,7 +253,7 @@ class nggManageGallery {
 				$wpdb->query("UPDATE $wpdb->nggallery SET author = '$gallery_author' WHERE gid = '$this->gid'");
 			}
 	
-			if ($showTags)
+			if ($this->showTags)
 				$this->update_tags();			
 			else 
 				$this->update_pictures();

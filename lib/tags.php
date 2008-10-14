@@ -290,49 +290,38 @@ class nggTags {
 	/**
 	* Get images corresponding to a list of tags
 	*/
+	/**
+	 * nggTags::find_images_for_tags()
+	 * 
+	 * @param mixed $taglist
+	 * @param string $mode could be 'ASC' or 'RAND'
+	 * @return array of images
+	 */
 	function find_images_for_tags($taglist, $mode = "ASC") {
 		// return the images based on the tag
 		global $wpdb;
 		
-		$taxonomy = 'ngg_tag';
-		
 		// extract it into a array
-		$taglist = explode(",", $taglist);		
-		if (!is_array($taglist)) {
+		$taglist = explode(",", $taglist);
+				
+		if ( !is_array($taglist) )
 			$taglist = array($taglist);
-		}
 		
 		$taglist = array_map('trim', $taglist);
-		$new_slugarray = array_map('sanitize_title', $taglist);		
+		$new_slugarray = array_map('sanitize_title', $taglist);
 		$sluglist   = "'" . implode("', '", $new_slugarray) . "'";
 		
-		$picarray = array();
-		$result = array();
-		
-		// first get all $trem_ids with this tag
+		// first get all $term_ids with this tag
 		$term_ids = $wpdb->get_col( $wpdb->prepare("SELECT term_id FROM $wpdb->terms WHERE slug IN ($sluglist) ORDER BY term_id ASC "));
-		$picids = get_objects_in_term($term_ids, $taxonomy);
+		$picids = get_objects_in_term($term_ids, 'ngg_tag');
 
-		if (is_array($picids)){
-			// now get all pictures
-			$piclist = "'" . implode("', '", $picids) . "'";
-			
-			if ($mode == 'ASC') {
-				$picarray = $wpdb->get_col("SELECT t.pid FROM $wpdb->nggpictures AS t WHERE t.pid IN ($piclist) ORDER BY t.pid ASC ");
-			} else if ($mode == 'RAND') {
-				$picarray = $wpdb->get_col("SELECT t.pid FROM $wpdb->nggpictures AS t WHERE t.pid IN ($piclist) ORDER BY rand() ");			
-			} else {
-				$picarray = $wpdb->get_col("SELECT t.pid FROM $wpdb->nggpictures AS t WHERE t.pid IN ($piclist) ");			
-			}
-			
-			$i = 0;
-			foreach ($picarray as $pid) {
-				$result[$i] = nggdb::find_image($pid);
-				$i++;
-			}
-		}
-		
-		return $result;
+		//Now lookup in the database
+		if ($mode == 'RAND')
+			$pictures = nggdb::find_images_in_list($picids, true, 'RAND' );
+		else
+			$pictures = nggdb::find_images_in_list($picids, true, 'ASC');			
+
+		return $pictures;
 	}
 	
 	/**

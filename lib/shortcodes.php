@@ -44,7 +44,7 @@ class NextGEN_shortcodes {
 		if ( stristr( $content, '[singlepic' )) {
 			$search = "@\[singlepic=(\d+)(|,\d+|,)(|,\d+|,)(|,watermark|,web20|,)(|,right|,center|,left|,)\]@i";
 			if (preg_match_all($search, $content, $matches, PREG_SET_ORDER)) {
-				var_dump($matches);
+
 				foreach ($matches as $match) {
 					// remove the comma
 					$match[2] = ltrim($match[2],',');
@@ -52,7 +52,6 @@ class NextGEN_shortcodes {
 					$match[4] = ltrim($match[4],',');	
 					$match[5] = ltrim($match[5],',');						
 					$replace = "[singlepic id=\"{$match[1]}\" w=\"{$match[2]}\" h=\"{$match[3]}\" mode=\"{$match[4]}\" float=\"{$match[5]}\" ]";
-					var_dump($replace);
 					$content = str_replace ($match[0], $replace, $content);
 				}
 			}

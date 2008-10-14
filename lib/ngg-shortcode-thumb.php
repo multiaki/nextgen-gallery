@@ -10,60 +10,48 @@ if (!function_exists('ngg_do_thumb_shortcode')) {
 
 /**
 * Function to show a thumbnail or a set of thumbnails with shortcode of type:
-*     [thumb id="1,2,4,5,..." caption="none|alttext|desc" group="thumbnail-group" float="|left|right" /]
+*     [thumb id="1,2,4,5,..." caption="none|alttext|desc" float="|left|right" /]
 * where 
 *  - id is one or more picture ids
 *  - caption is the text to put under the thumbnail
-*  - group is a group name for the thumbnails in case you want to group them when using thickbox or highslide
 *  - float is the CSS float property to apply to the thumbnail
 */
-function ngg_do_thumb_shortcode($atts, $content=null) {	
+function ngg_do_thumb_shortcode( $atts, $content=null ) {	
 	global $nggRewrite;
-	
-	$out = '';
 
 	// Extract attributes
 	extract(shortcode_atts(array(
 		'id' 		=> '',
 		'caption' 	=> 'none',
-		'group' 	=> '',
 		'float'		=> ''
 	), $atts));
 	
 	// make an array out of the ids
-	$pids = explode(",", $id);
+	$pids = explode( ',', $id );
 	
 	// Some error checks
-	if ( count($pids)==0 ) {
-		return "<p style='color: red; border: 1px solid red;'>At least one picture ID must be supplied for the shortcode [thumb]</p>";
-	}
+	if ( count($pids) == 0 )
+		return __('[Pictures not found]','nggallery');
 	
-	if ($caption!='none' && $caption!='alttext' && $caption!='desc') {
-		return "<p style='color: red; border: 1px solid red;'>Invalid value for the caption parameter of the shortcode [thumb]</p>";		
-	}
+	if ( $caption != 'none' && $caption != 'alttext' && $caption != 'desc')
+		$caption = 'none';		
 	
 	// Get ngg options
 	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
 	
 	// set thumb size 
  	$thumbwidth  = $ngg_options['thumbwidth'];
-	$thumbheight = $ngg_options['thumbheight'];	
-	$thumbsize = "";
-	if ($ngg_options['thumbfix']) {
-		$thumbsize = 'style="width:'.$thumbwidth.'px; height:'.$thumbheight.'px;"';
-	}
-	
-	if ($ngg_options['thumbcrop']) {
-		$thumbsize = 'style="width:'.$thumbwidth.'px; height:'.$thumbwidth.'px;"';
-	}
+	$thumbheight = $ngg_options['thumbheight'];
+		
+	$thumbsize = '';
+	if ($ngg_options['thumbfix'])  $thumbsize = 'style="width:'.$thumbwidth.'px; height:'.$thumbheight.'px;"';
+	if ($ngg_options['thumbcrop']) $thumbsize = 'style="width:'.$thumbwidth.'px; height:'.$thumbwidth.'px;"';
 	
 	// a description below the picture, require fixed width
-	//--
-	$setwidth = ($caption!="none") ? 'style="width:' . $thumbwidth . 'px;"' : '';
-	$class_desc = ($caption!="none") ? 'desc' : '';
+	$setwidth   = ( $caption != 'none' ) ? 'style="width:' . $thumbwidth . 'px;"' : '';
+	$class_desc = ( $caption != 'none' ) ? 'desc' : '';
 
 	// add float to img
-	//--
 	switch ($float) {
 		case 'left': 
 			$float=' ngg-left';
@@ -83,39 +71,26 @@ function ngg_do_thumb_shortcode($atts, $content=null) {
 	}
 		
 	// Start building the output HTML
-	$out .= '<div class="ngg-galleryoverview">';
+	$out = '<div class="ngg-galleryoverview">';
+	
+	$pictures = nggdb::find_images_in_list($pids);
 	
 	// For each picture ID
-	foreach ($pids as $pid) {	
-		// Get picture
-		$picture = nggdb::find_image($pid);
+	foreach ($pictures as $picture) {
 	
-		// Check picture existance
-		if ($picture==null) {
-			$out .= '<div class="ngg-gallery-thumbnail-box" style="color: red;">' 
-				.  sprintf(__("[thumb id='%s' /] &raquo; Image does not exist!", 'nggallery'), $pid)  
-				. '</div>';
-			continue;
-		}
-		
-		// set image url
-		$folder_url 	= get_option ('siteurl') . "/" . $picture->path . "/";
-		$thumbnailURL 	= get_option ('siteurl') . "/" . $picture->path . nggGalleryPlugin::get_thumbnail_folder($picture->path, FALSE);
-		$thumb_prefix   = nggGalleryPlugin::get_thumbnail_prefix($picture->path, FALSE);
-
 		// choose link between imagebrowser or effect
-		$link = ($ngg_options['galImgBrowser']) ? $nggRewrite->get_permalink(array('pid'=>$picture->pid)) : $folder_url.$picture->filename;
+		$link = ($ngg_options['galImgBrowser']) ? $nggRewrite->get_permalink(array('pid'=>$picture->pid)) : $picture->filename;
 		$link = apply_filters('ngg_create_gallery_link', $link, $picture);
 		
 		// get the effect code
-		$thumbcode = $picture->get_thumbcode($group);
+		$thumbcode = $picture->get_thumbcode('ngg');
 		
 		// create output
 		$out .= '<div class="ngg-gallery-thumbnail-box ' . $class_desc . ' ' . $float . '">' . "\n\t";
 		$out .= '<div class="ngg-gallery-thumbnail" ' . $setwidth . ' >' . "\n\t";
 		$out .= '<a href="' . $link . '" title="' . stripslashes($picture->description) . '" ' . $thumbcode . ' >';
 		$out .= '<img title="' . stripslashes($picture->alttext) . '" alt="' . stripslashes($picture->alttext) . '" ';
-		$out .= 'src="' . $thumbnailURL . $thumb_prefix . $picture->filename . '" ' . $thumbsize . ' />';
+		$out .= 'src="' . $picture->thumbURL . '" ' . $thumbsize . ' />';
 		$out .= '</a>' . "\n";
 		
 		if ($caption == "alttext")
