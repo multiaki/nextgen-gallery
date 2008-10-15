@@ -10,8 +10,7 @@ Author URI: http://alexrabe.boelinger.com/
 
 Copyright 2007-2008 by Alex Rabe & NextGEN DEV-Team
 
-The NextGEN button is taken from the Silk set of FamFamFam. See more at 
-http://www.famfamfam.com/lab/icons/silk/
+The NextGEN button is taken from the Fugue Icons of http://www.pinvoke.com/.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

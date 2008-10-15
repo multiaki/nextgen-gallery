@@ -22,6 +22,7 @@ V1.00
             width="" height="" mode="|watermark|web20"]extra caption here[/picture]
         shortcode. You can now insert single picture with some effect, resized or not, 
         with or without caption.
+- Changed : New icon for TinyMCE and WP2.7 Menue from http://www.pinvoke.com/
 - Changed : Move update message to admin.php
 - Changed : Widgets are now core and doesn't need to be activate, rework as Multi Widgets		
 - Changed : Improved the gallery management page.
