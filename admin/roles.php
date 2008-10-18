@@ -19,7 +19,7 @@ if ( isset($_POST['update_cap']) ) {
 	ngg_set_capability($_POST['change_style'],"NextGEN Change style");
 	ngg_set_capability($_POST['change_options'],"NextGEN Change options");
 	
-	nggGalleryPlugin::show_message(__('Updated capabilities',"nggallery"));
+	nggGallery::show_message(__('Updated capabilities',"nggallery"));
 }
 	
 ?>

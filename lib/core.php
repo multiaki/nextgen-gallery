@@ -3,10 +3,10 @@
 * Main PHP class for the WordPress plugin NextGEN Gallery
 * 
 * @author 		Alex Rabe 
-* @copyright 	Copyright 2007
+* @copyright 	Copyright 2007 - 2008
 * 
 */
-class nggGalleryPlugin {
+class nggGallery {
 	
 	/**
 	* remove page break
@@ -51,7 +51,7 @@ class nggGalleryPlugin {
 		}
 		
 		// set gallery url
-		$folder_url 	= get_option ('siteurl')."/".$picturepath.nggGalleryPlugin::get_thumbnail_folder($picturepath, FALSE);
+		$folder_url 	= get_option ('siteurl')."/".$picturepath.nggGallery::get_thumbnail_folder($picturepath, FALSE);
 		$thumbnailURL	= $folder_url. "thumbs_" .$fileName;
 		
 		return $thumbnailURL;
@@ -82,7 +82,7 @@ class nggGalleryPlugin {
 	}
 
 	/**
-	* nggGalleryPlugin::get_thumbnail_folder()
+	* nggGallery::get_thumbnail_folder()
 	* 
 	* @param mixed $gallerypath
 	* @param bool $include_Abspath
@@ -107,7 +107,7 @@ class nggGalleryPlugin {
 					if (SAFE_MODE) {
 						nggAdmin::check_safemode($gallerypath."/thumbs");	
 					} else {
-						nggGalleryPlugin::show_error(__('Unable to create directory ', 'nggallery').$gallerypath.'/thumbs !');
+						nggGallery::show_error(__('Unable to create directory ', 'nggallery').$gallerypath.'/thumbs !');
 					}
 					return FALSE;
 				}
@@ -120,7 +120,7 @@ class nggGalleryPlugin {
 	}
 
 	/**
-	* nggGalleryPlugin::get_thumbnail_folder()
+	* nggGallery::get_thumbnail_folder()
 	* 
 	* @param mixed $gallerypath
 	* @param bool $include_Abspath
@@ -128,11 +128,11 @@ class nggGalleryPlugin {
 	* @return string $foldername
 	*/
 	function get_thumbnail_folder($gallerypath, $include_Abspath = TRUE) {
-		return nggGalleryPlugin::create_thumbnail_folder($gallerypath, $include_Abspath);
+		return nggGallery::create_thumbnail_folder($gallerypath, $include_Abspath);
 	}
 	
 	/**
-	* nggGalleryPlugin::get_thumbnail_prefix() - obsolete
+	* nggGallery::get_thumbnail_prefix() - obsolete
 	* 
 	* @param string $gallerypath
 	* @param bool   $include_Abspath
@@ -197,7 +197,7 @@ class nggGalleryPlugin {
 	}
 	
 	/**
-	* nggGalleryPlugin::get_option() - get the options and overwrite them with custom meta settings
+	* nggGallery::get_option() - get the options and overwrite them with custom meta settings
 	*
 	* @param string $key
 	* @return array $options
@@ -272,7 +272,7 @@ class nggGalleryPlugin {
 	}
 	
 	/**
-	* nggGalleryPlugin::scale_image() - Scale down a image
+	* nggGallery::scale_image() - Scale down a image
 	* 
 	* @param mixed $location (filename)
 	* @param int $maxw - max width
@@ -304,7 +304,7 @@ class nggGalleryPlugin {
 	/**
 	* Renders a section of user display code.  The code is first checked for in the current theme display directory
 	* before defaulting to the plugin
-	* Call the function :	nggGalleryPlugin::render ('template_name', array ('var1' => $var1, 'var2' => $var2));
+	* Call the function :	nggGallery::render ('template_name', array ('var1' => $var1, 'var2' => $var2));
 	*
 	* @autor John Godley
 	* @param string $template_name Name of the template file (without extension)
@@ -335,7 +335,7 @@ class nggGalleryPlugin {
 	**/
 	function capture ($template_name, $vars = array ()) {
 		ob_start ();
-		nggGalleryPlugin::render ($template_name, $vars);
+		nggGallery::render ($template_name, $vars);
 		$output = ob_get_contents ();
 		ob_end_clean ();
 		
@@ -343,7 +343,7 @@ class nggGalleryPlugin {
 	}
 	
 	/**
-	 * nggGalleryPlugin::graphic_library() - switch between GD and ImageMagick
+	 * nggGallery::graphic_library() - switch between GD and ImageMagick
 	 * 
 	 * @return path to the selected library
 	 */

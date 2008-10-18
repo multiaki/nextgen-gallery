@@ -39,7 +39,7 @@ class NextGEN_shortcodes {
 	   */
 	function convert_shortcode($content) {
 		
-		$ngg_options = nggGalleryPlugin::get_option('ngg_options');
+		$ngg_options = nggGallery::get_option('ngg_options');
 	
 		if ( stristr( $content, '[singlepic' )) {
 			$search = "@\[singlepic=(\d+)(|,\d+|,)(|,\d+|,)(|,watermark|,web20|,)(|,right|,center|,left|,)\]@i";
@@ -182,14 +182,8 @@ class NextGEN_shortcodes {
 			'id' 		=> 0,
 			'mode'		=> ''	
 		), $atts ));
-		
-		$galleryID = $wpdb->get_var("SELECT gid FROM $wpdb->nggallery WHERE gid = '$id' ");
-		if(!$galleryID) $galleryID = $wpdb->get_var("SELECT gid FROM $wpdb->nggallery WHERE name = '$id' ");
 
-		if( $galleryID )
-			$out = nggShowImageBrowser($galleryID, $mode);
-		else 
-			$out = __('[Gallery not found]','nggallery');
+		$out = nggShowImageBrowser($id, $mode);
 			
 		return $out;
 	}
@@ -203,7 +197,6 @@ class NextGEN_shortcodes {
 			'w'		 	=> '',
 			'h'		 	=> ''
 		), $atts ));
-		
 		
 		$galleryID = $wpdb->get_var("SELECT gid FROM $wpdb->nggallery WHERE gid = '$id' ");
 		if(!$galleryID) $galleryID = $wpdb->get_var("SELECT gid FROM $wpdb->nggallery WHERE name = '$id' ");

@@ -14,7 +14,7 @@ function nggShowSlideshow($galleryID, $irWidth, $irHeight) {
 	
 	require_once (dirname (__FILE__).'/lib/swfobject.php');
 
-	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
+	$ngg_options = nggGallery::get_option('ngg_options');
 
 	// remove media file from RSS feed
 	if ( is_feed() ) {
@@ -79,7 +79,7 @@ function nggShowGallery( $galleryID, $mode = '' ) {
 	
 	global $nggRewrite;
 
-	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
+	$ngg_options = nggGallery::get_option('ngg_options');
 
 	//Set sort order value, if not used (upgrade issue)
 	$ngg_options['galSort'] = ($ngg_options['galSort']) ? $ngg_options['galSort'] : 'pid';
@@ -144,7 +144,7 @@ function nggShowGallery( $galleryID, $mode = '' ) {
 function nggCreateGallery($picturelist, $galleryID = false, $mode = '') {
     global $nggRewrite;
     
-    $ngg_options = nggGalleryPlugin::get_option('ngg_options');
+    $ngg_options = nggGallery::get_option('ngg_options');
 	    
     // $_GET from wp_query
 	$nggpage  = get_query_var('nggpage');
@@ -200,7 +200,7 @@ function nggCreateGallery($picturelist, $galleryID = false, $mode = '') {
 		// return the list of images we need
 		array_splice($picturelist, $maxElement);
 	
-		$navigation = nggGalleryPlugin::create_navigation($page, $total, $maxElement);
+		$navigation = nggGallery::create_navigation($page, $total, $maxElement);
 	} else {
 		$navigation = '<div class="ngg-clear">&nbsp;</div>';
 	}	
@@ -227,7 +227,7 @@ function nggCreateGallery($picturelist, $galleryID = false, $mode = '') {
 	$filename = ( empty($mode) ) ? 'gallery' : 'gallery-' . $mode;
 
 	// create the output
-	$out = nggGalleryPlugin::capture ( $filename, array ('gallery' => $gallery, 'images' => $picturelist, 'pagination' => $navigation) );
+	$out = nggGallery::capture ( $filename, array ('gallery' => $gallery, 'images' => $picturelist, 'pagination' => $navigation) );
 
 	return $out;
 }
@@ -287,7 +287,7 @@ function nggCreateAlbum( $galleriesID, $mode = 'extend', $albumID = 0) {
 	
 	global $wpdb, $nggRewrite;
 	
-	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
+	$ngg_options = nggGallery::get_option('ngg_options');
 	
 	$sortorder = $galleriesID;
 	$galleries = array();
@@ -344,7 +344,7 @@ function nggCreateAlbum( $galleriesID, $mode = 'extend', $albumID = 0) {
 	$filename = ( empty($mode) ) ? 'album-extend' : 'album-' . $mode ;
 
 	// create the output
-	$out = nggGalleryPlugin::capture ( $filename, array ('albumID' => $albumID, 'galleries' => $galleries, 'mode' => $mode) );
+	$out = nggGallery::capture ( $filename, array ('albumID' => $albumID, 'galleries' => $galleries, 'mode' => $mode) );
 
 	return $out;
  	
@@ -353,7 +353,7 @@ function nggCreateAlbum( $galleriesID, $mode = 'extend', $albumID = 0) {
 /**
  * nggShowImageBrowser()
  * 
- * @param int $galleryID
+ * @param int|string $galleryID or gallery name
  * @param string $mode (optional) name for a template file, look for imagebrowser-$mode
  * @return the content
  */
@@ -361,19 +361,21 @@ function nggShowImageBrowser($galleryID, $mode = '') {
 	
 	global $wpdb;
 	
-	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
+	$ngg_options = nggGallery::get_option('ngg_options');
 	
 	//Set sort order value, if not used (upgrade issue)
 	$ngg_options['galSort'] = ($ngg_options['galSort']) ? $ngg_options['galSort'] : 'pid';
 	$ngg_options['galSortDir'] = ($ngg_options['galSortDir'] == 'DESC') ? 'DESC' : 'ASC';
 	
 	// get the pictures
-	$picturelist = $wpdb->get_col( $wpdb->prepare( "SELECT pid FROM $wpdb->nggpictures WHERE galleryid = '%d' AND exclude != 1 ORDER BY $ngg_options[galSort] $ngg_options[galSortDir]", $galleryID) );	
-
-	if (is_array($picturelist))
+	$picturelist = nggdb::get_ids_from_gallery($galleryID, $ngg->options['galSort'], $ngg->options['galSortDir']);
+  	
+	if ( is_array($picturelist) )
 		$out = nggCreateImageBrowser($picturelist, $mode);
+	else
+		$out = __('[Gallery not found]','nggallery');
 	
-	$out = apply_filters('ngg_show_imagebrowser_content', $out, intval($galleryID));
+	$out = apply_filters('ngg_show_imagebrowser_content', $out, $galleryID);
 	
 	return $out;
 	
@@ -419,6 +421,7 @@ function nggCreateImageBrowser($picarray, $mode = '') {
 	
 	// get the picture data
 	$picture = nggdb::find_image($act_pid);
+	
 	// if we didn't get some data, exit now
 	if ($picture == null)
 		return;
@@ -442,7 +445,7 @@ function nggCreateImageBrowser($picarray, $mode = '') {
 	$filename = ( empty($mode) ) ? 'imagebrowser' : 'imagebrowser-' . $mode;
 
 	// create the output
-	$out = nggGalleryPlugin::capture ( $filename , array ('image' => $picture , 'meta' => $meta, 'exif' => $exif, 'iptc' => $iptc, 'xmp' => $xmp) );
+	$out = nggGallery::capture ( $filename , array ('image' => $picture , 'meta' => $meta, 'exif' => $exif, 'iptc' => $iptc, 'xmp' => $xmp) );
 	
 	return $out;
 	
@@ -461,7 +464,7 @@ function nggCreateImageBrowser($picarray, $mode = '') {
 function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $float = '') {
 	global $post;
 	
-	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
+	$ngg_options = nggGallery::get_option('ngg_options');
 	
 	// remove the comma
 	$float  = ltrim( $float, ',' );
@@ -516,7 +519,7 @@ function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $fl
 	$xmp  = $meta->get_XMP();
 		
 	// create the output
-	$out = nggGalleryPlugin::capture ('singlepic', array ('image' => $picture , 'meta' => $meta, 'exif' => $exif, 'iptc' => $iptc, 'xmp' => $xmp) );
+	$out = nggGallery::capture ('singlepic', array ('image' => $picture , 'meta' => $meta, 'exif' => $exif, 'iptc' => $iptc, 'xmp' => $xmp) );
 
 	$out = apply_filters('ngg_show_singlepic_content', $out, $picture );
 	
@@ -538,7 +541,7 @@ function nggShowGalleryTags($taglist) {
 	// get now the related images
 	$picturelist = nggTags::find_images_for_tags($taglist , 'ASC');
 
-	// look for ImageBrowser 
+	// look for ImageBrowser if we have a $_GET('pid')
 	if ( $pageid == get_the_ID() || !is_home() )  
 		if (!empty( $pid ))  {
 			foreach ($picturelist as $picture) {
@@ -569,7 +572,7 @@ function nggShowGalleryTags($taglist) {
  */ 
 function nggShowRelatedGallery($taglist, $maxImages = 0) {
 	
-	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
+	$ngg_options = nggGallery::get_option('ngg_options');
 	
 	// get now the related images
 	$picturelist = nggTags::find_images_for_tags($taglist, 'RAND');
@@ -649,7 +652,7 @@ function nggShowAlbumTags($taglist) {
 	}	
 
 	// create the output
-	$out = nggGalleryPlugin::capture ('album-compact', array ('albumID' => '0', 'galleries' => $picturelist, 'mode' => 'compact') );
+	$out = nggGallery::capture ('album-compact', array ('albumID' => '0', 'galleries' => $picturelist, 'mode' => 'compact') );
 	
 	$out = apply_filters('ngg_show_album_tags_content', $out, $taglist);
 	
@@ -664,7 +667,7 @@ function nggShowAlbumTags($taglist) {
  * @return the content
  */
 function nggShowRelatedImages($type = '', $maxImages = 0) {
-	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
+	$ngg_options = nggGallery::get_option('ngg_options');
 
 	if ($type == '') {
 		$type = $ngg_options['appendType'];

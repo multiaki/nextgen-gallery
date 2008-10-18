@@ -37,7 +37,7 @@ function ngg_do_thumb_shortcode( $atts, $content=null ) {
 		$caption = 'none';		
 	
 	// Get ngg options
-	$ngg_options = nggGalleryPlugin::get_option('ngg_options');
+	$ngg_options = nggGallery::get_option('ngg_options');
 	
 	// set thumb size 
  	$thumbwidth  = $ngg_options['thumbwidth'];

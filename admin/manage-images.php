@@ -15,7 +15,7 @@ function nggallery_picturelist() {
 	$picturelist = nggdb::get_gallery($act_gid, $ngg->options['galSort'], $ngg->options['galSortDir'], false);
 
 	if (!$picturelist) {
-		nggGalleryPlugin::show_error(__('Gallery not found.', 'nggallery'));
+		nggGallery::show_error(__('Gallery not found.', 'nggallery'));
 		return;
 	}
 	

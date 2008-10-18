@@ -12,7 +12,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			ngg_default_options();
 			$ngg->load_options();
 			
-			nggGalleryPlugin::show_message(__('Reset all settings to default parameter','nggallery'));
+			nggGallery::show_message(__('Reset all settings to default parameter','nggallery'));
 		}
 
 		if (isset($_POST['uninstall'])) {	
@@ -35,7 +35,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			ngg_remove_capability("NextGEN Change style");
 			ngg_remove_capability("NextGEN Change options");
 		 	
-		 	nggGalleryPlugin::show_message(__('Uninstall sucessfull ! Now delete the plugin and enjoy your life ! Good luck !','nggallery'));
+		 	nggGallery::show_message(__('Uninstall sucessfull ! Now delete the plugin and enjoy your life ! Good luck !','nggallery'));
 		}
 
 	?>

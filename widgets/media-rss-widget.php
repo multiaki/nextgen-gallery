@@ -188,7 +188,7 @@ class nggMediaRssWidget {
 	*/
 	function render_widget($args, $widget_args=1) {
 		global $ngg_mrssw_plugin;
-		$ngg_options = nggGalleryPlugin::get_option('ngg_options');
+		$ngg_options = nggGallery::get_option('ngg_options');
 		
 		// Get the options
 		//--

@@ -185,7 +185,7 @@ class nggMediaRss {
 	 * @param $image The image object
 	 */
 	function get_image_mrss_node($image, $indent="\t\t") {		
-		$ngg_options = nggGalleryPlugin::get_option('ngg_options');
+		$ngg_options = nggGallery::get_option('ngg_options');
 		
 		$tags = $image->get_tags();
 		$tag_names = '';

@@ -21,7 +21,7 @@ if ( $theme_css_exists = file_exists (TEMPLATEPATH . "/nggallery.css") ) {
 			$ngg->options['activateCSS'] = $_POST['activateCSS']; 
 			$ngg->options['CSSfile'] = $act_cssfile;
 			update_option('ngg_options', $ngg->options);
-			nggGalleryPlugin::show_message(__('Update Successfully','nggallery'));
+			nggGallery::show_message(__('Update Successfully','nggallery'));
 		}
 	} else {
 		// get the options
@@ -49,7 +49,7 @@ if (isset($_POST['updatecss'])) {
 		fwrite($f, $newcontent);
 
 		fclose($f);
-		nggGalleryPlugin::show_message(__('CSS file successfully updated','nggallery'));
+		nggGallery::show_message(__('CSS file successfully updated','nggallery'));
 	}
 }
 

@@ -28,7 +28,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			$wp_rewrite->flush_rules();
 		// Save options
 		update_option('ngg_options', $ngg->options);
-	 	nggGalleryPlugin::show_message(__('Update Successfully','nggallery'));
+	 	nggGallery::show_message(__('Update Successfully','nggallery'));
 	}		
 	
 	if ( isset($_POST['clearcache']) ) {
@@ -45,7 +45,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	      		closedir($handle);
 			}
 
-		nggGalleryPlugin::show_message(__('Cache cleared','nggallery'));
+		nggGallery::show_message(__('Cache cleared','nggallery'));
 	}
 	// message windows
 	if(!empty($messagetext)) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$messagetext.'</p></div>'; }

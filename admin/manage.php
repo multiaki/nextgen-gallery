@@ -81,7 +81,7 @@ class nggManageGallery {
 			$delete_galllery = $wpdb->query("DELETE FROM $wpdb->nggallery WHERE gid = $this->gid");
 			
 			if($delete_galllery)
-				nggGalleryPlugin::show_message( __('Gallery','nggallery').' \''.$this->gid.'\' '.__('deleted successfully','nggallery'));
+				nggGallery::show_message( __('Gallery','nggallery').' \''.$this->gid.'\' '.__('deleted successfully','nggallery'));
 				
 		 	$this->mode = 'main'; // show mainpage
 		}
@@ -94,7 +94,7 @@ class nggManageGallery {
 			if ($filename) {
 				$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$this->gid' ");
 				if ($gallerypath){
-					$thumb_folder = nggGalleryPlugin::get_thumbnail_folder($gallerypath, FALSE);
+					$thumb_folder = nggGallery::get_thumbnail_folder($gallerypath, FALSE);
 					if ($ngg->options['deleteImg']) {
 						@unlink(WINABSPATH . $gallerypath. '/thumbs/thumbs_' .$filename);
 						@unlink(WINABSPATH . $gallerypath . '/' . $filename);
@@ -103,7 +103,7 @@ class nggManageGallery {
 				$delete_pic = $wpdb->query("DELETE FROM $wpdb->nggpictures WHERE pid = $this->pid");
 			}
 			if($delete_pic)
-				nggGalleryPlugin::show_message( __('Picture','nggallery').' \''.$this->pid.'\' '.__('deleted successfully','nggallery') );
+				nggGallery::show_message( __('Picture','nggallery').' \''.$this->pid.'\' '.__('deleted successfully','nggallery') );
 				
 		 	$this->mode = 'edit'; // show pictures
 	
@@ -143,7 +143,7 @@ class nggManageGallery {
 				// Delete images
 					if ( is_array($_POST['doaction']) ) {
 					if ($gallerypath){
-						$thumb_folder = nggGalleryPlugin::get_thumbnail_folder($gallerypath, FALSE);
+						$thumb_folder = nggGallery::get_thumbnail_folder($gallerypath, FALSE);
 						foreach ( $_POST['doaction'] as $imageID ) {
 							$filename = $wpdb->get_var("SELECT filename FROM $wpdb->nggpictures WHERE pid = '$imageID' ");
 							if ($ngg->options['deleteImg']) {
@@ -154,13 +154,13 @@ class nggManageGallery {
 						}
 					}		
 					if($delete_pic)
-						nggGalleryPlugin::show_message(__('Pictures deleted successfully ',"nggallery"));
+						nggGallery::show_message(__('Pictures deleted successfully ',"nggallery"));
 					}
 					break;
 				case 'import_meta':
 				// Import Metadata
 					nggAdmin::import_MetaData($_POST['doaction']);
-					nggGalleryPlugin::show_message(__('Import metadata finished',"nggallery"));
+					nggGallery::show_message(__('Import metadata finished',"nggallery"));
 					break;
 			}
 		}
@@ -168,7 +168,7 @@ class nggManageGallery {
 		// will be called after a ajax operation
 		if (isset ($_POST['ajax_callback']))  {
 				if ($_POST['ajax_callback'] == 1)
-					nggGalleryPlugin::show_message(__('Operation successfull. Please clear your browser cache.',"nggallery"));
+					nggGallery::show_message(__('Operation successfull. Please clear your browser cache.',"nggallery"));
 			$this->mode = 'edit';		
 		}
 		
@@ -231,7 +231,7 @@ class nggManageGallery {
 					}
 				}
 		
-				nggGalleryPlugin::show_message(__('Tags changed',"nggallery"));
+				nggGallery::show_message(__('Tags changed',"nggallery"));
 			}
 		}
 	
@@ -261,7 +261,7 @@ class nggManageGallery {
 			//hook for other plugin to update the fields
 			do_action('ngg_update_gallery', $this->gid, $_POST);
 	
-			nggGalleryPlugin::show_message(__('Update successful',"nggallery"));
+			nggGallery::show_message(__('Update successful',"nggallery"));
 		}
 	
 		if (isset ($_POST['scanfolder']))  {
@@ -294,7 +294,7 @@ class nggManageGallery {
 			$gallery_pageid = wp_insert_post ($page);
 			if ($gallery_pageid != 0) {
 				$result = $wpdb->query("UPDATE $wpdb->nggallery SET title= '$gallery_title', pageid = '$gallery_pageid' WHERE gid = '$this->gid'");
-				nggGalleryPlugin::show_message( __('New gallery page ID','nggallery'). ' ' . $pageid . ' -> <strong>' . $gallery_title . '</strong> ' .__('created','nggallery') );
+				nggGallery::show_message( __('New gallery page ID','nggallery'). ' ' . $pageid . ' -> <strong>' . $gallery_title . '</strong> ' .__('created','nggallery') );
 			}
 		}
 		

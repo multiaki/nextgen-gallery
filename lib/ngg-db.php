@@ -125,6 +125,30 @@ class nggdb {
 	}
 	
 	/**
+	 * This function return all information about the gallery and the images inside
+	 * 
+	 * @param int|string $id or $name
+	 * @param string $orderby 
+	 * @param string $order (ASC |DESC)
+	 * @param bool $exclude
+	 * @return An array containing the nggImage objects representing the images in the gallery.
+	 */
+	function get_ids_from_gallery($id, $orderby = 'sortorder', $order = 'ASC', $exclude = true) {
+
+		global $wpdb;
+		
+		// Check for the exclude setting
+		$exclude_clause = ($exclude) ? ' AND tt.exclude<>1 ' : '';
+		
+		// Query database
+		if( is_numeric($id) )
+			$result = $wpdb->get_col( $wpdb->prepare( "SELECT tt.pid FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = %d $exclude_clause ORDER BY %s %s", $id, $orderby, $order ) );
+		else
+			$result = $wpdb->get_col( $wpdb->prepare( "SELECT tt.pid FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.name = %s $exclude_clause ORDER BY %s %s", $id, $orderby, $order ) );
+
+		return $result;		
+	}	
+	/**
 	 * Delete a gallery AND all the pictures associated to this gallery!
 	 * 
 	 * @gid The gallery ID
