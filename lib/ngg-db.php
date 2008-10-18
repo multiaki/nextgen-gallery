@@ -43,7 +43,7 @@ class nggdb {
 	 * @param string $order_by
 	 * @param string $order_dir
 	 * @param bool $counter Select true  when you need to count the images
-	 * @return array &galleries
+	 * @return array $galleries
 	 */
 	function find_all_galleries($order_by = 'gid', $order_dir = 'ASC', $counter = false) {		
 		global $wpdb;

@@ -9,7 +9,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	global $wpdb, $ngg;
 	
 	// same as $_SERVER['REQUEST_URI'], but should work under IIS 6.0
-	$filepath    = admin_url() . 'admin.php?page='.$_GET['page'];
+	$filepath    = admin_url() . 'admin.php?page=' . $_GET['page'];
 	
 	// link for the flash file
 	$swf_upload_link = NGGALLERY_URLPATH . 'admin/upload.php';
@@ -18,10 +18,13 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	$swf_upload_link = str_replace('&#038;', '&', $swf_upload_link);
 
 	$defaultpath = $ngg->options['gallerypath'];	
+	
+	//get all galleries
+	$gallerylist = nggdb::find_all_galleries();
 
 	if ($_POST['addgallery']){
 		check_admin_referer('ngg_addgallery');
-		$newgallery = attribute_escape($_POST['galleryname']);
+		$newgallery = attribute_escape( $_POST['galleryname']);
 		if (!empty($newgallery))
 			nggAdmin::create_gallery($newgallery, $defaultpath);
 	}
@@ -29,15 +32,15 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	if ($_POST['zipupload']){
 		check_admin_referer('ngg_addgallery');
 		if ($_FILES['zipfile']['error'] == 0) 
-			$messagetext = nggAdmin::import_zipfile($defaultpath);
+			$messagetext = nggAdmin::import_zipfile( intval( $_POST['zipgalselect'] ) );
 		else
-			nggGallery::show_error(__('Upload failed!','nggallery'));
+			nggGallery::show_error( __('Upload failed!','nggallery') );
 	}
 	
 	if ($_POST['importfolder']){
 		check_admin_referer('ngg_addgallery');
 		$galleryfolder = $_POST['galleryfolder'];
-		if ((!empty($galleryfolder)) AND ($defaultpath != $galleryfolder))
+		if ( ( !empty($galleryfolder) ) AND ($defaultpath != $galleryfolder) )
 			$messagetext = nggAdmin::import_gallery($galleryfolder);
 	}
 	
@@ -47,7 +50,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			$messagetext = nggAdmin::upload_images();
 		}
 		else
-			nggGallery::show_error(__('Upload failed!','nggallery'));	
+			nggGallery::show_error( __('Upload failed!','nggallery') );	
 	}
 	
 	if (isset($_POST['swf_callback'])){
@@ -201,12 +204,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<td><select name="zipgalselect">
 					<option value="0" ><?php _e('a new gallery', 'nggallery') ?></option>
 					<?php
-						$gallerylist = $wpdb->get_results("SELECT * FROM $wpdb->nggallery ORDER BY gid ASC");
-						if(is_array($gallerylist)) {
-							foreach($gallerylist as $gallery) {
-								echo '<option value="'.$gallery->name.'" >'.$gallery->name.' | '.$gallery->title.'</option>'."\n";
-							}
-						}
+						foreach($gallerylist as $gallery)
+							echo '<option value="' . $gallery->gid . '" >' . $gallery->title . '</option>' . "\n";
 					?>
 					</select>
 					<br /><?php echo _e('Note : The upload limit on your server is ','nggallery') . "<strong>" . ini_get('upload_max_filesize') . "Byte</strong>\n"; ?>
@@ -250,12 +249,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<td><select name="galleryselect" id="galleryselect">
 					<option value="0" ><?php _e('Choose gallery', 'nggallery') ?></option>
 					<?php
-						$gallerylist = $wpdb->get_results("SELECT * FROM $wpdb->nggallery ORDER BY gid ASC");
-						if(is_array($gallerylist)) {
-							foreach($gallerylist as $gallery) {
-								echo '<option value="'.$gallery->gid.'" >'.$gallery->name.' | '.$gallery->title.'</option>'."\n";
-							}
-						}
+						foreach($gallerylist as $gallery)
+							echo '<option value="' . $gallery->gid . '" >' . $gallery->title . '</option>' ."\n";
 					?>
 					</select>
 					<br /><?php echo _e('Note : The upload limit on your server is ','nggallery') . "<strong>" . ini_get('upload_max_filesize') . "Byte</strong>\n"; ?>
@@ -273,9 +268,6 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			</form>
 		</div>
 	</div>
-		
 	<?php
 	}
-	
-
 ?>

@@ -12,16 +12,10 @@ V1.00
 - NEW : Image tag management
 - NEW : Convert all shortcodes to WP shortcodes API
 - NEW : AJAX based thumbnail generator
-- NEW : Create output via template files, more flexible
+- NEW : Create output via template files, more flexible and support for multiple templates
 - NEW : Extended role system. Each gallery has now a author
-- NEW : [thumb id="4,5,12,..." caption="none|alttext|desc" 
-            group="thumbnail-group" float="|left|right"/] 
-        shortcode. You can now insert thumbnails for one or more images (that are not 
-        necessarly inside the same gallery).
-- NEW : [picture id="10" caption="none|alttext|desc" float="|left|right" 
-            width="" height="" mode="|watermark|web20"]extra caption here[/picture]
-        shortcode. You can now insert single picture with some effect, resized or not, 
-        with or without caption.
+- NEW : [thumb id="4,5,12,..."] shortcode. You can now insert 
+        thumbnails for one or more images (that are not necessarly inside the same gallery).
 - Changed : New icon for TinyMCE and WP2.7 Menue from http://www.pinvoke.com/
 - Changed : Move update message to admin.php
 - Changed : Widgets are now core and doesn't need to be activate, rework as Multi Widgets		
@@ -32,6 +26,7 @@ V1.00
 - Changed : Support now SSL 
 - Changed : Use JQuery UI instead of interface lib
 - Changed : Updated to swfobject 2.1
+- Changed : Rework of database queries and new central nggdb class 
 - Bugfix : Changed CSS for singlepic padding to margin
 - Bugfix : Check for zero in Exif Focal Length
 - Bugfix : Round instead inval for square thumbnails

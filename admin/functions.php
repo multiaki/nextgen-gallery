@@ -461,11 +461,14 @@ class nggAdmin{
 	}
 
 	// **************************************************************
-	function import_zipfile($defaultpath) {
+	function import_zipfile($galleryID) {
+
+		global $ngg;
 		
 		if (nggAdmin::check_quota())
-			return;
-		
+			return false;
+
+		$defaultpath = $ngg->options['gallerypath'];		
 		$temp_zipfile = $_FILES['zipfile']['tmp_name'];
 		$filename = $_FILES['zipfile']['name']; 
 					
@@ -473,20 +476,25 @@ class nggAdmin{
 		if (!eregi('zip|download|octet-stream', $_FILES['zipfile']['type'])) {
 			@unlink($temp_zipfile); // del temp file
 			nggGallery::show_error(__('Uploaded file was no or a faulty zip file ! The server recognize : ','nggallery').$_FILES['zipfile']['type']);
-			return; 
-		}
-		
-		// get foldername if selected
-		$foldername = $_POST['zipgalselect'];
-		if ($foldername == "0") {	
-			//cleanup and take the zipfile name as folder name
-			$foldername = sanitize_title(strtok ($filename,'.'));
-			//$foldername = preg_replace ("/(\s+)/", '-', strtolower(strtok ($filename,'.')));					
+			return false; 
 		}
 
-		//TODO:FORM must get the path from the tables not from defaultpath !!!
-		// set complete folder path		
-		$newfolder = WINABSPATH.$defaultpath.$foldername;
+		// should this unpacked into a new folder ?		
+		if ( $galleryID == '0' ) {	
+			//cleanup and take the zipfile name as folder name
+			$foldername = sanitize_title(strtok ($filename,'.'));
+		} else {
+			// get foldername if selected
+			$foldername = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$galleryID' ");
+		}
+
+		if ( empty($foldername) ) {
+			nggGallery::show_error( __('Could not get a vaild foldername', 'nggallery') );
+			return false;
+		}
+
+		// set complete folder path
+		$newfolder = WINABSPATH . $defaultpath . $foldername;
 
 		if (!is_dir($newfolder)) {
 			// create new directories
@@ -496,7 +504,7 @@ class nggAdmin{
 				return false;
 			}
 			if (!wp_mkdir_p ($newfolder.'/thumbs')) {
-				nggGallery::show_error(__('Unable to create directory ', 'nggallery').$newfolder.'/thumbs !');
+				nggGallery::show_error(__('Unable to create directory ', 'nggallery') . $newfolder . '/thumbs !');
 				return false;
 			}
 		} 
@@ -509,12 +517,11 @@ class nggAdmin{
 			$message = __('Zip-File successfully unpacked','nggallery').'<br />';		
 
 			// parse now the folder and add to database
-			$message .= nggAdmin::import_gallery($defaultpath.$foldername);
-	
+			$message .= nggAdmin::import_gallery( $defaultpath . $foldername);
 			nggGallery::show_message($message);
 		}
 		
-		return;
+		return true;
 	}
 
 	// **************************************************************
