@@ -228,7 +228,10 @@ function nggCreateGallery($picturelist, $galleryID = false, $mode = '') {
 
 	// create the output
 	$out = nggGallery::capture ( $filename, array ('gallery' => $gallery, 'images' => $picturelist, 'pagination' => $navigation) );
-
+	
+	// Apply a filter after the output
+	$out = apply_filters('ngg_gallery_output', $out, $picturelist);
+	
 	return $out;
 }
 

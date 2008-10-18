@@ -20,11 +20,10 @@ class NextGEN_shortcodes {
 		add_shortcode( 'imagebrowser', array(&$this, 'show_imagebrowser' ) );
 		add_shortcode( 'slideshow', array(&$this, 'show_slideshow' ) );
 		add_shortcode( 'nggtags', array(&$this, 'show_tags' ) );
-		
+		add_shortcode( 'thumb', array(&$this, 'show_thumbs' ));
+				
 		// Add shortcodes for thumbnail and images
-		require_once(dirname (__FILE__) . '/ngg-shortcode-thumb.php');
 		require_once(dirname (__FILE__) . '/ngg-shortcode-picture.php');
-		add_shortcode( 'thumb', 'ngg_do_thumb_shortcode');
 		add_shortcode( 'picture', 'ngg_do_picture_shortcode');
 				
 	}
@@ -220,6 +219,38 @@ class NextGEN_shortcodes {
 			$out = nggShowAlbumTags($album);
 		else
 			$out = nggShowGalleryTags($gallery);
+		
+		return $out;
+	}
+
+	/**
+	 * Function to show a thumbnail or a set of thumbnails with shortcode of type:
+	 * [thumb id="1,2,4,5,..." mode="ntemplatename" /]
+	 * where 
+	 * - id is one or more picture ids
+	 * - mode is  a name for a gallery template
+	 * @param array $atts
+	 * @return the_content
+	 */
+	function show_thumbs( $atts ) {
+	
+		extract(shortcode_atts(array(
+			'id' 		=> '',
+			'mode' 		=> ''
+		), $atts));
+		
+		// make an array out of the ids
+		$pids = explode( ',', $id );
+		
+		// Some error checks
+		if ( count($pids) == 0 )
+			return __('[Pictures not found]','nggallery');
+		
+		$picturelist = nggdb::find_images_in_list( $pids );
+		
+		// show gallery
+		if ( is_array($picturelist) )
+			$out = nggCreateGallery($picturelist, false, $mode);
 		
 		return $out;
 	}
