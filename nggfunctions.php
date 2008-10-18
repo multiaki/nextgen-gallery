@@ -72,10 +72,10 @@ function nggShowSlideshow($galleryID, $irWidth, $irHeight) {
  * nggShowGallery()
  * 
  * @param int $galleryID
- * @param string $mode (optional) name for a template file, look for gallery-$mode
+ * @param string $template (optional) name for a template file, look for gallery-$template
  * @return the content
  */
-function nggShowGallery( $galleryID, $mode = '' ) {
+function nggShowGallery( $galleryID, $template = '' ) {
 	
 	global $nggRewrite;
 
@@ -127,7 +127,7 @@ function nggShowGallery( $galleryID, $mode = '' ) {
 
 	// get all picture with this galleryid
 	if ( is_array($picturelist) )
-		$out = nggCreateGallery($picturelist, $galleryID, $mode);
+		$out = nggCreateGallery($picturelist, $galleryID, $template);
 	
 	$out = apply_filters('ngg_show_gallery_content', $out, intval($galleryID));
 	return $out;
@@ -138,10 +138,10 @@ function nggShowGallery( $galleryID, $mode = '' ) {
  * 
  * @param array $picturelist
  * @param bool $galleryID, if you supply a gallery ID, you can add a slideshow link
- * @param string $mode (optional) name for a template file, look for gallery-$mode
+ * @param string $template (optional) name for a template file, look for gallery-$template
  * @return the content
  */
-function nggCreateGallery($picturelist, $galleryID = false, $mode = '') {
+function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
     global $nggRewrite;
     
     $ngg_options = nggGallery::get_option('ngg_options');
@@ -223,8 +223,8 @@ function nggCreateGallery($picturelist, $galleryID = false, $mode = '') {
 		$picturelist[$key]->thumbcode  = $thumbcode;
 	}
 
-	// look for gallery-$mode.php or pure gallery.php
-	$filename = ( empty($mode) ) ? 'gallery' : 'gallery-' . $mode;
+	// look for gallery-$template.php or pure gallery.php
+	$filename = ( empty($template) ) ? 'gallery' : 'gallery-' . $template;
 
 	// create the output
 	$out = nggGallery::capture ( $filename, array ('gallery' => $gallery, 'images' => $picturelist, 'pagination' => $navigation) );
@@ -239,11 +239,11 @@ function nggCreateGallery($picturelist, $galleryID = false, $mode = '') {
  * nggShowAlbum()
  * 
  * @param int $albumID
- * @param string $mode
+ * @param string $template
  * @param string $sortorder
  * @return the content
  */
-function nggShowAlbum($albumID, $mode = 'extend') {
+function nggShowAlbum($albumID, $template = 'extend') {
 	
 	// $_GET from wp_query
 	$gallery  = get_query_var('gallery');
@@ -270,7 +270,7 @@ function nggShowAlbum($albumID, $mode = 'extend') {
 	$mode = ltrim($mode, ',');
 	
  	if ( is_array($album->gallery_ids) )
- 		$out = nggCreateAlbum( $album->gallery_ids, $mode, $album->id );
+ 		$out = nggCreateAlbum( $album->gallery_ids, $template, $album->id );
 	
 	$out = apply_filters( 'ngg_show_album_content', $out, intval( $album->id ) );
 
@@ -281,11 +281,11 @@ function nggShowAlbum($albumID, $mode = 'extend') {
  * nggCreateAlbum()
  * 
  * @param int $galleriesID
- * @param string $mode
+ * @param string $template
  * @param integer $albumID
  * @return the content
  */
-function nggCreateAlbum( $galleriesID, $mode = 'extend', $albumID = 0) {
+function nggCreateAlbum( $galleriesID, $template = 'extend', $albumID = 0) {
 	// create a gallery overview div
 	
 	global $wpdb, $nggRewrite;
@@ -343,8 +343,8 @@ function nggCreateAlbum( $galleriesID, $mode = 'extend', $albumID = 0) {
 		$galleries[$key]->galdesc = html_entity_decode ( stripslashes($galleries[$key]->galdesc) ) ;
 	}
 
-	// if sombody didn't enter any mode , take the extend version
-	$filename = ( empty($mode) ) ? 'album-extend' : 'album-' . $mode ;
+	// if sombody didn't enter any template , take the extend version
+	$filename = ( empty($template) ) ? 'album-extend' : 'album-' . $template ;
 
 	// create the output
 	$out = nggGallery::capture ( $filename, array ('albumID' => $albumID, 'galleries' => $galleries, 'mode' => $mode) );
@@ -357,10 +357,10 @@ function nggCreateAlbum( $galleriesID, $mode = 'extend', $albumID = 0) {
  * nggShowImageBrowser()
  * 
  * @param int|string $galleryID or gallery name
- * @param string $mode (optional) name for a template file, look for imagebrowser-$mode
+ * @param string $template (optional) name for a template file, look for imagebrowser-$template
  * @return the content
  */
-function nggShowImageBrowser($galleryID, $mode = '') {
+function nggShowImageBrowser($galleryID, $template = '') {
 	
 	global $wpdb;
 	
@@ -374,7 +374,7 @@ function nggShowImageBrowser($galleryID, $mode = '') {
 	$picturelist = nggdb::get_ids_from_gallery($galleryID, $ngg->options['galSort'], $ngg->options['galSortDir']);
   	
 	if ( is_array($picturelist) )
-		$out = nggCreateImageBrowser($picturelist, $mode);
+		$out = nggCreateImageBrowser($picturelist, $template);
 	else
 		$out = __('[Gallery not found]','nggallery');
 	
@@ -388,10 +388,10 @@ function nggShowImageBrowser($galleryID, $mode = '') {
  * nggCreateImageBrowser()
  * 
  * @param array $picarray with pid
- * @param string $mode (optional) name for a template file, look for imagebrowser-$mode
+ * @param string $template (optional) name for a template file, look for imagebrowser-$template
  * @return the content
  */
-function nggCreateImageBrowser($picarray, $mode = '') {
+function nggCreateImageBrowser($picarray, $template = '') {
 
 	global $nggRewrite;
 	
@@ -444,8 +444,8 @@ function nggCreateImageBrowser($picarray, $mode = '') {
 	$iptc = $meta->get_IPTC();
 	$xmp  = $meta->get_XMP();
 		
-	// look for gallery-$mode.php or pure gallery.php
-	$filename = ( empty($mode) ) ? 'imagebrowser' : 'imagebrowser-' . $mode;
+	// look for imagebrowser-$template.php or pure imagebrowser.php
+	$filename = ( empty($template) ) ? 'imagebrowser' : 'imagebrowser-' . $template;
 
 	// create the output
 	$out = nggGallery::capture ( $filename , array ('image' => $picture , 'meta' => $meta, 'exif' => $exif, 'iptc' => $iptc, 'xmp' => $xmp) );
@@ -462,9 +462,11 @@ function nggCreateImageBrowser($picarray, $mode = '') {
  * @param int $height, height of the image
  * @param string $mode could be none, watermark, web20
  * @param string $float could be none, left, right
+ * @param string $template (optional) name for a template file, look for singlepic-$template
+ * @param string $caption additional caption text
  * @return the content
  */
-function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $float = '') {
+function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $float = '' , $template = '', $caption = '') {
 	global $post;
 	
 	$ngg_options = nggGallery::get_option('ngg_options');
@@ -514,15 +516,19 @@ function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $fl
 	$picture->thumbcode = $picture->get_thumbcode( 'singlepic' . $imageID);
 	$picture->height = (int) $height;
 	$picture->width = (int) $width;
-	
+	$picture->caption = $caption;
+
 	// let's get the meta data
 	$meta = new nggMeta($picture->imagePath);
 	$exif = $meta->get_EXIF();
 	$iptc = $meta->get_IPTC();
 	$xmp  = $meta->get_XMP();
 		
+	// look for singlepic-$template.php or pure singlepic.php
+	$filename = ( empty($template) ) ? 'singlepic' : 'singlepic-' . $template;
+
 	// create the output
-	$out = nggGallery::capture ('singlepic', array ('image' => $picture , 'meta' => $meta, 'exif' => $exif, 'iptc' => $iptc, 'xmp' => $xmp) );
+	$out = nggGallery::capture ( $filename, array ('image' => $picture , 'meta' => $meta, 'exif' => $exif, 'iptc' => $iptc, 'xmp' => $xmp) );
 
 	$out = apply_filters('ngg_show_singlepic_content', $out, $picture );
 	

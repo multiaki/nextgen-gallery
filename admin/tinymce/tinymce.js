@@ -41,7 +41,7 @@ function insertNGGLink() {
 		var albumid = document.getElementById('albumtag').value;
 		var showtype = getCheckedValue(document.getElementsByName('albumtype'));
 		if (albumid != 0 )
-			tagtext = "[album id=" + albumid + " mode=" + showtype + "]";
+			tagtext = "[album id=" + albumid + " template=" + showtype + "]";
 		else
 			tinyMCEPopup.close();
 	}

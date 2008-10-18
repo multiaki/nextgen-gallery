@@ -2,6 +2,7 @@
 /**
  * @author Alex Rabe, Vincent Prat 
  * @copyright 2008
+ * @since 1.0.0
  * @description Use WordPress Shortcode API for more features
  * @Docs http://codex.wordpress.org/Shortcode_API
  */
@@ -21,11 +22,6 @@ class NextGEN_shortcodes {
 		add_shortcode( 'slideshow', array(&$this, 'show_slideshow' ) );
 		add_shortcode( 'nggtags', array(&$this, 'show_tags' ) );
 		add_shortcode( 'thumb', array(&$this, 'show_thumbs' ));
-				
-		// Add shortcodes for thumbnail and images
-		require_once(dirname (__FILE__) . '/ngg-shortcode-picture.php');
-		add_shortcode( 'picture', 'ngg_do_picture_shortcode');
-				
 	}
 
 	 /**
@@ -63,7 +59,7 @@ class NextGEN_shortcodes {
 				foreach ($matches as $match) {
 					// remove the comma
 					$match[2] = ltrim($match[2],',');
-					$replace = "[album id=\"{$match[1]}\" mode=\"{$match[2]}\"]";
+					$replace = "[album id=\"{$match[1]}\" template=\"{$match[2]}\"]";
 					$content = str_replace ($match[0], $replace, $content);
 				}
 			}
@@ -134,17 +130,40 @@ class NextGEN_shortcodes {
 		return $content;
 	}
 	
-	function show_singlepic( $atts ) {
+	/**
+	 * Function to show a single picture:
+	 * 
+	 *     [singlepic id="10" float="none|left|right" width="" height="" mode="none|watermark|web20" template="filename" /]
+	 *
+	 * where
+	 *  - id is one picture id
+	 *  - float is the CSS float property to apply to the thumbnail
+	 *  - width is width of the single picture you want to show (original width if this parameter is missing)
+	 *  - height is height of the single picture you want to show (original height if this parameter is missing)
+	 *  - mode is one of none, watermark or web20 (transformation applied to the picture)
+	 *  - template is a name for a gallery template, which is located in themefolder/nggallery or plugins/nextgen-gallery/view
+	 * 
+	 * If the tag contains some text, this will be inserted as an additional caption to the picture too. Example:
+	 * 		[singlepic id="10"]This is an additional caption[/singlepic]
+	 * This tag will show a picture with under it two HTML span elements containing respectively the alttext of the picture 
+	 * and the additional caption specified in the tag. 
+	 * 
+	 * @param array $atts
+	 * @param string $caption text
+	 * @return the content
+	 */
+	function show_singlepic( $atts, $content = '' ) {
 	
 		extract(shortcode_atts(array(
 			'id' 		=> 0,
 			'w'		 	=> '',
 			'h'		 	=> '',
 			'mode'	 	=> '',
-			'float'	 	=> ''
+			'float'	 	=> '',
+			'template' 	=> ''
 		), $atts ));
 		
-		$out = nggSinglePicture($id, $w, $h, $mode, $float);
+		$out = nggSinglePicture($id, $w, $h, $mode, $float, $template, $content);
 			
 		return $out;
 	}
@@ -153,10 +172,10 @@ class NextGEN_shortcodes {
 	
 		extract(shortcode_atts(array(
 			'id' 		=> 0,
-			'mode'		=> 'extend'	
+			'template'	=> 'extend'	
 		), $atts ));
 		
-		$out = nggShowAlbum($id, $mode, $albumSortOrder);
+		$out = nggShowAlbum($id, $template, $albumSortOrder);
 			
 		return $out;
 	}
@@ -165,10 +184,10 @@ class NextGEN_shortcodes {
 	
 		extract(shortcode_atts(array(
 			'id' 		=> 0,
-			'mode'		=> ''	
+			'template'	=> ''	
 		), $atts ));
 		
-		$out = nggShowGallery( $id, $mode);
+		$out = nggShowGallery( $id, $template);
 			
 		return $out;
 	}
@@ -179,10 +198,10 @@ class NextGEN_shortcodes {
 	
 		extract(shortcode_atts(array(
 			'id' 		=> 0,
-			'mode'		=> ''	
+			'template'	=> ''	
 		), $atts ));
 
-		$out = nggShowImageBrowser($id, $mode);
+		$out = nggShowImageBrowser($id, $template);
 			
 		return $out;
 	}
@@ -225,10 +244,12 @@ class NextGEN_shortcodes {
 
 	/**
 	 * Function to show a thumbnail or a set of thumbnails with shortcode of type:
-	 * [thumb id="1,2,4,5,..." mode="ntemplatename" /]
+	 * 
+	 * [thumb id="1,2,4,5,..." template="filename" /]
 	 * where 
 	 * - id is one or more picture ids
-	 * - mode is  a name for a gallery template
+	 * - template is a name for a gallery template, which is located in themefolder/nggallery or plugins/nextgen-gallery/view
+	 * 
 	 * @param array $atts
 	 * @return the_content
 	 */
@@ -236,7 +257,7 @@ class NextGEN_shortcodes {
 	
 		extract(shortcode_atts(array(
 			'id' 		=> '',
-			'mode' 		=> ''
+			'template' 	=> ''
 		), $atts));
 		
 		// make an array out of the ids
@@ -250,7 +271,7 @@ class NextGEN_shortcodes {
 		
 		// show gallery
 		if ( is_array($picturelist) )
-			$out = nggCreateGallery($picturelist, false, $mode);
+			$out = nggCreateGallery($picturelist, false, $template);
 		
 		return $out;
 	}

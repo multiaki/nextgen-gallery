@@ -19,5 +19,5 @@ Follow variables are useable :
 <a href="<?php echo $image->imageURL ?>" title="<?php echo $image->description ?>" <?php echo $image->thumbcode ?> >
 	<img class="<?php echo $image->classname ?>" src="<?php echo $image->thumbnailURL ?>" alt="<?php echo $image->alttext ?>" title="<?php echo $image->alttext ?>" width="<?php echo $image->width ?>" height="<?php echo $image->height ?>" />
 </a>
-
+<?php if (!empty ($image->caption)) : ?><span><?php echo $image->caption ?></span><?php endif; ?>
 <?php endif; ?>
