@@ -80,6 +80,13 @@ div.dashboard-widget-content .settings li {
 	font-weight: bold;
 }
 
+/* SETTING FOR FLASH UPLOAD BUTTON */
+.swfupload {
+	position:absolute;
+	z-index:1;
+	vertical-align:top;
+}
+
 /* SETTINGS FOR THE OPTIONS TABLE */ 
 .form-table th {
 	width:33%;

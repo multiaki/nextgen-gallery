@@ -89,7 +89,12 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			ngg_swf_upload = new SWFUpload({
 				// Backend settings
 				upload_url : "<?php echo $swf_upload_link; ?>",
-				flash_url : "<?php echo NGGALLERY_URLPATH; ?>admin/js/swfupload_f9.swf",
+				flash_url : "<?php echo NGGALLERY_URLPATH; ?>admin/js/swfupload.swf",
+				
+				// Button Settings
+				button_placeholder_id : "spanButtonPlaceholder",
+				button_width: 272,
+				button_height: 27,
 								
 				// File Upload Settings
 				file_size_limit : "<?php echo wp_max_upload_size(); ?>b",
@@ -225,7 +230,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				<table class="form-table"> 
 				<tr valign="top"> 
 					<th scope="row"><?php _e('Import from Server path:', 'nggallery') ;?></th> 
-					<td><input type="text" size="35" name="galleryfolder" value="<?php echo$defaultpath; ?>" /><br />
+					<td><input type="text" size="35" name="galleryfolder" value="<?php echo $defaultpath; ?>" /><br />
 					<?php _e('Import a folder with all images.', 'nggallery') ;?>
 					<?php if (SAFE_MODE) {?><br /><?php _e(' Please note : For safe-mode = ON you need to add the subfolder thumbs manually', 'nggallery') ;?><?php }; ?></td> 
 				</tr>
@@ -242,7 +247,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				<table class="form-table"> 
 				<tr valign="top"> 
 					<th scope="row"><?php _e('Upload image', 'nggallery') ;?></th>
-					<td><input type="file" name="imagefiles" id="imagefiles" size="35" class="imagefiles"/></td>
+					<td><span id='spanButtonPlaceholder'></span><input type="file" name="imagefiles" id="imagefiles" size="35" class="imagefiles"/></td>
 				</tr> 
 				<tr valign="top"> 
 					<th scope="row"><?php _e('in to', 'nggallery') ;?></th> 
