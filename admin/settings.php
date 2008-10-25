@@ -108,21 +108,13 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<h2><?php _e('General Options','nggallery'); ?></h2>
 			<form name="generaloptions" method="post">
 			<?php wp_nonce_field('ngg_settings') ?>
-			<input type="hidden" name="page_options" value="gallerypath,scanfolder,deleteImg,usePicLens,usePermalinks,graphicLibrary,activateTags,appendType,maxImages" />
+			<input type="hidden" name="page_options" value="gallerypath,deleteImg,usePicLens,usePermalinks,graphicLibrary,imageMagickDir,activateTags,appendType,maxImages" />
 				<table class="form-table">
 					<tr valign="top">
 						<th align="left"><?php _e('Gallery path','nggallery') ?></th>
 						<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="text" size="35" name="gallerypath" value="<?php echo $ngg->options['gallerypath']; ?>" /><br />
 						<?php _e('This is the default path for all galleries','nggallery') ?></td>
 					</tr>
-					<!--TODO:  Later... -->
-					<!--
-					<tr valign="top">
-						<th align="left"><?php //_e('Scan folders during runtime','nggallery') ?></th>
-						<td><input type="checkbox" name="scanfolder" value="1" <?php //checked('1', $ngg->options[scanfolder]); ?> /><br />
-						<?php //_e('Search automatic in the folders for new images (not working)','nggallery') ?></td>
-					</tr>
-					-->
 					<tr valign="top">
 						<th align="left"><?php _e('Delete image files','nggallery') ?></th>
 						<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="checkbox" name="deleteImg" value="1" <?php checked('1', $ngg->options['deleteImg']); ?> /><br />
@@ -136,7 +128,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<tr>
 						<th valign="top"><?php _e('Select graphic library','nggallery') ?>:</th>
 						<td><label><input name="graphicLibrary" type="radio" value="gd" <?php checked('gd', $ngg->options['graphicLibrary']); ?> /> <?php _e('GD Library', 'nggallery') ;?></label><br />
-						<label><input name="graphicLibrary" type="radio" value="im" <?php checked('im', $ngg->options['graphicLibrary']); ?> /> <?php _e('ImageMagick', 'nggallery') ;?></label>
+						<label><input name="graphicLibrary" type="radio" value="im" <?php checked('im', $ngg->options['graphicLibrary']); ?> /> <?php _e('ImageMagick. Path to the library :', 'nggallery') ;?>&nbsp;
+						<input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="text" size="35" name="imageMagickDir" value="<?php echo $ngg->options['imageMagickDir']; ?>" /></label>
 						</td>
 					</tr>
 					<tr>

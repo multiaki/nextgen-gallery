@@ -74,6 +74,11 @@ var $watermarkImgPath;
 */
 var $watermarkText;
 /**
+* Path to ImageMagick convert
+* @var string
+*/
+var $imageMagickDir;
+/**
 * String to execute ImageMagick convert.
 * @var string
 */
@@ -95,60 +100,114 @@ var $imageMagickBefore;
    * init of class: init of variables, detect needed memory (gd), image format (gd), detect image size (GetImageSize is general PHP, not GD), Image Meta?
    */
 
-	function ngg_Thumbnail($fileName,$no_ErrorImage = false) {
-		//make sure ImageMagick is installed
-		exec("convert -version", $magickv);
-      $helper = preg_match('/Version: ImageMagick ([0-9])/', $magickv[0], $magickversion);
-      if (!$magickversion[0]>"5") {
-      	echo 'You do not have ImageMagick installed.' . "\n";
-      	exit;
-      }
+	function ngg_Thumbnail($fileName, $no_ErrorImage = false) {
+		
+		//initialize variables
+      	$this->errmsg				= '';
+      	$this->error				= false;
+      	$this->currentDimensions	= array();
+      	$this->newDimensions		= array();
+      	$this->fileName				= $fileName;
+      	$this->imageMeta			= array();
+      	$this->percent				= 100;
+      	$this->maxWidth				= 0;
+      	$this->maxHeight			= 0;
+      	$this->watermarkImgPath		= '';
+      	$this->watermarkText		= '';
+		$this->imageMagickExec		= '';
+      	$this->imageMagickComp		= '';
+      	$this->imageMagickBefore	= '';
 
-    	//initialize variables
-      $this->errmsg              = '';
-      $this->error               = false;
-      $this->currentDimensions   = array();
-      $this->newDimensions       = array();
-      $this->fileName            = $fileName;
-      $this->imageMeta			  	 = array();
-      $this->percent             = 100;
-      $this->maxWidth            = 0;
-      $this->maxHeight           = 0;
-      $this->watermarkImgPath		 = '';
-      $this->watermarkText		   = '';
-      $this->imageMagickExec		 = '';
-      $this->imageMagickComp		 = '';
-      $this->imageMagickBefore	 = '';
+		//make sure ImageMagick is installed
+		$this->checkVersion();
       
-      
-        //check to see if file exists
-      if(!file_exists($this->fileName)) {
-      	$this->errmsg = 'File not found';
-         $this->error = true;
-      }
-      //check to see if file is readable
-      elseif(!is_readable($this->fileName)) {
-         $this->errmsg = 'File is not readable';
-         $this->error = true;
-      }
+		//check to see if file exists
+		if(!file_exists($this->fileName)) {
+			$this->errmsg = 'File not found';
+			$this->error = true;
+		}
+		//check to see if file is readable
+		elseif(!is_readable($this->fileName)) {
+			$this->errmsg = 'File is not readable';
+			$this->error = true;
+		}
 
 		if($this->error == false) { 
-	    $size = GetImageSize($this->fileName);
-      $this->currentDimensions = array('width'=>$size[0],'height'=>$size[1]);
-	  }
-    if($this->error == true) {
-      //if(!$no_ErrorImage)
-      	//$this->showErrorImage();
-      return;
-    }
+	    	$size = GetImageSize($this->fileName);
+      		$this->currentDimensions = array('width'=>$size[0],'height'=>$size[1]);
+	  	}
+	    
+		if($this->error == true) {
+	      //if(!$no_ErrorImage)
+	      	//$this->showErrorImage();
+	    	return;
+	    }
+	}
+
+	function checkVersion() {
+		
+		// very often exec()or passthru() is disabled. No chance for Imagick
+		if ( ini_get('disable_functions') ) {
+			$not_allowed = ini_get('disable_functions');
+			if ( stristr($not_allowed, 'exec') || stristr($not_allowed, 'passthru') ) {
+				$this->errmsg = 'exec() or passthru() is not allowed. Could not execute Imagick';
+				$this->error = true;
+				return false;
+			}
+		}
+		
+		// get the path to imageMagick
+		$ngg_options = get_option('ngg_options');
+		$this->imageMagickDir =  $ngg_options['imageMagickDir'];
+		
+		str_replace( "\\", "/", $this->imageMagickDir );
+		
+		// Try to get the ImageMagick version
+		$magickv = $this->exec('convert', '-version');
+
+		if ( empty($magickv) ) {
+			$this->errmsg = 'Could not execute ImageMagick. Check path ';
+			$this->error = true;
+			return false;
+		}
+		
+		// We need as least version 6 or higher	
+		$helper = preg_match('/Version: ImageMagick ([0-9])/', $magickv[0], $magickversion);
+		if ( !$magickversion[0] > '5' ) {
+			$this->errmsg = 'Require ImageMagick Version 6 or higher';
+			$this->error = true;
+			return false;
+		}
+
+      	return true;
+	}
+	
+	/**
+     * Execute ImageMagick/GraphicsMagick commands
+     *
+     * @param string $cmd an ImageMagick command (eg. "convert")
+     * @param string $args the arguments which should be passed
+     * @param bool §passthru(optional) output the result to the webserver insted
+     * @return void
+     */
+	function exec( $cmd, $args, $passthru = false) {
+		
+		$args = escapeshellarg ($args );
+		
+		if ( !$passthru ) {
+			exec( escapeshellcmd ( "{$this->imageMagickDir}/{$cmd} {$args}" ) , $result );
+			return $result;
+		}
+		
+		passthru( escapeshellcmd ( "{$this->imageMagickDir}/{$cmd} {$args}" ) );
+		//print "{$this->imageMagickDir}/{$cmd} {$args}";
 	}
 
     /**
      * Must be called to free up allocated memory after all manipulations are done
      */
-
     function destruct() {
-     //not needed
+     	//not needed
 		return;
     }
     
@@ -174,7 +233,7 @@ var $imageMagickBefore;
      * @param int $height
      * @return array
      */
-    function calcWidth($width,$height) {
+    function calcWidth($width, $height) {
         $newWp = (100 * $this->maxWidth) / $width;
         $newHeight = ($height * $newWp) / 100;
         return array('newWidth'=>intval($this->maxWidth),'newHeight'=>intval($newHeight));
@@ -186,7 +245,7 @@ var $imageMagickBefore;
      * @param int $height
      * @return array
      */
-    function calcHeight($width,$height) {
+    function calcHeight($width, $height) {
         $newHp = (100 * $this->maxHeight) / $height;
         $newWidth = ($width * $newHp) / 100;
         return array('newWidth'=>intval($newWidth),'newHeight'=>intval($this->maxHeight));
@@ -198,7 +257,7 @@ var $imageMagickBefore;
      * @param int $height
      * @return array
      */
-    function calcPercent($width,$height) {
+    function calcPercent($width, $height) {
         $newWidth = ($width * $this->percent) / 100;
         $newHeight = ($height * $this->percent) / 100;
         return array('newWidth'=>intval($newWidth),'newHeight'=>intval($newHeight));
@@ -247,14 +306,6 @@ var $imageMagickBefore;
         }
     }
 
-/* here start the rewritten functions for ImageMagick
-*******************************************************************************
-* the functions create a string to be executed when the save command is executed
-* 'show' function: streaming possible with Imagemagick and passthru php-command
-* 
-*******************************************************************************
-*/
-
     /**
      * Resizes image to maxWidth x maxHeight
      *
@@ -264,9 +315,9 @@ var $imageMagickBefore;
 	  
 	function resize($maxWidth = 0, $maxHeight = 0, $resampleMode = 3) {
 		$this->maxWidth = $maxWidth;
-    $this->maxHeight = $maxHeight;
+    	$this->maxHeight = $maxHeight;
 
-    $this->calcImageSize($this->currentDimensions['width'],$this->currentDimensions['height']);
+    	$this->calcImageSize($this->currentDimensions['width'],$this->currentDimensions['height']);
 
 		//string to resize the picture to $this->newDimensions['newWidth'],$this->newDimensions['newHeight']
 		//should result in: -thumbnail $this->newDimensions['newWidth']x$this->newDimensions['newHeight']
@@ -278,23 +329,23 @@ var $imageMagickBefore;
 		
 	}
 	
-	    /**
+	/**
      * Rotates image either 90 degrees clockwise or counter-clockwise
      *
      * @param string $direction
      */
-  function rotateImage($direction = 'CW') {
-  	if($direction == 'CW') {
-   		$this->imageMagickExec .= " -rotate -90 ";
-   	}
-   	else {
-   		$this->imageMagickExec .= " -rotate 90 ";
-   	}
-   	$newWidth = $this->currentDimensions['height'];
-   	$newHeight = $this->currentDimensions['width'];
+	function rotateImage($direction = 'CW') {
+	  	if($direction == 'CW') {
+	   		$this->imageMagickExec .= " -rotate -90 ";
+	   	}
+	   	else {
+	   		$this->imageMagickExec .= " -rotate 90 ";
+	   	}
+	   	$newWidth = $this->currentDimensions['height'];
+	   	$newHeight = $this->currentDimensions['width'];
 		$this->currentDimensions['width'] = $newWidth;
 		$this->currentDimensions['height'] = $newHeight;
-  }
+	}
 
    /**
 	 * Crops the image from calculated center in a square of $cropSize pixels
@@ -352,14 +403,15 @@ var $imageMagickBefore;
 	 * @param bool $border
 	 * @param string $borderColor
 	 */
-	function createReflection($percent,$reflection,$white,$border = true,$borderColor = '#a4a4a4') {
-    $width = $this->currentDimensions['width'];
-    $height = $this->currentDimensions['height'];
+	function createReflection($percent, $reflection, $white, $border = true, $borderColor = '#a4a4a4') {
 
-    $reflectionHeight = intval($height * ($reflection / 100));
-    $newHeight = $height + $reflectionHeight;
-        //$reflectedPart = $height * ((100-$percent) / 100);
-    $reflectedsize = intval($height * ((100 - (100 - $percent) + $reflection) / 100)); 
+	    $width = $this->currentDimensions['width'];
+	    $height = $this->currentDimensions['height'];
+	
+	    $reflectionHeight = intval($height * ($reflection / 100));
+	    $newHeight = $height + $reflectionHeight;
+	        //$reflectedPart = $height * ((100-$percent) / 100);
+	    $reflectedsize = intval($height * ((100 - (100 - $percent) + $reflection) / 100)); 
 			
 		$this->imageMagickBefore = "-size $width" . "x" ."$newHeight xc:white ";
 			
@@ -367,6 +419,7 @@ var $imageMagickBefore;
 			$this->imageMagickBefore .= " \( ";	 
 			$this->imageMagickExec = " -bordercolor '$borderColor' -border 1 \) ";
 		}
+
 		$this->imageMagickExec .= " -geometry +0+0 -composite ";
 		$gradientWhite = 100-$white;
 		$this->imageMagickExec .= " \( '$this->fileName' -flip -resize $width"."x"."$reflectedsize\! \( -size $width"."x"."$reflectionHeight gradient: -fill black -colorize $gradientWhite \) +matte -compose copy_opacity -composite \) -geometry +0+$height -composite ";
@@ -381,12 +434,12 @@ var $imageMagickBefore;
 	 * @param int $wmSize
  	 * @param int $wmOpaque
      */
-	function watermarkCreateText($color = '000000',$wmFont, $wmSize = 10, $wmOpaque = 90 ){
+	function watermarkCreateText($color = '000000', $wmFont, $wmSize = 10, $wmOpaque = 90 ){
 		//create a watermark.png image with the requested text.
 		
 		// set font path
-		$wmFontPath = NGGALLERY_ABSPATH."fonts/".$wmFont;
-		if ( !is_readable($wmFontPath))
+		$wmFontPath = NGGALLERY_ABSPATH . 'fonts/' . $wmFont;
+		if ( !is_readable($wmFontPath) )
 			return;	
 			
 		/*
@@ -397,14 +450,15 @@ var $imageMagickBefore;
 		$exec = "composite -compose CopyOpacity  stamp_mask.png  stamp_fgnd.png  watermark.png";*/
 
 		//convert the opacity between FF or 00; 100->0 and 0->FF (256)
-		$opacity = dechex(round((100-$wmOpaque)*256/100));
+		$opacity = dechex( round( (100-$wmOpaque) * 256/100 ) );
 		
-		$exec = "convert -size 800x500 xc:none -font $wmFontPath -pointsize $wmSize -gravity center -fill '#$color$opacity' -annotate 0 '$this->watermarkText' watermark.png";
-		$make_magick = system($exec);
-		$exec = "mogrify -trim +repage watermark.png";		 
-		$make_magick = system($exec);
+		$cmd = "-size 800x500 xc:none -font {$wmFontPath} -pointsize {$wmSize} -gravity center -fill '#{$color}{$opacity}' -annotate 0 '{$this->watermarkText}' watermark.png";
+		$this->exec('convert', $cmd);
+		
+		$cmd = "-trim +repage watermark.png";		 
+		$this->exec('mogrify', $cmd);
 	
-		$this->watermarkImgPath = NGGALLERY_ABSPATH."watermark.png";
+		$this->watermarkImgPath = NGGALLERY_ABSPATH . 'watermark.png';
 
 		return;		
 	}
@@ -422,7 +476,7 @@ var $imageMagickBefore;
 			return;	
 
 		$size = GetImageSize($this->watermarkImgPath);
-    $watermarkDimensions = array('width'=>$size[0],'height'=>$size[1]);
+    	$watermarkDimensions = array('width'=>$size[0],'height'=>$size[1]);
 		
 		$sourcefile_width=$this->currentDimensions['width'];
 		$sourcefile_height=$this->currentDimensions['height'];
@@ -430,13 +484,13 @@ var $imageMagickBefore;
 		$watermarkfile_width=$watermarkDimensions['width'];
 		$watermarkfile_height=$watermarkDimensions['height'];
 
-		switch(substr($relPOS, 0, 3)){
+		switch( substr($relPOS, 0, 3) ){
 			case 'top': $dest_y = 0 + $yPOS; break;
 			case 'mid': $dest_y = ($sourcefile_height / 2) - ($watermarkfile_height / 2); break;
 			case 'bot': $dest_y = $sourcefile_height - $watermarkfile_height - $yPOS; break;
 			default   : $dest_y = 0; break;
 		}
-		switch(substr($relPOS, 3)){
+		switch( substr($relPOS, 3) ){
 			case 'Left'	:	$dest_x = 0 + $xPOS; break;
 			case 'Center':	$dest_x = ($sourcefile_width / 2) - ($watermarkfile_width / 2); break;
 			case 'Right':	$dest_x = $sourcefile_width - $watermarkfile_width - $xPOS; break;
@@ -456,8 +510,6 @@ var $imageMagickBefore;
 		$this->imageMagickComp .=  " -geometry $dest_x$dest_y '$this->watermarkImgPath' -composite";
 		//" -dissolve 80% -geometry +$dest_x+$dest_y $this->watermarkImgPath";
 	}
-	
-			
     
 	/**
 	 * Saves image as $name (can include file path), with quality of # percent if file is a jpeg
@@ -466,7 +518,7 @@ var $imageMagickBefore;
 	 * @param int $quality
 	 * @return bool errorstate
 	 */
-	function save($name,$quality=85) {
+	function save( $name, $quality = 85 ) {
 	    $this->show($quality,$name);
 	    if ($this->error == true) {
 	    	$this->errmsg = 'Create Image failed. Check safe mode settings';
@@ -481,21 +533,17 @@ var $imageMagickBefore;
 	 * @param int $quality
 	 * @param string $name
 	 */
-	function show($quality=85,$name = '') {
-		//execute the ImageMagick command and stream it when name is empty.	
-	  	   
-		if($name != '') {
-				$execString = "convert $this->imageMagickBefore '$this->fileName' $this->imageMagickExec $this->imageMagickComp -quality $quality '$name'";
-				//print $execString;
-				$make_magick = system($execString);
-	  } else {
+	function show( $quality = 85, $name = '') {
+		//execute the ImageMagick command and stream it when name is empty or save it.
+		if( $name != '' ) {
+			$args = "{$this->imageMagickBefore} '$this->fileName' $this->imageMagickExec $this->imageMagickComp -quality $quality '$name'";
+			$this->exec('convert', $args);
+	  	} else {
 	  	//return a raw image stream
-				$execString = "convert $this->imageMagickBefore '$this->fileName' $this->imageMagickExec $this->imageMagickComp -quality $quality JPG:-"; 
-				//print $execString;
-				header('Content-type: image/jpeg');
-				passthru($execString);
+			$args = "{$this->imageMagickBefore} '$this->fileName' $this->imageMagickExec $this->imageMagickComp -quality $quality JPG:-"; 
+			header('Content-type: image/jpeg');
+			$this->exec('convert', $args, true);
 		}
-		//print $execString;		
 	}
 }
 ?>

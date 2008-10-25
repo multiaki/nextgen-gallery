@@ -109,12 +109,11 @@ function ngg_default_options() {
 	global $blog_id, $ngg;
 
 	$ngg_options['gallerypath']			= 'wp-content/gallery/';  		// set default path to the gallery
-	$ngg_options['scanfolder']			= false;						// search for new images  (not used)
 	$ngg_options['deleteImg']			= true;							// delete Images
 	$ngg_options['swfUpload']			= false;						// activate the batch upload
 	$ngg_options['usePermalinks']		= false;						// use permalinks for parameters
 	$ngg_options['graphicLibrary']		= 'gd';							// default graphic library
-
+	$ngg_options['imageMagickDir']		= '/usr/local/bin';				// default path to ImageMagick
 	
 	// Tags / categories
 	$ngg_options['activateTags']		= false;						// append related images

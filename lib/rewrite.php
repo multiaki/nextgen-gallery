@@ -13,7 +13,7 @@
 class nggRewrite {
 
 	// default value
-	var $slug = "nggallery";	
+	var $slug = 'nggallery';	
 
 	/**
 	* Constructor
@@ -24,7 +24,7 @@ class nggRewrite {
 		$this->options = get_option('ngg_options');
 		
 		// get later from the options
-		$this->slug = "nggallery";
+		$this->slug = 'nggallery';
 
 		/*WARNING: Do nothook rewrite rule regentation on the init hook for anything other than dev. */
 		//add_action('init',array(&$this, 'flush'));
@@ -71,29 +71,29 @@ class nggRewrite {
 			*/
 
 			// 1. Blog url + main slug
-			$url = get_option('home'). "/". $this->slug;
+			$url = get_option('home') . '/' . $this->slug;
 			
 			// 2. Post or page ?
 			if ( $post->post_type == 'page' ) {
-				$url .= "/page-".$post->ID; // Pagnename is nicer but how to handle /parent/pagename ? Confused...
+				$url .= "/page-" . $post->ID; // Pagnename is nicer but how to handle /parent/pagename ? Confused...
 			} else {
-				$url .= "/post/".$post->post_name;
+				$url .= "/post/" . $post->post_name;
 			}
 			
 			// 3. Album, pid or tags
 			if  (isset ($args['album']) && isset ($args['gallery']) ) {
-				$url .= "/album-".$args['album']."/gallery-".$args['gallery'];
+				$url .= "/album-" . $args['album'] . "/gallery-" . $args['gallery'];
 			}
 			if  (isset ($args['gallerytag'])) {
-				$url .= "/tags/".$args['gallerytag'];
+				$url .= "/tags/" . $args['gallerytag'];
 			}
 			if  (isset ($args['pid'])) {
-				$url .= "/page/".$args['pid'];			
+				$url .= "/page/" . $args['pid'];			
 			}	
 			
 			// 4. Navigation
 			if  (isset ($args['nggpage']) && ($args['nggpage']) ) {
-				$url .= "/page-".$args['nggpage'];
+				$url .= "/page-" . $args['nggpage'];
 			}
 			
 			// 5. Show images or Slideshow

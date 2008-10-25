@@ -232,7 +232,12 @@ function ngg_list_support()	{
 	'Sander van Loon' => '',
 	'Daniel Oliver Habenicht' => 'http://www.audioschmiede.de',
 	'Michael Sinclair' => '',
-	'Serira Designs' => 'http://www.seriradesigns.com' 
+	'Serira Designs' => 'http://www.seriradesigns.com', 
+	'Wang Qingsheng' => '',
+	'Maurice van der Linden' => 'http://www.vd-linden.nl',
+	'Sandra Longmore' => '',
+	'Grupo Probeta' => 'http://www.grupoprobeta.com',
+	'Aaron Simpson' => ''	
 	);
 	
 	ksort($supporter);

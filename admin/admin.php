@@ -37,7 +37,7 @@ class nggAdminPanel{
 	    if (wpmu_enable_function('wpmuRoles'))
 			add_submenu_page( NGGFOLDER , __('Roles', 'nggallery'), __('Roles', 'nggallery'), 'activate_plugins', 'nggallery-roles', array (&$this, 'show_menu'));
 	    add_submenu_page( NGGFOLDER , __('About this Gallery', 'nggallery'), __('About', 'nggallery'), 'NextGEN Gallery overview', 'nggallery-about', array (&$this, 'show_menu'));
-		if (wpmu_site_admin())
+		if ( wpmu_site_admin() )
 			add_submenu_page( 'wpmu-admin.php' , __('NextGEN Gallery', 'nggallery'), __('NextGEN Gallery', 'nggallery'), 'activate_plugins', 'nggallery-wpmu', array (&$this, 'show_menu'));
 
 	}
@@ -55,8 +55,8 @@ class nggAdminPanel{
 
 		// check for upgrade and show upgrade screen
 		if( get_option( 'ngg_db_version' ) != NGG_DBVERSION ) {
-			include_once (dirname (__FILE__). '/functions.php');
-			include_once (dirname (__FILE__). '/upgrade.php');
+			include_once ( dirname (__FILE__) . '/functions.php' );
+			include_once ( dirname (__FILE__) . '/upgrade.php' );
 			nggallery_upgrade_page();
 			return;			
 		}
@@ -68,13 +68,13 @@ class nggAdminPanel{
 		
   		switch ($_GET['page']){
 			case "nggallery-add-gallery" :
-				include_once (dirname (__FILE__). '/functions.php');	// admin functions
-				include_once (dirname (__FILE__). '/addgallery.php');	// nggallery_admin_add_gallery
+				include_once ( dirname (__FILE__) . '/functions.php' );	// admin functions
+				include_once ( dirname (__FILE__) . '/addgallery.php' );	// nggallery_admin_add_gallery
 				nggallery_admin_add_gallery();
 				break;
 			case "nggallery-manage-gallery" :
-				include_once (dirname (__FILE__). '/functions.php');	// admin functions
-				include_once (dirname (__FILE__). '/manage.php');		// nggallery_admin_manage_gallery
+				include_once ( dirname (__FILE__) . '/functions.php' );	// admin functions
+				include_once ( dirname (__FILE__) . '/manage.php' );		// nggallery_admin_manage_gallery
 				// Initate the Manage Gallery page
 				$ngg->manage_page = new nggManageGallery ();
 				// Render the output now, because you cannot access a object during the constructor is not finished
@@ -82,44 +82,44 @@ class nggAdminPanel{
 				
 				break;
 			case "nggallery-manage-album" :
-				include_once (dirname (__FILE__). '/album.php');		// nggallery_admin_manage_album
+				include_once ( dirname (__FILE__) . '/album.php' );		// nggallery_admin_manage_album
 				nggallery_admin_manage_album();
 				break;				
 			case "nggallery-options" :
-				include_once (dirname (__FILE__). '/settings.php');		// nggallery_admin_options
+				include_once ( dirname (__FILE__) . '/settings.php' );		// nggallery_admin_options
 				nggallery_admin_options();
 				break;
 			case "nggallery-tags" :
-				include_once (dirname (__FILE__). '/tags.php');			// nggallery_admin_tags
+				include_once ( dirname (__FILE__) . '/tags.php' );			// nggallery_admin_tags
 				break;
 			case "nggallery-style" :
-				include_once (dirname (__FILE__). '/style.php');		// nggallery_admin_style
+				include_once ( dirname (__FILE__) . '/style.php' );		// nggallery_admin_style
 				nggallery_admin_style();
 				break;
 			case "nggallery-setup" :
-				include_once (dirname (__FILE__). '/setup.php');		// nggallery_admin_setup
+				include_once ( dirname (__FILE__) . '/setup.php' );		// nggallery_admin_setup
 				nggallery_admin_setup();
 				break;
 			case "nggallery-roles" :
-				include_once (dirname (__FILE__). '/roles.php');		// nggallery_admin_roles
+				include_once ( dirname (__FILE__) . '/roles.php' );		// nggallery_admin_roles
 				nggallery_admin_roles();
 				break;
 			case "nggallery-import" :
-				include_once (dirname (__FILE__). '/myimport.php');		// nggallery_admin_import
+				include_once ( dirname (__FILE__) . '/myimport.php' );		// nggallery_admin_import
 				nggallery_admin_import();
 				break;
 			case "nggallery-about" :
-				include_once (dirname (__FILE__). '/about.php');		// nggallery_admin_about
+				include_once ( dirname (__FILE__) . '/about.php' );		// nggallery_admin_about
 				nggallery_admin_about();
 				break;
 			case "nggallery-wpmu" :
-				include_once (dirname (__FILE__). '/style.php');		
-				include_once (dirname (__FILE__). '/wpmu.php');			// nggallery_wpmu_admin
+				include_once ( dirname (__FILE__) . '/style.php' );		
+				include_once ( dirname (__FILE__) . '/wpmu.php' );			// nggallery_wpmu_admin
 				nggallery_wpmu_setup();
 				break;
 			case "nggallery" :
 			default :
-				include_once (dirname (__FILE__). '/overview.php'); 	// nggallery_admin_overview
+				include_once ( dirname (__FILE__) . '/overview.php' ); 	// nggallery_admin_overview
 				nggallery_admin_overview();
 				break;
 		}
@@ -168,7 +168,7 @@ class nggAdminPanel{
 		
 		switch ($_GET['page']) {
 			case NGGFOLDER :
-				wp_enqueue_style( 'nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.5.0', 'screen' );
+				wp_enqueue_style( 'nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.7.0', 'screen' );
 				wp_admin_css( 'css/dashboard' );
 			break;
 			case "nggallery-add-gallery" :
@@ -177,7 +177,7 @@ class nggAdminPanel{
 			case "nggallery-manage-gallery" :
 			case "nggallery-roles" :
 			case "nggallery-manage-album" :
-				wp_enqueue_style( 'nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.5.0', 'screen' );
+				wp_enqueue_style( 'nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.7.0', 'screen' );
 				wp_enqueue_style( 'thickbox');			
 			break;
 			case "nggallery-tags" :
@@ -193,8 +193,8 @@ class nggAdminPanel{
 
 function wpmu_site_admin() {
 	// Check for site admin
-	if (function_exists('is_site_admin'))
-		if (is_site_admin())
+	if ( function_exists('is_site_admin') )
+		if ( is_site_admin() )
 			return true;
 			
 	return false;
@@ -271,8 +271,8 @@ if ( !class_exists( "CheckPlugin" ) ) {
 				
 				// use wordpress snoopy class
 				require_once(ABSPATH . WPINC . '/class-snoopy.php');
-				
-				if (class_exists(snoopy)) {
+				 
+				if ( class_exists(snoopy) ) {
 					$client = new Snoopy();
 					$client->agent = 'NextGEN Gallery Version Checker V' . NGGVERSION . ' (+http://www.nextgen.boelinger.com/)';
 					$client->_fp_timeout = 10;

@@ -197,12 +197,12 @@ class nggLoader {
 		define('NGGURL', $this->updateURL);
 
 		// required for Windows & XAMPP
-		$myabspath = str_replace("\\","/",ABSPATH);  
-		define('WINABSPATH', $myabspath);
+		define('WINABSPATH', str_replace("\\","/",ABSPATH) );
 			
 		// define URL
 		define('NGGFOLDER', plugin_basename( dirname(__FILE__)) );
-		define('NGGALLERY_ABSPATH', WP_CONTENT_DIR.'/plugins/'.plugin_basename( dirname(__FILE__)).'/' );
+		
+		define('NGGALLERY_ABSPATH', str_replace("\\","/", WP_CONTENT_DIR.'/plugins/'.plugin_basename( dirname(__FILE__)).'/') );
 		define('NGGALLERY_URLPATH', WP_CONTENT_URL.'/plugins/'.plugin_basename( dirname(__FILE__)).'/' );
 		
 		// look for imagerotator
