@@ -4,7 +4,7 @@
 *
 * @author 		Frederic De Ranter
 * @copyright	Copyright 2008
-* @version 		0.2 (PHP4)
+* @version 		0.3 (PHP4)
 * @based 		on thumbnail.inc.php by Ian Selby (gen-x-design.com)
 * @since		NextGEN V1.0.0
 *
@@ -138,8 +138,9 @@ var $imageMagickBefore;
 	  	}
 	    
 		if($this->error == true) {
-	      //if(!$no_ErrorImage)
-	      	//$this->showErrorImage();
+			// for SinglePic send the error message out
+	    	if(!$no_ErrorImage) 
+	    		echo $this->errmsg;
 	    	return;
 	    }
 	}
@@ -158,13 +159,12 @@ var $imageMagickBefore;
 		
 		// get the path to imageMagick
 		$ngg_options = get_option('ngg_options');
-		$this->imageMagickDir =  $ngg_options['imageMagickDir'];
-		
-		str_replace( "\\", "/", $this->imageMagickDir );
-		
+		$this->imageMagickDir = trim( $ngg_options['imageMagickDir']);
+		$this->imageMagickDir = str_replace( "\\", "/", $this->imageMagickDir );
+
 		// Try to get the ImageMagick version
 		$magickv = $this->exec('convert', '-version');
-
+		
 		if ( empty($magickv) ) {
 			$this->errmsg = 'Could not execute ImageMagick. Check path ';
 			$this->error = true;
@@ -187,27 +187,43 @@ var $imageMagickBefore;
      *
      * @param string $cmd an ImageMagick command (eg. "convert")
      * @param string $args the arguments which should be passed
-     * @param bool §passthru(optional) output the result to the webserver insted
-     * @return void
+     * @param bool §passthru(optional) output the result to the webserver instead
+     * @return void | if passthru return the image
      */
 	function exec( $cmd, $args, $passthru = false) {
 		
+		// in error case we do not continue
+		if($this->error == true)
+			return;
+
+		// the path must have a slash at the end
+		if ( $this->imageMagickDir{strlen($this->imageMagickDir)-1} != '/')
+		    $this->imageMagickDir .= '/';
+		
 		$args = escapeshellarg ($args );
+
+		//var_dump( escapeshellcmd ( "{$this->imageMagickDir}/{$cmd} {$args}" ) ); return;
 		
 		if ( !$passthru ) {
-			exec( escapeshellcmd ( "{$this->imageMagickDir}/{$cmd} {$args}" ) , $result );
+			exec(escapeshellcmd ( "{$this->imageMagickDir}{$cmd} {$args}" ), $result );
+			//var_dump( "{$this->imageMagickDir}/{$cmd} {$args}" );
 			return $result;
+			
 		}
 		
-		passthru( escapeshellcmd ( "{$this->imageMagickDir}/{$cmd} {$args}" ) );
-		//print "{$this->imageMagickDir}/{$cmd} {$args}";
+		//var_dump( escapeshellcmd ( "{$this->imageMagickDir}/{$cmd} {$args}" ) ); return;
+
+		// for single pic we need the direct output
+		header('Content-type: image/jpeg');
+		passthru( escapeshellcmd ( "{$this->imageMagickDir}{$cmd} {$args}" ) );
+		
 	}
 
     /**
      * Must be called to free up allocated memory after all manipulations are done
      */
     function destruct() {
-     	//not needed
+     	//not needed for ImageMagick
 		return;
     }
     
@@ -236,7 +252,7 @@ var $imageMagickBefore;
     function calcWidth($width, $height) {
         $newWp = (100 * $this->maxWidth) / $width;
         $newHeight = ($height * $newWp) / 100;
-        return array('newWidth'=>intval($this->maxWidth),'newHeight'=>intval($newHeight));
+        return array('newWidth'=>intval($this->maxWidth), 'newHeight'=>intval($newHeight));
     }
 
     /**
@@ -248,7 +264,7 @@ var $imageMagickBefore;
     function calcHeight($width, $height) {
         $newHp = (100 * $this->maxHeight) / $height;
         $newWidth = ($width * $newHp) / 100;
-        return array('newWidth'=>intval($newWidth),'newHeight'=>intval($this->maxHeight));
+        return array('newWidth'=>intval($newWidth), 'newHeight'=>intval($this->maxHeight));
     }
 
     /**
@@ -260,7 +276,7 @@ var $imageMagickBefore;
     function calcPercent($width, $height) {
         $newWidth = ($width * $this->percent) / 100;
         $newHeight = ($height * $this->percent) / 100;
-        return array('newWidth'=>intval($newWidth),'newHeight'=>intval($newHeight));
+        return array('newWidth'=>intval($newWidth), 'newHeight'=>intval($newHeight));
     }
 
     /**
@@ -452,13 +468,13 @@ var $imageMagickBefore;
 		//convert the opacity between FF or 00; 100->0 and 0->FF (256)
 		$opacity = dechex( round( (100-$wmOpaque) * 256/100 ) );
 		
-		$cmd = "-size 800x500 xc:none -font {$wmFontPath} -pointsize {$wmSize} -gravity center -fill '#{$color}{$opacity}' -annotate 0 '{$this->watermarkText}' watermark.png";
+		$cmd = "-size 800x500 xc:none -fill '#{$color}{$opacity}' -font {$wmFontPath} -pointsize {$wmSize} -gravity center -annotate 0 '{$this->watermarkText}' watermark_text.png";
 		$this->exec('convert', $cmd);
 		
-		$cmd = "-trim +repage watermark.png";		 
+		$cmd = "-trim +repage watermark_text.png";		 
 		$this->exec('mogrify', $cmd);
 	
-		$this->watermarkImgPath = NGGALLERY_ABSPATH . 'watermark.png';
+		$this->watermarkImgPath = NGGALLERY_ABSPATH . 'watermark_text.png';
 
 		return;		
 	}
@@ -499,15 +515,15 @@ var $imageMagickBefore;
 		if ($dest_y<0) {
 			$dest_y = $dest_y; 
 		} else { 
-			$dest_y = "+".$dest_y;
+			$dest_y = '+' . $dest_y;
 		}
 		if ($dest_x<0) {
 			$dest_x = $dest_x; 
 		} else { 
-			$dest_x = "+".$dest_x;
+			$dest_x = '+' . $dest_x;
 		}
 		
-		$this->imageMagickComp .=  " -geometry $dest_x$dest_y '$this->watermarkImgPath' -composite";
+		$this->imageMagickComp .=  "'$this->watermarkImgPath' -geometry $dest_x$dest_y  -composite";
 		//" -dissolve 80% -geometry +$dest_x+$dest_y $this->watermarkImgPath";
 	}
     
@@ -534,14 +550,13 @@ var $imageMagickBefore;
 	 * @param string $name
 	 */
 	function show( $quality = 85, $name = '') {
-		//execute the ImageMagick command and stream it when name is empty or save it.
+		//save the image if we get a filename
 		if( $name != '' ) {
 			$args = "{$this->imageMagickBefore} '$this->fileName' $this->imageMagickExec $this->imageMagickComp -quality $quality '$name'";
 			$this->exec('convert', $args);
 	  	} else {
 	  	//return a raw image stream
 			$args = "{$this->imageMagickBefore} '$this->fileName' $this->imageMagickExec $this->imageMagickComp -quality $quality JPG:-"; 
-			header('Content-type: image/jpeg');
 			$this->exec('convert', $args, true);
 		}
 	}
