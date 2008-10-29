@@ -95,6 +95,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				button_placeholder_id : "spanButtonPlaceholder",
 				button_width: 272,
 				button_height: 27,
+				button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
+				button_cursor: SWFUpload.CURSOR.HAND,
 								
 				// File Upload Settings
 				file_size_limit : "<?php echo wp_max_upload_size(); ?>b",
