@@ -46,7 +46,7 @@ class nggLoader {
 	
 	var $version     = '1.0.0.b1';
 	var $dbversion   = '0.9.7';
-	var $minium_WP   = '2.7';
+	var $minium_WP   = '2.7-beta';
 	var $minium_WPMU = '2.7';
 	var $updateURL   = 'http://nextgen.boelinger.com/version.php';
 	var $options     = '';
@@ -68,6 +68,9 @@ class nggLoader {
 		// Init options & tables during activation & deregister init option
 		register_activation_hook( dirname(__FILE__) . '/nggallery.php', array(&$this, 'activate') );
 		register_deactivation_hook( dirname(__FILE__) . '/nggallery.php', array(&$this, 'deactivate') );	
+		
+		if ( function_exists('register_uninstall_hook') )
+			register_uninstall_hook( dirname(__FILE__) . '/nggallery.php', array(&$this, 'uninstall') );
 		
 		// Start this plugin once all other plugins are fully loaded
 		add_action( 'plugins_loaded', array(&$this, 'start_plugin') );
@@ -123,14 +126,14 @@ class nggLoader {
 			define('IS_WPMU', version_compare($wpmu_version, $this->minium_WPMU, '>=') );
 			
 		// Check for WP version installation
-		$wp_ok  =  version_compare($wp_version, $this->minium_WP, '>=');		
+		$wp_ok  =  version_compare($wp_version, $this->minium_WP, '>=');
 		
 		if ( ($wp_ok == FALSE) and (IS_WPMU != TRUE) ) {
 			add_action(
 				'admin_notices', 
 				create_function(
 					'', 
-					'printf (\'<div id="message" class="error fade"><p><strong>\' . __(\'Sorry, NextGEN Gallery works only under WordPress %s or higher\',"nggallery") . \'</strong></p></div>\', $this->minium_WP);'
+					'global $ngg; printf (\'<div id="message" class="error"><p><strong>\' . __(\'Sorry, NextGEN Gallery works only under WordPress %s or higher\', "nggallery" ) . \'</strong></p></div>\', $ngg->minium_WP );'
 				)
 			);
 			return false;
@@ -149,7 +152,7 @@ class nggLoader {
 				'admin_notices', 
 				create_function(
 					'', 
-					'echo \'<div id="message" class="error fade"><p><strong>' . __('Sorry, NextGEN Gallery works only with a Memory Limit of 16 MB higher',"nggallery") . '</strong></p></div>\';'
+					'echo \'<div id="message" class="error"><p><strong>' . __('Sorry, NextGEN Gallery works only with a Memory Limit of 16 MB higher',"nggallery") . '</strong></p></div>\';'
 				)
 			);
 			return false;
@@ -315,6 +318,15 @@ class nggLoader {
 		// remove & reset the init check option
 		delete_option( 'ngg_init_check' );
 		delete_option( 'ngg_update_exists' );
+	}
+	
+	function uninstall() {
+		
+		include_once (dirname (__FILE__) . '/admin/install.php');
+		nggallery_uninstall();
+		// remove the update message
+		delete_option( 'ngg_update_exists' );
+		
 	}
 }
 	// Let's start the holy plugin

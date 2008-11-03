@@ -2,7 +2,7 @@
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
 
 	function nggallery_admin_setup()  {	
-		global $wpdb, $ngg;
+		global $ngg;
 				
 		if (isset($_POST['resetdefault'])) {	
 			check_admin_referer('ngg_uninstall');
@@ -18,28 +18,14 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		if (isset($_POST['uninstall'])) {	
 			
 			check_admin_referer('ngg_uninstall');
+			
+			include_once ( dirname (__FILE__).  '/install.php');
 
-			$wpdb->query("DROP TABLE $wpdb->nggpictures");
-			$wpdb->query("DROP TABLE $wpdb->nggallery");
-			$wpdb->query("DROP TABLE $wpdb->nggalbum");
-		
-			delete_option( "ngg_options" );
-			delete_option( "ngg_db_version");
-
-			// now remove the capability
-			ngg_remove_capability("NextGEN Gallery overview");
-			ngg_remove_capability("NextGEN Use TinyMCE");
-			ngg_remove_capability("NextGEN Upload images");
-			ngg_remove_capability("NextGEN Manage gallery");
-			ngg_remove_capability("NextGEN Edit album");
-			ngg_remove_capability("NextGEN Change style");
-			ngg_remove_capability("NextGEN Change options");
-		 	
+			nggallery_uninstall();
+				 	
 		 	nggGallery::show_message(__('Uninstall sucessfull ! Now delete the plugin and enjoy your life ! Good luck !','nggallery'));
 		}
-
 	?>
-	
 	<div class="wrap">
 	<h2><?php _e('Reset options', 'nggallery') ;?></h2>
 		<form name="resetsettings" method="post">

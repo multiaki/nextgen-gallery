@@ -206,4 +206,24 @@ function ngg_default_options() {
 
 }
 
+function nggallery_uninstall() {
+	global $wpdb;
+	
+	$wpdb->query("DROP TABLE $wpdb->nggpictures");
+	$wpdb->query("DROP TABLE $wpdb->nggallery");
+	$wpdb->query("DROP TABLE $wpdb->nggalbum");
+	
+	delete_option( "ngg_options" );
+	delete_option( "ngg_db_version");
+	
+	// now remove the capability
+	ngg_remove_capability("NextGEN Gallery overview");
+	ngg_remove_capability("NextGEN Use TinyMCE");
+	ngg_remove_capability("NextGEN Upload images");
+	ngg_remove_capability("NextGEN Manage gallery");
+	ngg_remove_capability("NextGEN Edit album");
+	ngg_remove_capability("NextGEN Change style");
+	ngg_remove_capability("NextGEN Change options");
+}
+
 ?>
