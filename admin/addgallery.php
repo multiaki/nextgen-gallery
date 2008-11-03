@@ -191,7 +191,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<i>( <?php _e('Allowed characters for file and folder names are', 'nggallery') ;?>: a-z, A-Z, 0-9, -, _ )</i></td>
 				</tr>
 				</table>
-				<div class="submit"><input type="submit" name= "addgallery" value="<?php _e('Add gallery', 'nggallery') ;?>"/></div>
+				<div class="submit"><input class="button-primary" type="submit" name= "addgallery" value="<?php _e('Add gallery', 'nggallery') ;?>"/></div>
 			</form>
 		</div>
 		<?php if ( wpmu_enable_function('wpmuZipUpload')) { ?>
@@ -219,7 +219,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<br /><?php if ( (IS_WPMU) && wpmu_enable_function('wpmuQuotaCheck') ) display_space_usage(); ?></td> 
 				</tr> 
 				</table>
-				<div class="submit"> <input type="submit" name= "zipupload" value="<?php _e('Start upload', 'nggallery') ;?>"/></div>
+				<div class="submit"><input class="button-primary" type="submit" name= "zipupload" value="<?php _e('Start upload', 'nggallery') ;?>"/></div>
 			</form>
 		</div>
 		<?php }
@@ -237,7 +237,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<?php if (SAFE_MODE) {?><br /><?php _e(' Please note : For safe-mode = ON you need to add the subfolder thumbs manually', 'nggallery') ;?><?php }; ?></td> 
 				</tr>
 				</table>
-				<div class="submit"> <input type="submit" name= "importfolder" value="<?php _e('Import folder', 'nggallery') ;?>"/></div>
+				<div class="submit"><input class="button-primary" type="submit" name= "importfolder" value="<?php _e('Import folder', 'nggallery') ;?>"/></div>
 			</form>
 		</div>
 		<?php } ?> 
@@ -270,7 +270,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<?php } else { ?>
 					<input type="submit" name="enable_flash" id="enable_flash" title="<?php _e('Upload multiple files at once by ctrl/shift-selecting in dialog','nggallery') ?>" value="<?php _e('Enable flash based upload', 'nggallery') ;?>" />
 					<?php } ?>
-					<input type="submit" name="uploadimage" id="uploadimage_btn" value="<?php _e('Upload images', 'nggallery') ;?>" />
+					<input class="button-primary" type="submit" name="uploadimage" id="uploadimage_btn" value="<?php _e('Upload images', 'nggallery') ;?>" />
 				</div>
 			</form>
 		</div>

@@ -4,130 +4,196 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 /**
  * nggallery_admin_overview()
  *
- * Add the admin overview wp.25 style 
+ * Add the admin overview in wp2.7 style 
  * @return mixed content
  */
 function nggallery_admin_overview()  {	
-	global $wpdb;
-	
-	// get feed_messages
-	require_once(ABSPATH . WPINC . '/rss.php');
-	
 ?>
-  <div class="wrap ngg-wrap">
-    <h2><?php _e('NextGEN Gallery Overview', 'nggallery') ?></h2>
-    <br class="clear"/>
-	<div id="rightnow">
-		<h3 class="reallynow">
-			<span><?php _e('Welcome to NextGEN Gallery !', 'nggallery') ?></span>
-			<?php if(current_user_can('NextGEN Upload images')): ?><a class="rbutton" href="admin.php?page=nggallery-add-gallery"><strong><?php _e('Upload pictures', 'nggallery') ?></strong></a><?php endif; ?>
-			<?php if(current_user_can('NextGEN Manage gallery')): ?><a class="rbutton" href="admin.php?page=nggallery-manage-gallery"><?php _e('Manage galleries', 'nggallery') ?></a><?php endif; ?>
-			<br class="clear"/>
-		</h3>
-		<p class="youhave">
-		<?php
-			// get counter values 
-			$replace = array
-			(
-				'<strong>'.$wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggpictures").'</strong>',
-				'<strong>'.$wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggallery").'</strong>',
-				'<strong>'.$wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggalbum").'</strong>'
-			);  
-          	vprintf(__('There are totally %1$s pictures in %2$s galleries, which are spread across %3$s albums.', 'nggallery'), $replace);
-        ?>
-		</p>
-	    <p>
-	      <?php
-	        $userlevel = '<strong>' . (current_user_can('manage_options') ? __('gallery administrator', 'nggallery') : __('gallery editor', 'nggallery')) . '</strong>';
-	        printf(__('Here you can control your images, galleries and albums. You currently have %s rights.', 'nggallery'), $userlevel);
-	      ?>
-	    </p>
-	</div>
-	<br class="clear"/> 
+<div class="wrap ngg-wrap">
+	<h2><?php _e('NextGEN Gallery Overview', 'nggallery') ?></h2>
 	<div id="dashboard-widgets-wrap">
-	    <div id="dashboard-widgets">	
-			<div id="dashboard_primary" class="dashboard-widget-holder widget_rss wp_dashboard_empty">
-		    	<div class="ngg-dashboard-widget">
-				    <h3 class="dashboard-widget-title"><?php _e('Latest News', 'nggallery') ?></h3>
-				    <div class="dashboard-widget-content">
-				    <?php
-				      $rss = @fetch_rss('http://alexrabe.boelinger.com/?tag=nextgen-gallery&feed=rss2');
-				      
-				      if ( isset($rss->items) && 0 != count($rss->items) )
-				      {
-				        $rss->items = array_slice($rss->items, 0, 4);
-				        echo "<ul>";
-						foreach ($rss->items as $item)
-				        {
-				        ?>
-				          <li><a class="rsswidget" title="" href='<?php echo wp_filter_kses($item['link']); ?>'><?php echo wp_specialchars($item['title']); ?></a><span class="rss-date"><?php echo date("F jS, Y", strtotime($item['pubdate'])); ?></span> 
-				          <div class="rssSummary"><strong><?php echo human_time_diff(strtotime($item['pubdate'], time())); ?></strong> - <?php echo $item['description']; ?></div></li>
-				        <?php
-				        }
-				        echo "</ul>";
-				      }
-				      else
-				      {
-				        ?>
-				        <p><?php printf(__('Newsfeed could not be loaded.  Check the <a href="%s">front page</a> to check for updates.', 'nggallery'), 'http://alexrabe.boelinger.com/') ?></p>
-				        <?php
-				      }
-				    ?>
-				    </div>
-			    </div>
+	    <div id="dashboard-widgets" class="metabox-holder">
+	    	<div id="side-info-column" class="inner-sidebar">
+				<?php do_meta_boxes('ngg_overview', 'right', ''); ?>
 			</div>
-
-			<div id="dashboard_server_settings" class="dashboard-widget-holder wp_dashboard_empty">
-				<div class="ngg-dashboard-widget">
-				  <?php if (IS_WPMU) {
-				  	if (wpmu_enable_function('wpmuQuotaCheck'))
-						echo ngg_SpaceManager::details();
-					else {
-						//TODO:WPMU message in WP2.5 style
-						echo ngg_SpaceManager::details();
-					}
-				  } else { ?>
-				  	<h3 class="dashboard-widget-title" ><?php _e('Server Settings', 'nggallery') ?></h3>
-				  	<div class="dashboard-widget-content">
-			      		<ul class="settings">
-			      		<?php ngg_get_serverinfo(); ?>
-				   		</ul>
-						<?php ngg_gd_info(); ?>
-					</div>
-				  <?php } ?>
-			    </div>
-		    </div>
-		</div>
-		
-    	<br style="clear: both" />
-   </div>
-   </div>
+			<div id="post-body" class="has-sidebar">
+				<div id="dashboard-widgets-main-content" class="has-sidebar-content">
+				<?php do_meta_boxes('ngg_overview', 'left', ''); ?>
+				</div>
+			</div>
+	    </div>
+	</div>
+</div>
 <?php
 }
 
+/**
+ * Show the server settings
+ * 
+ * @return void
+ */
+function ngg_overview_server() {
+?>
+<div id="dashboard_server_settings" class="dashboard-widget-holder wp_dashboard_empty">
+	<div class="ngg-dashboard-widget">
+	  <?php if (IS_WPMU) {
+	  	if (wpmu_enable_function('wpmuQuotaCheck'))
+			echo ngg_SpaceManager::details();
+		else {
+			//TODO:WPMU message in WP2.5 style
+			echo ngg_SpaceManager::details();
+		}
+	  } else { ?>
+	  	<div class="dashboard-widget-content">
+      		<ul class="settings">
+      		<?php ngg_get_serverinfo(); ?>
+	   		</ul>
+		</div>
+	  <?php } ?>
+    </div>
+</div>
+<?php	
+}
+
+/**
+ * Show the GD ibfos
+ * 
+ * @return void
+ */
+function ngg_overview_graphic_lib() {
+?>
+<div id="dashboard_server_settings" class="dashboard-widget-holder">
+	<div class="ngg-dashboard-widget">
+	  	<div class="dashboard-widget-content">
+	  		<ul class="settings">
+			<?php ngg_gd_info(); ?>
+			</ul>
+		</div>
+    </div>
+</div>
+<?php	
+}
+
+/**
+ * Show the latest NextGEN Gallery news
+ * 
+ * @return void
+ */
+function ngg_overview_news(){
+	// get feed_messages
+	require_once(ABSPATH . WPINC . '/rss.php');
+?>
+<div class="rss-widget">
+    <?php
+//    $rss = @fetch_rss('http://alexrabe.boelinger.com/?tag=nextgen-gallery&feed=rss2');
+      $rss = @fetch_rss('http://alexrabe.boelinger.com/feed/rss2/');
+
+      if ( isset($rss->items) && 0 != count($rss->items) )
+      {
+        $rss->items = array_slice($rss->items, 0, 3);
+        echo "<ul>";
+		foreach ($rss->items as $item)
+        {
+        ?>
+          <li><a class="rsswidget" title="" href='<?php echo wp_filter_kses($item['link']); ?>'><?php echo wp_specialchars($item['title']); ?></a>
+		  <span class="rss-date"><?php echo date("F jS, Y", strtotime($item['pubdate'])); ?></span> 
+          <div class="rssSummary"><strong><?php echo human_time_diff(strtotime($item['pubdate'], time())); ?></strong> - <?php echo $item['description']; ?></div></li>
+        <?php
+        }
+        echo "</ul>";
+      }
+      else
+      {
+        ?>
+        <p><?php printf(__('Newsfeed could not be loaded.  Check the <a href="%s">front page</a> to check for updates.', 'nggallery'), 'http://alexrabe.boelinger.com/') ?></p>
+        <?php
+      }
+    ?>
+</div>
+<?php
+}
+
+/**
+ * Show a summary of the used images
+ * 
+ * @return void
+ */
+function ngg_overview_right_now() {
+	global $wpdb;
+	$images    = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggpictures");
+	$galleries = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggallery");
+	$albums    = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggalbum");
+?>
+
+<p class="sub"><?php _e('At a Glance'); ?></p>
+<div class="table">
+	<table>
+		<tbody>
+			<tr class="first">
+				<td class="first b"><a href="admin.php?page=nggallery-add-gallery"><?php echo intval($images); ?></a></td>
+				<td class="t"><?php echo __ngettext( 'Image', 'Images', intval($images), 'nggallery' ); ?></td>
+				<td class="b"></td>
+				<td class="last"></td>
+			</tr>
+			<tr>
+				<td class="first b"><a href="admin.php?page=nggallery-manage-gallery"><?php echo intval($galleries); ?></a></td>
+				<td class="t"><?php echo __ngettext( 'Gallery', 'Galleries', intval($galleries), 'nggallery' ); ?></td>
+				<td class="b"></td>
+				<td class="last"></td>
+			</tr>
+			<tr>
+				<td class="first b"><a href="admin.php?page=nggallery-manage-album"><?php echo intval($albums); ?></a></td>
+				<td class="t"><?php echo __ngettext( 'Album', 'Albums', intval($albums), 'nggallery' ); ?></td>
+				<td class="b"></td>
+				<td class="last"></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="versions">
+    <p>
+	<?php if(current_user_can('NextGEN Upload images')): ?><a class="button rbutton" href="admin.php?page=nggallery-add-gallery"><strong><?php _e('Upload pictures', 'nggallery') ?></strong></a><?php endif; ?>
+	<?php _e('Here you can control your images, galleries and albums.', 'nggallery') ?>
+	</p>
+	<span>
+	<?php
+		$userlevel = '<span class="b">' . (current_user_can('manage_options') ? __('Gallery Administrator', 'nggallery') : __('Gallery Editor', 'nggallery')) . '</span>';
+        printf(__('You currently have %s rights.', 'nggallery'), $userlevel);
+    ?>
+    </span>
+</div>
+<?php
+}
+
+add_meta_box('dashboard_right_now', __('Welcome to NextGEN Gallery !', 'nggallery'), 'ngg_overview_right_now', 'ngg_overview', 'left', 'core');
+add_meta_box('dashboard_primary', __('Latest News', 'nggallery'), 'ngg_overview_news', 'ngg_overview', 'right', 'core');
+add_meta_box('ngg_server', __('Server Settings', 'nggallery'), 'ngg_overview_server', 'ngg_overview', 'left', 'core');
+add_meta_box('ngg_gd_lib', __('Graphic Library', 'nggallery'), 'ngg_overview_graphic_lib', 'ngg_overview', 'right', 'core');
+
 // ***************************************************************
 function ngg_gd_info() {
+	
 	if(function_exists("gd_info")){
-		echo '<h4>'.__('GD support', 'nggallery').'</h4><ul class="settings">';
 		$info = gd_info();
 		$keys = array_keys($info);
 		for($i=0; $i<count($keys); $i++) {
 			if(is_bool($info[$keys[$i]]))
-				echo "<li> " . $keys[$i] ." : <strong>" . ngg_gd_yesNo($info[$keys[$i]]) . "</strong></li>\n";
+				echo "<li> " . $keys[$i] ." : <span>" . ngg_gd_yesNo($info[$keys[$i]]) . "</span></li>\n";
 			else
-				echo "<li> " . $keys[$i] ." : <strong>" . $info[$keys[$i]] . "</strong></li>\n";
+				echo "<li> " . $keys[$i] ." : <span>" . $info[$keys[$i]] . "</span></li>\n";
 		}
 	}
 	else {
-		echo '<h4>'.__('No GD support', 'nggallery').'!</h4><ul>';
+		echo '<h4>'.__('No GD support', 'nggallery').'!</h4>';
 	}
-	echo '</ul>';
 }
 
 // ***************************************************************		
 function ngg_gd_yesNo($bool){
-	if($bool) return __('Yes', 'nggallery');
-	else return __('No', 'nggallery');
+	if($bool) 
+		return __('Yes', 'nggallery');
+	else 
+		return __('No', 'nggallery');
 }
 
 // ***************************************************************
@@ -174,21 +240,21 @@ function ngg_get_serverinfo() {
 	else $xml = __('No', 'nggallery');
 	
 ?>
-	<li><?php _e('Operating System', 'nggallery'); ?> : <strong><?php echo PHP_OS; ?></strong></li>
-	<li><?php _e('Server', 'nggallery'); ?> : <strong><?php echo $_SERVER["SERVER_SOFTWARE"]; ?></strong></li>
-	<li><?php _e('Memory usage', 'nggallery'); ?> : <strong><?php echo $memory_usage; ?></strong></li>
-	<li><?php _e('MYSQL Version', 'nggallery'); ?> : <strong><?php echo $sqlversion; ?></strong></li>
-	<li><?php _e('SQL Mode', 'nggallery'); ?> : <strong><?php echo $sql_mode; ?></strong></li>
-	<li><?php _e('PHP Version', 'nggallery'); ?> : <strong><?php echo PHP_VERSION; ?></strong></li>
-	<li><?php _e('PHP Safe Mode', 'nggallery'); ?> : <strong><?php echo $safe_mode; ?></strong></li>
-	<li><?php _e('PHP Allow URL fopen', 'nggallery'); ?> : <strong><?php echo $allow_url_fopen; ?></strong></li>
-	<li><?php _e('PHP Memory Limit', 'nggallery'); ?> : <strong><?php echo $memory_limit; ?></strong></li>
-	<li><?php _e('PHP Max Upload Size', 'nggallery'); ?> : <strong><?php echo $upload_max; ?></strong></li>
-	<li><?php _e('PHP Max Post Size', 'nggallery'); ?> : <strong><?php echo $post_max; ?></strong></li>
-	<li><?php _e('PHP Max Script Execute Time', 'nggallery'); ?> : <strong><?php echo $max_execute; ?>s</strong></li>
-	<li><?php _e('PHP Exif support', 'nggallery'); ?> : <strong><?php echo $exif; ?></strong></li>
-	<li><?php _e('PHP IPTC support', 'nggallery'); ?> : <strong><?php echo $iptc; ?></strong></li>
-	<li><?php _e('PHP XML support', 'nggallery'); ?> : <strong><?php echo $xml; ?></strong></li>
+	<li><?php _e('Operating System', 'nggallery'); ?> : <span><?php echo PHP_OS; ?></span></li>
+	<li><?php _e('Server', 'nggallery'); ?> : <span><?php echo $_SERVER["SERVER_SOFTWARE"]; ?></span></li>
+	<li><?php _e('Memory usage', 'nggallery'); ?> : <span><?php echo $memory_usage; ?></span></li>
+	<li><?php _e('MYSQL Version', 'nggallery'); ?> : <span><?php echo $sqlversion; ?></span></li>
+	<li><?php _e('SQL Mode', 'nggallery'); ?> : <span><?php echo $sql_mode; ?></span></li>
+	<li><?php _e('PHP Version', 'nggallery'); ?> : <span><?php echo PHP_VERSION; ?></span></li>
+	<li><?php _e('PHP Safe Mode', 'nggallery'); ?> : <span><?php echo $safe_mode; ?></span></li>
+	<li><?php _e('PHP Allow URL fopen', 'nggallery'); ?> : <span><?php echo $allow_url_fopen; ?></span></li>
+	<li><?php _e('PHP Memory Limit', 'nggallery'); ?> : <span><?php echo $memory_limit; ?></span></li>
+	<li><?php _e('PHP Max Upload Size', 'nggallery'); ?> : <span><?php echo $upload_max; ?></span></li>
+	<li><?php _e('PHP Max Post Size', 'nggallery'); ?> : <span><?php echo $post_max; ?></span></li>
+	<li><?php _e('PHP Max Script Execute Time', 'nggallery'); ?> : <span><?php echo $max_execute; ?>s</span></li>
+	<li><?php _e('PHP Exif support', 'nggallery'); ?> : <span><?php echo $exif; ?></span></li>
+	<li><?php _e('PHP IPTC support', 'nggallery'); ?> : <span><?php echo $iptc; ?></span></li>
+	<li><?php _e('PHP XML support', 'nggallery'); ?> : <span><?php echo $xml; ?></span></li>
 <?php
 }
 

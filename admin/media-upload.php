@@ -105,8 +105,8 @@ function media_upload_nextgen_form($errors) {
 		
 	// Get the images
 	if ( $galleryID != 0 )
-		$picarray = $wpdb->get_col("SELECT pid FROM $wpdb->nggpictures WHERE galleryid = '$galleryID' AND exclude != 1 ORDER BY $ngg->options[galSort] $ngg->options[galSortDir] LIMIT $start, 10 ");	
-
+		$picarray = $wpdb->get_col("SELECT pid FROM $wpdb->nggpictures WHERE galleryid = '$galleryID' AND exclude != 1 ORDER BY {$ngg->options['galSort']} {$ngg->options['galSortDir']} LIMIT $start, 10 ");	
+		
 ?>
 
 <form id="filter" action="" method="get">
@@ -127,7 +127,7 @@ function media_upload_nextgen_form($errors) {
 		echo "<div class='tablenav-pages'>$page_links</div>";
 	?>
 	
-	<div class="alignleft">
+	<div class="alignleft actions">
 		<select id="select_gal" name="select_gal" style="width:250px;">;
 			<option value="0" <?php selected('0', $galleryID); ?> ><?php attribute_escape( _e('No gallery',"nggallery") ); ?></option>
 			<?php
@@ -141,7 +141,7 @@ function media_upload_nextgen_form($errors) {
 			}
 			?>
 		</select>
-		<input type="submit" id="show-gallery" value="<?php attribute_escape( _e('Select Gallery &#187;','nggallery') ); ?>" class="button-secondary" />
+		<input type="submit" id="show-gallery" value="<?php attribute_escape( _e('Select &#187;','nggallery') ); ?>" class="button-secondary" />
 	</div>
 	<br style="clear:both;" />
 </div>
@@ -177,7 +177,7 @@ function media_upload_nextgen_form($errors) {
 			  <div class='filename new'><?php echo ( empty($picture->alttext) ) ? wp_html_excerpt($picture->filename,75): stripslashes( wp_html_excerpt($picture->alttext,75) ); ?></div>
 			  <table class='slidetoggle describe startclosed'><tbody>
 				  <tr>
-					<td rowspan='4'><img class='thumbnail' alt='<?php echo attribute_escape( $picture->alttext ); ?>' src='<?php echo attribute_escape( $picture->thumbPath ); ?>'/></td>
+					<td rowspan='4'><img class='thumbnail' alt='<?php echo attribute_escape( $picture->alttext ); ?>' src='<?php echo attribute_escape( $picture->thumbURL ); ?>'/></td>
 					<td><?php attribute_escape( _e('Image ID:',"nggallery") ); ?><?php echo $picid ?></td>
 				  </tr>
 				  <tr><td><?php echo attribute_escape( $picture->filename ); ?></td></tr>
@@ -230,7 +230,9 @@ function media_upload_nextgen_form($errors) {
 	}
 	?>
 	</div>
-	<input type="submit" class="button savebutton" name="save" value="<?php attribute_escape( _e('Save all changes','nggallery') ); ?>" />
+	<p class="ml-submit">
+		<input type="submit" class="button savebutton" name="save" value="<?php attribute_escape( _e('Save all changes','nggallery') ); ?>" />
+	</p>
 	<input type="hidden" name="post_id" id="post_id" value="<?php echo (int) $post_id; ?>" />
 	<input type="hidden" name="select_gal" id="select_gal" value="<?php echo (int) $galleryID; ?>" />
 </form>

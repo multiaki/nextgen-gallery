@@ -67,10 +67,10 @@ if ( isset($_POST['update_cap']) ) {
 				<td><label for="change_options"><select name="change_options" id="change_options"><?php wp_dropdown_roles( ngg_get_role('NextGEN Change options') ); ?></select></label></td>
 			</tr>
 			</table>
-			<div class="submit"><input type="submit" name= "update_cap" value="<?php _e('Update capabilities', 'nggallery') ;?>"/></div>
+			<div class="submit"><input type="submit" class="button-primary" name= "update_cap" value="<?php _e('Update capabilities', 'nggallery') ;?>"/></div>
 	</form>
 	</div>
-<?php
+<?php 
 
 }
 

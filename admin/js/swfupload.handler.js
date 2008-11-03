@@ -3,15 +3,15 @@
  *   http://alexrabe.boelinger.com/
  *
  * Built on top of the swfupload library
- *   http://swfupload.org
+ *   http://swfupload.org version 2.2.0
  *
- *  version 1.0.0
+ *  version 1.0.2
  */
 
 // on load change the upload to swfupload
 function initSWFUpload() { 
 	jQuery(function() {
-		jQuery("#uploadimage_btn").after("<input type='button' name='uploadimage' id='swfupload_btn' value='" + ngg_swf_upload.customSettings.upload + "' />")
+		jQuery("#uploadimage_btn").after("<input class='button-primary' type='button' name='uploadimage' id='swfupload_btn' value='" + ngg_swf_upload.customSettings.upload + "' />")
 								  .remove();
 		jQuery("#swfupload_btn").click( function() { submitFiles(); } );
 		jQuery("#imagefiles")

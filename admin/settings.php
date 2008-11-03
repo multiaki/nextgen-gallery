@@ -109,7 +109,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<form name="generaloptions" method="post">
 			<?php wp_nonce_field('ngg_settings') ?>
 			<input type="hidden" name="page_options" value="gallerypath,deleteImg,usePicLens,usePermalinks,graphicLibrary,imageMagickDir,activateTags,appendType,maxImages" />
-				<table class="form-table">
+				<table class="form-table ngg-options">
 					<tr valign="top">
 						<th align="left"><?php _e('Gallery path','nggallery') ?></th>
 						<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="text" size="35" name="gallerypath" value="<?php echo $ngg->options['gallerypath']; ?>" /><br />
@@ -139,7 +139,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					</tr>
 				</table>
 			<h3><?php _e('Tags / Categories','nggallery') ?></h3>
-				<table class="form-table">
+				<table class="form-table ngg-options">
 					<tr>
 						<th valign="top"><?php _e('Activate related images','nggallery') ?>:</th>
 						<td><input name="activateTags" type="checkbox" value="1" <?php checked('1', $ngg->options['activateTags']); ?> />
@@ -159,7 +159,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						</td>
 					</tr>
 				</table> 				
-			<div class="submit"><input type="submit" name="updateoption" value="<?php _e('Update') ;?> &raquo;"/></div>
+			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes') ;?>"/></div>
 			</form>	
 		</div>	
 		
@@ -171,7 +171,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<?php wp_nonce_field('ngg_settings') ?>
 			<input type="hidden" name="page_options" value="thumbwidth,thumbheight,thumbfix,thumbcrop,thumbquality" />
 				<p><?php _e('Please note : If you change the settings, you need to recreate the thumbnails under -> Manage Gallery .', 'nggallery') ?></p>
-				<table class="form-table">
+				<table class="form-table ngg-options">
 					<tr valign="top">
 						<th align="left"><?php _e('Width x height (in pixel)','nggallery') ?></th>
 						<td><input type="text" size="4" maxlength="4" name="thumbwidth" value="<?php echo $ngg->options['thumbwidth']; ?>" /> x <input type="text" size="4" maxlength="4" name="thumbheight" value="<?php echo $ngg->options['thumbheight']; ?>" /><br />
@@ -192,7 +192,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						<td><input type="text" size="3" maxlength="3" name="thumbquality" value="<?php echo $ngg->options['thumbquality']; ?>" /> %</td>
 					</tr>
 				</table>
-			<div class="submit"><input type="submit" name="updateoption" value="<?php _e('Update') ;?> &raquo;"/></div>
+			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes') ;?>"/></div>
 			</form>	
 		</div>
 		
@@ -203,7 +203,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<form name="imagesettings" method="POST" action="<?php echo $filepath.'#images'; ?>" >
 			<?php wp_nonce_field('ngg_settings') ?>
 			<input type="hidden" name="page_options" value="imgResize,imgWidth,imgHeight,imgQuality,imgCacheSinglePic" />
-				<table class="form-table">
+				<table class="form-table ngg-options">
 					<tr valign="top">
 						<th scope="row"><label for="fixratio"><?php _e('Resize Images','nggallery') ?></label></th>
 						<!--TODO: checkbox fixratio can be used later -->
@@ -218,7 +218,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					</tr>
 				</table>
 				<h3><?php _e('Single picture','nggallery') ?></h3>
-				<table class="form-table">
+				<table class="form-table ngg-options">
 					<tr valign="top">
 						<th align="left"><?php _e('Cache single pictures','nggallery') ?></th>
 						<td></td>
@@ -231,7 +231,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						<td><input type="submit" name="clearcache" value="<?php _e('Proceed now','nggallery') ;?> &raquo;"/></td>
 					</tr>
 				</table>
-			<div class="submit"><input type="submit" name="updateoption" value="<?php _e('Update') ;?> &raquo;"/></div>
+			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes') ;?>"/></div>
 			</form>	
 		</div>
 		
@@ -242,7 +242,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<form name="galleryform" method="POST" action="<?php echo $filepath.'#gallery'; ?>" >
 			<?php wp_nonce_field('ngg_settings') ?>
 			<input type="hidden" name="page_options" value="galNoPages,galImages,galShowSlide,galTextSlide,galTextGallery,galShowOrder,galImgBrowser,galSort,galSortDir" />
-				<table class="form-table">
+				<table class="form-table ngg-options">
 					<tr>
 						<th valign="top"><?php _e('Deactivate gallery page link','nggallery') ?>:</th>
 						<td><input name="galNoPages" type="checkbox" value="1" <?php checked('1', $ngg->options['galNoPages']); ?> />
@@ -276,7 +276,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					</tr>
 				</table>
 			<h3><?php _e('Sort options','nggallery') ?></h3>
-				<table class="form-table">
+				<table class="form-table ngg-options">
 					<tr>
 						<th valign="top"><?php _e('Sort thumbnails','nggallery') ?>:</th>
 						<td>
@@ -294,7 +294,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						</td>
 					</tr>
 				</table>
-			<div class="submit"><input type="submit" name="updateoption" value="<?php _e('Update') ;?> &raquo;"/></div>
+			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes') ;?>"/></div>
 			</form>	
 		</div>
 		
@@ -307,7 +307,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<input type="hidden" name="page_options" value="thumbEffect,thumbCode" />
 			<p><?php _e('Here you can select the thumbnail effect, NextGEN Gallery will integrate the required HTML code in the images. Please note that only the Thickbox effect will automatic added to your theme.','nggallery'); ?>
 			<?php _e('With the placeholder','nggallery'); ?><strong> %GALLERY_NAME% </strong> <?php _e('you can activate a navigation through the images (depend on the effect). Change the code line only , when you use a different thumbnail effect or you know what you do.','nggallery'); ?></p>
-				<table class="form-table">
+				<table class="form-table ngg-options">
 					<tr valign="top">
 						<th><?php _e('JavaScript Thumbnail effect','nggallery') ?>:</th>
 						<td>
@@ -326,7 +326,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						<td><textarea id="thumbCode" name="thumbCode" cols="50" rows="5"><?php echo htmlspecialchars(stripslashes($ngg->options['thumbCode'])); ?></textarea></td>
 					</tr>
 				</table>
-			<div class="submit"><input type="submit" name="updateoption" value="<?php _e('Update') ;?> &raquo;"/></div>
+			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes') ;?>"/></div>
 			</form>	
 		</div>
 		
@@ -432,7 +432,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					</tr>
 				</table>
 			<div class="clear"> &nbsp; </div>
-			<div class="submit"><input type="submit" name="updateoption" value="<?php _e('Update') ;?> &raquo;"/></div>
+			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes') ;?>"/></div>
 			</form>	
 		</div>
 		
@@ -447,7 +447,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		<p><?php _e('The settings are used in the JW Image Rotator Version', 'nggallery') ?> 3.15 .
 		   <?php _e('See more information for the Flash Player on the web page', 'nggallery') ?> <a href="http://www.jeroenwijering.com/?item=JW_Image_Rotator" target="_blank" >JW Image Rotator from Jeroen Wijering</a>.
 		</p>
-				<table class="form-table">
+				<table class="form-table ngg-options">
 					<tr>
 						<th><?php _e('Default size (W x H)','nggallery') ?>:</th>
 						<td><input type="text" size="3" maxlength="4" name="irWidth" value="<?php echo $ngg->options['irWidth'] ?>" /> x
@@ -540,7 +540,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					</tr>
 					</table>
 				<div class="clear"> &nbsp; </div>
-				<div class="submit"><input type="submit" name="updateoption" value="<?php _e('Update') ;?> &raquo;"/></div>
+				<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes') ;?>"/></div>
 		</form>
 		</div>
 	</div>

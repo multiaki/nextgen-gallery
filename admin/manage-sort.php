@@ -63,7 +63,15 @@ function nggallery_sortorder($galleryID = 0){
 	<div class="wrap">
 		<form id="sortGallery" method="POST" action="<?php echo $clean_url ?>" onsubmit="saveImageOrder()" accept-charset="utf-8">
 			<h2><?php _e('Sort Gallery', 'nggallery') ?></h2>
-			<?php wp_nonce_field('ngg_updatesortorder') ?>
+			<div class="tablenav">
+				<div class="alignleft actions">
+					<?php wp_nonce_field('ngg_updatesortorder') ?>
+					<input class="button-primary action" type="submit" name="updateSortorder" onclick="saveImageOrder()" value="<?php _e('Update Sort Order', 'nggallery') ?>" />
+				</div>
+				<div class="alignright actions">
+					<input class="button-secondary action" type="submit" name="backToGallery" value="<?php _e('Back to gallery', 'nggallery') ?>" />
+				</div>
+			</div>	
 			<input name="sortorder" type="hidden" />
 			<ul class="subsubsub">
 				<li><?php _e('Presort', 'nggallery') ?> :</li>
@@ -75,10 +83,6 @@ function nggallery_sortorder($galleryID = 0){
 				<li><a href="<?php echo attribute_escape(add_query_arg('dir', 'ASC', $base_url)); ?>" <?php if ($dir == 'ASC') echo 'class="current"'; ?>><?php _e('Ascending', 'nggallery') ?></a> |</li>
 				<li><a href="<?php echo attribute_escape(add_query_arg('dir', 'DESC', $base_url)); ?>" <?php if ($dir == 'DESC') echo 'class="current"'; ?>><?php _e('Descending', 'nggallery') ?></a></li>
 			</ul>
-			<p id="sortButton">
-				<input class="button" type="submit" name="backToGallery" value="<?php _e('Back to gallery', 'nggallery') ?>" />
-				<input class="button" type="submit" name="updateSortorder" onclick="saveImageOrder()" value="<?php _e('Update Sort Order', 'nggallery') ?> &raquo;" />
-			</p>
 		</form>
 		<div id="debug" style="clear:both"></div>
 		<?php 

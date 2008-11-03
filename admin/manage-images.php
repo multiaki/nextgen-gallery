@@ -194,7 +194,7 @@ jQuery(document).ready( function() {
 			
 			<div class="submit">
 				<input type="submit" name="scanfolder" value="<?php _e("Scan Folder for new images",'nggallery')?> " />
-				<input type="submit" name="updatepictures" value="<?php _e("Save Changes",'nggallery')?> &raquo;" />
+				<input type="submit" class="button-primary action" name="updatepictures" value="<?php _e("Save Changes",'nggallery')?>" />
 			</div>
 
 		</div>
@@ -202,7 +202,7 @@ jQuery(document).ready( function() {
 </div> <!-- poststuff -->
 
 <div class="tablenav ngg-tablenav">
-	<div style="float: left;">
+	<div class="alignleft actions" style="float: left;">
 	<select id="bulkaction" name="bulkaction">
 		<option value="no_action" ><?php _e("No action",'nggallery')?></option>
 	<?php if (!$showTags) { ?>
@@ -243,9 +243,9 @@ jQuery(document).ready( function() {
 	<?php } ?>
 
 	</div>
-	<span style="float:right;"><input type="submit" name="updatepictures" class="button-secondary"  value="<?php _e("Save Changes",'nggallery')?> &raquo;" /></span>
+	<span style="float:right; padding:7px 8px 0;"><input type="submit" name="updatepictures" class="button-primary action"  value="<?php _e("Save Changes",'nggallery')?>" /></span>
 </div>
-<br style="clear: both;"/>
+
 <table id="ngg-listimages" class="widefat" >
 	<thead>
 	<tr>
@@ -269,6 +269,27 @@ jQuery(document).ready( function() {
 		<?php } ?>
 	</tr>
 	</thead>
+	<tfoot>
+	<tr>
+		<?php foreach($gallery_columns as $gallery_column_key => $column_display_name) {
+			switch ($gallery_column_key) {
+				case 'cb' :
+					$class = ' class="check-column;"';
+				break;
+				case 'tags' :
+					$class = ' style="width:70%;"';
+				break;
+				case 'action' :
+					$class = ' colspan="3" style="text-align: center;"';
+				break;
+				default : 
+					$class = ' style="text-align: center;"';
+			}
+		?>
+			<th scope="col"<?php echo $class; ?>><?php echo $column_display_name; ?></th>
+		<?php } ?>
+	</tr>
+	</tfoot>
 	<tbody>
 <?php
 if($picturelist) {
@@ -377,7 +398,7 @@ if($picturelist) {
 	
 		</tbody>
 	</table>
-	<p class="submit"><input type="submit" name="updatepictures" value="<?php _e("Save Changes",'nggallery')?> &raquo;" /></p>
+	<p class="submit"><input type="submit" class="button-primary action" name="updatepictures" value="<?php _e("Save Changes",'nggallery')?>" /></p>
 	</form>	
 	<br class="clear"/>
 	</div><!-- /#wrap -->

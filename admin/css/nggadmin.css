@@ -1,18 +1,8 @@
-/* NextGEN Gallery Style for Wordpress 2.7
+/* 
+** NextGEN Gallery Style for Wordpress 2.7
+*/
+
 /* SETTINGS FOR Overview Gallery */
-
-div.ngg-dashboard-widget {
-	border:1px solid #CCCCCC;
-	height:58em;
-	overflow:auto;
-	margin-right:20px;
-	padding:2px;
-	position:relative;
-}
-
-div.dashboard-widget-content .settings li {
-	margin:0.3em 0pt 0em;
-}
 
 #newversion {
 	border-color:#CCCCCC;
@@ -23,62 +13,12 @@ div.dashboard-widget-content .settings li {
 	padding:2px;
 }
 
-/* Right Now (not available in WP2.7) */
-
-#rightnow {
-	border-width: 1px;
-	border-style: solid;
-	padding: 2px;
-	margin-top: 10px;
-	margin-right: 7px;
+#dashboard_server_settings ul.settings span {
+	padding-left : 10px;
+	color:#2583AD;
+	font-weight:bold;
 }
 
-#rightnow .reallynow {
-	padding: 6px;
-	font-size: 15px;
-	line-height: 2;
-	margin: 0;
-}
-
-#rightnow .rbutton {
-	font-weight: normal;
-	padding: 6px;
-	border-bottom: none;
-	-moz-border-radius: 2px;
-	-khtml-border-radius: 2px;
-	-webkit-border-radius: 2px;
-	border-radius: 2px;
-	text-decoration: none;
-}
-
-#rightnow .reallynow span {
-	display: block;
-	text-align: left;
-	float: left;
-	padding: 0 6px;
-}
-
-#rightnow .reallynow a {
-	display: block;
-	text-align: right;
-	float: right;
-	padding: 0 6px;
-	font-size: 14px;
-	margin: 1px 6px 0 0;
-}
-
-#rightnow .youhave {
-	font-size:  14px;
-	padding: 10px;
-}
-
-#rightnow h3, #rightnow p {
-	padding: 0 10px;
-}
-
-#rightnow a {
-	font-weight: bold;
-}
 
 /* SETTING FOR FLASH UPLOAD BUTTON */
 .swfupload {
@@ -88,8 +28,8 @@ div.dashboard-widget-content .settings li {
 }
 
 /* SETTINGS FOR THE OPTIONS TABLE */ 
-.form-table th {
-	width:33%;
+.ngg-options th {
+	width:22%;
 } 
 
 /* WATERMARK */
@@ -213,12 +153,12 @@ div .progressbar span {
 
  /* SETTINGS FOR ALBUM PAGE */
 
-.ngg-albumnav {
-	width : 100%;
-	background-color:#EAF3FA;
-	clear:both;
-	margin-bottom:-10px;
-	margin-top:8px;
+.tablenav select[name="act_album"] {
+	width:150px;
+}
+
+.tablenav span {
+	padding-left: 50px;
 }
 
 .groupItem

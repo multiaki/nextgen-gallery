@@ -126,36 +126,31 @@ function ngg_serialize(s)
 	<form id="selectalbum" method="POST" onsubmit="ngg_serialize()" accept-charset="utf-8">
 		<?php wp_nonce_field('ngg_album') ?>
 		<input name="sortorder" type="hidden" />
-		<table class="ngg-albumnav">
-			<tr>
-				<th align="right"><?php _e('Select album', 'nggallery') ?></th>  
-				<td>
-					<select id="act_album" name="act_album" onchange="this.form.submit();">
-						<option value="0" ><?php _e('No album selected', 'nggallery') ?></option>
-						<?php
-							$albumlist = $wpdb->get_results("SELECT * FROM $wpdb->nggalbum ORDER BY id ASC");
-							if(is_array($albumlist)) {
-								foreach($albumlist as $album) {
-									if ($_POST['act_album'] == $album->id) $selected = 'selected="selected" ';
-									else $selected = '';
-									echo '<option value="'.$album->id.'" '.$selected.'>'.$album->name.'</option>'."\n";
-								}
+		<div class="tablenav">
+			<div class="alignleft actions">
+				<?php _e('Select album', 'nggallery') ?>
+				<select id="act_album" name="act_album" onchange="this.form.submit();">
+					<option value="0" ><?php _e('No album selected', 'nggallery') ?></option>
+					<?php
+						$albumlist = $wpdb->get_results("SELECT * FROM $wpdb->nggalbum ORDER BY id ASC");
+						if(is_array($albumlist)) {
+							foreach($albumlist as $album) {
+								if ($_POST['act_album'] == $album->id) $selected = 'selected="selected" ';
+								else $selected = '';
+								echo '<option value="'.$album->id.'" '.$selected.'>'.$album->name.'</option>'."\n";
 							}
-						?>
-					</select>
-				</td> 
-				<th align="right"><?php _e('Add new album', 'nggallery') ?></th>
-				<td><input id="newalbum" name="newalbum" value="" /></td>
-				<td>
-					<p class="ngg-submit">
-						<?php if ($_POST['act_album'] > 0){ ?>
-							<input type="submit" name="delete" class="button delete" value="<?php _e('Delete') ?> &raquo;" onclick="javascript:check=confirm('<?php _e('Delete album ?','nggallery'); ?>');if(check==false) return false;"/>
-						<?php } ?>
-						<input type="submit" name="update" class="button" value="<?php _e('Update') ?> &raquo;" />
-					</p>
-				</td>
-			</tr>
-		</table>
+						}
+					?>
+				</select>
+				<?php if ($_POST['act_album'] > 0){ ?>
+					<input class="button-primary action" type="submit" name="update" value="<?php _e('Update', 'nggallery') ?>"/>
+					<input type="submit" name="delete" class="button-secondary action" value="<?php _e('Delete', 'nggallery') ?>" onclick="javascript:check=confirm('<?php _e('Delete album ?','nggallery'); ?>');if(check==false) return false;"/>
+				<?php } else { ?>
+					<span><?php _e('Add new album', 'nggallery') ?>&nbsp;</span><input class="search-input" id="newalbum" name="newalbum" type="text" value="" />			
+					<input class="button-secondary action" type="submit" name="update" value="<?php _e('Add', 'nggallery') ?>"/>
+				<?php } ?>	
+			</div>
+		</div>
 	</form>
 	<br style="clear: both;"/>
 	<p>

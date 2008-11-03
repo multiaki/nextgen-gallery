@@ -142,6 +142,8 @@ class nggAdminPanel{
 		wp_register_script('swfupload_f10', NGGALLERY_URLPATH .'admin/js/swfupload.js', array('jquery'), '2.2.0');
 				
 		switch ($_GET['page']) {
+			case NGGFOLDER : 
+				wp_enqueue_script( 'postbox' );
 			case "nggallery-manage-gallery" :
 				wp_enqueue_script( 'postbox' );
 				wp_enqueue_script( 'ngg-ajax' );
