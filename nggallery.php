@@ -64,7 +64,7 @@ class nggLoader {
 		$this->register_taxonomy();
 		$this->load_options();
 		$this->load_dependencies();
-				
+		
 		// Init options & tables during activation & deregister init option
 		register_activation_hook( dirname(__FILE__) . '/nggallery.php', array(&$this, 'activate') );
 		register_deactivation_hook( dirname(__FILE__) . '/nggallery.php', array(&$this, 'deactivate') );	
@@ -102,9 +102,6 @@ class nggLoader {
 			// If activated, add PicLens/Cooliris javascript to footer
 			if ( $this->options['usePicLens'] )
 				add_action('wp_head', array('nggMediaRss', 'add_piclens_javascript'));
-			
-			// Add rewrite rules
-			$nggRewrite = new nggRewrite();
 			
 			// Why is this not core ?
 			add_action('wp_head', 'wp_print_styles');
@@ -231,6 +228,7 @@ class nggLoader {
 		require_once (dirname (__FILE__) . '/lib/tags.php');
 		require_once (dirname (__FILE__) . '/lib/media-rss.php');
 		require_once (dirname (__FILE__) . '/widgets/widgets.php');
+		require_once (dirname (__FILE__) . '/lib/rewrite.php');
 		include_once (dirname (__FILE__) . '/admin/tinymce/tinymce.php');
 		
 		if (DOING_AJAX)
@@ -246,7 +244,6 @@ class nggLoader {
 		} else {
 			require_once (dirname (__FILE__) . '/nggfunctions.php');
 			require_once (dirname (__FILE__) . '/lib/shortcodes.php');
-			require_once (dirname (__FILE__) . '/lib/rewrite.php');
 		}			
 	}
 	
@@ -332,6 +329,8 @@ class nggLoader {
 	// Let's start the holy plugin
 	global $ngg;
 	$ngg = new nggLoader();
+	// Add rewrite rules
+	$nggRewrite = new nggRewrite();	
 }
 
 ?>

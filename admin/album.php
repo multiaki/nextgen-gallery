@@ -235,15 +235,14 @@ function getgallerycontainer($galleryid = 0, $used = false) {
 	if ($gallery) {
 
 		// set image url
-		$act_thumbnail_url 	= get_option ('siteurl')."/".$gallery->path.nggGallery::get_thumbnail_folder($gallery->path, FALSE);
+		$act_thumbnail_url 	= get_option ('siteurl') . '/' .$gallery->path . nggGallery::get_thumbnail_folder($gallery->path, FALSE);
 		
 		$post= get_post($gallery->pageid); 	
 		$pagename = $post->post_title;	
 		$filename = $wpdb->get_var("SELECT filename FROM $wpdb->nggpictures WHERE pid = '$gallery->previewpic'");
-		if ($filename) $img = '<img src="'.$act_thumbnail_url. "thumbs_" .$filename.'" />';
-		else $img = '';
+		$img =  ($filename) ? '<img src="'.$act_thumbnail_url. 'thumbs_' .$filename.'" />' : '';
 		// add class if it's in use in other albums
-		$used = $used ? " inUse" : "";
+		$used = $used ? ' inUse' : '';
 		echo '<div id="gid-'.$gallery->gid.'" class="groupItem'. $used .'">
 				<div class="innerhandle">
 					<div class="item_top">

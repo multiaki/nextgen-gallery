@@ -57,6 +57,12 @@ function ngg_upgrade() {
 			// New capability for administrator role
 			$role = get_role('administrator');
 			$role->add_cap('NextGEN Manage tags');
+			
+			// Add new option
+			$ngg_options = get_option('ngg_options');
+			$ngg_options['graphicLibrary']  = 'gd';
+			update_option('ngg_options', $ngg_options);	
+			
 		}
 		
 		if (version_compare($installed_ver, '0.97', '<')) {
@@ -136,7 +142,7 @@ function ngg_convert_filestructure() {
 }
 
 /**
- * ngg_import_date_time() - Read the timestamp from exif and instert it into the database
+ * ngg_import_date_time() - Read the timestamp from exif and insert it into the database
  * 
  * @return void
  */

@@ -29,7 +29,7 @@ require_once(dirname(__FILE__) . "/../lib/media-rss.php");
 
 // Check we have the required GET parameters
 $mode = $_GET["mode"];
-if (!isset($mode) || $mode=="")
+if (!isset($mode) || $mode == '')
 	$mode = last_pictures;
 
 // Act according to the required mode
@@ -38,12 +38,12 @@ if ($mode=='last_pictures') {
 	
 	// Get additional parameters
 	$page = (int) $_GET["page"];	
-	if (!isset($page) || $page=="") {
+	if (!isset($page) || $page == '') {
 		$page = 0;
 	}
 	
 	$show = (int) $_GET["show"];	
-	if (!isset($show) || $show=="" || $show==0) {
+	if (!isset($show) || $show == '' || $show==0) {
 		$show = 10;
 	}
 	
@@ -52,7 +52,8 @@ if ($mode=='last_pictures') {
 		
 	// Get all galleries
 	$galleries = nggdb::find_all_galleries();
-	if ( count($galleries)==0 ) {
+	
+	if ( count($galleries) == 0 ) {
 		header('content-type:text/plain;charset=utf-8');
 		echo sprintf(__("No galleries have been yet created.","nggallery"), $gid);
 		exit;
@@ -60,19 +61,20 @@ if ($mode=='last_pictures') {
 	
 	// Get additional parameters
 	$gid = (int) $_GET["gid"];	
-	if (!isset($gid) || $gid=="" || $gid==0) {
-		$gid = $galleries[0]->gid;
-	}
 	
-	$prev_next = $_GET["prev_next"];	
-	if (!isset($prev_next) || $prev_next=="") {
+	if (!isset($gid) || $gid == '' || $gid == 0)
+		$gid = $galleries[0]->gid;
+	
+	$prev_next = $_GET["prev_next"];
+		
+	if (!isset($prev_next) || $prev_next == '')
 		$prev_next = false;
-	} else {
+	else
 		$prev_next = ($prev_next=='true' ? true : false);
-	}
 
 	// Get the main gallery object
-	$gallery = nggdb::find_gallery($gid);	
+	$gallery = nggdb::find_gallery($gid);
+		
 	if (!isset($gallery) || $gallery==null) {
 		header('content-type:text/plain;charset=utf-8');
 		echo sprintf(__("The gallery ID=%s does not exist.","nggallery"), $gid);
@@ -100,11 +102,12 @@ if ($mode=='last_pictures') {
 	}
 	
 	$rss = nggMediaRss::get_gallery_mrss($gallery, $prev_gallery, $next_gallery);	
+	
 } else if ($mode=='album') {
 	
 	// Get additional parameters
 	$aid = (int) $_GET["aid"];	
-	if (!isset($aid) || $aid=="" || $aid==0) {
+	if (!isset($aid) || $aid=='' || $aid==0) {
 		header('content-type:text/plain;charset=utf-8');
 		_e("No album ID has been provided as parameter","nggallery");
 		exit;
@@ -112,7 +115,7 @@ if ($mode=='last_pictures') {
 	
 	// Get the album object
 	$album = nggdb::find_album($aid);
-	if (!isset($album) || $album==null) {
+	if (!isset($album) || $album==null ) {
 		header('content-type:text/plain;charset=utf-8');
 		echo sprintf(__("The album ID=%s does not exist.","nggallery"), $aid);
 		exit;

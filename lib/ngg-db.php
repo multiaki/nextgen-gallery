@@ -393,5 +393,37 @@ class nggdb {
 		return null;
 	}
 
+	/**
+	 * Get all the images from a given album
+	 * 
+	 * @param object|int $album The album object or the id	
+	 * @param string $orderby
+	 * @param string $order
+	 * @param bool $exclude
+	 * @return An array containing the nggImage objects representing the images in the album.
+	 */
+	function find_images_in_album($album, $orderby = 'galleryid', $order = 'ASC', $exclude = true) {		 
+		global $wpdb;
+		
+		if ( !is_object($album) )
+			$album = nggdb::find_album( $album );
+
+ 		// Get gallery list		 
+		$gallery_list = implode(',', $album->gallery_ids);		 
+		// Check for the exclude setting
+		$exclude_clause = ($exclude) ? ' AND tt.exclude<>1 ' : '';
+
+		$result = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE tt.galleryid IN ($gallery_list) $exclude_clause ORDER BY $orderby $order");		 
+		// Return the object from the query result
+		if ($result) {
+			foreach ($result as $image) {
+				$images[] = new nggImage( $image );
+			}
+			return $images;
+		} 
+
+		return null;	 
+	}
+
 }
 ?>

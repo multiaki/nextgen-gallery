@@ -18,9 +18,9 @@ class nggMediaRss {
 	 * Add the javascript required to enable PicLens/CoolIris support 
 	 */
 	function add_piclens_javascript() {
-		echo "\n" . '<!-- NextGen Gallery CoolIris/PicLens support -->';
+		echo "\n" . '<!-- NextGeEN Gallery CoolIris/PicLens support -->';
 		echo "\n" . '<script type="text/javascript" src="http://lite.piclens.com/current/piclens_optimized.js"></script>';
-		echo "\n" . '<!-- /NextGen Gallery CoolIris/PicLens support -->';
+		echo "\n" . '<!-- /NextGEN Gallery CoolIris/PicLens support -->';
 	}
 	
 	/**
@@ -63,7 +63,7 @@ class nggMediaRss {
 		$title = stripslashes(get_option('blogname'));
 		$description = stripslashes(get_option('blogdescription'));
 		$link = get_option('siteurl');
-		$prev_link = $page>0 ? nggMediaRss::get_last_pictures_mrss_url($page-1, $show) : '';
+		$prev_link = ($page > 0) ? nggMediaRss::get_last_pictures_mrss_url($page-1, $show) : '';
 		$next_link = count($images)!=0 ? nggMediaRss::get_last_pictures_mrss_url($page+1, $show) : '';
 		
 		return nggMediaRss::get_mrss_root_node($title, $description, $link, $prev_link, $next_link, $images);
@@ -77,13 +77,14 @@ class nggMediaRss {
 	 * @param $next_gallery The next gallery to link in RSS (null if none)
 	 */
 	function get_gallery_mrss($gallery, $prev_gallery = null, $next_gallery = null) {
+		
 		$title = stripslashes($gallery->title);
 		$description = stripslashes($gallery->galdesc);
-		$link = $gallery->get_permalink();
-		$prev_link = $prev_gallery!=null ? nggMediaRss::get_gallery_mrss_url($prev_gallery->gid, true) : '';
-		$next_link = $next_gallery!=null ? nggMediaRss::get_gallery_mrss_url($next_gallery->gid, true) : '';
-		$images = $gallery->get_images();
-		
+		$link = nggMediaRss::get_permalink($gallery->pageid);
+		$prev_link = ( $prev_gallery != null) ? nggMediaRss::get_gallery_mrss_url($prev_gallery->gid, true) : '';
+		$next_link = ( $next_gallery != null) ? nggMediaRss::get_gallery_mrss_url($next_gallery->gid, true) : '';
+		$images = nggdb::get_gallery($gallery->gid);
+		var_dump($images);
 		return nggMediaRss::get_mrss_root_node($title, $description, $link, $prev_link, $next_link, $images);
 	}
 	
@@ -93,12 +94,13 @@ class nggMediaRss {
 	 * @param $album The album to include in RSS
 	 */
 	function get_album_mrss($album) {
+
 		$title = stripslashes($album->name);
-		$description = "";
-		$link = $album->get_permalink();
+		$description = '';
+		$link = nggMediaRss::get_permalink(0);
 		$prev_link = '';
 		$next_link = '';
-		$images = $album->get_images();
+		$images = nggdb::find_images_in_album($album->id);
 		
 		return nggMediaRss::get_mrss_root_node($title, $description, $link, $prev_link, $next_link, $images);
 	}
@@ -107,12 +109,12 @@ class nggMediaRss {
 	 * Get the XML <rss> node
 	 */
 	function get_mrss_root_node($title, $description, $link, $prev_link, $next_link, $images) {	
-		$out = "";
-		if ($prev_link!='' || $next_link!='') {
-			$out .= "<rss version='2.0' xmlns:media='http://search.yahoo.com/mrss' xmlns:atom='http://www.w3.org/2005/Atom'>\n" ;
-		} else {
-			$out .= "<rss version='2.0' xmlns:media='http://search.yahoo.com/mrss'>\n";
-		}
+		
+		if ($prev_link != '' || $next_link != '')
+			$out = "<rss version='2.0' xmlns:media='http://search.yahoo.com/mrss' xmlns:atom='http://www.w3.org/2005/Atom'>\n" ;
+		else
+			$out = "<rss version='2.0' xmlns:media='http://search.yahoo.com/mrss'>\n";
+		
 		$out .= "\t<channel>\n";
 		
 		$out .= nggMediaRss::get_generator_mrss_node();
@@ -141,7 +143,7 @@ class nggMediaRss {
 	 * Get the XML <generator> node
 	 */
 	function get_generator_mrss_node($indent = "\t\t") {	
-		return $indent . "<generator><![CDATA[NextGen Gallery [http://alexrabe.boelinger.com]]]></generator>\n";
+		return $indent . "<generator><![CDATA[NextGEN Gallery [http://alexrabe.boelinger.com]]]></generator>\n";
 	}	
 	
 	/**
@@ -184,7 +186,7 @@ class nggMediaRss {
 	 *
 	 * @param $image The image object
 	 */
-	function get_image_mrss_node($image, $indent="\t\t") {		
+	function get_image_mrss_node($image, $indent = "\t\t" ) {		
 		$ngg_options = nggGallery::get_option('ngg_options');
 		
 		$tags = $image->get_tags();
@@ -212,7 +214,17 @@ class nggMediaRss {
 		$out .= $indent . "</item>\n";
 
 		return $out;
+	}
+	
+	function get_permalink($page_id) {		 
+		if ($page_id == 0)	
+			$permalink = get_option('siteurl');		 
+		else 
+			$permalink = get_permalink($page_id);
+				 
+		return $permalink;		 
 	}	
+		
 }
 
 ?>
