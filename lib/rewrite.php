@@ -40,8 +40,10 @@ class nggRewrite {
 	*/
 	function get_permalink( $args ) {
 		global $wp_rewrite, $wp_query;
-
-		if ($wp_rewrite->using_permalinks() && $this->options['usePermalinks'] ) {
+		
+		//TODO:On what ever reason the rewrite rules didn't work for post under WordPress 2.7 
+		//Enable it currently only for pages 
+		if ($wp_rewrite->using_permalinks() && $this->options['usePermalinks'] && is_page() ) {
 			$post = &get_post(get_the_ID());
 
 			// $_GET from wp_query

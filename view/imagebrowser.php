@@ -18,7 +18,7 @@ Follow variables are useable :
 
 <div class="ngg-imagebrowser" >
 
-	<h3> <?php echo $image->alttext ?></h3>
+	<h3><?php echo $image->alttext ?></h3>
 
 	<div class="pic"><?php echo $image->href_link ?></div>
 	<div class="ngg-imagebrowser-nav"> 
