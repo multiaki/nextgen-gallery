@@ -84,7 +84,7 @@ class nggMediaRss {
 		$prev_link = ( $prev_gallery != null) ? nggMediaRss::get_gallery_mrss_url($prev_gallery->gid, true) : '';
 		$next_link = ( $next_gallery != null) ? nggMediaRss::get_gallery_mrss_url($next_gallery->gid, true) : '';
 		$images = nggdb::get_gallery($gallery->gid);
-		var_dump($images);
+
 		return nggMediaRss::get_mrss_root_node($title, $description, $link, $prev_link, $next_link, $images);
 	}
 	
