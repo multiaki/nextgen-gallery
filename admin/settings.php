@@ -134,7 +134,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					</tr>
 					<tr>
 						<th align="left"><?php _e('Activate PicLens/CoolIris support','nggallery') ?> (<a href="http://www.cooliris.com">CoolIris</a>)</th>
-						<td><input type="checkbox" name="usePicLens" value="1" <?php checked('1', $ngg_options['usePicLens']); ?> /><br />
+						<td><input type="checkbox" name="usePicLens" value="1" <?php checked('1', $ngg->options['usePicLens']); ?> /><br />
 						<?php _e('When you activate this option, some javascript is added to your site footer. Make sure that wp_footer is called in your theme.','nggallery') ?></td>
 					</tr>
 				</table>
