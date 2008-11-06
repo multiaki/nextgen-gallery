@@ -237,7 +237,9 @@ function ngg_list_support()	{
 	'Maurice van der Linden' => 'http://www.vd-linden.nl',
 	'Sandra Longmore' => '',
 	'Grupo Probeta' => 'http://www.grupoprobeta.com',
-	'Aaron Simpson' => ''	
+	'Aaron Simpson' => '',
+	'Dana Burns' => '',
+	'Craig Thompson' => 'http://www.globalwebhq.com/'	
 	);
 	
 	ksort($supporter);

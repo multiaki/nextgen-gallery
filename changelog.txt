@@ -2,15 +2,16 @@ NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
 V1.00
+- NEW : Added ImageMagick support (currently a bit experimental) (THX to Frederic de Ranter) 
 - NEW : Automatic unistall via register_uninstall_hook()
 - NEW : Added a presort option to sort easier the images
 - NEW : Lookup for a nggallery.css in the theme folder
 - NEW : Added Date/Time field to database and import it from EXIF, new sort option
-- NEW : Multi Widgets to show links to Media RSS feeds
-- NEW : PicLens support for galleries
-- NEW : Copy/Move images between galleries 
-- NEW : Media RSS feeds (either for galleries, albums or global)
-- NEW : Image tag management
+- NEW : Multi Widgets to show links to Media RSS feeds (THX to Vincent Prat) 
+- NEW : PicLens support for galleries (THX to Vincent Prat) 
+- NEW : Copy/Move images between galleries (THX to Vincent Prat) 
+- NEW : Media RSS feeds (either for galleries, albums or global) (THX to Vincent Prat) 
+- NEW : Image tag management (THX to Vincent Prat) 
 - NEW : Convert all shortcodes to WP shortcodes API
 - NEW : AJAX based thumbnail generator
 - NEW : Create output via template files, more flexible and support for multiple templates
@@ -23,7 +24,7 @@ V1.00
 - Changed : Move update message to admin.php
 - Changed : Widgets are now core and doesn't need to be activate, rework as Multi Widgets		
 - Changed : Improved the gallery management page.
-- Changed : Renammed the filter 'ngg_create_gallery_thumbcode' to 'ngg_get_thumbcode'.
+- Changed : Rename the filter 'ngg_create_gallery_thumbcode' to 'ngg_get_thumbcode'.
 - Changed : Convert tags to WP-Taxonomy tables, no more need for ngg_tags, ngg_pic2tags
 - Changed : Arrange manage fields in a new way
 - Changed : Support now SSL 
