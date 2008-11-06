@@ -41,7 +41,7 @@ class nggRewrite {
 	function get_permalink( $args ) {
 		global $wp_rewrite, $wp_query;
 		
-		//TODO:On what ever reason the rewrite rules didn't work for post under WordPress 2.7 
+		//TODO: The fix in 9193 didn't allow anymore rewrite rules for post. See http://trac.wordpress.org/ticket/6627
 		//Enable it currently only for pages 
 		if ($wp_rewrite->using_permalinks() && $this->options['usePermalinks'] && is_page() ) {
 			$post = &get_post(get_the_ID());

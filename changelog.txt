@@ -2,6 +2,7 @@ NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
 V1.00
+- NEW : Automatic unistall via register_uninstall_hook()
 - NEW : Added a presort option to sort easier the images
 - NEW : Lookup for a nggallery.css in the theme folder
 - NEW : Added Date/Time field to database and import it from EXIF, new sort option
@@ -16,6 +17,8 @@ V1.00
 - NEW : Extended role system. Each gallery has now a author
 - NEW : [thumb id="4,5,12,..."] shortcode. You can now insert 
         thumbnails for one or more images (that are not necessarly inside the same gallery).
+- Changed : Add swfupload 2.2.0. Support for Adobe Flash 10 upload		
+- Changed : Update all Admin pages for Wordpress 2.7 Admin UI		
 - Changed : New icon for TinyMCE and WP2.7 Menue from http://www.pinvoke.com/
 - Changed : Move update message to admin.php
 - Changed : Widgets are now core and doesn't need to be activate, rework as Multi Widgets		

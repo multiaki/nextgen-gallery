@@ -593,19 +593,16 @@ function nggShowRelatedGallery($taglist, $maxImages = 0) {
 	// cut the list to maxImages
 	if ( $maxImages > 0 )
 		array_splice($picturelist, $maxImages);
-	
+
  	// *** build the gallery output
 	$out   = '<div class="ngg-related-gallery">';
 	foreach ($picturelist as $picture) {
-		// set gallery url
-		$imageURL 	= get_option ('siteurl') . '/' . $picture->path . '/' . $picture->filename;
-		$thumbnailURL 	= $folder_url . 'thumbs/thumbs_' . $picture->filename;
 
 		// get the effect code
 		$thumbcode = $picture->get_thumbcode('Related images for ' . get_the_title());
-	
-		$out .= '<a href="' . $imageURL . '" title="' . stripslashes($picture->description) . '" ' . $thumbcode . ' >';
-		$out .= '<img title="' . stripslashes($picture->alttext) . '" alt="' . stripslashes($picture->alttext) . '" src="' . $thumbnailURL . '" />';
+
+		$out .= '<a href="' . $picture->imageURL . '" title="' . stripslashes($picture->description) . '" ' . $thumbcode . ' >';
+		$out .= '<img title="' . stripslashes($picture->alttext) . '" alt="' . stripslashes($picture->alttext) . '" src="' . $picture->thumbURL . '" />';
 		$out .= '</a>' . "\n";
 	}
 	$out .= '</div>' . "\n";

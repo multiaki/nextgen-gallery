@@ -133,7 +133,7 @@ if (!$error && filesize($real_file) > 0) {
 			 </div>
 	<?php if ( is_writeable($real_file) ) : ?>
 		<p class="submit">
-			<input type="submit" name="submit" value="<?php _e('Update File &raquo;','nggallery') ?>" tabindex="2" />
+			<input class="button-primary action" type="submit" name="submit" value="<?php _e('Update File','nggallery') ?>" tabindex="2" />
 		</p>
 	<?php else : ?>
 	<p><em><?php _e('If this file were writable you could edit it.','nggallery'); ?></em></p>

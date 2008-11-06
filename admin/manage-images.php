@@ -417,9 +417,9 @@ if($picturelist) {
 		  	</tr>
 		  	<tr align="right">
 		    	<td class="submit">
-		    		<input type="submit" name="TB_EditTags" value="<?php _e("OK",'nggallery')?>" onclick="var numchecked = getNumChecked(document.getElementById('updategallery')); if(numchecked < 1) { alert('<?php echo js_escape(__("No images selected",'nggallery')); ?>'); tb_remove(); return false } return confirm('<?php echo sprintf(js_escape(__("You are about to start the bulk edit for %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>')" />
+		    		<input class="button-primary" type="submit" name="TB_EditTags" value="<?php _e("OK",'nggallery')?>" onclick="var numchecked = getNumChecked(document.getElementById('updategallery')); if(numchecked < 1) { alert('<?php echo js_escape(__("No images selected",'nggallery')); ?>'); tb_remove(); return false } return confirm('<?php echo sprintf(js_escape(__("You are about to start the bulk edit for %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>')" />
 		    		&nbsp;
-		    		<input type="reset" value="&nbsp;<?php _e("Cancel",'nggallery')?>&nbsp;" onclick="tb_remove()"/>
+		    		<input class="button-secondary" type="reset" value="&nbsp;<?php _e("Cancel",'nggallery')?>&nbsp;" onclick="tb_remove()"/>
 		    	</td>
 			</tr>
 		</table>
@@ -454,9 +454,9 @@ if($picturelist) {
 		  	</tr>
 		  	<tr align="right">
 		    	<td class="submit">
-		    		<input type="submit" name="TB_SelectGallery" value="<?php _e("OK",'nggallery')?>" onclick="var numchecked = getNumChecked(document.getElementById('updategallery')); if(numchecked < 1) { alert('<?php echo js_escape(__("No images selected",'nggallery')); ?>'); tb_remove(); return false } return confirm('<?php echo sprintf(js_escape(__("You are about to copy or move %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>')" />
+		    		<input type="submit" class="button-primary" name="TB_SelectGallery" value="<?php _e("OK",'nggallery')?>" onclick="var numchecked = getNumChecked(document.getElementById('updategallery')); if(numchecked < 1) { alert('<?php echo js_escape(__("No images selected",'nggallery')); ?>'); tb_remove(); return false } return confirm('<?php echo sprintf(js_escape(__("You are about to copy or move %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>')" />
 		    		&nbsp;
-		    		<input type="reset" value="<?php _e("Cancel",'nggallery')?>" onclick="tb_remove()"/>
+		    		<input class="button-secondary" type="reset" value="<?php _e("Cancel",'nggallery')?>" onclick="tb_remove()"/>
 		    	</td>
 			</tr>
 		</table>
