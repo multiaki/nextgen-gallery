@@ -366,7 +366,7 @@ function ngg_widget_control($widget_args = 1) {
 		if ( (!empty($list)) && ($exclude != "all") ) {
 			$list = explode(',',$list);
 			// Prepare for SQL
-			$list = "'" . implode("', '", intval($list) ) . "'";
+			$list = "'" . implode("', '", $list ) . "'";
 			
 			if ($exclude == "denied")	
 				$exclude_list = "AND NOT t.gid IN ($list)";
