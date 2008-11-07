@@ -174,7 +174,7 @@ function media_upload_nextgen_form($errors) {
 			  <div class='filename'></div>
 			  <a class='toggle describe-toggle-on' href='#'><?php attribute_escape( _e('Show',"nggallery") ); ?></a>
 			  <a class='toggle describe-toggle-off' href='#'><?php attribute_escape( _e('Hide',"nggallery") );?></a>
-			  <div class='filename new'><?php echo ( empty($picture->alttext) ) ? wp_html_excerpt($picture->filename,75): stripslashes( wp_html_excerpt($picture->alttext,75) ); ?></div>
+			  <div class='filename new'><?php echo ( empty($picture->alttext) ) ? wp_html_excerpt($picture->filename,60): stripslashes( wp_html_excerpt($picture->alttext,60) ); ?></div>
 			  <table class='slidetoggle describe startclosed'><tbody>
 				  <tr>
 					<td rowspan='4'><img class='thumbnail' alt='<?php echo attribute_escape( $picture->alttext ); ?>' src='<?php echo attribute_escape( $picture->thumbURL ); ?>'/></td>

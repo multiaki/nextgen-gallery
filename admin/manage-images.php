@@ -187,13 +187,13 @@ jQuery(document).ready( function() {
 						<option value="0"><?php _e ('Main page (No parent)', 'nggallery'); ?></option>
 						<?php parent_dropdown (); ?>
 					</select>
-					<input type="submit" name="addnewpage" value="<?php _e ('Add page', 'nggallery'); ?>" id="group"/>
+					<input class="button-secondary action" type="submit" name="addnewpage" value="<?php _e ('Add page', 'nggallery'); ?>" id="group"/>
 					</th>
 				</tr>
 			</table>
 			
 			<div class="submit">
-				<input type="submit" name="scanfolder" value="<?php _e("Scan Folder for new images",'nggallery')?> " />
+				<input type="submit" class="button-secondary" name="scanfolder" value="<?php _e("Scan Folder for new images",'nggallery')?> " />
 				<input type="submit" class="button-primary action" name="updatepictures" value="<?php _e("Save Changes",'nggallery')?>" />
 			</div>
 
