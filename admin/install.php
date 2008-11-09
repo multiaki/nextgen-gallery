@@ -215,6 +215,7 @@ function nggallery_uninstall() {
 	
 	delete_option( "ngg_options" );
 	delete_option( "ngg_db_version");
+	delete_option( 'ngg_update_exists' );
 	
 	// now remove the capability
 	ngg_remove_capability("NextGEN Gallery overview");

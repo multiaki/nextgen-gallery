@@ -70,7 +70,7 @@ class nggLoader {
 		register_deactivation_hook( dirname(__FILE__) . '/nggallery.php', array(&$this, 'deactivate') );	
 		
 		if ( function_exists('register_uninstall_hook') )
-			register_uninstall_hook( dirname(__FILE__) . '/nggallery.php', array(&$this, 'uninstall') );
+			register_uninstall_hook( dirname(__FILE__) . '/admin/install.php', 'nggallery_uninstall' );
 		
 		// Start this plugin once all other plugins are fully loaded
 		add_action( 'plugins_loaded', array(&$this, 'start_plugin') );
@@ -316,15 +316,7 @@ class nggLoader {
 		delete_option( 'ngg_init_check' );
 		delete_option( 'ngg_update_exists' );
 	}
-	
-	function uninstall() {
-		
-		include_once (dirname (__FILE__) . '/admin/install.php');
-		nggallery_uninstall();
-		// remove the update message
-		delete_option( 'ngg_update_exists' );
-		
-	}
+
 }
 	// Let's start the holy plugin
 	global $ngg;
