@@ -11,20 +11,17 @@ function nggallery_picturelist() {
 	$showTags   = $ngg->manage_page->showTags;
 	$hideThumbs = $ngg->manage_page->hideThumbs;
 	
-	// get gallery values
-	$picturelist = nggdb::get_gallery($act_gid, $ngg->options['galSort'], $ngg->options['galSortDir'], false);
+	// Load the gallery metadata
+	$gallery = nggdb::find_gallery($act_gid);
 
-	if (!$picturelist) {
+	if (!$gallery) {
 		nggGallery::show_error(__('Gallery not found.', 'nggallery'));
 		return;
 	}
-	
-	//Build the object
-	$gallery = new stdClass();
-	// Copy gallery fields from the first database row into the object
-	foreach ($picturelist[0] as $key => $value)
-		$gallery->$key = $value ;
 
+	// get picture values
+	$picturelist = nggdb::get_gallery($act_gid, $ngg->options['galSort'], $ngg->options['galSortDir'], false);
+	
 	// get the current author
 	$act_author_user    = get_userdata( (int) $gallery->author );
 	
@@ -132,7 +129,7 @@ jQuery(document).ready( function() {
 <div id="poststuff">
 	<?php wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>
 	<div id="gallerydiv" class="postbox <?php echo postbox_classes('gallerydiv', 'ngg-manage-gallery'); ?>" >
-		<h3><?php _e('Gallery settings', 'nggallery') ?></h3>
+		<h3><?php _e('Gallery settings', 'nggallery') ?><small> (<?php _e('Click here for more settings', 'nggallery') ?>)</small></h3>
 		<div class="inside">
 			<table class="form-table" >
 				<tr>

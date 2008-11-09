@@ -73,19 +73,22 @@ class nggdb {
 	/**
 	 * Get a gallery given its ID
 	 * 
-	 * @gid The gallery ID
+	 * @param int|string $id or $name
 	 * @return A nggGallery object (null if not found)
 	 */
-	function find_gallery($gid) {		
+	function find_gallery( $id ) {		
 		global $wpdb;
 		
-		$gallery = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->nggallery WHERE gid = %d", $gid ) );
+		if( is_numeric($id) )
+			$gallery = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->nggallery WHERE gid = %d", $id ) );
+		else
+			$gallery = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->nggallery WHERE name = %s", $id ) );
 		
 		// Build the object from the query result
 		if ($gallery) 
 			return $gallery;
 		else 
-			return null;
+			return false;
 	}
 	
 	/**
@@ -100,6 +103,9 @@ class nggdb {
 	function get_gallery($id, $orderby = 'sortorder', $order = 'ASC', $exclude = true) {
 
 		global $wpdb;
+
+		// init the gallery as empty array
+		$gallery = array();
 		
 		// Check for the exclude setting
 		$exclude_clause = ($exclude) ? ' AND tt.exclude<>1 ' : '';
@@ -112,16 +118,13 @@ class nggdb {
 
 		// Build the object
 		if ($result) {
-			$gallery = array();
 				
 			// Now added all image data
 			foreach ($result as $key => $value)
 				$gallery[$key] = new nggImage( $value );
-			
-			return $gallery;
 		}
 		
-		return false;		
+		return $gallery;		
 	}
 	
 	/**
