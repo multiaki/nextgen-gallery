@@ -48,8 +48,8 @@ class nggdb {
 	function find_all_galleries($order_by = 'gid', $order_dir = 'ASC', $counter = false) {		
 		global $wpdb;
 		
-		$galleries = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->nggallery ORDER BY %s %s", $order_by, $order_dir), OBJECT_K );
-
+		$order_dir = ( $order_dir == 'DESC') ? 'DESC' : 'ASC';
+		$galleries = $wpdb->get_results( "SELECT * FROM $wpdb->nggallery ORDER BY {$order_by} {$order_dir}", OBJECT_K );
 		if ( !$galleries )
 			return array();
 		
@@ -57,12 +57,18 @@ class nggdb {
 			return $galleries;
 		
 		// get the galleries information 	
- 		foreach ($galleries as $key => $value)
+ 		foreach ($galleries as $key => $value) {
    			$galleriesID[] = $key;
-			   	
+   			// init the counter values
+   			$galleries[$key]->counter = 0;	
+		}
+		
 		// get the counter values 	
 		$picturesCounter = $wpdb->get_results('SELECT galleryid, COUNT(*) as counter FROM '.$wpdb->nggpictures.' WHERE galleryid IN (\''.implode('\',\'', $galleriesID).'\') AND exclude != 1 GROUP BY galleryid', OBJECT_K);
 
+		if ( !$picturesCounter )
+			return $galleries;
+		
 		// add the counter to the gallery objekt	
  		foreach ($picturesCounter as $key => $value)
 			$galleries[$value->galleryid]->counter = $value->counter;
@@ -95,12 +101,12 @@ class nggdb {
 	 * This function return all information about the gallery and the images inside
 	 * 
 	 * @param int|string $id or $name
-	 * @param string $orderby 
-	 * @param string $order (ASC |DESC)
+	 * @param string $order_by 
+	 * @param string $order_dir (ASC |DESC)
 	 * @param bool $exclude
 	 * @return An array containing the nggImage objects representing the images in the gallery.
 	 */
-	function get_gallery($id, $orderby = 'sortorder', $order = 'ASC', $exclude = true) {
+	function get_gallery($id, $order_by = 'sortorder', $order_dir = 'ASC', $exclude = true) {
 
 		global $wpdb;
 
@@ -110,11 +116,14 @@ class nggdb {
 		// Check for the exclude setting
 		$exclude_clause = ($exclude) ? ' AND tt.exclude<>1 ' : '';
 		
+		// Say no to any other value
+		$order_dir = ( $order_dir == 'DESC') ? 'DESC' : 'ASC';
+		
 		// Query database
 		if( is_numeric($id) )
-			$result = $wpdb->get_results( $wpdb->prepare( "SELECT tt.*, t.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = %d $exclude_clause ORDER BY %s %s", $id, $orderby, $order ) );
+			$result = $wpdb->get_results( $wpdb->prepare( "SELECT tt.*, t.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = %d {$exclude_clause} ORDER BY tt.{$order_by} {$order_dir}", $id ) );
 		else
-			$result = $wpdb->get_results( $wpdb->prepare( "SELECT tt.*, t.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.name = %s $exclude_clause ORDER BY %s %s", $id, $orderby, $order ) );
+			$result = $wpdb->get_results( $wpdb->prepare( "SELECT tt.*, t.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.name = %s {$exclude_clause} ORDER BY tt.{$order_by} {$order_dir}", $id ) );
 
 		// Build the object
 		if ($result) {
@@ -136,18 +145,21 @@ class nggdb {
 	 * @param bool $exclude
 	 * @return An array containing the nggImage objects representing the images in the gallery.
 	 */
-	function get_ids_from_gallery($id, $orderby = 'sortorder', $order = 'ASC', $exclude = true) {
+	function get_ids_from_gallery($id, $order_by = 'sortorder', $order_dir = 'ASC', $exclude = true) {
 
 		global $wpdb;
 		
 		// Check for the exclude setting
 		$exclude_clause = ($exclude) ? ' AND tt.exclude<>1 ' : '';
 		
+		// Say no to any other value
+		$order_dir = ( $order_dir == 'DESC') ? 'DESC' : 'ASC';		
+		
 		// Query database
 		if( is_numeric($id) )
-			$result = $wpdb->get_col( $wpdb->prepare( "SELECT tt.pid FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = %d $exclude_clause ORDER BY %s %s", $id, $orderby, $order ) );
+			$result = $wpdb->get_col( $wpdb->prepare( "SELECT tt.pid FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = %d $exclude_clause ORDER BY tt.{$order_by} $order_dir", $id ) );
 		else
-			$result = $wpdb->get_col( $wpdb->prepare( "SELECT tt.pid FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.name = %s $exclude_clause ORDER BY %s %s", $id, $orderby, $order ) );
+			$result = $wpdb->get_col( $wpdb->prepare( "SELECT tt.pid FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.name = %s $exclude_clause ORDER BY tt.{$order_by} $order_dir", $id ) );
 
 		return $result;		
 	}	
@@ -400,12 +412,12 @@ class nggdb {
 	 * Get all the images from a given album
 	 * 
 	 * @param object|int $album The album object or the id	
-	 * @param string $orderby
-	 * @param string $order
+	 * @param string $order_by
+	 * @param string $order_dir
 	 * @param bool $exclude
 	 * @return An array containing the nggImage objects representing the images in the album.
 	 */
-	function find_images_in_album($album, $orderby = 'galleryid', $order = 'ASC', $exclude = true) {		 
+	function find_images_in_album($album, $order_by = 'galleryid', $order_dir = 'ASC', $exclude = true) {		 
 		global $wpdb;
 		
 		if ( !is_object($album) )
@@ -416,7 +428,10 @@ class nggdb {
 		// Check for the exclude setting
 		$exclude_clause = ($exclude) ? ' AND tt.exclude<>1 ' : '';
 
-		$result = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE tt.galleryid IN ($gallery_list) $exclude_clause ORDER BY $orderby $order");		 
+		// Say no to any other value
+		$order_dir = ( $order_dir == 'DESC') ? 'DESC' : 'ASC';		
+
+		$result = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE tt.galleryid IN ($gallery_list) $exclude_clause ORDER BY tt.$orderby $order_dir");		 
 		// Return the object from the query result
 		if ($result) {
 			foreach ($result as $image) {

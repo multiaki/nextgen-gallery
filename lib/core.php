@@ -20,14 +20,14 @@ class nggGallery {
 	* Show a error messages
 	*/
 	function show_error($message) {
-		echo '<div class="error" id="error"><p>'.$message.'</p></div>'."\n";
+		echo '<div class="wrap"><h2></h2><div class="error" id="error"><p>' . $message . '</p></div></div>' . "\n";
 	}
 	
 	/**
 	* Show a system messages
 	*/
 	function show_message($message) {
-		echo '<div class="fade updated" id="message"><p>'.$message.'</p></div>'."\n";
+		echo '<div class="wrap"><h2></h2><div class="updated fade" id="message"><p>' . $message . '</p></div></div>' . "\n";
 	}
 
 	/**

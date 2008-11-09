@@ -25,7 +25,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	if ($_POST['addgallery']){
 		check_admin_referer('ngg_addgallery');
 		$newgallery = attribute_escape( $_POST['galleryname']);
-		if (!empty($newgallery))
+		if ( !empty($newgallery) )
 			nggAdmin::create_gallery($newgallery, $defaultpath);
 	}
 	
@@ -41,7 +41,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		check_admin_referer('ngg_addgallery');
 		$galleryfolder = $_POST['galleryfolder'];
 		if ( ( !empty($galleryfolder) ) AND ($defaultpath != $galleryfolder) )
-			$messagetext = nggAdmin::import_gallery($galleryfolder);
+			nggAdmin::import_gallery($galleryfolder);
 	}
 	
 	if ($_POST['uploadimage']){
@@ -60,7 +60,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			// get the path to the gallery
 			$galleryID = (int) $_POST['galleryselect'];
 			$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$galleryID' ");
-			$messagetext = nggAdmin::import_gallery($gallerypath);
+			nggAdmin::import_gallery($gallerypath);
 		}	
 	}
 
@@ -75,9 +75,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		$ngg->options['swfUpload'] = true;	
 		update_option('ngg_options', $ngg->options);
 	}
-	
-	// message windows
-	if(!empty($messagetext)) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$messagetext.'</p></div>'; }
+
 	?>
 	
 	<?php if($ngg->options['swfUpload']) { ?>

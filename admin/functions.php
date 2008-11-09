@@ -153,12 +153,14 @@ class nggAdmin{
 		// add images to database		
 		$image_ids = nggAdmin::add_Images($gallery_id, $new_images);
 		
-		// now create thumbnails
-		nggAdmin::do_ajax_operation( 'create_thumbnail' , $image_ids, __('Create new thumbnails','nggallery') );
 		//add the preview image if needed
 		nggAdmin::set_gallery_preview ( $gallery_id );
-				
-		nggGallery::show_message($created_msg . count($image_ids) .__(' picture(s) successfully added','nggallery'));
+
+		nggGallery::show_message( $created_msg . count($image_ids) .__(' picture(s) successfully added','nggallery') );
+
+		// now create thumbnails
+		nggAdmin::do_ajax_operation( 'create_thumbnail' , $image_ids, __('Create new thumbnails','nggallery') );
+		
 		return;
 
 	}
@@ -565,7 +567,7 @@ class nggAdmin{
 				// required until PHP 5.2.0
 				$filepart['filename'] = substr($filepart["basename"],0 ,strlen($filepart["basename"]) - (strlen($filepart["extension"]) + 1) );
 				
-				$filename = sanitize_title($filepart['filename']) . "." . $filepart['extension'];
+				$filename = sanitize_title($filepart['filename']) . '.' . $filepart['extension'];
 
 				// check for allowed extension
 				$ext = array("jpeg", "jpg", "png", "gif"); 
@@ -577,10 +579,10 @@ class nggAdmin{
 				// check if this filename already exist in the folder
 				$i = 0;
 				while (in_array($filename,$dirlist)) {
-					$filename = sanitize_title($filepart['filename']) . "_" . $i++ . "." .$filepart['extension'];
+					$filename = sanitize_title($filepart['filename']) . '_' . $i++ . '.' .$filepart['extension'];
 				}
 				
-				$dest_file = WINABSPATH.$gallerypath."/".$filename;
+				$dest_file = WINABSPATH . $gallerypath . '/' . $filename;
 				
 				//check for folder permission
 				if (!is_writeable(WINABSPATH.$gallerypath)) {
