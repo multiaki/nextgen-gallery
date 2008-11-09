@@ -118,6 +118,7 @@ class nggdb {
 		
 		// Say no to any other value
 		$order_dir = ( $order_dir == 'DESC') ? 'DESC' : 'ASC';
+		$order_by  = ( empty($order_by) ) ? 'sortorder' : $order_by;
 		
 		// Query database
 		if( is_numeric($id) )
@@ -154,7 +155,8 @@ class nggdb {
 		
 		// Say no to any other value
 		$order_dir = ( $order_dir == 'DESC') ? 'DESC' : 'ASC';		
-		
+		$order_by  = ( empty($order_by) ) ? 'sortorder' : $order_by;
+				
 		// Query database
 		if( is_numeric($id) )
 			$result = $wpdb->get_col( $wpdb->prepare( "SELECT tt.pid FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = %d $exclude_clause ORDER BY tt.{$order_by} $order_dir", $id ) );
@@ -430,8 +432,9 @@ class nggdb {
 
 		// Say no to any other value
 		$order_dir = ( $order_dir == 'DESC') ? 'DESC' : 'ASC';		
-
-		$result = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE tt.galleryid IN ($gallery_list) $exclude_clause ORDER BY tt.$orderby $order_dir");		 
+		$order_by  = ( empty($order_by) ) ? 'galleryid' : $order_by;
+		
+		$result = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE tt.galleryid IN ($gallery_list) $exclude_clause ORDER BY tt.$order_by $order_dir");		 
 		// Return the object from the query result
 		if ($result) {
 			foreach ($result as $image) {

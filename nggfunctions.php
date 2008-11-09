@@ -86,7 +86,7 @@ function nggShowGallery( $galleryID, $template = '' ) {
 	$ngg_options['galSortDir'] = ($ngg_options['galSortDir'] == 'DESC') ? 'DESC' : 'ASC';
 	
 	// get gallery values
-	$picturelist = nggdb::get_gallery($galleryID, $ngg->options['galSort'], $ngg->options['galSortDir']);
+	$picturelist = nggdb::get_gallery($galleryID, $ngg_options['galSort'], $ngg_options['galSortDir']);
 	
 	if ( !$picturelist->gid )
 		__('[Gallery not found]','nggallery');
@@ -371,7 +371,7 @@ function nggShowImageBrowser($galleryID, $template = '') {
 	$ngg_options['galSortDir'] = ($ngg_options['galSortDir'] == 'DESC') ? 'DESC' : 'ASC';
 	
 	// get the pictures
-	$picturelist = nggdb::get_ids_from_gallery($galleryID, $ngg->options['galSort'], $ngg->options['galSortDir']);
+	$picturelist = nggdb::get_ids_from_gallery($galleryID, $ngg_options['galSort'], $ngg_options['galSortDir']);
   	
 	if ( is_array($picturelist) )
 		$out = nggCreateImageBrowser($picturelist, $template);
