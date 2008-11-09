@@ -49,9 +49,9 @@ class nggdb {
 		global $wpdb;
 		
 		$galleries = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->nggallery ORDER BY %s %s", $order_by, $order_dir), OBJECT_K );
-		
+
 		if ( !$galleries )
-			$galleries = array();
+			return array();
 		
 		if ( !$counter )
 			return $galleries;
