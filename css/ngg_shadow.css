@@ -154,15 +154,23 @@ it's only a template design
 	margin:0pt 6px;
 }
 
-.ngg-navigation a.page-numbers, a.next, a.prev, 
-				span.page-numbers, span.next, span.prev {
+.ngg-navigation a.page-numbers,
+.ngg-navigation a.next,
+.ngg-navigation a.prev,
+.ngg-navigation span.page-numbers,
+.ngg-navigation span.next,
+.ngg-navigation span.prev {
 	border:1px solid #DDDDDD;
 	margin-right:3px;
 	padding:3px 7px;
 }
 
-.ngg-navigation a.page-numbers:hover, a.next:hover, a.prev:hover, 
-				span.page-numbers:hover, span.next:hover, span.prev:hover {
+.ngg-navigation a.page-numbers:hover,
+.ngg-navigation a.next:hover,
+.ngg-navigation a.prev:hover, 
+.ngg-navigation span.page-numbers:hover,
+.ngg-navigation span.next:hover,
+.ngg-navigation span.prev:hover {
 	background-color: #0066CC;
 	color: #FFFFFF !important;
 	text-decoration: none !important;
