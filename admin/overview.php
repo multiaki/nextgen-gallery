@@ -11,7 +11,7 @@ function nggallery_admin_overview()  {
 ?>
 <div class="wrap ngg-wrap">
 	<h2><?php _e('NextGEN Gallery Overview', 'nggallery') ?></h2>
-	<div id="dashboard-widgets-wrap">
+	<div id="dashboard-widgets-wrap" class="ngg-overview">
 	    <div id="dashboard-widgets" class="metabox-holder">
 	    	<div id="side-info-column" class="inner-sidebar">
 				<?php do_meta_boxes('ngg_overview', 'right', ''); ?>

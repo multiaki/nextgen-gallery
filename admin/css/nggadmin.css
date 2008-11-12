@@ -19,6 +19,12 @@
 	font-weight:bold;
 }
 
+.ngg-overview .postbox .handlediv {
+	float:right;
+	height:24px;
+	width:24px;
+}
+
 
 /* SETTING FOR FLASH UPLOAD BUTTON */
 .swfupload {
@@ -79,6 +85,10 @@
 
 /* SETTINGS FOR MANAGE TABLE */
 
+div#poststuff #gallerydiv {
+	cursor:pointer;
+}
+
 p#ngg-inlinebutton {
 	float:right;
 	margin:0pt;
@@ -93,11 +103,6 @@ div .ngg-tablenav {
 #ngg-listimages td, #ngg-listimages th {
 	vertical-align: middle;
 	padding: 10px 5px 10px;
-}
-
-#poststuff .postbox {
-	margin-left: 10px;
-	margin-right: 0px;
 }
 
 /* SETTINGS FOR PROGRESS BAR */
