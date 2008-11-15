@@ -18,6 +18,8 @@ class nggAdminPanel{
 		// Add the script and style files
 		add_action('admin_print_scripts', array(&$this, 'load_scripts') );
 		add_action('admin_print_styles', array(&$this, 'load_styles') );
+		
+		add_filter('contextual_help', array(&$this, 'show_help'), 10, 2);
 	
 	}
 
@@ -189,6 +191,43 @@ class nggAdminPanel{
 				wp_admin_css( 'css/theme-editor' );
 			break;
 		}	
+	}
+	
+	function show_help($help, $screen) {
+
+		$link = '';
+
+		switch ($screen) {
+			case 'toplevel_page_nextgen-gallery' :
+			case 'gallery_page_nggallery-setup' :
+			case 'gallery_page_nggallery-about' :
+			case 'gallery_page_nggallery-roles' :
+			case 'gallery_page_nggallery-style' :
+				$link = __('<a href="http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/" target="_blank">Introduction</a>');
+			break;
+			case 'gallery_page_nggallery-gallery' :
+			case 'gallery_page_nggallery-manage-gallery' :
+			case 'gallery_page_nggallery-manage-album' :
+			case 'gallery_page_nggallery-tags' :
+			case 'gallery_page_nggallery-options' :
+				$link = __('<a href="http://dpotter.net/Technical/2008/03/nextgen-gallery-review-image-management/" target="_blank">Image Management</a>');
+			break;
+		}
+		
+		if ( !empty($link) ) {
+			$help  = '<h5>' . __('Get help with NextGEN Gallery') . '</h5>';
+			$help .= '<div class="metabox-prefs">';
+			$help .= $link;
+			$help .= "</div>\n";
+			$help .= '<h5>' . __('More Help & Info') . '</h5>';
+			$help .= '<div class="metabox-prefs">';
+			$help .= __('<a href="http://wordpress.org/tags/nextgen-gallery" target="_blank">NextGEN Gallery Support Forums</a>');
+			$help .= '<br />';
+			$help .= __('<a href="http://wordpress.org/extend/plugins/nextgen-gallery" target="_blank">Download a new version</a>');
+			$help .= "</div>\n";
+		} 
+		
+		return $help;
 	}
 
 }
