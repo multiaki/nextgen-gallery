@@ -26,8 +26,8 @@ class nggSlideshowWidget {
 	function register_widget() {
 		
 		$widget_ops = array('classname' => 'widget_slideshow', 'description' => __( "Show a NextGEN Gallery Slideshow", "nggallery") );
-		wp_register_sidebar_widget('slideshow', __('Slideshow', 'nggallery'), array(&$this, 'widget_output'), $widget_ops );
-		wp_register_widget_control('slideshow', __('Slideshow', 'nggallery'), array(&$this, 'widget_control') );
+		wp_register_sidebar_widget('slideshow', __('NextGEN Slideshow', 'nggallery'), array(&$this, 'widget_output'), $widget_ops );
+		wp_register_widget_control('slideshow', __('NextGEN Slideshow', 'nggallery'), array(&$this, 'widget_control') );
 	}	
 		
 	function render_slideshow($galleryID, $irWidth = '', $irHeight = '') {

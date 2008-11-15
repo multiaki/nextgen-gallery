@@ -28,13 +28,13 @@ class nggMediaRssWidget {
 	* Function to register the Widget functions
 	*/
 	function register_widget() {
-		$name = __('Media RSS', 'nggallery');
+		$name = __('NextGEN Media RSS', 'nggallery');
 		$control_ops = array(
 			'width' => 400, 'height' => 350, 
 			'id_base' => 'ngg-mrssw');
 		$widget_ops = array(
 			'classname' => 'ngg_mrssw', 
-			'description' => __('Widget that displays Media RSS links.', 
+			'description' => __('Widget that displays Media RSS links for NextGEN Gallery.', 
 								'nggallery'));
 
 		if (!is_array($this->options)) {

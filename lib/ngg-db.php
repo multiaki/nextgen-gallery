@@ -370,11 +370,13 @@ class nggdb {
 					$gallery_cache[$image->galleryid] = nggdb::find_gallery($image->galleryid);
 				
 				// Join gallery information with picture information	
-				$joined_result = array_merge($gallery_cache[$image->galleryid], $image);
-				// Now get the complete iamge data
-				$result[$key] = new nggImage( $joined_result );
+				foreach ($gallery_cache[$image->galleryid] as $index => $value)
+					$image->$index = $value;
+				
+				// Now get the complete image data
+				$result[$key] = new nggImage( $image );
 			}
-		} 
+		}
 		
 		return $result;
 	}

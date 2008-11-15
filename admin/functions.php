@@ -16,7 +16,7 @@ class nggAdmin{
 		$galleryname = apply_filters('ngg_gallery_name', $gallerytitle);
 		$nggpath = $defaultpath.$galleryname;
 		$nggRoot = WINABSPATH.$defaultpath;
-		$txt = "";
+		$txt = '';
 		
 		// No gallery name ?
 		if (empty($galleryname)) {	
@@ -106,7 +106,7 @@ class nggAdmin{
 		// get the current user ID
 		get_currentuserinfo();
 		
-		$created_msg = "";
+		$created_msg = '';
 		
 		// remove trailing slash at the end, if somebody use it
 		if (substr($galleryfolder, -1) == '/') $galleryfolder = substr($galleryfolder, 0, -1);
@@ -146,7 +146,8 @@ class nggAdmin{
 		// Look for existing image list
 		$old_imageslist = $wpdb->get_col("SELECT filename FROM $wpdb->nggpictures WHERE galleryid = '$gallery_id' ");
 		// if no images are there, create empty array
-		if ($old_imageslist == NULL) $old_imageslist = array();
+		if ($old_imageslist == NULL) 
+			$old_imageslist = array();
 		// check difference
 		$new_images = array_diff($new_imageslist, $old_imageslist);
 		
@@ -156,23 +157,24 @@ class nggAdmin{
 		//add the preview image if needed
 		nggAdmin::set_gallery_preview ( $gallery_id );
 
-		nggGallery::show_message( $created_msg . count($image_ids) .__(' picture(s) successfully added','nggallery') );
-
 		// now create thumbnails
 		nggAdmin::do_ajax_operation( 'create_thumbnail' , $image_ids, __('Create new thumbnails','nggallery') );
+		
+		//TODO:Message will not shown, because AJAX routine require more time, message should be passed to AJAX
+		nggGallery::show_message( $created_msg . count($image_ids) .__(' picture(s) successfully added','nggallery') );
 		
 		return;
 
 	}
 	// **************************************************************
-	function scandir($dirname = ".") { 
+	function scandir($dirname = '.') { 
 		// thx to php.net :-)
 		$ext = array("jpeg", "jpg", "png", "gif"); 
 		$files = array(); 
 		if($handle = opendir($dirname)) { 
 		   while(false !== ($file = readdir($handle))) 
 		       for($i=0;$i<sizeof($ext);$i++) 
-		           if(stristr($file, ".".$ext[$i])) 
+		           if(stristr($file, '.' . $ext[$i])) 
 		               $files[] = utf8_encode($file); 
 		   closedir($handle); 
 		} 

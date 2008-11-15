@@ -333,7 +333,7 @@ class nggTags {
 		$taxonomy = 'ngg_tag';
 
 		// extract it into a array
-		$taglist = explode(",", $taglist);
+		$taglist = explode(',', $taglist);
 		
 		if (!is_array($taglist)) {
 			$taglist = array($taglist);
