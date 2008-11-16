@@ -42,10 +42,10 @@ class NextGEN_shortcodes {
 
 				foreach ($matches as $match) {
 					// remove the comma
-					$match[2] = ltrim($match[2],',');
-					$match[3] = ltrim($match[3],',');	
-					$match[4] = ltrim($match[4],',');	
-					$match[5] = ltrim($match[5],',');						
+					$match[2] = ltrim($match[2], ',');
+					$match[3] = ltrim($match[3], ',');	
+					$match[4] = ltrim($match[4], ',');	
+					$match[5] = ltrim($match[5], ',');						
 					$replace = "[singlepic id=\"{$match[1]}\" w=\"{$match[2]}\" h=\"{$match[3]}\" mode=\"{$match[4]}\" float=\"{$match[5]}\" ]";
 					$content = str_replace ($match[0], $replace, $content);
 				}

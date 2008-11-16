@@ -9,14 +9,6 @@
 class nggGallery {
 	
 	/**
-	* remove page break
-	*/
-	function ngg_nl2br($string) {
-		$string = str_replace(array("\r\n", "\r", "\n"), "<br />", $string);
-		return $string;
-	}
-	
-	/**
 	* Show a error messages
 	*/
 	function show_error($message) {
@@ -51,8 +43,8 @@ class nggGallery {
 		}
 		
 		// set gallery url
-		$folder_url 	= get_option ('siteurl')."/".$picturepath.nggGallery::get_thumbnail_folder($picturepath, FALSE);
-		$thumbnailURL	= $folder_url. "thumbs_" .$fileName;
+		$folder_url 	= get_option ('siteurl') . '/' . $picturepath.nggGallery::get_thumbnail_folder($picturepath, FALSE);
+		$thumbnailURL	= $folder_url . 'thumbs_' . $fileName;
 		
 		return $thumbnailURL;
 	}
@@ -76,7 +68,7 @@ class nggGallery {
 		}
 		
 		// set gallery url
-		$imageURL 	= get_option ('siteurl')."/".$picturepath."/".$fileName;
+		$imageURL 	= get_option ('siteurl') . '/' . $picturepath . '/' . $fileName;
 		
 		return $imageURL;	
 	}
@@ -90,28 +82,28 @@ class nggGallery {
 	*/
 	function create_thumbnail_folder($gallerypath, $include_Abspath = TRUE) {
 		if (!$include_Abspath) {
-			$gallerypath = WINABSPATH.$gallerypath;
+			$gallerypath = WINABSPATH . $gallerypath;
 		}
 		
 		if (!file_exists($gallerypath)) {
 			return FALSE;
 		}
 		
-		if (is_dir($gallerypath."/thumbs")) {
-			return "/thumbs/";
+		if (is_dir($gallerypath . '/thumbs/')) {
+			return '/thumbs/';
 		}
 		
 		if (is_admin()) {
-			if (!is_dir($gallerypath."/thumbs")) {
-				if ( !wp_mkdir_p($gallerypath."/thumbs") ) {
+			if (!is_dir($gallerypath .'/thumbs/')) {
+				if ( !wp_mkdir_p($gallerypath . '/thumbs/') ) {
 					if (SAFE_MODE) {
-						nggAdmin::check_safemode($gallerypath."/thumbs");	
+						nggAdmin::check_safemode($gallerypath . '/thumbs/');	
 					} else {
-						nggGallery::show_error(__('Unable to create directory ', 'nggallery').$gallerypath.'/thumbs !');
+						nggGallery::show_error(__('Unable to create directory ', 'nggallery') . $gallerypath . '/thumbs !');
 					}
 					return FALSE;
 				}
-				return "/thumbs/";
+				return '/thumbs/';
 			}
 		}
 		
@@ -140,7 +132,7 @@ class nggGallery {
 	* @return string  "thumbs_";
 	*/
 	function get_thumbnail_prefix($gallerypath, $include_Abspath = TRUE) {
-		return "thumbs_";		
+		return 'thumbs_';		
 	}
 	
 	/**
@@ -239,6 +231,7 @@ class nggGallery {
 
 			'bool' => array(
 				'ngg_gal_ShowSlide'			=> 'galShowSlide',
+				'ngg_gal_ShowPiclense'		=> 'usePicLens',
 				'ngg_gal_ImgageBrowser' 	=> 'galImgBrowser',
 				'ngg_ir_Shuffle' 			=> 'irShuffle',
 				'ngg_ir_LinkFromDisplay' 	=> 'irLinkfromdisplay',
@@ -254,13 +247,13 @@ class nggGallery {
 				// if the kex exist overwrite it with the custom field
 				if (array_key_exists($key, $meta_array)){
 					switch ($typ) {
-					case "string":
+					case 'string':
 						$options[$db_value] = (string) attribute_escape($meta_array[$key][0]);
 						break;
-					case "int":
+					case 'int':
 						$options[$db_value] = (int) $meta_array[$key][0];
 						break;
-					case "bool":
+					case 'bool':
 						$options[$db_value] = (bool) $meta_array[$key][0];
 						break;	
 					}
@@ -359,8 +352,8 @@ class nggGallery {
 	}
 	
 	function get_theme_css_file() {
-		if ( file_exists (TEMPLATEPATH . "/nggallery.css") )
-			return get_template_directory_uri() . "/nggallery.css";
+		if ( file_exists (TEMPLATEPATH . '/nggallery.css') )
+			return get_template_directory_uri() . '/nggallery.css';
 		else
 			return false;		
 	}
