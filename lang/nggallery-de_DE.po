@@ -2,17 +2,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-03 21:40+0100\n"
-"PO-Revision-Date: 2008-11-03 21:44+0100\n"
-"Last-Translator: Alex Rabe <alter.ego@boelinger.com>\n"
+"POT-Creation-Date: 2008-11-16 12:47+0100\n"
+"PO-Revision-Date: 2008-11-16 13:00+0100\n"
+"Last-Translator: Alex Rabe\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-Country: GERMANY\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: German\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 
@@ -42,7 +44,7 @@ msgstr "Klicken zum Schliessen "
 
 #: ../nggfunctions.php:31
 msgid "The <a href=\"http://www.macromedia.com/go/getflashplayer\">Flash Player</a> and <a href=\"http://www.mozilla.com/firefox/\">a browser with Javascript support</a> are needed.."
-msgstr ""
+msgstr "Es wird der <a href=\"http://www.macromedia.com/go/getflashplayer\">Adobe Flash Player</a>  benötigt und <a href=\"http://www.mozilla.com/firefox/\">im Browser muss Javascript</a> aktiviert sein.."
 
 #: ../nggfunctions.php:92
 #: ../nggfunctions.php:379
@@ -53,12 +55,12 @@ msgstr "[Galerie nicht gefunden]"
 msgid "[Album not found]"
 msgstr "[Album nicht gefunden]"
 
-#: ../nggfunctions.php:485
+#: ../nggfunctions.php:479
 msgid "[SinglePic not found]"
 msgstr "[Bild nicht gefunden]"
 
-#: ../nggfunctions.php:639
-#: ../admin/admin.php:28
+#: ../nggfunctions.php:630
+#: ../admin/admin.php:30
 msgid "Overview"
 msgstr "Übersicht"
 
@@ -176,7 +178,7 @@ msgstr "Vielen Dank!"
 
 #: ../admin/about.php:49
 msgid "We would like to thank this people which support us in the work :"
-msgstr "Wir wollen diesen Menschen für Ihre Hilfe danken:"
+msgstr "Ich möchte mich bei diesen Menschen für Ihre Unterstützung bedanken:"
 
 #: ../admin/addgallery.php:37
 #: ../admin/addgallery.php:53
@@ -184,206 +186,231 @@ msgid "Upload failed!"
 msgstr "Upload fehlgeschlagen!"
 
 #: ../admin/addgallery.php:58
-#: ../admin/functions.php:544
-#: ../admin/functions.php:634
+#: ../admin/functions.php:548
+#: ../admin/functions.php:638
 msgid "No gallery selected !"
 msgstr "Keine Galerie ausgewählt !"
 
-#: ../admin/addgallery.php:104
+#: ../admin/addgallery.php:102
 msgid "Image Files"
 msgstr "Bilder"
 
-#: ../admin/addgallery.php:123
-#: ../admin/addgallery.php:153
+#: ../admin/addgallery.php:121
+#: ../admin/addgallery.php:151
 msgid "remove"
 msgstr "Entfernen"
 
-#: ../admin/addgallery.php:124
+#: ../admin/addgallery.php:122
 msgid "Browse..."
 msgstr "Durchsuche..."
 
-#: ../admin/addgallery.php:125
-#: ../admin/addgallery.php:273
+#: ../admin/addgallery.php:123
+#: ../admin/addgallery.php:271
 msgid "Upload images"
 msgstr "Bilder hochladen"
 
-#: ../admin/addgallery.php:169
-#: ../admin/addgallery.php:181
+#: ../admin/addgallery.php:167
+#: ../admin/addgallery.php:179
 msgid "Add new gallery"
 msgstr "Neue Galerie erstellen"
 
-#: ../admin/addgallery.php:171
-#: ../admin/addgallery.php:200
+#: ../admin/addgallery.php:169
+#: ../admin/addgallery.php:198
 msgid "Upload a Zip-File"
 msgstr "Zip-Datei hochladen"
 
-#: ../admin/addgallery.php:174
-#: ../admin/addgallery.php:229
+#: ../admin/addgallery.php:172
+#: ../admin/addgallery.php:227
 msgid "Import image folder"
 msgstr "Bilder-Verzeichnis importieren"
 
-#: ../admin/addgallery.php:176
-#: ../admin/addgallery.php:246
+#: ../admin/addgallery.php:174
+#: ../admin/addgallery.php:244
 msgid "Upload Images"
 msgstr "Bilder hochladen"
 
-#: ../admin/addgallery.php:186
+#: ../admin/addgallery.php:184
 msgid "New Gallery"
 msgstr "Neue Galerie"
 
-#: ../admin/addgallery.php:189
+#: ../admin/addgallery.php:187
 msgid "Create a new , empty gallery below the folder"
 msgstr "Erstelle eine neue, leere Galerie unter dem Verzeichnis"
 
-#: ../admin/addgallery.php:191
+#: ../admin/addgallery.php:189
 msgid "Allowed characters for file and folder names are"
 msgstr "Erlaubte Charaktere für die Datei- und Verzeichnisnamen sind"
 
-#: ../admin/addgallery.php:194
+#: ../admin/addgallery.php:192
 msgid "Add gallery"
 msgstr "Galerie hinzufügen"
 
-#: ../admin/addgallery.php:205
+#: ../admin/addgallery.php:203
 msgid "Select Zip-File"
 msgstr "Wähle Zip-Datei"
 
-#: ../admin/addgallery.php:207
+#: ../admin/addgallery.php:205
 msgid "Upload a zip file with images"
 msgstr "Lade eine Zip-Datei mit Bildern hoch"
 
-#: ../admin/addgallery.php:210
-#: ../admin/addgallery.php:255
+#: ../admin/addgallery.php:208
+#: ../admin/addgallery.php:253
 msgid "in to"
 msgstr "in"
 
-#: ../admin/addgallery.php:212
+#: ../admin/addgallery.php:210
 msgid "a new gallery"
 msgstr "eine neue Galerie"
 
-#: ../admin/addgallery.php:218
-#: ../admin/addgallery.php:263
+#: ../admin/addgallery.php:216
+#: ../admin/addgallery.php:261
 msgid "Note : The upload limit on your server is "
 msgstr "Hinweis : Das Upload-Limit auf dem Server beträgt "
 
-#: ../admin/addgallery.php:222
+#: ../admin/addgallery.php:220
 msgid "Start upload"
 msgstr "Upload starten"
 
-#: ../admin/addgallery.php:234
+#: ../admin/addgallery.php:232
 msgid "Import from Server path:"
 msgstr "Importieren aus Server-Pfad:"
 
-#: ../admin/addgallery.php:236
+#: ../admin/addgallery.php:234
 msgid "Import a folder with all images."
 msgstr "Importiere ein Verzeichniss mit Bildern."
 
-#: ../admin/addgallery.php:237
+#: ../admin/addgallery.php:235
 msgid " Please note : For safe-mode = ON you need to add the subfolder thumbs manually"
 msgstr "Achtung : Da der Safe-Mode  (PHP.INI) eingeschaltet ist, mußt Du das Unterverzeichnis für die Vorschaubilder (\"thumbs\") manuell (per FTP) anlegen"
 
-#: ../admin/addgallery.php:240
+#: ../admin/addgallery.php:238
 msgid "Import folder"
 msgstr "Verzeichnis importieren"
 
-#: ../admin/addgallery.php:251
+#: ../admin/addgallery.php:249
 msgid "Upload image"
 msgstr "Bild hochladen"
 
-#: ../admin/addgallery.php:257
+#: ../admin/addgallery.php:255
 msgid "Choose gallery"
 msgstr "Wähle Galerie"
 
-#: ../admin/addgallery.php:269
+#: ../admin/addgallery.php:267
 msgid "The batch upload requires Adobe Flash 9, disable it if you have problems"
 msgstr "Das Batch-Upload-Skript benötigt Adbode Flash 9, wenn es Probleme gibt deaktiviere es besser."
 
-#: ../admin/addgallery.php:269
+#: ../admin/addgallery.php:267
 msgid "Disable flash upload"
 msgstr "Deaktiviere Batch-Upload"
 
-#: ../admin/addgallery.php:271
+#: ../admin/addgallery.php:269
 msgid "Upload multiple files at once by ctrl/shift-selecting in dialog"
 msgstr "Wähle im Dialog mit Ctrl/Shift mehrere Bilder gleichzeitig aus."
 
-#: ../admin/addgallery.php:271
+#: ../admin/addgallery.php:269
 msgid "Enable flash based upload"
 msgstr "Aktiviere Flash Batch Upload"
 
-#: ../admin/admin.php:27
+#: ../admin/admin.php:29
 #: ../admin/functions.php:81
 #: ../admin/functions.php:142
-#: ../admin/manage-images.php:123
+#: ../admin/manage-images.php:120
 #: ../admin/manage.php:84
 msgid "Gallery"
 msgstr "Galerie"
 
-#: ../admin/admin.php:29
+#: ../admin/admin.php:31
 msgid "Add Gallery"
 msgstr "Bilder/Galerie hinzufügen"
 
-#: ../admin/admin.php:30
+#: ../admin/admin.php:32
 msgid "Manage Gallery"
 msgstr "Galerie verwalten"
 
-#: ../admin/admin.php:31
+#: ../admin/admin.php:33
 msgid "Album"
 msgstr "Album"
 
-#: ../admin/admin.php:32
+#: ../admin/admin.php:34
 msgid "Tags"
 msgstr "Stichwörter"
 
-#: ../admin/admin.php:33
+#: ../admin/admin.php:35
 msgid "Options"
 msgstr "Optionen"
 
-#: ../admin/admin.php:35
+#: ../admin/admin.php:37
 msgid "Style"
 msgstr "Style"
 
-#: ../admin/admin.php:36
+#: ../admin/admin.php:38
 msgid "Setup Gallery"
 msgstr "Galerie Setup"
 
-#: ../admin/admin.php:36
+#: ../admin/admin.php:38
 msgid "Setup"
 msgstr "Setup"
 
-#: ../admin/admin.php:38
+#: ../admin/admin.php:40
 msgid "Roles"
 msgstr "Zugriff"
 
-#: ../admin/admin.php:39
+#: ../admin/admin.php:41
 msgid "About this Gallery"
 msgstr "Über diese Galerie"
 
-#: ../admin/admin.php:39
+#: ../admin/admin.php:41
 msgid "About"
 msgstr "Über"
 
-#: ../admin/admin.php:41
+#: ../admin/admin.php:43
+#: ../admin/media-upload.php:11
 msgid "NextGEN Gallery"
 msgstr "NextGEN Gallery"
 
-#: ../admin/admin.php:66
+#: ../admin/admin.php:68
 msgid "A new version of NextGEN Gallery is available !"
 msgstr "Eine neue Version von NextGEN Gallery ist jetzt verfügbar"
 
-#: ../admin/admin.php:66
+#: ../admin/admin.php:68
 msgid "Download here"
 msgstr "Hier downloaden"
 
-#: ../admin/admin.php:137
+#: ../admin/admin.php:139
 msgid "You do not have the correct permission"
 msgstr "Du hast keine Zugriffsrechte"
 
-#: ../admin/admin.php:138
+#: ../admin/admin.php:140
 msgid "Unexpected Error"
 msgstr "Unerwarteter Fehler"
 
-#: ../admin/admin.php:139
+#: ../admin/admin.php:141
 msgid "A failure occurred"
 msgstr "Ein Fehler ist aufgetreten"
+
+#: ../admin/admin.php:206
+msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Introduction</a>"
+msgstr "<a href=\"http://www.curlyrob.de/curlyrob/?page_id=129\" target=\"_blank\">Einführung</a>"
+
+#: ../admin/admin.php:213
+msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-image-management/\" target=\"_blank\">Image Management</a>"
+msgstr "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-image-management/\" target=\"_blank\">Bilderverwaltung (Englisch)</a>"
+
+#: ../admin/admin.php:218
+msgid "Get help with NextGEN Gallery"
+msgstr "Weitere Hilfe zu NextGEN Gallery"
+
+#: ../admin/admin.php:222
+msgid "More Help & Info"
+msgstr "Weitere Hilfe & Informationen"
+
+#: ../admin/admin.php:224
+msgid "<a href=\"http://wordpress.org/tags/nextgen-gallery\" target=\"_blank\">NextGEN Gallery Support Forums</a>"
+msgstr "<a href=\"http://wordpress.org/tags/nextgen-gallery\" target=\"_blank\">NextGEN Gallery Support Forum (Englisch)</a>"
+
+#: ../admin/admin.php:226
+msgid "<a href=\"http://wordpress.org/extend/plugins/nextgen-gallery\" target=\"_blank\">Download a new version</a>"
+msgstr "<a href=\"http://wordpress.org/extend/plugins/nextgen-gallery\" target=\"_blank\">Neue Versionen sind hier erhältlich</a>"
 
 #: ../admin/album.php:19
 #: ../admin/album.php:31
@@ -412,7 +439,7 @@ msgstr "Aktualisiere"
 
 #: ../admin/album.php:147
 #: ../admin/manage-galleries.php:54
-#: ../admin/manage-images.php:380
+#: ../admin/manage-images.php:377
 msgid "Delete"
 msgstr "Lösche"
 
@@ -456,23 +483,23 @@ msgstr "Album Seiten ID (Page ID)"
 msgid "No album selected!"
 msgstr "Kein Album ausgewählt"
 
-#: ../admin/album.php:255
+#: ../admin/album.php:254
 #: ../admin/manage-galleries.php:17
-#: ../admin/manage-images.php:476
+#: ../admin/manage-images.php:473
 msgid "ID"
 msgstr "ID"
 
-#: ../admin/album.php:256
+#: ../admin/album.php:255
 msgid "Name"
 msgstr "Name"
 
-#: ../admin/album.php:257
+#: ../admin/album.php:256
 #: ../admin/manage-galleries.php:18
-#: ../admin/manage-images.php:139
+#: ../admin/manage-images.php:136
 msgid "Title"
 msgstr "Titel"
 
-#: ../admin/album.php:258
+#: ../admin/album.php:257
 msgid "Page"
 msgstr "Seite"
 
@@ -504,7 +531,7 @@ msgstr "ist schreibgeschützt !"
 
 #: ../admin/functions.php:48
 #: ../admin/functions.php:58
-#: ../admin/functions.php:507
+#: ../admin/functions.php:511
 msgid "Unable to create directory "
 msgstr "Kann Verzeichnis nicht erstellen "
 
@@ -529,9 +556,9 @@ msgid "already exists"
 msgstr "gibt es bereits"
 
 #: ../admin/functions.php:86
-#, fuzzy, php-format
+#, php-format
 msgid "Gallery %1$s successfully created.<br/>You can show this gallery with the tag %2$s.<br/>"
-msgstr "Du kannst diese Galerie mit dem Stichwort anzeigen :"
+msgstr "Gallerie %1$s erstellt..<br/>Du kannst diese Galerie jetzt mit dem Stichwort %2$s einbinden.<br/>"
 
 #: ../admin/functions.php:89
 msgid "Edit gallery"
@@ -553,134 +580,134 @@ msgstr "Datenbank-Fehler. Kann Galerie nicht hinzufügen!"
 msgid "successfully created!"
 msgstr "erfolgreich erstellt!"
 
-#: ../admin/functions.php:157
-#: ../admin/functions.php:616
-#: ../admin/manage-images.php:210
+#: ../admin/functions.php:161
+#: ../admin/functions.php:620
+#: ../admin/manage-images.php:207
 #: ../admin/manage.php:136
 msgid "Create new thumbnails"
 msgstr "Neue Thumbnails erstellen"
 
-#: ../admin/functions.php:161
+#: ../admin/functions.php:164
 msgid " picture(s) successfully added"
 msgstr " Bild(er) erfolgreich hinzugefügt"
 
-#: ../admin/functions.php:199
-#: ../admin/functions.php:278
-#: ../admin/functions.php:319
+#: ../admin/functions.php:203
+#: ../admin/functions.php:282
+#: ../admin/functions.php:323
 msgid "Object didn't contain correct data"
-msgstr ""
+msgstr "Das Objekt enhält nicht die notwendigen Daten"
 
-#: ../admin/functions.php:204
+#: ../admin/functions.php:208
 msgid " is not writeable "
 msgstr "ist schreibgeschützt !"
 
-#: ../admin/functions.php:284
-#: ../admin/functions.php:322
+#: ../admin/functions.php:288
+#: ../admin/functions.php:326
 msgid " is not writeable"
 msgstr "ist schreibgeschützt !"
 
-#: ../admin/functions.php:478
+#: ../admin/functions.php:482
 msgid "Uploaded file was no or a faulty zip file ! The server recognize : "
 msgstr "Die hochgeladene Datei war keine korrekte Zip-Datei. Servermeldung :"
 
-#: ../admin/functions.php:492
+#: ../admin/functions.php:496
 msgid "Could not get a vaild foldername"
 msgstr ""
 
-#: ../admin/functions.php:502
+#: ../admin/functions.php:506
 #, php-format
 msgid "Unable to create directory %s. Is its parent directory writable by the server?"
 msgstr "Kann das Verzeichnis %s nicht erstellen. Is das Hauptverzeichnis vielleicht schreibgeschützt ?"
 
-#: ../admin/functions.php:517
+#: ../admin/functions.php:521
 msgid "Zip-File successfully unpacked"
 msgstr "Zip-Datei erfolgreich entpackt"
 
-#: ../admin/functions.php:552
-#: ../admin/functions.php:661
+#: ../admin/functions.php:556
+#: ../admin/functions.php:665
 msgid "Failure in database, no gallery path set !"
 msgstr "Datenbankfehler! Kein Galerie-Pfad gesetzt !"
 
-#: ../admin/functions.php:573
-#: ../admin/functions.php:655
+#: ../admin/functions.php:577
+#: ../admin/functions.php:659
 msgid "is no valid image file!"
 msgstr "ist keine zulässige Bilddatei !"
 
-#: ../admin/functions.php:587
-#: ../admin/functions.php:763
-#: ../admin/functions.php:830
+#: ../admin/functions.php:591
+#: ../admin/functions.php:767
+#: ../admin/functions.php:834
 #, php-format
 msgid "Unable to write to directory %s. Is this directory writable by the server?"
 msgstr "Kann das Verzeichnis %s nicht erstellen. Is das Hauptverzeichnis vielleicht schreibgeschützt ?"
 
-#: ../admin/functions.php:594
-#: ../admin/functions.php:678
+#: ../admin/functions.php:598
+#: ../admin/functions.php:682
 msgid "Error, the file could not moved to : "
 msgstr "Fehler: Diese Datei kann nicht verschoben werden zu :"
 
-#: ../admin/functions.php:599
-#: ../admin/functions.php:682
+#: ../admin/functions.php:603
+#: ../admin/functions.php:686
 msgid "Error, the file permissions could not set"
 msgstr "Fehler: Die Berechtigungen für diese Datei können nicht gesetzt werden"
 
-#: ../admin/functions.php:620
+#: ../admin/functions.php:624
 msgid " Image(s) successfully added"
 msgstr " Bild(er) erfolgreich hinzugefügt"
 
-#: ../admin/functions.php:643
+#: ../admin/functions.php:647
 msgid "Invalid upload. Error Code : "
 msgstr "Ungültiger Upload. Fehler Code :"
 
-#: ../admin/functions.php:692
+#: ../admin/functions.php:696
 msgid "Sorry, you have used your space allocation. Please delete some files to upload more files."
 msgstr "Schade, dein freier Speicher scheint aufgebraucht zu sein. Bitte lösche zuerst ein paar Bilder."
 
-#: ../admin/functions.php:719
+#: ../admin/functions.php:723
 #, php-format
 msgid "SAFE MODE Restriction in effect! You need to create the folder <strong>%s</strong> manually"
 msgstr "SAFE MODE Einschränkungen ist aktiv. Du must das Verzeichnis <strong>%s</strong> manuell anlegen."
 
-#: ../admin/functions.php:720
+#: ../admin/functions.php:724
 #, php-format
 msgid "When safe_mode is on, PHP checks to see if the owner (%s) of the current script matches the owner (%s) of the file to be operated on by a file function or its directory"
 msgstr "Wenn der Safe-Mode eingeschaltet ist, überprüft PHP ob der Besitzer (%s) des Skript mit dem Besitzer (%s) der Datei/Verzeichnis übereinstimmt."
 
-#: ../admin/functions.php:757
-#: ../admin/functions.php:824
+#: ../admin/functions.php:761
+#: ../admin/functions.php:828
 msgid "The destination gallery does not exist"
-msgstr ""
+msgstr "Die ausgewählte Galerie existiert nicht"
 
-#: ../admin/functions.php:788
+#: ../admin/functions.php:792
 #, php-format
 msgid "Failed to move image %1$s to %2$s"
-msgstr ""
+msgstr "Konte das Bild %1$s nicht nach %2$s verschieben"
 
-#: ../admin/functions.php:806
+#: ../admin/functions.php:810
 #, php-format
 msgid "Moved %1$s picture(s) to gallery : %2$s ."
 msgstr ""
 
-#: ../admin/functions.php:857
+#: ../admin/functions.php:861
 #, php-format
 msgid "Failed to copy image %1$s to %2$s"
-msgstr ""
+msgstr "Konnte das Bild %1$s nicht nach %2$s kopieren"
 
-#: ../admin/functions.php:869
+#: ../admin/functions.php:873
 #, php-format
 msgid "Failed to copy database row for picture %s"
 msgstr ""
 
-#: ../admin/functions.php:877
+#: ../admin/functions.php:881
 #, php-format
 msgid "Image %1$s (%2$s) copied as image %3$s (%4$s) &raquo; The file already existed in the destination gallery."
 msgstr ""
 
-#: ../admin/functions.php:880
+#: ../admin/functions.php:884
 #, php-format
 msgid "Image %1$s (%2$s) copied as image %3$s (%4$s)"
 msgstr ""
 
-#: ../admin/functions.php:889
+#: ../admin/functions.php:893
 #, php-format
 msgid "Copied %1$s picture(s) to gallery: %2$s ."
 msgstr ""
@@ -706,13 +733,14 @@ msgid "Gallery Overview"
 msgstr "Galerie Übersicht"
 
 #: ../admin/manage-galleries.php:19
-#: ../admin/manage-images.php:150
-#: ../admin/manage-images.php:485
+#: ../admin/manage-images.php:147
+#: ../admin/manage-images.php:482
+#: ../admin/media-upload.php:191
 msgid "Description"
 msgstr "Beschreibung"
 
 #: ../admin/manage-galleries.php:20
-#: ../admin/manage-images.php:170
+#: ../admin/manage-images.php:167
 msgid "Author"
 msgstr "Autor"
 
@@ -725,7 +753,7 @@ msgid "Quantity"
 msgstr "Anzahl"
 
 #: ../admin/manage-galleries.php:23
-#: ../admin/manage-images.php:492
+#: ../admin/manage-images.php:489
 msgid "Action"
 msgstr "Aktion"
 
@@ -738,7 +766,7 @@ msgid "Delete this gallery ?"
 msgstr "Diese Galerie löschen ?"
 
 #: ../admin/manage-galleries.php:61
-#: ../admin/manage-images.php:395
+#: ../admin/manage-images.php:392
 msgid "No entries found"
 msgstr "Keine Einträge gefunden"
 
@@ -746,14 +774,14 @@ msgstr "Keine Einträge gefunden"
 msgid "Gallery not found."
 msgstr "Galerie nicht gefunden"
 
-#: ../admin/manage-images.php:91
-#: ../admin/manage-images.php:420
-#: ../admin/manage-images.php:457
+#: ../admin/manage-images.php:88
+#: ../admin/manage-images.php:417
+#: ../admin/manage-images.php:454
 msgid "No images selected"
 msgstr "Keine Bilder ausgewählt"
 
-#: ../admin/manage-images.php:105
-#: ../admin/manage-images.php:420
+#: ../admin/manage-images.php:102
+#: ../admin/manage-images.php:417
 #, php-format
 msgid ""
 "You are about to start the bulk edit for %s images \n"
@@ -764,179 +792,184 @@ msgstr ""
 " \n"
 " 'Abbrechen' um zu stoppen, 'OK' um die Bearbeitung durchzuführen."
 
-#: ../admin/manage-images.php:135
+#: ../admin/manage-images.php:132
 msgid "Gallery settings"
 msgstr "Galerie Einstellungen"
 
-#: ../admin/manage-images.php:141
+#: ../admin/manage-images.php:132
+msgid "Click here for more settings"
+msgstr "Hier klicken für weitere Einstellungen"
+
+#: ../admin/manage-images.php:138
 msgid "Page Link to"
 msgstr "Seite verlinkt zu"
 
-#: ../admin/manage-images.php:144
+#: ../admin/manage-images.php:141
 msgid "Not linked"
 msgstr "Nicht verlinkt"
 
-#: ../admin/manage-images.php:152
+#: ../admin/manage-images.php:149
 msgid "Preview image"
 msgstr "Vorschau-Bild"
 
-#: ../admin/manage-images.php:155
+#: ../admin/manage-images.php:152
 msgid "No Picture"
 msgstr "Kein Bild"
 
-#: ../admin/manage-images.php:168
+#: ../admin/manage-images.php:165
 msgid "Path"
 msgstr "Pfad"
 
-#: ../admin/manage-images.php:184
+#: ../admin/manage-images.php:181
 msgid "Create new page"
 msgstr "Neue Seite erstellen"
 
-#: ../admin/manage-images.php:187
+#: ../admin/manage-images.php:184
 msgid "Main page (No parent)"
 msgstr "Haupseite (keine Unterseite)"
 
-#: ../admin/manage-images.php:190
+#: ../admin/manage-images.php:187
 msgid "Add page"
 msgstr "Seite hinzufügen"
 
-#: ../admin/manage-images.php:196
+#: ../admin/manage-images.php:193
 msgid "Scan Folder for new images"
 msgstr "Überprüfe Verzeichniss nach neuen Bildern"
 
-#: ../admin/manage-images.php:197
-#: ../admin/manage-images.php:246
-#: ../admin/manage-images.php:401
+#: ../admin/manage-images.php:194
+#: ../admin/manage-images.php:243
+#: ../admin/manage-images.php:398
 msgid "Save Changes"
 msgstr "Änderungen Speichern"
 
-#: ../admin/manage-images.php:207
+#: ../admin/manage-images.php:204
 msgid "No action"
 msgstr "Keine Aktion"
 
-#: ../admin/manage-images.php:209
+#: ../admin/manage-images.php:206
 #: ../admin/manage.php:132
 msgid "Set watermark"
 msgstr "Wasserzeichen setzen"
 
-#: ../admin/manage-images.php:211
+#: ../admin/manage-images.php:208
 #: ../admin/manage.php:140
 msgid "Resize images"
 msgstr "Bilder verkleinern"
 
-#: ../admin/manage-images.php:212
+#: ../admin/manage-images.php:209
 msgid "Delete images"
 msgstr "Bilder löschen"
 
-#: ../admin/manage-images.php:213
+#: ../admin/manage-images.php:210
 msgid "Import metadata"
 msgstr "Metadaten importieren"
 
-#: ../admin/manage-images.php:214
+#: ../admin/manage-images.php:211
 msgid "Copy to..."
 msgstr "Kopiere nach..."
 
-#: ../admin/manage-images.php:215
+#: ../admin/manage-images.php:212
 msgid "Move to..."
 msgstr "Verschiebe nach..."
 
-#: ../admin/manage-images.php:217
+#: ../admin/manage-images.php:214
 msgid "Add tags"
 msgstr "Stichwörter hinzufügen"
 
-#: ../admin/manage-images.php:218
+#: ../admin/manage-images.php:215
 msgid "Delete tags"
 msgstr "Stichwörter löschen"
 
-#: ../admin/manage-images.php:219
+#: ../admin/manage-images.php:216
 msgid "Overwrite tags"
 msgstr "Stichwörter überschreiben"
 
-#: ../admin/manage-images.php:224
-#: ../admin/manage-images.php:226
-#: ../admin/manage-images.php:420
-#: ../admin/manage-images.php:457
+#: ../admin/manage-images.php:221
+#: ../admin/manage-images.php:223
+#: ../admin/manage-images.php:417
+#: ../admin/manage-images.php:454
 msgid "OK"
 msgstr "OK"
 
-#: ../admin/manage-images.php:230
+#: ../admin/manage-images.php:227
 msgid "Hide thumbnails "
 msgstr "Thumbnails verstecken"
 
-#: ../admin/manage-images.php:232
+#: ../admin/manage-images.php:229
 msgid "Show thumbnails "
 msgstr "Thumbnails zeigen"
 
-#: ../admin/manage-images.php:236
+#: ../admin/manage-images.php:233
 msgid "Show tags"
 msgstr "Zeige Tags"
 
-#: ../admin/manage-images.php:238
+#: ../admin/manage-images.php:235
 msgid "Hide tags"
 msgstr "Verstecke Tags"
 
-#: ../admin/manage-images.php:242
+#: ../admin/manage-images.php:239
 msgid "Sort gallery"
 msgstr "Sortiere Bilder"
 
-#: ../admin/manage-images.php:379
+#: ../admin/manage-images.php:376
 msgid "Show Meta data"
 msgstr "Zeige Metadaten"
 
-#: ../admin/manage-images.php:379
+#: ../admin/manage-images.php:376
 msgid "Meta"
 msgstr "Meta"
 
-#: ../admin/manage-images.php:380
+#: ../admin/manage-images.php:377
 msgid "Delete this file ?"
 msgstr "Diese Datei löschen ?"
 
-#: ../admin/manage-images.php:416
+#: ../admin/manage-images.php:413
 msgid "Enter the tags"
 msgstr "Stichwörter angeben"
 
-#: ../admin/manage-images.php:422
-#: ../admin/manage-images.php:459
+#: ../admin/manage-images.php:419
+#: ../admin/manage-images.php:456
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: ../admin/manage-images.php:441
+#: ../admin/manage-images.php:438
 msgid "Select the destination gallery:"
 msgstr "Galerie nicht gefunden"
 
-#: ../admin/manage-images.php:457
-#, fuzzy, php-format
+#: ../admin/manage-images.php:454
+#, php-format
 msgid ""
 "You are about to copy or move %s images \n"
 " \n"
 " 'Cancel' to stop, 'OK' to proceed."
 msgstr ""
-"Du startest die Bearbeitung von %s Bildern \n"
+"Willst du wirklich %s Bild(er) verschieben \n"
 " \n"
-" 'Abbrechenl' um zu stoppen, 'OK' um die Bearbeitung durchzuführen."
+" 'Abbrechen' um zu stoppen, 'OK' um die Bearbeitung durchzuführen."
 
-#: ../admin/manage-images.php:479
+#: ../admin/manage-images.php:476
+#: ../admin/media-upload.php:212
 msgid "Thumbnail"
 msgstr "Thumbnail"
 
-#: ../admin/manage-images.php:479
-#: ../admin/manage-images.php:481
+#: ../admin/manage-images.php:476
+#: ../admin/manage-images.php:478
 msgid "Date"
 msgstr "Datum"
 
-#: ../admin/manage-images.php:481
+#: ../admin/manage-images.php:478
 msgid "File name"
 msgstr "Dateiname"
 
-#: ../admin/manage-images.php:485
+#: ../admin/manage-images.php:482
 msgid "Alt &amp; Title Text"
 msgstr "Alt &amp; Titel Text"
 
-#: ../admin/manage-images.php:488
+#: ../admin/manage-images.php:485
 msgid "exclude"
 msgstr "ausschließen"
 
-#: ../admin/manage-images.php:490
+#: ../admin/manage-images.php:487
 msgid "Tags (comma separated list)"
 msgstr "Stichwörter (Tags)"
 
@@ -973,6 +1006,7 @@ msgid "Filename"
 msgstr "Dateiname"
 
 #: ../admin/manage-sort.php:81
+#: ../admin/media-upload.php:187
 msgid "Alt/Title text"
 msgstr "Alt / Titel Text"
 
@@ -1006,7 +1040,6 @@ msgid "Import metadata finished"
 msgstr "Import der Metadaten beendet"
 
 #: ../admin/manage.php:171
-#, fuzzy
 msgid "Operation successfull. Please clear your browser cache."
 msgstr "Thumbnails erfolgreich erstellt. Bitte Browser-Cache aktualisieren."
 
@@ -1027,7 +1060,6 @@ msgid "created"
 msgstr "erstellt"
 
 #: ../admin/media-upload.php:132
-#: ../admin/tinymce/window.php:43
 msgid "No gallery"
 msgstr "Keine Galerie"
 
@@ -1052,27 +1084,22 @@ msgid "Alignment"
 msgstr "Ausrichtung"
 
 #: ../admin/media-upload.php:198
-#: ../admin/settings.php:315
 msgid "None"
 msgstr "Keiner"
 
 #: ../admin/media-upload.php:200
-#: ../admin/tinymce/window.php:128
 msgid "Left"
 msgstr "Links"
 
 #: ../admin/media-upload.php:202
-#: ../admin/tinymce/window.php:129
 msgid "Center"
 msgstr "Zentrieren"
 
 #: ../admin/media-upload.php:204
-#: ../admin/tinymce/window.php:130
 msgid "Right"
 msgstr "Rechts"
 
 #: ../admin/media-upload.php:208
-#: ../admin/settings.php:417
 msgid "Size"
 msgstr "Größe"
 
@@ -1103,7 +1130,13 @@ msgstr "Der Newsfeed kann nicht geladen werden. Schaue auf die <a href=\"%s\">Ha
 
 #: ../admin/overview.php:128
 msgid "At a Glance"
-msgstr ""
+msgstr "Übersicht"
+
+#: ../admin/overview.php:134
+msgid "Image"
+msgid_plural "Images"
+msgstr[0] "Bild"
+msgstr[1] "Bilder"
 
 #: ../admin/overview.php:155
 msgid "Upload pictures"
@@ -1124,7 +1157,7 @@ msgstr "Galerie-Mitarbeiter"
 #: ../admin/overview.php:161
 #, php-format
 msgid "You currently have %s rights."
-msgstr ""
+msgstr "Du hast derzeit %s Rechte."
 
 #: ../admin/overview.php:168
 msgid "Welcome to NextGEN Gallery !"
@@ -1389,7 +1422,7 @@ msgstr "ImageMagick (Experimental). Pfad zur Bibliothek :"
 
 #: ../admin/settings.php:136
 msgid "Activate PicLens/CoolIris support"
-msgstr ""
+msgstr "Aktiviere PicLens/CoolIris"
 
 #: ../admin/settings.php:138
 msgid "When you activate this option, some javascript is added to your site footer. Make sure that wp_footer is called in your theme."
@@ -1800,23 +1833,23 @@ msgstr "Wichtig : Es könnnten Probleme bei einigen Browser auftauchen. Unbeding
 msgid "Reset all settings to default parameter"
 msgstr "Stelle alle Einstellungen auf Anfangswerte zurück"
 
-#: ../admin/setup.php:38
+#: ../admin/setup.php:26
 msgid "Uninstall sucessfull ! Now delete the plugin and enjoy your life ! Good luck !"
 msgstr "Deinstallation erfolgreich ! Nun kannst Du das Plugin löschen und Dein Leben weiterhin genießen ! Stay geeky ! Viel Glück !"
 
-#: ../admin/setup.php:44
+#: ../admin/setup.php:30
 msgid "Reset options"
 msgstr "Optionen zurücksetzen"
 
-#: ../admin/setup.php:47
+#: ../admin/setup.php:33
 msgid "Reset all options/settings to the default installation."
 msgstr "Alle Optionen/Einstellungen zurücksetzen"
 
-#: ../admin/setup.php:48
+#: ../admin/setup.php:34
 msgid "Reset settings"
 msgstr "Einstellungen zurücksetzen"
 
-#: ../admin/setup.php:48
+#: ../admin/setup.php:34
 msgid ""
 "Reset all options to default settings ?\\n"
 "\\n"
@@ -1826,35 +1859,35 @@ msgstr ""
 "\\n"
 "Wähle [Cancel] um abzubrechen, [OK] zum Durchführen.\\n"
 
-#: ../admin/setup.php:53
+#: ../admin/setup.php:39
 msgid "Uninstall plugin tables"
 msgstr "Plugin Tabellen (DB) entfernen"
 
-#: ../admin/setup.php:58
+#: ../admin/setup.php:44
 msgid "You don't like NextGEN Gallery ?"
 msgstr "Du magst die NextGEN Galerie nicht ?"
 
-#: ../admin/setup.php:59
+#: ../admin/setup.php:45
 msgid "No problem, before you deactivate this plugin press the Uninstall Button, because deactivating NextGEN Gallery does not remove any data that may have been created. "
 msgstr "Null Problemo. Einfach nur vor dem Deaktivieren dieses Plugins den Uninstall-Button betätigen damit alle Tabellen der Galerie entfernt werden."
 
-#: ../admin/setup.php:61
+#: ../admin/setup.php:47
 msgid "WARNING:"
 msgstr "WARNUNG:"
 
-#: ../admin/setup.php:62
+#: ../admin/setup.php:48
 msgid "Once uninstalled, this cannot be undone. You should use a Database Backup plugin of WordPress to backup all the tables first. NextGEN gallery is stored in the tables"
 msgstr "Eine einmalig durchgeführte Deinstallation kann nicht mehr rückgängig gemacht werden, da alle Tabellen der Galerie aus der Datenbank entfernt werden und KEIN Backup dieser Galerie-Tabellen angelegt wird."
 
-#: ../admin/setup.php:62
+#: ../admin/setup.php:48
 msgid "and"
 msgstr "und"
 
-#: ../admin/setup.php:64
+#: ../admin/setup.php:50
 msgid "Uninstall plugin"
 msgstr "Plugin deinstallieren"
 
-#: ../admin/setup.php:64
+#: ../admin/setup.php:50
 msgid ""
 "You are about to Uninstall this plugin from WordPress.\\n"
 "This action is not reversible.\\n"
@@ -1946,7 +1979,7 @@ msgid "Your theme contain a NextGEN Gallery stylesheet (nggallery.css), this fil
 msgstr ""
 
 #: ../admin/style.php:136
-msgid "Update File &raquo;"
+msgid "Update File"
 msgstr "Datei aktualisieren"
 
 #: ../admin/style.php:139
@@ -2064,48 +2097,48 @@ msgstr ""
 msgid "Slug(s) to set:"
 msgstr ""
 
-#: ../admin/upgrade.php:68
+#: ../admin/upgrade.php:74
 msgid "Update database structure"
-msgstr ""
+msgstr "Aktualisiere die Datenbank-Struturen"
 
-#: ../admin/upgrade.php:129
+#: ../admin/upgrade.php:135
 msgid "Some folders/files could not renamed, please recheck the permission and rescan the folder in the manage gallery section."
 msgstr ""
 
-#: ../admin/upgrade.php:131
+#: ../admin/upgrade.php:137
 msgid "Rename failed"
 msgstr "Konnte nicht umbenannt werden"
 
-#: ../admin/upgrade.php:171
-#: ../admin/upgrade.php:191
+#: ../admin/upgrade.php:177
+#: ../admin/upgrade.php:197
 msgid "Upgrade NextGEN Gallery"
 msgstr "NextGEN Gallery aktualisieren"
 
-#: ../admin/upgrade.php:172
+#: ../admin/upgrade.php:178
 msgid "The script detect that you upgrade from a older version."
 msgstr ""
 
-#: ../admin/upgrade.php:173
+#: ../admin/upgrade.php:179
 msgid "Your database tables for NextGEN Gallery is out-of-date, and must be upgraded before you can continue."
 msgstr ""
 
-#: ../admin/upgrade.php:174
+#: ../admin/upgrade.php:180
 msgid "If you would like to downgrade later, please make first a complete backup of your database and the images."
 msgstr ""
 
-#: ../admin/upgrade.php:175
+#: ../admin/upgrade.php:181
 msgid "The upgrade process may take a while, so please be patient."
 msgstr ""
 
-#: ../admin/upgrade.php:176
+#: ../admin/upgrade.php:182
 msgid "Start upgrade now"
 msgstr "Aktualisierung  starten"
 
-#: ../admin/upgrade.php:193
+#: ../admin/upgrade.php:199
 msgid "Upgrade sucessfull"
 msgstr "Aktualisierung erfolgreich"
 
-#: ../admin/upgrade.php:194
+#: ../admin/upgrade.php:200
 msgid "Continue"
 msgstr "Weiter"
 
@@ -2396,14 +2429,12 @@ msgid "Error. No enough tags for rename. Too for merge. Choose !"
 msgstr ""
 
 #: ../lib/tags.php:163
-#, fuzzy
 msgid "No tag specified!"
-msgstr "Kein Album ausgewählt"
+msgstr "Kein Stichwort angegeben"
 
 #: ../lib/tags.php:186
-#, fuzzy
 msgid "No tag deleted."
-msgstr "Keine Bilder ausgewählt"
+msgstr "Kein Stichwort gelöscht"
 
 #: ../lib/tags.php:188
 #, php-format
@@ -2419,9 +2450,8 @@ msgid "Tags number and slugs number isn't the same!"
 msgstr ""
 
 #: ../lib/tags.php:241
-#, fuzzy
 msgid "No slug edited."
-msgstr "Kein Album ausgewählt"
+msgstr "Kein Stichwort geändert"
 
 #: ../lib/tags.php:243
 #, php-format
@@ -2433,7 +2463,7 @@ msgstr ""
 msgid "Photos"
 msgstr "Fotos"
 
-#: ../view/gallery.php:30
+#: ../view/gallery.php:32
 #: ../widgets/media-rss-widget.php:236
 msgid "[View with PicLens]"
 msgstr "[Mit PicLens anzeigen]"
@@ -2451,24 +2481,25 @@ msgid "of"
 msgstr "von"
 
 #: ../widgets/media-rss-widget.php:31
+msgid "NextGEN Media RSS"
+msgstr "NextGEN Media RSS"
+
+#: ../widgets/media-rss-widget.php:37
+msgid "Widget that displays Media RSS links for NextGEN Gallery."
+msgstr ""
+
 #: ../widgets/media-rss-widget.php:135
 #: ../widgets/media-rss-widget.php:203
 #: ../widgets/media-rss-widget.php:260
 msgid "Media RSS"
 msgstr "Media RSS"
 
-#: ../widgets/media-rss-widget.php:37
-msgid "Widget that displays Media RSS links."
-msgstr ""
-
 #: ../widgets/media-rss-widget.php:136
 #: ../widgets/media-rss-widget.php:261
-#, fuzzy
 msgid "Link to the main image feed"
-msgstr "ist keine zulässige Bilddatei !"
+msgstr "Link zum Bilder-Feed"
 
 #: ../widgets/media-rss-widget.php:153
-#: ../widgets/widgets.php:134
 msgid "Title:"
 msgstr "Titel:"
 
@@ -2491,6 +2522,11 @@ msgstr ""
 #: ../widgets/widgets.php:28
 msgid "Show a NextGEN Gallery Slideshow"
 msgstr "Binde eine NextGEN Gallery Slideshow eine"
+
+#: ../widgets/widgets.php:29
+#: ../widgets/widgets.php:30
+msgid "NextGEN Slideshow"
+msgstr "NextGEN Diashow"
 
 #: ../widgets/widgets.php:54
 msgid "<a href=\"http://www.macromedia.com/go/getflashplayer\">Get the Flash Player</a> to see the slideshow."
@@ -2564,25 +2600,25 @@ msgstr "Galerie ID :"
 msgid "Gallery IDs, separated by commas."
 msgstr "Galerie ID's, mit Kommas getrennt"
 
-#: ../xml/media-rss.php:57
+#: ../xml/media-rss.php:58
 msgid "No galleries have been yet created."
-msgstr ""
+msgstr "Keine Galerie wurde derzeit erstellt."
 
-#: ../xml/media-rss.php:78
+#: ../xml/media-rss.php:80
 #, php-format
 msgid "The gallery ID=%s does not exist."
 msgstr "Die Galerie ID=%s existiert nicht."
 
-#: ../xml/media-rss.php:109
+#: ../xml/media-rss.php:112
 msgid "No album ID has been provided as parameter"
 msgstr ""
 
-#: ../xml/media-rss.php:117
+#: ../xml/media-rss.php:120
 #, php-format
 msgid "The album ID=%s does not exist."
 msgstr ""
 
-#: ../xml/media-rss.php:124
+#: ../xml/media-rss.php:127
 #, php-format
 msgid "Invalid MediaRSS command (%s)."
 msgstr ""

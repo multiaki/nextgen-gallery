@@ -30,8 +30,11 @@ class nggRewrite {
 		//add_action('init',array(&$this, 'flush'));
 		
 		add_filter('query_vars', array(&$this, 'add_queryvars') );
+		add_filter('wp_title' , array(&$this, 'rewrite_title') );
+		
 		if ($this->options['usePermalinks'])
-		add_action('generate_rewrite_rules', array(&$this, 'RewriteRules'));
+			add_action('generate_rewrite_rules', array(&$this, 'RewriteRules'));
+		
 		
 	} // end of initialization
 
@@ -147,6 +150,53 @@ class nggRewrite {
 		return $query_vars;
 	}
 	
+	/**
+	* rewrite the blog title if the gallery is used
+	*/	
+	function rewrite_title($title) {
+		
+		$new_title = '';
+		// the separataor
+		$sep = ' &laquo; ';
+		
+		// $_GET from wp_query
+		$pid     = get_query_var('pid');
+		$pageid  = get_query_var('pageid');
+		$nggpage = get_query_var('nggpage');
+		$gallery = get_query_var('gallery');
+		$album   = get_query_var('album');
+		$tag  	 = get_query_var('gallerytag');
+		$show    = get_query_var('show');
+
+		//TODO:: I could parse for the Picture name , gallery etc, but this increase the queries
+		//TODO:: Class nggdb need to cache the query for the nggfunctions.php
+
+		if ( $show == 'slide' )
+			$new_title .= __('Slideshow', 'nggallery') . $sep ;
+		elseif ( $show == 'show' )
+			$new_title .= __('Gallery', 'nggallery') . $sep ;	
+
+		if ( !empty($pid) )
+			$new_title .= __('Picture', 'nggallery') . ' ' . $pid . $sep ;
+
+		if ( !empty($album) )
+			$new_title .= __('Album', 'nggallery') . ' ' . $album . $sep ;
+
+		if ( !empty($gallery) )
+			$new_title .= __('Gallery', 'nggallery') . ' ' . $gallery . $sep ;
+			
+		if ( !empty($nggpage) )
+			$new_title .= __('Page', 'nggallery') . ' ' . $nggpage . $sep ;
+
+		if ( !empty($tag) )
+			$new_title .= $tag . $sep;
+		
+		//prepend the data
+		$title = $new_title . $title;
+		
+		return $title;
+	}
+		
 	/**
 	* The actual rewrite rules
 	*/

@@ -471,12 +471,6 @@ function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $fl
 	
 	$ngg_options = nggGallery::get_option('ngg_options');
 	
-	// remove the comma
-	$float  = ltrim( $float, ',' );
-	$mode   = ltrim( $mode, ',' );
-	$width  = ltrim( $width, ',' );
-	$height = ltrim( $height, ',' );
-
 	// get picturedata
 	$picture = nggdb::find_image($imageID);
 	

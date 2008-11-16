@@ -120,9 +120,9 @@ function ngg_overview_news(){
  */
 function ngg_overview_right_now() {
 	global $wpdb;
-	$images    = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggpictures");
-	$galleries = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggallery");
-	$albums    = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggalbum");
+	$images    = intval( $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggpictures") );
+	$galleries = intval( $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggallery") );
+	$albums    = intval( $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggalbum") );
 ?>
 
 <p class="sub"><?php _e('At a Glance'); ?></p>
@@ -130,20 +130,20 @@ function ngg_overview_right_now() {
 	<table>
 		<tbody>
 			<tr class="first">
-				<td class="first b"><a href="admin.php?page=nggallery-add-gallery"><?php echo intval($images); ?></a></td>
-				<td class="t"><?php echo __ngettext( 'Image', 'Images', intval($images), 'nggallery' ); ?></td>
+				<td class="first b"><a href="admin.php?page=nggallery-add-gallery"><?php echo $images; ?></a></td>
+				<td class="t"><?php echo __ngettext( 'Image', 'Images', $images, 'nggallery' ); ?></td>
 				<td class="b"></td>
 				<td class="last"></td>
 			</tr>
 			<tr>
-				<td class="first b"><a href="admin.php?page=nggallery-manage-gallery"><?php echo intval($galleries); ?></a></td>
-				<td class="t"><?php echo __ngettext( 'Gallery', 'Galleries', intval($galleries), 'nggallery' ); ?></td>
+				<td class="first b"><a href="admin.php?page=nggallery-manage-gallery"><?php echo $galleries; ?></a></td>
+				<td class="t"><?php echo __ngettext( 'Gallery', 'Galleries', $galleries, 'nggallery' ); ?></td>
 				<td class="b"></td>
 				<td class="last"></td>
 			</tr>
 			<tr>
-				<td class="first b"><a href="admin.php?page=nggallery-manage-album"><?php echo intval($albums); ?></a></td>
-				<td class="t"><?php echo __ngettext( 'Album', 'Albums', intval($albums), 'nggallery' ); ?></td>
+				<td class="first b"><a href="admin.php?page=nggallery-manage-album"><?php echo $albums; ?></a></td>
+				<td class="t"><?php echo __ngettext( 'Album', 'Albums', $albums, 'nggallery' ); ?></td>
 				<td class="b"></td>
 				<td class="last"></td>
 			</tr>

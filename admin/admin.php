@@ -198,7 +198,7 @@ class nggAdminPanel{
 		$link = '';
 
 		switch ($screen) {
-			case 'toplevel_page_nextgen-gallery' :
+			case 'toplevel_page_' . NGGFOLDER :
 			case 'gallery_page_nggallery-setup' :
 			case 'gallery_page_nggallery-about' :
 			case 'gallery_page_nggallery-roles' :

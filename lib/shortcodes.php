@@ -162,7 +162,7 @@ class NextGEN_shortcodes {
 			'float'	 	=> '',
 			'template' 	=> ''
 		), $atts ));
-		
+	
 		$out = nggSinglePicture($id, $w, $h, $mode, $float, $template, $content);
 			
 		return $out;
