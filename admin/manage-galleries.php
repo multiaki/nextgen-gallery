@@ -45,7 +45,7 @@ if($gallerylist) {
 					<?php echo $gallery->title; ?>
 				<?php } ?>
 			</td>
-			<td><?php echo $gallery->galdesc; ?></td>
+			<td><?php echo $gallery->galdesc; ?>&nbsp;</td>
 			<td><?php echo $author_user->display_name; ?></td>
 			<td><?php echo $gallery->pageid; ?></td>
 			<td><?php echo $gallery->counter; ?></td>
