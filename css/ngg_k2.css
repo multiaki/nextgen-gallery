@@ -2,7 +2,7 @@
 CSS Name: K2 Theme
 Description: NextGEN Style for K2 Theme
 Author: Alex Rabe
-Version: 1.32
+Version: 1.33
    
 This is a template stylesheet that can be used with NextGEN Gallery. I tested the
 styles with a default theme Kubrick. Modify it when your theme struggle with it,
@@ -228,6 +228,11 @@ it's only a template design
 .ngg-imagebrowser-nav .counter {
 	text-align:center;
 	font-size:0.9em !important;
+}
+
+.exif-data {
+  	margin-left: auto !important;
+    margin-right: auto !important;	
 }
 
 /* ----------- Slideshow -------------*/

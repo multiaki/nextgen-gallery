@@ -19,9 +19,6 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 
 	$defaultpath = $ngg->options['gallerypath'];	
 	
-	//get all galleries
-	$gallerylist = nggdb::find_all_galleries();
-
 	if ($_POST['addgallery']){
 		check_admin_referer('ngg_addgallery');
 		$newgallery = attribute_escape( $_POST['galleryname']);
@@ -75,6 +72,9 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		$ngg->options['swfUpload'] = true;	
 		update_option('ngg_options', $ngg->options);
 	}
+
+	//get all galleries (after we added new ones)
+	$gallerylist = nggdb::find_all_galleries();
 
 	?>
 	

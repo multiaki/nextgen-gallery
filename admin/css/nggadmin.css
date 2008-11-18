@@ -42,17 +42,17 @@
 #wm-preview {
 	float:right;
 	font-size:90%;
-	width:40%;
+	width:35%;
 	border-color:#EBEBEB rgb(204, 204, 204) rgb(204, 204, 204) rgb(235, 235, 235);
 	border-style:solid;
 	border-width:1px;
 	margin-bottom:10px;
-	margin-left:20px;
+	margin-left:10px;
 	margin-right:8px;
 	padding:2px;
 }
 #wm-preview h3{
-	background:#EAF3FA none repeat scroll 0%;
+	background:#F9F9F9 none repeat scroll 0%;
 	font-size:14px;
 	font-weight:bold;
 	margin:0pt 0pt 10px;
@@ -67,6 +67,7 @@
 .wm-table {
 	border-collapse:collapse;
 	margin-top:1em;
+	width: 60%;
 }
 .wm-table td {
 	border-bottom:8px solid #FFFFFF;
@@ -80,7 +81,7 @@
 	text-align:left;
 }
 .wm-table tr {
-	background:#EAF3FA none repeat scroll 0%;
+	background:#F9F9F9 none repeat scroll 0%;
 }
 
 /* SETTINGS FOR MANAGE TABLE */

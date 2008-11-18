@@ -219,6 +219,11 @@ it's only a template design
 	font-size:0.9em !important;
 }
 
+.exif-data {
+  	margin-left: auto !important;
+    margin-right: auto !important;	
+}
+
 /* ----------- Slideshow -------------*/
 .slideshow {
 	margin-left: auto; 

@@ -389,7 +389,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				</div>
 			</div> 
 				<h3><label><input type="radio" name="wmType" value="image" <?php checked('image', $ngg->options['wmType']); ?> /> <?php _e('Use image as watermark','nggallery') ?></label></h3>
-				<table class="wm-table">
+				<table class="wm-table form-table">
 					<tr>
 						<th><?php _e('URL to file','nggallery') ?> :</th>
 						<td><input type="text" size="40" name="wmPath" value="<?php echo $ngg->options['wmPath']; ?>" /><br />
@@ -397,7 +397,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					</tr>
 				</table>	
 				<h3><label><input type="radio" name="wmType" value="text" <?php checked('text', $ngg->options['wmType']); ?> /> <?php _e('Use text as watermark','nggallery') ?></label></h3>
-				<table class="wm-table">	
+				<table class="wm-table form-table">	
 					<tr>
 						<th><?php _e('Font','nggallery') ?>:</th>
 						<td><select name="wmFont" size="1">	<?php 
@@ -444,7 +444,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		<input type="hidden" name="page_options" value="irWidth,irHeight,irShuffle,irLinkfromdisplay,irShownavigation,irShowicons,irWatermark,irOverstretch,irRotatetime,irTransition,irKenburns,irBackcolor,irFrontcolor,irLightcolor,irScreencolor,irAudio,irXHTMLvalid" />
 		<h2><?php _e('Slideshow','nggallery'); ?></h2>
 		<?php if (!NGGALLERY_IREXIST) { ?><p><div id="message" class="error fade"><p><?php _e('The imagerotator.swf is not in the nggallery folder, the slideshow will not work.','nggallery') ?></p></div></p><?php }?>
-		<p><?php _e('The settings are used in the JW Image Rotator Version', 'nggallery') ?> 3.15 .
+		<p><?php _e('The settings are used in the JW Image Rotator Version', 'nggallery') ?> 3.17 .
 		   <?php _e('See more information for the Flash Player on the web page', 'nggallery') ?> <a href="http://www.jeroenwijering.com/?item=JW_Image_Rotator" target="_blank" >JW Image Rotator from Jeroen Wijering</a>.
 		</p>
 				<table class="form-table ngg-options">

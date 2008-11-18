@@ -22,16 +22,15 @@
 }
 #tabs{
 	display: block;
-	background:#EAF3FA none repeat scroll 0%;
+	background:#F1F1F1 none repeat scroll 0%;
 	font-size:14px;
-	margin:0pt 0pt 10px;
 	overflow:hidden;
 }
 
 .ui-tabs-nav {
     list-style: none;
     margin: 0;
-    padding: 0 0 0 4px;
+    padding: 0 0 0 10px;
 }
 .ui-tabs-nav:after { /* clearing without presentational markup, IE gets extra treatment */
     display: block;
@@ -40,7 +39,7 @@
 }
 .ui-tabs-nav li {
     float: left;
-    padding:8px 5px;
+    padding: 7px 5px;
     min-width: 84px; /* be nice to Opera */
     margin: 2px 2px 0px 1px !important;
 	text-decoration: none;
@@ -54,7 +53,7 @@
 .ui-tabs-nav a {
     margin: 1px 0 0; /* position: relative makes opacity fail for disabled tab in IE */
     padding-left: 0;
-    color: #27537a;
+    color: #2583AD;
     line-height: 1.2;
     text-align: center;
     text-decoration: none;
@@ -62,8 +61,11 @@
     outline: 0; /* prevent dotted border in Firefox */
 }
 .ui-tabs-nav .ui-tabs-selected{
-	background:#CEE1EF none repeat scroll 0% 50%;
-	font-weight:bold;
+	background-color:#C0C0C0;
+	background-image:none;
+	border-color:#B5B5B5;
+	font-style:italic;
+
 	-moz-border-radius-topright: 4px;
 	-khtml-border-top-right-radius: 4px;
 	-webkit-border-top-right-radius: 4px;
@@ -73,16 +75,24 @@
 	-webkit-border-top-left-radius: 4px;
 	border-top-left-radius: 4px;
 }
-.ui-tabs-nav .ui-tabs-selected a {
+
+.ui-tabs-selected a,
+.ui-tabs-selected a:hover {
+	color:#FFFFFF !important;
+}
+
+.ui-tabs-nav .ui-tabs-selected a,
+.ui-tabs-nav .ui-tabs-selected a:hover  {
     position: relative;
     top: 1px;
     z-index: 2;
     margin-top: 0;
-    color:#333333;
 }
+
 .ui-tabs-nav li a:hover {
 	color:#D54E21;
 }
+
 .ui-tabs-nav a span {
     width: 64px; /* IE 6 treats width as min-width */
     min-width: 64px;
