@@ -197,16 +197,16 @@ class nggLoader {
 		define('NGGURL', $this->updateURL);
 
 		// required for Windows & XAMPP
-		define('WINABSPATH', str_replace("\\","/",ABSPATH) );
+		define('WINABSPATH', str_replace("\\", "/", ABSPATH) );
 			
 		// define URL
 		define('NGGFOLDER', plugin_basename( dirname(__FILE__)) );
 		
-		define('NGGALLERY_ABSPATH', str_replace("\\","/", WP_CONTENT_DIR.'/plugins/'.plugin_basename( dirname(__FILE__)).'/') );
-		define('NGGALLERY_URLPATH', WP_CONTENT_URL.'/plugins/'.plugin_basename( dirname(__FILE__)).'/' );
+		define('NGGALLERY_ABSPATH', str_replace("\\","/", WP_PLUGIN_DIR . '/' . plugin_basename( dirname(__FILE__) ) . '/' ));
+		define('NGGALLERY_URLPATH', WP_PLUGIN_URL . '/' . plugin_basename( dirname(__FILE__) ) . '/' );
 		
 		// look for imagerotator
-		define('NGGALLERY_IREXIST', file_exists( NGGALLERY_ABSPATH.'imagerotator.swf' ));
+		define('NGGALLERY_IREXIST', file_exists( NGGALLERY_ABSPATH . 'imagerotator.swf' ));
 
 		// get value for safe mode
 		if ( (gettype( ini_get('safe_mode') ) == 'string') ) {
@@ -258,8 +258,11 @@ class nggLoader {
 		echo "<meta name='NextGEN' content='" . $this->version . "' />\n";
 		
 		//	activate Thickbox
-		if ($this->options['thumbEffect'] == "thickbox") 
+		if ($this->options['thumbEffect'] == "thickbox") {
 			wp_enqueue_script( 'thickbox' );
+			// WP core reference relative to the images. Bad idea
+			echo '<style type="text/css">#TB_window a:link { padding: 0 10px !important; background: url("' . get_option('siteurl') . '/wp-includes/js/thickbox/tb-close.png") no-repeat }</style>' ."\n";
+		}
 
 		// activate modified Shutter reloaded if not use the Shutter plugin
 		if ( ($this->options['thumbEffect'] == "shutter") && !function_exists('srel_makeshutter') ) {

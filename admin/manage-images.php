@@ -240,7 +240,7 @@ jQuery(document).ready( function() {
 	<?php } ?>
 
 	</div>
-	<span style="float:right; padding:7px 8px 0;"><input type="submit" name="updatepictures" class="button-primary action"  value="<?php _e("Save Changes",'nggallery')?>" /></span>
+	<span style="float:right; padding:2px 8px 0 0;"><input type="submit" name="updatepictures" class="button-primary action"  value="<?php _e("Save Changes",'nggallery')?>" /></span>
 </div>
 
 <table id="ngg-listimages" class="widefat" >
@@ -410,7 +410,7 @@ if($picturelist) {
 		<input type="hidden" id="tags_bulkaction" name="TB_bulkaction" value="" />
 		<table width="100%" border="0" cellspacing="3" cellpadding="3" >
 		  	<tr>
-		    	<th><?php _e("Enter the tags",'nggallery')?> : <input name="taglist" type="text" style="width:99%" value="" /></th>
+		    	<th><?php _e("Enter the tags",'nggallery')?> : <input name="taglist" type="text" style="width:90%" value="" /></th>
 		  	</tr>
 		  	<tr align="right">
 		    	<td class="submit">
@@ -436,7 +436,7 @@ if($picturelist) {
 		  	<tr>
 		    	<th>
 		    		<?php _e("Select the destination gallery:", 'nggallery'); ?>&nbsp;
-		    		<select name="dest_gid" style="width:95%" >
+		    		<select name="dest_gid" style="width:90%" >
 		    			<?php 
 		    				foreach ($gallerylist as $gallery) { 
 		    					if ($gallery->gid != $act_gid) { 
