@@ -189,11 +189,18 @@ class nggdb {
 		global $wpdb;
 		
 		// Query database
-		if ( is_numeric($id) )
+		if ( is_numeric($id) ) {
 			$album = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->nggalbum WHERE id = %d", $id) );
-		else
+		} elseif ( $id == 'all' || $id == 0) {
+			// init the object and fill it
+			$album = new stdClass();
+			$album->id = 0;
+			$album->name = __('Album overview','nggallery');
+			$album->sortorder =  serialize( $wpdb->get_col("SELECT gid FROM $wpdb->nggallery") );
+		} else {
 			$album = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->nggalbum WHERE name = '%s'", $id) );
-
+		}
+		
 		// Unserialize the galleries inside the album
 		if ( $album ) {
 			if ( !empty( $album->sortorder ) ) 
