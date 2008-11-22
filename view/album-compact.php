@@ -4,7 +4,7 @@ Template Page for the album overview
 
 Follow variables are useable :
 
-	$albumID     : Current ID of the album
+	$album     	 : Contain information about the album
 	$galleries   : Contain all galleries inside this album
 	$mode        : Contain the selected mode (extended or compact)
 

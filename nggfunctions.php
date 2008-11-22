@@ -5,12 +5,13 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 /**
  * nggShowSlideshow()
  * 
+ * @access public 
  * @param integer $galleryID
  * @param integer $irWidth
  * @param integer $irHeight
  * @return the content
  */
-function nggShowSlideshow($galleryID, $irWidth, $irHeight) {
+function nggShowSlideshow($galleryID, $width, $height) {
 	
 	require_once (dirname (__FILE__).'/lib/swfobject.php');
 
@@ -22,16 +23,17 @@ function nggShowSlideshow($galleryID, $irWidth, $irHeight) {
 		return $out;
 	}
 
-	if (empty($irWidth) ) $irWidth  = (int) $ngg_options['irWidth'];
-	if (empty($irHeight)) $irHeight = (int) $ngg_options['irHeight'];
+	if (empty($width) ) $width  = (int) $ngg_options['irWidth'];
+	if (empty($height)) $height = (int) $ngg_options['irHeight'];
 
 	// init the flash output
-	$swfobject = new swfobject( NGGALLERY_URLPATH.'imagerotator.swf', 'so' . $galleryID, $irWidth, $irHeight, '7.0.0', 'false');
+	$swfobject = new swfobject( NGGALLERY_URLPATH.'imagerotator.swf', 'so' . $galleryID, $width, $height, '7.0.0', 'false');
 
 	$swfobject->message = '<p>'. __('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and <a href="http://www.mozilla.com/firefox/">a browser with Javascript support</a> are needed..', 'nggallery').'</p>';
 	$swfobject->add_params('wmode', 'opaque');
 	$swfobject->add_params('allowfullscreen', 'true');
 	$swfobject->add_attributes('styleclass', 'slideshow');
+	$swfobject->add_attributes('name', 'so' . $galleryID);
 
 	// adding the flash parameter	
 	$swfobject->add_flashvars( 'file', NGGALLERY_URLPATH.'xml/imagerotator.php?gid=' . $galleryID );
@@ -50,8 +52,8 @@ function nggShowSlideshow($galleryID, $irWidth, $irHeight) {
 	if ($ngg_options['irWatermark'])
 		$swfobject->add_flashvars( 'logo', $ngg_options['wmPath'], '', 'string'); 
 	$swfobject->add_flashvars( 'audio', $ngg_options['irAudio'], '', 'string');
-	$swfobject->add_flashvars( 'width', $irWidth, '260');
-	$swfobject->add_flashvars( 'height', $irHeight, '320');	
+	$swfobject->add_flashvars( 'width', $width, '260');
+	$swfobject->add_flashvars( 'height', $height, '320');	
 	// create the output
 	$out  = '<div class="slideshow">' . $swfobject->output() . '</div>';
 	// add now the script code
@@ -69,8 +71,9 @@ function nggShowSlideshow($galleryID, $irWidth, $irHeight) {
 }
 
 /**
- * nggShowGallery()
+ * nggShowGallery() - return a gallery  
  * 
+ * @access public 
  * @param int $galleryID
  * @param string $template (optional) name for a template file, look for gallery-$template
  * @return the content
@@ -136,6 +139,7 @@ function nggShowGallery( $galleryID, $template = '' ) {
 /**
  * Build a gallery output
  * 
+ * @access internal
  * @param array $picturelist
  * @param bool $galleryID, if you supply a gallery ID, you can add a slideshow link
  * @param string $template (optional) name for a template file, look for gallery-$template
@@ -229,18 +233,18 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
 	// create the output
 	$out = nggGallery::capture ( $filename, array ('gallery' => $gallery, 'images' => $picturelist, 'pagination' => $navigation) );
 	
-	// Apply a filter after the output
+	// apply a filter after the output
 	$out = apply_filters('ngg_gallery_output', $out, $picturelist);
 	
 	return $out;
 }
 
 /**
- * nggShowAlbum()
+ * nggShowAlbum() - return a album based on the id
  * 
+ * @access public 
  * @param int $albumID
- * @param string $template
- * @param string $sortorder
+ * @param string (optional) $template
  * @return the content
  */
 function nggShowAlbum($albumID, $template = 'extend') {
@@ -254,7 +258,8 @@ function nggShowAlbum($albumID, $template = 'extend') {
 		
 		if ( $albumID != $album ) 
 			return;
-
+			
+		// if gallery is is submit , then show the gallery instead 
 		$galleryID = (int) $gallery;
 		$out = nggShowGallery($galleryID);
 		return $out;
@@ -270,7 +275,7 @@ function nggShowAlbum($albumID, $template = 'extend') {
 	$mode = ltrim($mode, ',');
 	
  	if ( is_array($album->gallery_ids) )
- 		$out = nggCreateAlbum( $album->gallery_ids, $template, $album->id );
+ 		$out = nggCreateAlbum( $album->gallery_ids, $template, $album );
 	
 	$out = apply_filters( 'ngg_show_album_content', $out, intval( $album->id ) );
 
@@ -280,12 +285,13 @@ function nggShowAlbum($albumID, $template = 'extend') {
 /**
  * nggCreateAlbum()
  * 
- * @param int $galleriesID
- * @param string $template
- * @param integer $albumID
+ * @access internal
+ * @param array $galleriesID
+ * @param string (optional) $template
+ * @param object (optional) $album result from the db
  * @return the content
  */
-function nggCreateAlbum( $galleriesID, $template = 'extend', $albumID = 0) {
+function nggCreateAlbum( $galleriesID, $template = 'extend', $album = 0) {
 	// create a gallery overview div
 	
 	global $wpdb, $nggRewrite;
@@ -332,7 +338,7 @@ function nggCreateAlbum( $galleriesID, $template = 'extend', $albumID = 0) {
 
 		// choose between variable and page link
 		if ($ngg_options['galNoPages']) {
-			$args['album'] = $albumID; 
+			$args['album'] = $album->id; 
 			$args['gallery'] = $key;
 			$galleries[$key]->pagelink = $nggRewrite->get_permalink($args);
 		} else {
@@ -347,7 +353,7 @@ function nggCreateAlbum( $galleriesID, $template = 'extend', $albumID = 0) {
 	$filename = ( empty($template) ) ? 'album-extend' : 'album-' . $template ;
 
 	// create the output
-	$out = nggGallery::capture ( $filename, array ('albumID' => $albumID, 'galleries' => $galleries, 'mode' => $mode) );
+	$out = nggGallery::capture ( $filename, array ('album' => $album, 'galleries' => $galleries, 'mode' => $mode) );
 
 	return $out;
  	
@@ -356,6 +362,7 @@ function nggCreateAlbum( $galleriesID, $template = 'extend', $albumID = 0) {
 /**
  * nggShowImageBrowser()
  * 
+ * @access public 
  * @param int|string $galleryID or gallery name
  * @param string $template (optional) name for a template file, look for imagebrowser-$template
  * @return the content
@@ -387,6 +394,7 @@ function nggShowImageBrowser($galleryID, $template = '') {
 /**
  * nggCreateImageBrowser()
  * 
+ * @access internal
  * @param array $picarray with pid
  * @param string $template (optional) name for a template file, look for imagebrowser-$template
  * @return the content
@@ -455,15 +463,16 @@ function nggCreateImageBrowser($picarray, $template = '') {
 }
 
 /**
- * nggSinglePicture() - create a gallery based on the tags
+ * nggSinglePicture() - show a single picture based on the id
  * 
+ * @access public 
  * @param int $imageID, db-ID of the image
- * @param int $width, width of the image
- * @param int $height, height of the image
- * @param string $mode could be none, watermark, web20
- * @param string $float could be none, left, right
+ * @param int (optional) $width, width of the image
+ * @param int (optional) $height, height of the image
+ * @param string $mode (optional) could be none, watermark, web20
+ * @param string $float (optional) could be none, left, right
  * @param string $template (optional) name for a template file, look for singlepic-$template
- * @param string $caption additional caption text
+ * @param string $caption (optional) additional caption text
  * @return the content
  */
 function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $float = '' , $template = '', $caption = '') {
@@ -532,7 +541,8 @@ function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $fl
 /**
  * nggShowGalleryTags() - create a gallery based on the tags
  * 
- * @param mixed $taglist list of tags as csv
+ * @access public 
+ * @param string $taglist list of tags as csv
  * @return the content
  */
 function nggShowGalleryTags($taglist) {	
@@ -569,8 +579,9 @@ function nggShowGalleryTags($taglist) {
 /**
  * nggShowRelatedGallery() - create a gallery based on the tags
  * 
+ * @access public 
  * @param string $taglist list of tags as csv
- * @param integer $maxImages limit the number of images to show
+ * @param integer $maxImages (optional) limit the number of images to show
  * @return the content
  */ 
 function nggShowRelatedGallery($taglist, $maxImages = 0) {
@@ -593,7 +604,7 @@ function nggShowRelatedGallery($taglist, $maxImages = 0) {
 	foreach ($picturelist as $picture) {
 
 		// get the effect code
-		$thumbcode = $picture->get_thumbcode('Related images for ' . get_the_title());
+		$thumbcode = $picture->get_thumbcode( __('Related images for', 'nggallery') . ' ' . get_the_title());
 
 		$out .= '<a href="' . $picture->imageURL . '" title="' . stripslashes($picture->description) . '" ' . $thumbcode . ' >';
 		$out .= '<img title="' . stripslashes($picture->alttext) . '" alt="' . stripslashes($picture->alttext) . '" src="' . $picture->thumbURL . '" />';
@@ -609,6 +620,7 @@ function nggShowRelatedGallery($taglist, $maxImages = 0) {
 /**
  * nggShowAlbumTags() - create a gallery based on the tags
  * 
+ * @access public 
  * @param string $taglist list of tags as csv
  * @return the content
  */
@@ -627,7 +639,7 @@ function nggShowAlbumTags($taglist) {
 			// avoid this evil code $sql = 'SELECT name FROM wp_ngg_tags WHERE slug = \'slug\' union select concat(0x7c,user_login,0x7c,user_pass,0x7c) from wp_users WHERE 1 = 1';
 			$slug = attribute_escape( $tag );
 			$tagname = $wpdb->get_var( $wpdb->prepare( "SELECT name FROM $wpdb->terms WHERE slug = %s", $slug ) );
-			$out  = '<div id="albumnav"><span><a href="'.get_permalink().'" title="'.__('Overview', 'nggallery').'">'.__('Overview', 'nggallery').'</a> | '.$tagname.'</span></div>';
+			$out  = '<div id="albumnav"><span><a href="' . get_permalink() . '" title="' . __('Overview', 'nggallery') .' ">'.__('Overview', 'nggallery').'</a> | '.$tagname.'</span></div>';
 			$out .=  nggShowGalleryTags($slug);
 			return $out;
 	
@@ -652,7 +664,7 @@ function nggShowAlbumTags($taglist) {
 	}	
 
 	// create the output
-	$out = nggGallery::capture ('album-compact', array ('albumID' => '0', 'galleries' => $picturelist, 'mode' => 'compact') );
+	$out = nggGallery::capture ('album-compact', array ('album' => 0, 'galleries' => $picturelist, 'mode' => 'compact') );
 	
 	$out = apply_filters('ngg_show_album_tags_content', $out, $taglist);
 	
@@ -662,8 +674,9 @@ function nggShowAlbumTags($taglist) {
 /**
  * nggShowRelatedImages() - return related images based on category or tags
  * 
- * @param string $type
- * @param integer $maxImages
+ * @access public 
+ * @param string $type could be 'tags' or 'category'
+ * @param integer $maxImages of images
  * @return the content
  */
 function nggShowRelatedImages($type = '', $maxImages = 0) {
@@ -675,28 +688,29 @@ function nggShowRelatedImages($type = '', $maxImages = 0) {
 	}
 
 	$sluglist = array();
+
 	switch ($type) {
-		
-	case 'tags':
-		if (function_exists('get_the_tags')) { 
-			$taglist = get_the_tags();
-			
-			if (is_array($taglist)) {
-				foreach ($taglist as $tag) {
-					$sluglist[] = $tag->slug;
+		case 'tags':
+			if (function_exists('get_the_tags')) { 
+				$taglist = get_the_tags();
+				
+				if (is_array($taglist)) {
+					foreach ($taglist as $tag) {
+						$sluglist[] = $tag->slug;
+					}
 				}
 			}
-		}
 		break;
-		
-	case 'category':
-		$catlist = get_the_category();
-		
-		if (is_array($catlist)) {
-			foreach ($catlist as $cat) {
-				$sluglist[] = $cat->category_nicename;
+			
+		case 'category':
+			$catlist = get_the_category();
+			
+			if (is_array($catlist)) {
+				foreach ($catlist as $cat) {
+					$sluglist[] = $cat->category_nicename;
+				}
 			}
-		}
+		break;
 	}
 	
 	$sluglist = implode(',', $sluglist);
@@ -706,9 +720,11 @@ function nggShowRelatedImages($type = '', $maxImages = 0) {
 }
 
 /**
- * the_related_images()
- * function for theme authors
- * 
+ * Template function for theme authors
+ *
+ * @access public 
+ * @param string  (optional) $type could be 'tags' or 'category'
+ * @param integer (optional) $maxNumbers of images
  * @return void
  */
 function the_related_images($type = 'tags', $maxNumbers = 7) {
