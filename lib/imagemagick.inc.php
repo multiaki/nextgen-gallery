@@ -4,7 +4,7 @@
 *
 * @author 		Frederic De Ranter
 * @copyright	Copyright 2008
-* @version 		0.3 (PHP4)
+* @version 		0.4 (PHP4)
 * @based 		on thumbnail.inc.php by Ian Selby (gen-x-design.com)
 * @since		NextGEN V1.0.0
 *
@@ -162,8 +162,8 @@ var $imageMagickBefore;
 		$this->imageMagickDir = trim( $ngg_options['imageMagickDir']);
 		$this->imageMagickDir = str_replace( "\\", "/", $this->imageMagickDir );
 
-		// Try to get the ImageMagick version
-		$magickv = $this->exec('convert', '-version');
+		// Try to get the ImageMagick version		
+		$magickv = $this->execute('convert', '-version');
 		
 		if ( empty($magickv) ) {
 			$this->errmsg = 'Could not execute ImageMagick. Check path ';
@@ -182,6 +182,7 @@ var $imageMagickBefore;
       	return true;
 	}
 	
+
 	/**
      * Execute ImageMagick/GraphicsMagick commands
      *
@@ -190,34 +191,37 @@ var $imageMagickBefore;
      * @param bool §passthru(optional) output the result to the webserver instead
      * @return void | if passthru return the image
      */
-	function exec( $cmd, $args, $passthru = false) {
+	function execute( $cmd, $args, $passthru = false) {
 		
 		// in error case we do not continue
 		if($this->error == true)
 			return;
 
+		//if path is not empty
+		if ($this->imageMagickDir != '') {
 		// the path must have a slash at the end
-		if ( $this->imageMagickDir{strlen($this->imageMagickDir)-1} != '/')
-		    $this->imageMagickDir .= '/';
-		
-		$args = escapeshellarg ($args );
-
+			if ( $this->imageMagickDir{strlen($this->imageMagickDir)-1} != '/')
+		    	$this->imageMagickDir .= '/';
+		}
+	
+		//$args = escapeshellarg($args);
 		//var_dump( escapeshellcmd ( "{$this->imageMagickDir}/{$cmd} {$args}" ) ); return;
+		//$this->errmsg = escapeshellcmd( "{$this->imageMagickDir}{$cmd} {$args}" );
 		
 		if ( !$passthru ) {
-			exec(escapeshellcmd ( "{$this->imageMagickDir}{$cmd} {$args}" ), $result );
+			exec( "{$this->imageMagickDir}{$cmd} {$args}", $result );
 			//var_dump( "{$this->imageMagickDir}/{$cmd} {$args}" );
 			return $result;
 			
 		}
-		
 		//var_dump( escapeshellcmd ( "{$this->imageMagickDir}/{$cmd} {$args}" ) ); return;
 
 		// for single pic we need the direct output
 		header('Content-type: image/jpeg');
-		passthru( escapeshellcmd ( "{$this->imageMagickDir}{$cmd} {$args}" ) );
-		
+		$this->errmsg = "{$this->imageMagickDir}{$cmd} {$args}";
+		passthru( "{$this->imageMagickDir}{$cmd} {$args}" );
 	}
+
 
     /**
      * Must be called to free up allocated memory after all manipulations are done
@@ -467,12 +471,13 @@ var $imageMagickBefore;
 
 		//convert the opacity between FF or 00; 100->0 and 0->FF (256)
 		$opacity = dechex( round( (100-$wmOpaque) * 256/100 ) );
+		if ($opacity == "0") {$opacity = "00";} 
 		
 		$cmd = "-size 800x500 xc:none -fill '#{$color}{$opacity}' -font {$wmFontPath} -pointsize {$wmSize} -gravity center -annotate 0 '{$this->watermarkText}' watermark_text.png";
-		$this->exec('convert', $cmd);
+		$this->execute('convert', $cmd);
 		
 		$cmd = "-trim +repage watermark_text.png";		 
-		$this->exec('mogrify', $cmd);
+		$this->execute('mogrify', $cmd);
 	
 		$this->watermarkImgPath = NGGALLERY_ABSPATH . 'watermark_text.png';
 
@@ -487,9 +492,12 @@ var $imageMagickBefore;
      */
     function watermarkImage( $relPOS = 'botRight', $xPOS = 0, $yPOS = 0) {
 
-		// if it's not a valid file die...
-		if ( !is_readable($this->watermarkImgPath))
-			return;	
+		// if it's not a valid file die... 
+		/*if ( !is_readable($this->watermarkImgPath))
+		{
+			echo $this->watermarkImgPath;
+			return;
+		}	*/
 
 		$size = GetImageSize($this->watermarkImgPath);
     	$watermarkDimensions = array('width'=>$size[0],'height'=>$size[1]);
@@ -537,7 +545,7 @@ var $imageMagickBefore;
 	function save( $name, $quality = 85 ) {
 	    $this->show($quality,$name);
 	    if ($this->error == true) {
-	    	$this->errmsg = 'Create Image failed. Check safe mode settings';
+	    	//$this->errmsg = 'Create Image failed. Check safe mode settings';
 	    	return false;
 	    }
 	    return true;
@@ -552,12 +560,18 @@ var $imageMagickBefore;
 	function show( $quality = 85, $name = '') {
 		//save the image if we get a filename
 		if( $name != '' ) {
-			$args = "{$this->imageMagickBefore} '$this->fileName' $this->imageMagickExec $this->imageMagickComp -quality $quality '$name'";
-			$this->exec('convert', $args);
-	  	} else {
+			$args = "{$this->imageMagickBefore} ";
+			$args .= escapeshellarg("$this->fileName");
+			$args .= " $this->imageMagickExec $this->imageMagickComp -quality '$quality' ";
+			$args .= escapeshellarg("$name");
+			//$args = "{$this->imageMagickBefore} '$this->fileName' $this->imageMagickExec $this->imageMagickComp -quality $quality '$name'";
+			$this->execute('convert', $args);
+			//$this->error = true;			
+	  } else {
 	  	//return a raw image stream
 			$args = "{$this->imageMagickBefore} '$this->fileName' $this->imageMagickExec $this->imageMagickComp -quality $quality JPG:-"; 
-			$this->exec('convert', $args, true);
+			$this->execute('convert', $args, true);
+			$this->error = true;
 		}
 	}
 }
