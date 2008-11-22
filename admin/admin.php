@@ -246,12 +246,12 @@ class nggAdminPanel{
 			$help .= "</div>\n";
 			$help .= '<h5>' . __('More Help & Info', 'nggallery') . '</h5>';
 			$help .= '<div class="metabox-prefs">';
-			$help .= __('<a href="http://wordpress.org/tags/nextgen-gallery" target="_blank">NextGEN Gallery Support Forums</a>', 'nggallery');
+			$help .= __('<a href="http://wordpress.org/tags/nextgen-gallery" target="_blank">Support Forums</a>', 'nggallery');
 			$help .= ' | <a href="http://alexrabe.boelinger.com/wordpress-plugins/nextgen-gallery/faq/" target="_blank">' . __('FAQ', 'nggallery') . '</a>';
 			$help .= ' | <a href="http://code.google.com/p/nextgen-gallery/issues/list" target="_blank">' . __('Feature request', 'nggallery') . '</a>';
-			$help .= ' | <a href="http://code.google.com/p/nextgen-gallery/" target="_blank">' . __('Development', 'nggallery') . '</a>';
-			$help .= '<br />';
-			$help .= __('<a href="http://wordpress.org/extend/plugins/nextgen-gallery" target="_blank">Download a new version</a>', 'nggallery');
+			$help .= ' | <a href="http://alexrabe.boelinger.com/wordpress-plugins/nextgen-gallery/languages/" target="_blank">' . __('Get your language pack', 'nggallery') . '</a>';
+			$help .= ' | <a href="http://code.google.com/p/nextgen-gallery/" target="_blank">' . __('Contribute development', 'nggallery') . '</a>';
+			$help .= ' | <a href="http://wordpress.org/extend/plugins/nextgen-gallery" target="_blank">' . __('Download latest version', 'nggallery') . '</a>';
 			$help .= "</div>\n";
 		} 
 		

@@ -467,7 +467,7 @@ class nggAdmin{
 	// **************************************************************
 	function import_zipfile($galleryID) {
 
-		global $ngg;
+		global $ngg, $wpdb;
 		
 		if (nggAdmin::check_quota())
 			return false;
@@ -486,7 +486,7 @@ class nggAdmin{
 		// should this unpacked into a new folder ?		
 		if ( $galleryID == '0' ) {	
 			//cleanup and take the zipfile name as folder name
-			$foldername = sanitize_title(strtok ($filename,'.'));
+			$foldername = sanitize_title(strtok ($filename, '.'));
 		} else {
 			// get foldername if selected
 			$foldername = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$galleryID' ");
@@ -640,7 +640,7 @@ class nggAdmin{
 
 		// WPMU action
 		if (nggAdmin::check_quota())
-			return "0";
+			return '0';
 
 		// Check the upload
 		if (!isset($_FILES["Filedata"]) || !is_uploaded_file($_FILES["Filedata"]["tmp_name"]) || $_FILES["Filedata"]["error"] != 0) 
@@ -648,9 +648,9 @@ class nggAdmin{
 
 		// get the filename and extension
 		$temp_file = $_FILES["Filedata"]['tmp_name'];
-		$filepart = pathinfo ( strtolower($_FILES["Filedata"]['name']) );
+		$filepart = pathinfo ( strtolower($_FILES['Filedata']['name']) );
 		// required until PHP 5.2.0
-		$filepart['filename'] = substr($filepart["basename"],0 ,strlen($filepart["basename"]) - (strlen($filepart["extension"]) + 1) );
+		$filepart['filename'] = substr($filepart['basename'],0 ,strlen($filepart['basename']) - (strlen($filepart["extension"]) + 1) );
 		$filename = sanitize_title($filepart['filename']).".".$filepart['extension'];
 
 		// check for allowed extension
@@ -671,10 +671,10 @@ class nggAdmin{
 		// check if this filename already exist
 		$i = 0;
 		while (in_array($filename,$imageslist)) {
-			$filename = sanitize_title($filepart['filename']) . "_" . $i++ . "." .$filepart['extension'];
+			$filename = sanitize_title($filepart['filename']) . '_' . $i++ . '.' .$filepart['extension'];
 		}
 		
-		$dest_file = WINABSPATH.$gallerypath."/".$filename;
+		$dest_file = WINABSPATH . $gallerypath . '/' . $filename;
 				
 		// save temp file to gallery
 		if ( !@move_uploaded_file($_FILES["Filedata"]['tmp_name'], $dest_file) ){
@@ -700,7 +700,7 @@ class nggAdmin{
 	}
 	
 	// **************************************************************
-	function chmod($filename = "") {
+	function chmod($filename = '') {
 		// Set correct file permissions (taken from wp core)
 		$stat = @ stat(dirname($filename));
 		$perms = $stat['mode'] & 0007777;
@@ -790,7 +790,7 @@ class nggAdmin{
 			// Move files
 			if ( !@rename($image->imagePath, $destination_path) ) {
 				$errors .= sprintf(__('Failed to move image %1$s to %2$s','nggallery'), 
-					"<strong>" . $image->filename . "</strong>", $destination_path) . '<br />';
+					'<strong>' . $image->filename . '</strong>', $destination_path) . '<br />';
 				continue;				
 			}
 			
@@ -846,15 +846,15 @@ class nggAdmin{
 				return;
 			
 			$i = 0;
-			$tmp_prefix = ""; 
+			$tmp_prefix = ''; 
 			$destination_file_name = $image->filename;
-			while (file_exists($destination_path . "/" . $destination_file_name)) {
-				$tmp_prefix = "copy_" . ($i++) . "_";
+			while (file_exists($destination_path . '/' . $destination_file_name)) {
+				$tmp_prefix = 'copy_' . ($i++) . '_';
 				$destination_file_name = $tmp_prefix . $image->filename;
 			}
 			
-			$destination_file_path = $destination_path . "/" . $destination_file_name;
-			$destination_thumb_file_path = $destination_path . "/" . $image->thumbFolder . $image->thumbPrefix . $destination_file_name;
+			$destination_file_path = $destination_path . '/' . $destination_file_name;
+			$destination_thumb_file_path = $destination_path . '/' . $image->thumbFolder . $image->thumbPrefix . $destination_file_name;
 
 			// Copy files
 			if ( !@copy($image->imagePath, $destination_file_path) ) {

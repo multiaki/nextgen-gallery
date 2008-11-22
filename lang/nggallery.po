@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-16 12:47+0100\n"
-"PO-Revision-Date: 2008-11-16 12:47+0100\n"
+"POT-Creation-Date: 2008-11-22 13:38+0100\n"
+"PO-Revision-Date: 2008-11-22 13:38+0100\n"
 "Last-Translator: Alex Rabe\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
@@ -33,11 +33,11 @@ msgstr ""
 msgid "Separate picture tags with commas."
 msgstr ""
 
-#: ../nggallery.php:268
+#: ../nggallery.php:272
 msgid "L O A D I N G"
 msgstr ""
 
-#: ../nggallery.php:269
+#: ../nggallery.php:273
 msgid "Click to Close"
 msgstr ""
 
@@ -179,12 +179,12 @@ msgstr ""
 msgid "We would like to thank this people which support us in the work :"
 msgstr ""
 
-#: ../admin/addgallery.php:37
-#: ../admin/addgallery.php:53
+#: ../admin/addgallery.php:34
+#: ../admin/addgallery.php:50
 msgid "Upload failed!"
 msgstr ""
 
-#: ../admin/addgallery.php:58
+#: ../admin/addgallery.php:55
 #: ../admin/functions.php:548
 #: ../admin/functions.php:638
 msgid "No gallery selected !"
@@ -319,7 +319,7 @@ msgid "Gallery"
 msgstr ""
 
 #: ../admin/admin.php:31
-msgid "Add Gallery"
+msgid "Add Gallery / Images"
 msgstr ""
 
 #: ../admin/admin.php:32
@@ -363,7 +363,6 @@ msgid "About"
 msgstr ""
 
 #: ../admin/admin.php:43
-#: ../admin/media-upload.php:11
 msgid "NextGEN Gallery"
 msgstr ""
 
@@ -387,28 +386,103 @@ msgstr ""
 msgid "A failure occurred"
 msgstr ""
 
-#: ../admin/admin.php:206
+#: ../admin/admin.php:202
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Introduction</a>"
 msgstr ""
 
-#: ../admin/admin.php:213
-msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-image-management/\" target=\"_blank\">Image Management</a>"
+#: ../admin/admin.php:205
+msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Setup</a>"
+msgstr ""
+
+#: ../admin/admin.php:208
+msgid "<a href=\"http://alexrabe.boelinger.com/wordpress-plugins/nextgen-gallery/languages/\" target=\"_blank\">Translation by alex rabe</a>"
+msgstr ""
+
+#: ../admin/admin.php:211
+msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Roles / Capabilities</a>"
+msgstr ""
+
+#: ../admin/admin.php:214
+msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Styles</a>"
+msgstr ""
+
+#: ../admin/admin.php:215
+msgid "Templates"
 msgstr ""
 
 #: ../admin/admin.php:218
-msgid "Get help with NextGEN Gallery"
-msgstr ""
-
 #: ../admin/admin.php:222
-msgid "More Help & Info"
+msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Gallery management</a>"
 msgstr ""
 
-#: ../admin/admin.php:224
-msgid "<a href=\"http://wordpress.org/tags/nextgen-gallery\" target=\"_blank\">NextGEN Gallery Support Forums</a>"
+#: ../admin/admin.php:219
+msgid "Gallery example"
+msgstr ""
+
+#: ../admin/admin.php:223
+#: ../admin/admin.php:233
+msgid "Gallery tags"
 msgstr ""
 
 #: ../admin/admin.php:226
-msgid "<a href=\"http://wordpress.org/extend/plugins/nextgen-gallery\" target=\"_blank\">Download a new version</a>"
+msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Album management</a>"
+msgstr ""
+
+#: ../admin/admin.php:227
+msgid "Album example"
+msgstr ""
+
+#: ../admin/admin.php:228
+#: ../admin/admin.php:234
+msgid "Album tags"
+msgstr ""
+
+#: ../admin/admin.php:231
+msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Gallery tags</a>"
+msgstr ""
+
+#: ../admin/admin.php:232
+msgid "Related images"
+msgstr ""
+
+#: ../admin/admin.php:237
+msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-image-management/\" target=\"_blank\">Image management</a>"
+msgstr ""
+
+#: ../admin/admin.php:238
+msgid "Custom fields"
+msgstr ""
+
+#: ../admin/admin.php:243
+msgid "Get help with NextGEN Gallery"
+msgstr ""
+
+#: ../admin/admin.php:247
+msgid "More Help & Info"
+msgstr ""
+
+#: ../admin/admin.php:249
+msgid "<a href=\"http://wordpress.org/tags/nextgen-gallery\" target=\"_blank\">Support Forums</a>"
+msgstr ""
+
+#: ../admin/admin.php:250
+msgid "FAQ"
+msgstr ""
+
+#: ../admin/admin.php:251
+msgid "Feature request"
+msgstr ""
+
+#: ../admin/admin.php:252
+msgid "Get your language pack"
+msgstr ""
+
+#: ../admin/admin.php:253
+msgid "Contribute development"
+msgstr ""
+
+#: ../admin/admin.php:254
+msgid "Download latest version"
 msgstr ""
 
 #: ../admin/album.php:19
@@ -734,7 +808,6 @@ msgstr ""
 #: ../admin/manage-galleries.php:19
 #: ../admin/manage-images.php:147
 #: ../admin/manage-images.php:482
-#: ../admin/media-upload.php:191
 msgid "Description"
 msgstr ""
 
@@ -941,7 +1014,6 @@ msgid ""
 msgstr ""
 
 #: ../admin/manage-images.php:476
-#: ../admin/media-upload.php:212
 msgid "Thumbnail"
 msgstr ""
 
@@ -999,7 +1071,6 @@ msgid "Filename"
 msgstr ""
 
 #: ../admin/manage-sort.php:81
-#: ../admin/media-upload.php:187
 msgid "Alt/Title text"
 msgstr ""
 
@@ -1053,6 +1124,7 @@ msgid "created"
 msgstr ""
 
 #: ../admin/media-upload.php:132
+#: ../admin/tinymce/window.php:43
 msgid "No gallery"
 msgstr ""
 
@@ -1077,22 +1149,27 @@ msgid "Alignment"
 msgstr ""
 
 #: ../admin/media-upload.php:198
+#: ../admin/settings.php:315
 msgid "None"
 msgstr ""
 
 #: ../admin/media-upload.php:200
+#: ../admin/tinymce/window.php:128
 msgid "Left"
 msgstr ""
 
 #: ../admin/media-upload.php:202
+#: ../admin/tinymce/window.php:129
 msgid "Center"
 msgstr ""
 
 #: ../admin/media-upload.php:204
+#: ../admin/tinymce/window.php:130
 msgid "Right"
 msgstr ""
 
 #: ../admin/media-upload.php:208
+#: ../admin/settings.php:417
 msgid "Size"
 msgstr ""
 
@@ -2255,6 +2332,7 @@ msgid " sec"
 msgstr ""
 
 #: ../lib/meta.php:367
+#: ../view/imagebrowser-exif.php:42
 msgid "Aperture"
 msgstr ""
 
@@ -2284,6 +2362,7 @@ msgid "ISO"
 msgstr ""
 
 #: ../lib/meta.php:375
+#: ../view/imagebrowser-exif.php:50
 msgid "Shutter speed"
 msgstr ""
 
@@ -2367,6 +2446,10 @@ msgstr ""
 msgid "Format"
 msgstr ""
 
+#: ../lib/ngg-db.php:198
+msgid "Album overview"
+msgstr ""
+
 #: ../lib/shortcodes.php:268
 msgid "[Pictures not found]"
 msgstr ""
@@ -2445,20 +2528,34 @@ msgid "Photos"
 msgstr ""
 
 #: ../view/gallery.php:32
-#: ../widgets/media-rss-widget.php:236
 msgid "[View with PicLens]"
 msgstr ""
 
+#: ../view/imagebrowser-exif.php:26
 #: ../view/imagebrowser.php:26
 msgid "Back"
 msgstr ""
 
+#: ../view/imagebrowser-exif.php:29
 #: ../view/imagebrowser.php:29
 msgid "Next"
 msgstr ""
 
+#: ../view/imagebrowser-exif.php:31
 #: ../view/imagebrowser.php:31
 msgid "of"
+msgstr ""
+
+#: ../view/imagebrowser-exif.php:34
+msgid "Meta data"
+msgstr ""
+
+#: ../view/imagebrowser-exif.php:38
+msgid "Camera / Type"
+msgstr ""
+
+#: ../view/imagebrowser-exif.php:46
+msgid "Focal Length"
 msgstr ""
 
 #: ../widgets/media-rss-widget.php:31
@@ -2481,6 +2578,7 @@ msgid "Link to the main image feed"
 msgstr ""
 
 #: ../widgets/media-rss-widget.php:153
+#: ../widgets/widgets.php:134
 msgid "Title:"
 msgstr ""
 

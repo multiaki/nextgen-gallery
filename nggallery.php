@@ -260,8 +260,9 @@ class nggLoader {
 		//	activate Thickbox
 		if ($this->options['thumbEffect'] == "thickbox") {
 			wp_enqueue_script( 'thickbox' );
-			// WP core reference relative to the images. Bad idea
-			echo '<style type="text/css">#TB_window a:link { padding: 0 10px !important; background: url("' . get_option('siteurl') . '/wp-includes/js/thickbox/tb-close.png") no-repeat }</style>' ."\n";
+			// Load the thickbox images after all other scripts
+			add_action( 'wp_head', array(&$this, 'load_thickbox_images'), 11 );
+
 		}
 
 		// activate modified Shutter reloaded if not use the Shutter plugin
@@ -279,6 +280,11 @@ class nggLoader {
 		if ( $this->options['galShowSlide'] ) 
 			wp_enqueue_script('swfobject', NGGALLERY_URLPATH .'admin/js/swfobject.js', FALSE, '2.1');
 
+	}
+	
+	function load_thickbox_images() {
+		// WP core reference relative to the images. Bad idea
+		echo "\n" . '<script type="text/javascript">tb_pathToImage = "' . get_option('siteurl') . '/wp-includes/js/thickbox/loadingAnimation.gif";tb_closeImage = "' . get_option('siteurl') . '/wp-includes/js/thickbox/tb-close.png";</script>'. "\n";			
 	}
 	
 	function load_styles() {
