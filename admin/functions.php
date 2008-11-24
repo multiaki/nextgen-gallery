@@ -771,7 +771,7 @@ class nggAdmin{
 				
 		// Get pictures
 		$images = nggdb::find_images_in_list($pic_ids);
-		return;
+
 		foreach ($images as $image) {		
 			
 			$i = 0;
@@ -809,7 +809,8 @@ class nggAdmin{
 		$link = '<a href="' . admin_url() . 'admin.php?page=nggallery-manage-gallery&mode=edit&gid=' . $destination->gid . '" >' . $destination->title . '</a>';
 		$messages  = sprintf(__('Moved %1$s picture(s) to gallery : %2$s .','nggallery'), $count, $link);
 		nggGallery::show_message($messages);
-		
+
+		return;
 	}
 	
 	/**
@@ -893,13 +894,13 @@ class nggAdmin{
 			$messages .= '<hr />' . sprintf(__('Copied %1$s picture(s) to gallery: %2$s .','nggallery'), count($images), $link);
 		} 
 
-		if ( $messages != '' ) {
+		if ( $messages != '' )
 			nggGallery::show_message($messages);
-		}
 
-		if ( $errors != '' ) {
+		if ( $errors != '' )
 			nggGallery::show_error($errors);
-		}
+
+		return;
 	}
 	
 	function do_ajax_operation( $operation, $image_array, $title = '' ) {
