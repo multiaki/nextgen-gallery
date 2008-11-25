@@ -93,9 +93,9 @@ class NextGEN_shortcodes {
 
 				foreach ($matches as $match) {
 					// remove the comma
-					$match[2] = ltrim($match[2],',');
-					$match[3] = ltrim($match[3],',');	
-					$replace = "[slideshow id=\"{$match[1]}\" w=\"{$match[2]}\" h=\"{$match[3]}\"]";
+					$match[3] = ltrim($match[3],',');
+					$match[5] = ltrim($match[5],',');	
+					$replace = "[slideshow id=\"{$match[1]}\" w=\"{$match[3]}\" h=\"{$match[5]}\"]";
 					$content = str_replace ($match[0], $replace, $content);
 				}
 			}
