@@ -18,7 +18,7 @@ $picture  = nggdb::find_image( $pictureID );
 $thumb = new ngg_Thumbnail( $picture->imagePath );
 
 // Resize if necessary
-if ( !empty($_GET['width']) && !empty($_GET['height']) )
+if ( !empty($_GET['width']) || !empty($_GET['height']) )
 	$thumb->resize( intval($_GET['width']), intval($_GET['height']) );
 
 // Apply effects according to the mode parameter
