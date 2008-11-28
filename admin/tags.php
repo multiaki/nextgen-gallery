@@ -87,12 +87,11 @@ if ($nb_tags < $tag_count && $offset>0) {
 }
 
 ?>
-
 <style>
 	.disabled, .disabled:hover { border-color: #E5E5E5; color: #999999; cursor: default; }
 </style>
 
-<div id="wpbody"><div class="wrap ngg_wrap">
+<div class="wrap ngg_wrap">
 	<h2><?php _e('Manage image tags', 'nggallery'); ?></h2>
 	
 	<?php if ($action_status['message']!='') : ?>
@@ -282,4 +281,4 @@ if ($nb_tags < $tag_count && $offset>0) {
 		}
 	// ]]>
 	</script>
-</div></div>
+</div>
