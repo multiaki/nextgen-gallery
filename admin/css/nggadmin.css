@@ -68,6 +68,7 @@
 	border-collapse:collapse;
 	margin-top:1em;
 	width: 60%;
+	clear:none;
 }
 .wm-table td {
 	border-bottom:8px solid #FFFFFF;
