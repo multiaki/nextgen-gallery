@@ -111,7 +111,7 @@ function nggShowGallery( $galleryID, $template = '' ) {
 	if ( !is_home() || $pageid == get_the_ID() ) { 
 			
 		// 1st look for ImageBrowser link
-		if (!empty( $pid))  {
+		if ( !empty($pid) && $ngg_options['galImgBrowser'] )  {
 			$out = nggShowImageBrowser( $galleryID, $mode );
 			return $out;
 		}
