@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-22 13:38+0100\n"
-"PO-Revision-Date: 2008-11-22 13:38+0100\n"
-"Last-Translator: Alex Rabe\n"
+"POT-Creation-Date: 2008-11-29 12:09+0100\n"
+"PO-Revision-Date: 2008-11-29 12:09+0100\n"
+"Last-Translator: Alex Rabe <no@email.com>\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,48 +17,52 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 
-#: ../nggallery.php:152
+#: ../nggallery.php:151
 msgid "Sorry, NextGEN Gallery works only with a Memory Limit of 16 MB higher"
 msgstr ""
 
-#: ../nggallery.php:179
+#: ../nggallery.php:178
 msgid "Picture tag"
 msgstr ""
 
-#: ../nggallery.php:180
+#: ../nggallery.php:179
 msgid "Picture tag: %2$l."
 msgstr ""
 
-#: ../nggallery.php:181
+#: ../nggallery.php:180
 msgid "Separate picture tags with commas."
 msgstr ""
 
-#: ../nggallery.php:272
+#: ../nggallery.php:271
 msgid "L O A D I N G"
 msgstr ""
 
-#: ../nggallery.php:273
+#: ../nggallery.php:272
 msgid "Click to Close"
 msgstr ""
 
-#: ../nggfunctions.php:31
+#: ../nggfunctions.php:32
 msgid "The <a href=\"http://www.macromedia.com/go/getflashplayer\">Flash Player</a> and <a href=\"http://www.mozilla.com/firefox/\">a browser with Javascript support</a> are needed.."
 msgstr ""
 
-#: ../nggfunctions.php:92
-#: ../nggfunctions.php:379
+#: ../nggfunctions.php:95
+#: ../nggfunctions.php:386
 msgid "[Gallery not found]"
 msgstr ""
 
-#: ../nggfunctions.php:268
+#: ../nggfunctions.php:273
 msgid "[Album not found]"
 msgstr ""
 
-#: ../nggfunctions.php:479
+#: ../nggfunctions.php:488
 msgid "[SinglePic not found]"
 msgstr ""
 
-#: ../nggfunctions.php:630
+#: ../nggfunctions.php:607
+msgid "Related images for"
+msgstr ""
+
+#: ../nggfunctions.php:642
 #: ../admin/admin.php:30
 msgid "Overview"
 msgstr ""
@@ -311,6 +315,7 @@ msgid "Enable flash based upload"
 msgstr ""
 
 #: ../admin/admin.php:29
+#: ../admin/admin.php:200
 #: ../admin/functions.php:81
 #: ../admin/functions.php:142
 #: ../admin/manage-images.php:120
@@ -386,102 +391,102 @@ msgstr ""
 msgid "A failure occurred"
 msgstr ""
 
-#: ../admin/admin.php:202
+#: ../admin/admin.php:204
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Introduction</a>"
 msgstr ""
 
-#: ../admin/admin.php:205
+#: ../admin/admin.php:207
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Setup</a>"
 msgstr ""
 
-#: ../admin/admin.php:208
+#: ../admin/admin.php:210
 msgid "<a href=\"http://alexrabe.boelinger.com/wordpress-plugins/nextgen-gallery/languages/\" target=\"_blank\">Translation by alex rabe</a>"
 msgstr ""
 
-#: ../admin/admin.php:211
+#: ../admin/admin.php:213
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Roles / Capabilities</a>"
 msgstr ""
 
-#: ../admin/admin.php:214
+#: ../admin/admin.php:216
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Styles</a>"
 msgstr ""
 
-#: ../admin/admin.php:215
+#: ../admin/admin.php:217
 msgid "Templates"
 msgstr ""
 
-#: ../admin/admin.php:218
-#: ../admin/admin.php:222
+#: ../admin/admin.php:220
+#: ../admin/admin.php:224
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Gallery management</a>"
 msgstr ""
 
-#: ../admin/admin.php:219
+#: ../admin/admin.php:221
 msgid "Gallery example"
 msgstr ""
 
-#: ../admin/admin.php:223
-#: ../admin/admin.php:233
+#: ../admin/admin.php:225
+#: ../admin/admin.php:235
 msgid "Gallery tags"
 msgstr ""
 
-#: ../admin/admin.php:226
+#: ../admin/admin.php:228
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Album management</a>"
 msgstr ""
 
-#: ../admin/admin.php:227
+#: ../admin/admin.php:229
 msgid "Album example"
 msgstr ""
 
-#: ../admin/admin.php:228
-#: ../admin/admin.php:234
+#: ../admin/admin.php:230
+#: ../admin/admin.php:236
 msgid "Album tags"
 msgstr ""
 
-#: ../admin/admin.php:231
+#: ../admin/admin.php:233
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Gallery tags</a>"
 msgstr ""
 
-#: ../admin/admin.php:232
+#: ../admin/admin.php:234
 msgid "Related images"
 msgstr ""
 
-#: ../admin/admin.php:237
+#: ../admin/admin.php:239
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-image-management/\" target=\"_blank\">Image management</a>"
 msgstr ""
 
-#: ../admin/admin.php:238
+#: ../admin/admin.php:240
 msgid "Custom fields"
 msgstr ""
 
-#: ../admin/admin.php:243
+#: ../admin/admin.php:245
 msgid "Get help with NextGEN Gallery"
 msgstr ""
 
-#: ../admin/admin.php:247
+#: ../admin/admin.php:249
 msgid "More Help & Info"
 msgstr ""
 
-#: ../admin/admin.php:249
+#: ../admin/admin.php:251
 msgid "<a href=\"http://wordpress.org/tags/nextgen-gallery\" target=\"_blank\">Support Forums</a>"
 msgstr ""
 
-#: ../admin/admin.php:250
+#: ../admin/admin.php:252
 msgid "FAQ"
 msgstr ""
 
-#: ../admin/admin.php:251
+#: ../admin/admin.php:253
 msgid "Feature request"
 msgstr ""
 
-#: ../admin/admin.php:252
+#: ../admin/admin.php:254
 msgid "Get your language pack"
 msgstr ""
 
-#: ../admin/admin.php:253
+#: ../admin/admin.php:255
 msgid "Contribute development"
 msgstr ""
 
-#: ../admin/admin.php:254
+#: ../admin/admin.php:256
 msgid "Download latest version"
 msgstr ""
 
@@ -708,7 +713,7 @@ msgstr ""
 
 #: ../admin/functions.php:591
 #: ../admin/functions.php:767
-#: ../admin/functions.php:834
+#: ../admin/functions.php:835
 #, php-format
 msgid "Unable to write to directory %s. Is this directory writable by the server?"
 msgstr ""
@@ -746,7 +751,7 @@ msgid "When safe_mode is on, PHP checks to see if the owner (%s) of the current 
 msgstr ""
 
 #: ../admin/functions.php:761
-#: ../admin/functions.php:828
+#: ../admin/functions.php:829
 msgid "The destination gallery does not exist"
 msgstr ""
 
@@ -760,27 +765,27 @@ msgstr ""
 msgid "Moved %1$s picture(s) to gallery : %2$s ."
 msgstr ""
 
-#: ../admin/functions.php:861
+#: ../admin/functions.php:862
 #, php-format
 msgid "Failed to copy image %1$s to %2$s"
 msgstr ""
 
-#: ../admin/functions.php:873
+#: ../admin/functions.php:874
 #, php-format
 msgid "Failed to copy database row for picture %s"
 msgstr ""
 
-#: ../admin/functions.php:881
+#: ../admin/functions.php:882
 #, php-format
 msgid "Image %1$s (%2$s) copied as image %3$s (%4$s) &raquo; The file already existed in the destination gallery."
 msgstr ""
 
-#: ../admin/functions.php:884
+#: ../admin/functions.php:885
 #, php-format
 msgid "Image %1$s (%2$s) copied as image %3$s (%4$s)"
 msgstr ""
 
-#: ../admin/functions.php:893
+#: ../admin/functions.php:894
 #, php-format
 msgid "Copied %1$s picture(s) to gallery: %2$s ."
 msgstr ""
@@ -2065,95 +2070,95 @@ msgstr ""
 msgid "Alphabetical"
 msgstr ""
 
-#: ../admin/tags.php:96
+#: ../admin/tags.php:95
 msgid "Manage image tags"
 msgstr ""
 
-#: ../admin/tags.php:108
+#: ../admin/tags.php:107
 msgid "Existing Tags"
 msgstr ""
 
-#: ../admin/tags.php:112
+#: ../admin/tags.php:111
 msgid "Search tags"
 msgstr ""
 
-#: ../admin/tags.php:116
+#: ../admin/tags.php:115
 msgid "Go"
 msgstr ""
 
-#: ../admin/tags.php:121
+#: ../admin/tags.php:120
 msgid "Sort Order:"
 msgstr ""
 
-#: ../admin/tags.php:138
+#: ../admin/tags.php:137
 #, php-format
 msgid "View all images tagged with %s"
 msgstr ""
 
-#: ../admin/tags.php:153
-#: ../admin/tags.php:157
-#: ../admin/tags.php:170
+#: ../admin/tags.php:152
+#: ../admin/tags.php:156
+#: ../admin/tags.php:169
 msgid "Previous tags"
 msgstr ""
 
-#: ../admin/tags.php:166
+#: ../admin/tags.php:165
 msgid "Next tags"
 msgstr ""
 
-#: ../admin/tags.php:178
+#: ../admin/tags.php:177
 msgid "Rename Tag"
 msgstr ""
 
-#: ../admin/tags.php:186
+#: ../admin/tags.php:185
 msgid "Enter the tag to rename and its new value.  You can use this feature to merge tags too. Click \"Rename\" and all posts which use this tag will be updated."
 msgstr ""
 
-#: ../admin/tags.php:187
-#: ../admin/tags.php:235
+#: ../admin/tags.php:186
+#: ../admin/tags.php:234
 msgid "You can specify multiple tags to rename by separating them with commas."
 msgstr ""
 
-#: ../admin/tags.php:191
+#: ../admin/tags.php:190
 msgid "Tag(s) to rename:"
 msgstr ""
 
-#: ../admin/tags.php:195
+#: ../admin/tags.php:194
 msgid "New tag name(s):"
 msgstr ""
 
-#: ../admin/tags.php:198
+#: ../admin/tags.php:197
 msgid "Rename"
 msgstr ""
 
-#: ../admin/tags.php:204
+#: ../admin/tags.php:203
 msgid "Delete Tag"
 msgstr ""
 
-#: ../admin/tags.php:212
+#: ../admin/tags.php:211
 msgid "Enter the name of the tag to delete.  This tag will be removed from all posts."
 msgstr ""
 
-#: ../admin/tags.php:213
+#: ../admin/tags.php:212
 msgid "You can specify multiple tags to delete by separating them with commas"
 msgstr ""
 
-#: ../admin/tags.php:217
+#: ../admin/tags.php:216
 msgid "Tag(s) to delete:"
 msgstr ""
 
-#: ../admin/tags.php:226
+#: ../admin/tags.php:225
 msgid "Edit Tag Slug"
 msgstr ""
 
-#: ../admin/tags.php:234
+#: ../admin/tags.php:233
 msgid "Enter the tag name to edit and its new slug. <a href=\"http://codex.wordpress.org/Glossary#Slug\">Slug definition</a>"
 msgstr ""
 
-#: ../admin/tags.php:239
+#: ../admin/tags.php:238
 msgid "Tag(s) to match:"
 msgstr ""
 
-#: ../admin/tags.php:243
+#: ../admin/tags.php:242
 msgid "Slug(s) to set:"
 msgstr ""
 
@@ -2528,6 +2533,7 @@ msgid "Photos"
 msgstr ""
 
 #: ../view/gallery.php:32
+#: ../widgets/media-rss-widget.php:236
 msgid "[View with PicLens]"
 msgstr ""
 

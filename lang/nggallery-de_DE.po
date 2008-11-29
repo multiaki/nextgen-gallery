@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-22 13:42+0100\n"
-"PO-Revision-Date: 2008-11-22 14:04+0100\n"
-"Last-Translator: Alex Rabe\n"
+"POT-Creation-Date: 2008-11-29 12:10+0100\n"
+"PO-Revision-Date: 2008-11-29 22:26+0100\n"
+"Last-Translator: Alex Rabe <no@email.com>\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,48 +18,52 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 
-#: ../nggallery.php:152
+#: ../nggallery.php:151
 msgid "Sorry, NextGEN Gallery works only with a Memory Limit of 16 MB higher"
-msgstr "Tut mir leid aber NextGEN Galerie arbeitet nur mit einem Speicher Limit von 16 MB oder mehr"
+msgstr "Tut mir leid, aber NextGEN Galerie benötigt minimum 16MB Speicher (Memory Limit) oder mehr"
+
+#: ../nggallery.php:178
+msgid "Picture tag"
+msgstr "Bilder Stichwort"
 
 #: ../nggallery.php:179
-msgid "Picture tag"
-msgstr "Bild-Stichwort"
+msgid "Picture tag: %2$l."
+msgstr "Bilder Stichwort: %2$l."
 
 #: ../nggallery.php:180
-msgid "Picture tag: %2$l."
-msgstr ""
-
-#: ../nggallery.php:181
 msgid "Separate picture tags with commas."
-msgstr ""
+msgstr "Trenne Stichwörter mittels Komma"
 
-#: ../nggallery.php:272
+#: ../nggallery.php:271
 msgid "L O A D I N G"
 msgstr "B I T T E   W A R T E N"
 
-#: ../nggallery.php:273
+#: ../nggallery.php:272
 msgid "Click to Close"
 msgstr "Klicken zum Schliessen "
 
-#: ../nggfunctions.php:31
+#: ../nggfunctions.php:32
 msgid "The <a href=\"http://www.macromedia.com/go/getflashplayer\">Flash Player</a> and <a href=\"http://www.mozilla.com/firefox/\">a browser with Javascript support</a> are needed.."
 msgstr "Es wird der <a href=\"http://www.macromedia.com/go/getflashplayer\">Adobe Flash Player</a>  benötigt und <a href=\"http://www.mozilla.com/firefox/\">im Browser muss Javascript</a> aktiviert sein.."
 
-#: ../nggfunctions.php:92
-#: ../nggfunctions.php:379
+#: ../nggfunctions.php:95
+#: ../nggfunctions.php:386
 msgid "[Gallery not found]"
 msgstr "[Galerie nicht gefunden]"
 
-#: ../nggfunctions.php:268
+#: ../nggfunctions.php:273
 msgid "[Album not found]"
 msgstr "[Album nicht gefunden]"
 
-#: ../nggfunctions.php:479
+#: ../nggfunctions.php:488
 msgid "[SinglePic not found]"
 msgstr "[Bild nicht gefunden]"
 
-#: ../nggfunctions.php:630
+#: ../nggfunctions.php:607
+msgid "Related images for"
+msgstr "Verwandte Bilder von"
+
+#: ../nggfunctions.php:642
 #: ../admin/admin.php:30
 msgid "Overview"
 msgstr "Übersicht"
@@ -98,7 +102,7 @@ msgstr "für Ihren großartig dokumentierten Code"
 
 #: ../admin/about.php:18
 msgid "for jQuery, which is the best Web2.0 framework"
-msgstr "für jQuery, das Beste Web2.0 Framework"
+msgstr "für jQuery, das Beste Web 2.0 Framework"
 
 #: ../admin/about.php:19
 msgid "for the fantastic PHP Thumbnail Class"
@@ -312,6 +316,7 @@ msgid "Enable flash based upload"
 msgstr "Aktiviere Flash Batch Upload"
 
 #: ../admin/admin.php:29
+#: ../admin/admin.php:200
 #: ../admin/functions.php:81
 #: ../admin/functions.php:142
 #: ../admin/manage-images.php:120
@@ -387,103 +392,102 @@ msgstr "Unerwarteter Fehler"
 msgid "A failure occurred"
 msgstr "Ein Fehler ist aufgetreten"
 
-#: ../admin/admin.php:202
+#: ../admin/admin.php:204
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Introduction</a>"
 msgstr "<a href=\"http://www.curlyrob.de/curlyrob/?page_id=129\" target=\"_blank\">Einführung</a>"
 
-#: ../admin/admin.php:205
+#: ../admin/admin.php:207
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Setup</a>"
 msgstr "<a href=\"http://www.curlyrob.de/curlyrob/?page_id=129\" target=\"_blank\">Setup</a>"
 
-#: ../admin/admin.php:208
+#: ../admin/admin.php:210
 msgid "<a href=\"http://alexrabe.boelinger.com/wordpress-plugins/nextgen-gallery/languages/\" target=\"_blank\">Translation by alex rabe</a>"
 msgstr "<a href=\"http://alexrabe.boelinger.com/wordpress-plugins/nextgen-gallery/languages/\" target=\"_blank\">Unterstütze bei der Übersetzung</a>"
 
-#: ../admin/admin.php:211
+#: ../admin/admin.php:213
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Roles / Capabilities</a>"
 msgstr "<a href=\"http://www.curlyrob.de/curlyrob/?page_id=129\" target=\"_blank\">Einführung</a>"
 
-#: ../admin/admin.php:214
+#: ../admin/admin.php:216
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Styles</a>"
 msgstr "<a href=\"http://www.curlyrob.de/curlyrob/?page_id=129\" target=\"_blank\">Einführung</a>"
 
-#: ../admin/admin.php:215
+#: ../admin/admin.php:217
 msgid "Templates"
 msgstr "Vorlagen"
 
-#: ../admin/admin.php:218
-#: ../admin/admin.php:222
+#: ../admin/admin.php:220
+#: ../admin/admin.php:224
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Gallery management</a>"
 msgstr "<a href=\"http://www.curlyrob.de/curlyrob/?page_id=129\" target=\"_blank\">Einführung</a>"
 
-#: ../admin/admin.php:219
+#: ../admin/admin.php:221
 msgid "Gallery example"
 msgstr "Galerie Beispiel"
 
-#: ../admin/admin.php:223
-#: ../admin/admin.php:233
+#: ../admin/admin.php:225
+#: ../admin/admin.php:235
 msgid "Gallery tags"
 msgstr "Galerie Stichwörter"
 
-#: ../admin/admin.php:226
+#: ../admin/admin.php:228
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Album management</a>"
 msgstr "<a href=\"http://www.curlyrob.de/curlyrob/?page_id=129\" target=\"_blank\">Einführung</a>"
 
-#: ../admin/admin.php:227
+#: ../admin/admin.php:229
 msgid "Album example"
 msgstr "Album Beispiel"
 
-#: ../admin/admin.php:228
-#: ../admin/admin.php:234
+#: ../admin/admin.php:230
+#: ../admin/admin.php:236
 msgid "Album tags"
 msgstr "Album Stichwörter"
 
-#: ../admin/admin.php:231
+#: ../admin/admin.php:233
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Gallery tags</a>"
 msgstr "<a href=\"http://www.curlyrob.de/curlyrob/?page_id=129\" target=\"_blank\">Einführung</a>"
 
-#: ../admin/admin.php:232
+#: ../admin/admin.php:234
 msgid "Related images"
 msgstr "Verwandte Bilder"
 
-#: ../admin/admin.php:237
+#: ../admin/admin.php:239
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-image-management/\" target=\"_blank\">Image management</a>"
 msgstr "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-image-management/\" target=\"_blank\">Bilderverwaltung (Englisch)</a>"
 
-#: ../admin/admin.php:238
-#, fuzzy
+#: ../admin/admin.php:240
 msgid "Custom fields"
-msgstr "Benutzerdefiniert"
+msgstr "Spezialfelder"
 
-#: ../admin/admin.php:243
+#: ../admin/admin.php:245
 msgid "Get help with NextGEN Gallery"
 msgstr "Weitere Hilfe zu NextGEN Gallery"
 
-#: ../admin/admin.php:247
+#: ../admin/admin.php:249
 msgid "More Help & Info"
 msgstr "Weitere Hilfe & Informationen"
 
-#: ../admin/admin.php:249
+#: ../admin/admin.php:251
 msgid "<a href=\"http://wordpress.org/tags/nextgen-gallery\" target=\"_blank\">Support Forums</a>"
 msgstr "<a href=\"http://wordpress.org/tags/nextgen-gallery\" target=\"_blank\">Support Forum (Englisch)</a>"
 
-#: ../admin/admin.php:250
+#: ../admin/admin.php:252
 msgid "FAQ"
 msgstr "FAQ (englisch)"
 
-#: ../admin/admin.php:251
+#: ../admin/admin.php:253
 msgid "Feature request"
 msgstr "Wünsch dir was"
 
-#: ../admin/admin.php:252
+#: ../admin/admin.php:254
 msgid "Get your language pack"
 msgstr "Lade deine Sprachdatei"
 
-#: ../admin/admin.php:253
+#: ../admin/admin.php:255
 msgid "Contribute development"
 msgstr "Entwicklung helfen"
 
-#: ../admin/admin.php:254
+#: ../admin/admin.php:256
 msgid "Download latest version"
 msgstr "Aktuelle Version downloaden"
 
@@ -520,7 +524,7 @@ msgstr "Lösche"
 
 #: ../admin/album.php:147
 msgid "Delete album ?"
-msgstr "Lösche Album ?"
+msgstr "Album löschen ?"
 
 #: ../admin/album.php:149
 msgid "Add new album"
@@ -633,7 +637,7 @@ msgstr "gibt es bereits"
 #: ../admin/functions.php:86
 #, php-format
 msgid "Gallery %1$s successfully created.<br/>You can show this gallery with the tag %2$s.<br/>"
-msgstr "Gallerie %1$s erstellt..<br/>Du kannst diese Galerie jetzt mit dem Stichwort %2$s einbinden.<br/>"
+msgstr "Galerie %1$s erstellt..<br/>Du kannst diese Galerie jetzt mit dem Stichwort %2$s einbinden.<br/>"
 
 #: ../admin/functions.php:89
 msgid "Edit gallery"
@@ -710,7 +714,7 @@ msgstr "ist keine zulässige Bilddatei !"
 
 #: ../admin/functions.php:591
 #: ../admin/functions.php:767
-#: ../admin/functions.php:834
+#: ../admin/functions.php:835
 #, php-format
 msgid "Unable to write to directory %s. Is this directory writable by the server?"
 msgstr "Kann das Verzeichnis %s nicht erstellen. Is das Hauptverzeichnis vielleicht schreibgeschützt ?"
@@ -748,7 +752,7 @@ msgid "When safe_mode is on, PHP checks to see if the owner (%s) of the current 
 msgstr "Wenn der Safe-Mode eingeschaltet ist, überprüft PHP ob der Besitzer (%s) des Skript mit dem Besitzer (%s) der Datei/Verzeichnis übereinstimmt."
 
 #: ../admin/functions.php:761
-#: ../admin/functions.php:828
+#: ../admin/functions.php:829
 msgid "The destination gallery does not exist"
 msgstr "Die ausgewählte Galerie existiert nicht"
 
@@ -760,32 +764,32 @@ msgstr "Konte das Bild %1$s nicht nach %2$s verschieben"
 #: ../admin/functions.php:810
 #, php-format
 msgid "Moved %1$s picture(s) to gallery : %2$s ."
-msgstr ""
+msgstr " %1$s Bild(er) in Galerie : %2$s verschoben."
 
-#: ../admin/functions.php:861
+#: ../admin/functions.php:862
 #, php-format
 msgid "Failed to copy image %1$s to %2$s"
 msgstr "Konnte das Bild %1$s nicht nach %2$s kopieren"
 
-#: ../admin/functions.php:873
+#: ../admin/functions.php:874
 #, php-format
 msgid "Failed to copy database row for picture %s"
-msgstr ""
+msgstr "Fehler bei der Datenbank-Operation für Bild %s"
 
-#: ../admin/functions.php:881
+#: ../admin/functions.php:882
 #, php-format
 msgid "Image %1$s (%2$s) copied as image %3$s (%4$s) &raquo; The file already existed in the destination gallery."
-msgstr ""
+msgstr "Bild %1$s (%2$s) als Bild %3$s (%4$s) kopiert &raquo; Die Datei existierte bereits."
 
-#: ../admin/functions.php:884
+#: ../admin/functions.php:885
 #, php-format
 msgid "Image %1$s (%2$s) copied as image %3$s (%4$s)"
-msgstr ""
+msgstr "Bild %1$s (%2$s) kopiert als Bild %3$s (%4$s)"
 
-#: ../admin/functions.php:893
+#: ../admin/functions.php:894
 #, php-format
 msgid "Copied %1$s picture(s) to gallery: %2$s ."
-msgstr ""
+msgstr "Kopiere %1$s Bild(er) in die Galerie : %2$s ."
 
 #: ../admin/install.php:16
 msgid "Sorry, NextGEN Gallery works only with a role called administrator"
@@ -1150,7 +1154,7 @@ msgstr "Verstecke"
 
 #: ../admin/media-upload.php:181
 msgid "Image ID:"
-msgstr "Bilder ID:"
+msgstr "Bild ID:"
 
 #: ../admin/media-upload.php:195
 msgid "Alignment"
@@ -1504,7 +1508,7 @@ msgstr "Aktiviere PicLens/CoolIris"
 
 #: ../admin/settings.php:138
 msgid "When you activate this option, some javascript is added to your site footer. Make sure that wp_footer is called in your theme."
-msgstr ""
+msgstr "Dieser Effekt fügt ein neues Javascript zu deinem Theme hinzu. Beachte das wp_footer() in deinen Vorlagen aufgerufen wird."
 
 #: ../admin/settings.php:141
 msgid "Tags / Categories"
@@ -1935,7 +1939,7 @@ msgid ""
 msgstr ""
 "Alle Optionen zu Standard zurücksetzen ?\\n"
 "\\n"
-"Wähle [Cancel] um abzubrechen, [OK] zum Durchführen.\\n"
+"Wähle [Cancel] um abzubrechen, [OK] zum Fortfahren.\\n"
 
 #: ../admin/setup.php:39
 msgid "Uninstall plugin tables"
@@ -2080,96 +2084,95 @@ msgstr "Zuletzt benutzt"
 msgid "Alphabetical"
 msgstr "Alphabetisch"
 
-#: ../admin/tags.php:96
+#: ../admin/tags.php:95
 msgid "Manage image tags"
 msgstr "Verwalte Bilder Stichwörter"
 
-#: ../admin/tags.php:108
+#: ../admin/tags.php:107
 msgid "Existing Tags"
 msgstr "Vorhandene Stichwörter"
 
-#: ../admin/tags.php:112
+#: ../admin/tags.php:111
 msgid "Search tags"
 msgstr "Suche nach Stichwörter"
 
-#: ../admin/tags.php:116
+#: ../admin/tags.php:115
 msgid "Go"
 msgstr "Start"
 
-#: ../admin/tags.php:121
+#: ../admin/tags.php:120
 msgid "Sort Order:"
 msgstr "Sortierung :"
 
-#: ../admin/tags.php:138
+#: ../admin/tags.php:137
 #, php-format
 msgid "View all images tagged with %s"
-msgstr ""
+msgstr "Zeige alle Bilder die mit dem Stichwort %s markiert sind"
 
-#: ../admin/tags.php:153
-#: ../admin/tags.php:157
-#: ../admin/tags.php:170
-#, fuzzy
+#: ../admin/tags.php:152
+#: ../admin/tags.php:156
+#: ../admin/tags.php:169
 msgid "Previous tags"
-msgstr "Vorschau-Bild"
+msgstr "Vorheriges Stichwort"
 
-#: ../admin/tags.php:166
+#: ../admin/tags.php:165
 msgid "Next tags"
 msgstr "Nächstes Stichwörter"
 
-#: ../admin/tags.php:178
+#: ../admin/tags.php:177
 msgid "Rename Tag"
 msgstr "Schlagwort umbenennen"
 
-#: ../admin/tags.php:186
+#: ../admin/tags.php:185
 msgid "Enter the tag to rename and its new value.  You can use this feature to merge tags too. Click \"Rename\" and all posts which use this tag will be updated."
-msgstr ""
+msgstr "Trage das Stichwort ein, das Du umbenennen willst und seinen neuen Wert/Namen. Du kannst diese Funktion auch nutzen, um Stichwörter zusammenzuführen. Klicke auf \"Umbenennen\" und alle Bilder, die das Stichwort verwenden, werden aktualisiert."
 
-#: ../admin/tags.php:187
-#: ../admin/tags.php:235
+#: ../admin/tags.php:186
+#: ../admin/tags.php:234
 msgid "You can specify multiple tags to rename by separating them with commas."
-msgstr ""
+msgstr "Mehrere Stichwörter zum Umbenennen durch Komma trennen"
 
-#: ../admin/tags.php:191
+#: ../admin/tags.php:190
 msgid "Tag(s) to rename:"
-msgstr ""
+msgstr "Stichwörter umbennenen :"
 
-#: ../admin/tags.php:195
+#: ../admin/tags.php:194
 msgid "New tag name(s):"
 msgstr "Neuer Name für das Stichwort"
 
-#: ../admin/tags.php:198
+#: ../admin/tags.php:197
 msgid "Rename"
 msgstr "Umbenennen"
 
-#: ../admin/tags.php:204
+#: ../admin/tags.php:203
 msgid "Delete Tag"
 msgstr "Stichwort löschen"
 
-#: ../admin/tags.php:212
+#: ../admin/tags.php:211
 msgid "Enter the name of the tag to delete.  This tag will be removed from all posts."
-msgstr ""
+msgstr "Trage das zu löschenden Stichwort ein. Das Stichwort wird aus allen Bildern entfernt."
 
-#: ../admin/tags.php:213
+#: ../admin/tags.php:212
 msgid "You can specify multiple tags to delete by separating them with commas"
-msgstr ""
+msgstr "Du kannst mehrere Stichwörter zum Löschen markieren, indem Du sie mit Kommas trennst"
 
-#: ../admin/tags.php:217
+#: ../admin/tags.php:216
 msgid "Tag(s) to delete:"
 msgstr "Folgede Stichwörter löschen:"
 
-#: ../admin/tags.php:226
+#: ../admin/tags.php:225
 msgid "Edit Tag Slug"
 msgstr "Ändere Schlagwort"
 
-#: ../admin/tags.php:234
+#: ../admin/tags.php:233
 msgid "Enter the tag name to edit and its new slug. <a href=\"http://codex.wordpress.org/Glossary#Slug\">Slug definition</a>"
-msgstr ""
+msgstr "Trage den Namen des zu ändernden Stichwort und seinen neuen \"Slug\" ein. <a href=\"http://codex.wordpress.org/Glossary#Slug\">Was ist ein Slug?</a>"
 
-#: ../admin/tags.php:239
+#: ../admin/tags.php:238
 msgid "Tag(s) to match:"
-msgstr ""
+msgstr "Stichwörter vergleichen :"
 
-#: ../admin/tags.php:243
+#: ../admin/tags.php:242
 msgid "Slug(s) to set:"
 msgstr "Schlagwörter setzen:"
 
@@ -2192,7 +2195,7 @@ msgstr "NextGEN Gallery aktualisieren"
 
 #: ../admin/upgrade.php:178
 msgid "The script detect that you upgrade from a older version."
-msgstr ""
+msgstr "Es wurde eine ältere NextGEN Datenbank erkannt."
 
 #: ../admin/upgrade.php:179
 msgid "Your database tables for NextGEN Gallery is out-of-date, and must be upgraded before you can continue."
@@ -2476,7 +2479,7 @@ msgstr "Kein neues Stichwort definiert!"
 
 #: ../lib/tags.php:50
 msgid "No new/old valid tag specified!"
-msgstr "Keine neues Stichwort definiert !"
+msgstr "Kein neues Stichwort definiert !"
 
 #: ../lib/tags.php:86
 msgid "No tag renamed."
@@ -2485,7 +2488,7 @@ msgstr "Kein Stichwort umbenannt."
 #: ../lib/tags.php:88
 #, php-format
 msgid "Renamed tag(s) &laquo;%1$s&raquo; to &laquo;%2$s&raquo;"
-msgstr ""
+msgstr "Es wurden die Stichwörter &laquo;%1$s&raquo; bis &laquo;%2$s&raquo; umbenannt"
 
 #: ../lib/tags.php:95
 msgid "No valid new tag."
@@ -2493,7 +2496,7 @@ msgstr "Kein gültiges Stichwort"
 
 #: ../lib/tags.php:112
 msgid "No objects (post/page) found for specified old tags."
-msgstr ""
+msgstr "Keine Objekte (Seite/Beitrag) enthält das ausgewählte Stichwort"
 
 #: ../lib/tags.php:141
 msgid "No tag merged."
@@ -2502,7 +2505,7 @@ msgstr "Keine Stichwörter zusammengeführt."
 #: ../lib/tags.php:143
 #, php-format
 msgid "Merge tag(s) &laquo;%1$s&raquo; to &laquo;%2$s&raquo;. %3$s objects edited."
-msgstr ""
+msgstr "Stichwörter &laquo;%1$s&raquo; bis &laquo;%2$s&raquo; zusammengeführt. %3$s Objekte geändert."
 
 #: ../lib/tags.php:146
 msgid "Error. No enough tags for rename. Too for merge. Choose !"
@@ -2519,15 +2522,15 @@ msgstr "Kein Stichwort gelöscht"
 #: ../lib/tags.php:188
 #, php-format
 msgid "%1s tag(s) deleted."
-msgstr ""
+msgstr "%1s Stichwörter gelöscht"
 
 #: ../lib/tags.php:202
 msgid "No new slug(s) specified!"
-msgstr ""
+msgstr "Keine neuen Stichwörter ausgewählt"
 
 #: ../lib/tags.php:214
 msgid "Tags number and slugs number isn't the same!"
-msgstr ""
+msgstr "Stichwort und Schlagwort ist nicht das gleiche!"
 
 #: ../lib/tags.php:241
 msgid "No slug edited."
@@ -2536,7 +2539,7 @@ msgstr "Kein Stichwort geändert"
 #: ../lib/tags.php:243
 #, php-format
 msgid "%s slug(s) edited."
-msgstr ""
+msgstr "%s Stichwörter geändert"
 
 #: ../view/album-compact.php:31
 #: ../view/album-extend.php:29
@@ -2544,6 +2547,7 @@ msgid "Photos"
 msgstr "Fotos"
 
 #: ../view/gallery.php:32
+#: ../widgets/media-rss-widget.php:236
 msgid "[View with PicLens]"
 msgstr "[Mit PicLens anzeigen]"
 
