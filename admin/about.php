@@ -106,7 +106,12 @@ function ngg_list_contributors()	{
 	'Igor Shevkoplyas (Russian Translation)' => 'http://www.russian-translation-matters.com',
 	'Alexandr Kindras (Code contributor)' => 'http://www.fixdev.com',
 	'Manabu Togawa (Japanese Translation)' => 'http://www.churadesign.com/',
-	'Serhiy Tretyak (Ukrainian Translation)' => 'http://designpoint.com.ua/'
+	'Serhiy Tretyak (Ukrainian Translation)' => 'http://designpoint.com.ua/',
+	'Janis Grinvalds (Latvian Translation)' => 'http://riga.bmxrace.lv/',
+	'Kristoffer Th&oslash;ring (Norwegian Translation)' => '',
+	'Flactarus (Italian Translation)' => 'http://www.giroevago.it',
+	'Felip Alfred Galit&oacute; i Trilla (Catalan Translation)' => 'http://www.bratac.cat',
+	'Luka Komac (Slovenian Translation)' => 'http://www.komac.biz'
 	);
 	
 	ksort($contributors);
@@ -239,7 +244,9 @@ function ngg_list_support()	{
 	'Grupo Probeta' => 'http://www.grupoprobeta.com',
 	'Aaron Simpson' => '',
 	'Dana Burns' => '',
-	'Craig Thompson' => 'http://www.globalwebhq.com/'	
+	'Craig Thompson' => 'http://www.globalwebhq.com/',
+	'Cynthia Spangler' => 'http://www.parkcityweb.com/',
+	'Guy Raif' => ''
 	);
 	
 	ksort($supporter);

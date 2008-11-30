@@ -285,7 +285,7 @@ class nggManageGallery {
 			global $user_ID;
 	
 			$page['post_type']    = 'page';
-			$page['post_content'] = '[gallery='.$this->gid.']';
+			$page['post_content'] = '[nggallery id='.$this->gid.']';
 			$page['post_parent']  = $parent_id;
 			$page['post_author']  = $user_ID;
 			$page['post_status']  = 'publish';
