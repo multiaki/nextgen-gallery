@@ -210,7 +210,6 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
 	}	
 	//var_dump($picturelist);
 	foreach ($picturelist as $key => $picture) {
-		
 		// choose link between imagebrowser or effect
 		$link = ($ngg_options['galImgBrowser']) ? $nggRewrite->get_permalink( array('pid'=>$picture->pid) ) : $picture->imageURL;	
 		
@@ -224,7 +223,9 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
 		$picturelist[$key]->imageURL = apply_filters('ngg_create_gallery_link', $link, $picture);
 		$picturelist[$key]->thumbnailURL = $picture->thumbURL;
 		$picturelist[$key]->size = $thumbsize;
-		$picturelist[$key]->thumbcode  = $thumbcode;
+		$picturelist[$key]->thumbcode = $thumbcode;
+		$picturelist[$key]->description = stripslashes($picture->description);
+		$picturelist[$key]->alttext = stripslashes($picture->alttext);
 	}
 
 	// look for gallery-$template.php or pure gallery.php
