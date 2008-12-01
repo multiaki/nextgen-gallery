@@ -48,11 +48,11 @@ if ($mode=='last_pictures') {
 	}
 	
 	$rss = nggMediaRss::get_last_pictures_mrss($page, $show);	
-} else if ($mode=='gallery') {
+} else if ( $mode=='gallery' ) {
 		
 	// Get all galleries
 	$galleries = nggdb::find_all_galleries();
-	
+
 	if ( count($galleries) == 0 ) {
 		header('content-type:text/plain;charset=utf-8');
 		echo sprintf(__("No galleries have been yet created.","nggallery"), $gid);
@@ -60,47 +60,40 @@ if ($mode=='last_pictures') {
 	}
 	
 	// Get additional parameters
-	$gid = (int) $_GET["gid"];	
+	$gid = (int) $_GET['gid'];
 	
+	//if no gid is present, take the first gallery
 	if (!isset($gid) || $gid == '' || $gid == 0)
-		$gid = $galleries[0]->gid;
+	    $gid = current($galleries)->gid;
 	
-	$prev_next = $_GET["prev_next"];
-		
-	if (!isset($prev_next) || $prev_next == '')
-		$prev_next = false;
-	else
-		$prev_next = ($prev_next=='true' ? true : false);
-
-	// Get the main gallery object
-	$gallery = nggdb::find_gallery($gid);
-		
+	// Set the main gallery object
+	$gallery = $galleries[$gid];
+	
 	if (!isset($gallery) || $gallery==null) {
 		header('content-type:text/plain;charset=utf-8');
 		echo sprintf(__("The gallery ID=%s does not exist.","nggallery"), $gid);
 		exit;
 	}
+
+	// show other galleries if needed
+	$prev_next = ( $_GET['prev_next'] == 'true' ) ? true : false;
+	$prev_gallery = $next_gallery =  null;
 	
 	// Get previous and next galleries if required
-	$gallery = $galleries[0];
-	$prev_gallery = null;
-	$next_gallery = null;
-
-	for ($i=0; $i<count($galleries); $i++) {
-		if ($gid==$galleries[$i]->gid) {
-			$gallery = $galleries[$i];
-			if ($prev_next) {			
-				if ($i>0) {
-					$prev_gallery = $galleries[$i-1];
-				}
-				if ($i<count($galleries)-1) {
-					$next_gallery = $galleries[$i+1];
-				}
-			}
-			break;
+	if ($prev_next) {
+		reset($galleries);
+		while( current($galleries) ){
+ 			if( key($galleries) == $gid )
+				break;
+			next($galleries);
 		}
+		// one step back
+		$prev_gallery  = prev( $galleries);
+		// two step forward... Could be easier ? How ?
+		next($galleries);
+		$next_gallery  = next($galleries);
 	}
-	
+
 	$rss = nggMediaRss::get_gallery_mrss($gallery, $prev_gallery, $next_gallery);	
 	
 } else if ($mode=='album') {

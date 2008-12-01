@@ -34,14 +34,14 @@ class nggMediaRss {
 	 * Get the URL of a gallery media RSS
 	 */
 	function get_gallery_mrss_url($gid, $prev_next = false) {		
-		return nggMediaRss::get_mrss_url() . "?" . ("gid=" . $gid . ($prev_next ? "&amp;prev_next=true" : "") . "&amp;mode=gallery");
+		return nggMediaRss::get_mrss_url() . '?' . ('gid=' . $gid . ($prev_next ? '&amp;prev_next=true' : '') . '&amp;mode=gallery');
 	}
 	
 	/**
 	 * Get the URL of an album media RSS
 	 */
 	function get_album_mrss_url($aid) {		
-		return nggMediaRss::get_mrss_url() . "?" . ("aid=" . $aid . "&amp;mode=album");
+		return nggMediaRss::get_mrss_url() . '?' . ('aid=' . $aid . '&amp;mode=album');
 	}
 	
 	/**
@@ -72,9 +72,9 @@ class nggMediaRss {
 	/**
 	 * Get the XML <rss> node corresponding to a gallery
 	 *
-	 * @param $gallery The gallery to include in RSS
-	 * @param $prev_gallery The previous gallery to link in RSS (null if none)
-	 * @param $next_gallery The next gallery to link in RSS (null if none)
+	 * @param $gallery (object) The gallery to include in RSS
+	 * @param $prev_gallery (object) The previous gallery to link in RSS (null if none)
+	 * @param $next_gallery (object) The next gallery to link in RSS (null if none)
 	 */
 	function get_gallery_mrss($gallery, $prev_gallery = null, $next_gallery = null) {
 		
