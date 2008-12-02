@@ -112,17 +112,17 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				<table class="form-table ngg-options">
 					<tr valign="top">
 						<th align="left"><?php _e('Gallery path','nggallery') ?></th>
-						<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="text" size="35" name="gallerypath" value="<?php echo $ngg->options['gallerypath']; ?>" /><br />
-						<?php _e('This is the default path for all galleries','nggallery') ?></td>
+						<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="text" size="35" name="gallerypath" value="<?php echo $ngg->options['gallerypath']; ?>" />
+						<span class="setting-description"><?php _e('This is the default path for all galleries','nggallery') ?></span></td>
 					</tr>
 					<tr valign="top">
 						<th align="left"><?php _e('Delete image files','nggallery') ?></th>
-						<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="checkbox" name="deleteImg" value="1" <?php checked('1', $ngg->options['deleteImg']); ?> /><br />
+						<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="checkbox" name="deleteImg" value="1" <?php checked('1', $ngg->options['deleteImg']); ?> />
 						<?php _e('Delete files, when removing a gallery in the database','nggallery') ?></td>
 					</tr>
 					<tr valign="top">
 						<th align="left"><?php _e('Activate permalinks','nggallery') ?></th>
-						<td><input type="checkbox" name="usePermalinks" value="1" <?php checked('1', $ngg->options['usePermalinks']); ?> /><br />
+						<td><input type="checkbox" name="usePermalinks" value="1" <?php checked('1', $ngg->options['usePermalinks']); ?> />
 						<?php _e('When you activate this option, you need to update your permalink structure one time.','nggallery') ?></td>
 					</tr>
 					<tr>
@@ -134,8 +134,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					</tr>
 					<tr>
 						<th align="left"><?php _e('Activate PicLens/CoolIris support','nggallery') ?> (<a href="http://www.cooliris.com">CoolIris</a>)</th>
-						<td><input type="checkbox" name="usePicLens" value="1" <?php checked('1', $ngg->options['usePicLens']); ?> /><br />
-						<?php _e('When you activate this option, some javascript is added to your site footer. Make sure that wp_footer is called in your theme.','nggallery') ?></td>
+						<td><input type="checkbox" name="usePicLens" value="1" <?php checked('1', $ngg->options['usePicLens']); ?> />
+						<span class="setting-description"><?php _e('When you activate this option, some javascript is added to your site footer. Make sure that wp_footer is called in your theme.','nggallery') ?></span></td>
 					</tr>
 				</table>
 			<h3><?php _e('Tags / Categories','nggallery') ?></h3>
@@ -154,8 +154,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					</tr>
 					<tr>
 						<th valign="top"><?php _e('Max. number of images','nggallery') ?>:</th>
-						<td><input type="text" name="maxImages" value="<?php echo $ngg->options['maxImages'] ?>" size="3" maxlength="3" /><br />
-						<?php _e('0 will show all images','nggallery') ?>
+						<td><input type="text" name="maxImages" value="<?php echo $ngg->options['maxImages'] ?>" size="3" maxlength="3" />
+						<span class="setting-description"><?php _e('0 will show all images','nggallery') ?></span>
 						</td>
 					</tr>
 				</table> 				
@@ -174,17 +174,17 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				<table class="form-table ngg-options">
 					<tr valign="top">
 						<th align="left"><?php _e('Width x height (in pixel)','nggallery') ?></th>
-						<td><input type="text" size="4" maxlength="4" name="thumbwidth" value="<?php echo $ngg->options['thumbwidth']; ?>" /> x <input type="text" size="4" maxlength="4" name="thumbheight" value="<?php echo $ngg->options['thumbheight']; ?>" /><br />
-						<?php _e('These values are maximum values ','nggallery') ?></td>
+						<td><input type="text" size="4" maxlength="4" name="thumbwidth" value="<?php echo $ngg->options['thumbwidth']; ?>" /> x <input type="text" size="4" maxlength="4" name="thumbheight" value="<?php echo $ngg->options['thumbheight']; ?>" />
+						<span class="setting-description"><?php _e('These values are maximum values ','nggallery') ?></span></td>
 					</tr>
 					<tr valign="top">
 						<th align="left"><?php _e('Set fix dimension','nggallery') ?></th>
-						<td><input type="checkbox" name="thumbfix" value="1" <?php checked('1', $ngg->options['thumbfix']); ?> /><br />
+						<td><input type="checkbox" name="thumbfix" value="1" <?php checked('1', $ngg->options['thumbfix']); ?> />
 						<?php _e('Ignore the aspect ratio, no portrait thumbnails','nggallery') ?></td>
 					</tr>
 					<tr valign="top">
 						<th align="left"><?php _e('Crop square thumbnail from image','nggallery') ?></th>
-						<td><input type="checkbox" name="thumbcrop" value="1" <?php checked('1', $ngg->options['thumbcrop']); ?> /><br />
+						<td><input type="checkbox" name="thumbcrop" value="1" <?php checked('1', $ngg->options['thumbcrop']); ?> />
 						<?php _e('Create square thumbnails, use only the width setting :','nggallery') ?> <?php echo $ngg->options['thumbwidth']; ?> x <?php echo $ngg->options['thumbwidth']; ?></td>
 					</tr>
 					<tr valign="top">
@@ -208,8 +208,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						<th scope="row"><label for="fixratio"><?php _e('Resize Images','nggallery') ?></label></th>
 						<!--TODO: checkbox fixratio can be used later -->
 						<td><input type="hidden" name="imgResize" value="1" <?php checked('1', $ngg->options['imgResize']); ?> /> </td>
-						<td><input type="text" size="5" name="imgWidth" value="<?php echo $ngg->options['imgWidth']; ?>" /> x <input type="text" size="5" name="imgHeight" value="<?php echo $ngg->options['imgHeight']; ?>" /><br />
-						<?php _e('Width x height (in pixel). NextGEN Gallery will keep ratio size','nggallery') ?></td>
+						<td><input type="text" size="5" name="imgWidth" value="<?php echo $ngg->options['imgWidth']; ?>" /> x <input type="text" size="5" name="imgHeight" value="<?php echo $ngg->options['imgHeight']; ?>" />
+						<span class="setting-description"><?php _e('Width x height (in pixel). NextGEN Gallery will keep ratio size','nggallery') ?></span></td>
 					</tr>
 					<tr valign="top">
 						<th align="left"><?php _e('Image quality','nggallery') ?></th>
@@ -223,12 +223,12 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						<th align="left"><?php _e('Cache single pictures','nggallery') ?></th>
 						<td></td>
 						<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="checkbox" name="imgCacheSinglePic" value="1" <?php checked('1', $ngg->options['imgCacheSinglePic']); ?> />
-						<?php _e('Creates a file for each singlepic settings. Reduce the CPU load','nggallery') ?></td>
+						<span class="setting-description"><?php _e('Creates a file for each singlepic settings. Reduce the CPU load','nggallery') ?></span></td>
 					</tr>
 					<tr valign="top">
 						<th align="left"><?php _e('Clear cache folder','nggallery') ?></th>
 						<td></td>
-						<td><input type="submit" name="clearcache" value="<?php _e('Proceed now','nggallery') ;?> &raquo;"/></td>
+						<td><input type="submit" name="clearcache" class="button-secondary"  value="<?php _e('Proceed now','nggallery') ;?> &raquo;"/></td>
 					</tr>
 				</table>
 			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes') ;?>"/></div>
@@ -251,8 +251,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					</tr>
 					<tr>
 						<th valign="top"><?php _e('Number of images per page','nggallery') ?>:</th>
-						<td><input type="text" name="galImages" value="<?php echo $ngg->options['galImages'] ?>" size="3" maxlength="3" /><br />
-						<?php _e('0 will disable pagination, all images on one page','nggallery') ?>
+						<td><input type="text" name="galImages" value="<?php echo $ngg->options['galImages'] ?>" size="3" maxlength="3" />
+						<span class="setting-description"><?php _e('0 will disable pagination, all images on one page','nggallery') ?></span>
 						</td>
 					</tr>
 					<tr>
@@ -406,11 +406,12 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 									echo "\n".'<option value="'.$fontfile.'" '.ngg_input_selected($fontfile, $ngg->options['wmFont']).' >'.$fontfile.'</option>';
 								}
 								?>
-							</select><br />
+							</select><br /><span class="setting-description">
 							<?php if ( !function_exists(ImageTTFBBox) ) 
 									_e('This function will not work, cause you need the FreeType library','nggallery');
 								  else 
 								  	_e('You can upload more fonts in the folder <strong>nggallery/fonts</strong>','nggallery'); ?>
+                            </span>
 						</td>
 					</tr>
 					<tr>
@@ -472,7 +473,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<tr>
 						<th><?php _e('Use watermark logo','nggallery') ?>:</th>
 						<td><input name="irWatermark" type="checkbox" value="1" <?php checked('1', $ngg->options['irWatermark']); ?> />
-						<?php _e('You can change the logo at the watermark settings','nggallery') ?></td>
+						<span class="setting-description"><?php _e('You can change the logo at the watermark settings','nggallery') ?></span></td>
 					</tr>
 					<tr>
 						<th><?php _e('Stretch image','nggallery') ?>:</th>
@@ -536,7 +537,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<tr>
 						<th><?php _e('Try XHTML validation (with CDATA)','nggallery') ?>:</th>
 						<td><input name="irXHTMLvalid" type="checkbox" value="1" <?php checked('1', $ngg->options['irXHTMLvalid']); ?> />
-						<?php _e('Important : Could causes problem at some browser. Please recheck your page.','nggallery') ?></td>
+						<span class="setting-description"><?php _e('Important : Could causes problem at some browser. Please recheck your page.','nggallery') ?></span></td>
 					</tr>
 					</table>
 				<div class="clear"> &nbsp; </div>
