@@ -63,8 +63,11 @@ if ($mode=='last_pictures') {
 	$gid = (int) $_GET['gid'];
 	
 	//if no gid is present, take the first gallery
-	if (!isset($gid) || $gid == '' || $gid == 0)
-	    $gid = current($galleries)->gid;
+	if (!isset($gid) || $gid == '' || $gid == 0) {
+        $first = current($galleries);
+        $gid = $first->gid;
+	}
+	    
 	
 	// Set the main gallery object
 	$gallery = $galleries[$gid];
