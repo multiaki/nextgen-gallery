@@ -1,6 +1,13 @@
 <?php
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
 
+/**
+ * creates all tables for the gallery
+ * called during register_activation hook
+ * 
+ * @access internal
+ * @return void
+ */
 function nggallery_install () {
 	
    	global $wpdb , $wp_roles, $wp_version;
@@ -104,6 +111,13 @@ function nggallery_install () {
 
 }
 
+/**
+ * Setup the default option array for the gallery
+ * 
+ * @access internal
+ * @since version 0.33 
+ * @return void
+ */
 function ngg_default_options() {
 	
 	global $blog_id, $ngg;
@@ -206,17 +220,46 @@ function ngg_default_options() {
 
 }
 
+/**
+ * Deregister a capability from all classic roles
+ * 
+ * @access internal
+ * @param string $capability name of the capability which should be deregister
+ * @return void
+ */
+function ngg_remove_capability($capability){
+	// this function remove the $capability only from the classic roles
+	$check_order = array("subscriber", "contributor", "author", "editor", "administrator");
+
+	foreach ($check_order as $role) {
+
+		$role = get_role($role);
+		$role->remove_cap($capability) ;
+	}
+
+}
+
+/**
+ * Uninstall all settings and tables
+ * Called via Setup and register_unstall hook
+ * 
+ * @access internal
+ * @return void
+ */
 function nggallery_uninstall() {
 	global $wpdb;
 	
-	$wpdb->query("DROP TABLE $wpdb->nggpictures");
-	$wpdb->query("DROP TABLE $wpdb->nggallery");
-	$wpdb->query("DROP TABLE $wpdb->nggalbum");
+	// first remove all tables
+	$wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}ngg_pictures");
+	$wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}ngg_gallery");
+	$wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}ngg_album");
 	
-	delete_option( "ngg_options" );
-	delete_option( "ngg_db_version");
+	// then remove all options
+	delete_option( 'ngg_options' );
+	delete_option( 'ngg_db_version' );
 	delete_option( 'ngg_update_exists' );
-	
+	delete_option( 'ngg_next_update' );
+
 	// now remove the capability
 	ngg_remove_capability("NextGEN Gallery overview");
 	ngg_remove_capability("NextGEN Use TinyMCE");

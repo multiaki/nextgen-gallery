@@ -55,16 +55,4 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 
 	<?php
 }
-
-function ngg_remove_capability($capability){
-	// This function remove the $capability
-	$check_order = array("subscriber", "contributor", "author", "editor", "administrator");
-
-	foreach ($check_order as $role) {
-		
-		$role = get_role($role);
-		$role->remove_cap($capability) ;
-	}
-	
-}
 ?>

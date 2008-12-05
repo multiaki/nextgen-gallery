@@ -68,9 +68,9 @@ class nggLoader {
 		// Init options & tables during activation & deregister init option
 		register_activation_hook( dirname(__FILE__) . '/nggallery.php', array(&$this, 'activate') );
 		register_deactivation_hook( dirname(__FILE__) . '/nggallery.php', array(&$this, 'deactivate') );	
-		
-		if ( function_exists('register_uninstall_hook') )
-			register_uninstall_hook( dirname(__FILE__) . '/admin/install.php', 'nggallery_uninstall' );
+
+		// Register a uninstall hook to atumatic remove all tables & option
+		register_uninstall_hook( dirname(__FILE__) . '/nggallery.php', array('nggLoader', 'uninstall') );
 		
 		// Start this plugin once all other plugins are fully loaded
 		add_action( 'plugins_loaded', array(&$this, 'start_plugin') );
@@ -325,6 +325,11 @@ class nggLoader {
 		delete_option( 'ngg_update_exists' );
 	}
 
+	function uninstall() {
+        include_once (dirname (__FILE__) . '/admin/install.php');
+        nggallery_uninstall();
+	}
+	
 }
 	// Let's start the holy plugin
 	global $ngg;
@@ -332,5 +337,4 @@ class nggLoader {
 	// Add rewrite rules
 	$nggRewrite = new nggRewrite();	
 }
-
 ?>
