@@ -282,8 +282,8 @@ function wpmu_enable_function($value) {
 
 /**
  * WordPress PHP class to check for a new version.
- * @author Alex Rabe & Joern Kretzschmar
- * @orginal from Per Søderlind
+ * @author Alex Rabe
+ * @version 1.50
  *
  // Dashboard update notification example
 	function myPlugin_update_dashboard() {
@@ -340,18 +340,22 @@ if ( !class_exists( "CheckPlugin" ) ) {
 				$check_intervall = time() + $this->period;
 				update_option( $this->name . '_next_update', $check_intervall );
 				
-				// use wordpress snoopy class
-				require_once(ABSPATH . WPINC . '/class-snoopy.php');
-				 
-				if ( class_exists(snoopy) ) {
-					$client = new Snoopy();
-					$client->agent = 'NextGEN Gallery Version Checker V' . NGGVERSION . ' (+http://www.nextgen.boelinger.com/)';
-					$client->_fp_timeout = 10;
-					if (@$client->fetch($this->URL) === false) {
+				if ( function_exists(wp_remote_request) ) {
+					
+					$options = array();
+					$options['headers'] = array(
+						'User-Agent' => 'NextGEN Gallery Version Checker V' . NGGVERSION . '; (' . get_bloginfo('url') .')'
+					 );
+					$response = wp_remote_request($this->URL, $options);
+					
+					if ( is_wp_error( $response ) )
 						return false;
-					}
+				
+					if ( 200 != $response['response']['code'] )
+						return false;
 				   	
-					$server_version = unserialize($client->results);
+					$server_version = unserialize($response['body']);
+
 					if (is_array($server_version)) {
 						if ( version_compare($server_version[$this->name], $this->version, '>') ) {
 							update_option( $this->name . '_update_exists', 'true' );
