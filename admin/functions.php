@@ -281,8 +281,8 @@ class nggAdmin{
 		if ( !is_object($image) ) 
 			return __('Object didn\'t contain correct data','nggallery');	
 
-		$width  = ($width  != 0) ? $ngg->options['imgWidth']  : $width;
-		$height = ($height != 0) ? $ngg->options['imgHeight'] : $height;
+		$width  = ($width  != 0) ? $width  : $ngg->options['imgWidth'] ;
+		$height = ($height != 0) ? $height : $ngg->options['imgHeight'] ;
 		
 		if (!is_writable($image->imagePath))
 			return ' <strong>' . $image->filename . __(' is not writeable','nggallery') . '</strong>';
