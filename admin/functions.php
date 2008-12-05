@@ -281,8 +281,9 @@ class nggAdmin{
 		if ( !is_object($image) ) 
 			return __('Object didn\'t contain correct data','nggallery');	
 
-		$width  = ($width  != 0) ? $width  : $ngg->options['imgWidth'] ;
-		$height = ($height != 0) ? $height : $ngg->options['imgHeight'] ;
+		// if no parameter is set, take global settings
+		$width  = ($width  == 0) ? $ngg->options['imgWidth']  : $width;
+		$height = ($height == 0) ? $ngg->options['imgHeight'] : $height;
 		
 		if (!is_writable($image->imagePath))
 			return ' <strong>' . $image->filename . __(' is not writeable','nggallery') . '</strong>';
@@ -293,12 +294,11 @@ class nggAdmin{
 		if (!$file->error) {
 			$file->resize($width, $height, 4);
 			$file->save($image->imagePath, $ngg->options['imgQuality']);
+			$file->destruct();
+		} else {
+            $file->destruct();
+			return ' <strong>' . $image->filename . ' (Error : ' . $file->errmsg . ')</strong>';
 		}
-		
-		$file->destruct();
-
-		if ( !empty($file->errmsg) )
-			return ' <strong>' . $image->filename . ' (Error : '.$file->errmsg .')</strong>';		
 
 		return '1';
 	}
