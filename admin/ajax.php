@@ -10,7 +10,7 @@ add_action('wp_ajax_ngg_ajax_operation', 'ngg_ajax_operation' );
 function ngg_ajax_operation() {
 		
 		global $wpdb;
-		
+
 		// if nonce is not correct it returns -1
 		check_ajax_referer( "ngg-ajax" );
 		
@@ -34,17 +34,19 @@ function ngg_ajax_operation() {
 			switch ( $_POST['operation'] ) {
 				case 'create_thumbnail' :
 					$result = nggAdmin::create_thumbnail($picture);
-					die ($result);
 				break;
 				case 'resize_image' :
 					$result = nggAdmin::resize_image($picture);
-					die ($result);
 				break;
 				case 'set_watermark' :
 					$result = nggAdmin::set_watermark($picture);
-					die ($result);
+				break;
+				default :
+					die('-1');	
 				break;		
 			}
+			// A success should retun a '1'
+			die ($result);
 		}
 		
 		// The script should never stop here

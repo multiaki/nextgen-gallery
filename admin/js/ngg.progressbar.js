@@ -59,7 +59,7 @@
 			s = this.settings;
 			$("#" + s.id + " div").width( '100%' );
 			$("#" + s.id + " span").html( '100%' );
-			// in the case we add a not , we should wait for a click
+			// in the case we add a note , we should wait for a click
 			if (s.wait) {
 				setTimeout(function() {
 					$("#" + s.id).hide("slow");

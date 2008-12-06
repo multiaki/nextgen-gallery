@@ -439,7 +439,7 @@ class nggAdmin{
 
 		// extract all files in one folder
 		if ($archive->extract(PCLZIP_OPT_PATH, $dir, PCLZIP_OPT_REMOVE_ALL_PATH, PCLZIP_CB_PRE_EXTRACT, 'ngg_getOnlyImages') == 0) {
-			nggGallery::show_error("Error : ".$archive->errorInfo(true));
+			nggGallery::show_error( 'Error : ' . $archive->errorInfo(true) );
 			return false;
 		}
 
@@ -450,10 +450,10 @@ class nggAdmin{
 	function getOnlyImages($p_event, $p_header)	{
 		$info = pathinfo($p_header['filename']);
 		// check for extension
-		$ext = array("jpeg", "jpg", "png", "gif"); 
+		$ext = array('jpeg', 'jpg', 'png', 'gif'); 
 		if (in_array( strtolower($info['extension']), $ext)) {
 			// For MAC skip the ".image" files
-			if ($info['basename']{0} ==  "." ) 
+			if ($info['basename']{0} ==  '.' ) 
 				return 0;
 			else 
 				return 1;
@@ -572,7 +572,7 @@ class nggAdmin{
 				$filename = sanitize_title($filepart['filename']) . '.' . $filepart['extension'];
 
 				// check for allowed extension
-				$ext = array("jpeg", "jpg", "png", "gif"); 
+				$ext = array('jpeg', 'jpg', 'png', 'gif'); 
 				if (!in_array($filepart['extension'],$ext)){ 
 					nggGallery::show_error('<strong>'.$_FILES[$key]['name'].' </strong>'.__('is no valid image file!','nggallery'));
 					continue;
@@ -643,7 +643,7 @@ class nggAdmin{
 			return '0';
 
 		// Check the upload
-		if (!isset($_FILES["Filedata"]) || !is_uploaded_file($_FILES["Filedata"]["tmp_name"]) || $_FILES["Filedata"]["error"] != 0) 
+		if (!isset($_FILES['Filedata']) || !is_uploaded_file($_FILES["Filedata"]["tmp_name"]) || $_FILES["Filedata"]["error"] != 0) 
 			return __('Invalid upload. Error Code : ','nggallery') . $_FILES["Filedata"]["error"];
 
 		// get the filename and extension
@@ -654,9 +654,9 @@ class nggAdmin{
 		$filename = sanitize_title($filepart['filename']).".".$filepart['extension'];
 
 		// check for allowed extension
-		$ext = array("jpeg", "jpg", "png", "gif"); 
-		if (!in_array($filepart['extension'],$ext))
-			return $_FILES[$key]['name'].__('is no valid image file!','nggallery');
+		$ext = array('jpeg', 'jpg', 'png', 'gif'); 
+		if (!in_array($filepart['extension'], $ext))
+			return $_FILES[$key]['name'] . __('is no valid image file!','nggallery');
 
 		// get the path to the gallery	
 		$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$galleryID' ");

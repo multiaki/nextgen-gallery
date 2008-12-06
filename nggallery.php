@@ -219,20 +219,22 @@ class nggLoader {
 	
 	function load_dependencies() {
 	
-		// Load global libraries
-		require_once (dirname (__FILE__) . '/lib/core.php');
-		require_once (dirname (__FILE__) . '/lib/ngg-db.php');
-		require_once (dirname (__FILE__) . '/lib/image.php');
-		require_once (dirname (__FILE__) . '/lib/meta.php');
-		require_once (dirname (__FILE__) . '/lib/tags.php');
-		require_once (dirname (__FILE__) . '/lib/media-rss.php');
-		require_once (dirname (__FILE__) . '/widgets/widgets.php');
-		require_once (dirname (__FILE__) . '/lib/rewrite.php');
-		include_once (dirname (__FILE__) . '/admin/tinymce/tinymce.php');
-		
-		if (DOING_AJAX)
+		// Load global libraries												// average memory usage (in bytes)
+		require_once (dirname (__FILE__) . '/lib/core.php');					//  94.840
+		require_once (dirname (__FILE__) . '/lib/ngg-db.php');					// 132.400
+		require_once (dirname (__FILE__) . '/lib/image.php');					//  59.424
+
+		// We didn't need all stuff during a AJAX operation
+		if ( defined('DOING_AJAX') )
 			require_once (dirname (__FILE__) . '/admin/ajax.php');
-					
+		else {
+			require_once (dirname (__FILE__) . '/lib/meta.php');				// 131.856
+			require_once (dirname (__FILE__) . '/lib/tags.php');				// 117.136
+			require_once (dirname (__FILE__) . '/lib/media-rss.php');			//  82.768
+			require_once (dirname (__FILE__) . '/widgets/widgets.php');			// 298.792
+			require_once (dirname (__FILE__) . '/lib/rewrite.php');				//  71.936
+			include_once (dirname (__FILE__) . '/admin/tinymce/tinymce.php'); 	//  22.408
+		}
 		// Load backend libraries
 		if ( is_admin() ) {	
 			require_once (dirname (__FILE__) . '/admin/admin.php');
@@ -241,8 +243,8 @@ class nggLoader {
 			
 		// Load frontend libraries							
 		} else {
-			require_once (dirname (__FILE__) . '/nggfunctions.php');
-			require_once (dirname (__FILE__) . '/lib/shortcodes.php');
+			require_once (dirname (__FILE__) . '/nggfunctions.php');			// 242.016
+			require_once (dirname (__FILE__) . '/lib/shortcodes.php'); 			//  92.664
 		}			
 	}
 	
@@ -335,6 +337,7 @@ class nggLoader {
 	global $ngg;
 	$ngg = new nggLoader();
 	// Add rewrite rules
-	$nggRewrite = new nggRewrite();	
+	if ( class_exists(nggRewrite) )
+		$nggRewrite = new nggRewrite();	
 }
 ?>
