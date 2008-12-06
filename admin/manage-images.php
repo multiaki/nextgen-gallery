@@ -473,13 +473,13 @@ function ngg_manage_gallery_columns() {
 	$gallery_columns['id'] = __('ID');
 	
 	if ( !$ngg->manage_page->hideThumbs ) {
-		$gallery_columns['thumbnail'] = __('Thumbnail', 'nggallery') . '<br />' . __('Date', 'nggallery');
+		$gallery_columns['thumbnail'] = __('Thumbnail', 'nggallery') . ' / ' . __('Date', 'nggallery');
 	} else {
-		$gallery_columns['filename'] = __('File name', 'nggallery') . '<br />' . __('Date', 'nggallery');
+		$gallery_columns['filename'] = __('File name', 'nggallery') . ' / ' . __('Date', 'nggallery');
 	}
 	
 	if ( !$ngg->manage_page->showTags )	{
-		$gallery_columns['alt_title_desc'] = __('Alt &amp; Title Text', 'nggallery') . '<br />' . __('Description', 'nggallery');
+		$gallery_columns['alt_title_desc'] = __('Alt &amp; Title Text', 'nggallery') . ' / ' . __('Description', 'nggallery');
 		// $gallery_columns['description'] = __('Description', 'nggallery');
 		// $gallery_columns['alt_title_text'] = __('Alt &amp; Title Text', 'nggallery');
 		$gallery_columns['exclude'] = __('exclude', 'nggallery');
