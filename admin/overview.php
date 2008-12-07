@@ -125,7 +125,7 @@ function ngg_overview_right_now() {
 	$albums    = intval( $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggalbum") );
 ?>
 
-<p class="sub"><?php _e('At a Glance'); ?></p>
+<p class="sub"><?php _e('At a Glance', 'nggallery'); ?></p>
 <div class="table">
 	<table>
 		<tbody>

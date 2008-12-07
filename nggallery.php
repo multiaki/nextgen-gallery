@@ -54,6 +54,9 @@ class nggLoader {
 	
 	function nggLoader() {
 
+		// Load the language file
+		$this->load_textdomain();
+		
 		// Stop the plugin if we missed the requirements
 		if ( ( !$this->required_version() ) && ( !$this->check_memory_limit() ) )
 			return;
@@ -81,9 +84,6 @@ class nggLoader {
 
 		global $nggRewrite;
 				
-		// Load the language file
-		add_action('init', array(&$this, 'load_textdomain') );
-		
 		// Content Filters
 		add_filter('ngg_gallery_name', 'sanitize_title');
 		
@@ -234,18 +234,19 @@ class nggLoader {
 			require_once (dirname (__FILE__) . '/widgets/widgets.php');			// 298.792
 			require_once (dirname (__FILE__) . '/lib/rewrite.php');				//  71.936
 			include_once (dirname (__FILE__) . '/admin/tinymce/tinymce.php'); 	//  22.408
+
+			// Load backend libraries
+			if ( is_admin() ) {	
+				require_once (dirname (__FILE__) . '/admin/admin.php');
+				require_once (dirname (__FILE__) . '/admin/media-upload.php');
+				$this->nggAdminPanel = new nggAdminPanel();
+				
+			// Load frontend libraries							
+			} else {
+				require_once (dirname (__FILE__) . '/nggfunctions.php');		// 242.016
+				require_once (dirname (__FILE__) . '/lib/shortcodes.php'); 		//  92.664
+			}	
 		}
-		// Load backend libraries
-		if ( is_admin() ) {	
-			require_once (dirname (__FILE__) . '/admin/admin.php');
-			require_once (dirname (__FILE__) . '/admin/media-upload.php');
-			$this->nggAdminPanel = new nggAdminPanel();
-			
-		// Load frontend libraries							
-		} else {
-			require_once (dirname (__FILE__) . '/nggfunctions.php');			// 242.016
-			require_once (dirname (__FILE__) . '/lib/shortcodes.php'); 			//  92.664
-		}			
 	}
 	
 	function load_textdomain() {

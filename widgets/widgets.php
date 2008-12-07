@@ -24,8 +24,8 @@ class nggSlideshowWidget {
 	}		
 
 	function register_widget() {
-		
-		$widget_ops = array('classname' => 'widget_slideshow', 'description' => __( "Show a NextGEN Gallery Slideshow", "nggallery") );
+
+		$widget_ops = array('classname' => 'widget_slideshow', 'description' => __( 'Show a NextGEN Gallery Slideshow', 'nggallery') );
 		wp_register_sidebar_widget('slideshow', __('NextGEN Slideshow', 'nggallery'), array(&$this, 'widget_output'), $widget_ops );
 		wp_register_widget_control('slideshow', __('NextGEN Slideshow', 'nggallery'), array(&$this, 'widget_control') );
 	}	

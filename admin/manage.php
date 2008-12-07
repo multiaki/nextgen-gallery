@@ -81,7 +81,7 @@ class nggManageGallery {
 			$delete_galllery = $wpdb->query("DELETE FROM $wpdb->nggallery WHERE gid = $this->gid");
 			
 			if($delete_galllery)
-				nggGallery::show_message( __('Gallery','nggallery').' \''.$this->gid.'\' '.__('deleted successfully','nggallery'));
+				nggGallery::show_message( __ngettext( 'Gallery', 'Galleries', 1, 'nggallery' ) . ' \''.$this->gid.'\' '.__('deleted successfully','nggallery'));
 				
 		 	$this->mode = 'main'; // show mainpage
 		}

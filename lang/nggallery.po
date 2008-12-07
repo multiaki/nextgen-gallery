@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-29 12:09+0100\n"
-"PO-Revision-Date: 2008-11-29 12:09+0100\n"
+"POT-Creation-Date: 2008-12-07 12:18+0100\n"
+"PO-Revision-Date: 2008-12-07 12:18+0100\n"
 "Last-Translator: Alex Rabe <no@email.com>\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
@@ -33,11 +33,11 @@ msgstr ""
 msgid "Separate picture tags with commas."
 msgstr ""
 
-#: ../nggallery.php:271
+#: ../nggallery.php:274
 msgid "L O A D I N G"
 msgstr ""
 
-#: ../nggallery.php:272
+#: ../nggallery.php:275
 msgid "Click to Close"
 msgstr ""
 
@@ -46,23 +46,23 @@ msgid "The <a href=\"http://www.macromedia.com/go/getflashplayer\">Flash Player<
 msgstr ""
 
 #: ../nggfunctions.php:95
-#: ../nggfunctions.php:386
+#: ../nggfunctions.php:387
 msgid "[Gallery not found]"
 msgstr ""
 
-#: ../nggfunctions.php:273
+#: ../nggfunctions.php:274
 msgid "[Album not found]"
 msgstr ""
 
-#: ../nggfunctions.php:488
+#: ../nggfunctions.php:489
 msgid "[SinglePic not found]"
 msgstr ""
 
-#: ../nggfunctions.php:607
+#: ../nggfunctions.php:608
 msgid "Related images for"
 msgstr ""
 
-#: ../nggfunctions.php:642
+#: ../nggfunctions.php:643
 #: ../admin/admin.php:30
 msgid "Overview"
 msgstr ""
@@ -321,7 +321,9 @@ msgstr ""
 #: ../admin/manage-images.php:120
 #: ../admin/manage.php:84
 msgid "Gallery"
-msgstr ""
+msgid_plural "Galleries"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../admin/admin.php:31
 msgid "Add Gallery / Images"
@@ -333,7 +335,9 @@ msgstr ""
 
 #: ../admin/admin.php:33
 msgid "Album"
-msgstr ""
+msgid_plural "Albums"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../admin/admin.php:34
 msgid "Tags"
@@ -679,7 +683,7 @@ msgstr ""
 msgid " is not writeable "
 msgstr ""
 
-#: ../admin/functions.php:288
+#: ../admin/functions.php:289
 #: ../admin/functions.php:326
 msgid " is not writeable"
 msgstr ""
@@ -790,19 +794,19 @@ msgstr ""
 msgid "Copied %1$s picture(s) to gallery: %2$s ."
 msgstr ""
 
-#: ../admin/install.php:16
+#: ../admin/install.php:23
 msgid "Sorry, NextGEN Gallery works only with a role called administrator"
 msgstr ""
 
-#: ../admin/install.php:95
+#: ../admin/install.php:102
 msgid "NextGEN Gallery : Tables could not created, please check your database settings"
 msgstr ""
 
-#: ../admin/install.php:140
+#: ../admin/install.php:154
 msgid "[Show as slideshow]"
 msgstr ""
 
-#: ../admin/install.php:141
+#: ../admin/install.php:155
 msgid "[Show picture list]"
 msgstr ""
 
@@ -1174,7 +1178,7 @@ msgid "Right"
 msgstr ""
 
 #: ../admin/media-upload.php:208
-#: ../admin/settings.php:417
+#: ../admin/settings.php:418
 msgid "Size"
 msgstr ""
 
@@ -1453,7 +1457,7 @@ msgstr ""
 
 #: ../admin/settings.php:102
 #: ../admin/settings.php:268
-#: ../admin/settings.php:445
+#: ../admin/settings.php:446
 #: ../admin/tinymce/window.php:57
 msgid "Slideshow"
 msgstr ""
@@ -1744,163 +1748,163 @@ msgstr ""
 msgid "You can upload more fonts in the folder <strong>nggallery/fonts</strong>"
 msgstr ""
 
-#: ../admin/settings.php:421
+#: ../admin/settings.php:422
 msgid "Color"
 msgstr ""
 
-#: ../admin/settings.php:423
+#: ../admin/settings.php:424
 msgid "(hex w/o #)"
 msgstr ""
 
-#: ../admin/settings.php:426
+#: ../admin/settings.php:427
 msgid "Text"
 msgstr ""
 
-#: ../admin/settings.php:430
+#: ../admin/settings.php:431
 msgid "Opaque"
 msgstr ""
 
-#: ../admin/settings.php:446
+#: ../admin/settings.php:447
 msgid "The imagerotator.swf is not in the nggallery folder, the slideshow will not work."
 msgstr ""
 
-#: ../admin/settings.php:447
+#: ../admin/settings.php:448
 msgid "The settings are used in the JW Image Rotator Version"
 msgstr ""
 
-#: ../admin/settings.php:448
+#: ../admin/settings.php:449
 msgid "See more information for the Flash Player on the web page"
 msgstr ""
 
-#: ../admin/settings.php:452
+#: ../admin/settings.php:453
 msgid "Default size (W x H)"
 msgstr ""
 
-#: ../admin/settings.php:457
+#: ../admin/settings.php:458
 msgid "Shuffle mode"
 msgstr ""
 
-#: ../admin/settings.php:461
+#: ../admin/settings.php:462
 msgid "Show next image on click"
 msgstr ""
 
-#: ../admin/settings.php:465
+#: ../admin/settings.php:466
 msgid "Show navigation bar"
 msgstr ""
 
-#: ../admin/settings.php:469
+#: ../admin/settings.php:470
 msgid "Show loading icon"
 msgstr ""
 
-#: ../admin/settings.php:473
+#: ../admin/settings.php:474
 msgid "Use watermark logo"
 msgstr ""
 
-#: ../admin/settings.php:475
+#: ../admin/settings.php:476
 msgid "You can change the logo at the watermark settings"
 msgstr ""
 
-#: ../admin/settings.php:478
+#: ../admin/settings.php:479
 msgid "Stretch image"
 msgstr ""
 
-#: ../admin/settings.php:481
+#: ../admin/settings.php:482
 msgid "true"
 msgstr ""
 
-#: ../admin/settings.php:482
+#: ../admin/settings.php:483
 msgid "false"
 msgstr ""
 
-#: ../admin/settings.php:483
+#: ../admin/settings.php:484
 msgid "fit"
 msgstr ""
 
-#: ../admin/settings.php:484
+#: ../admin/settings.php:485
 msgid "none"
 msgstr ""
 
-#: ../admin/settings.php:489
+#: ../admin/settings.php:490
 msgid "Duration time"
 msgstr ""
 
-#: ../admin/settings.php:490
+#: ../admin/settings.php:491
 msgid "sec."
 msgstr ""
 
-#: ../admin/settings.php:493
+#: ../admin/settings.php:494
 msgid "Transition / Fade effect"
 msgstr ""
 
-#: ../admin/settings.php:496
+#: ../admin/settings.php:497
 msgid "fade"
 msgstr ""
 
-#: ../admin/settings.php:497
+#: ../admin/settings.php:498
 msgid "bgfade"
 msgstr ""
 
-#: ../admin/settings.php:498
+#: ../admin/settings.php:499
 msgid "slowfade"
 msgstr ""
 
-#: ../admin/settings.php:499
+#: ../admin/settings.php:500
 msgid "circles"
 msgstr ""
 
-#: ../admin/settings.php:500
+#: ../admin/settings.php:501
 msgid "bubbles"
 msgstr ""
 
-#: ../admin/settings.php:501
+#: ../admin/settings.php:502
 msgid "blocks"
 msgstr ""
 
-#: ../admin/settings.php:502
+#: ../admin/settings.php:503
 msgid "fluids"
 msgstr ""
 
-#: ../admin/settings.php:503
+#: ../admin/settings.php:504
 msgid "flash"
 msgstr ""
 
-#: ../admin/settings.php:504
+#: ../admin/settings.php:505
 msgid "lines"
 msgstr ""
 
-#: ../admin/settings.php:505
+#: ../admin/settings.php:506
 msgid "random"
 msgstr ""
 
-#: ../admin/settings.php:509
+#: ../admin/settings.php:510
 msgid "Use slow zooming effect"
 msgstr ""
 
-#: ../admin/settings.php:513
+#: ../admin/settings.php:514
 msgid "Background Color"
 msgstr ""
 
-#: ../admin/settings.php:518
+#: ../admin/settings.php:519
 msgid "Texts / Buttons Color"
 msgstr ""
 
-#: ../admin/settings.php:523
+#: ../admin/settings.php:524
 msgid "Rollover / Active Color"
 msgstr ""
 
-#: ../admin/settings.php:528
+#: ../admin/settings.php:529
 msgid "Screen Color"
 msgstr ""
 
-#: ../admin/settings.php:533
+#: ../admin/settings.php:534
 msgid "Background music (URL)"
 msgstr ""
 
-#: ../admin/settings.php:537
+#: ../admin/settings.php:538
 msgid "Try XHTML validation (with CDATA)"
 msgstr ""
 
-#: ../admin/settings.php:539
+#: ../admin/settings.php:540
 msgid "Important : Could causes problem at some browser. Please recheck your page."
 msgstr ""
 
@@ -2689,21 +2693,21 @@ msgstr ""
 msgid "No galleries have been yet created."
 msgstr ""
 
-#: ../xml/media-rss.php:80
+#: ../xml/media-rss.php:77
 #, php-format
 msgid "The gallery ID=%s does not exist."
 msgstr ""
 
-#: ../xml/media-rss.php:112
+#: ../xml/media-rss.php:108
 msgid "No album ID has been provided as parameter"
 msgstr ""
 
-#: ../xml/media-rss.php:120
+#: ../xml/media-rss.php:116
 #, php-format
 msgid "The album ID=%s does not exist."
 msgstr ""
 
-#: ../xml/media-rss.php:127
+#: ../xml/media-rss.php:123
 #, php-format
 msgid "Invalid MediaRSS command (%s)."
 msgstr ""

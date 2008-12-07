@@ -117,7 +117,7 @@ jQuery(document).ready( function() {
 
 <div class="wrap">
 
-<h2><?php _e('Gallery', 'nggallery') ?> : <?php echo $gallery->title; ?></h2>
+<h2><?php echo __ngettext( 'Gallery', 'Galleries', 1, 'nggallery' ); ?> : <?php echo $gallery->title; ?></h2>
 
 <br style="clear: both;" />
 
