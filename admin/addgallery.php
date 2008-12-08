@@ -91,7 +91,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				
 				// Button Settings
 				button_placeholder_id : "spanButtonPlaceholder",
-				button_width: 272,
+				button_width: 300,
 				button_height: 27,
 				button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
 				button_cursor: SWFUpload.CURSOR.HAND,
