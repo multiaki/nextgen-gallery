@@ -34,21 +34,21 @@ class nggMediaRss {
 	 * Get the URL of a gallery media RSS
 	 */
 	function get_gallery_mrss_url($gid, $prev_next = false) {		
-		return nggMediaRss::get_mrss_url() . '?' . ('gid=' . $gid . ($prev_next ? '&amp;prev_next=true' : '') . '&amp;mode=gallery');
+		return nggMediaRss::get_mrss_url() . '?' . ('gid=' . $gid . ($prev_next ? '&prev_next=true' : '') . '&mode=gallery');
 	}
 	
 	/**
 	 * Get the URL of an album media RSS
 	 */
 	function get_album_mrss_url($aid) {		
-		return nggMediaRss::get_mrss_url() . '?' . ('aid=' . $aid . '&amp;mode=album');
+		return nggMediaRss::get_mrss_url() . '?' . ('aid=' . $aid . '&mode=album');
 	}
 	
 	/**
 	 * Get the URL of the media RSS for last pictures
 	 */
 	function get_last_pictures_mrss_url($page = 0, $show = 30) {		
-		return nggMediaRss::get_mrss_url() . "?" . ("show=" . $show . "&amp;page=" . $page . "&amp;mode=last_pictures");
+		return nggMediaRss::get_mrss_url() . '?' . ('show=' . $show . '&page=' . $page . '&mode=last_pictures');
 	}
 	
 	/**

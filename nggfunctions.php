@@ -180,7 +180,7 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
 		
 		if ($ngg_options['usePicLens']) {
 			$gallery->show_piclens = true;
-			$gallery->piclens_link = "javascript:PicLensLite.start({feedUrl:'" . nggMediaRss::get_gallery_mrss_url($gallery->ID) . "'});";
+			$gallery->piclens_link = "javascript:PicLensLite.start({feedUrl:'" . htmlspecialchars( nggMediaRss::get_gallery_mrss_url($gallery->ID) ) . "'});";
 		}
 	}
 	
