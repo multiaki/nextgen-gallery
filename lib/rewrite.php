@@ -31,7 +31,7 @@ class nggRewrite {
 		
 		add_filter('query_vars', array(&$this, 'add_queryvars') );
 		add_filter('wp_title' , array(&$this, 'rewrite_title') );
-		
+			
 		if ($this->options['usePermalinks'])
 			add_action('generate_rewrite_rules', array(&$this, 'RewriteRules'));
 		
@@ -43,8 +43,8 @@ class nggRewrite {
 	*/
 	function get_permalink( $args ) {
 		global $wp_rewrite, $wp_query;
-		
-		//TODO: Watch out for ticket http://trac.wordpress.org/ticket/6627.
+
+		//TODO: Watch out for ticket http://trac.wordpress.org/ticket/6627
 		if ($wp_rewrite->using_permalinks() && $this->options['usePermalinks'] ) {
 			$post = &get_post(get_the_ID());
 
@@ -131,6 +131,12 @@ class nggRewrite {
 	*/
 	function flush() { 
 		global $wp_rewrite;
+		
+		$this->options = get_option('ngg_options');
+		
+		if ($this->options['usePermalinks'])
+			add_action('generate_rewrite_rules', array(&$this, 'RewriteRules'));
+			
 		$wp_rewrite->flush_rules();
 	}
 

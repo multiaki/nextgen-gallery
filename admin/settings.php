@@ -3,7 +3,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 
 	function nggallery_admin_options()  {
 	
-	global $wpdb, $wp_rewrite, $ngg;
+	global $wpdb, $ngg, $nggRewrite;
 
 	$old_state = $ngg->options['usePermalinks'];
 	
@@ -22,12 +22,17 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		//		$value = sanitize_option($option, $value); // This does stripslashes on those that need it
 				$ngg->options[$option] = $value;
 			}
+		// the path should always end with a slash	
+		$ngg->options['gallerypath']    = trailingslashit($ngg->options['gallerypath']);
+		$ngg->options['imageMagickDir'] = trailingslashit($ngg->options['imageMagickDir']);
 		}
-		// Flush ReWrite rules
-		if ( $old_state != $ngg->options['usePermalinks'] )
-			$wp_rewrite->flush_rules();
 		// Save options
 		update_option('ngg_options', $ngg->options);
+
+		// Flush ReWrite rules
+		if ( $old_state != $ngg->options['usePermalinks'] )
+			$nggRewrite->flush();
+		
 	 	nggGallery::show_message(__('Update Successfully','nggallery'));
 	}		
 	
@@ -39,7 +44,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	    	if ($handle = opendir($path)) {
 				while (false !== ($file = readdir($handle))) {
 			    	if ($file != '.' && $file != '..') {
-			          @unlink($path."/".$file);
+			          @unlink($path . '/' . $file);
 	          		}
 	        	}
 	      		closedir($handle);
@@ -554,7 +559,7 @@ function ngg_get_TTFfont() {
 	$ttf_fonts = array ();
 	
 	// Files in wp-content/plugins/nggallery/fonts directory
-	$plugin_root = NGGALLERY_ABSPATH."fonts";
+	$plugin_root = NGGALLERY_ABSPATH . 'fonts';
 	
 	$plugins_dir = @ dir($plugin_root);
 	if ($plugins_dir) {

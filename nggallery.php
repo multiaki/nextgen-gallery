@@ -313,8 +313,8 @@ class nggLoader {
 	}
 	
 	function activate() {
-		
 		include_once (dirname (__FILE__) . '/admin/install.php');
+		// check for tables
 		nggallery_install();
 		// remove the update message
 		delete_option( 'ngg_update_exists' );
@@ -335,7 +335,7 @@ class nggLoader {
 	
 }
 	// Let's start the holy plugin
-	global $ngg;
+	global $ngg, $nggRewrite;
 	$ngg = new nggLoader();
 	// Add rewrite rules
 	if ( class_exists(nggRewrite) )

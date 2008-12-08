@@ -103,8 +103,10 @@ function nggallery_install () {
 		return;
 	}
 	
-	// set the default settings		
- 	ngg_default_options();
+	$options = get_option('ngg_options');
+	// set the default settings, if we didn't upgrade
+	if ( empty( $options ) )	
+ 		ngg_default_options();
  	
 	// if all is passed , save the DBVERSION
 	add_option("ngg_db_version", NGG_DBVERSION);
@@ -124,10 +126,10 @@ function ngg_default_options() {
 
 	$ngg_options['gallerypath']			= 'wp-content/gallery/';  		// set default path to the gallery
 	$ngg_options['deleteImg']			= true;							// delete Images
-	$ngg_options['swfUpload']			= false;						// activate the batch upload
+	$ngg_options['swfUpload']			= true;							// activate the batch upload
 	$ngg_options['usePermalinks']		= false;						// use permalinks for parameters
 	$ngg_options['graphicLibrary']		= 'gd';							// default graphic library
-	$ngg_options['imageMagickDir']		= '/usr/local/bin';				// default path to ImageMagick
+	$ngg_options['imageMagickDir']		= '/usr/local/bin/';			// default path to ImageMagick
 	
 	// Tags / categories
 	$ngg_options['activateTags']		= false;						// append related images
@@ -146,7 +148,7 @@ function ngg_default_options() {
 	$ngg_options['imgWidth']			= 800;  						// Image Width
 	$ngg_options['imgHeight']			= 600;  						// Image height
 	$ngg_options['imgQuality']			= 85;							// Image Quality
-	$ngg_options['imgCacheSinglePic']	= false;						// cached the singlepic	
+	$ngg_options['imgCacheSinglePic']	= true;							// cached the singlepic	
 	
 	// Gallery Settings
 	$ngg_options['galImages']			= '20';		  					// Number Of images per page
@@ -156,7 +158,6 @@ function ngg_default_options() {
 	$ngg_options['galShowOrder']		= 'gallery';					// Show order
 	$ngg_options['galSort']				= 'sortorder';					// Sort order
 	$ngg_options['galSortDir']			= 'ASC';						// Sort direction
-	$ngg_options['galUsejQuery']   		= false;						// use the jQuery plugin
 	$ngg_options['galNoPages']   		= true;							// use no subpages for gallery
 	$ngg_options['galImgBrowser']   	= false;						// Show ImageBrowser, instead effect
 
