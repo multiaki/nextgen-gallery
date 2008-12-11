@@ -10,7 +10,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 function ngg_upgrade() {
 	
 	global $wpdb, $user_ID;
-	
+
 	$nggpictures					= $wpdb->prefix . 'ngg_pictures';
 	$nggallery						= $wpdb->prefix . 'ngg_gallery';
 	// get the current user ID
@@ -18,11 +18,8 @@ function ngg_upgrade() {
 
 	// Be sure that the tables exist
 	if($wpdb->get_var("show tables like '$nggpictures'") == $nggpictures) {
-		echo " <strong>" . __('Start upgrade routine', 'nggallery') . " </strong><br />\n";
-		echo __('memory_limit', 'nggallery') . " : " . ini_get('memory_limit') . "<br />\n";
-		if (function_exists('memory_get_usage')) $memory_usage = round(memory_get_usage() / 1024 / 1024, 2) . __(' MByte', 'nggallery');
-		else $memory_usage = __('N/A', 'nggallery');
-		echo __('Current memory usage', 'nggallery') . " : " . $memory_usage . "<br /><br />\n";
+
+		echo __('Upgrade database structure...', 'nggallery');
 
 		$installed_ver = get_option( "ngg_db_version" );
 		// v0.33 -> v.071
@@ -48,16 +45,13 @@ function ngg_upgrade() {
 			$wpdb->query("ALTER TABLE ".$nggallery." CHANGE author author BIGINT(20) NOT NULL DEFAULT '0'");
 		}
 
-		// v0.95 -> v0.99 
+		// v0.95 -> v0.97 
 		if (version_compare($installed_ver, '0.96', '<')) {
 			// Convert into WordPress Core taxonomy scheme
 			ngg_convert_tags();
 			// Drop tables, we don't need them anymore
 			$wpdb->query("DROP TABLE " . $wpdb->prefix . "ngg_tags");
 			$wpdb->query("DROP TABLE " . $wpdb->prefix . "ngg_pic2tags");
-			echo __('Update file structure...', 'nggallery');
-			ngg_convert_filestructure();
-			echo __('finished', 'nggallery') . "<br />\n";
 			
 			// New capability for administrator role
 			$role = get_role('administrator');
@@ -70,15 +64,30 @@ function ngg_upgrade() {
 			
 		}
 		
+		// v0.97 -> v1.00
 		if (version_compare($installed_ver, '0.97', '<')) {
 			$wpdb->query("ALTER TABLE ".$nggpictures." ADD imagedate DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER alttext");
-			echo __('Import date and time information...', 'nggallery');
-			ngg_import_date_time();
+		}
+		
+		// update now the database
+		update_option( "ngg_db_version", NGG_DBVERSION );
+		echo __('finished', 'nggallery') . "<br />\n";
+		
+		// Change all thumbnail folders to "thumbs"
+		if (version_compare($installed_ver, '0.96', '<')) {
+			echo __('Update file structure...', 'nggallery');
+			ngg_convert_filestructure();
 			echo __('finished', 'nggallery') . "<br />\n";
 		}
 		
-		update_option( "ngg_db_version", NGG_DBVERSION );
-		return __('Update database structure', 'nggallery');
+		// On some reason the import / date sometimes failed, due to the memory limit
+		if (version_compare($installed_ver, '0.97', '<')) {
+			echo __('Import date and time information...', 'nggallery');
+			ngg_import_date_time();
+			echo __('finished', 'nggallery') . "<br />\n";
+		}		
+
+		return;
 	}
 }
 
@@ -159,8 +168,8 @@ function ngg_import_date_time() {
 	$imagelist = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid ORDER BY tt.pid ASC");
 	if ( is_array($imagelist) ) {
 		foreach ($imagelist as $image) {
-			$picture = new nggImage($image, $image);
-			$meta = new nggMeta($picture->imagePath);
+			$picture = new nggImage($image);
+			$meta = new nggMeta($picture->imagePath, true);
 			$date = $meta->get_date_time();
 			$wpdb->query("UPDATE $wpdb->nggpictures SET imagedate = '$date' WHERE pid = '$picture->pid'");
 		}		
@@ -202,7 +211,7 @@ function nggallery_start_upgrade($filepath) {
 ?>
 <div class="wrap">
 	<h2><?php _e('Upgrade NextGEN Gallery', 'nggallery') ;?></h2>
-	<p><?php echo ngg_upgrade();?></p>
+	<p><?php ngg_upgrade();?></p>
 	<p><?php _e('Upgrade sucessfull', 'nggallery') ;?></p>
 	<h3><a href="<?php echo $filepath;?>"><?php _e('Continue', 'nggallery'); ?>...</a></h3>
 </div>
