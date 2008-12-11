@@ -13,15 +13,18 @@ function ngg_upgrade() {
 	
 	$nggpictures					= $wpdb->prefix . 'ngg_pictures';
 	$nggallery						= $wpdb->prefix . 'ngg_gallery';
-
 	// get the current user ID
 	get_currentuserinfo();
 
 	// Be sure that the tables exist
 	if($wpdb->get_var("show tables like '$nggpictures'") == $nggpictures) {
+		echo " <strong>" . __('Start upgrade routine', 'nggallery') . " </strong><br />\n";
+		echo __('memory_limit', 'nggallery') . " : " . ini_get('memory_limit') . "<br />\n";
+		if (function_exists('memory_get_usage')) $memory_usage = round(memory_get_usage() / 1024 / 1024, 2) . __(' MByte', 'nggallery');
+		else $memory_usage = __('N/A', 'nggallery');
+		echo __('Current memory usage', 'nggallery') . " : " . $memory_usage . "<br /><br />\n";
 
 		$installed_ver = get_option( "ngg_db_version" );
-
 		// v0.33 -> v.071
 		if (version_compare($installed_ver, '0.71', '<')) {
 			$wpdb->query("ALTER TABLE ".$nggpictures." CHANGE pid pid BIGINT(20) NOT NULL AUTO_INCREMENT ");
@@ -52,7 +55,9 @@ function ngg_upgrade() {
 			// Drop tables, we don't need them anymore
 			$wpdb->query("DROP TABLE " . $wpdb->prefix . "ngg_tags");
 			$wpdb->query("DROP TABLE " . $wpdb->prefix . "ngg_pic2tags");
+			echo __('Update file structure...', 'nggallery');
 			ngg_convert_filestructure();
+			echo __('finished', 'nggallery') . "<br />\n";
 			
 			// New capability for administrator role
 			$role = get_role('administrator');
@@ -67,7 +72,9 @@ function ngg_upgrade() {
 		
 		if (version_compare($installed_ver, '0.97', '<')) {
 			$wpdb->query("ALTER TABLE ".$nggpictures." ADD imagedate DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER alttext");
+			echo __('Import date and time information...', 'nggallery');
 			ngg_import_date_time();
+			echo __('finished', 'nggallery') . "<br />\n";
 		}
 		
 		update_option( "ngg_db_version", NGG_DBVERSION );
