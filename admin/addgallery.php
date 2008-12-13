@@ -2,7 +2,7 @@
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
 	
 	// sometimes a error feedback is better than a white screen
-	ini_set('error_reporting', E_ALL ^ E_NOTICE);
+	@ini_set('error_reporting', E_ALL ^ E_NOTICE);
 
 	function nggallery_admin_add_gallery()  {
 
