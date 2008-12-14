@@ -98,7 +98,8 @@ class nggLoader {
 		} else {			
 			
 			// Add MRSS to wp_head
-			add_action('wp_head', array('nggMediaRss', 'add_mrss_alternate_link'));
+			if ( $this->options['useMediaRSS'] )
+				add_action('wp_head', array('nggMediaRss', 'add_mrss_alternate_link'));
 			
 			// If activated, add PicLens/Cooliris javascript to footer
 			if ( $this->options['usePicLens'] )
@@ -261,7 +262,7 @@ class nggLoader {
 		echo "<meta name='NextGEN' content='" . $this->version . "' />\n";
 		
 		//	activate Thickbox
-		if ($this->options['thumbEffect'] == "thickbox") {
+		if ($this->options['thumbEffect'] == 'thickbox') {
 			wp_enqueue_script( 'thickbox' );
 			// Load the thickbox images after all other scripts
 			add_action( 'wp_head', array(&$this, 'load_thickbox_images'), 11 );

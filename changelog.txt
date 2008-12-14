@@ -2,6 +2,7 @@ NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
 V1.0.2
+- Added : Option to enable/disable the MediaRSS Feed
 - Changed : Added screencolor flashvar as bgcolor for the flash slideshow
 - Bugfix : Load SWFobject always when the imagerotator exist
 - Bugfix : Zip-Upload in existing gallery failed
