@@ -175,7 +175,7 @@ class NextGEN_shortcodes {
 			'template'	=> 'extend'	
 		), $atts ));
 		
-		$out = nggShowAlbum($id, $template, $albumSortOrder);
+		$out = nggShowAlbum($id, $template);
 			
 		return $out;
 	}

@@ -44,7 +44,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 if (!class_exists('nggLoader')) {
 class nggLoader {
 	
-	var $version     = '1.0.1';
+	var $version     = '1.0.2';
 	var $dbversion   = '0.9.7';
 	var $minium_WP   = '2.7';
 	var $minium_WPMU = '2.7';

@@ -314,8 +314,10 @@ function nggCreateAlbum( $galleriesID, $template = 'extend', $album = 0) {
 
 	// get the counter values 	
 	$picturesCounter = $wpdb->get_results('SELECT galleryid, COUNT(*) as counter FROM '.$wpdb->nggpictures.' WHERE galleryid IN (\''.implode('\',\'', $galleriesID).'\') AND exclude != 1 GROUP BY galleryid', OBJECT_K);
+	if ( is_array($picturesCounter) ) {
 	foreach ($picturesCounter as $key => $value)
 		$unsort_galleries[$key]->counter = $value->counter;
+	}
 	
 	// get the id's of the preview images
  	$imagesID = array();

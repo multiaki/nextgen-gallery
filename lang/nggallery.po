@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-11 20:27+0100\n"
-"PO-Revision-Date: 2008-12-11 20:27+0100\n"
+"POT-Creation-Date: 2008-12-14 11:08+0100\n"
+"PO-Revision-Date: 2008-12-14 11:08+0100\n"
 "Last-Translator: Alex Rabe <no@email.com>\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
@@ -17,27 +17,27 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 
-#: ../nggallery.php:151
+#: ../nggallery.php:152
 msgid "Sorry, NextGEN Gallery works only with a Memory Limit of 16 MB higher"
 msgstr ""
 
-#: ../nggallery.php:178
+#: ../nggallery.php:179
 msgid "Picture tag"
 msgstr ""
 
-#: ../nggallery.php:179
+#: ../nggallery.php:180
 msgid "Picture tag: %2$l."
 msgstr ""
 
-#: ../nggallery.php:180
+#: ../nggallery.php:181
 msgid "Separate picture tags with commas."
 msgstr ""
 
-#: ../nggallery.php:274
+#: ../nggallery.php:275
 msgid "L O A D I N G"
 msgstr ""
 
-#: ../nggallery.php:275
+#: ../nggallery.php:276
 msgid "Click to Close"
 msgstr ""
 
@@ -45,24 +45,24 @@ msgstr ""
 msgid "The <a href=\"http://www.macromedia.com/go/getflashplayer\">Flash Player</a> and <a href=\"http://www.mozilla.com/firefox/\">a browser with Javascript support</a> are needed.."
 msgstr ""
 
-#: ../nggfunctions.php:95
-#: ../nggfunctions.php:387
+#: ../nggfunctions.php:96
+#: ../nggfunctions.php:390
 msgid "[Gallery not found]"
 msgstr ""
 
-#: ../nggfunctions.php:274
+#: ../nggfunctions.php:275
 msgid "[Album not found]"
 msgstr ""
 
-#: ../nggfunctions.php:489
+#: ../nggfunctions.php:492
 msgid "[SinglePic not found]"
 msgstr ""
 
-#: ../nggfunctions.php:608
+#: ../nggfunctions.php:611
 msgid "Related images for"
 msgstr ""
 
-#: ../nggfunctions.php:643
+#: ../nggfunctions.php:646
 #: ../admin/admin.php:30
 msgid "Overview"
 msgstr ""
@@ -189,8 +189,8 @@ msgid "Upload failed!"
 msgstr ""
 
 #: ../admin/addgallery.php:55
-#: ../admin/functions.php:548
-#: ../admin/functions.php:638
+#: ../admin/functions.php:550
+#: ../admin/functions.php:640
 msgid "No gallery selected !"
 msgstr ""
 
@@ -520,7 +520,7 @@ msgid "Update"
 msgstr ""
 
 #: ../admin/album.php:147
-#: ../admin/manage-galleries.php:54
+#: ../admin/manage-galleries.php:55
 #: ../admin/manage-images.php:377
 msgid "Delete"
 msgstr ""
@@ -613,7 +613,7 @@ msgstr ""
 
 #: ../admin/functions.php:48
 #: ../admin/functions.php:58
-#: ../admin/functions.php:511
+#: ../admin/functions.php:513
 msgid "Unable to create directory "
 msgstr ""
 
@@ -663,7 +663,7 @@ msgid "successfully created!"
 msgstr ""
 
 #: ../admin/functions.php:161
-#: ../admin/functions.php:620
+#: ../admin/functions.php:622
 #: ../admin/manage-images.php:207
 #: ../admin/manage.php:136
 msgid "Create new thumbnails"
@@ -692,104 +692,104 @@ msgstr ""
 msgid "Uploaded file was no or a faulty zip file ! The server recognize : "
 msgstr ""
 
-#: ../admin/functions.php:496
+#: ../admin/functions.php:497
 msgid "Could not get a vaild foldername"
 msgstr ""
 
-#: ../admin/functions.php:506
+#: ../admin/functions.php:508
 #, php-format
 msgid "Unable to create directory %s. Is its parent directory writable by the server?"
 msgstr ""
 
-#: ../admin/functions.php:521
+#: ../admin/functions.php:523
 msgid "Zip-File successfully unpacked"
 msgstr ""
 
-#: ../admin/functions.php:556
-#: ../admin/functions.php:665
+#: ../admin/functions.php:558
+#: ../admin/functions.php:667
 msgid "Failure in database, no gallery path set !"
 msgstr ""
 
-#: ../admin/functions.php:577
-#: ../admin/functions.php:659
+#: ../admin/functions.php:579
+#: ../admin/functions.php:661
 msgid "is no valid image file!"
 msgstr ""
 
-#: ../admin/functions.php:591
-#: ../admin/functions.php:767
-#: ../admin/functions.php:835
+#: ../admin/functions.php:593
+#: ../admin/functions.php:769
+#: ../admin/functions.php:837
 #, php-format
 msgid "Unable to write to directory %s. Is this directory writable by the server?"
 msgstr ""
 
-#: ../admin/functions.php:598
-#: ../admin/functions.php:682
+#: ../admin/functions.php:600
+#: ../admin/functions.php:684
 msgid "Error, the file could not moved to : "
 msgstr ""
 
-#: ../admin/functions.php:603
-#: ../admin/functions.php:686
+#: ../admin/functions.php:605
+#: ../admin/functions.php:688
 msgid "Error, the file permissions could not set"
 msgstr ""
 
-#: ../admin/functions.php:624
+#: ../admin/functions.php:626
 msgid " Image(s) successfully added"
 msgstr ""
 
-#: ../admin/functions.php:647
+#: ../admin/functions.php:649
 msgid "Invalid upload. Error Code : "
 msgstr ""
 
-#: ../admin/functions.php:696
+#: ../admin/functions.php:698
 msgid "Sorry, you have used your space allocation. Please delete some files to upload more files."
 msgstr ""
 
-#: ../admin/functions.php:723
+#: ../admin/functions.php:725
 #, php-format
 msgid "SAFE MODE Restriction in effect! You need to create the folder <strong>%s</strong> manually"
 msgstr ""
 
-#: ../admin/functions.php:724
+#: ../admin/functions.php:726
 #, php-format
 msgid "When safe_mode is on, PHP checks to see if the owner (%s) of the current script matches the owner (%s) of the file to be operated on by a file function or its directory"
 msgstr ""
 
-#: ../admin/functions.php:761
-#: ../admin/functions.php:829
+#: ../admin/functions.php:763
+#: ../admin/functions.php:831
 msgid "The destination gallery does not exist"
 msgstr ""
 
-#: ../admin/functions.php:792
+#: ../admin/functions.php:794
 #, php-format
 msgid "Failed to move image %1$s to %2$s"
 msgstr ""
 
-#: ../admin/functions.php:810
+#: ../admin/functions.php:812
 #, php-format
 msgid "Moved %1$s picture(s) to gallery : %2$s ."
 msgstr ""
 
-#: ../admin/functions.php:862
+#: ../admin/functions.php:864
 #, php-format
 msgid "Failed to copy image %1$s to %2$s"
 msgstr ""
 
-#: ../admin/functions.php:874
+#: ../admin/functions.php:876
 #, php-format
 msgid "Failed to copy database row for picture %s"
 msgstr ""
 
-#: ../admin/functions.php:882
+#: ../admin/functions.php:884
 #, php-format
 msgid "Image %1$s (%2$s) copied as image %3$s (%4$s) &raquo; The file already existed in the destination gallery."
 msgstr ""
 
-#: ../admin/functions.php:885
+#: ../admin/functions.php:887
 #, php-format
 msgid "Image %1$s (%2$s) copied as image %3$s (%4$s)"
 msgstr ""
 
-#: ../admin/functions.php:894
+#: ../admin/functions.php:896
 #, php-format
 msgid "Copied %1$s picture(s) to gallery: %2$s ."
 msgstr ""
@@ -838,15 +838,15 @@ msgstr ""
 msgid "Action"
 msgstr ""
 
-#: ../admin/manage-galleries.php:41
+#: ../admin/manage-galleries.php:42
 msgid "Edit"
 msgstr ""
 
-#: ../admin/manage-galleries.php:54
+#: ../admin/manage-galleries.php:55
 msgid "Delete this gallery ?"
 msgstr ""
 
-#: ../admin/manage-galleries.php:61
+#: ../admin/manage-galleries.php:62
 #: ../admin/manage-images.php:392
 msgid "No entries found"
 msgstr ""
@@ -2602,7 +2602,7 @@ msgid "Link to the main image feed"
 msgstr ""
 
 #: ../widgets/media-rss-widget.php:153
-#: ../widgets/widgets.php:134
+#: ../widgets/widgets.php:135
 msgid "Title:"
 msgstr ""
 
@@ -2635,71 +2635,71 @@ msgstr ""
 msgid "<a href=\"http://www.macromedia.com/go/getflashplayer\">Get the Flash Player</a> to see the slideshow."
 msgstr ""
 
-#: ../widgets/widgets.php:136
+#: ../widgets/widgets.php:137
 msgid "Select Gallery:"
 msgstr ""
 
-#: ../widgets/widgets.php:138
+#: ../widgets/widgets.php:139
 msgid "All images"
 msgstr ""
 
-#: ../widgets/widgets.php:151
+#: ../widgets/widgets.php:152
 msgid "Height:"
 msgstr ""
 
-#: ../widgets/widgets.php:152
+#: ../widgets/widgets.php:153
 msgid "Width:"
 msgstr ""
 
-#: ../widgets/widgets.php:185
+#: ../widgets/widgets.php:186
 msgid "Add recent or random images from the galleries"
 msgstr ""
 
-#: ../widgets/widgets.php:187
+#: ../widgets/widgets.php:188
 msgid "NextGEN Widget"
 msgstr ""
 
-#: ../widgets/widgets.php:285
+#: ../widgets/widgets.php:286
 msgid "Title :"
 msgstr ""
 
-#: ../widgets/widgets.php:291
+#: ../widgets/widgets.php:292
 msgid "Show :"
 msgstr ""
 
-#: ../widgets/widgets.php:297
+#: ../widgets/widgets.php:298
 msgid "Orginal images"
 msgstr ""
 
-#: ../widgets/widgets.php:305
+#: ../widgets/widgets.php:306
 msgid "recent added "
 msgstr ""
 
-#: ../widgets/widgets.php:310
+#: ../widgets/widgets.php:311
 msgid "Width x Height :"
 msgstr ""
 
-#: ../widgets/widgets.php:317
+#: ../widgets/widgets.php:318
 msgid "Select :"
 msgstr ""
 
-#: ../widgets/widgets.php:319
+#: ../widgets/widgets.php:320
 msgid "All galleries"
 msgstr ""
 
-#: ../widgets/widgets.php:320
+#: ../widgets/widgets.php:321
 msgid "Only which are not listed"
 msgstr ""
 
-#: ../widgets/widgets.php:321
+#: ../widgets/widgets.php:322
 msgid "Only which are listed"
 msgstr ""
 
-#: ../widgets/widgets.php:327
+#: ../widgets/widgets.php:328
 msgid "Gallery ID :"
 msgstr ""
 
-#: ../widgets/widgets.php:329
+#: ../widgets/widgets.php:330
 msgid "Gallery IDs, separated by commas."
 msgstr ""
 
