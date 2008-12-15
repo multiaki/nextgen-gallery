@@ -5,6 +5,8 @@ V1.0.2
 - Added : Option to enable/disable the MediaRSS Feed
 - Added : For flash under FF3/WIN we should use outline: none; 
 - Changed : Added screencolor flashvar as bgcolor for the flash slideshow
+- Bugfix : Album id=all / Album id=0 didn't show content
+- Bugfix : Check for a empty description and alttext
 - Bugfix : Remove HTML tags from slideshow 
 - Bugfix : Load SWFobject always when the imagerotator exist
 - Bugfix : Zip-Upload in existing gallery failed

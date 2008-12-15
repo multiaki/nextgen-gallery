@@ -225,8 +225,8 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
 		$picturelist[$key]->thumbnailURL = $picture->thumbURL;
 		$picturelist[$key]->size = $thumbsize;
 		$picturelist[$key]->thumbcode = $thumbcode;
-		$picturelist[$key]->description = stripslashes($picture->description);
-		$picturelist[$key]->alttext = stripslashes($picture->alttext);
+		$picturelist[$key]->description = ( empty($picture->description) ) ? ' ' : stripslashes($picture->description);
+		$picturelist[$key]->alttext = ( empty($picture->alttext) ) ?  ' ' : stripslashes($picture->alttext);
 	}
 
 	// look for gallery-$template.php or pure gallery.php
@@ -245,7 +245,7 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
  * nggShowAlbum() - return a album based on the id
  * 
  * @access public 
- * @param int $albumID
+ * @param int | string $albumID
  * @param string (optional) $template
  * @return the content
  */
@@ -254,11 +254,14 @@ function nggShowAlbum($albumID, $template = 'extend') {
 	// $_GET from wp_query
 	$gallery  = get_query_var('gallery');
 	$album    = get_query_var('album');
+	
+	// in the case somebody uses the 'all' keyword, it should be '0' to show all galleries
+	$albumID  = ($albumID == 'all') ? 0 : $albumID;
 
 	// first look for gallery variable 
 	if (!empty( $gallery ))  {
 		
-		if ( $albumID != $album ) 
+		if ( ($albumID != $album) && ($albumID != 0) ) 
 			return;
 			
 		// if gallery is is submit , then show the gallery instead 
