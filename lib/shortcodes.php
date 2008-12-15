@@ -15,6 +15,10 @@ class NextGEN_shortcodes {
 		// convert the old shortcode
 		add_filter('the_content', array(&$this, 'convert_shortcode'));
 		
+		// do_shortcode on the_excerpt could causes several unwanted output. Uncomment it on your own risk
+		// add_filter('the_excerpt', array(&$this, 'convert_shortcode'));
+		// add_filter('the_excerpt', 'do_shortcode', 11);
+		
 		add_shortcode( 'singlepic', array(&$this, 'show_singlepic' ) );
 		add_shortcode( 'album', array(&$this, 'show_album' ) );
 		add_shortcode( 'nggallery', array(&$this, 'show_gallery') );
