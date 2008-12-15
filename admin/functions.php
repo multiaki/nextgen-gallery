@@ -494,7 +494,7 @@ class nggAdmin{
 		}
 
 		if ( empty($foldername) ) {
-			nggGallery::show_error( __('Could not get a vaild foldername', 'nggallery') );
+			nggGallery::show_error( __('Could not get a valid foldername', 'nggallery') );
 			return false;
 		}
 
