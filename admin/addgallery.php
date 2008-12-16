@@ -209,8 +209,10 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<td><select name="zipgalselect">
 					<option value="0" ><?php _e('a new gallery', 'nggallery') ?></option>
 					<?php
-						foreach($gallerylist as $gallery)
-							echo '<option value="' . $gallery->gid . '" >' . $gallery->title . '</option>' . "\n";
+						foreach($gallerylist as $gallery) {
+							$name = ( empty($gallery->title) ) ? $gallery->name : $gallery->title;
+							echo '<option value="' . $gallery->gid . '" >' . $name . '</option>' . "\n";
+						}
 					?>
 					</select>
 					<br /><?php echo _e('Note : The upload limit on your server is ','nggallery') . "<strong>" . ini_get('upload_max_filesize') . "Byte</strong>\n"; ?>
@@ -254,9 +256,10 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<td><select name="galleryselect" id="galleryselect">
 					<option value="0" ><?php _e('Choose gallery', 'nggallery') ?></option>
 					<?php
-						foreach($gallerylist as $gallery)
-							echo '<option value="' . $gallery->gid . '" >' . $gallery->title . '</option>' ."\n";
-					?>
+						foreach($gallerylist as $gallery) {
+							$name = ( empty($gallery->title) ) ? $gallery->name : $gallery->title;
+							echo '<option value="' . $gallery->gid . '" >' . $name . '</option>' . "\n";
+						}					?>
 					</select>
 					<br /><?php echo _e('Note : The upload limit on your server is ','nggallery') . "<strong>" . ini_get('upload_max_filesize') . "Byte</strong>\n"; ?>
 					<br /><?php if ((IS_WPMU) && wpmu_enable_function('wpmuQuotaCheck')) display_space_usage(); ?></td> 

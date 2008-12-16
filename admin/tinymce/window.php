@@ -45,7 +45,8 @@ global $wpdb;
 					$gallerylist = $wpdb->get_results("SELECT * FROM $wpdb->nggallery ORDER BY name ASC");
 					if(is_array($gallerylist)) {
 						foreach($gallerylist as $gallery) {
-							echo '<option value="'.$gallery->gid.'" >'.$gallery->name.'</option>'."\n";
+							$name = ( empty($gallery->title) ) ? $gallery->name : $gallery->title;
+							echo '<option value="' . $gallery->gid . '" >' . $gallery->gid . ' - ' . $name . '</option>' . "\n";
 						}
 					}
 				?>
@@ -73,7 +74,7 @@ global $wpdb;
 					$albumlist = $wpdb->get_results("SELECT * FROM $wpdb->nggalbum ORDER BY name ASC");
 					if(is_array($albumlist)) {
 						foreach($albumlist as $album) {
-							echo '<option value="'.$album->id.'" >'.$album->name.'</option>'."\n";
+							echo '<option value="' . $album->id . '" >' . $album->id . ' - ' . $album->name . '</option>'."\n";
 						}
 					}
 				?>
@@ -100,7 +101,7 @@ global $wpdb;
 					$picturelist = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures ORDER BY filename ASC");
 					if(is_array($picturelist)) {
 						foreach($picturelist as $picture) {
-							echo '<option value="'.$picture->pid.'" >'.$picture->filename.'</option>'."\n";
+							echo '<option value="' . $picture->pid . '" >'. $picture->pid . ' - ' . $picture->filename.'</option>'."\n";
 						}
 					}
 				?>
