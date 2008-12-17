@@ -25,6 +25,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		// the path should always end with a slash	
 		$ngg->options['gallerypath']    = trailingslashit($ngg->options['gallerypath']);
 		$ngg->options['imageMagickDir'] = trailingslashit($ngg->options['imageMagickDir']);
+		// the custom sortorder must be ascending
+		$ngg->options['galSortDir'] = ($ngg->options['galSort'] == 'sortorder') ? 'ASC' : $ngg->options['galSortDir'];
 		}
 		// Save options
 		update_option('ngg_options', $ngg->options);
