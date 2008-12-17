@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-14 11:23+0100\n"
-"PO-Revision-Date: 2008-12-14 11:23+0100\n"
+"POT-Creation-Date: 2008-12-15 12:50+0100\n"
+"PO-Revision-Date: 2008-12-15 12:50+0100\n"
 "Last-Translator: Alex Rabe <no@email.com>\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
@@ -46,23 +46,23 @@ msgid "The <a href=\"http://www.macromedia.com/go/getflashplayer\">Flash Player<
 msgstr ""
 
 #: ../nggfunctions.php:96
-#: ../nggfunctions.php:390
+#: ../nggfunctions.php:393
 msgid "[Gallery not found]"
 msgstr ""
 
-#: ../nggfunctions.php:275
+#: ../nggfunctions.php:278
 msgid "[Album not found]"
 msgstr ""
 
-#: ../nggfunctions.php:492
+#: ../nggfunctions.php:495
 msgid "[SinglePic not found]"
 msgstr ""
 
-#: ../nggfunctions.php:611
+#: ../nggfunctions.php:614
 msgid "Related images for"
 msgstr ""
 
-#: ../nggfunctions.php:646
+#: ../nggfunctions.php:649
 #: ../admin/admin.php:30
 msgid "Overview"
 msgstr ""
@@ -693,7 +693,7 @@ msgid "Uploaded file was no or a faulty zip file ! The server recognize : "
 msgstr ""
 
 #: ../admin/functions.php:497
-msgid "Could not get a vaild foldername"
+msgid "Could not get a valid foldername"
 msgstr ""
 
 #: ../admin/functions.php:508
@@ -2481,7 +2481,7 @@ msgstr ""
 msgid "Album overview"
 msgstr ""
 
-#: ../lib/shortcodes.php:268
+#: ../lib/shortcodes.php:272
 msgid "[Pictures not found]"
 msgstr ""
 
