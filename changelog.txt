@@ -1,6 +1,9 @@
 NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
+V1.0.3
+- Bugfix : Clean up mode for singlepic
+
 V1.0.2 - 19.12.2008
 - Added : Option to enable/disable the MediaRSS Feed
 - Added : For flash under FF3/WIN we should use outline: none; 

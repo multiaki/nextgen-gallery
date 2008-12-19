@@ -495,23 +495,28 @@ function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $fl
 		return __('[SinglePic not found]','nggallery');
 			
 	// add float to img
-	if (!empty($float)) {
-		switch ($float) {
+	switch ($float) {
 		
-		case 'left': $float=' ngg-left';
+		case 'left': 
+			$float =' ngg-left';
 		break;
 		
-		case 'right': $float=' ngg-right';
+		case 'right': 
+			$float =' ngg-right';
 		break;
 
-		case 'center': $float=' ngg-center';
+		case 'center': 
+			$float =' ngg-center';
 		break;
 		
-		default: $float='';
+		default: 
+			$float ='';
 		break;
-		}
 	}
 	
+	// clean mode if needed 
+	$mode = ( eregi('web20|watermark', $mode) ) ? $mode : '';
+
 	// check fo cached picture
 	if ( ($ngg_options['imgCacheSinglePic']) && ($post->post_status == 'publish') )
 		$picture->thumbnailURL = $picture->cached_singlepic_file($width, $height, $mode );
