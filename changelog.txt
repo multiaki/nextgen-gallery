@@ -4,6 +4,7 @@ by Alex Rabe & NextGEN DEV Team
 V1.1.0
 - NEW : Define number of columns inside the gallery
 - NEW : Added pagination for galleries and images in admin section
+- Bugfix : All albums code couldn't use the slideshow, query is empty for 0
 - Bugfix : Clean up mode for singlepic
 
 V1.0.2 - 19.12.2008

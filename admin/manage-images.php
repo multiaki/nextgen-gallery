@@ -12,15 +12,31 @@ function nggallery_picturelist() {
 	$hideThumbs = $ngg->manage_page->hideThumbs;
 	
 	// Load the gallery metadata
-	$gallery = nggdb::find_gallery($act_gid);
+	$gallery = $nggdb->find_gallery($act_gid);
 
 	if (!$gallery) {
 		nggGallery::show_error(__('Gallery not found.', 'nggallery'));
 		return;
 	}
-
+	
+	// look for pagination	
+	if ( ! isset( $_GET['paged'] ) || $_GET['paged'] < 1 )
+		$_GET['paged'] = 1;
+	
+	$start = ( $_GET['paged'] - 1 ) * 50;
+	
 	// get picture values
-	$picturelist = nggdb::get_gallery($act_gid, $ngg->options['galSort'], $ngg->options['galSortDir'], false);
+	$picturelist = $nggdb->get_gallery($act_gid, $ngg->options['galSort'], $ngg->options['galSortDir'], false, 50, $start );
+	
+	// build pagination
+	$page_links = paginate_links( array(
+		'base' => add_query_arg( 'paged', '%#%' ),
+		'format' => '',
+		'prev_text' => __('&laquo;'),
+		'next_text' => __('&raquo;'),
+		'total' => $nggdb->paged['max_objects_per_page'],
+		'current' => $_GET['paged']
+	));
 	
 	// get the current author
 	$act_author_user    = get_userdata( (int) $gallery->author );
@@ -121,7 +137,7 @@ jQuery(document).ready( function() {
 
 <br style="clear: both;" />
 
-<form id="updategallery" class="nggform" method="POST" action="<?php echo $ngg->manage_page->base_page . '&amp;mode=edit&amp;gid=' . $act_gid ?>" accept-charset="utf-8">
+<form id="updategallery" class="nggform" method="POST" action="<?php echo $ngg->manage_page->base_page . '&amp;mode=edit&amp;gid=' . $act_gid . '&amp;paged=' . $_GET['paged']; ?>" accept-charset="utf-8">
 <?php wp_nonce_field('ngg_updategallery') ?>
 
 <?php if ($showTags) { ?><input type="hidden" name="showTags" value="true" /><?php } ?>
@@ -199,6 +215,14 @@ jQuery(document).ready( function() {
 </div> <!-- poststuff -->
 
 <div class="tablenav ngg-tablenav">
+	<?php if ( $page_links ) : ?>
+	<div class="tablenav-pages"><?php $page_links_text = sprintf( '<span class="displaying-num">' . __( 'Displaying %s&#8211;%s of %s' ) . '</span>%s',
+		number_format_i18n( ( $_GET['paged'] - 1 ) * $nggdb->paged['objects_per_page'] + 1 ),
+		number_format_i18n( min( $_GET['paged'] * $nggdb->paged['objects_per_page'], $nggdb->paged['total_objects'] ) ),
+		number_format_i18n( $nggdb->paged['total_objects'] ),
+		$page_links
+	); echo $page_links_text; ?></div>
+	<?php endif; ?>
 	<div class="alignleft actions" style="float: left;">
 	<select id="bulkaction" name="bulkaction">
 		<option value="no_action" ><?php _e("No action",'nggallery')?></option>
@@ -238,9 +262,9 @@ jQuery(document).ready( function() {
 	<?php if ($ngg->options['galSort'] == "sortorder") { ?>
 		<input class="button-secondary" type="submit" name="sortGallery" value="<?php _e("Sort gallery",'nggallery')?>" />
 	<?php } ?>
-
+	
+	<input type="submit" name="updatepictures" class="button-primary action"  value="<?php _e("Save Changes",'nggallery')?>" />
 	</div>
-	<span style="float:right; padding:2px 8px 0 0;"><input type="submit" name="updatepictures" class="button-primary action"  value="<?php _e("Save Changes",'nggallery')?>" /></span>
 </div>
 
 <table id="ngg-listimages" class="widefat" >

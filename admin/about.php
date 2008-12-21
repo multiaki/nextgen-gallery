@@ -246,7 +246,11 @@ function ngg_list_support()	{
 	'Dana Burns' => '',
 	'Craig Thompson' => 'http://www.globalwebhq.com/',
 	'Cynthia Spangler' => 'http://www.parkcityweb.com/',
-	'Guy Raif' => ''
+	'Guy Raif' => '',
+	'McGillveray Studios' => 'http://www.mcgillveraystudios.ca',
+	'Stewart Evans' => 'http://www.scbs.org/',
+	'Richard Hartmann' => '',
+	'Robert Wetzlmayr' => ''	
 	);
 	
 	ksort($supporter);

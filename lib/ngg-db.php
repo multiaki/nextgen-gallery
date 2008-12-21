@@ -76,9 +76,11 @@ class nggdb {
 		$this->galleries = $wpdb->get_results( "SELECT SQL_CALC_FOUND_ROWS * FROM $wpdb->nggallery ORDER BY {$order_by} {$order_dir} {$limit_by}", OBJECT_K );
 		
 		// Count the number of galleries and calculate the pagination
-		$this->paged['total_objects'] = intval ( $wpdb->get_var( "SELECT FOUND_ROWS()" ) );
-		$this->paged['objects_per_page'] = count( $this->galleries );
-		$this->paged['max_objects_per_page'] = ( $limit > 0 ) ? ceil( $this->paged['total_objects'] / intval($limit)) : 1;
+		if ($limit > 0) {
+			$this->paged['total_objects'] = intval ( $wpdb->get_var( "SELECT FOUND_ROWS()" ) );
+			$this->paged['objects_per_page'] = count( $this->galleries );
+			$this->paged['max_objects_per_page'] = ( $limit > 0 ) ? ceil( $this->paged['total_objects'] / intval($limit)) : 1;
+		}
 		
 		if ( !$this->galleries )
 			return array();
@@ -135,9 +137,11 @@ class nggdb {
 	 * @param string $order_by 
 	 * @param string $order_dir (ASC |DESC)
 	 * @param bool $exclude
+	 * @param int $limit number of paged galleries, 0 shows all galleries
+	 * @param int $start the start index for paged galleries
 	 * @return An array containing the nggImage objects representing the images in the gallery.
 	 */
-	function get_gallery($id, $order_by = 'sortorder', $order_dir = 'ASC', $exclude = true) {
+	function get_gallery($id, $order_by = 'sortorder', $order_dir = 'ASC', $exclude = true, $limit = 0, $start = 0) {
 
 		global $wpdb;
 
@@ -151,11 +155,21 @@ class nggdb {
 		$order_dir = ( $order_dir == 'DESC') ? 'DESC' : 'ASC';
 		$order_by  = ( empty($order_by) ) ? 'sortorder' : $order_by;
 		
+		// Should we limit this query ?
+		$limit_by  = ( $limit > 0 ) ? 'LIMIT ' . intval($start) . ',' . intval($limit) : '';
+		
 		// Query database
 		if( is_numeric($id) )
-			$result = $wpdb->get_results( $wpdb->prepare( "SELECT tt.*, t.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = %d {$exclude_clause} ORDER BY tt.{$order_by} {$order_dir}", $id ) );
+			$result = $wpdb->get_results( $wpdb->prepare( "SELECT SQL_CALC_FOUND_ROWS tt.*, t.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = %d {$exclude_clause} ORDER BY tt.{$order_by} {$order_dir} {$limit_by}", $id ) );
 		else
-			$result = $wpdb->get_results( $wpdb->prepare( "SELECT tt.*, t.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.name = %s {$exclude_clause} ORDER BY tt.{$order_by} {$order_dir}", $id ) );
+			$result = $wpdb->get_results( $wpdb->prepare( "SELECT SQL_CALC_FOUND_ROWS tt.*, t.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.name = %s {$exclude_clause} ORDER BY tt.{$order_by} {$order_dir} {$limit_by}", $id ) );
+
+		// Count the number of images and calculate the pagination
+		if ($limit > 0) {
+			$this->paged['total_objects'] = intval ( $wpdb->get_var( "SELECT FOUND_ROWS()" ) );
+			$this->paged['objects_per_page'] = count( $result );
+			$this->paged['max_objects_per_page'] = ( $limit > 0 ) ? ceil( $this->paged['total_objects'] / intval($limit)) : 1;
+		}
 
 		// Build the object
 		if ($result) {
