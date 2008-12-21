@@ -192,10 +192,7 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
  	// check for page navigation
  	if ($maxElement > 0) {
 	 	if ( !is_home() || $pageid == get_the_ID() ) {
-			if ( !empty( $nggpage ) )	
-				$page = (int) $nggpage;
-			else
-				 $page = 1;
+	 		$page = ( !empty( $nggpage ) ) ? (int) $nggpage : 1;
 		}
 		else $page = 1;
 		 
@@ -258,14 +255,14 @@ function nggShowAlbum($albumID, $template = 'extend') {
 	// $_GET from wp_query
 	$gallery  = get_query_var('gallery');
 	$album    = get_query_var('album');
-	
-	// in the case somebody uses the 'all' keyword, it should be '0' to show all galleries
-	$albumID  = ($albumID == 'all') ? 0 : $albumID;
+
+	// in the case somebody uses the '0', it should be 'all' to show all galleries
+	$albumID  = ($albumID == 0) ? 'all' : $albumID;
 
 	// first look for gallery variable 
 	if (!empty( $gallery ))  {
 		
-		if ( ($albumID != $album) && ($albumID != 0) ) 
+		if ( ($albumID != $album) && ($albumID != 'all') ) 
 			return;
 			
 		// if gallery is is submit , then show the gallery instead 
@@ -286,7 +283,7 @@ function nggShowAlbum($albumID, $template = 'extend') {
  	if ( is_array($album->gallery_ids) )
  		$out = nggCreateAlbum( $album->gallery_ids, $template, $album );
 	
-	$out = apply_filters( 'ngg_show_album_content', $out, intval( $album->id ) );
+	$out = apply_filters( 'ngg_show_album_content', $out, $album->id );
 
 	return $out;
 }

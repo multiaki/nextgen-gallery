@@ -4,7 +4,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {	die('You 
 
 function nggallery_picturelist() {
 // *** show picture list
-	global $wpdb, $user_ID, $ngg;
+	global $wpdb, $nggdb, $user_ID, $ngg;
 	
 	// GET variables
 	$act_gid    = $ngg->manage_page->gid;
@@ -26,7 +26,7 @@ function nggallery_picturelist() {
 	$act_author_user    = get_userdata( (int) $gallery->author );
 	
 	// list all galleries
-	$gallerylist = nggdb::find_all_galleries();
+	$gallerylist = $nggdb->find_all_galleries();
 	
 ?>
 

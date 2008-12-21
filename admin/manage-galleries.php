@@ -5,12 +5,37 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { 	die('You
 // *** show main gallery list
 function nggallery_manage_gallery_main() {
 
-	global $wpdb, $ngg;
+	global $wpdb, $ngg, $nggdb, $wp_query;
 	
+	if ( ! isset( $_GET['paged'] ) || $_GET['paged'] < 1 )
+		$_GET['paged'] = 1;
+	
+	$start = ( $_GET['paged'] - 1 ) * 25;
+	$gallerylist = $nggdb->find_all_galleries('gid', 'asc', TRUE, 25, $start);
+
+	$page_links = paginate_links( array(
+		'base' => add_query_arg( 'paged', '%#%' ),
+		'format' => '',
+		'prev_text' => __('&laquo;'),
+		'next_text' => __('&raquo;'),
+		'total' => $nggdb->paged['max_objects_per_page'],
+		'current' => $_GET['paged']
+	));
+		
 	?>
 	<div class="wrap">
 		<h2><?php _e('Gallery Overview', 'nggallery') ?></h2>
-		<br style="clear: both;"/>
+		<div class="tablenav">
+		<?php if ( $page_links ) : ?>
+			<div class="tablenav-pages"><?php $page_links_text = sprintf( '<span class="displaying-num">' . __( 'Displaying %s&#8211;%s of %s' ) . '</span>%s',
+				number_format_i18n( ( $_GET['paged'] - 1 ) * $nggdb->paged['objects_per_page'] + 1 ),
+				number_format_i18n( min( $_GET['paged'] * $nggdb->paged['objects_per_page'], $nggdb->paged['total_objects'] ) ),
+				number_format_i18n( $nggdb->paged['total_objects'] ),
+				$page_links
+			); echo $page_links_text; ?></div>
+		<?php endif; ?>
+		<br class="clear" />
+		</div>
 		<table class="widefat">
 			<thead>
 			<tr>
@@ -25,8 +50,6 @@ function nggallery_manage_gallery_main() {
 			</thead>
 			<tbody>
 <?php
-			
-$gallerylist = nggdb::find_all_galleries('gid', 'asc', TRUE);
 
 if($gallerylist) {
 	foreach($gallerylist as $gallery) {

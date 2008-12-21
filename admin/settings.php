@@ -353,7 +353,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		<?php
 		$imageID = $wpdb->get_var("SELECT MIN(pid) FROM $wpdb->nggpictures");
 		$imageID = $wpdb->get_row("SELECT * FROM $wpdb->nggpictures WHERE pid = '$imageID'");	
-		if ($imageID) $imageURL = '<img width="75%" src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$imageID->pid.'&amp;mode=watermark&amp;width=320&amp;height=240" alt="'.$imageID->alttext.'" title="'.$imageID->alttext.'" />';
+		if ($imageID) $imageURL = '<img src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$imageID->pid.'&amp;mode=watermark&amp;width=400&amp;height=300" alt="'.$imageID->alttext.'" title="'.$imageID->alttext.'" />';
 
 		?>
 		<div id="watermark">

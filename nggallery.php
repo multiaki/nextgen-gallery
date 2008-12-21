@@ -67,6 +67,7 @@ class nggLoader {
 		$this->register_taxonomy();
 		$this->load_options();
 		$this->load_dependencies();
+		$this->start_rewrite_module();
 		
 		// Init options & tables during activation & deregister init option
 		register_activation_hook( dirname(__FILE__) . '/nggallery.php', array(&$this, 'activate') );
@@ -220,6 +221,7 @@ class nggLoader {
 	}
 	
 	function load_dependencies() {
+		global $nggdb;
 	
 		// Load global libraries												// average memory usage (in bytes)
 		require_once (dirname (__FILE__) . '/lib/core.php');					//  94.840
@@ -314,6 +316,16 @@ class nggLoader {
 		$this->options = get_option('ngg_options');
 	}
 	
+	// Add rewrite rules
+	function start_rewrite_module() {
+	
+	global $nggRewrite;	
+		
+	if ( class_exists(nggRewrite) )
+		$nggRewrite = new nggRewrite();	
+					
+	}
+		
 	function activate() {
 		include_once (dirname (__FILE__) . '/admin/install.php');
 		// check for tables
@@ -337,10 +349,8 @@ class nggLoader {
 	
 }
 	// Let's start the holy plugin
-	global $ngg, $nggRewrite;
+	global $ngg;
 	$ngg = new nggLoader();
-	// Add rewrite rules
-	if ( class_exists(nggRewrite) )
-		$nggRewrite = new nggRewrite();	
+
 }
 ?>

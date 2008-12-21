@@ -10,6 +10,24 @@
 class nggdb {
 	
 	/**
+	 * Holds the list of all galleries
+	 *
+	 * @since 1.1.0
+	 * @access public
+	 * @var object|array
+	 */
+	var $galleries = false;
+	
+	/**
+	 * The array for the pagination
+	 *
+	 * @since 1.1.0
+	 * @access public
+	 * @var array
+	 */
+	var $paged = false;
+	
+	/**
 	 * PHP4 compatibility layer for calling the PHP5 constructor.
 	 * 
 	 */
@@ -23,6 +41,9 @@ class nggdb {
 	 */	
 	function __construct() {
 		global $wpdb;
+		
+		$this->galleries = array();
+		$this->paged = array();
 		
 		register_shutdown_function(array(&$this, "__destruct"));
 		
@@ -42,38 +63,48 @@ class nggdb {
 	 * 
 	 * @param string $order_by
 	 * @param string $order_dir
-	 * @param bool $counter Select true  when you need to count the images
+	 * @param bool $counter (optional) Select true  when you need to count the images
+	 * @param int $limit number of paged galleries, 0 shows all galleries
+	 * @param int $start the start index for paged galleries
 	 * @return array $galleries
 	 */
-	function find_all_galleries($order_by = 'gid', $order_dir = 'ASC', $counter = false) {		
-		global $wpdb;
+	function find_all_galleries($order_by = 'gid', $order_dir = 'ASC', $counter = false, $limit = 0, $start = 0) {		
+		global $wpdb; 
 		
 		$order_dir = ( $order_dir == 'DESC') ? 'DESC' : 'ASC';
-		$galleries = $wpdb->get_results( "SELECT * FROM $wpdb->nggallery ORDER BY {$order_by} {$order_dir}", OBJECT_K );
-		if ( !$galleries )
+		$limit_by  = ( $limit > 0 ) ? 'LIMIT ' . intval($start) . ',' . intval($limit) : '';
+		$this->galleries = $wpdb->get_results( "SELECT SQL_CALC_FOUND_ROWS * FROM $wpdb->nggallery ORDER BY {$order_by} {$order_dir} {$limit_by}", OBJECT_K );
+		
+		// Count the number of galleries and calculate the pagination
+		$this->paged['total_objects'] = intval ( $wpdb->get_var( "SELECT FOUND_ROWS()" ) );
+		$this->paged['objects_per_page'] = count( $this->galleries );
+		$this->paged['max_objects_per_page'] = ( $limit > 0 ) ? ceil( $this->paged['total_objects'] / intval($limit)) : 1;
+		
+		if ( !$this->galleries )
 			return array();
 		
+		// if we didn't need to count the images then stop here
 		if ( !$counter )
-			return $galleries;
+			return $this->galleries;
 		
 		// get the galleries information 	
- 		foreach ($galleries as $key => $value) {
+ 		foreach ($this->galleries as $key => $value) {
    			$galleriesID[] = $key;
    			// init the counter values
-   			$galleries[$key]->counter = 0;	
+   			$this->galleries[$key]->counter = 0;	
 		}
 		
 		// get the counter values 	
 		$picturesCounter = $wpdb->get_results('SELECT galleryid, COUNT(*) as counter FROM '.$wpdb->nggpictures.' WHERE galleryid IN (\''.implode('\',\'', $galleriesID).'\') AND exclude != 1 GROUP BY galleryid', OBJECT_K);
 
 		if ( !$picturesCounter )
-			return $galleries;
+			return $this->galleries;
 		
 		// add the counter to the gallery objekt	
  		foreach ($picturesCounter as $key => $value)
-			$galleries[$value->galleryid]->counter = $value->counter;
+			$this->galleries[$value->galleryid]->counter = $value->counter;
 		
-		return $galleries;
+		return $this->galleries;
 	}
 	
 	/**
@@ -194,7 +225,7 @@ class nggdb {
 		} elseif ( $id == 'all' || $id == 0 ) {
 			// init the object and fill it
 			$album = new stdClass();
-			$album->id = 0;
+			$album->id = 'all';
 			$album->name = __('Album overview','nggallery');
 			$album->sortorder =  serialize( $wpdb->get_col("SELECT gid FROM $wpdb->nggallery") );
 		} else {
@@ -455,5 +486,14 @@ class nggdb {
 		return null;	 
 	}
 
+}
+
+if ( ! isset($nggdb) ) {
+	/**
+	 * Initate the NextGEN Gallery Database Object, for later cache reasons
+	 * @global object $nggdb Creates a new wpdb object based on wp-config.php Constants for the database
+	 * @since 1.1.0
+	 */
+	$nggdb = new nggdb();
 }
 ?>
