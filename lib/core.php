@@ -142,7 +142,7 @@ class nggGallery {
 	function create_navigation($page, $totalElement, $maxElement = 0) {
 		global $nggRewrite;
 		
-		$navigation = "";
+		$navigation = '';
 		
 		if ($maxElement > 0) {
 			$total = $totalElement;
@@ -224,6 +224,7 @@ class nggGallery {
 			'int' => array(
 				'ngg_gal_Images' 			=> 'galImages',
 				'ngg_gal_Sort' 				=> 'galSort',
+				'ngg_gal_Columns'			=> 'galColumns',
 				'ngg_ir_Width' 				=> 'irWidth',
 				'ngg_ir_Height' 			=> 'irHeight',
 				'ngg_ir_Rotatetime' 		=> 'irRotatetime'

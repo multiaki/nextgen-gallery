@@ -153,7 +153,8 @@ function ngg_default_options() {
 	$ngg_options['imgCacheSinglePic']	= true;							// cached the singlepic	
 	
 	// Gallery Settings
-	$ngg_options['galImages']			= '20';		  					// Number Of images per page
+	$ngg_options['galImages']			= '20';		  					// Number of images per page
+	$ngg_options['galColumns']			= 0;							// Number of columns for the gallery
 	$ngg_options['galShowSlide']		= true;							// Show slideshow
 	$ngg_options['galTextSlide']		= __('[Show as slideshow]','nggallery'); // Text for slideshow
 	$ngg_options['galTextGallery']		= __('[Show picture list]','nggallery'); // Text for gallery

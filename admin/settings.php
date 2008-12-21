@@ -253,7 +253,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<h2><?php _e('Gallery settings','nggallery'); ?></h2>
 			<form name="galleryform" method="POST" action="<?php echo $filepath.'#gallery'; ?>" >
 			<?php wp_nonce_field('ngg_settings') ?>
-			<input type="hidden" name="page_options" value="galNoPages,galImages,galShowSlide,galTextSlide,galTextGallery,galShowOrder,galImgBrowser,galSort,galSortDir" />
+			<input type="hidden" name="page_options" value="galNoPages,galImages,galColumns,galShowSlide,galTextSlide,galTextGallery,galShowOrder,galImgBrowser,galSort,galSortDir" />
 				<table class="form-table ngg-options">
 					<tr>
 						<th valign="top"><?php _e('Deactivate gallery page link','nggallery') ?>:</th>
@@ -265,6 +265,12 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						<th valign="top"><?php _e('Number of images per page','nggallery') ?>:</th>
 						<td><input type="text" name="galImages" value="<?php echo $ngg->options['galImages'] ?>" size="3" maxlength="3" />
 						<span class="setting-description"><?php _e('0 will disable pagination, all images on one page','nggallery') ?></span>
+						</td>
+					</tr>
+					<tr>
+						<th valign="top"><?php _e('Number of columns','nggallery') ?>:</th>
+						<td><input type="text" name="galColumns" value="<?php echo $ngg->options['galColumns'] ?>" size="3" maxlength="3" />
+						<span class="setting-description"><?php _e('0 will display as much as possible based on the width of your theme. Setting normally only required for captions below the images','nggallery') ?></span>
 						</td>
 					</tr>
 					<tr>

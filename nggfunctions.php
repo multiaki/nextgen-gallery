@@ -166,6 +166,10 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
 	$thumbwidth  = $ngg_options['thumbwidth'];
 	$thumbheight = $ngg_options['thumbheight'];		
 	
+	// fixed width if needed
+	$gallery->columns    = intval($ngg_options['galColumns']);
+	$gallery->imagewidth = ($gallery->columns > 0) ? 'style="width:'. floor(100/$gallery->columns) .'%;"' : '';
+	
 	// set thumb size 
 	$thumbsize = '';
 	if ($ngg_options['thumbfix'])  $thumbsize = 'width="'.$thumbwidth.'" height="'.$thumbheight.'"';
