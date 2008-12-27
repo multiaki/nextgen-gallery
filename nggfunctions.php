@@ -528,6 +528,7 @@ function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $fl
 	$picture->href_link = $picture->get_href_link();
 	$picture->alttext = html_entity_decode(stripslashes($picture->alttext));
 	$picture->description = html_entity_decode(stripslashes($picture->description));
+	$picture->linktitle = htmlentities(stripslashes($picture->description));
 	$picture->classname = 'ngg-singlepic'. $float;
 	$picture->thumbcode = $picture->get_thumbcode( 'singlepic' . $imageID);
 	$picture->height = (int) $height;
