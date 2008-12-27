@@ -358,6 +358,7 @@ class nggGallery {
 		else
 			return false;		
 	}
+	
 }
 
 ?>

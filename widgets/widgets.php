@@ -48,7 +48,7 @@ class nggSlideshowWidget {
 		if (empty($irHeight)) $irHeight = (int) $ngg_options['irHeight'];
 	
 		// init the flash output
-		$swfobject = new swfobject( NGGALLERY_URLPATH.'imagerotator.swf', 'sbsl' . $galleryID, $irWidth, $irHeight, '7.0.0', 'false');
+		$swfobject = new swfobject( $ngg_options['irURL'], 'sbsl' . $galleryID, $irWidth, $irHeight, '7.0.0', 'false');
 		
 		$swfobject->classname = 'ngg-widget-slideshow';
 		$swfobject->message =  __('<a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see the slideshow.', 'nggallery');
@@ -87,8 +87,12 @@ class nggSlideshowWidget {
 	// Slidehow widget control
 	function widget_output($args) {
 
-		global $wpdb;	 
-
+		global $wpdb;
+		
+		// If the Imagerotator didn't exist, skip the output
+		if ( NGGALLERY_IREXIST == false ) 	 
+			return;
+			
 	    extract($args);
   
     	// Each widget can store its own options. We keep strings here.

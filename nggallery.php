@@ -62,10 +62,10 @@ class nggLoader {
 			return;
 			
 		// Get some constants first
+		$this->load_options();
 		$this->define_constant();
 		$this->define_tables();
 		$this->register_taxonomy();
-		$this->load_options();
 		$this->load_dependencies();
 		$this->start_rewrite_module();
 		
@@ -208,7 +208,7 @@ class nggLoader {
 		define('NGGALLERY_URLPATH', WP_PLUGIN_URL . '/' . plugin_basename( dirname(__FILE__) ) . '/' );
 		
 		// look for imagerotator
-		define('NGGALLERY_IREXIST', file_exists( NGGALLERY_ABSPATH . 'imagerotator.swf' ));
+		define('NGGALLERY_IREXIST', !empty( $this->options['irURL'] ));
 
 		// get value for safe mode
 		if ( (gettype( ini_get('safe_mode') ) == 'string') ) {

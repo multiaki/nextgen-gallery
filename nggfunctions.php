@@ -22,12 +22,16 @@ function nggShowSlideshow($galleryID, $width, $height) {
 		$out = '[' . $ngg_options['galTextSlide'] . ']'; 
 		return $out;
 	}
-
+	
+	// If the Imagerotator didn't exist, skip the output
+	if ( NGGALLERY_IREXIST == false ) 
+		return;	
+		
 	if (empty($width) ) $width  = (int) $ngg_options['irWidth'];
 	if (empty($height)) $height = (int) $ngg_options['irHeight'];
 
 	// init the flash output
-	$swfobject = new swfobject( NGGALLERY_URLPATH.'imagerotator.swf', 'so' . $galleryID, $width, $height, '7.0.0', 'false');
+	$swfobject = new swfobject( $ngg_options['irURL'] , 'so' . $galleryID, $width, $height, '7.0.0', 'false');
 
 	$swfobject->message = '<p>'. __('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and <a href="http://www.mozilla.com/firefox/">a browser with Javascript support</a> are needed..', 'nggallery').'</p>';
 	$swfobject->add_params('wmode', 'opaque');

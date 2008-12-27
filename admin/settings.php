@@ -4,11 +4,17 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	function nggallery_admin_options()  {
 	
 	global $wpdb, $ngg, $nggRewrite;
-
+	
 	$old_state = $ngg->options['usePermalinks'];
 	
 	// same as $_SERVER['REQUEST_URI'], but should work under IIS 6.0
 	$filepath    = admin_url() . 'admin.php?page='.$_GET['page'];
+
+	if ( isset($_POST['irDetect']) ) {
+		check_admin_referer('ngg_settings');
+		$ngg->options['irURL'] = ngg_search_imagerotator();
+		update_option('ngg_options', $ngg->options);
+	}	
 
 	if ( isset($_POST['updateoption']) ) {	
 		check_admin_referer('ngg_settings');
@@ -460,13 +466,21 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		<div id="slideshow">
 		<form name="player_options" method="POST" action="<?php echo $filepath.'#slideshow'; ?>" >
 		<?php wp_nonce_field('ngg_settings') ?>
-		<input type="hidden" name="page_options" value="irWidth,irHeight,irShuffle,irLinkfromdisplay,irShownavigation,irShowicons,irWatermark,irOverstretch,irRotatetime,irTransition,irKenburns,irBackcolor,irFrontcolor,irLightcolor,irScreencolor,irAudio,irXHTMLvalid" />
+		<input type="hidden" name="page_options" value="irURL,irWidth,irHeight,irShuffle,irLinkfromdisplay,irShownavigation,irShowicons,irWatermark,irOverstretch,irRotatetime,irTransition,irKenburns,irBackcolor,irFrontcolor,irLightcolor,irScreencolor,irAudio,irXHTMLvalid" />
 		<h2><?php _e('Slideshow','nggallery'); ?></h2>
-		<?php if (!NGGALLERY_IREXIST) { ?><p><div id="message" class="error fade"><p><?php _e('The imagerotator.swf is not in the nggallery folder, the slideshow will not work.','nggallery') ?></p></div></p><?php }?>
+		<?php if (empty($ngg->options['irURL'])) { ?><p><div id="message" class="error"><p><?php _e('The path to imagerotator.swf is not defined, the slideshow will not work.','nggallery') ?></p></div></p><?php }?>
 		<p><?php _e('The settings are used in the JW Image Rotator Version', 'nggallery') ?> 3.17 .
 		   <?php _e('See more information for the Flash Player on the web page', 'nggallery') ?> <a href="http://www.longtailvideo.com/players/jw-image-rotator/" target="_blank" >JW Image Rotator from Jeroen Wijering</a>.
 		</p>
 				<table class="form-table ngg-options">
+					<tr>
+						<th><?php _e('Path to the Imagerotator (URL)','nggallery') ?>:</th>
+						<td>
+							<input type="text" size="50" id="irURL" name="irURL" value="<?php echo $ngg->options['irURL'] ?>" />
+							<input type="submit" name="irDetect" class="button-secondary"  value="<?php _e('Search now','nggallery') ;?> &raquo;"/>
+							<br /><span class="setting-description"><?php _e('Press the button to look automatic for the imagerotator, if you uploaded it to wp-content/uploads or a subfolder','nggallery') ?></span>
+						</td>
+					</tr>					
 					<tr>
 						<th><?php _e('Default size (W x H)','nggallery') ?>:</th>
 						<td><input type="text" size="3" maxlength="4" name="irWidth" value="<?php echo $ngg->options['irWidth'] ?>" /> x
@@ -597,6 +611,30 @@ function ngg_get_TTFfont() {
 	}
 
 	return $ttf_fonts;
+}
+
+function ngg_search_imagerotator() {
+	global $wpdb;
+
+	// Look first at the old place, then in other popular places
+	if ( file_exists( NGGALLERY_ABSPATH . 'imagerotator.swf' ) )
+		return NGGALLERY_URLPATH . 'imagerotator.swf';
+		
+	if ( file_exists( WP_CONTENT_DIR . '/imagerotator.swf' ) )
+		return WP_CONTENT_URL . '/imagerotator.swf';
+
+	if ( file_exists( WP_PLUGIN_DIR . '/imagerotator.swf' ) )
+		return WP_PLUGIN_URL . '/imagerotator.swf';
+		
+	$upload = wp_upload_dir();
+	if ( file_exists( $upload['basedir'] . '/imagerotator.swf' ) )
+		return $upload['baseurl'] . '/imagerotator.swf';
+
+	// Find the path to the imagerotator via the media library
+	if ( $path = $wpdb->get_var( "SELECT guid FROM {$wpdb->posts} WHERE guid LIKE '%imagerotator.swf%'" ) )
+		return $path;
+		
+	return '';
 }
 
 /**********************************************************/

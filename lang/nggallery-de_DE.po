@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-21 21:45+0100\n"
-"PO-Revision-Date: 2008-12-21 21:46+0100\n"
+"PO-Revision-Date: 2008-12-27 12:06+0100\n"
 "Last-Translator: Alex Rabe <no@email.com>\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
@@ -281,7 +281,7 @@ msgstr "Importieren aus Server-Pfad:"
 
 #: ../admin/addgallery.php:236
 msgid "Import a folder with all images."
-msgstr "Importiere ein Verzeichniss mit Bildern."
+msgstr "Importiere ein Verzeichnis mit Bildern."
 
 #: ../admin/addgallery.php:237
 msgid " Please note : For safe-mode = ON you need to add the subfolder thumbs manually"
@@ -929,13 +929,13 @@ msgstr "Seite hinzufügen"
 
 #: ../admin/manage-images.php:193
 msgid "Scan Folder for new images"
-msgstr "Überprüfe Verzeichniss nach neuen Bildern"
+msgstr "Überprüfe Verzeichnis nach neuen Bildern"
 
 #: ../admin/manage-images.php:194
 #: ../admin/manage-images.php:243
 #: ../admin/manage-images.php:398
 msgid "Save Changes"
-msgstr "Änderungen Speichern"
+msgstr "Änderungen speichern"
 
 #: ../admin/manage-images.php:204
 msgid "No action"
@@ -1802,7 +1802,7 @@ msgstr "Transparenz"
 
 #: ../admin/settings.php:465
 msgid "The imagerotator.swf is not in the nggallery folder, the slideshow will not work."
-msgstr "Die Datei imagerotator.swf ist nicht im Plugin Verzeichniss -> so wird die Slideshow nicht funktionieren."
+msgstr "Die Datei imagerotator.swf ist nicht im Plugin Verzeichniss, die Flash-Diaschau kann dann nicht angezeigt werden"
 
 #: ../admin/settings.php:466
 msgid "The settings are used in the JW Image Rotator Version"

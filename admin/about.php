@@ -250,7 +250,8 @@ function ngg_list_support()	{
 	'McGillveray Studios' => 'http://www.mcgillveraystudios.ca',
 	'Stewart Evans' => 'http://www.scbs.org/',
 	'Richard Hartmann' => '',
-	'Robert Wetzlmayr' => ''	
+	'Robert Wetzlmayr' => '',
+	'Lesly St Louis' => 'http://www.lesstlouis.com'
 	);
 	
 	ksort($supporter);
