@@ -616,23 +616,31 @@ function ngg_get_TTFfont() {
 function ngg_search_imagerotator() {
 	global $wpdb;
 
-	// Look first at the old place, then in other popular places
-	if ( file_exists( NGGALLERY_ABSPATH . 'imagerotator.swf' ) )
-		return NGGALLERY_URLPATH . 'imagerotator.swf';
-		
-	if ( file_exists( WP_CONTENT_DIR . '/imagerotator.swf' ) )
-		return WP_CONTENT_URL . '/imagerotator.swf';
-
-	if ( file_exists( WP_PLUGIN_DIR . '/imagerotator.swf' ) )
-		return WP_PLUGIN_URL . '/imagerotator.swf';
-		
 	$upload = wp_upload_dir();
+
+	// look first at the old place and move it to wp-content/uploads
+	if ( file_exists( NGGALLERY_ABSPATH . 'imagerotator.swf' ) )
+		@rename(NGGALLERY_ABSPATH . 'imagerotator.swf', $upload['basedir'] . '/imagerotator.swf');
+		
+	// This should be the new place	
 	if ( file_exists( $upload['basedir'] . '/imagerotator.swf' ) )
 		return $upload['baseurl'] . '/imagerotator.swf';
 
 	// Find the path to the imagerotator via the media library
 	if ( $path = $wpdb->get_var( "SELECT guid FROM {$wpdb->posts} WHERE guid LIKE '%imagerotator.swf%'" ) )
 		return $path;
+
+	// maybe it's located at wp-content
+	if ( file_exists( WP_CONTENT_DIR . '/imagerotator.swf' ) )
+		return WP_CONTENT_URL . '/imagerotator.swf';
+
+	// or in the plugin folder
+	if ( file_exists( WP_PLUGIN_DIR . '/imagerotator.swf' ) )
+		return WP_PLUGIN_URL . '/imagerotator.swf';
+		
+	// this is deprecated and will be ereased during a automatic upgrade
+	if ( file_exists( NGGALLERY_ABSPATH . 'imagerotator.swf' ) )
+		return NGGALLERY_URLPATH . 'imagerotator.swf';
 		
 	return '';
 }
