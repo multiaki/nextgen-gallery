@@ -162,10 +162,18 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
     if ( !is_array($picturelist) )
 		$picturelist = array($picturelist);
 	
+	// Populate galleries values from the first image			
+	$first_image = current($picturelist);
 	$gallery = new stdclass;
 	$gallery->ID = (int) $galleryID;
 	$gallery->show_slideshow = false;
-	
+	$gallery->name = $first_image->name;
+	$gallery->title = $first_image->title;
+	$gallery->description = $first_image->galdesc;
+	$gallery->path = $first_image->path;
+	$gallery->pageid = $first_image->pageid;
+	reset($picturelist);
+
 	$maxElement  = $ngg_options['galImages'];
 	$thumbwidth  = $ngg_options['thumbwidth'];
 	$thumbheight = $ngg_options['thumbheight'];		
