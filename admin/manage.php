@@ -96,7 +96,7 @@ class nggManageGallery {
 				if ($gallerypath){
 					$thumb_folder = nggGallery::get_thumbnail_folder($gallerypath, FALSE);
 					if ($ngg->options['deleteImg']) {
-						@unlink(WINABSPATH . $gallerypath. '/thumbs/thumbs_' .$filename);
+						@unlink(WINABSPATH . $gallerypath . '/thumbs/thumbs_' .$filename);
 						@unlink(WINABSPATH . $gallerypath . '/' . $filename);
 					}
 				}		

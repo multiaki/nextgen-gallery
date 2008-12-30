@@ -20,7 +20,9 @@ class nggAdminPanel{
 		add_action('admin_print_styles', array(&$this, 'load_styles') );
 		
 		add_filter('contextual_help', array(&$this, 'show_help'), 10, 2);
-	
+		add_filter('screen_meta_screen', array(&$this, 'edit_screen_meta'));
+		
+		$this->register_columns();		
 	}
 
 	// integrate the menu	
@@ -258,6 +260,43 @@ class nggAdminPanel{
 		} 
 		
 		return $help;
+	}
+	
+	function edit_screen_meta($screen) {
+
+		// menu title is localized, so we need to change the toplevel name
+		$i18n = strtolower  ( __ngettext( 'Gallery', 'Galleries', 1, 'nggallery' ) );
+		
+		switch ($screen) {
+			case "{$i18n}_page_nggallery-manage-gallery" :
+				// we would like to have screen option only at the manage images / gallery page
+				if ( isset ($_POST['sortGallery']) )
+					$screen = $screen;
+				else if ( ($_GET['mode'] == 'edit') || isset ($_POST['backToGallery']) )
+					$screen = 'nggallery-manage-images';
+				else if ( ($_GET['mode'] == 'sort') )
+					$screen = $screen;
+				else
+					$screen = 'nggallery-manage-gallery';	
+			break;
+		}
+
+		return $screen;
+	}
+
+	function register_column_headers($screen, $columns) {
+		global $_wp_column_headers;
+	
+		if ( !isset($_wp_column_headers) )
+			$_wp_column_headers = array();
+	
+		$_wp_column_headers[$screen] = $columns;
+	}
+
+	function register_columns() {
+		include_once ( dirname (__FILE__) . '/manage-images.php' );
+		
+		$this->register_column_headers('nggallery-manage-images', ngg_manage_gallery_columns() );	
 	}
 
 }

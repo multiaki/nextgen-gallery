@@ -106,6 +106,20 @@ div .ngg-tablenav {
 	vertical-align: middle;
 }
 
+.fixed .column-id {
+	width: 4em;
+}
+
+.fixed .column-alt_title_desc {
+	
+}
+
+.fixed .column-thumbnail, .fixed .column-exclude,
+.fixed .column-action, .fixed .column-delete {
+	width: 10%;
+}
+
+
 /* SETTINGS FOR PROGRESS BAR */
 
 div .progressborder {
