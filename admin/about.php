@@ -251,7 +251,8 @@ function ngg_list_support()	{
 	'Stewart Evans' => 'http://www.scbs.org/',
 	'Richard Hartmann' => '',
 	'Robert Wetzlmayr' => '',
-	'Lesly St Louis' => 'http://www.lesstlouis.com'
+	'Lesly St Louis' => 'http://www.lesstlouis.com',
+	'Marko Toncic' => ''
 	);
 	
 	ksort($supporter);

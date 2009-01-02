@@ -51,27 +51,27 @@ function nggallery_picturelist() {
 ?>
 
 <script type="text/javascript"> 
-	function showDialog( windowId ) {
-		var form = document.getElementById('updategallery');
-		var elementlist = "";
-		for (i = 0, n = form.elements.length; i < n; i++) {
-			if(form.elements[i].type == "checkbox") {
-				if(form.elements[i].name == "doaction[]")
-					if(form.elements[i].checked == true)
-						if (elementlist == "")
-							elementlist = form.elements[i].value
-						else
-							elementlist += "," + form.elements[i].value ;
-			}
-		}
-		jQuery("#" + windowId + "_bulkaction").val(jQuery("#bulkaction").val());
-		jQuery("#" + windowId + "_imagelist").val(elementlist);
-		// console.log (jQuery("#TB_imagelist").val());
-		tb_show("", "#TB_inline?width=640&height=120&inlineId=" + windowId + "&modal=true", false);
-	}
-</script>
-<script type="text/javascript">
 <!--
+
+function showDialog( windowId ) {
+	var form = document.getElementById('updategallery');
+	var elementlist = "";
+	for (i = 0, n = form.elements.length; i < n; i++) {
+		if(form.elements[i].type == "checkbox") {
+			if(form.elements[i].name == "doaction[]")
+				if(form.elements[i].checked == true)
+					if (elementlist == "")
+						elementlist = form.elements[i].value
+					else
+						elementlist += "," + form.elements[i].value ;
+		}
+	}
+	jQuery("#" + windowId + "_bulkaction").val(jQuery("#bulkaction").val());
+	jQuery("#" + windowId + "_imagelist").val(elementlist);
+	// console.log (jQuery("#TB_imagelist").val());
+	tb_show("", "#TB_inline?width=640&height=120&inlineId=" + windowId + "&modal=true", false);
+}
+
 function checkAll(form)
 {
 	for (i = 0, n = form.elements.length; i < n; i++) {
@@ -108,17 +108,23 @@ function checkSelected() {
 		alert('<?php echo js_escape(__("No images selected",'nggallery')); ?>');
 		return false; 
 	} 
-	//TODO: For copy to and move to we need some better way around
-	if (jQuery('#bulkaction').val() == 'copy_to') {
-		showDialog('selectgallery');
-		return false;
+	
+	actionId = jQuery('#bulkaction').val();
+	
+	switch (actionId) {
+		case "copy_to":
+		case "move_to":
+			showDialog('selectgallery');
+			return false;
+			break;
+		case "add_tags":
+		case "delete_tags":
+		case "overwrite_tags":
+			showDialog('entertags');
+			return false;
+			break;
 	}
 	
-	if (jQuery('#bulkaction').val() == 'move_to') {
-		showDialog('selectgallery');
-		return false;
-	}
-		
 	return confirm('<?php echo sprintf(js_escape(__("You are about to start the bulk edit for %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>');
 }
 
@@ -132,6 +138,7 @@ jQuery(document).ready( function() {
 		add_postbox_toggles('ngg-manage-gallery'); 	// WP 2.6
 
 });
+
 //-->
 </script>
 
@@ -144,7 +151,6 @@ jQuery(document).ready( function() {
 <form id="updategallery" class="nggform" method="POST" action="<?php echo $ngg->manage_page->base_page . '&amp;mode=edit&amp;gid=' . $act_gid . '&amp;paged=' . $_GET['paged']; ?>" accept-charset="utf-8">
 <?php wp_nonce_field('ngg_updategallery') ?>
 
-<?php if ($showTags) { ?><input type="hidden" name="showTags" value="true" /><?php } ?>
 <div id="poststuff">
 	<?php wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>
 	<div id="gallerydiv" class="postbox <?php echo postbox_classes('gallerydiv', 'ngg-manage-gallery'); ?>" >
@@ -229,7 +235,6 @@ jQuery(document).ready( function() {
 	<div class="alignleft actions" style="float: left;">
 	<select id="bulkaction" name="bulkaction">
 		<option value="no_action" ><?php _e("No action",'nggallery')?></option>
-	<?php if (!$showTags) { ?>
 		<option value="set_watermark" ><?php _e("Set watermark",'nggallery')?></option>
 		<option value="new_thumbnail" ><?php _e("Create new thumbnails",'nggallery')?></option>
 		<option value="resize_images" ><?php _e("Resize images",'nggallery')?></option>
@@ -237,24 +242,11 @@ jQuery(document).ready( function() {
 		<option value="import_meta" ><?php _e("Import metadata",'nggallery')?></option>
 		<option value="copy_to" ><?php _e("Copy to...",'nggallery')?></option>
 		<option value="move_to"><?php _e("Move to...",'nggallery')?></option>
-	<?php } else { ?>	
 		<option value="add_tags" ><?php _e("Add tags",'nggallery')?></option>
 		<option value="delete_tags" ><?php _e("Delete tags",'nggallery')?></option>
 		<option value="overwrite_tags" ><?php _e("Overwrite tags",'nggallery')?></option>
-	<?php } ?>	
 	</select>
-	
-	<?php if (!$showTags) { ?> 
-		<input class="button-secondary" type="submit" name="doaction" value="<?php _e("OK",'nggallery')?>" onclick="if ( !checkSelected() ) return false;" />
-	<?php } else {?>
-		<input class="button-secondary" type="submit" name="showThickbox" value="<?php _e("OK",'nggallery')?>" onclick="showDialog('tags'); return false;" />
-	<?php } ?>
-	
-	<?php if (!$showTags) { ?>
-		<input class="button-secondary" type="submit" name="toggletags" value="<?php _e("Show tags",'nggallery')?>" /> 
-	<?php } else {?>
-		<input class="button-secondary" type="submit" name="toggletags" value="<?php _e("Hide tags",'nggallery')?>" />
-	<?php } ?>
+	<input class="button-secondary" type="submit" name="showThickbox" value="<?php _e("OK",'nggallery')?>" onclick="if ( !checkSelected() ) return false;" />
 	
 	<?php if ($ngg->options['galSort'] == "sortorder") { ?>
 		<input class="button-secondary" type="submit" name="sortGallery" value="<?php _e("Sort gallery",'nggallery')?>" />
@@ -288,6 +280,8 @@ if($picturelist) {
 	if ($ngg->options['thumbcrop']) {
 		$thumbsize = 'width="'.$ngg->options['thumbwidth'].'" height="'.$ngg->options['thumbwidth'].'"';
 	}
+	
+	$thumbsize = 'height="60" width="60"';
 		
 	foreach($picturelist as $picture) {
 
@@ -312,7 +306,7 @@ if($picturelist) {
 				switch ($gallery_column_key) {
 					case 'cb' :
 						?> 
-						<th <?php echo $attributes ?> scope="row" style="padding:0;"><input name="doaction[]" type="checkbox" value="<?php echo $pid ?>" /></th>
+						<th <?php echo $attributes ?> scope="row"><input name="doaction[]" type="checkbox" value="<?php echo $pid ?>" /></th>
 						<?php
 					break;
 					case 'id' :
@@ -323,10 +317,28 @@ if($picturelist) {
 					case 'filename' :
 						?>
 						<td <?php echo $attributes ?>>
-							<a href="<?php echo $picture->imageURL; ?>" class="thickbox" title="<?php echo $picture->filename ?>">
-								<?php echo $picture->filename ?>
-							</a>
+							<strong><a href="<?php echo $picture->imageURL; ?>" class="thickbox" title="<?php echo $picture->filename ?>">
+								<?php echo ( empty($picture->alttext) ) ? $picture->filename : stripslashes($picture->alttext); ?>
+							</a></strong>
 							<br /><?php echo $date?>
+							<p>
+							<?php
+							$actions = array();
+							//TODO:Add a JS edit option
+							$actions['edit']   = '<a href="">' . __('Edit') . '</a>';
+							$actions['delete'] = '<a class="submitdelete" href="' . wp_nonce_url("admin.php?page=nggallery-manage-gallery&amp;mode=delpic&amp;gid=".$act_gid."&amp;pid=".$pid, 'ngg_delpicture'). '" class="delete column-delete" onclick="javascript:check=confirm( \'' . attribute_escape(sprintf(__('Delete "%s"' , 'nggallery'), $picture->filename)). '\');if(check==false) return false;">' . __('Delete') . '</a>';
+							$actions['meta']   = '<a class="thickbox" href="' . NGGALLERY_URLPATH . 'admin/showmeta.php?id=' . $pid . '" title="' . __('Show Meta data','nggallery') . '">' . __('Meta', 'nggallery') . '</a>';
+							$actions['view']   = '<a class="thickbox" href="' . $picture->imageURL . '" title="' . attribute_escape(sprintf(__('View "%s"'), $picture->filename)) . '">' . __('View', 'nggallery') . '</a>';
+							$action_count = count($actions);
+							$i = 0;
+							echo '<div class="row-actions">';
+							foreach ( $actions as $action => $link ) {
+								++$i;
+								( $i == $action_count ) ? $sep = '' : $sep = ' | ';
+								echo "<span class='$action'>$link$sep</span>";
+							}
+							echo '</div>';
+							?></p>
 						</td>
 						<?php						
 					break;
@@ -335,7 +347,6 @@ if($picturelist) {
 						<td <?php echo $attributes ?>><a href="<?php echo $picture->imageURL; ?>" class="thickbox" title="<?php echo $picture->filename ?>">
 								<img class="thumb" src="<?php echo $picture->thumbURL; ?>" <?php echo $thumbsize ?> />
 							</a>
-							<br /><?php echo $date?>
 						</td>
 						<?php						
 					break;
@@ -359,16 +370,6 @@ if($picturelist) {
 						<td <?php echo $attributes ?>><textarea name="tags[<?php echo $pid ?>]" style="width:95%;" rows="2"><?php echo $picture->tags ?></textarea></td>
 						<?php						
 					break;
-					case 'action' :
-						?>
-						<td <?php echo $attributes ?>><a href="<?php echo NGGALLERY_URLPATH."admin/showmeta.php?id=".$pid ?>" class="thickbox" title="<?php _e("Show Meta data",'nggallery')?>" ><?php _e('Meta') ?></a></td>
-						<?php
-					break;					
-					case 'delete' :
-						?>
-						<td <?php echo $attributes ?>><a href="<?php echo wp_nonce_url("admin.php?page=nggallery-manage-gallery&amp;mode=delpic&amp;gid=".$act_gid."&amp;pid=".$pid, 'ngg_delpicture')?>" class="delete column-delete" onclick="javascript:check=confirm( '<?php _e("Delete this file ?",'nggallery')?>');if(check==false) return false;" ><?php _e('Delete') ?></a></td>
-						<?php
-					break;					
 					default : 
 						?>
 						<td <?php echo $attributes ?>><?php do_action('ngg_manage_gallery_custom_column', $gallery_column_key, $pid); ?></td>
@@ -393,20 +394,18 @@ if($picturelist) {
 	</div><!-- /#wrap -->
 
 	<!-- #entertags -->
-	<div id="tags" style="display: none;" >
+	<div id="entertags" style="display: none;" >
 		<form id="form-tags" method="POST" accept-charset="utf-8">
 		<?php wp_nonce_field('ngg_thickbox_form') ?>
-		<?php if ($showTags) { ?><input type="hidden" name="showTags" value="true" /><?php } ?>
-		<?php if ($hideThumbs) { ?><input type="hidden" name="hideThumbs" value="true" /><?php } ?>
-		<input type="hidden" id="tags_imagelist" name="TB_imagelist" value="" />
-		<input type="hidden" id="tags_bulkaction" name="TB_bulkaction" value="" />
+		<input type="hidden" id="entertags_imagelist" name="TB_imagelist" value="" />
+		<input type="hidden" id="entertags_bulkaction" name="TB_bulkaction" value="" />
 		<table width="100%" border="0" cellspacing="3" cellpadding="3" >
 		  	<tr>
 		    	<th><?php _e("Enter the tags",'nggallery')?> : <input name="taglist" type="text" style="width:90%" value="" /></th>
 		  	</tr>
 		  	<tr align="right">
 		    	<td class="submit">
-		    		<input class="button-primary" type="submit" name="TB_EditTags" value="<?php _e("OK",'nggallery')?>" onclick="var numchecked = getNumChecked(document.getElementById('updategallery')); if(numchecked < 1) { alert('<?php echo js_escape(__("No images selected",'nggallery')); ?>'); tb_remove(); return false } return confirm('<?php echo sprintf(js_escape(__("You are about to start the bulk edit for %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>')" />
+		    		<input class="button-primary" type="submit" name="TB_EditTags" value="<?php _e("OK",'nggallery')?>" />
 		    		&nbsp;
 		    		<input class="button-secondary" type="reset" value="&nbsp;<?php _e("Cancel",'nggallery')?>&nbsp;" onclick="tb_remove()"/>
 		    	</td>
@@ -420,14 +419,12 @@ if($picturelist) {
 	<div id="selectgallery" style="display: none;" >
 		<form id="form-select-gallery" method="POST" accept-charset="utf-8">
 		<?php wp_nonce_field('ngg_thickbox_form') ?>
-		<?php if ($showTags) { ?><input type="hidden" name="showTags" value="true" /><?php } ?>
-		<?php if ($hideThumbs) { ?><input type="hidden" name="hideThumbs" value="true" /><?php } ?>
 		<input type="hidden" id="selectgallery_imagelist" name="TB_imagelist" value="" />
 		<input type="hidden" id="selectgallery_bulkaction" name="TB_bulkaction" value="" />
 		<table width="100%" border="0" cellspacing="3" cellpadding="3" >
 		  	<tr>
 		    	<th>
-		    		<?php _e("Select the destination gallery:", 'nggallery'); ?>&nbsp;
+		    		<?php _e('Select the destination gallery:', 'nggallery'); ?>&nbsp;
 		    		<select name="dest_gid" style="width:90%" >
 		    			<?php 
 		    				foreach ($gallerylist as $gallery) { 
@@ -443,7 +440,7 @@ if($picturelist) {
 		  	</tr>
 		  	<tr align="right">
 		    	<td class="submit">
-		    		<input type="submit" class="button-primary" name="TB_SelectGallery" value="<?php _e("OK",'nggallery')?>" onclick="var numchecked = getNumChecked(document.getElementById('updategallery')); if(numchecked < 1) { alert('<?php echo js_escape(__("No images selected",'nggallery')); ?>'); tb_remove(); return false } return confirm('<?php echo sprintf(js_escape(__("You are about to copy or move %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>')" />
+		    		<input type="submit" class="button-primary" name="TB_SelectGallery" value="<?php _e("OK",'nggallery')?>" />
 		    		&nbsp;
 		    		<input class="button-secondary" type="reset" value="<?php _e("Cancel",'nggallery')?>" onclick="tb_remove()"/>
 		    	</td>
@@ -469,16 +466,14 @@ function ngg_manage_gallery_columns() {
 	
 	$gallery_columns['cb'] = '<input name="checkall" type="checkbox" onclick="checkAll(document.getElementById(\'updategallery\'));" />';
 	$gallery_columns['id'] = __('ID');
-	$gallery_columns['thumbnail'] = __('Thumbnail', 'nggallery') . ' / ' . __('Date', 'nggallery');
+	$gallery_columns['thumbnail'] = __('Thumbnail', 'nggallery');
 	
-	if ( !$ngg->manage_page->showTags )	{
-		$gallery_columns['alt_title_desc'] = __('Alt &amp; Title Text', 'nggallery') . ' / ' . __('Description', 'nggallery');
-		$gallery_columns['exclude'] = __('exclude', 'nggallery');
-	} else {
-		$gallery_columns['tags'] = __('Tags (comma separated list)', 'nggallery');
-	}
-	$gallery_columns['action'] 	= __('Action', 'nggallery');
-	$gallery_columns['delete'] 	= '';
+	$gallery_columns['filename'] = __('Filename', 'nggallery');
+	
+	$gallery_columns['alt_title_desc'] = __('Alt &amp; Title Text', 'nggallery') . ' / ' . __('Description', 'nggallery');
+	$gallery_columns['tags'] = __('Tags (comma separated list)', 'nggallery');
+
+	$gallery_columns['exclude'] = __('exclude', 'nggallery');
 	
 	$gallery_columns = apply_filters('ngg_manage_gallery_columns', $gallery_columns);
 

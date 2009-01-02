@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-27 23:16+0100\n"
-"PO-Revision-Date: 2008-12-27 23:16+0100\n"
+"POT-Creation-Date: 2009-01-02 17:18+0100\n"
+"PO-Revision-Date: 2009-01-02 17:18+0100\n"
 "Last-Translator: Alex Rabe <no@email.com>\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
@@ -46,24 +46,24 @@ msgid "The <a href=\"http://www.macromedia.com/go/getflashplayer\">Flash Player<
 msgstr ""
 
 #: ../nggfunctions.php:100
-#: ../nggfunctions.php:398
+#: ../nggfunctions.php:406
 msgid "[Gallery not found]"
 msgstr ""
 
-#: ../nggfunctions.php:283
+#: ../nggfunctions.php:291
 msgid "[Album not found]"
 msgstr ""
 
-#: ../nggfunctions.php:500
+#: ../nggfunctions.php:508
 msgid "[SinglePic not found]"
 msgstr ""
 
-#: ../nggfunctions.php:625
+#: ../nggfunctions.php:633
 msgid "Related images for"
 msgstr ""
 
-#: ../nggfunctions.php:660
-#: ../admin/admin.php:30
+#: ../nggfunctions.php:668
+#: ../admin/admin.php:32
 msgid "Overview"
 msgstr ""
 
@@ -314,183 +314,184 @@ msgstr ""
 msgid "Enable flash based upload"
 msgstr ""
 
-#: ../admin/admin.php:29
-#: ../admin/admin.php:200
+#: ../admin/admin.php:31
+#: ../admin/admin.php:202
+#: ../admin/admin.php:268
 #: ../admin/functions.php:81
 #: ../admin/functions.php:142
-#: ../admin/manage-images.php:136
-#: ../admin/manage.php:84
+#: ../admin/manage-images.php:147
+#: ../admin/manage.php:78
 msgid "Gallery"
 msgid_plural "Galleries"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../admin/admin.php:31
+#: ../admin/admin.php:33
 msgid "Add Gallery / Images"
 msgstr ""
 
-#: ../admin/admin.php:32
+#: ../admin/admin.php:34
 msgid "Manage Gallery"
 msgstr ""
 
-#: ../admin/admin.php:33
+#: ../admin/admin.php:35
 msgid "Album"
 msgid_plural "Albums"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../admin/admin.php:34
+#: ../admin/admin.php:36
 msgid "Tags"
 msgstr ""
 
-#: ../admin/admin.php:35
+#: ../admin/admin.php:37
 msgid "Options"
 msgstr ""
 
-#: ../admin/admin.php:37
+#: ../admin/admin.php:39
 msgid "Style"
 msgstr ""
 
-#: ../admin/admin.php:38
+#: ../admin/admin.php:40
 msgid "Setup Gallery"
 msgstr ""
 
-#: ../admin/admin.php:38
+#: ../admin/admin.php:40
 msgid "Setup"
 msgstr ""
 
-#: ../admin/admin.php:40
+#: ../admin/admin.php:42
 msgid "Roles"
 msgstr ""
 
-#: ../admin/admin.php:41
+#: ../admin/admin.php:43
 msgid "About this Gallery"
 msgstr ""
 
-#: ../admin/admin.php:41
+#: ../admin/admin.php:43
 msgid "About"
 msgstr ""
 
-#: ../admin/admin.php:43
+#: ../admin/admin.php:45
 msgid "NextGEN Gallery"
 msgstr ""
 
-#: ../admin/admin.php:68
+#: ../admin/admin.php:70
 msgid "A new version of NextGEN Gallery is available !"
 msgstr ""
 
-#: ../admin/admin.php:68
+#: ../admin/admin.php:70
 msgid "Download here"
 msgstr ""
 
-#: ../admin/admin.php:139
+#: ../admin/admin.php:141
 msgid "You do not have the correct permission"
 msgstr ""
 
-#: ../admin/admin.php:140
+#: ../admin/admin.php:142
 msgid "Unexpected Error"
 msgstr ""
 
-#: ../admin/admin.php:141
+#: ../admin/admin.php:143
 msgid "A failure occurred"
 msgstr ""
 
-#: ../admin/admin.php:204
+#: ../admin/admin.php:206
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Introduction</a>"
 msgstr ""
 
-#: ../admin/admin.php:207
+#: ../admin/admin.php:209
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Setup</a>"
 msgstr ""
 
-#: ../admin/admin.php:210
+#: ../admin/admin.php:212
 msgid "<a href=\"http://alexrabe.boelinger.com/wordpress-plugins/nextgen-gallery/languages/\" target=\"_blank\">Translation by alex rabe</a>"
 msgstr ""
 
-#: ../admin/admin.php:213
+#: ../admin/admin.php:215
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Roles / Capabilities</a>"
 msgstr ""
 
-#: ../admin/admin.php:216
+#: ../admin/admin.php:218
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Styles</a>"
 msgstr ""
 
-#: ../admin/admin.php:217
+#: ../admin/admin.php:219
 msgid "Templates"
 msgstr ""
 
-#: ../admin/admin.php:220
-#: ../admin/admin.php:224
+#: ../admin/admin.php:222
+#: ../admin/admin.php:226
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Gallery management</a>"
 msgstr ""
 
-#: ../admin/admin.php:221
+#: ../admin/admin.php:223
 msgid "Gallery example"
 msgstr ""
 
-#: ../admin/admin.php:225
-#: ../admin/admin.php:235
+#: ../admin/admin.php:227
+#: ../admin/admin.php:237
 msgid "Gallery tags"
 msgstr ""
 
-#: ../admin/admin.php:228
+#: ../admin/admin.php:230
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Album management</a>"
 msgstr ""
 
-#: ../admin/admin.php:229
+#: ../admin/admin.php:231
 msgid "Album example"
 msgstr ""
 
-#: ../admin/admin.php:230
-#: ../admin/admin.php:236
+#: ../admin/admin.php:232
+#: ../admin/admin.php:238
 msgid "Album tags"
 msgstr ""
 
-#: ../admin/admin.php:233
+#: ../admin/admin.php:235
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Gallery tags</a>"
 msgstr ""
 
-#: ../admin/admin.php:234
+#: ../admin/admin.php:236
 msgid "Related images"
 msgstr ""
 
-#: ../admin/admin.php:239
+#: ../admin/admin.php:241
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-image-management/\" target=\"_blank\">Image management</a>"
 msgstr ""
 
-#: ../admin/admin.php:240
+#: ../admin/admin.php:242
 msgid "Custom fields"
 msgstr ""
 
-#: ../admin/admin.php:245
+#: ../admin/admin.php:247
 msgid "Get help with NextGEN Gallery"
 msgstr ""
 
-#: ../admin/admin.php:249
+#: ../admin/admin.php:251
 msgid "More Help & Info"
 msgstr ""
 
-#: ../admin/admin.php:251
+#: ../admin/admin.php:253
 msgid "<a href=\"http://wordpress.org/tags/nextgen-gallery\" target=\"_blank\">Support Forums</a>"
 msgstr ""
 
-#: ../admin/admin.php:252
+#: ../admin/admin.php:254
 msgid "FAQ"
 msgstr ""
 
-#: ../admin/admin.php:253
+#: ../admin/admin.php:255
 msgid "Feature request"
 msgstr ""
 
-#: ../admin/admin.php:254
+#: ../admin/admin.php:256
 msgid "Get your language pack"
 msgstr ""
 
-#: ../admin/admin.php:255
+#: ../admin/admin.php:257
 msgid "Contribute development"
 msgstr ""
 
-#: ../admin/admin.php:256
+#: ../admin/admin.php:258
 msgid "Download latest version"
 msgstr ""
 
@@ -521,7 +522,7 @@ msgstr ""
 
 #: ../admin/album.php:147
 #: ../admin/manage-galleries.php:78
-#: ../admin/manage-images.php:401
+#: ../admin/manage-images.php:329
 msgid "Delete"
 msgstr ""
 
@@ -567,7 +568,7 @@ msgstr ""
 
 #: ../admin/album.php:254
 #: ../admin/manage-galleries.php:42
-#: ../admin/manage-images.php:497
+#: ../admin/manage-images.php:468
 msgid "ID"
 msgstr ""
 
@@ -577,7 +578,7 @@ msgstr ""
 
 #: ../admin/album.php:256
 #: ../admin/manage-galleries.php:43
-#: ../admin/manage-images.php:152
+#: ../admin/manage-images.php:161
 msgid "Title"
 msgstr ""
 
@@ -664,8 +665,8 @@ msgstr ""
 
 #: ../admin/functions.php:161
 #: ../admin/functions.php:622
-#: ../admin/manage-images.php:231
-#: ../admin/manage.php:136
+#: ../admin/manage-images.php:239
+#: ../admin/manage.php:130
 msgid "Create new thumbnails"
 msgstr ""
 
@@ -825,19 +826,19 @@ msgid "Gallery Overview"
 msgstr ""
 
 #: ../admin/manage-galleries.php:30
-#: ../admin/manage-images.php:219
+#: ../admin/manage-images.php:228
 #, php-format
 msgid "Displaying %s&#8211;%s of %s"
 msgstr ""
 
 #: ../admin/manage-galleries.php:44
-#: ../admin/manage-images.php:163
-#: ../admin/manage-images.php:506
+#: ../admin/manage-images.php:172
+#: ../admin/manage-images.php:473
 msgid "Description"
 msgstr ""
 
 #: ../admin/manage-galleries.php:45
-#: ../admin/manage-images.php:183
+#: ../admin/manage-images.php:192
 msgid "Author"
 msgstr ""
 
@@ -850,11 +851,11 @@ msgid "Quantity"
 msgstr ""
 
 #: ../admin/manage-galleries.php:48
-#: ../admin/manage-images.php:513
 msgid "Action"
 msgstr ""
 
 #: ../admin/manage-galleries.php:65
+#: ../admin/manage-images.php:328
 msgid "Edit"
 msgstr ""
 
@@ -863,7 +864,7 @@ msgid "Delete this gallery ?"
 msgstr ""
 
 #: ../admin/manage-galleries.php:85
-#: ../admin/manage-images.php:416
+#: ../admin/manage-images.php:385
 msgid "No entries found"
 msgstr ""
 
@@ -871,14 +872,11 @@ msgstr ""
 msgid "Gallery not found."
 msgstr ""
 
-#: ../admin/manage-images.php:104
-#: ../admin/manage-images.php:441
-#: ../admin/manage-images.php:478
+#: ../admin/manage-images.php:108
 msgid "No images selected"
 msgstr ""
 
-#: ../admin/manage-images.php:118
-#: ../admin/manage-images.php:441
+#: ../admin/manage-images.php:128
 #, php-format
 msgid ""
 "You are about to start the bulk edit for %s images \n"
@@ -886,181 +884,162 @@ msgid ""
 " 'Cancel' to stop, 'OK' to proceed."
 msgstr ""
 
-#: ../admin/manage-images.php:148
+#: ../admin/manage-images.php:157
 msgid "Gallery settings"
 msgstr ""
 
-#: ../admin/manage-images.php:148
+#: ../admin/manage-images.php:157
 msgid "Click here for more settings"
 msgstr ""
 
-#: ../admin/manage-images.php:154
+#: ../admin/manage-images.php:163
 msgid "Page Link to"
 msgstr ""
 
-#: ../admin/manage-images.php:157
+#: ../admin/manage-images.php:166
 msgid "Not linked"
 msgstr ""
 
-#: ../admin/manage-images.php:165
+#: ../admin/manage-images.php:174
 msgid "Preview image"
 msgstr ""
 
-#: ../admin/manage-images.php:168
+#: ../admin/manage-images.php:177
 msgid "No Picture"
 msgstr ""
 
-#: ../admin/manage-images.php:181
+#: ../admin/manage-images.php:190
 msgid "Path"
 msgstr ""
 
-#: ../admin/manage-images.php:197
+#: ../admin/manage-images.php:206
 msgid "Create new page"
 msgstr ""
 
-#: ../admin/manage-images.php:200
+#: ../admin/manage-images.php:209
 msgid "Main page (No parent)"
 msgstr ""
 
-#: ../admin/manage-images.php:203
+#: ../admin/manage-images.php:212
 msgid "Add page"
 msgstr ""
 
-#: ../admin/manage-images.php:209
+#: ../admin/manage-images.php:218
 msgid "Scan Folder for new images"
 msgstr ""
 
-#: ../admin/manage-images.php:210
-#: ../admin/manage-images.php:266
-#: ../admin/manage-images.php:422
+#: ../admin/manage-images.php:219
+#: ../admin/manage-images.php:255
+#: ../admin/manage-images.php:391
 msgid "Save Changes"
 msgstr ""
 
-#: ../admin/manage-images.php:228
+#: ../admin/manage-images.php:237
 msgid "No action"
 msgstr ""
 
-#: ../admin/manage-images.php:230
-#: ../admin/manage.php:132
+#: ../admin/manage-images.php:238
+#: ../admin/manage.php:126
 msgid "Set watermark"
 msgstr ""
 
-#: ../admin/manage-images.php:232
-#: ../admin/manage.php:140
+#: ../admin/manage-images.php:240
+#: ../admin/manage.php:134
 msgid "Resize images"
 msgstr ""
 
-#: ../admin/manage-images.php:233
+#: ../admin/manage-images.php:241
 msgid "Delete images"
 msgstr ""
 
-#: ../admin/manage-images.php:234
+#: ../admin/manage-images.php:242
 msgid "Import metadata"
 msgstr ""
 
-#: ../admin/manage-images.php:235
+#: ../admin/manage-images.php:243
 msgid "Copy to..."
 msgstr ""
 
-#: ../admin/manage-images.php:236
+#: ../admin/manage-images.php:244
 msgid "Move to..."
 msgstr ""
 
-#: ../admin/manage-images.php:238
+#: ../admin/manage-images.php:245
 msgid "Add tags"
 msgstr ""
 
-#: ../admin/manage-images.php:239
+#: ../admin/manage-images.php:246
 msgid "Delete tags"
 msgstr ""
 
-#: ../admin/manage-images.php:240
+#: ../admin/manage-images.php:247
 msgid "Overwrite tags"
 msgstr ""
 
-#: ../admin/manage-images.php:245
-#: ../admin/manage-images.php:247
-#: ../admin/manage-images.php:441
-#: ../admin/manage-images.php:478
+#: ../admin/manage-images.php:249
+#: ../admin/manage-images.php:408
+#: ../admin/manage-images.php:443
 msgid "OK"
 msgstr ""
 
-#: ../admin/manage-images.php:251
-msgid "Hide thumbnails "
-msgstr ""
-
-#: ../admin/manage-images.php:253
-msgid "Show thumbnails "
-msgstr ""
-
-#: ../admin/manage-images.php:257
-msgid "Show tags"
-msgstr ""
-
-#: ../admin/manage-images.php:259
-msgid "Hide tags"
-msgstr ""
-
-#: ../admin/manage-images.php:263
+#: ../admin/manage-images.php:252
 msgid "Sort gallery"
 msgstr ""
 
-#: ../admin/manage-images.php:400
+#: ../admin/manage-images.php:329
+#, php-format
+msgid "Delete \"%s\""
+msgstr ""
+
+#: ../admin/manage-images.php:330
 msgid "Show Meta data"
 msgstr ""
 
-#: ../admin/manage-images.php:400
+#: ../admin/manage-images.php:330
 msgid "Meta"
 msgstr ""
 
-#: ../admin/manage-images.php:401
-msgid "Delete this file ?"
+#: ../admin/manage-images.php:331
+#, php-format
+msgid "View \"%s\""
 msgstr ""
 
-#: ../admin/manage-images.php:437
+#: ../admin/manage-images.php:331
+msgid "View"
+msgstr ""
+
+#: ../admin/manage-images.php:404
 msgid "Enter the tags"
 msgstr ""
 
-#: ../admin/manage-images.php:443
-#: ../admin/manage-images.php:480
+#: ../admin/manage-images.php:410
+#: ../admin/manage-images.php:445
 msgid "Cancel"
 msgstr ""
 
-#: ../admin/manage-images.php:462
+#: ../admin/manage-images.php:427
 msgid "Select the destination gallery:"
 msgstr ""
 
-#: ../admin/manage-images.php:478
-#, php-format
-msgid ""
-"You are about to copy or move %s images \n"
-" \n"
-" 'Cancel' to stop, 'OK' to proceed."
-msgstr ""
-
-#: ../admin/manage-images.php:500
+#: ../admin/manage-images.php:469
 msgid "Thumbnail"
 msgstr ""
 
-#: ../admin/manage-images.php:500
-#: ../admin/manage-images.php:502
-msgid "Date"
+#: ../admin/manage-images.php:471
+#: ../admin/manage-sort.php:80
+msgid "Filename"
 msgstr ""
 
-#: ../admin/manage-images.php:502
-msgid "File name"
-msgstr ""
-
-#: ../admin/manage-images.php:506
+#: ../admin/manage-images.php:473
 msgid "Alt &amp; Title Text"
 msgstr ""
 
-#: ../admin/manage-images.php:509
-msgid "exclude"
+#: ../admin/manage-images.php:474
+msgid "Tags (comma separated list)"
 msgstr ""
 
-#: ../admin/manage-images.php:511
-msgid "Tags (comma separated list)"
+#: ../admin/manage-images.php:476
+msgid "exclude"
 msgstr ""
 
 #: ../admin/manage-sort.php:30
@@ -1091,10 +1070,6 @@ msgstr ""
 msgid "Image ID"
 msgstr ""
 
-#: ../admin/manage-sort.php:80
-msgid "Filename"
-msgstr ""
-
 #: ../admin/manage-sort.php:81
 msgid "Alt/Title text"
 msgstr ""
@@ -1111,40 +1086,40 @@ msgstr ""
 msgid "Descending"
 msgstr ""
 
-#: ../admin/manage.php:84
-#: ../admin/manage.php:106
+#: ../admin/manage.php:78
+#: ../admin/manage.php:100
 msgid "deleted successfully"
 msgstr ""
 
-#: ../admin/manage.php:106
+#: ../admin/manage.php:100
 msgid "Picture"
 msgstr ""
 
-#: ../admin/manage.php:157
+#: ../admin/manage.php:151
 msgid "Pictures deleted successfully "
 msgstr ""
 
-#: ../admin/manage.php:163
+#: ../admin/manage.php:157
 msgid "Import metadata finished"
 msgstr ""
 
-#: ../admin/manage.php:171
+#: ../admin/manage.php:165
 msgid "Operation successfull. Please clear your browser cache."
 msgstr ""
 
-#: ../admin/manage.php:234
+#: ../admin/manage.php:228
 msgid "Tags changed"
 msgstr ""
 
-#: ../admin/manage.php:264
+#: ../admin/manage.php:255
 msgid "Update successful"
 msgstr ""
 
-#: ../admin/manage.php:297
+#: ../admin/manage.php:288
 msgid "New gallery page ID"
 msgstr ""
 
-#: ../admin/manage.php:297
+#: ../admin/manage.php:288
 msgid "created"
 msgstr ""
 
@@ -1683,6 +1658,10 @@ msgstr ""
 msgid "Custom order"
 msgstr ""
 
+#: ../admin/settings.php:309
+msgid "File name"
+msgstr ""
+
 #: ../admin/settings.php:310
 msgid "Alt / Title text"
 msgstr ""
@@ -2210,62 +2189,67 @@ msgstr ""
 msgid "Slug(s) to set:"
 msgstr ""
 
-#: ../admin/upgrade.php:22
+#: ../admin/upgrade.php:20
 msgid "Upgrade database structure..."
 msgstr ""
 
 #: ../admin/upgrade.php:74
-#: ../admin/upgrade.php:80
-#: ../admin/upgrade.php:87
+#: ../admin/upgrade.php:84
+#: ../admin/upgrade.php:91
+#: ../admin/upgrade.php:100
 msgid "finished"
 msgstr ""
 
-#: ../admin/upgrade.php:78
+#: ../admin/upgrade.php:82
 msgid "Update file structure..."
 msgstr ""
 
-#: ../admin/upgrade.php:85
+#: ../admin/upgrade.php:89
 msgid "Import date and time information..."
 msgstr ""
 
-#: ../admin/upgrade.php:151
+#: ../admin/upgrade.php:97
+msgid "Move imagerotator to new location..."
+msgstr ""
+
+#: ../admin/upgrade.php:163
 msgid "Some folders/files could not renamed, please recheck the permission and rescan the folder in the manage gallery section."
 msgstr ""
 
-#: ../admin/upgrade.php:153
+#: ../admin/upgrade.php:165
 msgid "Rename failed"
 msgstr ""
 
-#: ../admin/upgrade.php:193
-#: ../admin/upgrade.php:213
+#: ../admin/upgrade.php:260
+#: ../admin/upgrade.php:280
 msgid "Upgrade NextGEN Gallery"
 msgstr ""
 
-#: ../admin/upgrade.php:194
+#: ../admin/upgrade.php:261
 msgid "The script detect that you upgrade from a older version."
 msgstr ""
 
-#: ../admin/upgrade.php:195
+#: ../admin/upgrade.php:262
 msgid "Your database tables for NextGEN Gallery is out-of-date, and must be upgraded before you can continue."
 msgstr ""
 
-#: ../admin/upgrade.php:196
+#: ../admin/upgrade.php:263
 msgid "If you would like to downgrade later, please make first a complete backup of your database and the images."
 msgstr ""
 
-#: ../admin/upgrade.php:197
+#: ../admin/upgrade.php:264
 msgid "The upgrade process may take a while, so please be patient."
 msgstr ""
 
-#: ../admin/upgrade.php:198
+#: ../admin/upgrade.php:265
 msgid "Start upgrade now"
 msgstr ""
 
-#: ../admin/upgrade.php:215
+#: ../admin/upgrade.php:282
 msgid "Upgrade sucessfull"
 msgstr ""
 
-#: ../admin/upgrade.php:216
+#: ../admin/upgrade.php:283
 msgid "Continue"
 msgstr ""
 
