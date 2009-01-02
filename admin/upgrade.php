@@ -21,6 +21,11 @@ function ngg_upgrade() {
 		$wpdb->show_errors();
 
 		$installed_ver = get_option( "ngg_db_version" );
+		
+		// 0.9.7 is smaller that 0.97, my fault :-)
+		if ( $installed_ver == '0.9.7' )
+			$installed_ver = '0.97';
+
 		// v0.33 -> v.071
 		if (version_compare($installed_ver, '0.71', '<')) {
 			$wpdb->query("ALTER TABLE $wpdb->nggpictures CHANGE pid pid BIGINT(20) NOT NULL AUTO_INCREMENT ");

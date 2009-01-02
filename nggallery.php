@@ -45,7 +45,7 @@ if (!class_exists('nggLoader')) {
 class nggLoader {
 	
 	var $version     = '1.1.0a';
-	var $dbversion   = '0.9.7';
+	var $dbversion   = '1.1.0';
 	var $minium_WP   = '2.7';
 	var $minium_WPMU = '2.7';
 	var $updateURL   = 'http://nextgen.boelinger.com/version.php';
