@@ -6,7 +6,7 @@ Follow variables are useable :
 
 	$gallery     : Contain all about the gallery
 	$images      : Contain all images, path, title
-	$pagination  : Contain 
+	$pagination  : Contain the pagination content
 
  You can check the content when you insert the tag <?php var_dump($variable) ?>
  If you would like to show the timestamp of the image ,you can use <?php echo $exif['created_timestamp'] ?>

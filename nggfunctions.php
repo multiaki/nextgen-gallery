@@ -313,8 +313,14 @@ function nggCreateAlbum( $galleriesID, $template = 'extend', $album = 0) {
 	
 	global $wpdb, $nggRewrite;
 	
+    // $_GET from wp_query
+	$nggpage  = get_query_var('nggpage');	
+	
 	$ngg_options = nggGallery::get_option('ngg_options');
 	
+	//this option can currently only set via the custom fields
+	$maxElement  = (int) $ngg_options['galPagedGalleries'];
+
 	$sortorder = $galleriesID;
 	$galleries = array();
 	
@@ -368,11 +374,33 @@ function nggCreateAlbum( $galleriesID, $template = 'extend', $album = 0) {
 		$galleries[$key]->galdesc = html_entity_decode ( stripslashes($galleries[$key]->galdesc) ) ;
 	}
 
+ 	// check for page navigation
+ 	if ($maxElement > 0) {
+	 	if ( !is_home() || $pageid == get_the_ID() ) {
+	 		$page = ( !empty( $nggpage ) ) ? (int) $nggpage : 1;
+		}
+		else $page = 1;
+		 
+	 	$start = $offset = ( $page - 1 ) * $maxElement;
+	 	
+	 	$total = count($galleries);
+	 	
+		// remove the element if we didn't start at the beginning
+		if ($start > 0 ) array_splice($galleries, 0, $start);
+		
+		// return the list of images we need
+		array_splice($galleries, $maxElement);
+	
+		$navigation = nggGallery::create_navigation($page, $total, $maxElement);
+	} else {
+		$navigation = '<div class="ngg-clear">&nbsp;</div>';
+	}
+
 	// if sombody didn't enter any template , take the extend version
 	$filename = ( empty($template) ) ? 'album-extend' : 'album-' . $template ;
 
 	// create the output
-	$out = nggGallery::capture ( $filename, array ('album' => $album, 'galleries' => $galleries, 'mode' => $mode) );
+	$out = nggGallery::capture ( $filename, array ('album' => $album, 'galleries' => $galleries, 'pagination' => $navigation) );
 
 	return $out;
  	

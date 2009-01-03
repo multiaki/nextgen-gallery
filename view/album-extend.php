@@ -32,8 +32,10 @@ Follow variables are useable :
 	</div>
 
  	<?php endforeach; ?>
-
+ 	
+	<!-- Pagination -->
+ 	<?php echo $pagination ?>
+ 	
 </div>
-<div class="ngg-clear"></div>
 
 <?php endif; ?>

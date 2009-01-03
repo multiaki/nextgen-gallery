@@ -2,6 +2,7 @@ NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
 V1.1.0
+- NEW : Pagination for album page via custom fields (ngg_paged_Galleries)
 - NEW : Define number of columns inside the gallery
 - NEW : Added pagination for galleries and images in admin section
 - Changed : Added a URL field to setup the path to the Imagerotator

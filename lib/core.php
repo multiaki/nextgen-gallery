@@ -136,13 +136,16 @@ class nggGallery {
 	}
 	
 	/**
-	* create the complete navigation
-	*/
-	// TODO: shall be moved to another class. This belongs to the view and not to the library.
+	 * create the complete navigation
+	 * TODO: shall be moved to another class. This belongs to the view and not to the library.
+	 * 
+	 * @param mixed $page
+	 * @param integer $totalElement 
+	 * @param integer $maxElement
+	 * @return string pagination content
+	 */
 	function create_navigation($page, $totalElement, $maxElement = 0) {
 		global $nggRewrite;
-		
-		$navigation = '';
 		
 		if ($maxElement > 0) {
 			$total = $totalElement;
@@ -225,6 +228,7 @@ class nggGallery {
 				'ngg_gal_Images' 			=> 'galImages',
 				'ngg_gal_Sort' 				=> 'galSort',
 				'ngg_gal_Columns'			=> 'galColumns',
+				'ngg_paged_Galleries'		=> 'galPagedGalleries',
 				'ngg_ir_Width' 				=> 'irWidth',
 				'ngg_ir_Height' 			=> 'irHeight',
 				'ngg_ir_Rotatetime' 		=> 'irRotatetime'

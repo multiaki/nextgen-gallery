@@ -154,6 +154,7 @@ function ngg_default_options() {
 	
 	// Gallery Settings
 	$ngg_options['galImages']			= '20';		  					// Number of images per page
+	$ngg_options['galPagedGalleries']	= 0;		  					// Number of galleries per page (in a album)
 	$ngg_options['galColumns']			= 0;							// Number of columns for the gallery
 	$ngg_options['galShowSlide']		= true;							// Show slideshow
 	$ngg_options['galTextSlide']		= __('[Show as slideshow]','nggallery'); // Text for slideshow
