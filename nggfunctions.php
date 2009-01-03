@@ -365,7 +365,9 @@ function nggCreateAlbum( $galleriesID, $template = 'extend', $album = 0) {
 		if ($ngg_options['galNoPages']) {
 			$args['album'] = $album->id; 
 			$args['gallery'] = $key;
+			$args['nggpage'] = false;
 			$galleries[$key]->pagelink = $nggRewrite->get_permalink($args);
+			
 		} else {
 			$galleries[$key]->pagelink = get_permalink( $galleries[$key]->pageid );
 		}
