@@ -98,8 +98,9 @@ p#ngg-inlinebutton {
 	top:-25pt;
 }
 
-div .ngg-tablenav {
-	overflow:hidden;
+.ngg-tablenav .button-secondary {
+	padding:2px 8px;
+	vertical-align: top;
 }
 
 #ngg-listimages td, #ngg-listimages th {

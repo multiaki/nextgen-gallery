@@ -5,8 +5,10 @@ V1.1.0
 - NEW : Pagination for album page via custom fields (ngg_paged_Galleries)
 - NEW : Define number of columns inside the gallery
 - NEW : Added pagination for galleries and images in admin section
+- Changed : Rework of Manage image tables
 - Changed : Added a URL field to setup the path to the Imagerotator
 - Changed : Add additional parameter to gallery object
+- Bugfix : Style fixes for tables in IE7
 - Bugfix : All albums code couldn't use the slideshow, query is empty for 0
 - Bugfix : Htmlentities() for links in the a href title description
 - Bugfix : Clean up mode for singlepic

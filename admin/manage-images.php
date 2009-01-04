@@ -47,7 +47,7 @@ function nggallery_picturelist() {
 	//get the columns
 	$gallery_columns = ngg_manage_gallery_columns();
 	$hidden_columns  = get_hidden_columns('nggallery-manage-images');
-	
+	$num_columns     = count($gallery_columns) - count($hidden_columns);
 ?>
 
 <script type="text/javascript"> 
@@ -232,7 +232,7 @@ jQuery(document).ready( function() {
 		$page_links
 	); echo $page_links_text; ?></div>
 	<?php endif; ?>
-	<div class="alignleft actions" style="float: left;">
+	<div class="alignleft actions">
 	<select id="bulkaction" name="bulkaction">
 		<option value="no_action" ><?php _e("No action",'nggallery')?></option>
 		<option value="set_watermark" ><?php _e("Set watermark",'nggallery')?></option>
@@ -256,7 +256,7 @@ jQuery(document).ready( function() {
 	</div>
 </div>
 
-<table id="ngg-listimages" class="widefat fixed" >
+<table id="ngg-listimages" class="widefat fixed" cellspacing="0" >
 
 	<thead>
 	<tr>
@@ -285,14 +285,14 @@ if($picturelist) {
 		
 	foreach($picturelist as $picture) {
 
-		$pid     = (int) $picture->pid;
-		$class   = ( $class == 'class="alternate"' ) ? '' : 'class="alternate"';	
-		$exclude = ( $picture->exclude ) ? 'checked="checked"' : '';
+		$pid       = (int) $picture->pid;
+		$alternate = ( $alternate == 'alternate' ) ? '' : 'alternate';	
+		$exclude   = ( $picture->exclude ) ? 'checked="checked"' : '';
 		$date = mysql2date(get_option('date_format'), $picture->imagedate);
 		$time = mysql2date(get_option('time_format'), $picture->imagedate);
 		
 		?>
-		<tr id="picture-<?php echo $pid ?>" <?php echo $class ?> >
+		<tr id="picture-<?php echo $pid ?>" class="<?php echo $alternate ?> iedit"  valign="top">
 			<?php
 			foreach($gallery_columns as $gallery_column_key => $column_display_name) {
 				$class = "class=\"$gallery_column_key column-$gallery_column_key\"";
@@ -325,10 +325,10 @@ if($picturelist) {
 							<?php
 							$actions = array();
 							//TODO:Add a JS edit option
-							$actions['edit']   = '<a href="">' . __('Edit') . '</a>';
-							$actions['delete'] = '<a class="submitdelete" href="' . wp_nonce_url("admin.php?page=nggallery-manage-gallery&amp;mode=delpic&amp;gid=".$act_gid."&amp;pid=".$pid, 'ngg_delpicture'). '" class="delete column-delete" onclick="javascript:check=confirm( \'' . attribute_escape(sprintf(__('Delete "%s"' , 'nggallery'), $picture->filename)). '\');if(check==false) return false;">' . __('Delete') . '</a>';
-							$actions['meta']   = '<a class="thickbox" href="' . NGGALLERY_URLPATH . 'admin/showmeta.php?id=' . $pid . '" title="' . __('Show Meta data','nggallery') . '">' . __('Meta', 'nggallery') . '</a>';
+							//$actions['edit']   = '<a class="editinline" href="#">' . __('Edit') . '</a>';
 							$actions['view']   = '<a class="thickbox" href="' . $picture->imageURL . '" title="' . attribute_escape(sprintf(__('View "%s"'), $picture->filename)) . '">' . __('View', 'nggallery') . '</a>';
+							$actions['meta']   = '<a class="thickbox" href="' . NGGALLERY_URLPATH . 'admin/showmeta.php?id=' . $pid . '" title="' . __('Show Meta data','nggallery') . '">' . __('Meta', 'nggallery') . '</a>';
+							$actions['delete'] = '<a class="submitdelete" href="' . wp_nonce_url("admin.php?page=nggallery-manage-gallery&amp;mode=delpic&amp;gid=".$act_gid."&amp;pid=".$pid, 'ngg_delpicture'). '" class="delete column-delete" onclick="javascript:check=confirm( \'' . attribute_escape(sprintf(__('Delete "%s"' , 'nggallery'), $picture->filename)). '\');if(check==false) return false;">' . __('Delete') . '</a>';
 							$action_count = count($actions);
 							$i = 0;
 							echo '<div class="row-actions">';
@@ -382,7 +382,7 @@ if($picturelist) {
 		<?php
 	}
 } else {
-	echo '<tr><td colspan="8" align="center"><strong>'.__('No entries found','nggallery').'</strong></td></tr>';
+	echo '<tr><td colspan="' . $num_columns . '" align="center"><strong>'.__('No entries found','nggallery').'</strong></td></tr>';
 }
 ?>
 	

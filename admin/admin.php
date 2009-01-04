@@ -152,6 +152,8 @@ class nggAdminPanel{
 				wp_enqueue_script( 'postbox' );
 				wp_enqueue_script( 'ngg-ajax' );
 				wp_enqueue_script( 'ngg-progressbar' );
+				//TODO:Add Inline edit later
+				//wp_enqueue_script( 'ngg-inline-edit', NGGALLERY_URLPATH .'admin/js/ngg.inline-edit-images.js', array('jquery'), '1.0.0' );
 				add_thickbox();
 			break;
 			case "nggallery-manage-album" :

@@ -36,7 +36,7 @@ function nggallery_manage_gallery_main() {
 		<br class="clear" />
 		</div>
 		<?php endif; ?>
-		<table class="widefat">
+		<table class="widefat" cellspacing="0">
 			<thead>
 			<tr>
 				<th scope="col" ><?php _e('ID') ?></th>
