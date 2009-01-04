@@ -468,7 +468,16 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		<?php wp_nonce_field('ngg_settings') ?>
 		<input type="hidden" name="page_options" value="irURL,irWidth,irHeight,irShuffle,irLinkfromdisplay,irShownavigation,irShowicons,irWatermark,irOverstretch,irRotatetime,irTransition,irKenburns,irBackcolor,irFrontcolor,irLightcolor,irScreencolor,irAudio,irXHTMLvalid" />
 		<h2><?php _e('Slideshow','nggallery'); ?></h2>
-		<?php if (empty($ngg->options['irURL'])) { ?><p><div id="message" class="error"><p><?php _e('The path to imagerotator.swf is not defined, the slideshow will not work.','nggallery') ?></p></div></p><?php }?>
+		<?php if (!empty($ngg->options['irURL'])) { ?>
+			<p>
+				<div id="message" class="error">
+				<p>
+					<?php _e('The path to imagerotator.swf is not defined, the slideshow will not work.','nggallery') ?><br />
+					<?php _e('If you would like to use the JW Image Rotatator, please download the player <a href="http://www.longtailvideo.com/players/jw-image-rotator/" target="_blank" >here</a> and upload it to your Upload folder (Default is wp-content/uploads).','nggallery') ?>
+				</p>
+				</div>
+			</p>
+		<?php }?>
 		<p><?php _e('The settings are used in the JW Image Rotator Version', 'nggallery') ?> 3.17 .
 		   <?php _e('See more information for the Flash Player on the web page', 'nggallery') ?> <a href="http://www.longtailvideo.com/players/jw-image-rotator/" target="_blank" >JW Image Rotator from Jeroen Wijering</a>.
 		</p>
@@ -478,7 +487,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						<td>
 							<input type="text" size="50" id="irURL" name="irURL" value="<?php echo $ngg->options['irURL'] ?>" />
 							<input type="submit" name="irDetect" class="button-secondary"  value="<?php _e('Search now','nggallery') ;?> &raquo;"/>
-							<br /><span class="setting-description"><?php _e('Press the button to look automatic for the imagerotator, if you uploaded it to wp-content/uploads or a subfolder','nggallery') ?></span>
+							<br /><span class="setting-description"><?php _e('Press the button to search automatic for the imagerotator, if you uploaded it to wp-content/uploads or a subfolder','nggallery') ?></span>
 						</td>
 					</tr>					
 					<tr>

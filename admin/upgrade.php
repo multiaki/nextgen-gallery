@@ -23,8 +23,7 @@ function ngg_upgrade() {
 		$installed_ver = get_option( "ngg_db_version" );
 		
 		// 0.9.7 is smaller that 0.97, my fault :-)
-		if ( $installed_ver == '0.9.7' )
-			$installed_ver = '0.97';
+		if ( $installed_ver == '0.9.7' ) $installed_ver = '0.97';
 
 		// v0.33 -> v.071
 		if (version_compare($installed_ver, '0.71', '<')) {
@@ -100,7 +99,9 @@ function ngg_upgrade() {
 		if (version_compare($installed_ver, '1.1.0', '<')) {
 			$ngg_options = get_option('ngg_options');
 			echo __('Move imagerotator to new location...', 'nggallery');
-			$ngg_options['irURL']  = ngg_move_imagerotator();
+			$ngg_options['irURL'] = ngg_move_imagerotator();
+			$ngg_options['galPagedGalleries'] = 0;
+			$ngg_options['galColumns'] = 0;
 			update_option('ngg_options', $ngg_options);
 			echo __('finished', 'nggallery') . "<br />\n";				
 		}
@@ -164,6 +165,7 @@ function ngg_convert_filestructure() {
 				}
 			}
 		}
+		
 		if (!empty($errors)) {
 			echo "<div class='error_inline'><p>". __('Some folders/files could not renamed, please recheck the permission and rescan the folder in the manage gallery section.', 'nggallery') ."</p>";
 			foreach($errors as $value) {
@@ -254,7 +256,7 @@ function ngg_maybe_add_column($table_name, $column_name, $create_ddl) {
  * @return Upgrade Message
  */
 function nggallery_upgrade_page()  {	
-	$filepath    = admin_url() . 'admin.php?page='.$_GET['page'];
+	$filepath    = admin_url() . 'admin.php?page=' . $_GET['page'];
 	
 	if ($_GET['upgrade'] == 'now') {
 		nggallery_start_upgrade($filepath);

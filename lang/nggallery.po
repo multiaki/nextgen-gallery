@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-02 17:18+0100\n"
-"PO-Revision-Date: 2009-01-02 17:18+0100\n"
+"POT-Creation-Date: 2009-01-04 12:18+0100\n"
+"PO-Revision-Date: 2009-01-04 12:18+0100\n"
 "Last-Translator: Alex Rabe <no@email.com>\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
@@ -46,23 +46,23 @@ msgid "The <a href=\"http://www.macromedia.com/go/getflashplayer\">Flash Player<
 msgstr ""
 
 #: ../nggfunctions.php:100
-#: ../nggfunctions.php:406
+#: ../nggfunctions.php:435
 msgid "[Gallery not found]"
 msgstr ""
 
-#: ../nggfunctions.php:291
+#: ../nggfunctions.php:290
 msgid "[Album not found]"
 msgstr ""
 
-#: ../nggfunctions.php:508
+#: ../nggfunctions.php:537
 msgid "[SinglePic not found]"
 msgstr ""
 
-#: ../nggfunctions.php:633
+#: ../nggfunctions.php:662
 msgid "Related images for"
 msgstr ""
 
-#: ../nggfunctions.php:668
+#: ../nggfunctions.php:697
 #: ../admin/admin.php:32
 msgid "Overview"
 msgstr ""
@@ -315,8 +315,8 @@ msgid "Enable flash based upload"
 msgstr ""
 
 #: ../admin/admin.php:31
-#: ../admin/admin.php:202
-#: ../admin/admin.php:268
+#: ../admin/admin.php:204
+#: ../admin/admin.php:270
 #: ../admin/functions.php:81
 #: ../admin/functions.php:142
 #: ../admin/manage-images.php:147
@@ -396,102 +396,102 @@ msgstr ""
 msgid "A failure occurred"
 msgstr ""
 
-#: ../admin/admin.php:206
+#: ../admin/admin.php:208
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Introduction</a>"
 msgstr ""
 
-#: ../admin/admin.php:209
+#: ../admin/admin.php:211
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Setup</a>"
 msgstr ""
 
-#: ../admin/admin.php:212
+#: ../admin/admin.php:214
 msgid "<a href=\"http://alexrabe.boelinger.com/wordpress-plugins/nextgen-gallery/languages/\" target=\"_blank\">Translation by alex rabe</a>"
 msgstr ""
 
-#: ../admin/admin.php:215
+#: ../admin/admin.php:217
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Roles / Capabilities</a>"
 msgstr ""
 
-#: ../admin/admin.php:218
+#: ../admin/admin.php:220
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Styles</a>"
 msgstr ""
 
-#: ../admin/admin.php:219
+#: ../admin/admin.php:221
 msgid "Templates"
 msgstr ""
 
-#: ../admin/admin.php:222
-#: ../admin/admin.php:226
+#: ../admin/admin.php:224
+#: ../admin/admin.php:228
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Gallery management</a>"
 msgstr ""
 
-#: ../admin/admin.php:223
+#: ../admin/admin.php:225
 msgid "Gallery example"
 msgstr ""
 
-#: ../admin/admin.php:227
-#: ../admin/admin.php:237
+#: ../admin/admin.php:229
+#: ../admin/admin.php:239
 msgid "Gallery tags"
 msgstr ""
 
-#: ../admin/admin.php:230
+#: ../admin/admin.php:232
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Album management</a>"
 msgstr ""
 
-#: ../admin/admin.php:231
+#: ../admin/admin.php:233
 msgid "Album example"
 msgstr ""
 
-#: ../admin/admin.php:232
-#: ../admin/admin.php:238
+#: ../admin/admin.php:234
+#: ../admin/admin.php:240
 msgid "Album tags"
 msgstr ""
 
-#: ../admin/admin.php:235
+#: ../admin/admin.php:237
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Gallery tags</a>"
 msgstr ""
 
-#: ../admin/admin.php:236
+#: ../admin/admin.php:238
 msgid "Related images"
 msgstr ""
 
-#: ../admin/admin.php:241
+#: ../admin/admin.php:243
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-image-management/\" target=\"_blank\">Image management</a>"
 msgstr ""
 
-#: ../admin/admin.php:242
+#: ../admin/admin.php:244
 msgid "Custom fields"
 msgstr ""
 
-#: ../admin/admin.php:247
+#: ../admin/admin.php:249
 msgid "Get help with NextGEN Gallery"
 msgstr ""
 
-#: ../admin/admin.php:251
+#: ../admin/admin.php:253
 msgid "More Help & Info"
 msgstr ""
 
-#: ../admin/admin.php:253
+#: ../admin/admin.php:255
 msgid "<a href=\"http://wordpress.org/tags/nextgen-gallery\" target=\"_blank\">Support Forums</a>"
 msgstr ""
 
-#: ../admin/admin.php:254
+#: ../admin/admin.php:256
 msgid "FAQ"
 msgstr ""
 
-#: ../admin/admin.php:255
+#: ../admin/admin.php:257
 msgid "Feature request"
 msgstr ""
 
-#: ../admin/admin.php:256
+#: ../admin/admin.php:258
 msgid "Get your language pack"
 msgstr ""
 
-#: ../admin/admin.php:257
+#: ../admin/admin.php:259
 msgid "Contribute development"
 msgstr ""
 
-#: ../admin/admin.php:258
+#: ../admin/admin.php:260
 msgid "Download latest version"
 msgstr ""
 
@@ -522,7 +522,7 @@ msgstr ""
 
 #: ../admin/album.php:147
 #: ../admin/manage-galleries.php:78
-#: ../admin/manage-images.php:329
+#: ../admin/manage-images.php:331
 msgid "Delete"
 msgstr ""
 
@@ -803,11 +803,11 @@ msgstr ""
 msgid "NextGEN Gallery : Tables could not created, please check your database settings"
 msgstr ""
 
-#: ../admin/install.php:159
+#: ../admin/install.php:160
 msgid "[Show as slideshow]"
 msgstr ""
 
-#: ../admin/install.php:160
+#: ../admin/install.php:161
 msgid "[Show picture list]"
 msgstr ""
 
@@ -855,7 +855,6 @@ msgid "Action"
 msgstr ""
 
 #: ../admin/manage-galleries.php:65
-#: ../admin/manage-images.php:328
 msgid "Edit"
 msgstr ""
 
@@ -988,7 +987,11 @@ msgstr ""
 
 #: ../admin/manage-images.php:329
 #, php-format
-msgid "Delete \"%s\""
+msgid "View \"%s\""
+msgstr ""
+
+#: ../admin/manage-images.php:329
+msgid "View"
 msgstr ""
 
 #: ../admin/manage-images.php:330
@@ -1001,11 +1004,7 @@ msgstr ""
 
 #: ../admin/manage-images.php:331
 #, php-format
-msgid "View \"%s\""
-msgstr ""
-
-#: ../admin/manage-images.php:331
-msgid "View"
+msgid "Delete \"%s\""
 msgstr ""
 
 #: ../admin/manage-images.php:404
@@ -1775,159 +1774,163 @@ msgstr ""
 msgid "Opaque"
 msgstr ""
 
-#: ../admin/settings.php:471
+#: ../admin/settings.php:475
 msgid "The path to imagerotator.swf is not defined, the slideshow will not work."
 msgstr ""
 
-#: ../admin/settings.php:472
-msgid "The settings are used in the JW Image Rotator Version"
-msgstr ""
-
-#: ../admin/settings.php:473
-msgid "See more information for the Flash Player on the web page"
-msgstr ""
-
-#: ../admin/settings.php:477
-msgid "Path to the Imagerotator (URL)"
-msgstr ""
-
-#: ../admin/settings.php:480
-msgid "Search now"
+#: ../admin/settings.php:476
+msgid "If you would like to use the JW Image Rotatator, please download the player <a href=\"http://www.longtailvideo.com/players/jw-image-rotator/\" target=\"_blank\" >here</a> and upload it to your Upload folder (Default is wp-content/uploads)."
 msgstr ""
 
 #: ../admin/settings.php:481
-msgid "Press the button to look automatic for the imagerotator, if you uploaded it to wp-content/uploads or a subfolder"
+msgid "The settings are used in the JW Image Rotator Version"
 msgstr ""
 
-#: ../admin/settings.php:485
-msgid "Default size (W x H)"
+#: ../admin/settings.php:482
+msgid "See more information for the Flash Player on the web page"
+msgstr ""
+
+#: ../admin/settings.php:486
+msgid "Path to the Imagerotator (URL)"
+msgstr ""
+
+#: ../admin/settings.php:489
+msgid "Search now"
 msgstr ""
 
 #: ../admin/settings.php:490
-msgid "Shuffle mode"
+msgid "Press the button to search automatic for the imagerotator, if you uploaded it to wp-content/uploads or a subfolder"
 msgstr ""
 
 #: ../admin/settings.php:494
+msgid "Default size (W x H)"
+msgstr ""
+
+#: ../admin/settings.php:499
+msgid "Shuffle mode"
+msgstr ""
+
+#: ../admin/settings.php:503
 msgid "Show next image on click"
 msgstr ""
 
-#: ../admin/settings.php:498
+#: ../admin/settings.php:507
 msgid "Show navigation bar"
 msgstr ""
 
-#: ../admin/settings.php:502
+#: ../admin/settings.php:511
 msgid "Show loading icon"
 msgstr ""
 
-#: ../admin/settings.php:506
+#: ../admin/settings.php:515
 msgid "Use watermark logo"
 msgstr ""
 
-#: ../admin/settings.php:508
+#: ../admin/settings.php:517
 msgid "You can change the logo at the watermark settings"
 msgstr ""
 
-#: ../admin/settings.php:511
+#: ../admin/settings.php:520
 msgid "Stretch image"
 msgstr ""
 
-#: ../admin/settings.php:514
+#: ../admin/settings.php:523
 msgid "true"
 msgstr ""
 
-#: ../admin/settings.php:515
+#: ../admin/settings.php:524
 msgid "false"
 msgstr ""
 
-#: ../admin/settings.php:516
+#: ../admin/settings.php:525
 msgid "fit"
 msgstr ""
 
-#: ../admin/settings.php:517
+#: ../admin/settings.php:526
 msgid "none"
 msgstr ""
 
-#: ../admin/settings.php:522
+#: ../admin/settings.php:531
 msgid "Duration time"
 msgstr ""
 
-#: ../admin/settings.php:523
+#: ../admin/settings.php:532
 msgid "sec."
 msgstr ""
 
-#: ../admin/settings.php:526
+#: ../admin/settings.php:535
 msgid "Transition / Fade effect"
 msgstr ""
 
-#: ../admin/settings.php:529
+#: ../admin/settings.php:538
 msgid "fade"
 msgstr ""
 
-#: ../admin/settings.php:530
+#: ../admin/settings.php:539
 msgid "bgfade"
 msgstr ""
 
-#: ../admin/settings.php:531
+#: ../admin/settings.php:540
 msgid "slowfade"
 msgstr ""
 
-#: ../admin/settings.php:532
+#: ../admin/settings.php:541
 msgid "circles"
 msgstr ""
 
-#: ../admin/settings.php:533
+#: ../admin/settings.php:542
 msgid "bubbles"
 msgstr ""
 
-#: ../admin/settings.php:534
+#: ../admin/settings.php:543
 msgid "blocks"
 msgstr ""
 
-#: ../admin/settings.php:535
+#: ../admin/settings.php:544
 msgid "fluids"
 msgstr ""
 
-#: ../admin/settings.php:536
+#: ../admin/settings.php:545
 msgid "flash"
 msgstr ""
 
-#: ../admin/settings.php:537
+#: ../admin/settings.php:546
 msgid "lines"
 msgstr ""
 
-#: ../admin/settings.php:538
+#: ../admin/settings.php:547
 msgid "random"
 msgstr ""
 
-#: ../admin/settings.php:542
+#: ../admin/settings.php:551
 msgid "Use slow zooming effect"
 msgstr ""
 
-#: ../admin/settings.php:546
+#: ../admin/settings.php:555
 msgid "Background Color"
 msgstr ""
 
-#: ../admin/settings.php:551
+#: ../admin/settings.php:560
 msgid "Texts / Buttons Color"
 msgstr ""
 
-#: ../admin/settings.php:556
+#: ../admin/settings.php:565
 msgid "Rollover / Active Color"
 msgstr ""
 
-#: ../admin/settings.php:561
+#: ../admin/settings.php:570
 msgid "Screen Color"
 msgstr ""
 
-#: ../admin/settings.php:566
+#: ../admin/settings.php:575
 msgid "Background music (URL)"
 msgstr ""
 
-#: ../admin/settings.php:570
+#: ../admin/settings.php:579
 msgid "Try XHTML validation (with CDATA)"
 msgstr ""
 
-#: ../admin/settings.php:572
+#: ../admin/settings.php:581
 msgid "Important : Could causes problem at some browser. Please recheck your page."
 msgstr ""
 
@@ -2193,63 +2196,63 @@ msgstr ""
 msgid "Upgrade database structure..."
 msgstr ""
 
-#: ../admin/upgrade.php:74
-#: ../admin/upgrade.php:84
-#: ../admin/upgrade.php:91
-#: ../admin/upgrade.php:100
+#: ../admin/upgrade.php:78
+#: ../admin/upgrade.php:88
+#: ../admin/upgrade.php:95
+#: ../admin/upgrade.php:106
 msgid "finished"
 msgstr ""
 
-#: ../admin/upgrade.php:82
+#: ../admin/upgrade.php:86
 msgid "Update file structure..."
 msgstr ""
 
-#: ../admin/upgrade.php:89
+#: ../admin/upgrade.php:93
 msgid "Import date and time information..."
 msgstr ""
 
-#: ../admin/upgrade.php:97
+#: ../admin/upgrade.php:101
 msgid "Move imagerotator to new location..."
 msgstr ""
 
-#: ../admin/upgrade.php:163
+#: ../admin/upgrade.php:170
 msgid "Some folders/files could not renamed, please recheck the permission and rescan the folder in the manage gallery section."
 msgstr ""
 
-#: ../admin/upgrade.php:165
+#: ../admin/upgrade.php:172
 msgid "Rename failed"
 msgstr ""
 
-#: ../admin/upgrade.php:260
-#: ../admin/upgrade.php:280
+#: ../admin/upgrade.php:267
+#: ../admin/upgrade.php:287
 msgid "Upgrade NextGEN Gallery"
 msgstr ""
 
-#: ../admin/upgrade.php:261
+#: ../admin/upgrade.php:268
 msgid "The script detect that you upgrade from a older version."
 msgstr ""
 
-#: ../admin/upgrade.php:262
+#: ../admin/upgrade.php:269
 msgid "Your database tables for NextGEN Gallery is out-of-date, and must be upgraded before you can continue."
 msgstr ""
 
-#: ../admin/upgrade.php:263
+#: ../admin/upgrade.php:270
 msgid "If you would like to downgrade later, please make first a complete backup of your database and the images."
 msgstr ""
 
-#: ../admin/upgrade.php:264
+#: ../admin/upgrade.php:271
 msgid "The upgrade process may take a while, so please be patient."
 msgstr ""
 
-#: ../admin/upgrade.php:265
+#: ../admin/upgrade.php:272
 msgid "Start upgrade now"
 msgstr ""
 
-#: ../admin/upgrade.php:282
+#: ../admin/upgrade.php:289
 msgid "Upgrade sucessfull"
 msgstr ""
 
-#: ../admin/upgrade.php:283
+#: ../admin/upgrade.php:290
 msgid "Continue"
 msgstr ""
 
