@@ -718,10 +718,13 @@ function nggShowAlbumTags($taglist) {
 		$picturelist[$key]->counter     = $picture->count;
 		$picturelist[$key]->title     	= $picture->name;
 		$picturelist[$key]->pagelink    = $nggRewrite->get_permalink( array('gallerytag'=>$picture->slug) );
-	}	
-
+	}
+		
+	//TODO: Add pagination later
+	$navigation = '<div class="ngg-clear">&nbsp;</div>';
+	
 	// create the output
-	$out = nggGallery::capture ('album-compact', array ('album' => 0, 'galleries' => $picturelist, 'mode' => 'compact') );
+	$out = nggGallery::capture ('album-compact', array ('album' => 0, 'galleries' => $picturelist, 'pagination' => $navigation) );
 	
 	$out = apply_filters('ngg_show_album_tags_content', $out, $taglist);
 	

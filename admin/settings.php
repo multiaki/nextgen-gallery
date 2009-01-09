@@ -468,7 +468,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		<?php wp_nonce_field('ngg_settings') ?>
 		<input type="hidden" name="page_options" value="irURL,irWidth,irHeight,irShuffle,irLinkfromdisplay,irShownavigation,irShowicons,irWatermark,irOverstretch,irRotatetime,irTransition,irKenburns,irBackcolor,irFrontcolor,irLightcolor,irScreencolor,irAudio,irXHTMLvalid" />
 		<h2><?php _e('Slideshow','nggallery'); ?></h2>
-		<?php if (!empty($ngg->options['irURL'])) { ?>
+		<?php if (empty($ngg->options['irURL'])) { ?>
 			<p>
 				<div id="message" class="error">
 				<p>
