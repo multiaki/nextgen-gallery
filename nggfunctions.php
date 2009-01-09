@@ -237,8 +237,9 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
 		$picturelist[$key]->thumbnailURL = $picture->thumbURL;
 		$picturelist[$key]->size = $thumbsize;
 		$picturelist[$key]->thumbcode = $thumbcode;
-		$picturelist[$key]->description = ( empty($picture->description) ) ? ' ' : stripslashes($picture->description);
-		$picturelist[$key]->alttext = ( empty($picture->alttext) ) ?  ' ' : stripslashes($picture->alttext);
+		$picturelist[$key]->description = ( empty($picture->description) ) ? ' ' : htmlspecialchars ( stripslashes($picture->description) );
+		$picturelist[$key]->alttext = ( empty($picture->alttext) ) ?  ' ' : htmlspecialchars ( stripslashes($picture->alttext) );
+		$picturelist[$key]->caption = ( empty($picture->description) ) ? '&nbsp;' : html_entity_decode( stripslashes($picture->description) );
 	}
 
 	// look for gallery-$template.php or pure gallery.php
@@ -492,6 +493,7 @@ function nggCreateImageBrowser($picarray, $template = '') {
 	$picture->next_image_link  = $nggRewrite->get_permalink(array ('pid' => $next_pid));
 	$picture->number = $key + 1;
 	$picture->total = $total;
+	$picture->linktitle = htmlentities(stripslashes($picture->description));
 	$picture->alttext = html_entity_decode(stripslashes($picture->alttext));
 	$picture->description = html_entity_decode(stripslashes($picture->description));
 	

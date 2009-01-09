@@ -2,10 +2,13 @@ NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
 V1.1.0
-- NEW : Pagination for album page via custom fields (ngg_paged_Galleries)
-- NEW : Define number of columns inside the gallery
+- NEW : Pagination for album page via custom fields ('ngg_paged_Galleries')
+- NEW : Support for fixed number of columns inside the gallery
 - NEW : Added pagination for galleries and images in admin section
+- NEW : New action hook after image is added to databse, called 'ngg_added_new_image' 
+- NEW : New template for caption below images, called via [nggallery id=x template=caption]
 - Changed : Rework of Manage image tables
+- Changed : Move imagerotator.swf to wp-content/uploads
 - Changed : Added a URL field to setup the path to the Imagerotator
 - Changed : Add additional parameter to gallery object
 - Bugfix : Style fixes for tables in IE7

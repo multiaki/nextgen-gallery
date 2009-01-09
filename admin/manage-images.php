@@ -280,8 +280,6 @@ if($picturelist) {
 	if ($ngg->options['thumbcrop']) {
 		$thumbsize = 'width="'.$ngg->options['thumbwidth'].'" height="'.$ngg->options['thumbwidth'].'"';
 	}
-	
-	$thumbsize = 'height="60" width="60"';
 		
 	foreach($picturelist as $picture) {
 

@@ -94,7 +94,7 @@ class nggGallery {
 		}
 		
 		if (is_admin()) {
-			if (!is_dir($gallerypath .'/thumbs/')) {
+			if (!is_dir($gallerypath . '/thumbs/')) {
 				if ( !wp_mkdir_p($gallerypath . '/thumbs/') ) {
 					if (SAFE_MODE) {
 						nggAdmin::check_safemode($gallerypath . '/thumbs/');	

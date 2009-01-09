@@ -2,13 +2,13 @@
 /*
 Plugin Name: NextGEN Gallery
 Plugin URI: http://alexrabe.boelinger.com/?page_id=80
-Description: A NextGENeration Photo gallery for the WEB2.0(beta).
-Author: NextGEN DEV-Team
-Version: 1.1.0a
+Description: A NextGENeration Photo gallery for the Web 2.0.
+Author: Alex Rabe
+Version: 1.1.0b
 
 Author URI: http://alexrabe.boelinger.com/
 
-Copyright 2007-2008 by Alex Rabe & NextGEN DEV-Team
+Copyright 2007-2009 by Alex Rabe & NextGEN DEV-Team
 
 The NextGEN button is taken from the Fugue Icons of http://www.pinvoke.com/.
 
@@ -32,7 +32,7 @@ The JW Image Rotator (Slideshow) is not part of this license and is available
 under a Creative Commons License, which allowing you to use, modify and redistribute 
 them for noncommercial purposes. 
 
-For commercial use please look at the Jeroen's homepage : http://www.jeroenwijering.com/ 
+For commercial use please look at the Jeroen's homepage : http://www.longtailvideo.com 
 
 */ 
 
@@ -44,7 +44,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 if (!class_exists('nggLoader')) {
 class nggLoader {
 	
-	var $version     = '1.1.0a';
+	var $version     = '1.1.0b';
 	var $dbversion   = '1.1.0';
 	var $minium_WP   = '2.7';
 	var $minium_WPMU = '2.7';

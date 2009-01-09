@@ -233,7 +233,7 @@ class nggManageGallery {
 		// Update pictures	
 		
 			check_admin_referer('ngg_updategallery');
-			
+		
 			$gallery_title   = attribute_escape($_POST['title']);
 			$gallery_path    = attribute_escape($_POST['path']);
 			$gallery_desc    = attribute_escape($_POST['gallerydesc']);
@@ -299,35 +299,35 @@ class nggManageGallery {
 	}
 	
 	function update_pictures() {
-		//TODO: Message when update failed
 		global $wpdb;
+
+		//TODO:Error message when update failed
+		//TODO:Combine update in one query per image
 		
-		$nggdescription = attribute_escape( $_POST['description'] );
-		$nggalttext = attribute_escape( $_POST['alttext'] );
-		$nggexclude = attribute_escape( $_POST['exclude'] );
-		$taglist = attribute_escape($_POST['tags']);
-		
-		if ( is_array($nggdescription) ) {
-			foreach( $nggdescription as $key=>$value ) {
+		$description = 	$_POST['description'];
+		$alttext = 		$_POST['alttext'];
+		$exclude = 		$_POST['exclude'];
+		$taglist = 		$_POST['tags'];
+
+		if ( is_array($description) ) {
+			foreach( $description as $key=>$value ) {
 				$desc = $wpdb->escape($value);
-				$result=$wpdb->query( "UPDATE $wpdb->nggpictures SET description = '$desc' WHERE pid = $key");
-				if($result) $update_ok = $result;
+				$wpdb->query( "UPDATE $wpdb->nggpictures SET description = '$desc' WHERE pid = $key");
 			}
 		}
-		if ( is_array($nggalttext) ){
-			foreach( $nggalttext as $key=>$value ) {
+		if ( is_array($alttext) ){
+			foreach( $alttext as $key=>$value ) {
 				$alttext = $wpdb->escape($value);
-				$result=$wpdb->query( "UPDATE $wpdb->nggpictures SET alttext = '$alttext' WHERE pid = $key");
-				if($result) $update_ok = $result;
+				$wpdb->query( "UPDATE $wpdb->nggpictures SET alttext = '$alttext' WHERE pid = $key");
 			}
 		}
 		
-		$nggpictures = $wpdb->get_results("SELECT pid FROM $wpdb->nggpictures WHERE galleryid = '$this->gid'");
+		$pictures = $wpdb->get_results("SELECT pid FROM $wpdb->nggpictures WHERE galleryid = '$this->gid'");
 	
-		if ( is_array($nggpictures) ){
-			foreach($nggpictures as $picture){
-				if (is_array($nggexclude)){
-					if ( array_key_exists($picture->pid, $nggexclude) )
+		if ( is_array($pictures) ){
+			foreach($pictures as $picture){
+				if (is_array($exclude)){
+					if ( array_key_exists($picture->pid, $exclude) )
 						$wpdb->query("UPDATE $wpdb->nggpictures SET exclude = 1 WHERE pid = '$picture->pid'");
 					else 
 						$wpdb->query("UPDATE $wpdb->nggpictures SET exclude = 0 WHERE pid = '$picture->pid'");
