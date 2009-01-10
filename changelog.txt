@@ -5,7 +5,7 @@ V1.1.0
 - NEW : Pagination for album page via custom fields ('ngg_paged_Galleries')
 - NEW : Support for fixed number of columns inside the gallery
 - NEW : Added pagination for galleries and images in admin section
-- NEW : New action hook after image is added to databse, called 'ngg_added_new_image' 
+- NEW : New action hook after image is added to database, called 'ngg_added_new_image' 
 - NEW : New template for caption below images, called via [nggallery id=x template=caption]
 - Changed : Rework of Manage image tables
 - Changed : Move imagerotator.swf to wp-content/uploads

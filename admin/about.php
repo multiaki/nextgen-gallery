@@ -252,7 +252,12 @@ function ngg_list_support()	{
 	'Richard Hartmann' => '',
 	'Robert Wetzlmayr' => '',
 	'Lesly St Louis' => 'http://www.lesstlouis.com',
-	'Marko Toncic' => ''
+	'Marko Toncic' => '',
+	'SlashGear.com' => 'http://www.slashgear.com',
+	'Mustang Rock inc' => '',
+	'Jim Nelson' => 'http://www.tripawds.com/',
+	'Tim Bowen' => 'http://www.creativeslice.com',
+	'Fabrizio Parodi' => ''
 	);
 	
 	ksort($supporter);
