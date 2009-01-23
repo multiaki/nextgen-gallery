@@ -205,9 +205,8 @@ class nggGallery {
 		$meta_array = get_post_custom();
 		
 		// Ensure that this is a array
-		if (!is_array($meta_array)) {
+		if ( !is_array($meta_array) )
 			$meta_array = array($meta_array);
-		}
 		
 		// assign meta key to db setting key
 		$meta_tags = array(
