@@ -1,7 +1,7 @@
 NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
-V1.1.0
+V1.1.0 - 26.01.2009
 - NEW : Pagination for album page via custom fields ('ngg_paged_Galleries')
 - NEW : Support for fixed number of columns inside the gallery
 - NEW : Added pagination for galleries and images in admin section
