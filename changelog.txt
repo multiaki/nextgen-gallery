@@ -2,7 +2,8 @@ NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
 V1.2.0
-- NEW : Crop thumbnails manullaly (THX to Simone Fumagalli)
+- NEW : Crop thumbnails manually (THX to Simone Fumagalli)
+- Bugfix : init column script after document is ready
 
 V1.1.0 - 26.01.2009
 - NEW : Pagination for album page via custom fields ('ngg_paged_Galleries')

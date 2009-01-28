@@ -451,7 +451,7 @@ if($picturelist) {
 
 	<script type="text/javascript">
 	/* <![CDATA[ */
-	columns.init('nggallery-manage-images');
+	jQuery(document).ready(function(){columns.init('nggallery-manage-images');});	
 	/* ]]> */
 	</script>
 	<?php
