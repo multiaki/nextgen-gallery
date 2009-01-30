@@ -38,7 +38,7 @@ function ngg_upgrade() {
 		
 		// v0.71 -> v0.84
 		if (version_compare($installed_ver, '0.84', '<')) {
-			ngg_maybe_add_column( $wpdb->nggallery, 'sortorder', "BIGINT(20) DEFAULT '0' NOT NULL AFTER exclude");
+			ngg_maybe_add_column( $wpdb->nggpictures, 'sortorder', "BIGINT(20) DEFAULT '0' NOT NULL AFTER exclude");
 		}
 
 		// v0.84 -> v0.95
