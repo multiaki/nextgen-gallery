@@ -361,6 +361,28 @@ class nggGallery {
 		else
 			return false;		
 	}
+
+	/**
+	 * Support for i18n with polyglot or qtrans
+	 * 
+	 * @param string $in
+	 * @return string $in localized
+	 */
+	function i18n($in) {
+		
+		if ( function_exists( 'langswitch_filter_langs_with_message' ) )
+			$in = langswitch_filter_langs_with_message($in);
+				
+		if ( function_exists( 'polyglot_filter' ))
+			$in = polyglot_filter($in);
+		
+		if ( function_exists( 'qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage' ))
+			$in = qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($in);
+		
+		$in = apply_filters('localization', $in);
+		
+		return $in;
+	}
 	
 }
 

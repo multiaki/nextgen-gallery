@@ -19,7 +19,7 @@ function nggShowSlideshow($galleryID, $width, $height) {
 
 	// remove media file from RSS feed
 	if ( is_feed() ) {
-		$out = '[' . $ngg_options['galTextSlide'] . ']'; 
+		$out = '[' . nggGallery::i18n($ngg_options['galTextSlide']) . ']'; 
 		return $out;
 	}
 	
@@ -125,7 +125,7 @@ function nggShowGallery( $galleryID, $template = '' ) {
 		if ( $show == 'slide' ) {
 			$args['show'] = "gallery";
 			$out  = '<div class="ngg-galleryoverview">';
-			$out .= '<div class="slideshowlink"><a class="slideshowlink" href="' . $nggRewrite->get_permalink($args) . '">'.$ngg_options['galTextGallery'].'</a></div>';
+			$out .= '<div class="slideshowlink"><a class="slideshowlink" href="' . $nggRewrite->get_permalink($args) . '">'.nggGallery::i18n($ngg_options['galTextGallery']).'</a></div>';
 			$out .= nggShowSlideshow($galleryID, $ngg_options['irWidth'], $ngg_options['irHeight']);
 			$out .= '</div>'."\n";
 			$out .= '<div class="ngg-clear"></div>'."\n";
@@ -191,7 +191,7 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
 		if (($ngg_options['galShowSlide']) AND (NGGALLERY_IREXIST)) {
 			$gallery->show_slideshow = true;
 			$gallery->slideshow_link = $nggRewrite->get_permalink(array ('show' => "slide"));
-			$gallery->slideshow_link_text = $ngg_options['galTextSlide'];
+			$gallery->slideshow_link_text = nggGallery::i18n($ngg_options['galTextSlide']);
 		}
 		
 		if ($ngg_options['usePicLens']) {
@@ -663,8 +663,8 @@ function nggShowRelatedGallery($taglist, $maxImages = 0) {
 		// get the effect code
 		$thumbcode = $picture->get_thumbcode( __('Related images for', 'nggallery') . ' ' . get_the_title());
 
-		$out .= '<a href="' . $picture->imageURL . '" title="' . stripslashes($picture->description) . '" ' . $thumbcode . ' >';
-		$out .= '<img title="' . stripslashes($picture->alttext) . '" alt="' . stripslashes($picture->alttext) . '" src="' . $picture->thumbURL . '" />';
+		$out .= '<a href="' . $picture->imageURL . '" title="' . stripslashes(nggGallery::i18n($picture->description)) . '" ' . $thumbcode . ' >';
+		$out .= '<img title="' . stripslashes(nggGallery::i18n($picture->alttext)) . '" alt="' . stripslashes(nggGallery::i18n($picture->alttext)) . '" src="' . $picture->thumbURL . '" />';
 		$out .= '</a>' . "\n";
 	}
 	$out .= '</div>' . "\n";
