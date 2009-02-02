@@ -76,12 +76,13 @@ class nggAdmin{
 			return false;
 		}
 		
-		$result=$wpdb->get_var("SELECT name FROM $wpdb->nggallery WHERE name = '$galleryname' ");
+		$result = $wpdb->get_var("SELECT name FROM $wpdb->nggallery WHERE name = '$galleryname' ");
+		
 		if ($result) {
 			nggGallery::show_error( __ngettext( 'Gallery', 'Galleries', 1, 'nggallery' ) .' <strong>'.$galleryname.'</strong> '.__('already exists', 'nggallery'));
 			return false;			
 		} else { 
-			$result = $wpdb->query("INSERT INTO $wpdb->nggallery (name, path, title, author) VALUES ('$galleryname', '$nggpath', '$gallerytitle' , '$user_ID') ");
+			$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->nggallery (name, path, title, author) VALUES (%s, %s, %s, %s)", $galleryname, $nggpath, $gallerytitle , $user_ID) );
 			if ($result) {
 				$message  = __('Gallery %1$s successfully created.<br/>You can show this gallery with the tag %2$s.<br/>','nggallery');
 				$message  = sprintf($message, $galleryname, '[gallery id=' . $wpdb->insert_id . ']');
@@ -134,7 +135,7 @@ class nggAdmin{
 		$gallery_id = $wpdb->get_var("SELECT gid FROM $wpdb->nggallery WHERE path = '$galleryfolder' ");
 
 		if (!$gallery_id) {
-			$result = $wpdb->query("INSERT INTO $wpdb->nggallery (name, path, title, author) VALUES ('$galleryname', '$galleryfolder', '$galleryname', '$user_ID') ");
+			$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->nggallery (name, path, title, author) VALUES (%s, %s, %s, %s)", $galleryname, $nggpath, $gallerytitle , $user_ID) );
 			if (!$result) {
 				nggGallery::show_error(__('Database error. Could not add gallery!','nggallery'));
 				return;
@@ -358,7 +359,7 @@ class nggAdmin{
 		
 		if ( is_array($imageslist) ) {
 			foreach($imageslist as $picture) {
-				$result = $wpdb->query("INSERT INTO $wpdb->nggpictures (galleryid, filename, alttext, exclude) VALUES ('$galleryID', '$picture', '$picture', 0) ");
+				$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->nggpictures (galleryid, filename, alttext, exclude) VALUES (%s, %s, %s, 0)", $galleryID, $picture, $picture) );
 				$pic_id = (int) $wpdb->insert_id;
 				if ($result) 
 					$image_ids[] = $pic_id;
@@ -402,7 +403,7 @@ class nggAdmin{
 				// get the file date/time from exif
 				$timestamp = $meta['timestamp'];
 				// update database
-				$result=$wpdb->query( "UPDATE $wpdb->nggpictures SET alttext = '$alttext', description = '$description', imagedate = '$timestamp'  WHERE pid = $pic_id");
+				$result = $wpdb->query( $wpdb->prepare("UPDATE $wpdb->nggpictures SET alttext = %s, description = %s, imagedate = %s WHERE pid = %d", $alttext, $description, $timestamp, $pic_id) );
 				// add the tags
 				if ($meta['keywords']) {
 					$taglist = explode(",", $meta['keywords']);
