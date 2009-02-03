@@ -207,11 +207,13 @@ if ( (!$ngg_options['thumbfix']) and (!$ngg_options['thumbcrop']) ) {
 <script>
 <!--
 	
+	jQuery(document).ready(function(){
 		jQuery('#imageToEdit').Jcrop({
 			onChange: showPreview,
 			onSelect: showPreview,
 			aspectRatio: <?php echo round($WidthHtmlPrev/$HeightHtmlPrev,1) ?>
 		});
+	});
 
 -->
 </script>
