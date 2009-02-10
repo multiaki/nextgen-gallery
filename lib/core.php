@@ -3,7 +3,7 @@
 * Main PHP class for the WordPress plugin NextGEN Gallery
 * 
 * @author 		Alex Rabe 
-* @copyright 	Copyright 2007 - 2008
+* @copyright 	Copyright 2007 - 2009
 * 
 */
 class nggGallery {

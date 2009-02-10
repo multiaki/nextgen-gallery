@@ -3,7 +3,7 @@ by Alex Rabe & NextGEN DEV Team
 
 V1.2.0
 - NEW : Crop thumbnails manually (THX to Simone Fumagalli)
-- NEW : Support for i18n with polyglot or qtrans plugin ( THX to Boris Gumpler)
+- NEW : Support for i18n with polyglot or qtrans plugin ( THX to Boris Glumpler)
 - Bugfix : init column script after document is ready
 - Bugfix : Upgrade routine didn't add sortorder to correct table (THX to Uwe)
 
