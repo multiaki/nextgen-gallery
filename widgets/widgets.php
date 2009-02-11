@@ -293,7 +293,7 @@ function ngg_widget_control($widget_args = 1) {
 			</select>
 			<select id="ngg_images-show-<?php echo $number; ?>" name="widget_ngg_images[<?php echo $number; ?>][show]" >
 				<option <?php selected("thumbnail" , $show); ?> value="thumbnail"><?php _e('Thumbnails','nggallery'); ?></option>
-				<option <?php selected("original" , $show); ?> value="orginal"><?php _e('Original images','nggallery'); ?></option>
+				<option <?php selected("original" , $show); ?> value="original"><?php _e('Original images','nggallery'); ?></option>
 			</select>
 			</label>
 		</p>
@@ -391,12 +391,12 @@ function ngg_widget_control($widget_args = 1) {
 				$thumbcode = $image->get_thumbcode("sidebar_".$number);
 				
 				//TODO:For mixed portrait/landscape it's better to use only the height setting, if widht is 0 or vice versa
-				$out = '<a href="'.$image->imageURL.'" title="'.stripslashes(nggGallery::i18n($image->description)).'" '.$thumbcode.'>';
+				$out = '<a href="' . $image->imageURL . '" title="' . html_entity_decode(stripslashes(nggGallery::i18n($image->description))) . '" ' . $thumbcode .'>';
 				// Typo fix for the next updates (happend until 1.0.2)
 				$options[$number]['show'] = ( $options[$number]['show'] == 'orginal' ) ? 'original' : $options[$number]['show'];
 				
 				if ( $options[$number]['show'] == 'original' )
-					$out .= '<img src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$image->pid.'&amp;width='.$options[$number]['width'].'&amp;height='.$options[$number]['height']. '" width="'.$options[$number]['width'].'" height="'.$options[$number]['height'].'" title="'.nggGallery::i18n($image->alttext).'" alt="'.nggGallery::i18n($image->alttext).'" />';
+					$out .= '<img src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$image->pid.'&amp;width='.$options[$number]['width'].'&amp;height='.$options[$number]['height']. '" title="'.nggGallery::i18n($image->alttext).'" alt="'.nggGallery::i18n($image->alttext).'" />';
 				else	
 					$out .= '<img src="'.$image->thumbURL.'" width="'.$options[$number]['width'].'" height="'.$options[$number]['height'].'" title="'.nggGallery::i18n($image->alttext).'" alt="'.nggGallery::i18n($image->alttext).'" />';			
 				
