@@ -2,9 +2,12 @@ NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
 V1.2.0
+- NEW : Adding shortcode [recent max="7" template="filename" /] to show the most recent pictures (THX to Bernhard)
 - NEW : Crop thumbnails manually (THX to Simone Fumagalli)
 - NEW : Support for i18n with polyglot or qtrans plugin ( THX to Boris Glumpler)
-- Bugfix : init column script after document is ready
+- Added : SWFUpload V2.2.0 B5
+- Bugfix : Typo fix in widgets
+- Bugfix : Init column script after document is ready
 - Bugfix : Upgrade routine didn't add sortorder to correct table (THX to Uwe)
 
 V1.1.0 - 26.01.2009
