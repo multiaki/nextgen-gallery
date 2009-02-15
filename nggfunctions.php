@@ -791,4 +791,42 @@ function the_related_images($type = 'tags', $maxNumbers = 7) {
 	echo nggShowRelatedImages($type, $maxNumbers);
 }
 
+/**
+ * nggShowRecentImages($maxImages,$template) - return recent images
+ * 
+ * @access public
+ * @param integer $maxImages of images
+ * @param string $template (optional) name for a template file, look for gallery-$template
+ * @return the content
+ */
+function nggShowRecentImages($maxImages, $template = '') {
+	// $_GET from wp_query
+	$pid  	= get_query_var('pid');
+	$pageid = get_query_var('pageid');
+	
+	// get now the recent images
+	$picturelist = nggdb::find_last_images(0, $maxImages, true);
+
+	// look for ImageBrowser if we have a $_GET('pid')
+	if ( $pageid == get_the_ID() || !is_home() )  
+		if (!empty( $pid ))  {
+			foreach ($picturelist as $picture) {
+				$picarray[] = $picture->pid;
+			}
+			$out = nggCreateImageBrowser($picarray);
+			return $out;
+		}
+
+	// go on if not empty
+	if ( empty($picturelist) )
+		return;
+	
+	// show gallery
+	if ( is_array($picturelist) )
+		$out = nggCreateGallery($picturelist, false, $template);
+
+	$out = apply_filters('ngg_show_recent_images_content', $out, $taglist);
+	return $out;
+}
+
 ?>
