@@ -390,15 +390,19 @@ function ngg_widget_control($widget_args = 1) {
 				// get the effect code
 				$thumbcode = $image->get_thumbcode("sidebar_".$number);
 				
+				// enable i18n support for alttext and description
+				$alttext      =  htmlentities( stripslashes( nggGallery::i18n($image->alttext) ));
+				$description  =  htmlentities( stripslashes( nggGallery::i18n($image->description) ));
+				
 				//TODO:For mixed portrait/landscape it's better to use only the height setting, if widht is 0 or vice versa
-				$out = '<a href="' . $image->imageURL . '" title="' . html_entity_decode(stripslashes(nggGallery::i18n($image->description))) . '" ' . $thumbcode .'>';
+				$out = '<a href="' . $image->imageURL . '" title="' . $description . '" ' . $thumbcode .'>';
 				// Typo fix for the next updates (happend until 1.0.2)
 				$options[$number]['show'] = ( $options[$number]['show'] == 'orginal' ) ? 'original' : $options[$number]['show'];
 				
 				if ( $options[$number]['show'] == 'original' )
-					$out .= '<img src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$image->pid.'&amp;width='.$options[$number]['width'].'&amp;height='.$options[$number]['height']. '" title="'.nggGallery::i18n($image->alttext).'" alt="'.nggGallery::i18n($image->alttext).'" />';
+					$out .= '<img src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$image->pid.'&amp;width='.$options[$number]['width'].'&amp;height='.$options[$number]['height']. '" title="'.$alttext.'" alt="'.$alttext.'" />';
 				else	
-					$out .= '<img src="'.$image->thumbURL.'" width="'.$options[$number]['width'].'" height="'.$options[$number]['height'].'" title="'.nggGallery::i18n($image->alttext).'" alt="'.nggGallery::i18n($image->alttext).'" />';			
+					$out .= '<img src="'.$image->thumbURL.'" width="'.$options[$number]['width'].'" height="'.$options[$number]['height'].'" title="'.$alttext.'" alt="'.$alttext.'" />';			
 				
 				echo $out . '</a>'."\n";
 				

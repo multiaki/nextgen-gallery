@@ -6,6 +6,8 @@ V1.2.0
 - NEW : Crop thumbnails manually (THX to Simone Fumagalli)
 - NEW : Support for i18n with polyglot or qtrans plugin ( THX to Boris Glumpler)
 - Added : SWFUpload V2.2.0 B5
+- Bugfix : Language typo fixes
+- Bugfix : Admin Pagination fix
 - Bugfix : Typo fix in widgets
 - Bugfix : Init column script after document is ready
 - Bugfix : Upgrade routine didn't add sortorder to correct table (THX to Uwe)

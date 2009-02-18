@@ -283,7 +283,7 @@ msgid "Import metadata finished"
 msgstr ""
 
 #: ../admin/manage.php:171
-msgid "Operation successfull. Please clear your browser cache."
+msgid "Operation successful. Please clear your browser cache."
 msgstr ""
 
 #: ../admin/manage.php:234
@@ -1180,7 +1180,7 @@ msgid "Activate Media RSS feed"
 msgstr ""
 
 #: ../admin/settings.php:145
-msgid "A RSS feed will be added to you blog header. Usefull for CoolIris/PicLens"
+msgid "A RSS feed will be added to you blog header. Useful for CoolIris/PicLens"
 msgstr ""
 
 #: ../admin/settings.php:148
@@ -1638,7 +1638,7 @@ msgid "Reset all settings to default parameter"
 msgstr ""
 
 #: ../admin/setup.php:26
-msgid "Uninstall sucessfull ! Now delete the plugin and enjoy your life ! Good luck !"
+msgid "Uninstall sucessful ! Now delete the plugin and enjoy your life ! Good luck !"
 msgstr ""
 
 #: ../admin/setup.php:30
@@ -1748,7 +1748,7 @@ msgid "Start upgrade now"
 msgstr ""
 
 #: ../admin/upgrade.php:215
-msgid "Upgrade sucessfull"
+msgid "Upgrade sucessful"
 msgstr ""
 
 #: ../admin/upgrade.php:216

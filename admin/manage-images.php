@@ -8,8 +8,6 @@ function nggallery_picturelist() {
 	
 	// GET variables
 	$act_gid    = $ngg->manage_page->gid;
-	$showTags   = $ngg->manage_page->showTags;
-	$hideThumbs = $ngg->manage_page->hideThumbs;
 	
 	// Load the gallery metadata
 	$gallery = $nggdb->find_gallery($act_gid);

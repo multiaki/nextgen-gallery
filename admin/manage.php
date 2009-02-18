@@ -162,7 +162,7 @@ class nggManageGallery {
 		// will be called after a ajax operation
 		if (isset ($_POST['ajax_callback']))  {
 				if ($_POST['ajax_callback'] == 1)
-					nggGallery::show_message(__('Operation successfull. Please clear your browser cache.',"nggallery"));
+					nggGallery::show_message(__('Operation successful. Please clear your browser cache.',"nggallery"));
 			$this->mode = 'edit';		
 		}
 		

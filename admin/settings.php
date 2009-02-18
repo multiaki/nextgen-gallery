@@ -148,7 +148,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<tr>
 						<th align="left"><?php _e('Activate Media RSS feed','nggallery') ?></th>
 						<td><input type="checkbox" name="useMediaRSS" value="1" <?php checked('1', $ngg->options['useMediaRSS']); ?> />
-						<span class="setting-description"><?php _e('A RSS feed will be added to you blog header. Usefull for CoolIris/PicLens','nggallery') ?></span></td>
+						<span class="setting-description"><?php _e('A RSS feed will be added to you blog header. Useful for CoolIris/PicLens','nggallery') ?></span></td>
 					</tr>
 					<tr>
 						<th align="left"><?php _e('Activate PicLens/CoolIris support','nggallery') ?> (<a href="http://www.cooliris.com">CoolIris</a>)</th>
