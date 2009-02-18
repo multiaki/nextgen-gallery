@@ -26,7 +26,8 @@ class NextGEN_shortcodes {
 		add_shortcode( 'slideshow', array(&$this, 'show_slideshow' ) );
 		add_shortcode( 'nggtags', array(&$this, 'show_tags' ) );
 		add_shortcode( 'thumb', array(&$this, 'show_thumbs' ) );
-		add_shortcode( 'recent', array(&$this, 'show_recent' ) );
+		add_shortcode( 'random', array(&$this, 'show_random_recent' ), 'random' );
+		add_shortcode( 'recent', array(&$this, 'show_random_recent' ), 'recent' );
 	}
 
 	 /**
@@ -282,24 +283,25 @@ class NextGEN_shortcodes {
 	}
 
 	/**
-	 * Function to show a gallery of the most recent images with shortcode of type:
+	 * Function to show a gallery of random or the most recent images with shortcode of type:
 	 * 
+	 * [random max="7" template="filename" /]
 	 * [recent max="7" template="filename" /]
 	 * where 
-	 * - max is the maximum number of recent images to show
+	 * - max is the maximum number of random or recent images to show
 	 * - template is a name for a gallery template, which is located in themefolder/nggallery or plugins/nextgen-gallery/view
 	 * 
 	 * @param array $atts
 	 * @return the_content
 	 */
-	function show_recent( $atts ) {
+	function show_random_recent( $atts, $type ) {
 	
 		extract(shortcode_atts(array(
 			'max'		=> '',
 			'template'	=> ''
 		), $atts));
 		
-		$out = nggShowRecentImages($max, $template);
+		$out = nggShowRandomRecent($type, $max, $template);
 		
 		return $out;
 	}
