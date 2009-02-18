@@ -26,8 +26,8 @@ class NextGEN_shortcodes {
 		add_shortcode( 'slideshow', array(&$this, 'show_slideshow' ) );
 		add_shortcode( 'nggtags', array(&$this, 'show_tags' ) );
 		add_shortcode( 'thumb', array(&$this, 'show_thumbs' ) );
-		add_shortcode( 'random', array(&$this, 'show_random_recent' ), 'random' );
-		add_shortcode( 'recent', array(&$this, 'show_random_recent' ), 'recent' );
+		add_shortcode( 'random', array(&$this, 'show_random' ) );
+		add_shortcode( 'recent', array(&$this, 'show_recent' ) );
 	}
 
 	 /**
@@ -294,14 +294,26 @@ class NextGEN_shortcodes {
 	 * @param array $atts
 	 * @return the_content
 	 */
-	function show_random_recent( $atts, $type ) {
+	function show_random( $atts ) {
 	
 		extract(shortcode_atts(array(
 			'max'		=> '',
 			'template'	=> ''
 		), $atts));
 		
-		$out = nggShowRandomRecent($type, $max, $template);
+		$out = nggShowRandomRecent('random', $max, $template);
+		
+		return $out;
+	}
+
+	function show_recent( $atts ) {
+	
+		extract(shortcode_atts(array(
+			'max'		=> '',
+			'template'	=> ''
+		), $atts));
+		
+		$out = nggShowRandomRecent('recent', $max, $template);
 		
 		return $out;
 	}
