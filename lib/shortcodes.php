@@ -28,6 +28,7 @@ class NextGEN_shortcodes {
 		add_shortcode( 'thumb', array(&$this, 'show_thumbs' ) );
 		add_shortcode( 'random', array(&$this, 'show_random' ) );
 		add_shortcode( 'recent', array(&$this, 'show_recent' ) );
+		add_shortcode( 'tagcloud', array(&$this, 'show_tagcloud' ) );
 	}
 
 	 /**
@@ -314,6 +315,24 @@ class NextGEN_shortcodes {
 		), $atts));
 		
 		$out = nggShowRandomRecent('recent', $max, $template);
+		
+		return $out;
+	}
+
+	/**
+	 * Shortcode for the Image tag cloud
+	 * Usage : [tagcloud template="filename" /]
+	 * 
+	 * @param array $atts
+	 * @return the content
+	 */
+	function show_tagcloud( $atts ) {
+	
+		extract(shortcode_atts(array(
+			'template'	=> ''
+		), $atts));
+		
+		$out = nggTagCloud($template);
 		
 		return $out;
 	}

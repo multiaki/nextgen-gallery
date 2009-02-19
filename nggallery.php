@@ -66,7 +66,6 @@ class nggLoader {
 		$this->load_options();
 		$this->define_constant();
 		$this->define_tables();
-		$this->register_taxonomy();
 		$this->load_dependencies();
 		$this->start_rewrite_module();
 		
@@ -80,7 +79,10 @@ class nggLoader {
 
 		// Start this plugin once all other plugins are fully loaded
 		add_action( 'plugins_loaded', array(&$this, 'start_plugin') );
-
+		
+		// Register_taxonomy must be used during wo init
+		add_action( 'init', array(&$this, 'register_taxonomy') );
+		add_filter( 'get_terms', array(&$this, 'correct_terms') , 10, 2);
 	}
 	
 	function start_plugin() {
@@ -172,23 +174,37 @@ class nggLoader {
 		
 	}
 	
-	function register_taxonomy() {		
+	function register_taxonomy() {
+		global $wp_rewrite;
 
-		// Register the NextGEN taxonomy	
-		register_taxonomy( 
-			'ngg_tag', 
-			'nggallery',
-			array(
+		// Register the NextGEN taxonomy
+		$args = array(
  	            'label' => __('Picture tag', 'nggallery'),
  	            'template' => __('Picture tag: %2$l.', 'nggallery'),
 	            'helps' => __('Separate picture tags with commas.', 'nggallery'),
 	            'sort' => true,
  	            'args' => array('orderby' => 'term_order'),
-	            'rewrite' => array('slug' => 'picture-tag'),
- 	            'query_var' => 'picture-tag'
-			)
-		);
-		
+	            'rewrite' => false,
+ 	            'query_var' => 'nggtag'
+				);
+
+		if ($wp_rewrite->using_permalinks() && $this->options['usePermalinks'] )
+			$args['rewrite'] = array('slug' => 'nggtag');
+					
+		register_taxonomy( 'ngg_tag', 'nggallery', $args );
+	}
+	
+	function correct_terms($terms, $taxonomies) {
+		// taxonomy.php seems to be faulty, 
+		// function get_term_link() look for a integer term id, but get_terms() retrun a string array
+
+		if ( $taxonomies[0] == 'ngg_tag' ) {
+			foreach ( $terms as $k => $term ) {
+				$terms[$k]->term_id = (int) $terms[$k]->term_id;
+			}
+		}
+
+		return $terms;		
 	}
 
 	function define_constant() {

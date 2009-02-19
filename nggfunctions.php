@@ -835,4 +835,17 @@ function nggShowRandomRecent($type, $maxImages, $template = '') {
 	return $out;
 }
 
+/**
+ * nggTagCloud() - return a tag cloud based on the wp core tag cloud system
+ * 
+ * @param string $template (optional) name for a template file, look for gallery-$template
+ * @return the content
+ */
+function nggTagCloud($template = '') {
+	
+	$out = wp_tag_cloud('taxonomy=ngg_tag' );
+	
+	return $out;
+}
+
 ?>
