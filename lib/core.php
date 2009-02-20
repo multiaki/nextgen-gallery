@@ -356,8 +356,8 @@ class nggGallery {
 	}
 	
 	function get_theme_css_file() {
-		if ( file_exists (TEMPLATEPATH . '/nggallery.css') )
-			return get_template_directory_uri() . '/nggallery.css';
+		if ( file_exists (STYLESHEETPATH . '/nggallery.css') )
+			return get_stylesheet_directory_uri() . '/nggallery.css';
 		else
 			return false;		
 	}
