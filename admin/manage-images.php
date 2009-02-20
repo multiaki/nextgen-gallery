@@ -142,7 +142,7 @@ jQuery(document).ready( function() {
 
 <div class="wrap">
 
-<h2><?php echo __ngettext( 'Gallery', 'Galleries', 1, 'nggallery' ); ?> : <?php echo $gallery->title; ?></h2>
+<h2><?php echo __ngettext( 'Gallery', 'Galleries', 1, 'nggallery' ); ?> : <?php echo nggGallery::i18n($gallery->title); ?></h2>
 
 <br style="clear: both;" />
 
@@ -314,7 +314,7 @@ if($picturelist) {
 						?>
 						<td <?php echo $attributes ?>>
 							<strong><a href="<?php echo $picture->imageURL; ?>" class="thickbox" title="<?php echo $picture->filename ?>">
-								<?php echo ( empty($picture->alttext) ) ? $picture->filename : stripslashes($picture->alttext); ?>
+								<?php echo ( empty($picture->alttext) ) ? $picture->filename : stripslashes(nggGallery::i18n($picture->alttext)); ?>
 							</a></strong>
 							<br /><?php echo $date?>
 							<p>

@@ -281,7 +281,6 @@ class nggManageGallery {
 			$page['post_author']  = $user_ID;
 			$page['post_status']  = 'publish';
 			$page['post_title']   = $gallery_title == '' ? $gallery_name : $gallery_title;
-			
 			$page = apply_filters('ngg_add_new_page', $page, $this->gid);
 	
 			$gallery_pageid = wp_insert_post ($page);
