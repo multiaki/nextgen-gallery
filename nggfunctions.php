@@ -3,12 +3,13 @@
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
 
 /**
- * nggShowSlideshow()
+ * Return a script for the Imagerotator flash slideshow. Can be used in any tmeplate with <?php echo nggShowSlideshow($galleryID, $width, $height) ?>
+ * Require the script swfobject.js in the header or footer
  * 
  * @access public 
- * @param integer $galleryID
- * @param integer $irWidth
- * @param integer $irHeight
+ * @param integer $galleryID ID of the gallery
+ * @param integer $irWidth Width of the flash container
+ * @param integer $irHeight Height of the flash container
  * @return the content
  */
 function nggShowSlideshow($galleryID, $width, $height) {
@@ -237,9 +238,9 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
 		$picturelist[$key]->thumbnailURL = $picture->thumbURL;
 		$picturelist[$key]->size = $thumbsize;
 		$picturelist[$key]->thumbcode = $thumbcode;
+		$picturelist[$key]->caption = ( empty($picture->description) ) ? '&nbsp;' : html_entity_decode ( stripslashes($picture->description) );
 		$picturelist[$key]->description = ( empty($picture->description) ) ? ' ' : htmlspecialchars ( stripslashes($picture->description) );
 		$picturelist[$key]->alttext = ( empty($picture->alttext) ) ?  ' ' : htmlspecialchars ( stripslashes($picture->alttext) );
-		$picturelist[$key]->caption = ( empty($picture->description) ) ? '&nbsp;' : html_entity_decode( stripslashes($picture->description) );
 	}
 
 	// look for gallery-$template.php or pure gallery.php
@@ -305,7 +306,7 @@ function nggShowAlbum($albumID, $template = 'extend') {
  * 
  * @access internal
  * @param array $galleriesID
- * @param string (optional) $template
+ * @param string (optional) $template name for a template file, look for album-$template
  * @param object (optional) $album result from the db
  * @return the content
  */
@@ -838,14 +839,46 @@ function nggShowRandomRecent($type, $maxImages, $template = '') {
 /**
  * nggTagCloud() - return a tag cloud based on the wp core tag cloud system
  * 
+ * @param array $args
  * @param string $template (optional) name for a template file, look for gallery-$template
  * @return the content
  */
-function nggTagCloud($template = '') {
+function nggTagCloud($args ='', $template = '') {
+	global $nggRewrite;
+
+	// $_GET from wp_query
+	$query   = get_query_var('gallerytag');
 	
-	$out = wp_tag_cloud('taxonomy=ngg_tag' );
+	// look for gallerytag variable 
+	if ( $pageid == get_the_ID() || !is_home() )  {
+		if (!empty( $query ))  {
+	
+			$slug = attribute_escape( $query );
+			$out .=  nggShowGalleryTags($slug);
+			return $out;
+	
+		} 
+	}
+	
+	$defaults = array(
+		'smallest' => 8, 'largest' => 22, 'unit' => 'pt', 'number' => 45,
+		'format' => 'flat', 'orderby' => 'name', 'order' => 'ASC',
+		'exclude' => '', 'include' => '', 'link' => 'view', 'taxonomy' => 'ngg_tag'
+	);
+	$args = wp_parse_args( $args, $defaults );
+
+	$tags = get_terms( $args['taxonomy'], array_merge( $args, array( 'orderby' => 'count', 'order' => 'DESC' ) ) ); // Always query top tags
+
+	foreach ($tags as $key => $tag ) {
+		
+		$link = $nggRewrite->get_permalink(array ('gallerytag' => $tag->slug));
+		
+		$tags[ $key ]->link = $link;
+		$tags[ $key ]->id = $tag->term_id;
+	}
+	
+	$out = '<div class="ngg-tagcloud">' . wp_generate_tag_cloud( $tags, $args ) . '</div>';
 	
 	return $out;
 }
-
 ?>

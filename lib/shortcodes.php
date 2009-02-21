@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Alex Rabe, Vincent Prat 
- * @copyright 2008
+ * @copyright 2008 - 2009
  * @since 1.0.0
  * @description Use WordPress Shortcode API for more features
  * @Docs http://codex.wordpress.org/Shortcode_API
@@ -133,7 +133,7 @@ class NextGEN_shortcodes {
 		// attach related images based on category or tags
 		if ($ngg_options['activateTags']) 
 			$content .= nggShowRelatedImages();
-	
+		
 		return $content;
 	}
 	
@@ -332,7 +332,7 @@ class NextGEN_shortcodes {
 			'template'	=> ''
 		), $atts));
 		
-		$out = nggTagCloud($template);
+		$out = nggTagCloud( '', $template );
 		
 		return $out;
 	}

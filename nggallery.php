@@ -82,7 +82,6 @@ class nggLoader {
 		
 		// Register_taxonomy must be used during wo init
 		add_action( 'init', array(&$this, 'register_taxonomy') );
-		add_filter( 'get_terms', array(&$this, 'correct_terms') , 10, 2);
 	}
 	
 	function start_plugin() {
@@ -183,30 +182,12 @@ class nggLoader {
  	            'template' => __('Picture tag: %2$l.', 'nggallery'),
 	            'helps' => __('Separate picture tags with commas.', 'nggallery'),
 	            'sort' => true,
- 	            'args' => array('orderby' => 'term_order'),
-	            'rewrite' => false,
- 	            'query_var' => 'nggtag'
+ 	            'args' => array('orderby' => 'term_order')
 				);
-
-		if ($wp_rewrite->using_permalinks() && $this->options['usePermalinks'] )
-			$args['rewrite'] = array('slug' => 'nggtag');
 					
 		register_taxonomy( 'ngg_tag', 'nggallery', $args );
 	}
 	
-	function correct_terms($terms, $taxonomies) {
-		// taxonomy.php seems to be faulty, 
-		// function get_term_link() look for a integer term id, but get_terms() retrun a string array
-
-		if ( $taxonomies[0] == 'ngg_tag' ) {
-			foreach ( $terms as $k => $term ) {
-				$terms[$k]->term_id = (int) $terms[$k]->term_id;
-			}
-		}
-
-		return $terms;		
-	}
-
 	function define_constant() {
 		
 		//TODO:SHOULD BE REMOVED LATER

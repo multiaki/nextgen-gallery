@@ -4,7 +4,7 @@
  * 
  * @package NextGEN Gallery
  * @author Alex Rabe
- * @copyright 2008
+ * @copyright 2008-2009
  * @since 1.0.0
  */
 class nggAdminPanel{
