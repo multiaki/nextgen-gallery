@@ -847,16 +847,16 @@ function nggTagCloud($args ='', $template = '') {
 	global $nggRewrite;
 
 	// $_GET from wp_query
-	$query   = get_query_var('gallerytag');
+	$tag     = get_query_var('gallerytag');
+	$pageid  = get_query_var('pageid');
 	
 	// look for gallerytag variable 
 	if ( $pageid == get_the_ID() || !is_home() )  {
-		if (!empty( $query ))  {
+		if (!empty( $tag ))  {
 	
-			$slug = attribute_escape( $query );
-			$out .=  nggShowGalleryTags($slug);
+			$slug =  attribute_escape( $tag );
+			$out  =  nggShowGalleryTags( $slug );
 			return $out;
-	
 		} 
 	}
 	
@@ -870,10 +870,8 @@ function nggTagCloud($args ='', $template = '') {
 	$tags = get_terms( $args['taxonomy'], array_merge( $args, array( 'orderby' => 'count', 'order' => 'DESC' ) ) ); // Always query top tags
 
 	foreach ($tags as $key => $tag ) {
-		
-		$link = $nggRewrite->get_permalink(array ('gallerytag' => $tag->slug));
-		
-		$tags[ $key ]->link = $link;
+
+		$tags[ $key ]->link = $nggRewrite->get_permalink(array ('gallerytag' => $tag->slug));
 		$tags[ $key ]->id = $tag->term_id;
 	}
 	
