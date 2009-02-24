@@ -14,8 +14,8 @@ class nggAdmin{
 
 		//cleanup pathname
 		$galleryname = apply_filters('ngg_gallery_name', $gallerytitle);
-		$nggpath = $defaultpath.$galleryname;
-		$nggRoot = WINABSPATH.$defaultpath;
+		$nggpath = $defaultpath . $galleryname;
+		$nggRoot = WINABSPATH . $defaultpath;
 		$txt = '';
 		
 		// No gallery name ?
@@ -26,8 +26,8 @@ class nggAdmin{
 		
 		// check for main folder
 		if ( !is_dir($nggRoot) ) {
-			if ( !wp_mkdir_p($nggRoot) ) {
-				$txt  = __('Directory', 'nggallery').' <strong>'.$defaultpath.'</strong> '.__('didn\'t exist. Please create first the main gallery folder ', 'nggallery').'!<br />';
+			if ( !wp_mkdir_p( $nggRoot ) ) {
+				$txt  = __('Directory', 'nggallery').' <strong>' . $defaultpath . '</strong> '.__('didn\'t exist. Please create first the main gallery folder ', 'nggallery').'!<br />';
 				$txt .= __('Check this link, if you didn\'t know how to set the permission :', 'nggallery').' <a href="http://codex.wordpress.org/Changing_File_Permissions">http://codex.wordpress.org/Changing_File_Permissions</a> ';
 				nggGallery::show_error($txt);
 				return false;
@@ -35,33 +35,33 @@ class nggAdmin{
 		}
 
 		// check for permission settings, Safe mode limitations are not taken into account. 
-		if ( !is_writeable($nggRoot ) ) {
-			$txt  = __('Directory', 'nggallery').' <strong>'.$defaultpath.'</strong> '.__('is not writeable !', 'nggallery').'<br />';
+		if ( !is_writeable( $nggRoot ) ) {
+			$txt  = __('Directory', 'nggallery').' <strong>' . $defaultpath . '</strong> '.__('is not writeable !', 'nggallery').'<br />';
 			$txt .= __('Check this link, if you didn\'t know how to set the permission :', 'nggallery').' <a href="http://codex.wordpress.org/Changing_File_Permissions">http://codex.wordpress.org/Changing_File_Permissions</a> ';
 			nggGallery::show_error($txt);
 			return false;
 		}
 		
 		// 1. Create new gallery folder
-		if ( !is_dir(WINABSPATH.$nggpath) ) {
-			if ( !wp_mkdir_p (WINABSPATH.$nggpath) ) 
+		if ( !is_dir(WINABSPATH . $nggpath) ) {
+			if ( !wp_mkdir_p (WINABSPATH . $nggpath) ) 
 				$txt  = __('Unable to create directory ', 'nggallery').$nggpath.'!<br />';
 		}
 		
 		// 2. Check folder permission
-		if ( !is_writeable(WINABSPATH.$nggpath ) )
+		if ( !is_writeable(WINABSPATH . $nggpath ) )
 			$txt .= __('Directory', 'nggallery').' <strong>'.$nggpath.'</strong> '.__('is not writeable !', 'nggallery').'<br />';
 
 		// 3. Now create "thumbs" folder inside
-		if ( !is_dir(WINABSPATH.$nggpath.'/thumbs') ) {				
-			if ( !wp_mkdir_p ( WINABSPATH.$nggpath.'/thumbs') ) 
-				$txt .= __('Unable to create directory ', 'nggallery').' <strong>'.$nggpath.'/thumbs !</strong>';
+		if ( !is_dir(WINABSPATH . $nggpath . '/thumbs') ) {				
+			if ( !wp_mkdir_p ( WINABSPATH . $nggpath . '/thumbs') ) 
+				$txt .= __('Unable to create directory ', 'nggallery').' <strong>' . $nggpath . '/thumbs !</strong>';
 		}
 		
 		if (SAFE_MODE) {
 			$help  = __('The server setting Safe-Mode is on !', 'nggallery');	
-			$help .= '<br />'.__('If you have problems, please create directory', 'nggallery').' <strong>'.$nggpath.'</strong> ';	
-			$help .= __('and the thumbnails directory', 'nggallery').' <strong>'.$nggpath.'/thumbs</strong> '.__('with permission 777 manually !', 'nggallery');
+			$help .= '<br />'.__('If you have problems, please create directory', 'nggallery').' <strong>' . $nggpath . '</strong> ';	
+			$help .= __('and the thumbnails directory', 'nggallery').' <strong>' . $nggpath . '/thumbs</strong> '.__('with permission 777 manually !', 'nggallery');
 			nggGallery::show_message($help);
 		}
 		
@@ -69,8 +69,8 @@ class nggAdmin{
 		if ( !empty($txt) ) {
 			if (SAFE_MODE) {
 			// for safe_mode , better delete folder, both folder must be created manually
-				@rmdir(WINABSPATH.$nggpath.'/thumbs');
-				@rmdir(WINABSPATH.$nggpath);
+				@rmdir(WINABSPATH . $nggpath . '/thumbs');
+				@rmdir(WINABSPATH . $nggpath);
 			}
 			nggGallery::show_error($txt);
 			return false;
@@ -79,7 +79,7 @@ class nggAdmin{
 		$result = $wpdb->get_var("SELECT name FROM $wpdb->nggallery WHERE name = '$galleryname' ");
 		
 		if ($result) {
-			nggGallery::show_error( __ngettext( 'Gallery', 'Galleries', 1, 'nggallery' ) .' <strong>'.$galleryname.'</strong> '.__('already exists', 'nggallery'));
+			nggGallery::show_error( __ngettext( 'Gallery', 'Galleries', 1, 'nggallery' ) .' <strong>' . $galleryname . '</strong> '.__('already exists', 'nggallery'));
 			return false;			
 		} else { 
 			$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->nggallery (name, path, title, author) VALUES (%s, %s, %s, %s)", $galleryname, $nggpath, $gallerytitle , $user_ID) );
@@ -124,18 +124,20 @@ class nggAdmin{
 			nggGallery::show_message(__('Directory', 'nggallery').' <strong>'.$gallerypath.'</strong> '.__('contains no pictures', 'nggallery'));
 			return;
 		}
+		
 		// check & create thumbnail folder
 		if ( !nggGallery::get_thumbnail_folder($gallerypath) )
 			return;
 		
 		// take folder name as gallery name		
 		$galleryname = basename($galleryfolder);
+		$galleryname = apply_filters('ngg_gallery_name', $galleryname);
 		
 		// check for existing gallery folder
 		$gallery_id = $wpdb->get_var("SELECT gid FROM $wpdb->nggallery WHERE path = '$galleryfolder' ");
 
 		if (!$gallery_id) {
-			$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->nggallery (name, path, title, author) VALUES (%s, %s, %s, %s)", $galleryname, $nggpath, $gallerytitle , $user_ID) );
+			$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->nggallery (name, path, title, author) VALUES (%s, %s, %s, %s)", $galleryname, $gallerypath, $galleryname , $user_ID) );
 			if (!$result) {
 				nggGallery::show_error(__('Database error. Could not add gallery!','nggallery'));
 				return;
@@ -146,9 +148,11 @@ class nggAdmin{
 		
 		// Look for existing image list
 		$old_imageslist = $wpdb->get_col("SELECT filename FROM $wpdb->nggpictures WHERE galleryid = '$gallery_id' ");
+		
 		// if no images are there, create empty array
 		if ($old_imageslist == NULL) 
 			$old_imageslist = array();
+			
 		// check difference
 		$new_images = array_diff($new_imageslist, $old_imageslist);
 		
