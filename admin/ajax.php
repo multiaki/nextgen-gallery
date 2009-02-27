@@ -45,7 +45,7 @@ function ngg_ajax_operation() {
 					die('-1');	
 				break;		
 			}
-			// A success should retun a '1'
+			// A success should return a '1'
 			die ($result);
 		}
 		
@@ -58,6 +58,14 @@ add_action('wp_ajax_createNewThumb', 'createNewThumb');
 	function createNewThumb() {
 		
 		global $wpdb;
+		
+		// check for correct capability
+		if ( !is_user_logged_in() )
+			die('-1');
+			
+		// check for correct NextGEN capability
+		if ( !current_user_can('NextGEN Manage gallery') ) 
+			die('-1');	
 
 		require_once( dirname( dirname(__FILE__) ) . '/ngg-config.php');
 		include_once( nggGallery::graphic_library() );
@@ -67,14 +75,14 @@ add_action('wp_ajax_createNewThumb', 'createNewThumb');
 		$id 	 = (int) $_POST['id'];
 		$picture = nggdb::find_image($id);
 
-		$x = round($_POST['x'] * $_POST['rr'],0);
-		$y = round($_POST['y'] * $_POST['rr'],0);
-		$w = round($_POST['w'] * $_POST['rr'],0);
-		$h = round($_POST['h'] * $_POST['rr'],0);
+		$x = round( intval($_POST['x']) * intval($_POST['rr']), 0);
+		$y = round( intval($_POST['y']) * intval($_POST['rr']), 0);
+		$w = round( intval($_POST['w']) * intval($_POST['rr']), 0);
+		$h = round( intval($_POST['h']) * intval($_POST['rr']), 0);
 		
 		$thumb = new ngg_Thumbnail($picture->imagePath, TRUE);
 		
-		$thumb->crop($x,$y,$w,$h);
+		$thumb->crop($x, $y, $w, $h);
 		
 		$thumb_filename = $picture->thumbPath;
 

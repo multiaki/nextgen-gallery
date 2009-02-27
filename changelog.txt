@@ -6,6 +6,7 @@ V1.2.0
 - NEW : Adding shortcode [recent max="7" template="filename" /] & [random max="7" template="filename" /] to show the most recent/random pictures (THX to Bernhard)
 - NEW : Crop thumbnails manually (THX to Simone Fumagalli)
 - NEW : Support for i18n with polyglot or qtrans plugin (THX to Boris Glumpler)
+- NEW : Canonical meta link support
 - Added : SWFUpload V2.2.0 B5
 - Bugfix : Language typo fixes
 - Bugfix : Admin Pagination fix
