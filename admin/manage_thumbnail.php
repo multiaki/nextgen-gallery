@@ -134,14 +134,14 @@ if ( (!$ngg_options['thumbfix']) and (!$ngg_options['thumbcrop']) ) {
 		wT = coords.w;
 		hT = coords.h;
 		
-		jQuery("#sizeThumb").html(xT+" "+yT+" "+wT+" "+hT)
+		jQuery("#sizeThumb").html(xT+" "+yT+" "+wT+" "+hT);
 		
 	};
 	
 	function updateThumb() {
 		
 		if ( (wT == 0) || (hT == 0) || (wT == undefined) || (hT == undefined) ) {
-			alert("<?php _e("Select with the mouse the area for the new thumbnail.", "nggallery") ?>")
+			alert("<?php _e("Select with the mouse the area for the new thumbnail.", "nggallery") ?>");
 			return false;			
 		}
 				
@@ -155,13 +155,13 @@ if ( (!$ngg_options['thumbfix']) and (!$ngg_options['thumbcrop']) ) {
 					newUrl = jQuery("#"+selectedImage).attr("src") + "?" + d.getTime();
 					jQuery("#"+selectedImage).attr("src" , newUrl);
 					
-					jQuery('#thumbMsg').html("<?php echo _e("Thumbnail updated", "nggallery") ?>")
-					jQuery('#thumbMsg').css({'display':'block'})
+					jQuery('#thumbMsg').html("<?php echo _e("Thumbnail updated", "nggallery") ?>");
+					jQuery('#thumbMsg').css({'display':'block'});
 					setTimeout(function(){ jQuery('#thumbMsg').fadeOut('slow'); }, 1500);
 			},
 		  error: function() {
-		  			jQuery('#thumbMsg').html("<?php echo _e("Error updating thumbnail.", "nggallery") ?>")
-					jQuery('#thumbMsg').css({'display':'block'})
+		  			jQuery('#thumbMsg').html("<?php echo _e("Error updating thumbnail.", "nggallery") ?>");
+					jQuery('#thumbMsg').css({'display':'block'});
 					setTimeout(function(){ jQuery('#thumbMsg').fadeOut('slow'); }, 1500);
 		    }
 		});
@@ -171,7 +171,7 @@ if ( (!$ngg_options['thumbfix']) and (!$ngg_options['thumbcrop']) ) {
 	-->
 </script>
 
-<table width="98%" align="center" height="400" style="border:1px solid #DADADA">
+<table width="98%" align="center" style="border:1px solid #DADADA">
 	
 	<tr>
 		<td rowspan="3" valign="middle" align="center" width="350" style="background-color : #DADADA;">
