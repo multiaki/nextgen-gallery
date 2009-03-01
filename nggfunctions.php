@@ -494,9 +494,9 @@ function nggCreateImageBrowser($picarray, $template = '') {
 	$picture->next_image_link  = $nggRewrite->get_permalink(array ('pid' => $next_pid));
 	$picture->number = $key + 1;
 	$picture->total = $total;
-	$picture->linktitle = htmlentities(stripslashes($picture->description));
-	$picture->alttext = html_entity_decode(stripslashes($picture->alttext));
-	$picture->description = html_entity_decode(stripslashes($picture->description));
+	$picture->linktitle = htmlspecialchars( stripslashes($picture->description) );
+	$picture->alttext = html_entity_decode( stripslashes($picture->alttext) );
+	$picture->description = html_entity_decode( stripslashes($picture->description) );
 	
 	// let's get the meta data
 	$meta = new nggMeta($picture->imagePath);
@@ -570,9 +570,9 @@ function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $fl
 
 	// add more variables for render output
 	$picture->href_link = $picture->get_href_link();
-	$picture->alttext = html_entity_decode(stripslashes($picture->alttext));
-	$picture->description = html_entity_decode(stripslashes($picture->description));
-	$picture->linktitle = htmlentities(stripslashes($picture->description));
+	$picture->alttext = html_entity_decode( stripslashes($picture->alttext) );
+	$picture->linktitle = htmlspecialchars( stripslashes($picture->description) );
+	$picture->description = html_entity_decode( stripslashes($picture->description) );
 	$picture->classname = 'ngg-singlepic'. $float;
 	$picture->thumbcode = $picture->get_thumbcode( 'singlepic' . $imageID);
 	$picture->height = (int) $height;

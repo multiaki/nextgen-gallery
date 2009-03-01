@@ -391,8 +391,8 @@ function ngg_widget_control($widget_args = 1) {
 				$thumbcode = $image->get_thumbcode("sidebar_".$number);
 				
 				// enable i18n support for alttext and description
-				$alttext      =  htmlentities( stripslashes( nggGallery::i18n($image->alttext) ));
-				$description  =  htmlentities( stripslashes( nggGallery::i18n($image->description) ));
+				$alttext      =  htmlspecialchars( stripslashes( nggGallery::i18n($image->alttext) ));
+				$description  =  htmlspecialchars( stripslashes( nggGallery::i18n($image->description) ));
 				
 				//TODO:For mixed portrait/landscape it's better to use only the height setting, if widht is 0 or vice versa
 				$out = '<a href="' . $image->imageURL . '" title="' . $description . '" ' . $thumbcode .'>';
