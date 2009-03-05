@@ -145,20 +145,24 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	<?php } else { ?>
 	<!-- MultiFile script -->
 	<script type="text/javascript">	
-		jQuery(function(){
+	/* <![CDATA[ */
+		jQuery(document).ready(function(){
 			jQuery('#imagefiles').MultiFile({
 				STRING: {
 			    	remove:'<?php _e('remove', 'nggallery') ;?>'
   				}
 		 	});
 		});
+	/* ]]> */
 	</script>
 	<?php } ?>
 	<!-- jQuery Tabs script -->
 	<script type="text/javascript">
-		jQuery(function() {
+	/* <![CDATA[ */
+		jQuery(document).ready(function(){
 			jQuery('#slider > ul').tabs({ fxFade: true, fxSpeed: 'fast' });	
 		});
+	/* ]]> */
 	</script>
 		
 	<div id="slider" class="wrap">
@@ -267,7 +271,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				</table>
 				<div class="submit">
 					<?php if ($ngg->options['swfUpload']) { ?>
-					<input type="submit" name="disable_flash" id="disable_flash" title="<?php _e('The batch upload requires Adobe Flash 9, disable it if you have problems','nggallery') ?>" value="<?php _e('Disable flash upload', 'nggallery') ;?>" />
+					<input type="submit" name="disable_flash" id="disable_flash" title="<?php _e('The batch upload requires Adobe Flash 10, disable it if you have problems','nggallery') ?>" value="<?php _e('Disable flash upload', 'nggallery') ;?>" />
 					<?php } else { ?>
 					<input type="submit" name="enable_flash" id="enable_flash" title="<?php _e('Upload multiple files at once by ctrl/shift-selecting in dialog','nggallery') ?>" value="<?php _e('Enable flash based upload', 'nggallery') ;?>" />
 					<?php } ?>

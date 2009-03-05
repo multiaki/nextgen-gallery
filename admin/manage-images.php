@@ -103,7 +103,7 @@ function checkSelected() {
 	var numchecked = getNumChecked(document.getElementById('updategallery'));
 	 
 	if(numchecked < 1) { 
-		alert('<?php echo js_escape(__("No images selected",'nggallery')); ?>');
+		alert('<?php echo js_escape(__("No images selected", 'nggallery')); ?>');
 		return false; 
 	} 
 	

@@ -46,7 +46,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	
 	if ( isset($_POST['clearcache']) ) {
 		
-		$path = WINABSPATH . $ngg->options['gallerypath'] . "cache/";
+		$path = WINABSPATH . $ngg->options['gallerypath'] . 'cache/';
 		
 		if (is_dir($path))
 	    	if ($handle = opendir($path)) {
@@ -65,7 +65,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	
 	?>
 	<script type="text/javascript">
-		jQuery(function() {
+		jQuery(document).ready(function(){
 			jQuery('#slider > ul').tabs({ fxFade: true, fxSpeed: 'fast' });	
 		});
 	

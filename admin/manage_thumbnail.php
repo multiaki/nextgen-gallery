@@ -170,7 +170,7 @@ if ( (!$ngg_options['thumbfix']) and (!$ngg_options['thumbcrop']) ) {
 	</tr>
 </table>
 
-<script language="JavaScript">
+<script type="text/javascript">
 <!--
 	jQuery(document).ready(function(){
 		jQuery('#imageToEdit').Jcrop({
