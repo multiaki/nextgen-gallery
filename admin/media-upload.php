@@ -41,7 +41,7 @@ function media_upload_nextgen() {
 			$html = "<img src='{$image['url']}' alt='$alttext' class='$class' />";
 		
 		if ($image['size'] == "singlepic") 
-			$html = "[singlepic=$send_id,320,240,,{$image['align']}]";
+			$html = "[singlepic id=$send_id w=320 h=240 float={$image['align']}]";
 			
 		media_upload_nextgen_save_image();
 		
