@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-04 16:28+0100\n"
-"PO-Revision-Date: 2009-03-04 16:30+0100\n"
-"Last-Translator: Alex Rabe <no@email.com>\n"
+"POT-Creation-Date: 2009-03-05 23:41+0100\n"
+"PO-Revision-Date: 2009-03-05 23:43+0100\n"
+"Last-Translator: Alex Rabe\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -188,134 +188,129 @@ msgstr "Ich möchte mich bei diesen Menschen für Ihre Unterstützung bedanken:"
 msgid "and all donators..."
 msgstr "und allen anderen Spendern..."
 
-#: ../admin/addgallery.php:34
-#: ../admin/addgallery.php:50
+#: ../admin/addgallery.php:37
+#: ../admin/addgallery.php:53
 msgid "Upload failed!"
 msgstr "Upload fehlgeschlagen!"
 
-#: ../admin/addgallery.php:55
+#: ../admin/addgallery.php:58
 #: ../admin/functions.php:559
 #: ../admin/functions.php:649
 msgid "No gallery selected !"
 msgstr "Keine Galerie ausgewählt !"
 
-#: ../admin/addgallery.php:102
+#: ../admin/addgallery.php:105
 msgid "Image Files"
 msgstr "Bilder"
 
-#: ../admin/addgallery.php:121
-#: ../admin/addgallery.php:151
+#: ../admin/addgallery.php:124
+#: ../admin/addgallery.php:155
 msgid "remove"
 msgstr "Entfernen"
 
-#: ../admin/addgallery.php:122
+#: ../admin/addgallery.php:125
 msgid "Browse..."
 msgstr "Durchsuche..."
 
-#: ../admin/addgallery.php:123
-#: ../admin/addgallery.php:274
+#: ../admin/addgallery.php:126
+#: ../admin/addgallery.php:282
 msgid "Upload images"
 msgstr "Bilder hochladen"
 
-#: ../admin/addgallery.php:167
-#: ../admin/addgallery.php:179
+#: ../admin/addgallery.php:174
+#: ../admin/addgallery.php:186
 msgid "Add new gallery"
 msgstr "Neue Galerie erstellen"
 
-#: ../admin/addgallery.php:169
-#: ../admin/addgallery.php:198
+#: ../admin/addgallery.php:176
+#: ../admin/addgallery.php:205
 msgid "Upload a Zip-File"
 msgstr "Zip-Datei hochladen"
 
-#: ../admin/addgallery.php:172
-#: ../admin/addgallery.php:229
+#: ../admin/addgallery.php:179
+#: ../admin/addgallery.php:237
 msgid "Import image folder"
 msgstr "Bilder-Verzeichnis importieren"
 
-#: ../admin/addgallery.php:174
-#: ../admin/addgallery.php:246
+#: ../admin/addgallery.php:181
+#: ../admin/addgallery.php:254
 msgid "Upload Images"
 msgstr "Bilder hochladen"
 
-#: ../admin/addgallery.php:184
+#: ../admin/addgallery.php:191
 msgid "New Gallery"
 msgstr "Neue Galerie"
 
-#: ../admin/addgallery.php:187
+#: ../admin/addgallery.php:194
 msgid "Create a new , empty gallery below the folder"
 msgstr "Erstelle eine neue, leere Galerie unter dem Verzeichnis"
 
-#: ../admin/addgallery.php:189
+#: ../admin/addgallery.php:196
 msgid "Allowed characters for file and folder names are"
 msgstr "Erlaubte Zeichen für die Datei- und Verzeichnisnamen sind"
 
-#: ../admin/addgallery.php:192
+#: ../admin/addgallery.php:199
 msgid "Add gallery"
 msgstr "Galerie hinzufügen"
 
-#: ../admin/addgallery.php:203
+#: ../admin/addgallery.php:210
 msgid "Select Zip-File"
 msgstr "Wähle Zip-Datei"
 
-#: ../admin/addgallery.php:205
+#: ../admin/addgallery.php:212
 msgid "Upload a zip file with images"
 msgstr "Lade eine Zip-Datei mit Bildern hoch"
 
-#: ../admin/addgallery.php:208
-#: ../admin/addgallery.php:255
+#: ../admin/addgallery.php:215
+#: ../admin/addgallery.php:263
 msgid "in to"
 msgstr "in"
 
-#: ../admin/addgallery.php:210
+#: ../admin/addgallery.php:217
 msgid "a new gallery"
 msgstr "eine neue Galerie"
 
-#: ../admin/addgallery.php:218
-#: ../admin/addgallery.php:264
+#: ../admin/addgallery.php:226
 msgid "Note : The upload limit on your server is "
 msgstr "Hinweis : Das Upload-Limit auf dem Server beträgt "
 
-#: ../admin/addgallery.php:222
+#: ../admin/addgallery.php:230
 msgid "Start upload"
 msgstr "Upload starten"
 
-#: ../admin/addgallery.php:234
+#: ../admin/addgallery.php:242
 msgid "Import from Server path:"
 msgstr "Importieren aus Server-Pfad:"
 
-#: ../admin/addgallery.php:236
-msgid "Import a folder with all images."
-msgstr "Importiere ein Verzeichnis mit Bildern."
-
-#: ../admin/addgallery.php:237
+#: ../admin/addgallery.php:245
 msgid " Please note : For safe-mode = ON you need to add the subfolder thumbs manually"
 msgstr "Achtung : Da der Safe-Mode  (PHP.INI) eingeschaltet ist, mußt Du das Unterverzeichnis für die Vorschaubilder (\"thumbs\") manuell (per FTP) anlegen"
 
-#: ../admin/addgallery.php:240
+#: ../admin/addgallery.php:248
 msgid "Import folder"
 msgstr "Verzeichnis importieren"
 
-#: ../admin/addgallery.php:251
+#: ../admin/addgallery.php:259
 msgid "Upload image"
 msgstr "Bild hochladen"
 
-#: ../admin/addgallery.php:257
+#: ../admin/addgallery.php:265
 msgid "Choose gallery"
 msgstr "Wähle Galerie"
 
-#: ../admin/addgallery.php:270
-msgid "The batch upload requires Adobe Flash 9, disable it if you have problems"
+#: ../admin/addgallery.php:278
+msgid "The batch upload requires Adobe Flash 10, disable it if you have problems"
 msgstr "Das Batch-Upload benötigt Adbode Flash 10, wenn es Probleme gibt deaktiviere es besser."
 
-#: ../admin/addgallery.php:270
+#: ../admin/addgallery.php:278
 msgid "Disable flash upload"
 msgstr "Deaktiviere Batch-Upload"
 
-#: ../admin/addgallery.php:272
+#: ../admin/addgallery.php:280
 msgid "Upload multiple files at once by ctrl/shift-selecting in dialog"
 msgstr "Wähle im Dialog mit Ctrl/Shift mehrere Bilder gleichzeitig aus."
 
-#: ../admin/addgallery.php:272
+#: ../admin/addgallery.php:280
 msgid "Enable flash based upload"
 msgstr "Aktiviere Flash Batch Upload"
 
@@ -1138,26 +1133,26 @@ msgstr "Neue Galerie Seiten ID"
 msgid "created"
 msgstr "erstellt"
 
+#: ../admin/manage_thumbnail.php:19
 #: ../admin/manage_thumbnail.php:22
-#: ../admin/manage_thumbnail.php:25
 #: ../admin/showmeta.php:10
 #: ../admin/showmeta.php:13
 msgid "Cheatin&#8217; uh?"
 msgstr "Cheatin&#8217; uh?"
 
-#: ../admin/manage_thumbnail.php:144
+#: ../admin/manage_thumbnail.php:116
 msgid "Select with the mouse the area for the new thumbnail."
 msgstr "Wähle mit der Maus den Bereich für das neue Thumbnail"
 
-#: ../admin/manage_thumbnail.php:158
+#: ../admin/manage_thumbnail.php:130
 msgid "Thumbnail updated"
 msgstr "Thumbnail geändert"
 
-#: ../admin/manage_thumbnail.php:163
+#: ../admin/manage_thumbnail.php:135
 msgid "Error updating thumbnail."
 msgstr "Fehler : Thumbnails konnte nicht geändert werden"
 
-#: ../admin/manage_thumbnail.php:182
+#: ../admin/manage_thumbnail.php:152
 msgid "Select the area for the thumbnail from the picture on the left."
 msgstr "Wähle den Auschnitt für das Thumbanil innerhalb des Bildes"
 
@@ -2418,6 +2413,11 @@ msgstr "Kein Float"
 msgid "Insert"
 msgstr "Einfügen"
 
+#: ../lib/core.php:419
+#, php-format
+msgid "Note : Based on your server memory limit you should not upload larger images then <strong>%d x %d</strong> pixel"
+msgstr "Hinweis : Basierend auf der Speicherbegrenzung auf dem Server, solltest du keine Bilder grösser als  <strong>%d x %d</strong> Pixel hochladen"
+
 #: ../lib/meta.php:87
 msgid " mm"
 msgstr " mm"
@@ -2798,6 +2798,8 @@ msgstr "Album-ID  %s existiert nicht"
 msgid "Invalid MediaRSS command (%s)."
 msgstr "Ungültiger Media RSS Befehl (%s)"
 
+#~ msgid "Import a folder with all images."
+#~ msgstr "Importiere ein Verzeichnis mit Bildern."
 #~ msgid "Show tags"
 #~ msgstr "Zeige Tags"
 #~ msgid "Hide tags"

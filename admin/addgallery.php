@@ -11,6 +11,9 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	// same as $_SERVER['REQUEST_URI'], but should work under IIS 6.0
 	$filepath    = admin_url() . 'admin.php?page=' . $_GET['page'];
 	
+	// check for the max image size
+	$maxsize    = nggGallery::check_memory_limit();
+	
 	// link for the flash file
 	$swf_upload_link = NGGALLERY_URLPATH . 'admin/upload.php';
 	$swf_upload_link = wp_nonce_url($swf_upload_link, 'ngg_swfupload');
@@ -219,6 +222,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						}
 					?>
 					</select>
+					<br /><?php echo $maxsize; ?>
 					<br /><?php echo _e('Note : The upload limit on your server is ','nggallery') . "<strong>" . ini_get('upload_max_filesize') . "Byte</strong>\n"; ?>
 					<br /><?php if ( (IS_WPMU) && wpmu_enable_function('wpmuQuotaCheck') ) display_space_usage(); ?></td> 
 				</tr> 
@@ -237,7 +241,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				<tr valign="top"> 
 					<th scope="row"><?php _e('Import from Server path:', 'nggallery') ;?></th> 
 					<td><input type="text" size="35" name="galleryfolder" value="<?php echo $defaultpath; ?>" /><br />
-					<?php _e('Import a folder with all images.', 'nggallery') ;?>
+					<br /><?php echo $maxsize; ?>
 					<?php if (SAFE_MODE) {?><br /><?php _e(' Please note : For safe-mode = ON you need to add the subfolder thumbs manually', 'nggallery') ;?><?php }; ?></td> 
 				</tr>
 				</table>
@@ -265,7 +269,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 							echo '<option value="' . $gallery->gid . '" >' . $name . '</option>' . "\n";
 						}					?>
 					</select>
-					<br /><?php echo _e('Note : The upload limit on your server is ','nggallery') . "<strong>" . ini_get('upload_max_filesize') . "Byte</strong>\n"; ?>
+					<br /><?php echo $maxsize; ?>
 					<br /><?php if ((IS_WPMU) && wpmu_enable_function('wpmuQuotaCheck')) display_space_usage(); ?></td> 
 				</tr> 
 				</table>

@@ -384,6 +384,46 @@ class nggGallery {
 		return $in;
 	}
 	
+	/**
+	 * Check the memory_limit and calculate a recommended memory size
+	 * 
+	 * @since V1.2.0
+	 * @return string message about recommended image size
+	 */
+	function check_memory_limit() {
+
+		if ( (function_exists('memory_get_usage')) && (ini_get('memory_limit')) ) {
+			
+			// get memory limit
+			$memory_limit = ini_get('memory_limit');
+			if ($memory_limit != '')
+				$memory_limit = substr($memory_limit, 0, -1) * 1024 * 1024;
+			
+			// calculate the free memory 	
+			$freeMemory = $memory_limit - memory_get_usage();
+			
+			// build the test sizes
+			$sizes = array();
+			$sizes[] = array ( 'width' => 800, 'height' => 600);
+			$sizes[] = array ( 'width' => 1024, 'height' => 768);
+			$sizes[] = array ( 'width' => 1280, 'height' => 960);  // 1MP	
+			$sizes[] = array ( 'width' => 1600, 'height' => 1200); // 2MP
+			$sizes[] = array ( 'width' => 2016, 'height' => 1512); // 3MP
+			$sizes[] = array ( 'width' => 2272, 'height' => 1704); // 4MP
+			$sizes[] = array ( 'width' => 2560, 'height' => 1920); // 5MP
+			
+			// test the classic sizes
+			foreach ($sizes as $size){
+				// very, very rough estimation
+				if ($freeMemory < round( $size['width'] * $size['height'] * 5.09 )) {
+                	$result = sprintf(  __( 'Note : Based on your server memory limit you should not upload larger images then <strong>%d x %d</strong> pixel' ), $size['width'], $size['height']); 
+					return $result;
+				}
+			}
+		}
+		return;
+	}
+	
 }
 
 ?>
