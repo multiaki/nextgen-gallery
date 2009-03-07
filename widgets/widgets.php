@@ -368,7 +368,7 @@ function ngg_widget_control($widget_args = 1) {
 			$list = "'" . implode("', '", $list ) . "'";
 			
 			if ($exclude == 'denied')	
-				$exclude_list = "AND NOT t.gid IN ($list)";
+				$exclude_list = "AND NOT (t.gid IN ($list))";
 
 			if ($exclude == 'allow')	
 				$exclude_list = "AND t.gid IN ($list)";
