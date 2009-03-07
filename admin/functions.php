@@ -137,12 +137,12 @@ class nggAdmin{
 		$gallery_id = $wpdb->get_var("SELECT gid FROM $wpdb->nggallery WHERE path = '$galleryfolder' ");
 
 		if (!$gallery_id) {
-			$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->nggallery (name, path, title, author) VALUES (%s, %s, %s, %s)", $galleryname, $gallerypath, $galleryname , $user_ID) );
+			$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->nggallery (name, path, title, author) VALUES (%s, %s, %s, %s)", $galleryname, $galleryfolder, $galleryname , $user_ID) );
 			if (!$result) {
 				nggGallery::show_error(__('Database error. Could not add gallery!','nggallery'));
 				return;
 			}
-			$created_msg = __ngettext( 'Gallery', 'Galleries', 1, 'nggallery' ) . ' <strong>'.$galleryname.'</strong> '.__('successfully created!','nggallery').'<br />';
+			$created_msg = __ngettext( 'Gallery', 'Galleries', 1, 'nggallery' ) . ' <strong>' . $galleryname . '</strong> ' . __('successfully created!','nggallery') . '<br />';
 			$gallery_id  = $wpdb->insert_id;  // get index_id
 		}
 		
@@ -156,6 +156,14 @@ class nggAdmin{
 		// check difference
 		$new_images = array_diff($new_imageslist, $old_imageslist);
 		
+		// all images must be valid files
+		foreach($new_images as $key => $picture) {
+			if (!@getimagesize($gallerypath . '/' . $picture) ) {
+				unset($new_images[$key]);
+				@unlink($gallerypath . '/' . $picture);				
+			}
+		}
+				
 		// add images to database		
 		$image_ids = nggAdmin::add_Images($gallery_id, $new_images);
 		
@@ -174,7 +182,7 @@ class nggAdmin{
 	// **************************************************************
 	function scandir($dirname = '.') { 
 		// thx to php.net :-)
-		$ext = array("jpeg", "jpg", "png", "gif"); 
+		$ext = array('jpeg', 'jpg', 'png', 'gif'); 
 		$files = array(); 
 		if($handle = opendir($dirname)) { 
 		   while(false !== ($file = readdir($handle))) 
@@ -410,7 +418,7 @@ class nggAdmin{
 				$result = $wpdb->query( $wpdb->prepare("UPDATE $wpdb->nggpictures SET alttext = %s, description = %s, imagedate = %s WHERE pid = %d", $alttext, $description, $timestamp, $pic_id) );
 				// add the tags
 				if ($meta['keywords']) {
-					$taglist = explode(",", $meta['keywords']);
+					$taglist = explode(',', $meta['keywords']);
 					wp_set_object_terms($pic_id, $taglist, 'ngg_tag');
 				} // add tags
 			}// error check
@@ -424,7 +432,7 @@ class nggAdmin{
 	function get_MetaData($picPath) {
 		// must be Gallery absPath + filename
 		
-		require_once(NGGALLERY_ABSPATH.'/lib/meta.php');
+		require_once(NGGALLERY_ABSPATH . '/lib/meta.php');
 		
 		$meta = array();
 
@@ -457,10 +465,11 @@ class nggAdmin{
  
 	// **************************************************************
 	function getOnlyImages($p_event, $p_header)	{
+		
 		$info = pathinfo($p_header['filename']);
 		// check for extension
 		$ext = array('jpeg', 'jpg', 'png', 'gif'); 
-		if (in_array( strtolower($info['extension']), $ext)) {
+		if ( in_array( strtolower($info['extension']), $ext) ) {
 			// For MAC skip the ".image" files
 			if ($info['basename']{0} ==  '.' ) 
 				return 0;
@@ -501,12 +510,12 @@ class nggAdmin{
 			// get foldername if selected
 			$foldername = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$galleryID' ");
 		}
-
+		
 		if ( empty($foldername) ) {
 			nggGallery::show_error( __('Could not get a valid foldername', 'nggallery') );
 			return false;
 		}
-
+		
 		// set complete folder path
 		$newfolder = WINABSPATH . $foldername;
 
@@ -518,7 +527,7 @@ class nggAdmin{
 				nggGallery::show_error($message);
 				return false;
 			}
-			if (!wp_mkdir_p ($newfolder.'/thumbs')) {
+			if (!wp_mkdir_p ($newfolder . '/thumbs')) {
 				nggGallery::show_error(__('Unable to create directory ', 'nggallery') . $newfolder . '/thumbs !');
 				return false;
 			}
@@ -529,10 +538,10 @@ class nggAdmin{
 		@unlink($temp_zipfile);		
 
 		if ($result) {
-			$message = __('Zip-File successfully unpacked','nggallery').'<br />';		
+			$message = __('Zip-File successfully unpacked','nggallery') . '<br />';		
 
 			// parse now the folder and add to database
-			$message .= nggAdmin::import_gallery( $foldername);
+			$message .= nggAdmin::import_gallery( $foldername );
 			nggGallery::show_message($message);
 		}
 		
@@ -582,9 +591,9 @@ class nggAdmin{
 				
 				$filename = sanitize_title($filepart['filename']) . '.' . $filepart['extension'];
 
-				// check for allowed extension
+				// check for allowed extension and if it's an image file
 				$ext = array('jpeg', 'jpg', 'png', 'gif'); 
-				if (!in_array($filepart['extension'],$ext)){ 
+				if ( !in_array($filepart['extension'], $ext) || !@getimagesize($temp_file) ){ 
 					nggGallery::show_error('<strong>'.$_FILES[$key]['name'].' </strong>'.__('is no valid image file!','nggallery'));
 					continue;
 				}
