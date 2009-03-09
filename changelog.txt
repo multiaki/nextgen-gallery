@@ -1,7 +1,7 @@
 NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
-V1.2.0
+V1.2.0 - 09.03.2009
 - NEW : Support for image tag cloud with shortcode [tagcloud]
 - NEW : Adding shortcode [recent max="7" template="filename" /] & [random max="7" template="filename" /] to show the most recent/random pictures (THX to Bernhard)
 - NEW : Crop thumbnails manually (THX to Simone Fumagalli)
