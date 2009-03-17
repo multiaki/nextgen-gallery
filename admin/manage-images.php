@@ -307,7 +307,9 @@ if($picturelist) {
 					break;
 					case 'id' :
 						?>
-						<td <?php echo $attributes ?> scope="row" style=""><?php echo $pid ?></td>
+						<td <?php echo $attributes ?> scope="row" style=""><?php echo $pid; ?>
+							<input type="hidden" name="pid[]" value="<?php echo $pid ?>" />
+						</td>
 						<?php
 					break;
 					case 'filename' :
