@@ -238,9 +238,9 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
 		$picturelist[$key]->thumbnailURL = $picture->thumbURL;
 		$picturelist[$key]->size = $thumbsize;
 		$picturelist[$key]->thumbcode = $thumbcode;
-		$picturelist[$key]->caption = ( empty($picture->description) ) ? '&nbsp;' : html_entity_decode ( stripslashes($picture->description) );
-		$picturelist[$key]->description = ( empty($picture->description) ) ? ' ' : htmlspecialchars ( stripslashes($picture->description) );
-		$picturelist[$key]->alttext = ( empty($picture->alttext) ) ?  ' ' : htmlspecialchars ( stripslashes($picture->alttext) );
+		$picturelist[$key]->caption = ( empty($picture->description) ) ? '&nbsp;' : html_entity_decode ( stripslashes(nggGallery::i18n($picture->description)) );
+		$picturelist[$key]->description = ( empty($picture->description) ) ? ' ' : htmlspecialchars ( stripslashes(nggGallery::i18n($picture->description)) );
+		$picturelist[$key]->alttext = ( empty($picture->alttext) ) ?  ' ' : htmlspecialchars ( stripslashes(nggGallery::i18n($picture->alttext)) );
 	}
 
 	// look for gallery-$template.php or pure gallery.php
