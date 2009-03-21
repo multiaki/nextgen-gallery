@@ -244,7 +244,7 @@ function ngg_widget_control($widget_args = 1) {
 			foreach ( (array) $_POST['widget_ngg_images'] as $widget_number => $widget_ngg_images ) {
 				if ( !isset($widget_ngg_images['width']) && isset($options[$widget_number]) ) // user clicked cancel
 					continue;
-
+					
 				$widget_ngg_images = stripslashes_deep( $widget_ngg_images );
 				$options[$widget_number]['title']	= $widget_ngg_images['title'];
 				$options[$widget_number]['items']	= (int) $widget_ngg_images['items'];
@@ -389,11 +389,12 @@ function ngg_widget_control($widget_args = 1) {
 			$imageList = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE tt.exclude != 1 $exclude_list ORDER by pid DESC limit 0,$items");
 		
 		if ( $webslice ) {
+			//TODO:  If you change the title, it will not show up in widget admin panel
 			$before_title  = "\n" . '<div class="hslice" id="ngg-webslice" >' . "\n";
 			$before_title .= '<h2 class="widgettitle entry-title">';
 			$after_widget  =  '</div>'."\n" . $after_widget;			
 		}	
-		
+		                      
 		echo $before_widget . $before_title . $title . $after_title;
 		echo "\n" . '<div class="ngg-widget entry-content">'. "\n";
 	
