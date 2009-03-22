@@ -1,8 +1,9 @@
 NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
-V1.2.1
+V1.2.1 - 22.03.2009
 - NEW : Support for IE8 Web Slices in widgets
+- NEW : Add filter ngg_image_object
 - Changed : Descending order in add gallery menu
 - Bugfix : Exclude option didnT work for multi pages
 - Bugfix : Check for correct capability in manage gallery
