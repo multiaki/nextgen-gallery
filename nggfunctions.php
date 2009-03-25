@@ -566,11 +566,16 @@ function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $fl
 	
 	// clean mode if needed 
 	$mode = ( eregi('web20|watermark', $mode) ) ? $mode : '';
+	
+	//let's initiate the url
+	$picture->thumbnailURL = false;
 
 	// check fo cached picture
 	if ( ($ngg_options['imgCacheSinglePic']) && ($post->post_status == 'publish') )
 		$picture->thumbnailURL = $picture->cached_singlepic_file($width, $height, $mode );
-	else
+	
+	// if we didn't use a cached image then we take the on-the-fly mode	
+	if (!$picture->thumbnailURL) 
 		$picture->thumbnailURL = NGGALLERY_URLPATH . 'nggshow.php?pid=' . $imageID . '&amp;width=' . $width . '&amp;height=' . $height . '&amp;mode=' . $mode;
 
 	// add more variables for render output
