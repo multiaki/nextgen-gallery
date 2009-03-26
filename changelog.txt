@@ -1,6 +1,9 @@
 NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
+V1.3.0
+- NEW : AJAX support for Imagebrowser and gallery navigation (THX to Anty)
+
 V1.2.1 - 22.03.2009
 - NEW : Support for IE8 Web Slices in widgets
 - NEW : Add filter ngg_image_object

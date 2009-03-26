@@ -493,7 +493,9 @@ function nggCreateImageBrowser($picarray, $template = '') {
 	// add more variables for render output
 	$picture->href_link = $picture->get_href_link();
 	$picture->previous_image_link = $nggRewrite->get_permalink(array ('pid' => $back_pid));
+	$picture->previous_pid = $back_pid;
 	$picture->next_image_link  = $nggRewrite->get_permalink(array ('pid' => $next_pid));
+	$picture->next_pid = $next_pid;
 	$picture->number = $key + 1;
 	$picture->total = $total;
 	$picture->linktitle = htmlspecialchars( stripslashes($picture->description) );

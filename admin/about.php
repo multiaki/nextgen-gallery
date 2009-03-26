@@ -57,6 +57,7 @@ function ngg_list_contributors()	{
 /* The list of my contributors. Thanks to all of them !*/
 	
 	$contributors = array(
+	'Anty (Code contributor)' => 'http://www.anty.at/',
 	'Simone Fumagalli (Code contributor)' => 'http://www.iliveinperego.com/',
 	'Vincent Prat (Code contributor)' => 'http://www.vincentprat.info',
 	'Frederic De Ranter (AJAX code contributor)' => 'http://li.deranter.com/',

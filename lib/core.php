@@ -156,10 +156,16 @@ class nggGallery {
 				$r = '';
 				if ( 1 < $page ) {
 					$args['nggpage'] = ( 1 == $page - 1 ) ? FALSE : $page - 1;
-					$r .=  '<a class="prev" href="'. $nggRewrite->get_permalink( $args ) . '">&#9668;</a>';
+					$previous = $args['nggpage'];
+					if (FALSE == $args['nggpage']) {
+						$previous = 1; 
+					}
+					$r .=  '<a class="prev" id="ngg-prev-' . $previous . '" href="'. $nggRewrite->get_permalink( $args ) . '">&#9668;</a>';
 				}
 				
-				if ( ( $total_pages = ceil( $total / $maxElement ) ) > 1 ) {
+				$total_pages = ceil( $total / $maxElement );
+				
+				if ( $total_pages > 1 ) {
 					for ( $page_num = 1; $page_num <= $total_pages; $page_num++ ) {
 						if ( $page == $page_num ) {
 							$r .=  '<span>' . $page_num . '</span>';
@@ -179,7 +185,7 @@ class nggGallery {
 				
 				if ( ( $page ) * $maxElement < $total || -1 == $total ) {
 					$args['nggpage'] = $page + 1;
-					$r .=  '<a class="next" href="' . $nggRewrite->get_permalink ( $args ) . '">&#9658;</a>';
+					$r .=  '<a class="next" id="ngg-next-' . $args['nggpage'] . '" href="' . $nggRewrite->get_permalink ( $args ) . '">&#9658;</a>';
 				}
 				
 				$navigation = "<div class='ngg-navigation'>$r</div>";
