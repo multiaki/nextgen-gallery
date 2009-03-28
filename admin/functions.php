@@ -85,7 +85,7 @@ class nggAdmin{
 			$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->nggallery (name, path, title, author) VALUES (%s, %s, %s, %s)", $galleryname, $nggpath, $gallerytitle , $user_ID) );
 			if ($result) {
 				$message  = __('Gallery %1$s successfully created.<br/>You can show this gallery with the tag %2$s.<br/>','nggallery');
-				$message  = sprintf($message, $galleryname, '[gallery id=' . $wpdb->insert_id . ']');
+				$message  = sprintf($message, $galleryname, '[nggallery id=' . $wpdb->insert_id . ']');
 				$message .= '<a href="' . admin_url() . 'admin.php?page=nggallery-manage-gallery&mode=edit&gid=' . $wpdb->insert_id . '" >';
 				$message .= __('Edit gallery','nggallery');
 				$message .= '</a>';
