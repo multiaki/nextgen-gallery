@@ -236,7 +236,7 @@ class nggdb {
 		// Query database
 		if ( is_numeric($id) && $id != 0 ) {
 			$album = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->nggalbum WHERE id = %d", $id) );
-		} elseif ( $id == 'all' || $id == 0 ) {
+		} elseif ( $id == 'all' || (is_numeric($id) && $id == 0) ) {
 			// init the object and fill it
 			$album = new stdClass();
 			$album->id = 'all';
