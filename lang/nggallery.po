@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-21 13:53+0100\n"
-"PO-Revision-Date: 2009-03-21 13:53+0100\n"
-"Last-Translator: Alex Rabe\n"
+"POT-Creation-Date: 2009-03-31 14:13+0100\n"
+"PO-Revision-Date: 2009-03-31 14:13+0100\n"
+"Last-Translator: Alex Rabe <no@email.com>\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,28 +17,32 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 
-#: ../nggallery.php:156
+#: ../nggallery.php:157
 msgid "Sorry, NextGEN Gallery works only with a Memory Limit of 16 MB higher"
 msgstr "asd"
 
-#: ../nggallery.php:181
+#: ../nggallery.php:182
 msgid "Picture tag"
 msgstr ""
 
-#: ../nggallery.php:182
+#: ../nggallery.php:183
 msgid "Picture tag: %2$l."
 msgstr ""
 
-#: ../nggallery.php:183
+#: ../nggallery.php:184
 msgid "Separate picture tags with commas."
 msgstr ""
 
-#: ../nggallery.php:276
+#: ../nggallery.php:277
 msgid "L O A D I N G"
 msgstr ""
 
-#: ../nggallery.php:277
+#: ../nggallery.php:278
 msgid "Click to Close"
+msgstr ""
+
+#: ../nggallery.php:291
+msgid "loading"
 msgstr ""
 
 #: ../nggfunctions.php:37
@@ -46,23 +50,23 @@ msgid "The <a href=\"http://www.macromedia.com/go/getflashplayer\">Flash Player<
 msgstr "asd"
 
 #: ../nggfunctions.php:101
-#: ../nggfunctions.php:437
+#: ../nggfunctions.php:439
 msgid "[Gallery not found]"
 msgstr ""
 
-#: ../nggfunctions.php:292
+#: ../nggfunctions.php:294
 msgid "[Album not found]"
 msgstr ""
 
-#: ../nggfunctions.php:540
+#: ../nggfunctions.php:547
 msgid "[SinglePic not found]"
 msgstr ""
 
-#: ../nggfunctions.php:665
+#: ../nggfunctions.php:680
 msgid "Related images for"
 msgstr ""
 
-#: ../nggfunctions.php:700
+#: ../nggfunctions.php:715
 #: ../admin/admin.php:32
 msgid "Overview"
 msgstr ""
@@ -183,7 +187,7 @@ msgstr ""
 msgid "We would like to thank this people which support us in the work :"
 msgstr ""
 
-#: ../admin/about.php:143
+#: ../admin/about.php:144
 msgid "and all donators..."
 msgstr ""
 
@@ -319,7 +323,6 @@ msgstr ""
 #: ../admin/functions.php:82
 #: ../admin/functions.php:145
 #: ../admin/manage-images.php:151
-#: ../admin/manage.php:78
 msgid "Gallery"
 msgid_plural "Galleries"
 msgstr[0] ""
@@ -665,7 +668,6 @@ msgstr ""
 #: ../admin/functions.php:174
 #: ../admin/functions.php:640
 #: ../admin/manage-images.php:243
-#: ../admin/manage.php:130
 msgid "Create new thumbnails"
 msgstr ""
 
@@ -941,12 +943,10 @@ msgid "No action"
 msgstr ""
 
 #: ../admin/manage-images.php:242
-#: ../admin/manage.php:126
 msgid "Set watermark"
 msgstr ""
 
 #: ../admin/manage-images.php:244
-#: ../admin/manage.php:134
 msgid "Resize images"
 msgstr ""
 
@@ -1102,6 +1102,7 @@ msgid "deleted successfully"
 msgstr ""
 
 #: ../admin/manage.php:100
+#: ../admin/tinymce/window.php:31
 msgid "Picture"
 msgstr ""
 
@@ -2406,7 +2407,7 @@ msgstr ""
 msgid "Insert"
 msgstr ""
 
-#: ../lib/core.php:419
+#: ../lib/core.php:425
 #, php-format
 msgid "Note : Based on your server memory limit you should not upload larger images then <strong>%d x %d</strong> pixel"
 msgstr ""

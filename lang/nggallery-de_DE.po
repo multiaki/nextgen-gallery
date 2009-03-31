@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-21 13:53+0100\n"
-"PO-Revision-Date: 2009-03-21 13:54+0100\n"
-"Last-Translator: Alex Rabe\n"
+"POT-Creation-Date: 2009-03-31 14:13+0100\n"
+"PO-Revision-Date: 2009-03-31 14:15+0100\n"
+"Last-Translator: Alex Rabe <no@email.com>\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,52 +18,56 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 
-#: ../nggallery.php:156
+#: ../nggallery.php:157
 msgid "Sorry, NextGEN Gallery works only with a Memory Limit of 16 MB higher"
 msgstr "Tut mir leid, aber NextGEN Galerie benötigt minimum 16MB Speicher (Memory Limit) oder mehr"
 
-#: ../nggallery.php:181
+#: ../nggallery.php:182
 msgid "Picture tag"
 msgstr "Bilder Stichwort"
 
-#: ../nggallery.php:182
+#: ../nggallery.php:183
 msgid "Picture tag: %2$l."
 msgstr "Bilder Stichwort: %2$l."
 
-#: ../nggallery.php:183
+#: ../nggallery.php:184
 msgid "Separate picture tags with commas."
 msgstr "Trenne Stichwörter mittels Komma"
 
-#: ../nggallery.php:276
-msgid "L O A D I N G"
-msgstr "B I T T E   W A R T E N"
-
 #: ../nggallery.php:277
+msgid "L O A D I N G"
+msgstr "B I T T E &nbsp;&nbsp;W A R T E N"
+
+#: ../nggallery.php:278
 msgid "Click to Close"
 msgstr "Klicken zum Schliessen "
+
+#: ../nggallery.php:291
+msgid "loading"
+msgstr "lade..."
 
 #: ../nggfunctions.php:37
 msgid "The <a href=\"http://www.macromedia.com/go/getflashplayer\">Flash Player</a> and <a href=\"http://www.mozilla.com/firefox/\">a browser with Javascript support</a> are needed.."
 msgstr "Es wird der <a href=\"http://www.macromedia.com/go/getflashplayer\">Adobe Flash Player</a>  benötigt und <a href=\"http://www.mozilla.com/firefox/\">im Browser muss Javascript</a> aktiviert sein.."
 
 #: ../nggfunctions.php:101
-#: ../nggfunctions.php:437
+#: ../nggfunctions.php:439
 msgid "[Gallery not found]"
 msgstr "[Galerie nicht gefunden]"
 
-#: ../nggfunctions.php:292
+#: ../nggfunctions.php:294
 msgid "[Album not found]"
 msgstr "[Album nicht gefunden]"
 
-#: ../nggfunctions.php:540
+#: ../nggfunctions.php:547
 msgid "[SinglePic not found]"
 msgstr "[Bild nicht gefunden]"
 
-#: ../nggfunctions.php:665
+#: ../nggfunctions.php:680
 msgid "Related images for"
 msgstr "Verwandte Bilder von"
 
-#: ../nggfunctions.php:700
+#: ../nggfunctions.php:715
 #: ../admin/admin.php:32
 msgid "Overview"
 msgstr "Übersicht"
@@ -184,7 +188,7 @@ msgstr "Vielen Dank!"
 msgid "We would like to thank this people which support us in the work :"
 msgstr "Ich möchte mich bei diesen Menschen für Ihre Unterstützung bedanken:"
 
-#: ../admin/about.php:143
+#: ../admin/about.php:144
 msgid "and all donators..."
 msgstr "und allen anderen Spendern..."
 
@@ -320,7 +324,6 @@ msgstr "Aktiviere Flash Batch Upload"
 #: ../admin/functions.php:82
 #: ../admin/functions.php:145
 #: ../admin/manage-images.php:151
-#: ../admin/manage.php:78
 msgid "Gallery"
 msgid_plural "Galleries"
 msgstr[0] "Galerie"
@@ -666,7 +669,6 @@ msgstr "erfolgreich erstellt!"
 #: ../admin/functions.php:174
 #: ../admin/functions.php:640
 #: ../admin/manage-images.php:243
-#: ../admin/manage.php:130
 msgid "Create new thumbnails"
 msgstr "Neue Thumbnails erstellen"
 
@@ -945,12 +947,10 @@ msgid "No action"
 msgstr "Keine Aktion"
 
 #: ../admin/manage-images.php:242
-#: ../admin/manage.php:126
 msgid "Set watermark"
 msgstr "Wasserzeichen setzen"
 
 #: ../admin/manage-images.php:244
-#: ../admin/manage.php:134
 msgid "Resize images"
 msgstr "Bilder verkleinern"
 
@@ -1106,6 +1106,7 @@ msgid "deleted successfully"
 msgstr "erfolgreich gelöscht"
 
 #: ../admin/manage.php:100
+#: ../admin/tinymce/window.php:31
 msgid "Picture"
 msgstr "Bild"
 
@@ -2417,7 +2418,7 @@ msgstr "Kein Float"
 msgid "Insert"
 msgstr "Einfügen"
 
-#: ../lib/core.php:419
+#: ../lib/core.php:425
 #, php-format
 msgid "Note : Based on your server memory limit you should not upload larger images then <strong>%d x %d</strong> pixel"
 msgstr "Hinweis : Basierend auf der Speicherbegrenzung auf dem Server, solltest du keine Bilder grösser als  <strong>%d x %d</strong> Pixel hochladen"
