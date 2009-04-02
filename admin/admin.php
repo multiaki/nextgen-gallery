@@ -21,13 +21,11 @@ class nggAdminPanel{
 		
 		add_filter('contextual_help', array(&$this, 'show_help'), 10, 2);
 		add_filter('screen_meta_screen', array(&$this, 'edit_screen_meta'));
-		
-		$this->register_columns();		
 	}
 
 	// integrate the menu	
 	function add_menu()  {
-		
+	
 		add_menu_page( __ngettext( 'Gallery', 'Galleries', 1, 'nggallery' ), __ngettext( 'Gallery', 'Galleries', 1, 'nggallery' ), 'NextGEN Gallery overview', NGGFOLDER, array (&$this, 'show_menu'), NGGALLERY_URLPATH .'admin/images/nextgen.png' );
 	    add_submenu_page( NGGFOLDER , __('Overview', 'nggallery'), __('Overview', 'nggallery'), 'NextGEN Gallery overview', NGGFOLDER, array (&$this, 'show_menu'));
 		add_submenu_page( NGGFOLDER , __('Add Gallery / Images', 'nggallery'), __('Add Gallery / Images', 'nggallery'), 'NextGEN Upload images', 'nggallery-add-gallery', array (&$this, 'show_menu'));
@@ -43,6 +41,9 @@ class nggAdminPanel{
 	    add_submenu_page( NGGFOLDER , __('About this Gallery', 'nggallery'), __('About', 'nggallery'), 'NextGEN Gallery overview', 'nggallery-about', array (&$this, 'show_menu'));
 		if ( wpmu_site_admin() )
 			add_submenu_page( 'wpmu-admin.php' , __('NextGEN Gallery', 'nggallery'), __('NextGEN Gallery', 'nggallery'), 'activate_plugins', 'nggallery-wpmu', array (&$this, 'show_menu'));
+
+		//register the column fields
+		$this->register_columns();	
 
 	}
 
