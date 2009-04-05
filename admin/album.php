@@ -10,7 +10,7 @@ function nggallery_admin_manage_album()  {
 	$albumID = (int) $_POST['act_album'];
 		
 	if ($_POST['update']){
-		
+	
 		check_admin_referer('ngg_album');
 		
 		if ($_POST['newalbum']){ 
@@ -118,7 +118,7 @@ function ngg_serialize(s)
 {
 	//serial = jQuery.SortSerialize(s);
 	serial = jQuery('#galleryContainer').sortable('serialize');
-	jQuery('input[@name=sortorder]').val(serial);
+	jQuery('input[name=sortorder]').val(serial);
 }
 </script>
 <div class="wrap album" id="wrap" >
