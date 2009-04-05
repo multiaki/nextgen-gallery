@@ -7,24 +7,56 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
  * Add the admin overview in wp2.7 style 
  * @return mixed content
  */
-function nggallery_admin_overview()  {	
+function nggallery_admin_overview()  {
+global $wp_version;
+
+if ( version_compare($wp_version, '2.7.999', '>') ) {
 ?>
-<div class="wrap ngg-wrap">
-	<h2><?php _e('NextGEN Gallery Overview', 'nggallery') ?></h2>
-	<div id="dashboard-widgets-wrap" class="ngg-overview">
-	    <div id="dashboard-widgets" class="metabox-holder">
-	    	<div id="side-info-column" class="inner-sidebar">
-				<?php do_meta_boxes('ngg_overview', 'right', ''); ?>
-			</div>
-			<div id="post-body" class="has-sidebar">
-				<div id="dashboard-widgets-main-content" class="has-sidebar-content">
-				<?php do_meta_boxes('ngg_overview', 'left', ''); ?>
+	<div class="wrap ngg-wrap">
+		<h2><?php _e('NextGEN Gallery Overview', 'nggallery') ?></h2>
+		<div id="dashboard-widgets-wrap" class="ngg-overview">
+		    <div id="dashboard-widgets" class="metabox-holder">
+				<div id="post-body">
+					<div id="dashboard-widgets-main-content">
+						<div class="postbox-container" style="width:49%;">
+							<?php do_meta_boxes('ngg_overview', 'left', ''); ?>
+						</div>
+			    		<div class="postbox-container" style="width:49%;">
+							<?php do_meta_boxes('ngg_overview', 'right', ''); ?>
+						</div>						
+					</div>
 				</div>
-			</div>
-	    </div>
+		    </div>
+		</div>
 	</div>
-</div>
+	<script type="text/javascript">
+		//<![CDATA[
+		jQuery(document).ready( function($) {
+			// postboxes setup
+			postboxes.add_postbox_toggles('ngg-overview');
+		});
+		//]]>
+	</script>
 <?php
+} else {
+?>	
+	<div class="wrap ngg-wrap">
+		<h2><?php _e('NextGEN Gallery Overview', 'nggallery') ?></h2>
+		<div id="dashboard-widgets-wrap" class="ngg-overview">
+		    <div id="dashboard-widgets" class="metabox-holder">
+		    	<div id="side-info-column" class="inner-sidebar">
+					<?php do_meta_boxes('ngg_overview', 'right', ''); ?>
+				</div>
+				<div id="post-body" class="has-sidebar">
+					<div id="dashboard-widgets-main-content" class="has-sidebar-content">
+					<?php do_meta_boxes('ngg_overview', 'left', ''); ?>
+					</div>
+				</div>
+		    </div>
+		</div>
+	</div>
+<?php
+}
 }
 
 /**
