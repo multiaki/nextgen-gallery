@@ -54,6 +54,7 @@ jQuery(document).ready(
 			opacity: 0.7,
 			tolerance: 'intersect',
 			distance: 2,
+			forcePlaceholderSize: true ,
 			connectWith: ["#galleryContainer"] 
 		} );
 
@@ -63,6 +64,7 @@ jQuery(document).ready(
 			opacity: 0.7,
 			tolerance: 'intersect',
 			distance: 2,
+			forcePlaceholderSize: true ,
 			connectWith: ["#selectContainer"] 
 		} );
 		

@@ -266,6 +266,7 @@ div .progressbar span {
 .sort_placeholder
 {
 	border:1px dashed #bba !important;
+	margin-bottom: 10px;
 	background: #F9F9F9;
 }
 
