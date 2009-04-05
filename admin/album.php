@@ -148,21 +148,22 @@ function ngg_serialize(s)
 					<input class="button-primary action" type="submit" name="update" value="<?php _e('Update', 'nggallery') ?>"/>
 					<input type="submit" name="delete" class="button-secondary action" value="<?php _e('Delete', 'nggallery') ?>" onclick="javascript:check=confirm('<?php _e('Delete album ?','nggallery'); ?>');if(check==false) return false;"/>
 				<?php } else { ?>
-					<span><?php _e('Add new album', 'nggallery') ?>&nbsp;</span><input class="search-input" id="newalbum" name="newalbum" type="text" value="" />			
+					<span><?php _e('Add new album', 'nggallery') ?>&nbsp;</span>
+					<input class="search-input" id="newalbum" name="newalbum" type="text" value="" />			
 					<input class="button-secondary action" type="submit" name="update" value="<?php _e('Add', 'nggallery') ?>"/>
 				<?php } ?>	
 			</div>
 		</div>
 	</form>
-	<br style="clear: both;"/>
-	<p>
+	<br class="clear"/>
+	<div>
 	<div style="float:right;">
 	  <a href="#" id="toggle_used"><?php _e('[Show all]', 'nggallery') ?></a>
 	| <a href="#" id="all_max"><?php _e('[Maximize]', 'nggallery') ?></a>
 	| <a href="#" id="all_min"><?php _e('[Minimize]', 'nggallery') ?></a>
 	</div>
 	<?php _e('After you create and select a album, you can drag and drop a gallery into your album below','nggallery'); ?>
-	</p>
+	</div>
 
 	<br class="clear"/>
 	

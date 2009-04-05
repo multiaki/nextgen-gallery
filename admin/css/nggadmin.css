@@ -1,5 +1,5 @@
 /* 
-** NextGEN Gallery Style for Wordpress 2.7
+** NextGEN Gallery Style for Wordpress 2.8
 */
 
 /* SETTINGS FOR Overview Gallery */
@@ -201,8 +201,7 @@ div .progressbar span {
 .groupItem
 {
 	background-color:#FBFBFB;
-	border:1px solid #CCCCCC;
-	display:block;
+/*	border:1px solid #CCCCCC; */
 	line-height:75px;
 	cursor: move;
 	margin: 0 0 10px;
@@ -211,8 +210,13 @@ div .progressbar span {
 
 .groupItem .item_top
 {
-	background-color:#CEE1EF;
-	color: #333333;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	display:block;
+	background-color:#2683AE;
+	color:#FFFFFF;
 	font-weight:bold;
 	line-height: 28px;
 	height: 28px;
@@ -223,24 +227,20 @@ div .progressbar span {
 
 .groupItem .item_top a
 {
+	color:#FFFFFF;
 	float:right;
 	text-decoration: none;
-	color: #333333;
 }
 
 .groupItem .item_top a:hover
 {
-	color: #D54E21;
-}
-
-.innerhandle {
-	border-color:#F2F2F2 rgb(232, 232, 232) rgb(232, 232, 232) rgb(242, 242, 242);
-	border-style:solid;
-	border-width:1px;
-	display:block;
+	color:#FFFFFF;
 }
 
 .itemContent {
+	border-color:#DFDFDF;
+	border-style:none solid solid;
+	border-width:0 1px 1px;
 	padding: 5px 0 10px 5px;
 }
 
@@ -268,6 +268,10 @@ div .progressbar span {
 	border:1px dashed #bba !important;
 	margin-bottom: 10px;
 	background: #F9F9F9;
+}
+
+.container {
+	margin-top: 10px;
 }
 
 #galleryContainer {

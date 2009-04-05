@@ -66,7 +66,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	?>
 	<script type="text/javascript">
 		jQuery(document).ready(function(){
-			jQuery('#slider > ul').tabs({ fxFade: true, fxSpeed: 'fast' });	
+			jQuery('#slider').tabs({ fxFade: true, fxSpeed: 'fast' });	
 		});
 	
 		function insertcode(value) {
