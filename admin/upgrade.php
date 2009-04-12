@@ -73,6 +73,13 @@ function ngg_upgrade() {
 			ngg_maybe_add_column( $wpdb->nggpictures, 'imagedate', "DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER alttext");
 		}
 		
+		// v0.97 -> v1.3.0
+		if (version_compare($installed_ver, '1.3.0', '<')) {
+			ngg_maybe_add_column( $wpdb->nggpictures, 'post_id', "BIGINT(20) DEFAULT '0' NOT NULL AFTER pid");
+			ngg_maybe_add_column( $wpdb->nggpictures, 'meta_data', "LONGTEXT AFTER sortorder");
+			$wpdb->query("ALTER TABLE " . $wpdb->nggpictures . " ADD INDEX post_id ( post_id )");
+		}
+		
 		// update now the database
 		update_option( "ngg_db_version", NGG_DBVERSION );
 		echo __('finished', 'nggallery') . "<br />\n";

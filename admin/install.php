@@ -55,6 +55,7 @@ function nggallery_install () {
       
 		$sql = "CREATE TABLE " . $nggpictures . " (
 		pid BIGINT(20) NOT NULL AUTO_INCREMENT ,
+		post_id BIGINT(20) DEFAULT '0' NOT NULL ,
 		galleryid BIGINT(20) DEFAULT '0' NOT NULL ,
 		filename VARCHAR(255) NOT NULL ,
 		description MEDIUMTEXT NULL ,
@@ -62,7 +63,9 @@ function nggallery_install () {
 		imagedate DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
 		exclude TINYINT NULL DEFAULT '0' ,
 		sortorder BIGINT(20) DEFAULT '0' NOT NULL ,
-		PRIMARY KEY pid (pid)
+		meta_data LONGTEXT,
+		PRIMARY KEY pid (pid),
+		KEY post_id (post_id)
 		) $charset_collate;";
 	
       dbDelta($sql);
