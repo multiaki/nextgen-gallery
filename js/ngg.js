@@ -38,14 +38,19 @@ function ngg_ajax_navigation(e, obj) {
 	
 	if (jQuery(currentNode.parentNode).attr("id")) {
 		var gallery = jQuery(currentNode.parentNode);
+
+		// we found a gallery, let's extract the post id & gallery id
+		var payload = gallery.attr("id").substring(12);
+		var separatorPosition = parseInt(payload.indexOf("-"));
 		
-		// we found a gallery
-		var galleryId = gallery.attr("id").substring(12);
-		
+		var galleryId = payload.substr(0, separatorPosition);
+		var postId = payload.substr(separatorPosition + 1);
+				
 		ngg_show_loading(e);
 		
 		// load gallery content
-		jQuery.get(ngg_ajax.path + "nggajax.php", {galleryid: galleryId, id: pageNumber, type: "gallery"}, function (data, textStatus) {
+		jQuery.get(ngg_ajax.path + "nggajax.php", {p: postId, galleryid: galleryId, nggpage: pageNumber, type: "gallery"}, function (data, textStatus) {
+			
 			// delete old content
 			gallery.children().remove();
 			
@@ -85,14 +90,13 @@ function ngg_ajax_navigation(e, obj) {
 };
 
 function ngg_ajax_browser_navigation(e, obj) {
+	
+
 	// try to find gallery number
 	if ("ngg-prev-" == jQuery(obj).attr("id").substr(0, 9) || "ngg-next-" == jQuery(obj).attr("id").substr(0, 9)) {
-		// extract gallery-id and image-id
-		var payload = jQuery(obj).attr("id").substr(9);
-		var separatorPosition = parseInt(payload.charAt("-"));
 		
-		var galleryId = payload.substr(0, separatorPosition);
-		var imageNumber = payload.substr(separatorPosition + 1);
+		// extract the image-id
+		var imageNumber = jQuery(obj).attr("id").substr(9);
 
 		// find the image-browser-container
 		var currentNode = obj;
@@ -102,11 +106,18 @@ function ngg_ajax_browser_navigation(e, obj) {
 		
 		if (jQuery(currentNode.parentNode).hasClass("ngg-imagebrowser")) {
 			var gallery = jQuery(currentNode.parentNode);
+
+			// let's extract the post id & gallery id
+			var payload = gallery.attr("id").substring(17);
+			var separatorPosition = parseInt(payload.indexOf("-"));
+			
+			var galleryId = payload.substr(0, separatorPosition);
+			var postId = payload.substr(separatorPosition + 1);
 			
 			ngg_show_loading(e);
 			
 			// get content
-			jQuery.get(ngg_ajax.path +"nggajax.php", {galleryid: galleryId, id: imageNumber, type: "browser"}, function (data, textStatus) {
+			jQuery.get(ngg_ajax.path + "nggajax.php", {p: postId, galleryid: galleryId, pid: imageNumber, type: "browser"}, function (data, textStatus) {
 				// delete old content
 				gallery.children().remove();
 				
@@ -144,7 +155,7 @@ function ngg_ajax_browser_navigation(e, obj) {
 
 var loadingImage;
 function ngg_show_loading(obj) {
-	loadingImage = jQuery(document.createElement("img")).attr("src", ngg_ajax.path +"images/ajax-loader.gif").attr("alt", ngg_ajax.loading);
+	loadingImage = jQuery(document.createElement("img")).attr("src", ngg_ajax.path + "images/ajax-loader.gif").attr("alt", ngg_ajax.loading);
 
 	jQuery("body").append(loadingImage);
 	

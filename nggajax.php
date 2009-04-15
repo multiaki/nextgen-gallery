@@ -1,22 +1,31 @@
 <?php
 require_once('ngg-config.php');
 
-if ((!isset($_GET['galleryid']) || !is_numeric($_GET['galleryid'])) || (!isset($_GET['id']) || !is_numeric($_GET['id'])) || !isset($_GET['type'])) {
+// check if we have all needed parameter
+if ((!isset($_GET['galleryid']) || !is_numeric($_GET['galleryid'])) || (!isset($_GET['p']) || !is_numeric($_GET['p'])) || !isset($_GET['type']))
 	die('Insufficient parameters.');
-}
 
 switch ($_GET['type']) {
 	case 'gallery':
-		set_query_var('pageid', intval($_GET['id']));
-		// TODO: in what situation is nggpage different from pageid?
-		set_query_var('nggpage', intval($_GET['id']));
+	
+		// get the navigation page
+		set_query_var('nggpage', intval($_GET['nggpage']));
+		
+		// get the current page/post id
+		set_query_var('pageid', intval($_GET['p']));
+		$GLOBALS['id'] = intval($_GET['p']);
 		
 		echo nggShowGallery( intval($_GET['galleryid']) );
 		
 		break;
 	case 'browser':
-		set_query_var('pid', intval($_GET['id']));
-		global $id;
+	
+		// which image should be shown ?
+		set_query_var('pid', intval($_GET['pid']));
+		
+		// get the current page/post id
+		set_query_var('pageid', intval($_GET['p']));
+		$GLOBALS['id'] = intval($_GET['p']);
 			
 		echo nggShowImageBrowser( intval($_GET['galleryid']) );
 		

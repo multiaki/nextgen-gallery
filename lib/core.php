@@ -422,7 +422,7 @@ class nggGallery {
 			foreach ($sizes as $size){
 				// very, very rough estimation
 				if ($freeMemory < round( $size['width'] * $size['height'] * 5.09 )) {
-                	$result = sprintf(  __( 'Note : Based on your server memory limit you should not upload larger images then <strong>%d x %d</strong> pixel' ), $size['width'], $size['height']); 
+                	$result = sprintf(  __( 'Note : Based on your server memory limit you should not upload larger images then <strong>%d x %d</strong> pixel', 'nggallery' ), $size['width'], $size['height']); 
 					return $result;
 				}
 			}

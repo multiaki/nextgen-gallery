@@ -159,6 +159,9 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
     // $_GET from wp_query
 	$nggpage  = get_query_var('nggpage');
 	$pageid   = get_query_var('pageid');
+	
+	// we need to know the current page id
+	$current_page = (get_the_ID() == false) ? 0 : get_the_ID();
     
     if ( !is_array($picturelist) )
 		$picturelist = array($picturelist);
@@ -172,6 +175,7 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
 	$gallery->title = stripslashes( $first_image->title );
 	$gallery->description = html_entity_decode(stripslashes( $first_image->galdesc));
 	$gallery->pageid = $first_image->pageid;
+	$gallery->anchor = 'ngg-gallery-' . $galleryID . '-' . $current_page;
 	reset($picturelist);
 
 	$maxElement  = $ngg_options['galImages'];
@@ -203,7 +207,7 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
 	
  	// check for page navigation
  	if ($maxElement > 0) {
-	 	if ( !is_home() || $pageid == get_the_ID() ) {
+	 	if ( !is_home() || $pageid == $current_page ) {
 	 		$page = ( !empty( $nggpage ) ) ? (int) $nggpage : 1;
 		}
 		else $page = 1;
@@ -222,7 +226,7 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
 	} else {
 		$navigation = '<div class="ngg-clear">&nbsp;</div>';
 	}	
-	//var_dump($picturelist);
+
 	foreach ($picturelist as $key => $picture) {
 		// choose link between imagebrowser or effect
 		$link = ($ngg_options['galImgBrowser']) ? $nggRewrite->get_permalink( array('pid'=>$picture->pid) ) : $picture->imageURL;	
@@ -281,8 +285,7 @@ function nggShowAlbum($albumID, $template = 'extend') {
 			return;
 			
 		// if gallery is is submit , then show the gallery instead 
-		$galleryID = (int) $gallery;
-		$out = nggShowGallery($galleryID);
+		$out = nggShowGallery( intval($gallery) );
 		return $out;
 	}
 	 
@@ -463,6 +466,9 @@ function nggCreateImageBrowser($picarray, $template = '') {
 	
 	// $_GET from wp_query
 	$pid  = get_query_var('pid');
+	
+	// we need to know the current page id
+	$current_page = (get_the_ID() == false) ? 0 : get_the_ID();
 
     if ( !is_array($picarray) )
 		$picarray = array($picarray);
@@ -504,6 +510,7 @@ function nggCreateImageBrowser($picarray, $template = '') {
 	$picture->linktitle = htmlspecialchars( stripslashes($picture->description) );
 	$picture->alttext = html_entity_decode( stripslashes($picture->alttext) );
 	$picture->description = html_entity_decode( stripslashes($picture->description) );
+	$picture->anchor = 'ngg-imagebrowser-' . $picture->galleryid . '-' . $current_page;
 	
 	// filter to add custom content for the output
 	$picture = apply_filters('ngg_image_object', $picture, $act_pid);
