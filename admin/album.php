@@ -7,13 +7,13 @@ global $wpdb;
 function nggallery_admin_manage_album()  {
 	global $wpdb;
 	
-	$albumID = (int) $_POST['act_album'];
+	$albumID = isset($_POST['act_album']) ? (int) $_POST['act_album'] : 0 ;
 		
 	if ($_POST['update']){
 	
 		check_admin_referer('ngg_album');
 		
-		if ($_POST['newalbum']){ 
+		if (isset($_POST['update']) && $_POST['update']) { 
 			$newalbum = attribute_escape($_POST['newalbum']);
 			$result = $wpdb->query("INSERT INTO $wpdb->nggalbum (name, sortorder) VALUES ('$newalbum','0')");
 			if ($result) nggGallery::show_message(__('Update Successfully','nggallery'));
@@ -32,7 +32,7 @@ function nggallery_admin_manage_album()  {
 		} 
 	}
 	
-	if ($_POST['delete']){
+	if (isset($_POST['delete']) && $_POST['delete']) {
 		check_admin_referer('ngg_album');
 
 		$result = nggdb::delete_album($albumID);
@@ -144,7 +144,7 @@ function ngg_serialize(s)
 						}
 					?>
 				</select>
-				<?php if ($_POST['act_album'] > 0){ ?>
+				<?php if ($albumID > 0){ ?>
 					<input class="button-primary action" type="submit" name="update" value="<?php _e('Update', 'nggallery') ?>"/>
 					<input type="submit" name="delete" class="button-secondary action" value="<?php _e('Delete', 'nggallery') ?>" onclick="javascript:check=confirm('<?php _e('Delete album ?','nggallery'); ?>');if(check==false) return false;"/>
 				<?php } else { ?>
@@ -177,7 +177,7 @@ function ngg_serialize(s)
 		$used_list = getallusedgalleries();
 		
 		if(is_array($gallerylist)) {
-			if ( ($_POST['act_album'] == 0) or (!isset($_POST['act_album'])) ) {
+			if ( $albumID == 0 ) {
 				foreach($gallerylist as $gallery) {
 					if (in_array($gallery->gid,$used_list))
 						getgallerycontainer($gallery->gid,true);
@@ -185,8 +185,7 @@ function ngg_serialize(s)
 						getgallerycontainer($gallery->gid,false);
 				}
 			} else {
-				$act_album = $_POST['act_album'];
-				$sortorder = $wpdb->get_var("SELECT sortorder FROM $wpdb->nggalbum WHERE id = '$act_album'");
+				$sortorder = $wpdb->get_var("SELECT sortorder FROM $wpdb->nggalbum WHERE id = '$albumID'");
 				$sort_array = unserialize($sortorder);
 				// if something went wrong, initialize to empty array
 				if (!is_array($sort_array)) $sort_array = array();
@@ -240,8 +239,9 @@ function getgallerycontainer($galleryid = 0, $used = false) {
 		// set image url
 		$act_thumbnail_url 	= get_option ('siteurl') . '/' .$gallery->path . nggGallery::get_thumbnail_folder($gallery->path, FALSE);
 		
-		$post= get_post($gallery->pageid); 	
-		$pagename = $post->post_title;	
+		// get the post name
+		$post= get_post($gallery->pageid);
+		$pagename = ($post == null) ? '' : $post->post_title;	
 		$filename = $wpdb->get_var("SELECT filename FROM $wpdb->nggpictures WHERE pid = '$gallery->previewpic'");
 		$img =  ($filename) ? '<img src="'.$act_thumbnail_url. 'thumbs_' .$filename.'" />' : '';
 		// add class if it's in use in other albums

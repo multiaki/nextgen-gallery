@@ -327,7 +327,7 @@ class nggLoader {
 	function start_rewrite_module() {
 		global $nggRewrite;	
 			
-		if ( class_exists(nggRewrite) )
+		if ( class_exists('nggRewrite') )
 			$nggRewrite = new nggRewrite();	
 	}
 		

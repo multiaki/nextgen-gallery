@@ -132,6 +132,10 @@ class nggAdminPanel{
 	
 	function load_scripts() {
 		
+		// no need to go on if it's not a plugin page
+		if(!isset($_GET['page']))
+			return;
+
 		wp_register_script('ngg-ajax', NGGALLERY_URLPATH .'admin/js/ngg.ajax.js', array('jquery'), '1.0.0');
 		wp_localize_script('ngg-ajax', 'nggAjaxSetup', array(
 					'url' => admin_url('admin-ajax.php'),
@@ -175,6 +179,10 @@ class nggAdminPanel{
 	
 	function load_styles() {
 		
+		// no need to go on if it's not a plugin page
+		if(!isset($_GET['page']))
+			return;
+
 		switch ($_GET['page']) {
 			case NGGFOLDER :
 				wp_enqueue_style( 'nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.7.0', 'screen' );

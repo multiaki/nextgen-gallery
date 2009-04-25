@@ -13,9 +13,12 @@ class nggManageGallery {
 	function nggManageGallery() {
 
 		// GET variables
-		$this->gid  = (int) $_GET['gid'];
-		$this->pid  = (int) $_GET['pid'];	
-		$this->mode = trim ($_GET['mode']);
+		if(isset($_GET['gid']))
+			$this->gid  = (int) $_GET['gid'];
+		if(isset($_GET['pid']))
+			$this->pid  = (int) $_GET['pid'];	
+		if(isset($_GET['mode']))
+			$this->mode = trim ($_GET['mode']);
 	
 		//Look for POST process
 		if ( !empty($_POST) || !empty($_GET) )

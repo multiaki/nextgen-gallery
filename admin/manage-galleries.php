@@ -53,7 +53,7 @@ function nggallery_manage_gallery_main() {
 
 if($gallerylist) {
 	foreach($gallerylist as $gallery) {
-		$class = ( $class == 'class="alternate"' ) ? '' : 'class="alternate"';
+		$class = ( !isset($class) || $class == 'class="alternate"' ) ? '' : 'class="alternate"';
 		$gid = $gallery->gid;
 		$name = (empty($gallery->title) ) ? $gallery->name : $gallery->title;
 		$author_user = get_userdata( (int) $gallery->author );

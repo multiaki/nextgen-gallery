@@ -288,7 +288,7 @@ if($picturelist) {
 	foreach($picturelist as $picture) {
 
 		$pid       = (int) $picture->pid;
-		$alternate = ( $alternate == 'alternate' ) ? '' : 'alternate';	
+		$alternate = ( !isset($alternate) || $alternate == 'alternate' ) ? '' : 'alternate';	
 		$exclude   = ( $picture->exclude ) ? 'checked="checked"' : '';
 		$date = mysql2date(get_option('date_format'), $picture->imagedate);
 		$time = mysql2date(get_option('time_format'), $picture->imagedate);
