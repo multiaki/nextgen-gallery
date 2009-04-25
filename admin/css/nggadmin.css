@@ -393,3 +393,10 @@ DIV that shows the image as you drag it
 	margin:5px auto;
 	padding:10px;
 }
+/* ABOUT PAGE */ 
+.ngg-list {
+	font-size:11px; 
+	margin-left:15px;
+	list-style-position:inside;
+	list-style-type:disc;
+}

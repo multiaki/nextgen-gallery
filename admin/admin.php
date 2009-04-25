@@ -157,6 +157,7 @@ class nggAdminPanel{
 				wp_enqueue_script( 'postbox' );
 				wp_enqueue_script( 'ngg-ajax' );
 				wp_enqueue_script( 'ngg-progressbar' );
+				//wp_enqueue_script( 'jquery-ui-dialog' );
 				//TODO:Add Inline edit later
 				//wp_enqueue_script( 'ngg-inline-edit', NGGALLERY_URLPATH .'admin/js/ngg.inline-edit-images.js', array('jquery'), '1.0.0' );
 				add_thickbox();
@@ -185,6 +186,7 @@ class nggAdminPanel{
 
 		switch ($_GET['page']) {
 			case NGGFOLDER :
+			case "nggallery-about" :
 				wp_enqueue_style( 'nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.7.0', 'screen' );
 				wp_admin_css( 'css/dashboard' );
 			break;
@@ -194,6 +196,7 @@ class nggAdminPanel{
 			case "nggallery-manage-gallery" :
 			case "nggallery-roles" :
 			case "nggallery-manage-album" :
+				//wp_enqueue_style( 'jqueryui', NGGALLERY_URLPATH .'admin/css/jquery-ui.css', false, '1.7.1', 'screen' );
 				wp_enqueue_style( 'nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.7.0', 'screen' );
 				wp_enqueue_style( 'thickbox');			
 			break;
