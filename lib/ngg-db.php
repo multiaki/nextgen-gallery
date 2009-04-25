@@ -1,10 +1,10 @@
 <?php
-
+if ( !class_exists('nggdb') ) :
 /**
  * NextGEN Gallery Database Class
  * 
  * @author Alex Rabe, Vincent Prat
- * @copyright 2008
+ * @copyright 2008-2009
  * @since 1.0.0
  */
 class nggdb {
@@ -17,6 +17,24 @@ class nggdb {
 	 * @var object|array
 	 */
 	var $galleries = false;
+
+	/**
+	 * Holds the list of all images
+	 *
+	 * @since 1.3.0
+	 * @access public
+	 * @var object|array
+	 */
+	var $images = false;
+
+	/**
+	 * Holds the list of all albums
+	 *
+	 * @since 1.3.0
+	 * @access public
+	 * @var object|array
+	 */
+	var $albums = false;
 	
 	/**
 	 * The array for the pagination
@@ -43,9 +61,11 @@ class nggdb {
 		global $wpdb;
 		
 		$this->galleries = array();
-		$this->paged = array();
+		$this->images 	 = array();
+		$this->albums 	 = array();
+		$this->paged 	 = array();
 		
-		register_shutdown_function(array(&$this, "__destruct"));
+		register_shutdown_function(array(&$this, '__destruct'));
 		
 	}
 	
@@ -501,13 +521,15 @@ class nggdb {
 	}
 
 }
+endif;
 
-if ( ! isset($nggdb) ) {
+if ( ! isset($GLOBALS['nggdb']) ) {
 	/**
 	 * Initate the NextGEN Gallery Database Object, for later cache reasons
 	 * @global object $nggdb Creates a new wpdb object based on wp-config.php Constants for the database
 	 * @since 1.1.0
 	 */
-	$nggdb = new nggdb();
+	unset($GLOBALS['nggdb']);
+	$GLOBALS['nggdb'] =& new nggdb();
 }
 ?>
