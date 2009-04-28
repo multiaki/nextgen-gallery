@@ -520,6 +520,57 @@ class nggdb {
 		return null;	 
 	}
 
+	/**
+	 * search for images and return the result
+	 * 
+	 * @since 1.3.0
+	 * @param string $request
+	 * @return Array Result of the request
+	 */
+	function search_for_images( $request ) {
+		global $wpdb;
+		
+		// If a search pattern is specified, load the posts that match
+		if ( !empty($request) ) {
+			// added slashes screw with quote grouping when done early, so done later
+			$request = stripslashes($request);
+			
+			// split the words it a array if seperated by a space or comma
+			preg_match_all('/".*?("|$)|((?<=[\\s",+])|^)[^\\s",+]+/', $request, $matches);
+			$search_terms = array_map(create_function('$a', 'return trim($a, "\\"\'\\n\\r ");'), $matches[0]);
+			
+			$n = '%';
+			$searchand = '';
+			
+			foreach( (array) $search_terms as $term) {
+				$term = addslashes_gpc($term);
+				$search .= "{$searchand}((tt.description LIKE '{$n}{$term}{$n}') OR (tt.alttext LIKE '{$n}{$term}{$n}') OR (tt.filename LIKE '{$n}{$term}{$n}'))";
+				$searchand = ' AND ';
+			}
+			
+			$term = $wpdb->escape($request);
+			if (count($search_terms) > 1 && $search_terms[0] != $request )
+				$search .= " OR (tt.description LIKE '{$n}{$term}{$n}') OR (tt.alttext LIKE '{$n}{$term}{$n}') OR (tt.filename LIKE '{$n}{$term}{$n}')";
+
+			if ( !empty($search) )
+				$search = " AND ({$search}) ";
+		}
+		
+		// build the final query
+		$query = "SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE 1=1 $search ORDER BY tt.pid ASC ";
+				$result = $wpdb->get_results($query);
+
+		// Return the object from the query result
+		if ($result) {
+			foreach ($result as $image) {
+				$images[] = new nggImage( $image );
+			}
+			return $images;
+		} 
+
+		return null;
+	}
+
 }
 endif;
 
