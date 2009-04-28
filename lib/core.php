@@ -410,7 +410,7 @@ class nggGallery {
 			
 			// build the test sizes
 			$sizes = array();
-			$sizes[] = array ( 'width' => 800, 'height' => 600);
+			$sizes[] = array ( 'width' => 800,  'height' => 600);
 			$sizes[] = array ( 'width' => 1024, 'height' => 768);
 			$sizes[] = array ( 'width' => 1280, 'height' => 960);  // 1MP	
 			$sizes[] = array ( 'width' => 1600, 'height' => 1200); // 2MP

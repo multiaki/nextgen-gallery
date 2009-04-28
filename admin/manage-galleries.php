@@ -7,6 +7,13 @@ function nggallery_manage_gallery_main() {
 
 	global $wpdb, $ngg, $nggdb, $wp_query;
 	
+	if (isset ($_POST['addgallery']) && isset ($_POST['galleryname'])){
+		check_admin_referer('ngg_addgallery');
+		$newgallery = attribute_escape( $_POST['galleryname']);
+		if ( !empty($newgallery) )
+			nggAdmin::create_gallery($newgallery, $defaultpath);
+	}
+	
 	if ( ! isset( $_GET['paged'] ) || $_GET['paged'] < 1 )
 		$_GET['paged'] = 1;
 	
@@ -21,10 +28,31 @@ function nggallery_manage_gallery_main() {
 		'total' => $nggdb->paged['max_objects_per_page'],
 		'current' => $_GET['paged']
 	));
-		
+	
+	$defaultpath = $ngg->options['gallerypath'];	
 	?>
+	<script type="text/javascript"> 
+	<!--
+	function showDialog( windowId ) {
+		tb_show("", "#TB_inline?width=640&height=120&inlineId=" + windowId + "&modal=true", false);
+	}
+	//-->
+	</script>
 	<div class="wrap">
 		<h2><?php _e('Gallery Overview', 'nggallery') ?></h2>
+		<form class="search-form" action="" method="get">
+		<p class="search-box">
+			<label class="hidden" for="media-search-input"><?php _e( 'Search Media', 'nggallery' ); ?>:</label>
+			<input type="hidden" id="page-name" name="page" value="nggallery-manage-gallery" />
+			<input type="text" id="media-search-input" name="s" value="<?php the_search_query(); ?>" />
+			<input type="submit" value="<?php _e( 'Search Media', 'nggallery' ); ?>" class="button" />
+		</p>
+		</form>
+		<div class="tablenav">
+			<div class="alignleft actions">
+				<input id="doaction" class="button-secondary action" type="submit" onclick="showDialog('addGallery');" name="doaction" value="<?php _e('Add new gallery', 'nggallery') ?>"/>
+			</div>
+		</div>
 		<?php if ( $page_links ) : ?>
 		<div class="tablenav">
 			<div class="tablenav-pages"><?php $page_links_text = sprintf( '<span class="displaying-num">' . __( 'Displaying %s&#8211;%s of %s' ) . '</span>%s',
@@ -39,12 +67,12 @@ function nggallery_manage_gallery_main() {
 		<table class="widefat" cellspacing="0">
 			<thead>
 			<tr>
-				<th scope="col" ><?php _e('ID') ?></th>
-				<th scope="col" ><?php _e('Title', 'nggallery') ?></th>
-				<th scope="col" ><?php _e('Description', 'nggallery') ?></th>
-				<th scope="col" ><?php _e('Author', 'nggallery') ?></th>
-				<th scope="col" ><?php _e('Page ID', 'nggallery') ?></th>
-				<th scope="col" ><?php _e('Quantity', 'nggallery') ?></th>
+				<th scope="col" ><?php _e('ID'); ?></th>
+				<th scope="col" ><?php _e('Title', 'nggallery'); ?></th>
+				<th scope="col" ><?php _e('Description', 'nggallery'); ?></th>
+				<th scope="col" ><?php _e('Author', 'nggallery'); ?></th>
+				<th scope="col" ><?php _e('Page ID', 'nggallery'); ?></th>
+				<th scope="col" ><?php _e('Quantity', 'nggallery'); ?></th>
 				<th scope="col" ><?php _e('Action'); ?></th>
 			</tr>
 			</thead>
@@ -88,6 +116,31 @@ if($gallerylist) {
 			</tbody>
 		</table>
 	</div>
+	<!-- #addGallery -->
+	<div id="addGallery" style="display: none;" >
+		<form id="form-tags" method="POST" accept-charset="utf-8">
+		<?php wp_nonce_field('ngg_addgallery') ?>
+		<table width="100%" border="0" cellspacing="3" cellpadding="3" >
+		  	<tr>
+		    	<td>
+					<strong><?php _e('New Gallery', 'nggallery') ;?>:</strong> <input type="text" size="35" name="galleryname" value="" /><br />
+					<?php if(!IS_WPMU) { ?>
+					<?php _e('Create a new , empty gallery below the folder', 'nggallery') ;?>  <strong><?php echo $defaultpath ?></strong><br />
+					<?php } ?>
+					<i>( <?php _e('Allowed characters for file and folder names are', 'nggallery') ;?>: a-z, A-Z, 0-9, -, _ )</i>
+				</td>
+		  	</tr>
+		  	<tr align="right">
+		    	<td class="submit">
+		    		<input class="button-primary" type="submit" name="addgallery" value="<?php _e('OK','nggallery'); ?>" />
+		    		&nbsp;
+		    		<input class="button-secondary" type="reset" value="&nbsp;<?php _e("Cancel",'nggallery'); ?>&nbsp;" onclick="tb_remove()"/>
+		    	</td>
+			</tr>
+		</table>
+		</form>
+	</div>
+	<!-- /#addGallery -->
 <?php
 } 
 ?>
