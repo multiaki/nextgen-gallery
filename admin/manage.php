@@ -8,6 +8,7 @@ class nggManageGallery {
 	var $gid = false;
 	var $pid = false;
 	var $base_page = 'admin.php?page=nggallery-manage-gallery';
+	var $search_result = false;
 	
 	// initiate the manage page
 	function nggManageGallery() {
@@ -47,10 +48,10 @@ class nggManageGallery {
 
 	function processor() {
 	
-		global $wpdb, $ngg;
+		global $wpdb, $ngg, $nggdb;
 		
-		if ($this->mode == 'delete') {
 		// Delete a gallery
+		if ($this->mode == 'delete') {
 		
 			check_admin_referer('ngg_editgallery');
 		
@@ -83,21 +84,17 @@ class nggManageGallery {
 		 	$this->mode = 'main'; // show mainpage
 		}
 	
-		if ($this->mode == 'delpic') {
 		// Delete a picture
+		if ($this->mode == 'delpic') {
 		//TODO:Remove also Tag reference
 			check_admin_referer('ngg_delpicture');
-			$filename = $wpdb->get_var("SELECT filename FROM $wpdb->nggpictures WHERE pid = '$this->pid' ");
-			if ($filename) {
-				$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$this->gid' ");
-				if ($gallerypath){
-					$thumb_folder = nggGallery::get_thumbnail_folder($gallerypath, FALSE);
-					if ($ngg->options['deleteImg']) {
-						@unlink(WINABSPATH . $gallerypath . '/thumbs/thumbs_' .$filename);
-						@unlink(WINABSPATH . $gallerypath . '/' . $filename);
-					}
-				}		
-				$delete_pic = $wpdb->query("DELETE FROM $wpdb->nggpictures WHERE pid = $this->pid");
+			$image = $nggdb->find_image( $this->pid );
+			if ($image) {
+				if ($ngg->options['deleteImg']) {
+					@unlink($image->imagePath);
+					@unlink($image->thumbPath);	
+				} 
+				$delete_pic = $wpdb->query("DELETE FROM $wpdb->nggpictures WHERE pid = $image->pid");
 			}
 			if($delete_pic)
 				nggGallery::show_message( __('Picture','nggallery').' \''.$this->pid.'\' '.__('deleted successfully','nggallery') );
@@ -106,19 +103,10 @@ class nggManageGallery {
 	
 		}
 		
+		// do bulk update
 		if (isset ($_POST['bulkaction']) && isset ($_POST['doaction']))  {
-			// do bulk update
 			
 			check_admin_referer('ngg_updategallery');
-			
-			$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$this->gid' ");
-			$imageslist = array();
-			
-			if ( is_array($_POST['doaction']) ) {
-				foreach ( $_POST['doaction'] as $imageID ) {
-					$imageslist[] = $wpdb->get_var("SELECT filename FROM $wpdb->nggpictures WHERE pid = '$imageID' ");
-				}
-			}
 			
 			switch ($_POST['bulkaction']) {
 				case 'no_action';
@@ -139,19 +127,18 @@ class nggManageGallery {
 				case 'delete_images':
 				// Delete images
 					if ( is_array($_POST['doaction']) ) {
-					if ($gallerypath){
-						$thumb_folder = nggGallery::get_thumbnail_folder($gallerypath, FALSE);
 						foreach ( $_POST['doaction'] as $imageID ) {
-							$filename = $wpdb->get_var("SELECT filename FROM $wpdb->nggpictures WHERE pid = '$imageID' ");
-							if ($ngg->options['deleteImg']) {
-								@unlink(WINABSPATH.$gallerypath.'/'.$thumb_folder.'/'. "thumbs_" .$filename);
-								@unlink(WINABSPATH.$gallerypath.'/'.$filename);	
-							} 
-							$delete_pic = $wpdb->query("DELETE FROM $wpdb->nggpictures WHERE pid = $imageID");
+							$image = $nggdb->find_image( $imageID );
+							if ($image) {
+								if ($ngg->options['deleteImg']) {
+									@unlink($image->imagePath);
+									@unlink($image->thumbPath);	
+								} 
+								$delete_pic = $wpdb->query("DELETE FROM $wpdb->nggpictures WHERE pid = $image->pid");
+							}
 						}
-					}		
-					if($delete_pic)
-						nggGallery::show_message(__('Pictures deleted successfully ',"nggallery"));
+						if($delete_pic)
+							nggGallery::show_message(__('Pictures deleted successfully ', "nggallery"));
 					}
 					break;
 				case 'import_meta':
@@ -300,6 +287,9 @@ class nggManageGallery {
 		if ( isset ($_POST['sortGallery']) )
 			$this->mode = 'sort';
 		
+		if ( isset ($_GET['s']) )	
+			$this->search_images();
+		
 	}
 	
 	function update_pictures() {
@@ -370,6 +360,20 @@ class nggManageGallery {
 			$query .= " AND meta_value != '0'";
 	
 		return $wpdb->get_col( $query );
+	}
+	
+	function search_images() {
+		global $nggdb;
+		
+		if ( empty($_GET['s']) )
+			return;
+		//on what ever reason I need to set again the query var
+		set_query_var('s', $_GET['s']);
+		$request = get_search_query();
+		// looknow for the images
+		$this->search_result = $nggdb->search_for_images( $request );
+		// show pictures page
+		$this->mode = 'edit'; 
 	}
 }
 ?>

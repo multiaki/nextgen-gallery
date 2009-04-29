@@ -6,52 +6,71 @@ function nggallery_picturelist() {
 // *** show picture list
 	global $wpdb, $nggdb, $user_ID, $ngg;
 	
-	// GET variables
-	$act_gid    = $ngg->manage_page->gid;
+	// Look if its a search result
+	$is_search = isset ($_GET['s']) ? true : false;
 	
-	// Load the gallery metadata
-	$gallery = $nggdb->find_gallery($act_gid);
-
-	if (!$gallery) {
-		nggGallery::show_error(__('Gallery not found.', 'nggallery'));
-		return;
-	}
-	
-	// Check if you have the correct capability
-	if (!nggAdmin::can_manage_this_gallery($gallery->author)) {
-		nggGallery::show_error(__('Sorry, you have no access here', 'nggallery'));
-		return;
-	}	
-	
-	// look for pagination	
-	if ( ! isset( $_GET['paged'] ) || $_GET['paged'] < 1 )
+	if ($is_search) {
+		// fetch the imagelist 
+		$picturelist = $ngg->manage_page->search_result;
+		
+		// we didn't set a gallery or a pagination
+		$act_gid     = 0;
 		$_GET['paged'] = 1;
+		$page_links = false;
+		
+		//TODO: You can only change images where you have the capability...
+		
+	} else {
 	
-	$start = ( $_GET['paged'] - 1 ) * 50;
+		// GET variables
+		$act_gid    = $ngg->manage_page->gid;
+		
+		// Load the gallery metadata
+		$gallery = $nggdb->find_gallery($act_gid);
 	
-	// get picture values
-	$picturelist = $nggdb->get_gallery($act_gid, $ngg->options['galSort'], $ngg->options['galSortDir'], false, 50, $start );
-	
-	// build pagination
-	$page_links = paginate_links( array(
-		'base' => add_query_arg( 'paged', '%#%' ),
-		'format' => '',
-		'prev_text' => __('&laquo;'),
-		'next_text' => __('&raquo;'),
-		'total' => $nggdb->paged['max_objects_per_page'],
-		'current' => $_GET['paged']
-	));
-	
-	// get the current author
-	$act_author_user    = get_userdata( (int) $gallery->author );
-	
-	// list all galleries
-	$gallerylist = $nggdb->find_all_galleries();
-	
-	//get the columns
-	$gallery_columns = ngg_manage_gallery_columns();
-	$hidden_columns  = get_hidden_columns('nggallery-manage-images');
-	$num_columns     = count($gallery_columns) - count($hidden_columns);
+		if (!$gallery) {
+			nggGallery::show_error(__('Gallery not found.', 'nggallery'));
+			return;
+		}
+		
+		// Check if you have the correct capability
+		if (!nggAdmin::can_manage_this_gallery($gallery->author)) {
+			nggGallery::show_error(__('Sorry, you have no access here', 'nggallery'));
+			return;
+		}	
+		
+		// look for pagination	
+		if ( ! isset( $_GET['paged'] ) || $_GET['paged'] < 1 )
+			$_GET['paged'] = 1;
+		
+		$start = ( $_GET['paged'] - 1 ) * 50;
+		
+		// get picture values
+		$picturelist = $nggdb->get_gallery($act_gid, $ngg->options['galSort'], $ngg->options['galSortDir'], false, 50, $start );
+		
+		// build pagination
+		$page_links = paginate_links( array(
+			'base' => add_query_arg( 'paged', '%#%' ),
+			'format' => '',
+			'prev_text' => __('&laquo;'),
+			'next_text' => __('&raquo;'),
+			'total' => $nggdb->paged['max_objects_per_page'],
+			'current' => $_GET['paged']
+		));
+		
+		// get the current author
+		$act_author_user    = get_userdata( (int) $gallery->author );
+
+	}	
+		
+		// list all galleries
+		$gallerylist = $nggdb->find_all_galleries();
+
+		//get the columns
+		$gallery_columns = ngg_manage_gallery_columns();
+		$hidden_columns  = get_hidden_columns('nggallery-manage-images');
+		$num_columns     = count($gallery_columns) - count($hidden_columns);
+
 ?>
 
 <script type="text/javascript"> 
@@ -148,6 +167,23 @@ jQuery(document).ready( function() {
 
 <div class="wrap">
 
+<?php if ($is_search) :?>
+<h2><?php printf( __('Search results for &#8220;%s&#8221;', 'nggallery'), wp_specialchars( get_search_query() ) ); ?></h2>
+<form class="search-form" action="" method="get">
+<p class="search-box">
+	<label class="hidden" for="media-search-input"><?php _e( 'Search Media', 'nggallery' ); ?>:</label>
+	<input type="hidden" id="page-name" name="page" value="nggallery-manage-gallery" />
+	<input type="text" id="media-search-input" name="s" value="<?php the_search_query(); ?>" />
+	<input type="submit" value="<?php _e( 'Search Media', 'nggallery' ); ?>" class="button" />
+</p>
+</form>
+
+<br style="clear: both;" />
+
+<form id="updategallery" class="nggform" method="POST" action="<?php echo $ngg->manage_page->base_page . '&amp;mode=edit&amp;s=' . $_GET['s']; ?>" accept-charset="utf-8">
+<?php wp_nonce_field('ngg_updategallery') ?>
+
+<?php else :?>
 <h2><?php echo __ngettext( 'Gallery', 'Galleries', 1, 'nggallery' ); ?> : <?php echo nggGallery::i18n($gallery->title); ?></h2>
 
 <br style="clear: both;" />
@@ -226,6 +262,7 @@ jQuery(document).ready( function() {
 		</div>
 	</div>
 </div> <!-- poststuff -->
+<?php endif; ?>
 
 <div class="tablenav ngg-tablenav">
 	<?php if ( $page_links ) : ?>
@@ -252,7 +289,7 @@ jQuery(document).ready( function() {
 	</select>
 	<input class="button-secondary" type="submit" name="showThickbox" value="<?php _e("OK",'nggallery')?>" onclick="if ( !checkSelected() ) return false;" />
 	
-	<?php if ($ngg->options['galSort'] == "sortorder") { ?>
+	<?php if (($ngg->options['galSort'] == "sortorder") && (!$is_search) ) { ?>
 		<input class="button-secondary" type="submit" name="sortGallery" value="<?php _e("Sort gallery",'nggallery')?>" />
 	<?php } ?>
 	
