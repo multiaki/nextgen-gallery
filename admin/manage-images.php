@@ -10,6 +10,7 @@ function nggallery_picturelist() {
 	$is_search = isset ($_GET['s']) ? true : false;
 	
 	if ($is_search) {
+
 		// fetch the imagelist 
 		$picturelist = $ngg->manage_page->search_result;
 		
@@ -17,8 +18,6 @@ function nggallery_picturelist() {
 		$act_gid     = 0;
 		$_GET['paged'] = 1;
 		$page_links = false;
-		
-		//TODO: You can only change images where you have the capability...
 		
 	} else {
 	
@@ -313,17 +312,21 @@ jQuery(document).ready( function() {
 <?php
 if($picturelist) {
 	
-	$thumbsize = '';
-	if ($ngg->options['thumbfix']) {
-		$thumbsize = 'width="'.$ngg->options['thumbwidth'].'" height="'.$ngg->options['thumbheight'].'"';
-	}
+	$thumbsize 	= '';
+	$counter	= 0;	
+	if ($ngg->options['thumbfix'])
+		$thumbsize = 'width="' . $ngg->options['thumbwidth'] . '" height="' . $ngg->options['thumbheight'] . '"';
 	
-	if ($ngg->options['thumbcrop']) {
-		$thumbsize = 'width="'.$ngg->options['thumbwidth'].'" height="'.$ngg->options['thumbwidth'].'"';
-	}
+	if ($ngg->options['thumbcrop'])
+		$thumbsize = 'width="' . $ngg->options['thumbwidth'] . '" height="' . $ngg->options['thumbwidth'] . '"';
 		
 	foreach($picturelist as $picture) {
-
+		
+		//for search result we need to check the capatibiliy
+		if ( !nggAdmin::can_manage_this_gallery($picture->author) && $is_search )
+			continue;
+			
+		$counter++;
 		$pid       = (int) $picture->pid;
 		$alternate = ( !isset($alternate) || $alternate == 'alternate' ) ? '' : 'alternate';	
 		$exclude   = ( $picture->exclude ) ? 'checked="checked"' : '';
@@ -423,9 +426,12 @@ if($picturelist) {
 		</tr>
 		<?php
 	}
-} else {
-	echo '<tr><td colspan="' . $num_columns . '" align="center"><strong>'.__('No entries found','nggallery').'</strong></td></tr>';
 }
+ 
+// In the case you have no capaptibility to see the search result
+if ( $counter==0 )
+	echo '<tr><td colspan="' . $num_columns . '" align="center"><strong>'.__('No entries found','nggallery').'</strong></td></tr>';
+
 ?>
 	
 		</tbody>

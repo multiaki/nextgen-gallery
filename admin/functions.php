@@ -754,12 +754,13 @@ class nggAdmin{
 		// check is the ID fit's to the user_ID'
 		global $user_ID, $wp_roles;
 		
-		// get the current user ID
-		get_currentuserinfo();
-		
-		if ( !current_user_can('NextGEN Manage others gallery') )
+		if ( !current_user_can('NextGEN Manage others gallery') ) {
+			// get the current user ID
+			get_currentuserinfo();
+			
 			if ( $user_ID != $check_ID)
 				return false;
+		}
 		
 		return true;
 	

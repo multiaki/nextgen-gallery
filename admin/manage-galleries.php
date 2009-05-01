@@ -39,7 +39,7 @@ function nggallery_manage_gallery_main() {
 	//-->
 	</script>
 	<div class="wrap">
-		<h2><?php _e('Gallery Overview', 'nggallery') ?></h2>
+		<h2><?php _e('Gallery Overview', 'nggallery'); ?></h2>
 		<form class="search-form" action="" method="get">
 		<p class="search-box">
 			<label class="hidden" for="media-search-input"><?php _e( 'Search Media', 'nggallery' ); ?>:</label>
@@ -49,9 +49,11 @@ function nggallery_manage_gallery_main() {
 		</p>
 		</form>
 		<div class="tablenav">
+			<?php if ( current_user_can('NextGEN Upload images') ) : ?>
 			<div class="alignleft actions">
 				<input id="doaction" class="button-secondary action" type="submit" onclick="showDialog('addGallery');" name="doaction" value="<?php _e('Add new gallery', 'nggallery') ?>"/>
 			</div>
+			<?php endif; ?>
 		</div>
 		<?php if ( $page_links ) : ?>
 		<div class="tablenav">
@@ -61,7 +63,6 @@ function nggallery_manage_gallery_main() {
 				number_format_i18n( $nggdb->paged['total_objects'] ),
 				$page_links
 			); echo $page_links_text; ?></div>
-		<br class="clear" />
 		</div>
 		<?php endif; ?>
 		<table class="widefat" cellspacing="0">
@@ -90,7 +91,7 @@ if($gallerylist) {
 			<th scope="row"><?php echo $gid; ?></th>
 			<td>
 				<?php if (nggAdmin::can_manage_this_gallery($gallery->author)) { ?>
-					<a href="<?php echo wp_nonce_url( $ngg->manage_page->base_page . "&amp;mode=edit&amp;gid=" . $gid, 'ngg_editgallery')?>" class='edit' title="<?php _e('Edit') ?>" >
+					<a href="<?php echo wp_nonce_url( $ngg->manage_page->base_page . '&amp;mode=edit&amp;gid=' . $gid, 'ngg_editgallery')?>" class='edit' title="<?php _e('Edit'); ?>" >
 						<?php echo nggGallery::i18n($name); ?>
 					</a>
 				<?php } else { ?>
@@ -103,14 +104,14 @@ if($gallerylist) {
 			<td><?php echo $gallery->counter; ?></td>
 			<td>
 				<?php if (nggAdmin::can_manage_this_gallery($gallery->author)) : ?>
-					<a href="<?php echo wp_nonce_url( $ngg->manage_page->base_page . "&amp;mode=delete&amp;gid=" . $gid, 'ngg_editgallery')?>" class="delete" onclick="javascript:check=confirm( '<?php _e("Delete this gallery ?",'nggallery')?>');if(check==false) return false;"><?php _e('Delete') ?></a>
+					<a href="<?php echo wp_nonce_url( $ngg->manage_page->base_page . '&amp;mode=delete&amp;gid=' . $gid, 'ngg_editgallery')?>" class="delete" onclick="javascript:check=confirm( '<?php _e('Delete this gallery ?', 'nggallery'); ?>');if(check==false) return false;"><?php _e('Delete'); ?></a>
 				<?php endif; ?>
 			</td>
 		</tr>
 		<?php
 	}
 } else {
-	echo '<tr><td colspan="7" align="center"><strong>'.__('No entries found','nggallery').'</strong></td></tr>';
+	echo '<tr><td colspan="7" align="center"><strong>' . __('No entries found', 'nggallery') . '</strong></td></tr>';
 }
 ?>			
 			</tbody>
@@ -119,7 +120,7 @@ if($gallerylist) {
 	<!-- #addGallery -->
 	<div id="addGallery" style="display: none;" >
 		<form id="form-tags" method="POST" accept-charset="utf-8">
-		<?php wp_nonce_field('ngg_addgallery') ?>
+		<?php wp_nonce_field('ngg_addgallery'); ?>
 		<table width="100%" border="0" cellspacing="3" cellpadding="3" >
 		  	<tr>
 		    	<td>
@@ -134,7 +135,7 @@ if($gallerylist) {
 		    	<td class="submit">
 		    		<input class="button-primary" type="submit" name="addgallery" value="<?php _e('OK','nggallery'); ?>" />
 		    		&nbsp;
-		    		<input class="button-secondary" type="reset" value="&nbsp;<?php _e("Cancel",'nggallery'); ?>&nbsp;" onclick="tb_remove()"/>
+		    		<input class="button-secondary" type="reset" value="&nbsp;<?php _e('Cancel', 'nggallery'); ?>&nbsp;" onclick="tb_remove()"/>
 		    	</td>
 			</tr>
 		</table>
