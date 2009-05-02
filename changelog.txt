@@ -5,6 +5,7 @@ V1.3.0
 - NEW : Search for images in the admin tab
 - NEW : Add new gallery also in manage tab
 - NEW : AJAX support for Imagebrowser and gallery navigation (THX to Anty)
+- NEW : Added zip upload via URL (THX to Juan Jose Galvez)
 - Added : jQuery Multiple File Upload Plugin v1.44
 - Added : SWFUpload V2.2.0
 - Bugfix : Correct various PHP notice messages
