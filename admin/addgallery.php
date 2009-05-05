@@ -224,6 +224,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<option value="0" ><?php _e('a new gallery', 'nggallery') ?></option>
 					<?php
 						foreach($gallerylist as $gallery) {
+							if ( !nggAdmin::can_manage_this_gallery($gallery->author) )
+								continue;
 							$name = ( empty($gallery->title) ) ? $gallery->name : $gallery->title;
 							echo '<option value="' . $gallery->gid . '" >' . $gallery->gid . ' - ' . $name . '</option>' . "\n";
 						}
@@ -272,6 +274,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<option value="0" ><?php _e('Choose gallery', 'nggallery') ?></option>
 					<?php
 						foreach($gallerylist as $gallery) {
+							if ( !nggAdmin::can_manage_this_gallery($gallery->author) )
+								continue;
 							$name = ( empty($gallery->title) ) ? $gallery->name : $gallery->title;
 							echo '<option value="' . $gallery->gid . '" >' . $gallery->gid . ' - ' . $name . '</option>' . "\n";
 						}					?>
