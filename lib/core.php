@@ -242,7 +242,7 @@ class nggGallery {
 			'bool' => array(
 				'ngg_gal_ShowSlide'			=> 'galShowSlide',
 				'ngg_gal_ShowPiclense'		=> 'usePicLens',
-				'ngg_gal_ImgageBrowser' 	=> 'galImgBrowser',
+				'ngg_gal_ImageBrowser' 		=> 'galImgBrowser',
 				'ngg_ir_Shuffle' 			=> 'irShuffle',
 				'ngg_ir_LinkFromDisplay' 	=> 'irLinkfromdisplay',
 				'ngg_ir_ShowNavigation'		=> 'irShownavigation',
