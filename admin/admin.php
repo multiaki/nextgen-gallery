@@ -88,7 +88,8 @@ class nggAdminPanel{
 				break;
 			case "nggallery-manage-album" :
 				include_once ( dirname (__FILE__) . '/album.php' );		// nggallery_admin_manage_album
-				nggallery_admin_manage_album();
+				$ngg->manage_album = new nggManageAlbum ();
+				$ngg->manage_album->controller();
 				break;				
 			case "nggallery-options" :
 				include_once ( dirname (__FILE__) . '/settings.php' );		// nggallery_admin_options

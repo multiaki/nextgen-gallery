@@ -45,7 +45,7 @@ function nggallery_manage_gallery_main() {
 			<label class="hidden" for="media-search-input"><?php _e( 'Search Media', 'nggallery' ); ?>:</label>
 			<input type="hidden" id="page-name" name="page" value="nggallery-manage-gallery" />
 			<input type="text" id="media-search-input" name="s" value="<?php the_search_query(); ?>" />
-			<input type="submit" value="<?php _e( 'Search Media', 'nggallery' ); ?>" class="button" />
+			<input type="submit" value="<?php _e( 'Search Images', 'nggallery' ); ?>" class="button" />
 		</p>
 		</form>
 		<div class="tablenav">

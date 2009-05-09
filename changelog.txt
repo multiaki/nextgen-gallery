@@ -9,6 +9,8 @@ V1.3.0
 - Added : jQuery Multiple File Upload Plugin v1.44
 - Added : SWFUpload V2.2.0
 - Bugfix : Correct various PHP notice messages
+- Bugfix : Typo fix in custom fields for ngg_gal_ImageBrowser
+- Bugfix : Avoid upload of images in gallery without correct capability  
 
 V1.2.1 - 22.03.2009
 - NEW : Support for IE8 Web Slices in widgets

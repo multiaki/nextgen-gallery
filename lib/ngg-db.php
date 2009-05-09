@@ -79,6 +79,30 @@ class nggdb {
 	}	
 
 	/**
+	 * Get all the album nad unserialize the content
+	 * 
+	 * @since 1.3.0
+	 * @param string $order_by
+	 * @param string $order_dir
+	 * @return array $album
+	 */
+	function find_all_album( $order_by = 'id', $order_dir = 'ASC') {	
+		global $wpdb; 
+		
+		$order_dir = ( $order_dir == 'DESC') ? 'DESC' : 'ASC';
+		$this->albums = $wpdb->get_results("SELECT * FROM $wpdb->nggalbum ORDER BY {$order_by} {$order_dir}" , OBJECT_K );
+		
+		if ( !$this->albums )
+			return array();
+		
+		foreach ($this->albums as $key => $value) {
+			$this->albums[$key]->galleries = (array) unserialize($this->albums[$key]->sortorder);
+		}
+		
+		return $this->albums;
+	}
+
+	/**
 	 * Get all the galleries
 	 * 
 	 * @param string $order_by
@@ -230,6 +254,7 @@ class nggdb {
 
 		return $result;		
 	}	
+	
 	/**
 	 * Delete a gallery AND all the pictures associated to this gallery!
 	 * 
