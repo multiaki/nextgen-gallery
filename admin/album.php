@@ -234,9 +234,9 @@ function ngg_serialize(s)
 	
 	<div>
 		<div style="float:right;">
-		  <a href="#" id="toggle_used"><?php _e('[Show all]', 'nggallery') ?></a>
-		| <a href="#" id="all_max"><?php _e('[Maximize]', 'nggallery') ?></a>
-		| <a href="#" id="all_min"><?php _e('[Minimize]', 'nggallery') ?></a>
+		  <a href="#" title="<?php _e('Show / hide used galleries','nggallery'); ?>" id="toggle_used"><?php _e('[Show all]', 'nggallery') ?></a>
+		| <a href="#" title="<?php _e('Maximize the widget content','nggallery'); ?>" id="all_max"><?php _e('[Maximize]', 'nggallery') ?></a>
+		| <a href="#" title="<?php _e('Minimize the widget content','nggallery'); ?>" id="all_min"><?php _e('[Minimize]', 'nggallery') ?></a>
 		</div>
 		<?php _e('After you create and select a album, you can drag and drop a gallery or another album into your new album below','nggallery'); ?>
 	</div>
@@ -246,8 +246,8 @@ function ngg_serialize(s)
 	<div class="container">
 		
 		<!-- /#album container -->
-		<div class="sidebar-right">
-			<div class="sidebar-name">
+		<div class="widget widget-right">
+			<div class="widget-top">
 				<h3><?php _e('Select album', 'nggallery'); ?></h3>
 			</div>
 			<div id="albumContainer" class="widget-holder">
@@ -262,8 +262,8 @@ function ngg_serialize(s)
 		</div>
 		
 		<!-- /#select container -->
-		<div class="sidebar-right">
-			<div class="sidebar-name">
+		<div class="widget widget-right">
+			<div class="widget-top">
 				<h3><?php _e('Select gallery', 'nggallery'); ?></h3>
 			</div>
 			<div id="selectContainer" class="widget-holder">
@@ -286,13 +286,13 @@ function ngg_serialize(s)
 		</div>
 		
 		<!-- /#target-album -->
-		<div class="target-album">
+		<div class="widget target-album widget-liquid-left">
 
 		<?php
 			if ($this->currentID > 0){			
 				$album = $this->albums[$this->currentID];
 				?>
-				<div class="sidebar-name">
+				<div class="widget-top">
 					<h3><?php _e('Album ID', 'nggallery');  ?> <?php echo $album->id . ' : ' .$album->name; ?> </h3>
 				</div>
 				<div id="galleryContainer" class="widget-holder target">
@@ -305,7 +305,7 @@ function ngg_serialize(s)
 			else
 			{	
 				?>
-				<div class="sidebar-name">
+				<div class="widget-top">
 					<h3><?php _e('No album selected!', 'nggallery'); ?></h3>
 				</div>
 				<div class="widget-holder target">
@@ -374,7 +374,7 @@ function ngg_serialize(s)
 				<div class="innerhandle">
 					<div class="item_top ' . $class . '">
 						<a href="#" class="min" title="close">[-]</a>
-						ID: ' . $obj['id'] . ' | ' . nggGallery::i18n( $obj['title'] ) . '
+						ID: ' . $obj['id'] . ' | ' . wp_html_excerpt( nggGallery::i18n( $obj['title'] ) , 25) . '
 					</div>
 					<div class="itemContent">
 							' . $preview_image . '
