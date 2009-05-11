@@ -109,7 +109,9 @@ function nggShowGallery( $galleryID, $template = '' ) {
 	
 	// set $show if slideshow first
 	if ( empty( $show ) AND ($ngg_options['galShowOrder'] == 'slide')) {
-		if (is_home()) $pageid = get_the_ID();
+		if ( is_home() ) 
+			$pageid = get_the_ID();
+		
 		$show = 'slide';
 	}
 
@@ -281,13 +283,14 @@ function nggShowAlbum($albumID, $template = 'extend') {
 	// first look for gallery variable 
 	if (!empty( $gallery ))  {
 		
-		if ( ($albumID != $album) && ($albumID != 'all') ) 
-			return;
-			
 		// if gallery is is submit , then show the gallery instead 
 		$out = nggShowGallery( intval($gallery) );
 		return $out;
 	}
+	
+	//redirect to subalbum
+	if (!empty( $album ))
+		$albumID = $album;
 	 
 	// lookup in the database
 	$album = nggdb::find_album( $albumID );
@@ -318,7 +321,7 @@ function nggShowAlbum($albumID, $template = 'extend') {
 function nggCreateAlbum( $galleriesID, $template = 'extend', $album = 0) {
 	// create a gallery overview div
 	
-	global $wpdb, $nggRewrite;
+	global $wpdb, $nggRewrite, $nggdb;
 	
     // $_GET from wp_query
 	$nggpage  = get_query_var('nggpage');	
@@ -355,8 +358,35 @@ function nggCreateAlbum( $galleriesID, $template = 'extend', $album = 0) {
 
 	// re-order them and populate some 
  	foreach ($sortorder as $key) {
- 		$galleries[$key] = $unsort_galleries[$key];
-		
+ 		
+ 		//if we have a prefix 'a' then it's a subalbum, instead a gallery
+ 		if (substr( $key, 0, 1) == 'a') { 
+ 			// get the album content
+			 if ( !$subalbum = $nggdb->find_album(substr( $key, 1)) )
+ 				continue;
+ 			
+			//populate the sub album values
+			$galleries[$key]->counter = 0;
+			//TODO:Include a preview pic
+			$galleries[$key]->previewpic = '';
+			$galleries[$key]->previewurl = '';
+			$galleries[$key]->previewname = $subalbum->name;
+			
+			//link to the subalbum
+			$args['album'] = $subalbum->id;
+			$args['gallery'] = false; 
+			$args['nggpage'] = false;
+			$galleries[$key]->pagelink = $nggRewrite->get_permalink($args);
+			//TODO:Include a description
+			$galleries[$key]->galdesc = '';
+			$galleries[$key]->title = html_entity_decode ( nggGallery::i18n($subalbum->name) ); 
+			
+			continue;
+		}
+
+ 		// Add the counter value if avaible
+  		$galleries[$key] = $unsort_galleries[$key];
+	
 		// add the file name and the link 
 		if ($galleries[$key]->previewpic  != 0) {
 			$galleries[$key]->previewname = $albumPreview[$galleries[$key]->previewpic]->filename;

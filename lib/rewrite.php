@@ -81,7 +81,10 @@ class nggRewrite {
 				$url .= '/post/' . $post->post_name;
 			
 			// 3. Album, pid or tags
-			if  (isset ($args['album']) && isset ($args['gallery']) )
+				
+			if (isset ($args['album']) && ($args['gallery'] == false) )
+				$url .= '/album-' . $args['album'];
+			elseif  (isset ($args['album']) && isset ($args['gallery']) )
 				$url .= '/album-' . $args['album'] . '/gallery-' . $args['gallery'];
 				
 			if  (isset ($args['gallerytag']))
@@ -112,7 +115,7 @@ class nggRewrite {
 			if (($show_on_front == 'page') && ($page_on_front == get_the_ID()))
 				$args['page_id'] = get_the_ID();
 
-			$query = htmlspecialchars(add_query_arg( $args));
+			$query = htmlspecialchars( add_query_arg($args, get_permalink( get_the_ID() )) );
 			
 			return $query;
 		}
@@ -228,6 +231,8 @@ class nggRewrite {
 			$this->slug.'/page-([0-9]+)/images/?$' => 'index.php?page_id=$matches[1]&show=gallery',
 			$this->slug.'/page-([0-9]+)/tags/([^/]+)/?$' => 'index.php?page_id=$matches[1]&gallerytag=$matches[2]',
 			$this->slug.'/page-([0-9]+)/tags/([^/]+)/page-([0-9]+)/?$' => 'index.php?page_id=$matches[1]&gallerytag=$matches[2]&nggpage=$matches[3]',
+			$this->slug.'/page-([0-9]+)/album-([^/]+)/?$' => 'index.php?page_id=$matches[1]&album=$matches[2]',
+			$this->slug.'/page-([0-9]+)/album-([^/]+)/page-([0-9]+)/?$' => 'index.php?page_id=$matches[1]&album=$matches[2]&nggpage=$matches[3]',
 			$this->slug.'/page-([0-9]+)/album-([^/]+)/gallery-([0-9]+)/?$' => 'index.php?page_id=$matches[1]&album=$matches[2]&gallery=$matches[3]',
 			$this->slug.'/page-([0-9]+)/album-([^/]+)/gallery-([0-9]+)/slideshow/?$' => 'index.php?page_id=$matches[1]&album=$matches[2]&gallery=$matches[3]&show=slide',
 			$this->slug.'/page-([0-9]+)/album-([^/]+)/gallery-([0-9]+)/images/?$' => 'index.php?page_id=$matches[1]&album=$matches[2]&gallery=$matches[3]&show=gallery',
@@ -244,6 +249,8 @@ class nggRewrite {
 			$this->slug.'/post/([^/]+)/images/?$' => 'index.php?name=$matches[1]&show=gallery',
 			$this->slug.'/post/([^/]+)/tags/([^/]+)/?$' => 'index.php?name=$matches[1]&gallerytag=$matches[2]',
 			$this->slug.'/post/([^/]+)/tags/([^/]+)/page-([0-9]+)/?$' => 'index.php?name=$matches[1]&gallerytag=$matches[2]&nggpage=$matches[3]',
+			$this->slug.'/post/([^/]+)/album-([^/]+)/?$' => 'index.php?name=$matches[1]&album=$matches[2]',
+			$this->slug.'/post/([^/]+)/album-([^/]+)/page-([0-9]+)/?$' => 'index.php?name=$matches[1]&album=$matches[2]&nggpage=$matches[3]',
 			$this->slug.'/post/([^/]+)/album-([^/]+)/gallery-([0-9]+)/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]',
 			$this->slug.'/post/([^/]+)/album-([^/]+)/gallery-([0-9]+)/slideshow/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]&show=slide',
 			$this->slug.'/post/([^/]+)/album-([^/]+)/gallery-([0-9]+)/images/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]&show=gallery',
