@@ -286,7 +286,9 @@ class nggdb {
 			$album = new stdClass();
 			$album->id = 'all';
 			$album->name = __('Album overview','nggallery');
-			$album->sortorder =  serialize( $wpdb->get_col("SELECT gid FROM $wpdb->nggallery") );
+			$album->albumdesc  = __('Album overview','nggallery');
+			$album->previewpic = 0;
+			$album->sortorder  =  serialize( $wpdb->get_col("SELECT gid FROM $wpdb->nggallery") );
 		} else {
 			$album = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->nggalbum WHERE name = '%s'", $id) );
 		}

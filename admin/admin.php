@@ -56,7 +56,7 @@ class nggAdminPanel{
 		$nggCheck 			= new CheckPlugin();	
 		$nggCheck->URL 		= NGGURL;
 		$nggCheck->version 	= NGGVERSION;
-		$nggCheck->name 	= "ngg";
+		$nggCheck->name 	= 'ngg';
 
 		// check for upgrade and show upgrade screen
 		if( get_option( 'ngg_db_version' ) != NGG_DBVERSION ) {

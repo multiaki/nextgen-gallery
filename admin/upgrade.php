@@ -80,6 +80,13 @@ function ngg_upgrade() {
 			$wpdb->query("ALTER TABLE " . $wpdb->nggpictures . " ADD INDEX post_id ( post_id )");
 		}
 		
+		// v1.3.0 -> v1.3.1
+		if (version_compare($installed_ver, '1.3.1', '<')) {
+			// add description and previewpic for the ablum itself
+			ngg_maybe_add_column( $wpdb->nggalbum, 'previewpic', "BIGINT(20) DEFAULT '0' NOT NULL AFTER name");
+			ngg_maybe_add_column( $wpdb->nggalbum, 'albumdesc', "MEDIUMTEXT NULL AFTER previewpic");
+		}		
+		
 		// update now the database
 		update_option( "ngg_db_version", NGG_DBVERSION );
 		echo __('finished', 'nggallery') . "<br />\n";
@@ -158,7 +165,7 @@ function ngg_convert_filestructure() {
 			$gallerypath = WINABSPATH.$gallery->path;
 
 			// old mygallery check, convert the wrong folder/ file name now
-			if (@is_dir($gallerypath .'/tumbs')) {
+			if (@is_dir($gallerypath . '/tumbs')) {
 				if ( !@rename($gallerypath . '/tumbs' , $gallerypath .'/thumbs') )
 					$errors[] = $gallery->path . '/thumbs';
 				// read list of images
@@ -288,7 +295,6 @@ function nggallery_upgrade_page()  {
  * @return void
  */
 function nggallery_start_upgrade($filepath) {
-	global $wpdb;
 ?>
 <div class="wrap">
 	<h2><?php _e('Upgrade NextGEN Gallery', 'nggallery') ;?></h2>

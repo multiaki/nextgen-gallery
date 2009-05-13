@@ -79,9 +79,9 @@ function nggallery_install () {
 		path MEDIUMTEXT NULL ,
 		title MEDIUMTEXT NULL ,
 		galdesc MEDIUMTEXT NULL ,
-		pageid BIGINT(20) NULL DEFAULT '0' ,
-		previewpic BIGINT(20) NULL DEFAULT '0' ,
-		author BIGINT(20) NOT NULL DEFAULT '0' ,
+		pageid BIGINT(20) DEFAULT '0' NOT NULL ,
+		previewpic BIGINT(20) DEFAULT '0' NOT NULL ,
+		author BIGINT(20) DEFAULT '0' NOT NULL  ,
 		PRIMARY KEY gid (gid)
 		) $charset_collate;";
 	
@@ -93,6 +93,8 @@ function nggallery_install () {
 		$sql = "CREATE TABLE " . $nggalbum . " (
 		id BIGINT(20) NOT NULL AUTO_INCREMENT ,
 		name VARCHAR(255) NOT NULL ,
+		previewpic BIGINT(20) DEFAULT '0' NOT NULL ,
+		albumdesc MEDIUMTEXT NULL ,
 		sortorder LONGTEXT NOT NULL,
 		PRIMARY KEY id (id)
 		) $charset_collate;";
