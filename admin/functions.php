@@ -407,7 +407,13 @@ class nggAdmin{
 		
 		if ( is_array($imageslist) ) {
 			foreach($imageslist as $picture) {
-				$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->nggpictures (galleryid, filename, alttext, exclude) VALUES (%s, %s, %s, 0)", $galleryID, $picture, $picture) );
+				
+				// strip off the extension of the filename
+				$path_parts = pathinfo( $picture );
+				$alttext = ( !isset($path_parts['filename']) ) ? substr($path_parts['basename'], 0,strpos($path_parts['basename'], '.')) : $path_parts['filename'];
+				// save it to the database 
+				$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->nggpictures (galleryid, filename, alttext, exclude) VALUES (%s, %s, %s, 0)", $galleryID, $picture, $alttext) );
+				// and give me the new id
 				$pic_id = (int) $wpdb->insert_id;
 				if ($result) 
 					$image_ids[] = $pic_id;
