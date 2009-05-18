@@ -97,6 +97,8 @@ class nggdb {
 		
 		foreach ($this->albums as $key => $value) {
 			$this->albums[$key]->galleries = (array) unserialize($this->albums[$key]->sortorder);
+			$this->albums[$key]->name = stripslashes( $this->albums[$key]->name ); 
+			$this->albums[$key]->albumdesc = stripslashes( $this->albums[$key]->albumdesc ); 
 		}
 		
 		return $this->albums;
@@ -297,6 +299,11 @@ class nggdb {
 		if ( $album ) {
 			if ( !empty( $album->sortorder ) ) 
 				$album->gallery_ids = unserialize( $album->sortorder );
+			
+			// it was a bad idea to use a object, stripslashes_deep() could not used here, learn from it
+			$album->albumdesc  = stripslashes($album->albumdesc);
+			$album->name	   = stripslashes($album->name);
+					
 			return $album;
 		} 
 		

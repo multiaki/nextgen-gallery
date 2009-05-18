@@ -2,6 +2,7 @@ NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
 V1.3.0
+- NEW : Subalbum support
 - NEW : Search for images in the admin tab
 - NEW : Add new gallery also in manage tab
 - NEW : AJAX support for Imagebrowser and gallery navigation (THX to Anty)

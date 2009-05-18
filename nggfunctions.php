@@ -367,9 +367,10 @@ function nggCreateAlbum( $galleriesID, $template = 'extend', $album = 0) {
  			
 			//populate the sub album values
 			$galleries[$key]->counter = 0;
-			//TODO:Include a preview pic
-			$galleries[$key]->previewpic = '';
-			$galleries[$key]->previewurl = '';
+			if ($subalbum->previewpic > 0)
+				$image = $nggdb->find_image( $subalbum->previewpic );
+			$galleries[$key]->previewpic = $subalbum->previewpic;
+			$galleries[$key]->previewurl = ($image->thumbURL) ? $image->thumbURL : '';
 			$galleries[$key]->previewname = $subalbum->name;
 			
 			//link to the subalbum
@@ -377,8 +378,7 @@ function nggCreateAlbum( $galleriesID, $template = 'extend', $album = 0) {
 			$args['gallery'] = false; 
 			$args['nggpage'] = false;
 			$galleries[$key]->pagelink = $nggRewrite->get_permalink($args);
-			//TODO:Include a description
-			$galleries[$key]->galdesc = '';
+			$galleries[$key]->galdesc = html_entity_decode ( nggGallery::i18n($subalbum->albumdesc) );
 			$galleries[$key]->title = html_entity_decode ( nggGallery::i18n($subalbum->name) ); 
 			
 			continue;

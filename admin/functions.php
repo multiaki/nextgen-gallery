@@ -915,7 +915,7 @@ class nggAdmin{
 		$errors = '';
 		$count = 0;
 
-		if (!is_array($pic_ids))
+		if ( !is_array($pic_ids) )
 			$pic_ids = array($pic_ids);
 		
 		// Get destination gallery
@@ -1013,7 +1013,7 @@ class nggAdmin{
 		
 		foreach ($images as $image) {		
 			// WPMU action
-			if (nggAdmin::check_quota())
+			if ( nggAdmin::check_quota() )
 				return;
 			
 			$i = 0;

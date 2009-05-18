@@ -165,6 +165,7 @@ class nggAdminPanel{
 			break;
 			case "nggallery-manage-album" :
 				wp_enqueue_script( 'jquery-ui-sortable' );
+				add_thickbox();
 			break;
 			case "nggallery-options" :
 				wp_enqueue_script( 'jquery-ui-tabs' );

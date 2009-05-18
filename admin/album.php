@@ -51,9 +51,12 @@ class nggManageAlbum {
 		global $nggdb;
 	
 		$this->currentID = isset($_POST['act_album']) ? (int) $_POST['act_album'] : 0 ;
-	
+
 		if (isset ($_POST['update']) || isset( $_POST['delete'] ) || isset( $_POST['add'] ) )
 			$this->processor();
+		
+		if (isset ($_POST['update_album']) )
+			$this->update_album();	
 		
 		// get first all galleries & albums
 		$this->albums = $nggdb->find_all_album();
@@ -97,10 +100,25 @@ class nggManageAlbum {
 		}
 		
 	}
+
+	function update_album() {
+		global $wpdb;
+		
+		check_admin_referer('ngg_thickbox_form');
+		
+		$name = attribute_escape( $_POST['album_name'] );
+		$desc = attribute_escape( $_POST['album_desc'] );
+		$prev = (int) $_POST['previewpic'];
+		
+		$result = $wpdb->query( $wpdb->prepare( "UPDATE $wpdb->nggalbum SET name= '%s', albumdesc= '%s', previewpic= %d WHERE id = '$this->currentID'" , $name, $desc, $prev ) );
+
+		if ($result)
+			nggGallery::show_message(__('Update Successfully','nggallery'));
+	}
 	
 	function output() {
 		
-	global $nggdb;
+	global $wpdb, $nggdb;
 
 	//TODO:Code MUST be optimized, how to flag a used gallery better ?
 	$used_list = $this->get_used_galleries();
@@ -197,6 +215,11 @@ function ngg_serialize(s)
 	serial = jQuery('#galleryContainer').sortable('serialize');
 	jQuery('input[name=sortorder]').val(serial);
 }
+
+function showDialog() {
+	tb_show("", "#TB_inline?width=640&height=240&inlineId=editalbum&modal=true", false);
+}
+
 </script>
 
 <div class="wrap album" id="wrap" >
@@ -219,8 +242,9 @@ function ngg_serialize(s)
 					?>
 				</select>
 				<?php if ($this->currentID > 0){ ?>
-					<input class="button-primary action" type="submit" name="update" value="<?php _e('Update', 'nggallery') ?>"/>
-					<input type="submit" name="delete" class="button-secondary action" value="<?php _e('Delete', 'nggallery') ?>" onclick="javascript:check=confirm('<?php _e('Delete album ?','nggallery'); ?>');if(check==false) return false;"/>
+					<input class="button-primary" type="submit" name="update" value="<?php _e('Update', 'nggallery'); ?>"/>
+					<input class="button-secondary" type="submit" name="showThickbox" value="<?php _e( 'Edit album', 'nggallery'); ?>" onclick="showDialog(); return false;" />
+					<input class="button-secondary action "type="submit" name="delete" value="<?php _e('Delete', 'nggallery'); ?>" onclick="javascript:check=confirm('<?php _e('Delete album ?','nggallery'); ?>');if(check==false) return false;"/>
 				<?php } else { ?>
 					<span><?php _e('Add new album', 'nggallery') ?>&nbsp;</span>
 					<input class="search-input" id="newalbum" name="newalbum" type="text" value="" />			
@@ -293,7 +317,7 @@ function ngg_serialize(s)
 				$album = $this->albums[$this->currentID];
 				?>
 				<div class="widget-top">
-					<h3><?php _e('Album ID', 'nggallery');  ?> <?php echo $album->id . ' : ' .$album->name; ?> </h3>
+					<h3><?php _e('Album ID', 'nggallery');  ?> <?php echo $album->id . ' : ' . $album->name; ?> </h3>
 				</div>
 				<div id="galleryContainer" class="widget-holder target">
 				<?php
@@ -317,6 +341,52 @@ function ngg_serialize(s)
 
 	</div><!-- /#container -->
 </div><!-- /#wrap -->
+
+<!-- #editalbum -->
+<div id="editalbum" style="display: none;" >
+	<form id="form-edit-album" method="POST" accept-charset="utf-8">
+	<?php wp_nonce_field('ngg_thickbox_form') ?>
+	<input type="hidden" id="current_album" name="act_album" value="<?php echo $this->currentID; ?>" />
+	<table width="100%" border="0" cellspacing="3" cellpadding="3" >
+	  	<tr>
+	    	<th>
+	    		<?php _e('Album name:', 'nggallery'); ?><br />
+				<input class="search-input" id="album_name" name="album_name" type="text" value="<?php echo attribute_escape( $album->name ); ?>" style="width:95%" />
+	    	</th>
+	  	</tr>
+	  	<tr>
+	    	<th>
+	    		<?php _e('Album description:', 'nggallery'); ?><br />
+	    		<textarea class="search-input" id="album_desc" name="album_desc" cols="50" rows="2" style="width:95%" ><?php echo attribute_escape( $album->albumdesc ); ?></textarea>
+	    	</th>
+	  	</tr>
+	  	<tr>
+	    	<th>
+	    		<?php _e('Select a preview image:', 'nggallery'); ?>&nbsp;
+					<select name="previewpic" style="width:95%" >
+		                <option value="0"><?php _e('No picture', 'nggallery'); ?></option>
+						<?php
+							$picturelist = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures ORDER BY pid DESC");
+							if( is_array($picturelist) ) {
+								foreach($picturelist as $picture) {
+									echo '<option value="' . $picture->pid . '" >'. $picture->pid . ' - ' . $picture->filename.'</option>'."\n";
+								}
+							}
+						?>
+					</select>
+	    	</th>
+	  	</tr>
+	  	<tr align="right">
+	    	<td class="submit">
+	    		<input type="submit" class="button-primary" name="update_album" value="<?php _e("OK",'nggallery')?>" />
+	    		&nbsp;
+	    		<input class="button-secondary" type="reset" value="<?php _e("Cancel",'nggallery')?>" onclick="tb_remove()"/>
+	    	</td>
+		</tr>
+	</table>
+	</form>
+</div>
+<!-- /#editalbum -->
 
 <?php
 		
@@ -344,7 +414,11 @@ function ngg_serialize(s)
 			$obj['name'] = $obj['title'] = $album->name;
 			$obj['pagenname'] = '---';
 			$class = 'album_obj';
-			$preview_image = '';
+			
+			if ($album->previewpic > 0)
+				$image = $nggdb->find_image( $album->previewpic );
+			$preview_image = ($image->thumbURL) ? '<div class="inlinepicture"><img src="' . $image->thumbURL . '" /></div>' : '';
+
 			// this indicates that we have a album container
 			$prefix = 'a';
 		
@@ -361,9 +435,9 @@ function ngg_serialize(s)
 			$obj['pagenname'] = ($post == null) ? '' : $post->post_title;	
 
 			// set image url
-			$act_thumbnail_url 	= get_option ('siteurl') . '/' .$gallery->path . nggGallery::get_thumbnail_folder($gallery->path, FALSE);
-			$filename = $wpdb->get_var("SELECT filename FROM $wpdb->nggpictures WHERE pid = '$gallery->previewpic'");
-			$preview_image =  ($filename) ? '<div class="inlinepicture"><img src="'.$act_thumbnail_url. 'thumbs_' .$filename.'" /></div>' : '';
+			$image = $nggdb->find_image( $gallery->previewpic );
+			$preview_image = ($image->thumbURL) ? '<div class="inlinepicture"><img src="' . $image->thumbURL . '" /></div>' : '';
+
 			$prefix = '';
 		}
 
