@@ -138,7 +138,7 @@ jQuery(document).ready(
 			tolerance: 'intersect',
 			distance: 2,
 			forcePlaceholderSize: true ,
-			connectWith: '#galleryContainer' 
+			connectWith: ['#galleryContainer'] 
 		} );
 
 		jQuery('#galleryContainer').sortable( {
@@ -158,7 +158,7 @@ jQuery(document).ready(
 			tolerance: 'intersect',
 			distance: 2,
 			forcePlaceholderSize: true ,
-			connectWith: '#galleryContainer'
+			connectWith: ['#galleryContainer']
 		} );
 		
 		jQuery('a.min').bind('click', toggleContent);
