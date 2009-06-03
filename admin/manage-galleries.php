@@ -34,7 +34,7 @@ function nggallery_manage_gallery_main() {
 	<script type="text/javascript"> 
 	<!--
 	function showDialog( windowId ) {
-		tb_show("", "#TB_inline?width=640&height=120&inlineId=" + windowId + "&modal=true", false);
+		tb_show("", "#TB_inline?width=640&height=130&inlineId=" + windowId + "&modal=true", false);
 	}
 	//-->
 	</script>
