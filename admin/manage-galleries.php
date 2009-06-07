@@ -42,7 +42,7 @@ function nggallery_manage_gallery_main() {
 		<h2><?php _e('Gallery Overview', 'nggallery'); ?></h2>
 		<form class="search-form" action="" method="get">
 		<p class="search-box">
-			<label class="hidden" for="media-search-input"><?php _e( 'Search Media', 'nggallery' ); ?>:</label>
+			<label class="hidden" for="media-search-input"><?php _e( 'Search Images', 'nggallery' ); ?>:</label>
 			<input type="hidden" id="page-name" name="page" value="nggallery-manage-gallery" />
 			<input type="text" id="media-search-input" name="s" value="<?php the_search_query(); ?>" />
 			<input type="submit" value="<?php _e( 'Search Images', 'nggallery' ); ?>" class="button" />

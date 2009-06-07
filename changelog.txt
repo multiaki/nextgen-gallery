@@ -10,6 +10,7 @@ V1.3.0
 - Added : jQuery Multiple File Upload Plugin v1.44
 - Added : SWFUpload V2.2.0
 - Changed : Remove extension for Alttext during first import
+- Changed : Meta tag added via wp_head hook (THX to Viper)
 - Bugfix : Correct various PHP notice messages
 - Bugfix : Typo fix in custom fields for ngg_gal_ImageBrowser
 - Bugfix : Avoid upload of images in gallery without correct capability  

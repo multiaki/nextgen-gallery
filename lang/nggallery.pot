@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-03 20:40+0100\n"
-"PO-Revision-Date: 2009-06-03 20:40+0100\n"
+"POT-Creation-Date: 2009-06-07 13:06+0100\n"
+"PO-Revision-Date: 2009-06-07 13:07+0100\n"
 "Last-Translator: Alex Rabe\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
@@ -17,31 +17,31 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 
-#: ../nggallery.php:157
+#: ../nggallery.php:160
 msgid "Sorry, NextGEN Gallery works only with a Memory Limit of 16 MB higher"
 msgstr "asd"
 
-#: ../nggallery.php:182
+#: ../nggallery.php:185
 msgid "Picture tag"
 msgstr ""
 
-#: ../nggallery.php:183
+#: ../nggallery.php:186
 msgid "Picture tag: %2$l."
 msgstr ""
 
-#: ../nggallery.php:184
+#: ../nggallery.php:187
 msgid "Separate picture tags with commas."
 msgstr ""
 
-#: ../nggallery.php:277
+#: ../nggallery.php:278
 msgid "L O A D I N G"
 msgstr ""
 
-#: ../nggallery.php:278
+#: ../nggallery.php:279
 msgid "Click to Close"
 msgstr ""
 
-#: ../nggallery.php:292
+#: ../nggallery.php:293
 msgid "loading"
 msgstr ""
 
@@ -890,11 +890,8 @@ msgid "Gallery Overview"
 msgstr ""
 
 #: ../admin/manage-galleries.php:45
-#: ../admin/manage-images.php:173
-msgid "Search Media"
-msgstr ""
-
 #: ../admin/manage-galleries.php:48
+#: ../admin/manage-images.php:173
 #: ../admin/manage-images.php:176
 msgid "Search Images"
 msgstr ""

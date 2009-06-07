@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-03 20:40+0100\n"
-"PO-Revision-Date: 2009-06-03 20:41+0100\n"
+"POT-Creation-Date: 2009-06-07 13:00+0100\n"
+"PO-Revision-Date: 2009-06-07 13:05+0100\n"
 "Last-Translator: Alex Rabe\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
@@ -18,31 +18,31 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 
-#: ../nggallery.php:157
+#: ../nggallery.php:160
 msgid "Sorry, NextGEN Gallery works only with a Memory Limit of 16 MB higher"
 msgstr "Tut mir leid, aber NextGEN Galerie benötigt minimum 16MB Speicher (Memory Limit) oder mehr"
 
-#: ../nggallery.php:182
+#: ../nggallery.php:185
 msgid "Picture tag"
 msgstr "Bilder Stichwort"
 
-#: ../nggallery.php:183
+#: ../nggallery.php:186
 msgid "Picture tag: %2$l."
 msgstr "Bilder Stichwort: %2$l."
 
-#: ../nggallery.php:184
+#: ../nggallery.php:187
 msgid "Separate picture tags with commas."
 msgstr "Trenne Stichwörter mittels Komma"
 
-#: ../nggallery.php:277
+#: ../nggallery.php:278
 msgid "L O A D I N G"
 msgstr "B I T T E &nbsp;&nbsp;W A R T E N"
 
-#: ../nggallery.php:278
+#: ../nggallery.php:279
 msgid "Click to Close"
 msgstr "Klicken zum Schliessen "
 
-#: ../nggallery.php:292
+#: ../nggallery.php:293
 msgid "loading"
 msgstr "lade..."
 
@@ -270,14 +270,12 @@ msgid "Upload a zip file with images"
 msgstr "Lade eine Zip-Datei mit Bildern hoch"
 
 #: ../admin/addgallery.php:216
-#, fuzzy
 msgid "or enter a Zip-File URL"
-msgstr "Zip-Datei hochladen"
+msgstr "oder gib eine URL zur ZIP-Datei an"
 
 #: ../admin/addgallery.php:218
-#, fuzzy
 msgid "Import a zip file with images from a url"
-msgstr "Lade eine Zip-Datei mit Bildern hoch"
+msgstr "Lade eine Zip-Datei mit Bildern über ein URL hoch"
 
 #: ../admin/addgallery.php:222
 #: ../admin/addgallery.php:272
@@ -540,9 +538,8 @@ msgid "Update"
 msgstr "Aktualisiere"
 
 #: ../admin/album.php:246
-#, fuzzy
 msgid "Edit album"
-msgstr "Album erstellen"
+msgstr "Album ändern"
 
 #: ../admin/album.php:247
 #: ../admin/manage-galleries.php:107
@@ -564,7 +561,7 @@ msgstr "Hinzufügen"
 
 #: ../admin/album.php:261
 msgid "Show / hide used galleries"
-msgstr ""
+msgstr "Zeige / Verstecke verwendete Galerien"
 
 #: ../admin/album.php:261
 msgid "[Show all]"
@@ -572,7 +569,7 @@ msgstr "[Alle zeigen]"
 
 #: ../admin/album.php:262
 msgid "Maximize the widget content"
-msgstr ""
+msgstr "Maximiere die Widgets"
 
 #: ../admin/album.php:262
 msgid "[Maximize]"
@@ -580,44 +577,39 @@ msgstr "[Vergrößern]"
 
 #: ../admin/album.php:263
 msgid "Minimize the widget content"
-msgstr ""
+msgstr "Minimiere die Widgets"
 
 #: ../admin/album.php:263
 msgid "[Minimize]"
 msgstr "[Verkleinern]"
 
 #: ../admin/album.php:265
-#, fuzzy
 msgid "After you create and select a album, you can drag and drop a gallery or another album into your new album below"
-msgstr "Nachdem du ein Album erstellt und ausgewählt hast, kannst du per Drag & Drop eine Galerie in das Album ziehen"
+msgstr "Nachdem du ein Album erstellt und ausgewählt hast, kannst du per Drag & Drop eine Galerie oder ein anderes Album in das neue Album ziehen"
 
 #: ../admin/album.php:291
 msgid "Select gallery"
 msgstr "Wähle Galerie"
 
 #: ../admin/album.php:320
-#, fuzzy
 msgid "Album ID"
-msgstr "Album"
+msgstr "Album ID"
 
 #: ../admin/album.php:333
 msgid "No album selected!"
 msgstr "Kein Album ausgewählt"
 
 #: ../admin/album.php:353
-#, fuzzy
 msgid "Album name:"
-msgstr "Album Beispiel"
+msgstr "Album Name :"
 
 #: ../admin/album.php:359
-#, fuzzy
 msgid "Album description:"
-msgstr "Beschreibung"
+msgstr "Beschreibung:"
 
 #: ../admin/album.php:365
-#, fuzzy
 msgid "Select a preview image:"
-msgstr "Wähle Ladeanimation"
+msgstr "Wähle Vorschaubild:"
 
 #: ../admin/album.php:367
 msgid "No picture"
@@ -755,14 +747,12 @@ msgid " is not writeable"
 msgstr "ist schreibgeschützt !"
 
 #: ../admin/functions.php:575
-#, fuzzy
 msgid "No valid URL path "
-msgstr "Kein gültiges Stichwort"
+msgstr "Kein gültiger URL Pfad"
 
 #: ../admin/functions.php:591
-#, fuzzy
 msgid "Import via cURL failed."
-msgstr "Bilder-Verzeichnis importieren"
+msgstr "Import via cURL abgebrochen"
 
 #: ../admin/functions.php:606
 msgid "Uploaded file was no or a faulty zip file ! The server recognize : "
@@ -901,16 +891,11 @@ msgid "Gallery Overview"
 msgstr "Galerie Übersicht"
 
 #: ../admin/manage-galleries.php:45
-#: ../admin/manage-images.php:173
-#, fuzzy
-msgid "Search Media"
-msgstr "Suche nach Stichwörter"
-
 #: ../admin/manage-galleries.php:48
+#: ../admin/manage-images.php:173
 #: ../admin/manage-images.php:176
-#, fuzzy
 msgid "Search Images"
-msgstr "Suche nach Stichwörter"
+msgstr "Suche Bilder"
 
 #: ../admin/manage-galleries.php:60
 #: ../admin/manage-images.php:268
@@ -985,7 +970,7 @@ msgstr ""
 #: ../admin/manage-images.php:170
 #, php-format
 msgid "Search results for &#8220;%s&#8221;"
-msgstr ""
+msgstr "Suchergebinsse für &#8220;%s&#8221;"
 
 #: ../admin/manage-images.php:196
 msgid "Gallery settings"
@@ -2897,6 +2882,9 @@ msgstr "Album-ID  %s existiert nicht"
 msgid "Invalid MediaRSS command (%s)."
 msgstr "Ungültiger Media RSS Befehl (%s)"
 
+#, fuzzy
+#~ msgid "Search Media"
+#~ msgstr "Suche nach Stichwörter"
 #~ msgid "Select Gallery"
 #~ msgstr "Wähle Galerie"
 #~ msgid "Album Page ID"

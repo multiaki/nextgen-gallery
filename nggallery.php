@@ -115,6 +115,9 @@ class nggLoader {
 			// Add the script and style files
 			add_action('wp_print_scripts', array(&$this, 'load_scripts') );
 			add_action('wp_print_styles', array(&$this, 'load_styles') );
+			
+			// Add a version number to the header
+			add_action('wp_head', create_function('', 'echo "\n<meta name=\'NextGEN\' content=\'' . $this->version . '\' />\n";') );
 
 		}	
 	}
@@ -259,8 +262,6 @@ class nggLoader {
 	}
 	
 	function load_scripts() {
-
-		echo "<meta name='NextGEN' content='" . $this->version . "' />\n";
 		
 		//	activate Thickbox
 		if ($this->options['thumbEffect'] == 'thickbox') {
