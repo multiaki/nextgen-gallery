@@ -1,7 +1,7 @@
 NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
-V1.3.0
+V1.3.0 - 07.06.2009
 - NEW : Subalbum support
 - NEW : Search for images in the admin tab
 - NEW : Add new gallery also in manage tab
