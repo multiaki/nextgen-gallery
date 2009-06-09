@@ -4,6 +4,7 @@ by Alex Rabe & NextGEN DEV Team
 V1.3.2
 - Bugfix : AJAX reload didn't work if slideshow is shown by default
 - Bugfix : Redirect links didn't work if permalinks are deactivates
+- Bugfix : Add new gallery in manage-overview didn't use defaultpath
 
 V1.3.1 - 07.06.2009
 - Bugfix : Fixed ZIP upload, wrong variable used
