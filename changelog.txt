@@ -1,6 +1,9 @@
 NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
+V1.3.3
+- Changed : For WP.2.8 Thickbox Images must be loaded in the wp_footer
+
 V1.3.2 - 10.06.2009
 - Changed  : Resize maximum to 1280 x 1280 with nggshow (THX to onezero)
 - Bugfix : Bugfix for Multifile upload

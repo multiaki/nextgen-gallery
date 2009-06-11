@@ -4,7 +4,7 @@
 */
 
 // Adding Media RSS Widget as well
-require_once(dirname (__FILE__) . '/media-rss-widget.php');
+require_once(dirname (__FILE__) . '/media-rss-widget-27.php');
 
 /**
  * nggSlideshowWidget - The slideshow widget control for NextGEN Gallery ( require WP2.5 or higher)
