@@ -66,7 +66,19 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	?>
 	<script type="text/javascript">
 		jQuery(document).ready(function(){
-			jQuery('#slider').tabs({ fxFade: true, fxSpeed: 'fast' });	
+			jQuery('#slider').tabs({ fxFade: true, fxSpeed: 'fast' });
+			jQuery('.picker').ColorPicker({
+				onSubmit: function(hsb, hex, rgb, el) {
+					jQuery(el).val(hex);
+					jQuery(el).ColorPickerHide();
+				},
+				onBeforeShow: function () {
+					jQuery(this).ColorPickerSetColor(this.value);
+				}
+			})
+			.bind('keyup', function(){
+				jQuery(this).ColorPickerSetColor(this.value);
+			});
 		});
 	
 		function insertcode(value) {
@@ -444,7 +456,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					</tr>
 					<tr>
 						<th><?php _e('Color','nggallery') ?>:</th>
-						<td><input type="text" size="6" maxlength="6" id="wmColor" name="wmColor" onchange="setcolor('#previewText', this.value)" value="<?php echo $ngg->options['wmColor'] ?>" />
+						<td><input class="picker" type="text" size="6" maxlength="6" id="wmColor" name="wmColor" onchange="setcolor('#previewText', this.value)" value="<?php echo $ngg->options['wmColor'] ?>" />
 						<input type="text" size="1" readonly="readonly" id="previewText" style="background-color: #<?php echo $ngg->options['wmColor'] ?>" /> <?php _e('(hex w/o #)','nggallery') ?></td>
 					</tr>
 					<tr>
@@ -553,22 +565,22 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					</tr>
 					<tr>
 						<th><?php _e('Background Color','nggallery') ?>:</th>
-						<td><input type="text" size="6" maxlength="6" id="irBackcolor" name="irBackcolor" onchange="setcolor('#previewBack', this.value)" value="<?php echo $ngg->options['irBackcolor'] ?>" />
+						<td><input class="picker" type="text" size="6" maxlength="6" id="irBackcolor" name="irBackcolor" onchange="setcolor('#previewBack', this.value)" value="<?php echo $ngg->options['irBackcolor'] ?>" />
 						<input type="text" size="1" readonly="readonly" id="previewBack" style="background-color: #<?php echo $ngg->options['irBackcolor'] ?>" /></td>
 					</tr>
 					<tr>					
 						<th><?php _e('Texts / Buttons Color','nggallery') ?>:</th>
-						<td><input type="text" size="6" maxlength="6" id="irFrontcolor" name="irFrontcolor" onchange="setcolor('#previewFront', this.value)" value="<?php echo $ngg->options['irFrontcolor'] ?>" />
+						<td><input class="picker" type="text" size="6" maxlength="6" id="irFrontcolor" name="irFrontcolor" onchange="setcolor('#previewFront', this.value)" value="<?php echo $ngg->options['irFrontcolor'] ?>" />
 						<input type="text" size="1" readonly="readonly" id="previewFront" style="background-color: #<?php echo $ngg->options['irFrontcolor'] ?>" /></td>
 					</tr>
 					<tr>					
 						<th><?php _e('Rollover / Active Color','nggallery') ?>:</th>
-						<td><input type="text" size="6" maxlength="6" id="irLightcolor" name="irLightcolor" onchange="setcolor('#previewLight', this.value)" value="<?php echo $ngg->options['irLightcolor'] ?>" />
+						<td><input class="picker" type="text" size="6" maxlength="6" id="irLightcolor" name="irLightcolor" onchange="setcolor('#previewLight', this.value)" value="<?php echo $ngg->options['irLightcolor'] ?>" />
 						<input type="text" size="1" readonly="readonly" id="previewLight" style="background-color: #<?php echo $ngg->options['irLightcolor'] ?>" /></td>
 					</tr>
 					<tr>					
 						<th><?php _e('Screen Color','nggallery') ?>:</th>
-						<td><input type="text" size="6" maxlength="6" id="irScreencolor" name="irScreencolor" onchange="setcolor('#previewScreen', this.value)" value="<?php echo $ngg->options['irScreencolor'] ?>" />
+						<td><input class="picker" type="text" size="6" maxlength="6" id="irScreencolor" name="irScreencolor" onchange="setcolor('#previewScreen', this.value)" value="<?php echo $ngg->options['irScreencolor'] ?>" />
 						<input type="text" size="1" readonly="readonly" id="previewScreen" style="background-color: #<?php echo $ngg->options['irScreencolor'] ?>" /></td>
 					</tr>
 					<tr>					
