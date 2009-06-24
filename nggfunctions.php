@@ -253,6 +253,10 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
 
 	// look for gallery-$template.php or pure gallery.php
 	$filename = ( empty($template) ) ? 'gallery' : 'gallery-' . $template;
+	
+	//filter functions for custom addons
+	$gallery     = apply_filters( 'ngg_gallery_object', $gallery, $galleryID );
+	$picturelist = apply_filters( 'ngg_image_object', $picturelist, $galleryID );
 
 	// create the output
 	$out = nggGallery::capture ( $filename, array ('gallery' => $gallery, 'images' => $picturelist, 'pagination' => $navigation) );
