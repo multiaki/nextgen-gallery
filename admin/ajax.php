@@ -17,9 +17,9 @@ function ngg_ajax_operation() {
 		// check for correct capability
 		if ( !is_user_logged_in() )
 			die('-1');
-		
+
 		// check for correct NextGEN capability
-		if ( !current_user_can('NextGEN Upload images') || !current_user_can('NextGEN Manage gallery') ) 
+		if ( !current_user_can('NextGEN Upload images') && !current_user_can('NextGEN Manage gallery') ) 
 			die('-1');	
 		
 		// include the ngg function
