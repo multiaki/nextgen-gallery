@@ -46,8 +46,8 @@ class nggLoader {
 	
 	var $version     = '1.4.0';
 	var $dbversion   = '1.3.1';
-	var $minium_WP   = '2.8';
-	var $minium_WPMU = '2.8';
+	var $minium_WP   = '2.7';
+	var $minium_WPMU = '2.7';
 	var $updateURL   = 'http://nextgen.boelinger.com/version.php';
 	var $donators    = 'http://nextgen.boelinger.com/donators.php';
 	var $options     = '';
@@ -59,7 +59,7 @@ class nggLoader {
 		$this->load_textdomain();
 		
 		// Stop the plugin if we missed the requirements
-		if ( ( !$this->required_version() ) && ( !$this->check_memory_limit() ) )
+		if ( ( !$this->required_version() ) || ( !$this->check_memory_limit() ) )
 			return;
 			
 		// Get some constants first
