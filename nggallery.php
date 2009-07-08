@@ -133,7 +133,7 @@ class nggLoader {
 		// Check for WP version installation
 		$wp_ok  =  version_compare($wp_version, $this->minium_WP, '>=');
 		
-		if ( ($wp_ok == FALSE) and (IS_WPMU != TRUE) ) {
+		if ( ($wp_ok == FALSE) and (IS_WPMU == FALSE) ) {
 			add_action(
 				'admin_notices', 
 				create_function(
@@ -249,7 +249,8 @@ class nggLoader {
 				
 			// Load frontend libraries							
 			} else {
-				require_once (dirname (__FILE__) . '/nggfunctions.php');		// 242.016
+				require_once (dirname (__FILE__) . '/lib/navigation.php');		// 242.016
+				require_once (dirname (__FILE__) . '/nggfunctions.php');		// n.a.
 				require_once (dirname (__FILE__) . '/lib/shortcodes.php'); 		//  92.664
 			}	
 		}
@@ -310,11 +311,11 @@ class nggLoader {
 			wp_enqueue_style('NextGEN', NGGALLERY_URLPATH.'css/'.$this->options['CSSfile'], false, '1.0.0', 'screen'); 
 		
 		//	activate Thickbox
-		if ($this->options['thumbEffect'] == "thickbox") 
+		if ($this->options['thumbEffect'] == 'thickbox') 
 			wp_enqueue_style( 'thickbox');
 
 		// activate modified Shutter reloaded if not use the Shutter plugin
-		if ( ($this->options['thumbEffect'] == "shutter") && !function_exists('srel_makeshutter') )
+		if ( ($this->options['thumbEffect'] == 'shutter') && !function_exists('srel_makeshutter') )
 			wp_enqueue_style('shutter', NGGALLERY_URLPATH .'shutter/shutter-reloaded.css', false, '1.3.0', 'screen');
 		
 	}

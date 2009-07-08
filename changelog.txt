@@ -1,8 +1,19 @@
 NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
-V1.3.3
-- Changed : For WP.2.8 Thickbox Images must be loaded in the wp_footer
+v1.4.0
+- Added : New template gallery-carousel
+
+V1.3.4 - 07.06.2009
+- Added : New filter ngg_gallery_object and ngg_image_object
+- Bugfix : Fix double rendering of a gallery if two album shortcodes are used
+- Bugfix : Fix for custom field ngg_gal_sort
+- Bugfix : Changed capability check for upload 
+- Bugfix : Check for correct version OR memory limit
+
+V1.3.3 - 11.06.2009
+- Changed : Load Thickbox images via wp_footer()
+- Bugfix  : Widget setting couldnot be saved
 
 V1.3.2 - 10.06.2009
 - Changed  : Resize maximum to 1280 x 1280 with nggshow (THX to onezero)

@@ -136,68 +136,6 @@ class nggGallery {
 	}
 	
 	/**
-	 * create the complete navigation
-	 * TODO: shall be moved to another class. This belongs to the view and not to the library.
-	 * 
-	 * @param mixed $page
-	 * @param integer $totalElement 
-	 * @param integer $maxElement
-	 * @return string pagination content
-	 */
-	function create_navigation($page, $totalElement, $maxElement = 0) {
-		global $nggRewrite;
-		
-		if ($maxElement > 0) {
-			$total = $totalElement;
-			
-			// create navigation	
-			if ( $total > $maxElement ) {
-				$total_pages = ceil( $total / $maxElement );
-				$r = '';
-				if ( 1 < $page ) {
-					$args['nggpage'] = ( 1 == $page - 1 ) ? FALSE : $page - 1;
-					$previous = $args['nggpage'];
-					if (FALSE == $args['nggpage']) {
-						$previous = 1; 
-					}
-					$r .=  '<a class="prev" id="ngg-prev-' . $previous . '" href="'. $nggRewrite->get_permalink( $args ) . '">&#9668;</a>';
-				}
-				
-				$total_pages = ceil( $total / $maxElement );
-				
-				if ( $total_pages > 1 ) {
-					for ( $page_num = 1; $page_num <= $total_pages; $page_num++ ) {
-						if ( $page == $page_num ) {
-							$r .=  '<span>' . $page_num . '</span>';
-						} else {
-							$p = false;
-							if ( $page_num < 3 || ( $page_num >= $page - 3 && $page_num <= $page + 3 ) || $page_num > $total_pages - 3 ) {
-								$args['nggpage'] = ( 1 == $page_num ) ? FALSE : $page_num;
-								$r .= '<a class="page-numbers" href="' . $nggRewrite->get_permalink( $args ) . '">' . ( $page_num ) . '</a>';
-								$in = true;
-							} elseif ( $in == true ) {
-								$r .= '<span>...</span>';
-								$in = false;
-							}
-						}
-					}
-				}
-				
-				if ( ( $page ) * $maxElement < $total || -1 == $total ) {
-					$args['nggpage'] = $page + 1;
-					$r .=  '<a class="next" id="ngg-next-' . $args['nggpage'] . '" href="' . $nggRewrite->get_permalink ( $args ) . '">&#9658;</a>';
-				}
-				
-				$navigation = "<div class='ngg-navigation'>$r</div>";
-			} else {
-				$navigation = "<div class='ngg-clear'></div>"."\n";
-			}
-		}
-		
-		return $navigation;
-	}
-	
-	/**
 	* nggGallery::get_option() - get the options and overwrite them with custom meta settings
 	*
 	* @param string $key

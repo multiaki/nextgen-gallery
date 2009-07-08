@@ -157,14 +157,16 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
     global $nggRewrite;
     
     $ngg_options = nggGallery::get_option('ngg_options');
+    $current_pid = false;
 	    
     // $_GET from wp_query
 	$nggpage  = get_query_var('nggpage');
 	$pageid   = get_query_var('pageid');
+	$pid	  = get_query_var('pid');
 	
 	// we need to know the current page id
 	$current_page = (get_the_ID() == false) ? 0 : get_the_ID();
-    
+
     if ( !is_array($picturelist) )
 		$picturelist = array($picturelist);
 	
@@ -206,32 +208,33 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
 			$gallery->piclens_link = "javascript:PicLensLite.start({feedUrl:'" . htmlspecialchars( nggMediaRss::get_gallery_mrss_url($gallery->ID) ) . "'});";
 		}
 	}
-	
+
  	// check for page navigation
  	if ($maxElement > 0) {
-	 	if ( !is_home() || $pageid == $current_page ) {
+ 		
+	 	if ( !is_home() || $pageid == $current_page )
 	 		$page = ( !empty( $nggpage ) ) ? (int) $nggpage : 1;
-		}
-		else $page = 1;
+		else 
+			$page = 1;
 		 
 	 	$start = $offset = ( $page - 1 ) * $maxElement;
 	 	
 	 	$total = count($picturelist);
 	 	
 		// remove the element if we didn't start at the beginning
-		if ($start > 0 ) array_splice($picturelist, 0, $start);
+		if ($start > 0 ) 
+			array_splice($picturelist, 0, $start);
 		
 		// return the list of images we need
 		array_splice($picturelist, $maxElement);
-	
-		$navigation = nggGallery::create_navigation($page, $total, $maxElement);
+
+		$nggNav = new nggNavigation;	
+		$navigation = $nggNav->create_navigation($page, $total, $maxElement);
 	} else {
 		$navigation = '<div class="ngg-clear">&nbsp;</div>';
 	}	
 
 	foreach ($picturelist as $key => $picture) {
-		// choose link between imagebrowser or effect
-		$link = ($ngg_options['galImgBrowser']) ? $nggRewrite->get_permalink( array('pid'=>$picture->pid) ) : $picture->imageURL;	
 		
 		// get the effect code
 		if ($galleryID)
@@ -239,6 +242,10 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
 		else
 			$thumbcode = ($ngg_options['galImgBrowser']) ? '' : $picture->get_thumbcode(get_the_title());
 		
+		// create link for imagebrowser and other effects
+		$picturelist[$key]->pidlink = $nggRewrite->get_permalink( array('pid'=>$picture->pid) );
+		// choose link between imagebrowser or effect
+		$link = ($ngg_options['galImgBrowser']) ? $picturelist[$key]->pidlink : $picture->imageURL;	
 		// add a filter for the link
 		$picturelist[$key]->imageURL = apply_filters('ngg_create_gallery_link', $link, $picture);
 		$picturelist[$key]->thumbnailURL = $picture->thumbURL;
@@ -247,19 +254,32 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
 		$picturelist[$key]->caption = ( empty($picture->description) ) ? '&nbsp;' : html_entity_decode ( stripslashes(nggGallery::i18n($picture->description)) );
 		$picturelist[$key]->description = ( empty($picture->description) ) ? ' ' : htmlspecialchars ( stripslashes(nggGallery::i18n($picture->description)) );
 		$picturelist[$key]->alttext = ( empty($picture->alttext) ) ?  ' ' : htmlspecialchars ( stripslashes(nggGallery::i18n($picture->alttext)) );
+		
 		// filter to add custom content for the output
 		$picturelist[$key] = apply_filters('ngg_image_object', $picturelist[$key], $picture->pid);
-	}
 
+		//check if $pid is in the array
+		if ($picture->pid == $pid) 
+			$current_pid = $picturelist[$key];
+	}
+	reset($picturelist);
+
+	//for paged galleries, take the first image in the array if it's not in the list
+	$current_pid = ( empty($current_pid) ) ? current( $picturelist ) : $current_pid;
+	
 	// look for gallery-$template.php or pure gallery.php
 	$filename = ( empty($template) ) ? 'gallery' : 'gallery-' . $template;
 	
 	//filter functions for custom addons
 	$gallery     = apply_filters( 'ngg_gallery_object', $gallery, $galleryID );
 	$picturelist = apply_filters( 'ngg_image_object', $picturelist, $galleryID );
+	
+	//additional navigation links
+	$next = ( empty($nggNav->next) ) ? false : $nggNav->next;
+	$prev = ( empty($nggNav->prev) ) ? false : $nggNav->prev;
 
 	// create the output
-	$out = nggGallery::capture ( $filename, array ('gallery' => $gallery, 'images' => $picturelist, 'pagination' => $navigation) );
+	$out = nggGallery::capture ( $filename, array ('gallery' => $gallery, 'images' => $picturelist, 'pagination' => $navigation, 'current' => $current_pid, 'next' => $next, 'prev' => $prev) );
 	
 	// apply a filter after the output
 	$out = apply_filters('ngg_gallery_output', $out, $picturelist);
@@ -449,8 +469,9 @@ function nggCreateAlbum( $galleriesID, $template = 'extend', $album = 0) {
 		
 		// return the list of images we need
 		array_splice($galleries, $maxElement);
-	
-		$navigation = nggGallery::create_navigation($page, $total, $maxElement);
+		
+		$nggNav = new nggNavigation;	
+		$navigation = $nggNav->create_navigation($page, $total, $maxElement);
 	} else {
 		$navigation = '<div class="ngg-clear">&nbsp;</div>';
 	}
