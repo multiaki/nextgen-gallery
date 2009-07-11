@@ -186,15 +186,27 @@ class NextGEN_shortcodes {
 			
 		return $out;
 	}
-
+	/**
+	 * Function to show a thumbnail or a set of thumbnails with shortcode of type:
+	 * 
+	 * [gallery id="1,2,4,5,..." template="filename" images="number of images per page" /]
+	 * where 
+	 * - id of a gallery
+	 * - images is the number of images per page (optional), 0 will show all images
+	 * - template is a name for a gallery template, which is located in themefolder/nggallery or plugins/nextgen-gallery/view
+	 * 
+	 * @param array $atts
+	 * @return the_content
+	 */
 	function show_gallery( $atts ) {
 	
 		extract(shortcode_atts(array(
 			'id' 		=> 0,
-			'template'	=> ''	
+			'template'	=> '',	
+			'images'	=> false
 		), $atts ));
 		
-		$out = nggShowGallery( $id, $template);
+		$out = nggShowGallery( $id, $template, $images );
 			
 		return $out;
 	}

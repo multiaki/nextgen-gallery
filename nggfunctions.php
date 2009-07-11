@@ -82,14 +82,15 @@ function nggShowSlideshow($galleryID, $width, $height) {
  * @access public 
  * @param int $galleryID
  * @param string $template (optional) name for a template file, look for gallery-$template
+ * @param int $images (optional) number of images per page
  * @return the content
  */
-function nggShowGallery( $galleryID, $template = '' ) {
+function nggShowGallery( $galleryID, $template = '', $images = false ) {
 	
 	global $nggRewrite;
 
 	$ngg_options = nggGallery::get_option('ngg_options');
-
+	
 	//Set sort order value, if not used (upgrade issue)
 	$ngg_options['galSort'] = ($ngg_options['galSort']) ? $ngg_options['galSort'] : 'pid';
 	$ngg_options['galSortDir'] = ($ngg_options['galSortDir'] == 'DESC') ? 'DESC' : 'ASC';
@@ -138,7 +139,7 @@ function nggShowGallery( $galleryID, $template = '' ) {
 
 	// get all picture with this galleryid
 	if ( is_array($picturelist) )
-		$out = nggCreateGallery($picturelist, $galleryID, $template);
+		$out = nggCreateGallery($picturelist, $galleryID, $template, $images);
 	
 	$out = apply_filters('ngg_show_gallery_content', $out, intval($galleryID));
 	return $out;
@@ -151,12 +152,17 @@ function nggShowGallery( $galleryID, $template = '' ) {
  * @param array $picturelist
  * @param bool $galleryID, if you supply a gallery ID, you can add a slideshow link
  * @param string $template (optional) name for a template file, look for gallery-$template
+ * @param int $images (optional) number of images per page
  * @return the content
  */
-function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
+function nggCreateGallery($picturelist, $galleryID = false, $template = '', $images = false) {
     global $nggRewrite;
     
     $ngg_options = nggGallery::get_option('ngg_options');
+
+	//the shortcode parameter will override global settings, TODO: rewrite this to a class
+	$ngg_options['galImages'] = ( $images === false ) ? $ngg_options['galImages'] : (int) $images;	
+	
     $current_pid = false;
 	    
     // $_GET from wp_query
@@ -199,7 +205,7 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
 	if ($galleryID) {
 		if (($ngg_options['galShowSlide']) AND (NGGALLERY_IREXIST)) {
 			$gallery->show_slideshow = true;
-			$gallery->slideshow_link = $nggRewrite->get_permalink(array ('show' => "slide"));
+			$gallery->slideshow_link = $nggRewrite->get_permalink(array ( 'show' => 'slide') );
 			$gallery->slideshow_link_text = nggGallery::i18n($ngg_options['galTextSlide']);
 		}
 		
@@ -243,7 +249,10 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '') {
 			$thumbcode = ($ngg_options['galImgBrowser']) ? '' : $picture->get_thumbcode(get_the_title());
 		
 		// create link for imagebrowser and other effects
-		$picturelist[$key]->pidlink = $nggRewrite->get_permalink( array('pid'=>$picture->pid) );
+		$args ['nggpage'] = empty($nggpage) ? false : $nggpage;
+		$args ['pid'] 	  = $picture->pid;
+		$picturelist[$key]->pidlink = $nggRewrite->get_permalink( $args );
+		
 		// choose link between imagebrowser or effect
 		$link = ($ngg_options['galImgBrowser']) ? $picturelist[$key]->pidlink : $picture->imageURL;	
 		// add a filter for the link

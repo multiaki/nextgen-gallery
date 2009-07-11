@@ -32,7 +32,7 @@ class nggSlideshowWidget extends WP_Widget {
 			
 		$title = apply_filters('widget_title', empty( $instance['title'] ) ? __('Slideshow', 'nggallery') : $instance['title']);
 
-		// $out = $this->render_slideshow($instance['galleryid'] , $instance['width'] , $instance['height']);
+		$out = $this->render_slideshow($instance['galleryid'] , $instance['width'] , $instance['height']);
 
 		if ( !empty( $out ) ) {
 			echo $before_widget;
