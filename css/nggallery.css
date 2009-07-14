@@ -289,6 +289,7 @@ html>body .ngg-album {
 	overflow: hidden;
 	margin:0pt;
 	padding:5px 0px 0px 0pt;
+	text-align:left;
 }
 
 .ngg-widget img {
