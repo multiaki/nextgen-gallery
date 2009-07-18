@@ -46,8 +46,8 @@ class nggLoader {
 	
 	var $version     = '1.4.0';
 	var $dbversion   = '1.3.1';
-	var $minium_WP   = '2.7';
-	var $minium_WPMU = '2.7';
+	var $minium_WP   = '2.8';
+	var $minium_WPMU = '2.8';
 	var $updateURL   = 'http://nextgen.boelinger.com/version.php';
 	var $donators    = 'http://nextgen.boelinger.com/donators.php';
 	var $options     = '';
@@ -69,19 +69,24 @@ class nggLoader {
 		$this->load_dependencies();
 		$this->start_rewrite_module();
 		
+		$this->plugin_name = plugin_basename(__FILE__);
+		
 		// Init options & tables during activation & deregister init option
-		register_activation_hook( dirname(__FILE__) . '/nggallery.php', array(&$this, 'activate') );
-		register_deactivation_hook( dirname(__FILE__) . '/nggallery.php', array(&$this, 'deactivate') );	
+		register_activation_hook( $this->plugin_name, array(&$this, 'activate') );
+		register_deactivation_hook( $this->plugin_name, array(&$this, 'deactivate') );	
 
-		// Register a uninstall hook to atumatic remove all tables & option
-		if ( function_exists('register_uninstall_hook') )
-			register_uninstall_hook( dirname(__FILE__) . '/nggallery.php', array('nggLoader', 'uninstall') );
+		// Register a uninstall hook to remove all tables & option automatic
+		register_uninstall_hook( $this->plugin_name, array('nggLoader', 'uninstall') );
 
 		// Start this plugin once all other plugins are fully loaded
 		add_action( 'plugins_loaded', array(&$this, 'start_plugin') );
 		
 		// Register_taxonomy must be used during wo init
 		add_action( 'init', array(&$this, 'register_taxonomy') );
+		
+		// Disable the update message for PHP4 Users
+		if (version_compare(PHP_VERSION, '5.2.0', '<'))
+			add_filter('transient_update_plugins', array(&$this, 'disable_upgrade'));
 		
 	}
 	
@@ -91,12 +96,12 @@ class nggLoader {
 				
 		// Content Filters
 		add_filter('ngg_gallery_name', 'sanitize_title');
-		
+
 		// Load the admin panel or the frontend functions
 		if ( is_admin() ) {	
 			
 			// Pass the init check or show a message
-			if (get_option( "ngg_init_check" ) != false )
+			if (get_option( 'ngg_init_check' ) != false )
 				add_action( 'admin_notices', create_function('', 'echo \'<div id="message" class="error"><p><strong>' . get_option( "ngg_init_check" ) . '</strong></p></div>\';') );
 				
 		} else {			
@@ -157,7 +162,7 @@ class nggLoader {
 				'admin_notices', 
 				create_function(
 					'', 
-					'echo \'<div id="message" class="error"><p><strong>' . __('Sorry, NextGEN Gallery works only with a Memory Limit of 16 MB higher',"nggallery") . '</strong></p></div>\';'
+					'echo \'<div id="message" class="error"><p><strong>' . __('Sorry, NextGEN Gallery works only with a Memory Limit of 16 MB higher', 'nggallery') . '</strong></p></div>\';'
 				)
 			);
 			return false;
@@ -337,7 +342,16 @@ class nggLoader {
 	}
 		
 	function activate() {
+		
+		//Since version 1.4.0 We need PHP5.2
+        if (version_compare(PHP_VERSION, '5.2.0', '<')) { 
+                deactivate_plugins(plugin_basename(__FILE__)); // Deactivate ourself
+                wp_die("Sorry, but you can't run this plugin, it requires PHP 5.2 or higher."); 
+				return; 
+        } 
+
 		include_once (dirname (__FILE__) . '/admin/install.php');
+		
 		// check for tables
 		nggallery_install();
 		// remove the update message
@@ -357,10 +371,29 @@ class nggLoader {
         nggallery_uninstall();
 	}
 	
+	function disable_upgrade($option){
+
+	 	$this_plugin = plugin_basename(__FILE__);
+	 	
+		 // PHP5.2 is required for NGG V1.4.0 
+		if ( version_compare($option->response[ $this_plugin ]->new_version, '1.4.0', '>=') )
+			return $option;
+
+	    if( isset($option->response[ $this_plugin ]) ){
+	        //Clear its download link:
+	        $option->response[ $this_plugin ]->package = '';
+	        //Add a notice message
+	        if ($this->add_PHP5_notice == false){
+   	    		add_action( "in_plugin_update_message-$this->plugin_name", create_function('', 'echo \'<br /><span style="color:red">You need to have PHP 5.2 or higher for the new version !!!</span>\';') );
+	    		$this->add_PHP5_notice = true;
+			}
+		}
+	    return $option;
+	}
+	
 }
 	// Let's start the holy plugin
 	global $ngg;
 	$ngg = new nggLoader();
-
 }
 ?>
