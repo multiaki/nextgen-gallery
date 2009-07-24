@@ -366,7 +366,7 @@ function showDialog() {
 					<select name="previewpic" style="width:95%" >
 		                <option value="0"><?php _e('No picture', 'nggallery'); ?></option>
 						<?php
-							$picturelist = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures ORDER BY pid DESC");
+							$picturelist = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE tt.exclude != 1 GROUP BY tt.galleryid ORDER by tt.galleryid");
 							if( is_array($picturelist) ) {
 								foreach($picturelist as $picture) {
 									echo '<option value="' . $picture->pid . '" >'. $picture->pid . ' - ' . $picture->filename.'</option>'."\n";
