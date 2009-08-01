@@ -235,7 +235,11 @@ class nggLoader {
 		require_once (dirname (__FILE__) . '/lib/ngg-db.php');					// 132.400
 		require_once (dirname (__FILE__) . '/lib/image.php');					//  59.424
 		require_once (dirname (__FILE__) . '/widgets/widgets.php');				// 298.792
-
+		
+		//Just needed if you access remote to WordPress
+		if ( defined('XMLRPC_REQUEST') )
+			require_once (dirname (__FILE__) . '/lib/xmlrpc.php');
+			
 		// We didn't need all stuff during a AJAX operation
 		if ( defined('DOING_AJAX') )
 			require_once (dirname (__FILE__) . '/admin/ajax.php');

@@ -192,9 +192,9 @@ class nggRewrite {
 		if ( !empty($nggpage) )
 			$new_title .= __('Page', 'nggallery') . ' ' . intval($nggpage) . $sep ;
 		
-		//TODO: Check tag for possible XSS, until that it's better to disable
-		//if ( !empty($tag) )
-			//$new_title .= attribute_escape($tag) . $sep;
+		//esc_attr should avoid XSS like http://domain/?gallerytag=%3C/title%3E%3Cscript%3Ealert(document.cookie)%3C/script%3E
+		if ( !empty($tag) )
+			$new_title .= esc_attr($tag) . $sep;
 		
 		// for all sub pages we add the canonical tag	
 		if ( !empty($new_title) )	

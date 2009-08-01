@@ -7,7 +7,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
  * 
  * @package NextGEN Gallery
  * @author Alex Rabe
- * @copyright 2007-2209
+ * @copyright 2007-2009
  * @access public
  */
 class nggAdmin{
@@ -18,9 +18,10 @@ class nggAdmin{
 	 * @class nggAdmin
 	 * @param string $gallerytitle
 	 * @param string $defaultpath
-	 * @return
+	 * @param bool $output if the function should show an error messsage or not
+	 * @return 
 	 */
-	function create_gallery($gallerytitle, $defaultpath) {
+	function create_gallery($gallerytitle, $defaultpath, $output = true) {
 
 		global $wpdb, $user_ID;
  
@@ -28,14 +29,15 @@ class nggAdmin{
 		get_currentuserinfo();
 
 		//cleanup pathname
-		$galleryname = apply_filters('ngg_gallery_name', $gallerytitle);
+		$galleryname = sanitize_file_name( $gallerytitle );
+		$galleryname = apply_filters('ngg_gallery_name', $galleryname);
 		$nggpath = $defaultpath . $galleryname;
 		$nggRoot = WINABSPATH . $defaultpath;
 		$txt = '';
 		
 		// No gallery name ?
-		if (empty($galleryname)) {	
-			nggGallery::show_error( __('No valid gallery name!', 'nggallery') );
+		if ( empty($galleryname) ) {	
+			if ($output) nggGallery::show_error( __('No valid gallery name!', 'nggallery') );
 			return false;
 		}
 		
@@ -44,7 +46,7 @@ class nggAdmin{
 			if ( !wp_mkdir_p( $nggRoot ) ) {
 				$txt  = __('Directory', 'nggallery').' <strong>' . $defaultpath . '</strong> '.__('didn\'t exist. Please create first the main gallery folder ', 'nggallery').'!<br />';
 				$txt .= __('Check this link, if you didn\'t know how to set the permission :', 'nggallery').' <a href="http://codex.wordpress.org/Changing_File_Permissions">http://codex.wordpress.org/Changing_File_Permissions</a> ';
-				nggGallery::show_error($txt);
+				if ($output) nggGallery::show_error($txt);
 				return false;
 			}
 		}
@@ -53,7 +55,7 @@ class nggAdmin{
 		if ( !is_writeable( $nggRoot ) ) {
 			$txt  = __('Directory', 'nggallery').' <strong>' . $defaultpath . '</strong> '.__('is not writeable !', 'nggallery').'<br />';
 			$txt .= __('Check this link, if you didn\'t know how to set the permission :', 'nggallery').' <a href="http://codex.wordpress.org/Changing_File_Permissions">http://codex.wordpress.org/Changing_File_Permissions</a> ';
-			nggGallery::show_error($txt);
+			if ($output) nggGallery::show_error($txt);
 			return false;
 		}
 		
@@ -77,7 +79,7 @@ class nggAdmin{
 			$help  = __('The server setting Safe-Mode is on !', 'nggallery');	
 			$help .= '<br />'.__('If you have problems, please create directory', 'nggallery').' <strong>' . $nggpath . '</strong> ';	
 			$help .= __('and the thumbnails directory', 'nggallery').' <strong>' . $nggpath . '/thumbs</strong> '.__('with permission 777 manually !', 'nggallery');
-			nggGallery::show_message($help);
+			if ($output) nggGallery::show_message($help);
 		}
 		
 		// show a error message			
@@ -87,25 +89,32 @@ class nggAdmin{
 				@rmdir(WINABSPATH . $nggpath . '/thumbs');
 				@rmdir(WINABSPATH . $nggpath);
 			}
-			nggGallery::show_error($txt);
+			if ($output) nggGallery::show_error($txt);
 			return false;
 		}
 		
 		$result = $wpdb->get_var("SELECT name FROM $wpdb->nggallery WHERE name = '$galleryname' ");
 		
 		if ($result) {
-			nggGallery::show_error( __ngettext( 'Gallery', 'Galleries', 1, 'nggallery' ) .' <strong>' . $galleryname . '</strong> '.__('already exists', 'nggallery'));
+			if ($output) nggGallery::show_error( __ngettext( 'Gallery', 'Galleries', 1, 'nggallery' ) .' <strong>' . $galleryname . '</strong> '.__('already exists', 'nggallery'));
 			return false;			
 		} else { 
 			$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->nggallery (name, path, title, author) VALUES (%s, %s, %s, %s)", $galleryname, $nggpath, $gallerytitle , $user_ID) );
+			// and give me the new id
+			$gallery_id = (int) $wpdb->insert_id;
+			
+			// return only the id if defined
+			if ($return_id)
+				return $gallery_id;
+				
 			if ($result) {
 				$message  = __('Gallery %1$s successfully created.<br/>You can show this gallery with the tag %2$s.<br/>','nggallery');
-				$message  = sprintf($message, $galleryname, '[nggallery id=' . $wpdb->insert_id . ']');
-				$message .= '<a href="' . admin_url() . 'admin.php?page=nggallery-manage-gallery&mode=edit&gid=' . $wpdb->insert_id . '" >';
+				$message  = sprintf($message, $galleryname, '[nggallery id=' . $gallery_id . ']');
+				$message .= '<a href="' . admin_url() . 'admin.php?page=nggallery-manage-gallery&mode=edit&gid=' . $gallery_id . '" >';
 				$message .= __('Edit gallery','nggallery');
 				$message .= '</a>';
 				
-				nggGallery::show_message($message); 
+				if ($output) nggGallery::show_message($message); 
 			}
 			return true;
 		} 
@@ -891,10 +900,10 @@ class nggAdmin{
 	}
 	
 	/**
-	 * Cpapbility check. Check is the ID fit's to the user_ID'
+	 * Capability check. Check is the ID fit's to the user_ID
 	 * 
 	 * @class nggAdmin
-	 * @param int $check_ID is teh user_id
+	 * @param int $check_ID is the user_id
 	 * @return bool $result
 	 */
 	function can_manage_this_gallery($check_ID) {

@@ -45,10 +45,9 @@ class nggImage{
 	 * Constructor
 	 * 
 	 * @param object $gallery The nggGallery object representing the gallery containing this image
-	 * @param object $row //TODO:Obsoltete ???
 	 * @return void
 	 */
-	function nggImage($gallery, $row = false) {			
+	function nggImage($gallery) {			
 			
 		//This must be an object
 		$gallery = (object) $gallery;
