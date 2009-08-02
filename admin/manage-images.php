@@ -239,6 +239,7 @@ jQuery(document).ready( function() {
 					?>
 					</th>
 				</tr>
+				<?php if(current_user_can("publish_pages")) : ?>
 				<tr>
 					<th align="left">&nbsp;</th>
 					<th align="left">&nbsp;</th>				
@@ -251,6 +252,7 @@ jQuery(document).ready( function() {
 					<input class="button-secondary action" type="submit" name="addnewpage" value="<?php _e ('Add page', 'nggallery'); ?>" id="group"/>
 					</th>
 				</tr>
+				<?php endif; ?>
 			</table>
 			
 			<div class="submit">

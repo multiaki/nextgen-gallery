@@ -4,6 +4,7 @@ by Alex Rabe & NextGEN DEV Team
 = v1.4.0 - in progress =
 * NEW   : XMLRPC support with 4 new methods : see xmlrpc.php for more information
 * Added : New template gallery-carousel
+* Bugfix : Check capability to create a new page
 
 = V1.3.5 - 17.07.2009 =
 * Bugfix : Fixed XSS issue for Page title
