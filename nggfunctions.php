@@ -281,7 +281,7 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '', $ima
 	
 	//filter functions for custom addons
 	$gallery     = apply_filters( 'ngg_gallery_object', $gallery, $galleryID );
-	$picturelist = apply_filters( 'ngg_image_object', $picturelist, $galleryID );
+	$picturelist = apply_filters( 'ngg_picturelist_object', $picturelist, $galleryID );
 	
 	//additional navigation links
 	$next = ( empty($nggNav->next) ) ? false : $nggNav->next;
