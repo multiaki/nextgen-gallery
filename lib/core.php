@@ -256,8 +256,8 @@ class nggGallery {
 			$$key = $val;
 		}
 		
-		if (file_exists (TEMPLATEPATH . "/nggallery/$template_name.php")) {
-			include (TEMPLATEPATH . "/nggallery/$template_name.php");
+		if (file_exists (STYLESHEETPATH . "/nggallery/$template_name.php")) {
+			include (STYLESHEETPATH . "/nggallery/$template_name.php");
 		} else if (file_exists (NGGALLERY_ABSPATH . "/view/$template_name.php")) {
 			include (NGGALLERY_ABSPATH . "/view/$template_name.php");
 		} else {

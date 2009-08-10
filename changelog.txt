@@ -4,7 +4,9 @@ by Alex Rabe & NextGEN DEV Team
 = v1.4.0 - in progress =
 * NEW   : XMLRPC support with 4 new methods : see xmlrpc.php for more information
 * Added : New template gallery-carousel
+* Changed : Support templates for child themes, use STYLESHEETPATH instead TEMPLATEPATH (THX to Prollius)
 * Bugfix : Check capability to create a new page
+* Bugfix : Fix double call of filter name , changed to ngg_picturelist_object (THX to Prollius)
 
 = V1.3.5 - 17.07.2009 =
 * Bugfix : Fixed XSS issue for Page title
