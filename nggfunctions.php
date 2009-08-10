@@ -90,6 +90,7 @@ function nggShowGallery( $galleryID, $template = '', $images = false ) {
 	global $nggRewrite;
 
 	$ngg_options = nggGallery::get_option('ngg_options');
+	$galleryID = (int) $galleryID;
 	
 	//Set sort order value, if not used (upgrade issue)
 	$ngg_options['galSort'] = ($ngg_options['galSort']) ? $ngg_options['galSort'] : 'pid';
@@ -97,11 +98,9 @@ function nggShowGallery( $galleryID, $template = '', $images = false ) {
 	
 	// get gallery values
 	$picturelist = nggdb::get_gallery($galleryID, $ngg_options['galSort'], $ngg_options['galSortDir']);
-	
-	if ( !$picturelist->gid )
-		__('[Gallery not found]','nggallery');
-	else
-		$galleryID = (int) $picturelist->gid;
+
+	if ( !$picturelist )
+		return __('[Gallery not found]','nggallery');
 
 	// $_GET from wp_query
 	$show    = get_query_var('show');
