@@ -194,7 +194,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<?php } ?>
 					<i>( <?php _e('Allowed characters for file and folder names are', 'nggallery') ;?>: a-z, A-Z, 0-9, -, _ )</i></td>
 				</tr>
-				<?php do_action('ngg_add_new_gallery'); ?>
+				<?php do_action('ngg_add_new_gallery_form'); ?>
 				</table>
 				<div class="submit"><input class="button-primary" type="submit" name= "addgallery" value="<?php _e('Add gallery', 'nggallery') ;?>"/></div>
 			</form>
