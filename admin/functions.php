@@ -102,7 +102,9 @@ class nggAdmin{
 			$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->nggallery (name, path, title, author) VALUES (%s, %s, %s, %s)", $galleryname, $nggpath, $gallerytitle , $user_ID) );
 			// and give me the new id
 			$gallery_id = (int) $wpdb->insert_id;
-			
+			// here you can inject a custom function
+			do_action('ngg_created_new_gallery', $gallery_id);
+
 			// return only the id if defined
 			if ($return_id)
 				return $gallery_id;
