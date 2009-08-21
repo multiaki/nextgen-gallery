@@ -27,14 +27,14 @@ nggAjax = {
 			   	cache: false,
 			   	timeout: 10000,
 			   	success: function(msg){
-			   		switch (msg) {
-			   			case "-1":
+			   		switch ( parseInt(msg) ) {
+			   			case -1:
 					   		nggProgressBar.addNote( nggAjax.settings.permission );
 						break;
-			   			case "0":
+			   			case 0:
 					   		nggProgressBar.addNote( nggAjax.settings.error );
 						break;
-			   			case "1":
+			   			case 1:
 					   		// show nothing, its better
 						break;
 						default:
