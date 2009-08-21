@@ -257,7 +257,7 @@ class nggAdmin{
 		if (file_exists($image->thumbPath))
 			if (!is_writable($image->thumbPath))
 				return $image->filename . __(' is not writeable ','nggallery');
-
+		
 		$thumb = new ngg_Thumbnail($image->imagePath, TRUE);
 
 		// skip if file is not there
@@ -674,7 +674,7 @@ class nggAdmin{
 	 */
 	function upload_images() {
 	
-		global $wpdb;
+		global $nggdb;
 		
 		// WPMU action
 		if (nggAdmin::check_quota())
@@ -692,15 +692,15 @@ class nggAdmin{
 		}
 
 		// get the path to the gallery	
-		$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$galleryID' ");
+		$gallery = $nggdb->find_gallery($galleryID);
 
-		if (!$gallerypath){
+		if ( empty($gallery->path) ){
 			nggGallery::show_error(__('Failure in database, no gallery path set !','nggallery'));
 			return;
 		} 
-				
+	
 		// read list of images
-		$dirlist = nggAdmin::scandir(WINABSPATH.$gallerypath);
+		$dirlist = nggAdmin::scandir($gallery->abspath);
 		
 		$imagefiles = $_FILES['imagefiles'];
 		
@@ -711,41 +711,40 @@ class nggAdmin{
 				if ($imagefiles['error'][$key] == 0) {
 					
 					$temp_file = $imagefiles['tmp_name'][$key];
-					$filepart = pathinfo ( strtolower($imagefiles['name'][$key]) );
-					// required until PHP 5.2.0
-					$filepart['filename'] = substr($filepart["basename"],0 ,strlen($filepart["basename"]) - (strlen($filepart["extension"]) + 1) );
 					
-					$filename = sanitize_title($filepart['filename']) . '.' . $filepart['extension'];
-	
+					//clean filename and extract extension
+					$filepart = nggGallery::fileinfo( $imagefiles['name'][$key] );
+					$filename = $filepart['basename'];
+						
 					// check for allowed extension and if it's an image file
-					$ext = array('jpeg', 'jpg', 'png', 'gif'); 
+					$ext = array('jpg', 'png', 'gif'); 
 					if ( !in_array($filepart['extension'], $ext) || !@getimagesize($temp_file) ){ 
-						nggGallery::show_error('<strong>' . $imagefiles['name'][$key] . ' </strong>'.__('is no valid image file!','nggallery'));
+						nggGallery::show_error('<strong>' . $imagefiles['name'][$key] . ' </strong>' . __('is no valid image file!','nggallery'));
 						continue;
 					}
 	
 					// check if this filename already exist in the folder
 					$i = 0;
-					while (in_array($filename,$dirlist)) {
-						$filename = sanitize_title($filepart['filename']) . '_' . $i++ . '.' .$filepart['extension'];
+					while ( in_array( $filename, $dirlist ) ) {
+						$filename = $filepart['filename'] . '_' . $i++ . '.' .$filepart['extension'];
 					}
 					
-					$dest_file = WINABSPATH . $gallerypath . '/' . $filename;
+					$dest_file = $gallery->abspath . '/' . $filename;
 					
 					//check for folder permission
-					if (!is_writeable(WINABSPATH.$gallerypath)) {
-						$message = sprintf(__('Unable to write to directory %s. Is this directory writable by the server?', 'nggallery'), WINABSPATH.$gallerypath);
+					if ( !is_writeable($gallery->abspath) ) {
+						$message = sprintf(__('Unable to write to directory %s. Is this directory writable by the server?', 'nggallery'), $gallery->abspath);
 						nggGallery::show_error($message);
 						return;				
 					}
 					
 					// save temp file to gallery
-					if (!@move_uploaded_file($temp_file, $dest_file)){
+					if ( !@move_uploaded_file($temp_file, $dest_file) ){
 						nggGallery::show_error(__('Error, the file could not moved to : ','nggallery') . $dest_file);
-						nggAdmin::check_safemode(WINABSPATH.$gallerypath);		
+						nggAdmin::check_safemode( $gallery->abspath );		
 						continue;
 					} 
-					if (!nggAdmin::chmod ($dest_file)) {
+					if ( !nggAdmin::chmod($dest_file) ) {
 						nggGallery::show_error(__('Error, the file permissions could not set','nggallery'));
 						continue;
 					}
@@ -788,7 +787,7 @@ class nggAdmin{
 		
 		if ($galleryID == 0) {
 			@unlink($temp_file);		
-			return __('No gallery selected !','nggallery');;
+			return __('No gallery selected !', 'nggallery');
 		}
 
 		// WPMU action
@@ -796,35 +795,34 @@ class nggAdmin{
 			return '0';
 
 		// Check the upload
-		if (!isset($_FILES['Filedata']) || !is_uploaded_file($_FILES["Filedata"]["tmp_name"]) || $_FILES["Filedata"]["error"] != 0) 
-			return __('Invalid upload. Error Code : ','nggallery') . $_FILES["Filedata"]["error"];
+		if (!isset($_FILES['Filedata']) || !is_uploaded_file($_FILES['Filedata']['tmp_name']) || $_FILES['Filedata']['error'] != 0) 
+			return __('Invalid upload. Error Code : ', 'nggallery') . $_FILES['Filedata']['error'];
 
 		// get the filename and extension
-		$temp_file = $_FILES["Filedata"]['tmp_name'];
-		$filepart = pathinfo ( strtolower($_FILES['Filedata']['name']) );
-		// required until PHP 5.2.0
-		$filepart['filename'] = substr($filepart['basename'],0 ,strlen($filepart['basename']) - (strlen($filepart["extension"]) + 1) );
-		$filename = sanitize_title($filepart['filename']) . '.' . $filepart['extension'];
+		$temp_file = $_FILES['Filedata']['tmp_name'];
+
+		$filepart = nggGallery::fileinfo( $_FILES['Filedata']['name'] );
+		$filename = $filepart['basename'];
 
 		// check for allowed extension
-		$ext = array('jpeg', 'jpg', 'png', 'gif'); 
+		$ext = array('jpg', 'png', 'gif'); 
 		if (!in_array($filepart['extension'], $ext))
-			return $_FILES[$key]['name'] . __('is no valid image file!','nggallery');
+			return $_FILES[$key]['name'] . __('is no valid image file!', 'nggallery');
 
 		// get the path to the gallery	
 		$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$galleryID' ");
 		if (!$gallerypath){
 			@unlink($temp_file);		
-			return __('Failure in database, no gallery path set !','nggallery');
+			return __('Failure in database, no gallery path set !', 'nggallery');
 		} 
 
 		// read list of images
-		$imageslist = nggAdmin::scandir( WINABSPATH.$gallerypath );
+		$imageslist = nggAdmin::scandir( WINABSPATH . $gallerypath );
 
 		// check if this filename already exist
 		$i = 0;
 		while (in_array($filename,$imageslist)) {
-			$filename = sanitize_title($filepart['filename']) . '_' . $i++ . '.' . $filepart['extension'];
+			$filename = $filepart['filename'] . '_' . $i++ . '.' . $filepart['extension'];
 		}
 		
 		$dest_file = WINABSPATH . $gallerypath . '/' . $filename;

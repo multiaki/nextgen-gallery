@@ -367,6 +367,38 @@ class nggGallery {
 		return;
 	}
 	
+	/**
+	 * Slightly modfifed version of pathinfo(), clean up filename & rename jpeg to jpg
+	 * 
+	 * @param string $name The name being checked. 
+	 * @return array containing information about file
+	 */
+	function fileinfo( $name ) {
+		
+		//Sanitizes a filename replacing whitespace with dashes
+		$name = sanitize_file_name($name);
+		
+		//get the parts of the name
+		$filepart = pathinfo ( strtolower($name) );
+		
+		if ( empty($filepart) )
+			return false;
+		
+		// required until PHP 5.2.0
+		if ( empty($filepart['filename']) ) 
+			$filepart['filename'] = substr($filepart['basename'],0 ,strlen($filepart['basename']) - (strlen($filepart['extension']) + 1) );
+		
+		$filepart['filename'] = sanitize_title_with_dashes( $filepart['filename'] );
+		
+		//extension jpeg will not be recognized by the slideshow, so we rename it
+		$filepart['extension'] = ($filepart['extension'] == 'jpeg') ? 'jpg' : $filepart['extension'];
+		
+		//combine the new file name
+		$filepart['basename'] = $filepart['filename'] . '.' . $filepart['extension'];
+		
+		return $filepart;
+	}
+	
 }
 
 ?>

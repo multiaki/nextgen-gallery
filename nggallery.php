@@ -304,6 +304,7 @@ class nggLoader {
 			) );
 		}
 		
+		//TODO:Just for test, remove later !!!
 		wp_enqueue_script('easing', NGGALLERY_URLPATH .'js/galleryview/jquery.easing.1.2.js', 'jQuery', '1.2');			
 		wp_enqueue_script('galleryview', NGGALLERY_URLPATH .'js/galleryview/jquery.galleryview-1.1-pack.js', 'jQuery', '1.1');
 		wp_enqueue_script('timers', NGGALLERY_URLPATH .'js/galleryview/jquery.timers-1.1.2.js', 'jQuery', '1.1.2');

@@ -170,9 +170,10 @@ class nggdb {
 			$gallery = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->nggallery WHERE name = %s", $id ) );
 		
 		// Build the object from the query result
-		if ($gallery) 
-			return $gallery;
-		else 
+		if ($gallery) {
+			$gallery->abspath = WINABSPATH . $gallery->path;
+			return $gallery;			
+		} else 
 			return false;
 	}
 	

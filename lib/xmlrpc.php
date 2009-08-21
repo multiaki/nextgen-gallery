@@ -98,7 +98,7 @@ class nggXMLRPC{
 		$password	= $wpdb->escape($args[2]);
 		$data		= $args[3];
 
-		$name = sanitize_file_name( $data['name'] );
+		$name = $data['name'];
 		$type = $data['type'];
 		$bits = $data['bits'];
 		
@@ -128,7 +128,19 @@ class nggXMLRPC{
 			logIO('O', '(NGG) User does not have upload_files capability');
 			$this->error = new IXR_Error(401, __('You are not allowed to upload files to this gallery.'));
 			return $this->error;
-		}
+		}           
+		                                                 
+		//clean filename and extract extension
+		$filepart = nggGallery::fileinfo( $name );
+		$name = $filepart['basename'];
+		
+		// check for allowed extension and if it's an image file
+		$ext = array('jpg', 'png', 'gif'); 
+		if ( !in_array($filepart['extension'], $ext) ){ 
+			logIO('O', '(NGG) Not allowed file type');
+			$this->error = new IXR_Error(401, __('This is no valid image file.','nggallery'));
+			return $this->error;
+		}	
 
 		// in the case you would overwrite the image, let's delete the old one first
 		if(!empty($data["overwrite"]) && ($data["overwrite"] == true)) {

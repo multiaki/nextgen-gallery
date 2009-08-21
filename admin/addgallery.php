@@ -100,7 +100,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 								
 				// File Upload Settings
 				file_size_limit : "<?php echo wp_max_upload_size(); ?>b",
-				file_types : "*.jpg;*.gif;*.png",
+				file_types : "*.jpg;*.jpeg;*.gif;*.png",
 				file_types_description : "<?php _e('Image Files', 'nggallery') ;?>",
 				
 				// Queue handler
