@@ -431,6 +431,9 @@ function nggCreateAlbum( $galleriesID, $template = 'extend', $album = 0) {
 			$galleries[$key]->galdesc = html_entity_decode ( nggGallery::i18n($subalbum->albumdesc) );
 			$galleries[$key]->title = html_entity_decode ( nggGallery::i18n($subalbum->name) ); 
 			
+			// apply a filter on gallery object before the output
+            $galleries[$key] = apply_filters('ngg_album_galleryobject', $galleries[$key]);
+            
 			continue;
 		}
 
@@ -464,6 +467,9 @@ function nggCreateAlbum( $galleriesID, $template = 'extend', $album = 0) {
 
 		// i18n
 		$galleries[$key]->title = html_entity_decode ( nggGallery::i18n($galleries[$key]->title) ) ;
+		
+		// apply a filter on gallery object before the output
+        $galleries[$key] = apply_filters('ngg_album_galleryobject', $galleries[$key]);
 	}
 
  	// check for page navigation
@@ -489,6 +495,9 @@ function nggCreateAlbum( $galleriesID, $template = 'extend', $album = 0) {
 		$navigation = '<div class="ngg-clear">&nbsp;</div>';
 	}
 
+    // apply a filter on $galleries before the output
+    $galleries = apply_filters('ngg_album_galleries', $galleries);
+	
 	// if sombody didn't enter any template , take the extend version
 	$filename = ( empty($template) ) ? 'album-extend' : 'album-' . $template ;
 
