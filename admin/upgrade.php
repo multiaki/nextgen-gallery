@@ -82,10 +82,16 @@ function ngg_upgrade() {
 		
 		// v1.3.0 -> v1.3.1
 		if (version_compare($installed_ver, '1.3.1', '<')) {
-			// add description and previewpic for the ablum itself
+			// add description and previewpic for the album itself
 			ngg_maybe_add_column( $wpdb->nggalbum, 'previewpic', "BIGINT(20) DEFAULT '0' NOT NULL AFTER name");
 			ngg_maybe_add_column( $wpdb->nggalbum, 'albumdesc', "MEDIUMTEXT NULL AFTER previewpic");
 		}		
+		
+		 // v1.3.5 -> v1.4.0
+        if (version_compare($installed_ver, '1.4.0', '<')) {
+            // add link from album to a page
+            ngg_maybe_add_column( $wpdb->nggalbum, 'pageid', "BIGINT(20) DEFAULT '0' NOT NULL AFTER sortorder");
+        }   
 		
 		// update now the database
 		update_option( "ngg_db_version", NGG_DBVERSION );

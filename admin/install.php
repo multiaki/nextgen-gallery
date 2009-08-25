@@ -96,6 +96,7 @@ function nggallery_install () {
 		previewpic BIGINT(20) DEFAULT '0' NOT NULL ,
 		albumdesc MEDIUMTEXT NULL ,
 		sortorder LONGTEXT NOT NULL,
+		pageid BIGINT(20) DEFAULT '0' NOT NULL,
 		PRIMARY KEY id (id)
 		) $charset_collate;";
 	

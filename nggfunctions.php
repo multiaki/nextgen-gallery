@@ -422,7 +422,12 @@ function nggCreateAlbum( $galleriesID, $template = 'extend', $album = 0) {
 			$args['album'] = $subalbum->id;
 			$args['gallery'] = false; 
 			$args['nggpage'] = false;
-			$galleries[$key]->pagelink = $nggRewrite->get_permalink($args);
+			$pageid = (isset($subalbum->pageid) ? $subalbum->pageid : 0);
+            if ($pageid > 0) {
+                $galleries[$key]->pagelink = get_permalink($pageid);
+            } else {
+                $galleries[$key]->pagelink = $nggRewrite->get_permalink($args);
+            }
 			$galleries[$key]->galdesc = html_entity_decode ( nggGallery::i18n($subalbum->albumdesc) );
 			$galleries[$key]->title = html_entity_decode ( nggGallery::i18n($subalbum->name) ); 
 			

@@ -109,8 +109,9 @@ class nggManageAlbum {
 		$name = attribute_escape( $_POST['album_name'] );
 		$desc = attribute_escape( $_POST['album_desc'] );
 		$prev = (int) $_POST['previewpic'];
+		$link = (int) $_POST['pageid'];
 		
-		$result = $wpdb->query( $wpdb->prepare( "UPDATE $wpdb->nggalbum SET name= '%s', albumdesc= '%s', previewpic= %d WHERE id = '$this->currentID'" , $name, $desc, $prev ) );
+		$result = $wpdb->query( $wpdb->prepare( "UPDATE $wpdb->nggalbum SET name= '%s', albumdesc= '%s', previewpic= %d, pageid= %d WHERE id = '$this->currentID'" , $name, $desc, $prev, $link ) );
 
 		if ($result)
 			nggGallery::show_message(__('Update Successfully','nggallery'));
@@ -217,7 +218,7 @@ function ngg_serialize(s)
 }
 
 function showDialog() {
-	tb_show("", "#TB_inline?width=640&height=240&inlineId=editalbum&modal=true", false);
+	tb_show("", "#TB_inline?width=640&height=305&inlineId=editalbum&modal=true", false);
 }
 
 </script>
@@ -369,13 +370,25 @@ function showDialog() {
 							$picturelist = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE tt.exclude != 1 GROUP BY tt.galleryid ORDER by tt.galleryid");
 							if( is_array($picturelist) ) {
 								foreach($picturelist as $picture) {
-									echo '<option value="' . $picture->pid . '" >'. $picture->pid . ' - ' . $picture->filename.'</option>'."\n";
+									echo '<option value="' . $picture->pid . '"'. (($picture->pid == $album->previewpic) ? ' selected="selected"' : '') . ' >'. $picture->pid . ' - ' . $picture->filename.'</option>'."\n";
 								}
 							}
 						?>
 					</select>
 	    	</th>
 	  	</tr>
+        <tr>
+            <th>
+                <?php _e('Page Link to', 'nggallery')?><br />
+                    <select name="pageid" style="width:95%">
+                        <option value="0" ><?php _e('Not linked', 'nggallery') ?></option>
+                        <?php 
+                        if (!isset($album->pageid))
+                            $album->pageid = 0;
+                        parent_dropdown($album->pageid); ?>
+                    </select>
+            </th>
+        </tr>
 	  	<tr align="right">
 	    	<td class="submit">
 	    		<input type="submit" class="button-primary" name="update_album" value="<?php _e("OK",'nggallery')?>" />
