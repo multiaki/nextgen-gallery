@@ -298,11 +298,13 @@ class NextGEN_shortcodes {
 	/**
 	 * Function to show a gallery of random or the most recent images with shortcode of type:
 	 * 
-	 * [random max="7" template="filename" /]
-	 * [recent max="7" template="filename" /]
+	 * [random max="7" template="filename" id="2" /]
+	 * [recent max="7" template="filename" id="3" mode="recentdate" /]
 	 * where 
 	 * - max is the maximum number of random or recent images to show
 	 * - template is a name for a gallery template, which is located in themefolder/nggallery or plugins/nextgen-gallery/view
+	 * - id is the gallery id, if the recent/random pictures shall be taken from a specific gallery only
+	 * - mode is either "recent" (which takes the latest additions to the databse, default) or "recentdate" (which takes the latest pictures by EXIF date)
 	 * 
 	 * @param array $atts
 	 * @return the_content
@@ -311,10 +313,11 @@ class NextGEN_shortcodes {
 	
 		extract(shortcode_atts(array(
 			'max'		=> '',
-			'template'	=> ''
+			'template'	=> '',
+		    'id'        => 0
 		), $atts));
 		
-		$out = nggShowRandomRecent('random', $max, $template);
+		$out = nggShowRandomRecent('random', $max, $template, $id);
 		
 		return $out;
 	}
@@ -323,10 +326,12 @@ class NextGEN_shortcodes {
 	
 		extract(shortcode_atts(array(
 			'max'		=> '',
-			'template'	=> ''
+			'template'	=> '',
+		    'id'        => 0,
+		    'mode'      => 'recent'
 		), $atts));
 		
-		$out = nggShowRandomRecent('recent', $max, $template);
+		$out = nggShowRandomRecent($mode, $max, $template, $id);
 		
 		return $out;
 	}

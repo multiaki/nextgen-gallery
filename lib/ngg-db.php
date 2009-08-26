@@ -452,9 +452,11 @@ class nggdb {
 	 * @param integer $page
 	 * @param integer $limit
 	 * @param bool $use_exclude
+	 * @param int $galleryId Only look for images with this gallery id, or in all galleries if id is 0
+	 * @param bool $orderbydate If true order by date instead of pid
 	 * @return
 	 */
-	function find_last_images($page = 0, $limit = 30, $exclude = true) {
+	function find_last_images($page = 0, $limit = 30, $exclude = true, $galleryId = 0, $orderbydate = false) {
 		global $wpdb;
 		
 		// Check for the exclude setting
@@ -462,11 +464,16 @@ class nggdb {
 		
 		$offset = (int) $page * $limit;
 		
+		$galleryId = (int) $galleryId;
+		$gallery_clause = ($galleryId === 0) ? '' : ' AND galleryid = ' . $galleryId . ' ';
+		
+		$order = ($orderbydate) ? ' imagedate ' : ' pid ';
+		
 		$result = array();
 		$gallery_cache = array();
 		
 		// Query database
-		$images = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures WHERE 1=1 $exclude_clause ORDER BY pid DESC LIMIT $offset, $limit");
+		$images = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures WHERE 1=1 $exclude_clause $gallery_clause ORDER BY $order DESC LIMIT $offset, $limit");
 		
 		// Build the object from the query result
 		if ($images) {	

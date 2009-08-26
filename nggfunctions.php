@@ -911,22 +911,26 @@ function the_related_images($type = 'tags', $maxNumbers = 7) {
  * nggShowRandomRecent($type, $maxImages,$template) - return recent or random images
  * 
  * @access public
- * @param string $type 'recent' or 'random'
+ * @param string $type 'recent' (for latest addition to DB), 'recentdate' (for image with the latest date) or 'random'
  * @param integer $maxImages of images
  * @param string $template (optional) name for a template file, look for gallery-$template
+ * @param int $galleryId Limit to a specific gallery
  * @return the content
  */
-function nggShowRandomRecent($type, $maxImages, $template = '') {
+function nggShowRandomRecent($type, $maxImages, $template = '', $galleryId = 0) {
 	
 	// $_GET from wp_query
 	$pid  	= get_query_var('pid');
 	$pageid = get_query_var('pageid');
 	
 	// get now the recent or random images
-	if ($type == 'random')
-		$picturelist = nggdb::get_random_images($maxImages);
-	else
-		$picturelist = nggdb::find_last_images(0, $maxImages, true);
+	if ($type == 'random') {
+		$picturelist = nggdb::get_random_images($maxImages, $galleryId);
+	} elseif ($type == 'recentdate') {
+		$picturelist = nggdb::find_last_images(0, $maxImages, true, $galleryId, true);
+	} else {
+		$picturelist = nggdb::find_last_images(0, $maxImages, true, $galleryId, false);
+	}
 
 	// look for ImageBrowser if we have a $_GET('pid')
 	if ( $pageid == get_the_ID() || !is_home() )  
