@@ -98,7 +98,8 @@ class nggdb {
 		foreach ($this->albums as $key => $value) {
 			$this->albums[$key]->galleries = (array) unserialize($this->albums[$key]->sortorder);
 			$this->albums[$key]->name = stripslashes( $this->albums[$key]->name ); 
-			$this->albums[$key]->albumdesc = stripslashes( $this->albums[$key]->albumdesc ); 
+			$this->albums[$key]->albumdesc = stripslashes( $this->albums[$key]->albumdesc );
+			wp_cache_add($key, $this->albums[$key], 'ngg_album'); 
 		}
 		
 		return $this->albums;
@@ -131,16 +132,17 @@ class nggdb {
 		if ( !$this->galleries )
 			return array();
 		
-		// if we didn't need to count the images then stop here
-		if ( !$counter )
-			return $this->galleries;
-		
 		// get the galleries information 	
  		foreach ($this->galleries as $key => $value) {
    			$galleriesID[] = $key;
    			// init the counter values
-   			$this->galleries[$key]->counter = 0;	
+   			$this->galleries[$key]->counter = 0;
+			wp_cache_add($key, $this->galleries[$key], 'ngg_gallery');   	
 		}
+
+		// if we didn't need to count the images then stop here
+		if ( !$counter )
+			return $this->galleries;
 		
 		// get the counter values 	
 		$picturesCounter = $wpdb->get_results('SELECT galleryid, COUNT(*) as counter FROM '.$wpdb->nggpictures.' WHERE galleryid IN (\''.implode('\',\'', $galleriesID).'\') AND exclude != 1 GROUP BY galleryid', OBJECT_K);
@@ -149,8 +151,10 @@ class nggdb {
 			return $this->galleries;
 		
 		// add the counter to the gallery objekt	
- 		foreach ($picturesCounter as $key => $value)
+ 		foreach ($picturesCounter as $key => $value) {
 			$this->galleries[$value->galleryid]->counter = $value->counter;
+			wp_cache_add($value->galleryid, $this->galleries[$value->galleryid], 'ngg_gallery');
+		}
 		
 		return $this->galleries;
 	}
@@ -164,14 +168,21 @@ class nggdb {
 	function find_gallery( $id ) {		
 		global $wpdb;
 		
-		if( is_numeric($id) )
+		if( is_numeric($id) ) {
+			
+			if ( $gallery = wp_cache_get($id, 'ngg_gallery') )
+				return $gallery;
+			
 			$gallery = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->nggallery WHERE gid = %d", $id ) );
-		else
+
+		} else
 			$gallery = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->nggallery WHERE name = %s", $id ) );
 		
 		// Build the object from the query result
 		if ($gallery) {
 			$gallery->abspath = WINABSPATH . $gallery->path;
+			wp_cache_add($id, $gallery, 'ngg_gallery');
+			
 			return $gallery;			
 		} else 
 			return false;
@@ -226,6 +237,8 @@ class nggdb {
 				$gallery[$key] = new nggImage( $value );
 		}
 
+		wp_cache_add($id, $gallery, 'ngg_gallery');
+
 		return $gallery;		
 	}
 	
@@ -268,6 +281,9 @@ class nggdb {
 				
 		$wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->nggpictures WHERE galleryid = %d", $gid) );
 		$wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->nggallery WHERE gid = %d", $gid) );
+		
+		wp_cache_delete($gid, 'ngg_gallery');
+		
 		//TODO:Remove all tag relationship
 		return true;
 	}
@@ -280,6 +296,9 @@ class nggdb {
 	 */
 	function find_album( $id ) {		
 		global $wpdb;
+		
+		if ( $album = wp_cache_get($id, 'ngg_album') )
+			return $album;
 		
 		// Query database
 		if ( is_numeric($id) && $id != 0 ) {
@@ -304,7 +323,8 @@ class nggdb {
 			// it was a bad idea to use a object, stripslashes_deep() could not used here, learn from it
 			$album->albumdesc  = stripslashes($album->albumdesc);
 			$album->name	   = stripslashes($album->name);
-					
+			
+			wp_cache_add($id, $album, 'ngg_album');		
 			return $album;
 		} 
 		
@@ -320,6 +340,8 @@ class nggdb {
 		global $wpdb;
 				
 		$result = $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->nggalbum WHERE id = %d", $id) );
+		wp_cache_delete($id, 'ngg_album');
+		
 		return $result;
 	}
 
@@ -335,6 +357,7 @@ class nggdb {
 			  "INSERT INTO $wpdb->nggpictures (galleryid, filename, description, alttext, exclude) VALUES "
 			. "('$gid', '$filename', '$desc', '$alttext', '$exclude');");
 		$pid = (int) $wpdb->insert_id;
+		wp_cache_delete($gid, 'ngg_gallery');
 		
 		return $pid;
 	}
@@ -376,6 +399,8 @@ class nggdb {
 		
 		if ( !empty($sql) && $pid != 0)
 			$result = $wpdb->query( "UPDATE $wpdb->nggpictures SET $sql WHERE pid = $pid" );
+		
+		wp_cache_delete($pid, 'ngg_image');	
 
 		return $result;
 	}
@@ -389,7 +414,9 @@ class nggdb {
 	function find_image( $id ) {
 		global $wpdb;
 		
-		// Query database
+		if ( $image = wp_cache_get($id, 'ngg_image') )
+			return $image;
+		
 		$result = $wpdb->get_row( $wpdb->prepare( "SELECT tt.*, t.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE tt.pid = %d ", $id ) );
 		
 		// Build the object from the query result
@@ -397,7 +424,7 @@ class nggdb {
 			$image = new nggImage($result);
 			return $image;
 		} 
-		
+				
 		return false;
 	}
 	
@@ -426,7 +453,7 @@ class nggdb {
 	
 			// Build the image objects from the query result
 			if ($images) {	
-				foreach ($images as $key => $image)
+				foreach ($images as $key => $image) 
 					$result[$key] = new nggImage( $image );
 			} 
 		}
@@ -612,6 +639,31 @@ class nggdb {
 
 		return null;
 	}
+	
+	/**
+	 * Update or add meta data for an image
+	 * 
+	 * @since 1.4.0
+	 * @param int $id The image ID
+	 * @param array $values An arry with existing or new values
+	 * @return bool result of query
+	 */	
+	function update_image_meta( $id, $new_values ) {
+		global $wpdb;
+		
+		// Query database for existing values
+		// Use cache object
+		$old_values = $wpdb->get_var( $wpdb->prepare( "SELECT meta_data FROM $wpdb->nggpictures WHERE pid = %d ", $id ) );
+		$old_values = unserialize( $old_values );
+
+		$meta = array_merge( (array)$old_values, (array)$new_values );
+
+		$result = $wpdb->query( $wpdb->prepare("UPDATE $wpdb->nggpictures SET meta_data = %s WHERE pid = %d", serialize($meta), $id) );
+		
+		wp_cache_delete($id, 'ngg_image');
+		
+		return $result;
+	}
 
 }
 endif;
@@ -619,7 +671,7 @@ endif;
 if ( ! isset($GLOBALS['nggdb']) ) {
 	/**
 	 * Initate the NextGEN Gallery Database Object, for later cache reasons
-	 * @global object $nggdb Creates a new wpdb object based on wp-config.php Constants for the database
+	 * @global object $nggdb Creates a new nggdb object
 	 * @since 1.1.0
 	 */
 	unset($GLOBALS['nggdb']);

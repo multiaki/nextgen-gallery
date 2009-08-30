@@ -226,7 +226,7 @@ class nggAdminPanel{
 
 		$link = '';
 		// menu title is localized...
-		$i18n = strtolower  ( __ngettext( 'Gallery', 'Galleries', 1, 'nggallery' ) );
+		$i18n = strtolower  ( _n( 'Gallery', 'Galleries', 1, 'nggallery' ) );
 
 		switch ($screen) {
 			case 'toplevel_page_' . NGGFOLDER :
@@ -294,7 +294,7 @@ class nggAdminPanel{
 	function edit_screen_meta($screen) {
 
 		// menu title is localized, so we need to change the toplevel name
-		$i18n = strtolower  ( __ngettext( 'Gallery', 'Galleries', 1, 'nggallery' ) );
+		$i18n = strtolower  ( _n( 'Gallery', 'Galleries', 1, 'nggallery' ) );
 		
 		switch ($screen) {
 			case "{$i18n}_page_nggallery-manage-gallery" :

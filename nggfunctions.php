@@ -606,7 +606,7 @@ function nggCreateImageBrowser($picarray, $template = '') {
 	$picture = apply_filters('ngg_image_object', $picture, $act_pid);
 	
 	// let's get the meta data
-	$meta = new nggMeta($picture->imagePath);
+	$meta = new nggMeta($act_pid);
 	$exif = $meta->get_EXIF();
 	$iptc = $meta->get_IPTC();
 	$xmp  = $meta->get_XMP();
@@ -695,7 +695,7 @@ function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $fl
 	$picture = apply_filters('ngg_image_object', $picture, $imageID);
 
 	// let's get the meta data
-	$meta = new nggMeta($picture->imagePath);
+	$meta = new nggMeta($imageID);
 	$exif = $meta->get_EXIF();
 	$iptc = $meta->get_IPTC();
 	$xmp  = $meta->get_XMP();

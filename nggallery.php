@@ -52,6 +52,7 @@ class nggLoader {
 	var $donators    = 'http://nextgen.boelinger.com/donators.php';
 	var $options     = '';
 	var $manage_page;
+	var $add_PHP5_notice = false;
 	
 	function nggLoader() {
 
@@ -84,9 +85,12 @@ class nggLoader {
 		// Register_taxonomy must be used during wo init
 		add_action( 'init', array(&$this, 'register_taxonomy') );
 		
-		// Disable the update message for PHP4 Users
-		if (version_compare(PHP_VERSION, '5.2.0', '<'))
+		// Add a message for PHP4 Users, can disable the update message later on
+		if (version_compare(PHP_VERSION, '5.0.0', '<'))
 			add_filter('transient_update_plugins', array(&$this, 'disable_upgrade'));
+		
+		//Add some links on the plugin page
+		add_filter('plugin_row_meta', array(&$this, 'add_plugin_links'), 10, 2);	
 		
 	}
 	
@@ -380,20 +384,33 @@ class nggLoader {
 
 	 	$this_plugin = plugin_basename(__FILE__);
 	 	
-		 // PHP5.2 is required for NGG V1.4.0 
+		// PHP5.2 is required for NGG V1.4.0 
 		if ( version_compare($option->response[ $this_plugin ]->new_version, '1.4.0', '>=') )
 			return $option;
 
 	    if( isset($option->response[ $this_plugin ]) ){
-	        //Clear its download link:
-	        $option->response[ $this_plugin ]->package = '';
+	        //TODO:Clear its download link, not now but maybe later
+	        //$option->response[ $this_plugin ]->package = '';
+	        
 	        //Add a notice message
 	        if ($this->add_PHP5_notice == false){
-   	    		add_action( "in_plugin_update_message-$this->plugin_name", create_function('', 'echo \'<br /><span style="color:red">You need to have PHP 5.2 or higher for the new version !!!</span>\';') );
+   	    		add_action( "in_plugin_update_message-$this->plugin_name", create_function('', 'echo \'<br /><span style="color:red">Please update to PHP5.2 as soon as possible, the plugin is not tested under PHP4 anymore</span>\';') );
 	    		$this->add_PHP5_notice = true;
 			}
 		}
 	    return $option;
+	}
+	
+	// Taken from Google XML Sitemaps from Arne Brachhold
+	function add_plugin_links($links, $file) {
+		
+		if ( $file == plugin_basename(__FILE__) ) {
+			$links[] = '<a href="admin.php?page=nextgen-gallery">' . __('Overview', 'nggallery') . '</a>';
+			$links[] = '<a href="http://wordpress.org/tags/nextgen-gallery/">' . __('Get help', 'nggallery') . '</a>';
+			$links[] = '<a href="http://code.google.com/p/nextgen-gallery/">' . __('Contribute', 'nggallery') . '</a>';
+			$links[] = '<a href="http://alexrabe.boelinger.com/donation/">' . __('Donate', 'nggallery') . '</a>';
+		}
+		return $links;
 	}
 	
 }

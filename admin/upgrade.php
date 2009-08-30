@@ -233,7 +233,7 @@ function ngg_import_date_time() {
 	if ( is_array($imagelist) ) {
 		foreach ($imagelist as $image) {
 			$picture = new nggImage($image);
-			$meta = new nggMeta($picture->imagePath, true);
+			$meta = new nggMeta($picture->pid, true);
 			$date = $meta->get_date_time();
 			$wpdb->query("UPDATE $wpdb->nggpictures SET imagedate = '$date' WHERE pid = '$picture->pid'");
 		}		

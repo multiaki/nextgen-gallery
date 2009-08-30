@@ -5,14 +5,15 @@
  * nggmeta.lib.php
  * 
  * @author 		Alex Rabe 
- * @copyright 	Copyright 2007
+ * @copyright 	Copyright 2007-2009
  * 
  */
 	  
 class nggMeta{
 
 	/**** Image Data ****/
-    var $imagePath		=	"";		// ABS Path to the image
+    var $image			=	'';		// The image object
+    var $size			=	false;	// The image size
 	var $exif_data 		= 	false;	// EXIF data array
 	var $iptc_data 		= 	false;	// IPTC data array
 	var $xmp_data  		= 	false;	// XMP data array
@@ -24,23 +25,25 @@ class nggMeta{
  	/**
  	 * nggMeta::nggMeta()
  	 * 
- 	 * @param string $image path to a image
+ 	 * @param int $image path to a image
  	 * @param bool $onlyEXIF parse only exif if needed
  	 * @return
  	 */
- 	function nggMeta($image, $onlyEXIF = false) {
- 		$this->imagePath = $image;
+ 	function nggMeta($pic_id, $onlyEXIF = false) {
  		
- 		if ( !file_exists( $this->imagePath ) )
+		//get the path and other data about the image
+		$this->image = nggdb::find_image( $pic_id );
+ 
+ 		if ( !file_exists( $this->image->imagePath ) )
 			return false;
 
- 		$size = @getimagesize ( $this->imagePath, $metadata );
+ 		$this->size = @getimagesize ( $this->image->imagePath , $metadata );
 
-		if ($size && is_array($metadata)) {
+		if ($this->size && is_array($metadata)) {
 
 			// get exif - data
 			if ( is_callable('exif_read_data'))
-			$this->exif_data = @exif_read_data($this->imagePath, 0, true );
+			$this->exif_data = @exif_read_data($this->image->imagePath , 0, true );
  			
  			// stop here if we didn't need other meta data
  			if ($onlyEXIF)
@@ -52,7 +55,7 @@ class nggMeta{
 
 			// get the xmp data in a XML format
 			if ( is_callable('xml_parser_create'))
-			$this->xmp_data = $this->extract_XMP($this->imagePath);
+			$this->xmp_data = $this->extract_XMP($this->image->imagePath );
 			
 			return true;
 		}
@@ -421,13 +424,55 @@ class nggMeta{
 				$date_time = $this->exif_date2ts($date_time);
 		} else {
 			// if no other date available, get the filetime
-			$date_time = @filectime($this->imagePath);	
+			$date_time = @filectime($this->image->imagePath );	
 		}
 		
 		// Return the MySQL format 
 		$date_time = date( 'Y-m-d H:i:s', $date_time );
 
 		return $date_time;
+	}
+	
+	/**
+	 * This function saves the most common metadata to the database (seralized)
+	 * Reason : GD manipulation removes that options
+	 * 
+	 * @return void
+	 */
+	function save_meta() {
+		global $wpdb;
+		
+		$meta = array(
+			'aperture' => 0,
+			'credit' => '',
+			'camera' => '',
+			'caption' => '',
+			'created_timestamp' => 0,
+			'copyright' => '',
+			'focal_length' => 0,
+			'iso' => 0,
+			'shutter_speed' => 0,
+			'title' => '',
+			'keywords' => ''
+		);
+				
+		$meta = apply_filters( 'ngg_read_image_metadata', $meta  );
+		
+		// meta should be still an array
+		if ( !is_array($meta) )
+			return false;
+		
+		foreach ($meta as $key => $value) {
+			$meta[$key] = $this->get_META($key);			
+		}
+		
+		//let's add now the size of the image 
+		$meta['width'] = $this->size[0];
+		$meta['height'] = $this->size[1]; 
+		
+		$result = nggdb::update_image_meta($this->image->pid, $meta);
+		
+		return $result;		
 	}
 
 }

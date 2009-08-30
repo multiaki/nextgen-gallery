@@ -183,7 +183,7 @@ jQuery(document).ready( function() {
 <?php wp_nonce_field('ngg_updategallery') ?>
 
 <?php else :?>
-<h2><?php echo __ngettext( 'Gallery', 'Galleries', 1, 'nggallery' ); ?> : <?php echo nggGallery::i18n($gallery->title); ?></h2>
+<h2><?php echo _n( 'Gallery', 'Galleries', 1, 'nggallery' ); ?> : <?php echo nggGallery::i18n($gallery->title); ?></h2>
 
 <br style="clear: both;" />
 
@@ -334,7 +334,7 @@ if($picturelist) {
 		$exclude   = ( $picture->exclude ) ? 'checked="checked"' : '';
 		$date = mysql2date(get_option('date_format'), $picture->imagedate);
 		$time = mysql2date(get_option('time_format'), $picture->imagedate);
-		
+				
 		?>
 		<tr id="picture-<?php echo $pid ?>" class="<?php echo $alternate ?> iedit"  valign="top">
 			<?php
@@ -366,7 +366,10 @@ if($picturelist) {
 							<strong><a href="<?php echo $picture->imageURL; ?>" class="thickbox" title="<?php echo $picture->filename ?>">
 								<?php echo ( empty($picture->alttext) ) ? $picture->filename : stripslashes(nggGallery::i18n($picture->alttext)); ?>
 							</a></strong>
-							<br /><?php echo $date?>
+							<br /><?php echo $date; ?>
+							<?php if ( !empty($picture->meta_data) ): ?>
+							<br /><?php echo $picture->meta_data['width']; ?> x <?php echo $picture->meta_data['height']; ?> <?php _e('pixel', 'nggallery'); ?>
+							<?php endif; ?>
 							<p>
 							<?php
 							$actions = array();
@@ -457,7 +460,7 @@ if ( $counter==0 )
 		    	<td class="submit">
 		    		<input class="button-primary" type="submit" name="TB_EditTags" value="<?php _e("OK",'nggallery')?>" />
 		    		&nbsp;
-		    		<input class="button-secondary" type="reset" value="&nbsp;<?php _e("Cancel",'nggallery')?>&nbsp;" onclick="tb_remove()"/>
+		    		<input class="button-secondary" type="reset" value="&nbsp;<?php _e("Cancel",'nggallery'); ?>&nbsp;" onclick="tb_remove()"/>
 		    	</td>
 			</tr>
 		</table>

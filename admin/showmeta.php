@@ -3,8 +3,8 @@
 // look up for the path
 require_once( dirname( dirname(__FILE__) ) . '/ngg-config.php');
 
-require_once(NGGALLERY_ABSPATH.'/lib/meta.php');
-require_once(NGGALLERY_ABSPATH.'/lib/image.php');
+require_once(NGGALLERY_ABSPATH . '/lib/meta.php');
+require_once(NGGALLERY_ABSPATH . '/lib/image.php');
 
 if ( !is_user_logged_in() )
 	die(__('Cheatin&#8217; uh?'));
@@ -12,16 +12,11 @@ if ( !is_user_logged_in() )
 if ( !current_user_can('NextGEN Manage gallery') ) 
 	die(__('Cheatin&#8217; uh?'));
 
-function get_out_now() { exit; }
-add_action( 'shutdown', 'get_out_now', -1 );
-
 global $wpdb;
 
 $id = (int) $_GET['id'];
-// let's get the image data
-$picture = nggdb::find_image($id);
 // let's get the meta data'
-$meta = new nggMeta($picture->imagePath);
+$meta = new nggMeta($id);
 $exifdata = $meta->get_EXIF();
 $iptcdata = $meta->get_IPTC();
 $xmpdata = $meta->get_XMP();
@@ -31,7 +26,7 @@ $xmpdata = $meta->get_XMP();
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" href="<?php echo get_option( 'siteurl' ) ?>/wp-admin/wp-admin.css?version=<?php bloginfo('version'); ?>" type="text/css" />
+<link rel="stylesheet" href="<?php echo get_option( 'siteurl' ); ?>/wp-admin/wp-admin.css?version=<?php bloginfo('version'); ?>" type="text/css" />
 <style type="text/css">
 	#TB_title{
 		background-color:#222222;

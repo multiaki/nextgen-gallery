@@ -9,8 +9,6 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
  */
 function nggallery_admin_overview()  {
 
-	// new way since wp 2.8
-	if ( version_compare($GLOBALS['wp_version'], '2.7.999', '>') ) {
 	?>
 	<div class="wrap ngg-wrap">
 		<h2><?php _e('NextGEN Gallery Overview', 'nggallery') ?></h2>
@@ -38,27 +36,6 @@ function nggallery_admin_overview()  {
 		//]]>
 	</script>
 	<?php
-	
-	} else {
-	
-	?>	
-	<div class="wrap ngg-wrap">
-		<h2><?php _e('NextGEN Gallery Overview', 'nggallery') ?></h2>
-		<div id="dashboard-widgets-wrap" class="ngg-overview">
-		    <div id="dashboard-widgets" class="metabox-holder">
-		    	<div id="side-info-column" class="inner-sidebar">
-					<?php do_meta_boxes('ngg_overview', 'right', ''); ?>
-				</div>
-				<div id="post-body" class="has-sidebar">
-					<div id="dashboard-widgets-main-content" class="has-sidebar-content">
-					<?php do_meta_boxes('ngg_overview', 'left', ''); ?>
-					</div>
-				</div>
-		    </div>
-		</div>
-	</div>
-	<?php
-	}
 }
 
 /**
@@ -164,8 +141,7 @@ function ngg_overview_news(){
 ?>
 <div class="rss-widget">
     <?php
-//    $rss = @fetch_rss('http://alexrabe.boelinger.com/?tag=nextgen-gallery&feed=rss2');
-      $rss = @fetch_rss('http://alexrabe.boelinger.com/feed/rss2/');
+      $rss = @fetch_rss('http://alexrabe.boelinger.com/feed/');
 
       if ( isset($rss->items) && 0 != count($rss->items) )
       {
@@ -210,19 +186,19 @@ function ngg_overview_right_now() {
 		<tbody>
 			<tr class="first">
 				<td class="first b"><a href="admin.php?page=nggallery-add-gallery"><?php echo $images; ?></a></td>
-				<td class="t"><?php echo __ngettext( 'Image', 'Images', $images, 'nggallery' ); ?></td>
+				<td class="t"><?php echo _n( 'Image', 'Images', $images, 'nggallery' ); ?></td>
 				<td class="b"></td>
 				<td class="last"></td>
 			</tr>
 			<tr>
 				<td class="first b"><a href="admin.php?page=nggallery-manage-gallery"><?php echo $galleries; ?></a></td>
-				<td class="t"><?php echo __ngettext( 'Gallery', 'Galleries', $galleries, 'nggallery' ); ?></td>
+				<td class="t"><?php echo _n( 'Gallery', 'Galleries', $galleries, 'nggallery' ); ?></td>
 				<td class="b"></td>
 				<td class="last"></td>
 			</tr>
 			<tr>
 				<td class="first b"><a href="admin.php?page=nggallery-manage-album"><?php echo $albums; ?></a></td>
-				<td class="t"><?php echo __ngettext( 'Album', 'Albums', $albums, 'nggallery' ); ?></td>
+				<td class="t"><?php echo _n( 'Album', 'Albums', $albums, 'nggallery' ); ?></td>
 				<td class="b"></td>
 				<td class="last"></td>
 			</tr>
@@ -382,7 +358,7 @@ class ngg_SpaceManager {
 		);
 
 		$quota = ngg_SpaceManager::getQuota() * 1024 * 1024;
-		$used = get_dirsize( constant( "ABSPATH" ) . constant( "UPLOADS" ) );
+		$used = get_dirsize( constant( 'ABSPATH' ) . constant( 'UPLOADS' ) );
 //		$used = get_dirsize( ABSPATH."wp-content/blogs.dir/".$blog_id."/files" );
 		
 		if ($used > $quota) $percentused = '100';
@@ -391,7 +367,7 @@ class ngg_SpaceManager {
 		$remaining = $quota - $used;
 		$percentremain = 100 - $percentused;
 
-		$out = "";
+		$out = '';
 		$out .= '<div id="spaceused"> <h3>'.__('Storage Space','nggallery').'</h3>';
 
 		if ($settings['used']['display']) {

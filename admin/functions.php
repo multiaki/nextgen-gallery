@@ -96,7 +96,7 @@ class nggAdmin{
 		$result = $wpdb->get_var("SELECT name FROM $wpdb->nggallery WHERE name = '$galleryname' ");
 		
 		if ($result) {
-			if ($output) nggGallery::show_error( __ngettext( 'Gallery', 'Galleries', 1, 'nggallery' ) .' <strong>' . $galleryname . '</strong> '.__('already exists', 'nggallery'));
+			if ($output) nggGallery::show_error( _n( 'Gallery', 'Galleries', 1, 'nggallery' ) .' <strong>' . $galleryname . '</strong> '.__('already exists', 'nggallery'));
 			return false;			
 		} else { 
 			$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->nggallery (name, path, title, author) VALUES (%s, %s, %s, %s)", $galleryname, $nggpath, $gallerytitle , $user_ID) );
@@ -172,7 +172,7 @@ class nggAdmin{
 				nggGallery::show_error(__('Database error. Could not add gallery!','nggallery'));
 				return;
 			}
-			$created_msg = __ngettext( 'Gallery', 'Galleries', 1, 'nggallery' ) . ' <strong>' . $galleryname . '</strong> ' . __('successfully created!','nggallery') . '<br />';
+			$created_msg = _n( 'Gallery', 'Galleries', 1, 'nggallery' ) . ' <strong>' . $galleryname . '</strong> ' . __('successfully created!','nggallery') . '<br />';
 			$gallery_id  = $wpdb->insert_id;  // get index_id
 		}
 		
@@ -463,7 +463,7 @@ class nggAdmin{
 			$picture = nggdb::find_image($pic_id);
 			if (!$picture->error) {
 
-				$meta = nggAdmin::get_MetaData($picture->imagePath);
+				$meta = nggAdmin::get_MetaData( $picture->pid, true );
 				
 				// get the title
 				if (!$alttext = $meta['title'])
@@ -493,9 +493,10 @@ class nggAdmin{
 	 * @class nggAdmin
 	 * @require NextGEN Meta class
 	 * @param string $picPath must be Gallery absPath + filename
+	 * @param bool $save if is set, the meta data will be saved to the database
 	 * @return array metadata
 	 */
-	function get_MetaData($picPath) {
+	function get_MetaData($picPath, $save = false) {
 		
 		require_once(NGGALLERY_ABSPATH . '/lib/meta.php');
 		
@@ -505,7 +506,11 @@ class nggAdmin{
 		$meta['title'] = $pdata->get_META('title');		
 		$meta['caption'] = $pdata->get_META('caption');	
 		$meta['keywords'] = $pdata->get_META('keywords');
-		$meta['timestamp'] = $pdata->get_date_time();	
+		$meta['timestamp'] = $pdata->get_date_time();
+		
+		//the common data will be saved to the database
+		if ( $save )
+			$pdata->save_meta();	
 		
 		return $meta;
 		

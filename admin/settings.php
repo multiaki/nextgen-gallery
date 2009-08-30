@@ -121,7 +121,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<li><a href="#generaloptions"><?php _e('General Options', 'nggallery') ;?></a></li>
 			<li><a href="#thumbnails"><?php _e('Thumbnails', 'nggallery') ;?></a></li>
 			<li><a href="#images"><?php _e('Images', 'nggallery') ;?></a></li>
-			<li><a href="#gallery"><?php echo __ngettext( 'Gallery', 'Galleries', 1, 'nggallery' ) ;?></a></li>
+			<li><a href="#gallery"><?php echo _n( 'Gallery', 'Galleries', 1, 'nggallery' ) ;?></a></li>
 			<li><a href="#effects"><?php _e('Effects', 'nggallery') ;?></a></li>
 			<li><a href="#watermark"><?php _e('Watermark', 'nggallery') ;?></a></li>
 			<li><a href="#slideshow"><?php _e('Slideshow', 'nggallery') ;?></a></li>
