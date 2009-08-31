@@ -2,7 +2,7 @@
 
 /**
  * @author Alex Rabe
- * @copyright 2008
+ * @copyright 2008 - 2009
  */
 
 add_action('wp_ajax_ngg_ajax_operation', 'ngg_ajax_operation' );
@@ -29,7 +29,7 @@ function ngg_ajax_operation() {
 		if ( isset($_POST['image'])) {
 			$id = (int) $_POST['image'];
 			// let's get the image data
-			$picture = nggdb::find_image($id);
+			$picture = nggdb::find_image( $id );
 			// what do you want to do ?		
 			switch ( $_POST['operation'] ) {
 				case 'create_thumbnail' :
@@ -40,6 +40,12 @@ function ngg_ajax_operation() {
 				break;
 				case 'set_watermark' :
 					$result = nggAdmin::set_watermark($picture);
+				break;
+				case 'import_metadata' :
+					$result = nggAdmin::import_MetaData( $id );
+				break;
+				case 'get_image_ids' :
+					$result = nggAdmin::get_image_ids( $id );
 				break;
 				default :
 					die('-1');	
@@ -90,13 +96,13 @@ add_action('wp_ajax_createNewThumb', 'createNewThumb');
 			if ($thumb->currentDimensions['height'] > $thumb->currentDimensions['width']) {
 				$thumb->resize($ngg_options['thumbwidth'], 0);
 			} else {
-				$thumb->resize(0,$ngg_options['thumbheight']);	
+				$thumb->resize(0, $ngg_options['thumbheight']);	
 			}
 		} else {
-			$thumb->resize($ngg_options['thumbwidth'],$ngg_options['thumbheight'],$ngg_options['thumbResampleMode']);	
+			$thumb->resize($ngg_options['thumbwidth'], $ngg_options['thumbheight'], $ngg_options['thumbResampleMode']);	
 		}
 		
-		if ( $thumb->save($thumb_filename,100)) {
+		if ( $thumb->save($thumb_filename, 100)) {
 			echo "OK";
 		} else {
 			header('HTTP/1.1 500 Internal Server Error');			

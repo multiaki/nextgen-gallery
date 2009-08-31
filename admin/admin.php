@@ -139,7 +139,7 @@ class nggAdminPanel{
 		if(!isset($_GET['page']))
 			return;
 
-		wp_register_script('ngg-ajax', NGGALLERY_URLPATH .'admin/js/ngg.ajax.js', array('jquery'), '1.0.0');
+		wp_register_script('ngg-ajax', NGGALLERY_URLPATH .'admin/js/ngg.ajax.js', array('jquery'), '1.4.0');
 		wp_localize_script('ngg-ajax', 'nggAjaxSetup', array(
 					'url' => admin_url('admin-ajax.php'),
 					'action' => 'ngg_ajax_operation',

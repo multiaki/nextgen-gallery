@@ -460,6 +460,7 @@ class nggAdmin{
 			$imagesIds = array($imagesIds);
 		
 		foreach($imagesIds as $pic_id) {
+			
 			$picture = nggdb::find_image($pic_id);
 			if (!$picture->error) {
 
@@ -1149,16 +1150,37 @@ class nggAdmin{
 		
 		global $wpdb;
 		
-		$imageID = $wpdb->get_var("SELECT previewpic FROM $wpdb->nggallery WHERE gid = '$galleryID' ");
+		$gallery = nggdb::find_gallery( $galleryID );
 		
 		// in the case no preview image is setup, we do this now
-		if ($imageID == 0) {
+		if ($gallery->previewpic == 0) {
 			$firstImage = $wpdb->get_var("SELECT pid FROM $wpdb->nggpictures WHERE exclude != 1 AND galleryid = '$galleryID' ORDER by pid DESC limit 0,1");
-			if ($firstImage)
+			if ($firstImage) {
 				$wpdb->query("UPDATE $wpdb->nggallery SET previewpic = '$firstImage' WHERE gid = '$galleryID'");
+				wp_cache_delete($galleryID, 'ngg_gallery');
+			}
 		}
 		
 		return;
+	}
+
+	/**
+	 * Return a JSON coded array of Image ids for a requested gallery
+	 * 
+	 * @param int $galleryID
+	 * @return arry (JSON)
+	 */
+	function get_image_ids( $galleryID ) {
+		
+		if ( !function_exists('json_encode') )
+			return(-2);
+		
+		$gallery = nggdb::get_ids_from_gallery($galleryID, 'pid', 'ASC', false);
+
+		header('Content-Type: text/plain; charset=' . get_option('blog_charset'), true);
+		$output = json_encode($gallery);
+		
+		return $output;
 	}
 
 } // END class nggAdmin

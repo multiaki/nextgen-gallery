@@ -75,7 +75,7 @@ function nggallery_picturelist() {
 <script type="text/javascript"> 
 <!--
 
-function showDialog( windowId ) {
+function showDialog( windowId, height ) {
 	var form = document.getElementById('updategallery');
 	var elementlist = "";
 	for (i = 0, n = form.elements.length; i < n; i++) {
@@ -91,7 +91,7 @@ function showDialog( windowId ) {
 	jQuery("#" + windowId + "_bulkaction").val(jQuery("#bulkaction").val());
 	jQuery("#" + windowId + "_imagelist").val(elementlist);
 	// console.log (jQuery("#TB_imagelist").val());
-	tb_show("", "#TB_inline?width=640&height=120&inlineId=" + windowId + "&modal=true", false);
+	tb_show("", "#TB_inline?width=640&height=" + height + "&inlineId=" + windowId + "&modal=true", false);
 }
 
 function checkAll(form)
@@ -127,7 +127,7 @@ function checkSelected() {
 	var numchecked = getNumChecked(document.getElementById('updategallery'));
 	 
 	if(numchecked < 1) { 
-		alert('<?php echo js_escape(__("No images selected", 'nggallery')); ?>');
+		alert('<?php echo js_escape(__('No images selected', 'nggallery')); ?>');
 		return false; 
 	} 
 	
@@ -136,15 +136,23 @@ function checkSelected() {
 	switch (actionId) {
 		case "copy_to":
 		case "move_to":
-			showDialog('selectgallery');
+			showDialog('selectgallery', 120);
 			return false;
 			break;
 		case "add_tags":
 		case "delete_tags":
 		case "overwrite_tags":
-			showDialog('entertags');
+			showDialog('entertags', 120);
 			return false;
 			break;
+		case "resize_images":
+			showDialog('resize_images', 120);
+			return false;
+			break;
+		case "new_thumbnail":
+			showDialog('new_thumbnail', 190);
+			return false;
+			break;			
 	}
 	
 	return confirm('<?php echo sprintf(js_escape(__("You are about to start the bulk edit for %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>');
@@ -153,11 +161,7 @@ function checkSelected() {
 jQuery(document).ready( function() {
 	// close postboxes that should be closed
 	jQuery('.if-js-closed').removeClass('if-js-closed').addClass('closed');
-
-	if (typeof postboxes != "undefined")
-		postboxes.add_postbox_toggles('ngg-manage-gallery'); // WP 2.7
-	else
-		add_postbox_toggles('ngg-manage-gallery'); 	// WP 2.6
+	postboxes.add_postbox_toggles('ngg-manage-gallery');
 
 });
 
@@ -181,6 +185,7 @@ jQuery(document).ready( function() {
 
 <form id="updategallery" class="nggform" method="POST" action="<?php echo $ngg->manage_page->base_page . '&amp;mode=edit&amp;s=' . $_GET['s']; ?>" accept-charset="utf-8">
 <?php wp_nonce_field('ngg_updategallery') ?>
+<input type="hidden" name="page" value="manage-images" />
 
 <?php else :?>
 <h2><?php echo _n( 'Gallery', 'Galleries', 1, 'nggallery' ); ?> : <?php echo nggGallery::i18n($gallery->title); ?></h2>
@@ -189,6 +194,7 @@ jQuery(document).ready( function() {
 
 <form id="updategallery" class="nggform" method="POST" action="<?php echo $ngg->manage_page->base_page . '&amp;mode=edit&amp;gid=' . $act_gid . '&amp;paged=' . $_GET['paged']; ?>" accept-charset="utf-8">
 <?php wp_nonce_field('ngg_updategallery') ?>
+<input type="hidden" name="page" value="manage-images" />
 
 <div id="poststuff">
 	<?php wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>
@@ -288,13 +294,13 @@ jQuery(document).ready( function() {
 		<option value="delete_tags" ><?php _e("Delete tags",'nggallery')?></option>
 		<option value="overwrite_tags" ><?php _e("Overwrite tags",'nggallery')?></option>
 	</select>
-	<input class="button-secondary" type="submit" name="showThickbox" value="<?php _e("OK",'nggallery')?>" onclick="if ( !checkSelected() ) return false;" />
+	<input class="button-secondary" type="submit" name="showThickbox" value="<?php _e('Apply', 'nggallery'); ?>" onclick="if ( !checkSelected() ) return false;" />
 	
 	<?php if (($ngg->options['galSort'] == "sortorder") && (!$is_search) ) { ?>
-		<input class="button-secondary" type="submit" name="sortGallery" value="<?php _e("Sort gallery",'nggallery')?>" />
+		<input class="button-secondary" type="submit" name="sortGallery" value="<?php _e('Sort gallery', 'nggallery');?>" />
 	<?php } ?>
 	
-	<input type="submit" name="updatepictures" class="button-primary action"  value="<?php _e("Save Changes",'nggallery')?>" />
+	<input type="submit" name="updatepictures" class="button-primary action"  value="<?php _e('Save Changes', 'nggallery');?>" />
 	</div>
 </div>
 
@@ -452,6 +458,7 @@ if ( $counter==0 )
 		<?php wp_nonce_field('ngg_thickbox_form') ?>
 		<input type="hidden" id="entertags_imagelist" name="TB_imagelist" value="" />
 		<input type="hidden" id="entertags_bulkaction" name="TB_bulkaction" value="" />
+		<input type="hidden" name="page" value="manage-images" />
 		<table width="100%" border="0" cellspacing="3" cellpadding="3" >
 		  	<tr>
 		    	<th><?php _e("Enter the tags",'nggallery')?> : <input name="taglist" type="text" style="width:90%" value="" /></th>
@@ -474,6 +481,7 @@ if ( $counter==0 )
 		<?php wp_nonce_field('ngg_thickbox_form') ?>
 		<input type="hidden" id="selectgallery_imagelist" name="TB_imagelist" value="" />
 		<input type="hidden" id="selectgallery_bulkaction" name="TB_bulkaction" value="" />
+		<input type="hidden" name="page" value="manage-images" />
 		<table width="100%" border="0" cellspacing="3" cellpadding="3" >
 		  	<tr>
 		    	<th>
@@ -502,6 +510,70 @@ if ( $counter==0 )
 		</form>
 	</div>
 	<!-- /#selectgallery -->
+
+	<!-- #resize_images -->
+	<div id="resize_images" style="display: none;" >
+		<form id="form-resize-images" method="POST" accept-charset="utf-8">
+		<?php wp_nonce_field('ngg_thickbox_form') ?>
+		<input type="hidden" id="resize_images_imagelist" name="TB_imagelist" value="" />
+		<input type="hidden" id="resize_images_bulkaction" name="TB_bulkaction" value="" />
+		<input type="hidden" name="page" value="manage-images" />
+		<table width="100%" border="0" cellspacing="3" cellpadding="3" >
+			<tr valign="top">
+				<td>
+					<strong><?php _e('Resize Images to', 'nggallery'); ?>:</strong> 
+				</td>
+				<td>
+					<input type="text" size="5" name="imgWidth" value="<?php echo $ngg->options['imgWidth']; ?>" /> x <input type="text" size="5" name="imgHeight" value="<?php echo $ngg->options['imgHeight']; ?>" />
+					<br /><small><?php _e('Width x height (in pixel). NextGEN Gallery will keep ratio size','nggallery') ?></small>
+				</td>
+			</tr>
+		  	<tr align="right">
+		    	<td colspan="2" class="submit">
+		    		<input class="button-primary" type="submit" name="TB_ResizeImages" value="<?php _e('OK', 'nggallery'); ?>" />
+		    		&nbsp;
+		    		<input class="button-secondary" type="reset" value="&nbsp;<?php _e('Cancel', 'nggallery'); ?>&nbsp;" onclick="tb_remove()"/>
+		    	</td>
+			</tr>
+		</table>
+		</form>
+	</div>
+	<!-- /#resize_images -->
+
+	<!-- #new_thumbnail -->
+	<div id="new_thumbnail" style="display: none;" >
+		<form id="form-new-thumbnail" method="POST" accept-charset="utf-8">
+		<?php wp_nonce_field('ngg_thickbox_form') ?>
+		<input type="hidden" id="new_thumbnail_imagelist" name="TB_imagelist" value="" />
+		<input type="hidden" id="new_thumbnail_bulkaction" name="TB_bulkaction" value="" />
+		<input type="hidden" name="page" value="manage-images" />
+		<table width="100%" border="0" cellspacing="3" cellpadding="3" >
+			<tr valign="top">
+				<th align="left"><?php _e('Width x height (in pixel)','nggallery') ?></th>
+				<td><input type="text" size="5" maxlength="5" name="thumbwidth" value="<?php echo $ngg->options['thumbwidth']; ?>" /> x <input type="text" size="5" maxlength="5" name="thumbheight" value="<?php echo $ngg->options['thumbheight']; ?>" />
+				<br /><small><?php _e('These values are maximum values ','nggallery') ?></small></td>
+			</tr>
+			<tr valign="top">
+				<th align="left"><?php _e('Set fix dimension','nggallery') ?></th>
+				<td><input type="checkbox" name="thumbfix" value="1" <?php checked('1', $ngg->options['thumbfix']); ?> />
+				<br /><small><?php _e('Ignore the aspect ratio, no portrait thumbnails','nggallery') ?></small></td>
+			</tr>
+			<tr valign="top">
+				<th align="left"><?php _e('Crop square thumbnail from image','nggallery') ?></th>
+				<td><input type="checkbox" name="thumbcrop" value="1" <?php checked('1', $ngg->options['thumbcrop']); ?> />
+				<br /><small><?php _e('Create square thumbnails, use only the width setting :','nggallery') ?> <?php echo $ngg->options['thumbwidth']; ?> x <?php echo $ngg->options['thumbwidth']; ?></small></td>
+			</tr>
+		  	<tr align="right">
+		    	<td colspan="2" class="submit">
+		    		<input class="button-primary" type="submit" name="TB_NewThumbnail" value="<?php _e('OK', 'nggallery');?>" />
+		    		&nbsp;
+		    		<input class="button-secondary" type="reset" value="&nbsp;<?php _e('Cancel', 'nggallery'); ?>&nbsp;" onclick="tb_remove()"/>
+		    	</td>
+			</tr>
+		</table>
+		</form>
+	</div>
+	<!-- /#new_thumbnail -->	
 
 	<script type="text/javascript">
 	/* <![CDATA[ */

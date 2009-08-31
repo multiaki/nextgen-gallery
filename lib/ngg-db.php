@@ -274,15 +274,15 @@ class nggdb {
 	/**
 	 * Delete a gallery AND all the pictures associated to this gallery!
 	 * 
-	 * @gid The gallery ID
+	 * @id The gallery ID
 	 */
-	function delete_gallery($gid) {		
+	function delete_gallery( $id ) {		
 		global $wpdb;
 				
-		$wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->nggpictures WHERE galleryid = %d", $gid) );
-		$wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->nggallery WHERE gid = %d", $gid) );
+		$wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->nggpictures WHERE galleryid = %d", $id) );
+		$wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->nggallery WHERE gid = %d", $id) );
 		
-		wp_cache_delete($gid, 'ngg_gallery');
+		wp_cache_delete($id, 'ngg_gallery');
 		
 		//TODO:Remove all tag relationship
 		return true;
@@ -462,15 +462,21 @@ class nggdb {
 	
 	/**
 	* Delete an image entry from the database
+	* @param integer $id is the Image ID
 	*/
-	function delete_image($pid) {
+	function delete_image( $id ) {
 		global $wpdb;
 		
-		// Delete the image row
-		$wpdb->query("DELETE FROM $wpdb->nggpictures WHERE pid = $pid");
+		// Delete the image
+		$result = $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->nggpictures WHERE pid = %d", $id) );
 		
 		// Delete tag references
-		wp_delete_object_term_relationships($pid, 'ngg_tag');
+		wp_delete_object_term_relationships( $id, 'ngg_tag');
+		
+		// Remove from cache
+		wp_cache_delete( $id, 'ngg_image');	
+		
+		return $result;
 	}
 	
 	/**
