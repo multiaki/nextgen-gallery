@@ -86,7 +86,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 								$selected = " selected='selected'";
 							}
 							else $selected = '';
-							$css_name = attribute_escape($css_name);
+							$css_name = esc_attr($css_name);
 							echo "\n\t<option value=\"$key\" $selected>$css_name</option>";
 						}
 					?>

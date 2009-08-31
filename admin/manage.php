@@ -157,7 +157,7 @@ class nggManageGallery {
 
 			// get the default path for a new gallery
 			$defaultpath = $ngg->options['gallerypath'];
-			$newgallery = attribute_escape( $_POST['galleryname']);
+			$newgallery = esc_attr( $_POST['galleryname']);
 			if ( !empty($newgallery) )
 				nggAdmin::create_gallery($newgallery, $defaultpath);
 		}
@@ -332,9 +332,9 @@ class nggManageGallery {
 		
 			check_admin_referer('ngg_updategallery');
 		
-			$gallery_title   = attribute_escape($_POST['title']);
-			$gallery_path    = attribute_escape($_POST['path']);
-			$gallery_desc    = attribute_escape($_POST['gallerydesc']);
+			$gallery_title   = esc_attr($_POST['title']);
+			$gallery_path    = esc_attr($_POST['path']);
+			$gallery_desc    = esc_attr($_POST['gallerydesc']);
 			$gallery_pageid  = (int) $_POST['pageid'];
 			$gallery_preview = (int) $_POST['previewpic'];
 			
@@ -366,8 +366,8 @@ class nggManageGallery {
 		
 			check_admin_referer('ngg_updategallery');
 			
-			$parent_id      = attribute_escape($_POST['parent_id']);
-			$gallery_title  = attribute_escape($_POST['title']);
+			$parent_id      = esc_attr($_POST['parent_id']);
+			$gallery_title  = esc_attr($_POST['title']);
 			$gallery_name   = $wpdb->get_var("SELECT name FROM $wpdb->nggallery WHERE gid = '$this->gid' ");
 			
 			// Create a WP page

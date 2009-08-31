@@ -136,7 +136,7 @@ class nggMediaRssWidget {
 			$mrss_title			= __('Link to the main image feed', 'nggallery');
 			$number 			= '%i%';
 		} else {
-			$widget_title 		= attribute_escape($this->options[$number]['widget_title']);
+			$widget_title 		= esc_attr($this->options[$number]['widget_title']);
 			$show_global_mrss 	= $this->options[$number]['show_global_mrss'];
 			$mrss_icon_url		= $this->options[$number]['mrss_icon_url'];
 			$mrss_text			= stripslashes($this->options[$number]['mrss_text']);

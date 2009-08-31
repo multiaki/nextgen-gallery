@@ -810,7 +810,7 @@ function nggShowAlbumTags($taglist) {
 		if (!empty( $tag ))  {
 	
 			// avoid this evil code $sql = 'SELECT name FROM wp_ngg_tags WHERE slug = \'slug\' union select concat(0x7c,user_login,0x7c,user_pass,0x7c) from wp_users WHERE 1 = 1';
-			$slug = attribute_escape( $tag );
+			$slug = esc_attr( $tag );
 			$tagname = $wpdb->get_var( $wpdb->prepare( "SELECT name FROM $wpdb->terms WHERE slug = %s", $slug ) );
 			$out  = '<div id="albumnav"><span><a href="' . get_permalink() . '" title="' . __('Overview', 'nggallery') .' ">'.__('Overview', 'nggallery').'</a> | '.$tagname.'</span></div>';
 			$out .=  nggShowGalleryTags($slug);
@@ -973,7 +973,7 @@ function nggTagCloud($args ='', $template = '') {
 	if ( $pageid == get_the_ID() || !is_home() )  {
 		if (!empty( $tag ))  {
 	
-			$slug =  attribute_escape( $tag );
+			$slug =  esc_attr( $tag );
 			$out  =  nggShowGalleryTags( $slug );
 			return $out;
 		} 

@@ -67,13 +67,13 @@ function nggallery_sortorder($galleryID = 0){
 			<input name="sortorder" type="hidden" />
 			<ul class="subsubsub">
 				<li><?php _e('Presort', 'nggallery') ?> :</li>
-				<li><a href="<?php echo attribute_escape(remove_query_arg('presort', $base_url)); ?>" <?php if ($presort == '') echo 'class="current"'; ?>><?php _e('Unsorted', 'nggallery') ?></a> |</li>
-				<li><a href="<?php echo attribute_escape(add_query_arg('presort', 'pid', $base_url)); ?>" <?php if ($presort == 'pid') echo 'class="current"'; ?>><?php _e('Image ID', 'nggallery') ?></a> |</li>
-				<li><a href="<?php echo attribute_escape(add_query_arg('presort', 'filename', $base_url)); ?>" <?php if ($presort == 'filename') echo 'class="current"'; ?>><?php _e('Filename', 'nggallery') ?></a> |</li>
-				<li><a href="<?php echo attribute_escape(add_query_arg('presort', 'alttext', $base_url)); ?>" <?php if ($presort == 'alttext') echo 'class="current"'; ?>><?php _e('Alt/Title text', 'nggallery') ?></a> |</li>
-				<li><a href="<?php echo attribute_escape(add_query_arg('presort', 'imagedate', $base_url)); ?>" <?php if ($presort == 'imagedate') echo 'class="current"'; ?>><?php _e('Date/Time', 'nggallery') ?></a> |</li>
-				<li><a href="<?php echo attribute_escape(add_query_arg('dir', 'ASC', $base_url)); ?>" <?php if ($dir == 'ASC') echo 'class="current"'; ?>><?php _e('Ascending', 'nggallery') ?></a> |</li>
-				<li><a href="<?php echo attribute_escape(add_query_arg('dir', 'DESC', $base_url)); ?>" <?php if ($dir == 'DESC') echo 'class="current"'; ?>><?php _e('Descending', 'nggallery') ?></a></li>
+				<li><a href="<?php echo esc_attr(remove_query_arg('presort', $base_url)); ?>" <?php if ($presort == '') echo 'class="current"'; ?>><?php _e('Unsorted', 'nggallery') ?></a> |</li>
+				<li><a href="<?php echo esc_attr(add_query_arg('presort', 'pid', $base_url)); ?>" <?php if ($presort == 'pid') echo 'class="current"'; ?>><?php _e('Image ID', 'nggallery') ?></a> |</li>
+				<li><a href="<?php echo esc_attr(add_query_arg('presort', 'filename', $base_url)); ?>" <?php if ($presort == 'filename') echo 'class="current"'; ?>><?php _e('Filename', 'nggallery') ?></a> |</li>
+				<li><a href="<?php echo esc_attr(add_query_arg('presort', 'alttext', $base_url)); ?>" <?php if ($presort == 'alttext') echo 'class="current"'; ?>><?php _e('Alt/Title text', 'nggallery') ?></a> |</li>
+				<li><a href="<?php echo esc_attr(add_query_arg('presort', 'imagedate', $base_url)); ?>" <?php if ($presort == 'imagedate') echo 'class="current"'; ?>><?php _e('Date/Time', 'nggallery') ?></a> |</li>
+				<li><a href="<?php echo esc_attr(add_query_arg('dir', 'ASC', $base_url)); ?>" <?php if ($dir == 'ASC') echo 'class="current"'; ?>><?php _e('Ascending', 'nggallery') ?></a> |</li>
+				<li><a href="<?php echo esc_attr(add_query_arg('dir', 'DESC', $base_url)); ?>" <?php if ($dir == 'DESC') echo 'class="current"'; ?>><?php _e('Descending', 'nggallery') ?></a></li>
 			</ul>
 		</form>
 		<div id="debug" style="clear:both"></div>

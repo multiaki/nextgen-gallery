@@ -72,7 +72,7 @@ class nggManageAlbum {
 		check_admin_referer('ngg_album');
 	
 		if ( isset($_POST['add']) && isset ($_POST['newalbum']) ) { 
-			$newalbum = attribute_escape($_POST['newalbum']);
+			$newalbum = esc_attr($_POST['newalbum']);
 			$result = $wpdb->query("INSERT INTO $wpdb->nggalbum (name, sortorder) VALUES ('$newalbum','0')");
 			if ($result) 
 				nggGallery::show_message(__('Update Successfully','nggallery'));
@@ -106,8 +106,8 @@ class nggManageAlbum {
 		
 		check_admin_referer('ngg_thickbox_form');
 		
-		$name = attribute_escape( $_POST['album_name'] );
-		$desc = attribute_escape( $_POST['album_desc'] );
+		$name = esc_attr( $_POST['album_name'] );
+		$desc = esc_attr( $_POST['album_desc'] );
 		$prev = (int) $_POST['previewpic'];
 		$link = (int) $_POST['pageid'];
 		
@@ -352,13 +352,13 @@ function showDialog() {
 	  	<tr>
 	    	<th>
 	    		<?php _e('Album name:', 'nggallery'); ?><br />
-				<input class="search-input" id="album_name" name="album_name" type="text" value="<?php echo attribute_escape( $album->name ); ?>" style="width:95%" />
+				<input class="search-input" id="album_name" name="album_name" type="text" value="<?php echo esc_attr( $album->name ); ?>" style="width:95%" />
 	    	</th>
 	  	</tr>
 	  	<tr>
 	    	<th>
 	    		<?php _e('Album description:', 'nggallery'); ?><br />
-	    		<textarea class="search-input" id="album_desc" name="album_desc" cols="50" rows="2" style="width:95%" ><?php echo attribute_escape( $album->albumdesc ); ?></textarea>
+	    		<textarea class="search-input" id="album_desc" name="album_desc" cols="50" rows="2" style="width:95%" ><?php echo esc_attr( $album->albumdesc ); ?></textarea>
 	    	</th>
 	  	</tr>
 	  	<tr>

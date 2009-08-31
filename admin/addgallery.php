@@ -24,7 +24,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	
 	if ($_POST['addgallery']){
 		check_admin_referer('ngg_addgallery');
-		$newgallery = attribute_escape( $_POST['galleryname']);
+		$newgallery = esc_attr( $_POST['galleryname']);
 		if ( !empty($newgallery) )
 			nggAdmin::create_gallery($newgallery, $defaultpath);
 	}

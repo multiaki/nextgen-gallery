@@ -195,7 +195,7 @@ class nggGallery {
 				if (array_key_exists($key, $meta_array)){
 					switch ($typ) {
 					case 'string':
-						$options[$db_value] = (string) attribute_escape($meta_array[$key][0]);
+						$options[$db_value] = (string) esc_attr($meta_array[$key][0]);
 						break;
 					case 'int':
 						$options[$db_value] = (int) $meta_array[$key][0];

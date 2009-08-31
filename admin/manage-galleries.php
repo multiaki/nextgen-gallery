@@ -76,7 +76,7 @@ function nggallery_manage_gallery_main() {
 				break;
 		}
 		
-		return confirm('<?php echo sprintf(js_escape(__("You are about to start the bulk edit for %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>');
+		return confirm('<?php echo sprintf(js_escape(__("You are about to start the bulk edit for %s galleries \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>');
 	}
 
 	function showDialog( windowId, height ) {

@@ -105,7 +105,7 @@ if (!$error && filesize($real_file) > 0) {
 						$act_css_version = $a_cssfile['Version'];
 					}
 					else $selected = '';
-					$css_name = attribute_escape($css_name);
+					$css_name = esc_attr($css_name);
 					echo "\n\t<option value=\"$key\" $selected>$css_name</option>";
 				}
 			?>
