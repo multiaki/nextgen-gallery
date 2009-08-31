@@ -22,20 +22,6 @@ $iptcdata = $meta->get_IPTC();
 $xmpdata = $meta->get_XMP();
 
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" href="<?php echo get_option( 'siteurl' ); ?>/wp-admin/wp-admin.css?version=<?php bloginfo('version'); ?>" type="text/css" />
-<style type="text/css">
-	#TB_title{
-		background-color:#222222;
-		color:#CFCFCF;
-	}
-</style>
-</head>
-<body class="wp-admin">
-
 	<!-- EXIF DATA -->
 	<fieldset class="options nggallery">
 	<h3><?php _e('EXIF Data','nggallery'); ?></h3>
@@ -107,6 +93,3 @@ $xmpdata = $meta->get_XMP();
 		</table>
 	</fieldset>
 	<?php  } ?>
-
-</body>
-</html>
