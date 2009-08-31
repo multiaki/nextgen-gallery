@@ -632,9 +632,10 @@ function nggCreateImageBrowser($picarray, $template = '') {
  * @param string $float (optional) could be none, left, right
  * @param string $template (optional) name for a template file, look for singlepic-$template
  * @param string $caption (optional) additional caption text
+ * @param string $link (optional) link to a other url instead the full image
  * @return the content
  */
-function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $float = '' , $template = '', $caption = '') {
+function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $float = '' , $template = '', $caption = '', $link = '') {
 	global $post;
 	
 	$ngg_options = nggGallery::get_option('ngg_options');
@@ -681,6 +682,7 @@ function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $fl
 		$picture->thumbnailURL = NGGALLERY_URLPATH . 'nggshow.php?pid=' . $imageID . '&amp;width=' . $width . '&amp;height=' . $height . '&amp;mode=' . $mode;
 
 	// add more variables for render output
+	$picture->imageURL = ( empty($link) ) ? $picture->imageURL : $link;
 	$picture->href_link = $picture->get_href_link();
 	$picture->alttext = html_entity_decode( stripslashes($picture->alttext) );
 	$picture->linktitle = htmlspecialchars( stripslashes($picture->description) );

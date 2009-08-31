@@ -140,7 +140,7 @@ class NextGEN_shortcodes {
 	/**
 	 * Function to show a single picture:
 	 * 
-	 *     [singlepic id="10" float="none|left|right" width="" height="" mode="none|watermark|web20" template="filename" /]
+	 *     [singlepic id="10" float="none|left|right" width="" height="" mode="none|watermark|web20" link="url" "template="filename" /]
 	 *
 	 * where
 	 *  - id is one picture id
@@ -148,6 +148,7 @@ class NextGEN_shortcodes {
 	 *  - width is width of the single picture you want to show (original width if this parameter is missing)
 	 *  - height is height of the single picture you want to show (original height if this parameter is missing)
 	 *  - mode is one of none, watermark or web20 (transformation applied to the picture)
+	 *  - link is optional and could link to a other url instead the full image
 	 *  - template is a name for a gallery template, which is located in themefolder/nggallery or plugins/nextgen-gallery/view
 	 * 
 	 * If the tag contains some text, this will be inserted as an additional caption to the picture too. Example:
@@ -167,10 +168,11 @@ class NextGEN_shortcodes {
 			'h'		 	=> '',
 			'mode'	 	=> '',
 			'float'	 	=> '',
+			'link'	 	=> '',
 			'template' 	=> ''
 		), $atts ));
 	
-		$out = nggSinglePicture($id, $w, $h, $mode, $float, $template, $content);
+		$out = nggSinglePicture($id, $w, $h, $mode, $float, $template, $content, $link);
 			
 		return $out;
 	}

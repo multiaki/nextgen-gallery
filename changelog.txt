@@ -8,6 +8,7 @@ by Alex Rabe & NextGEN DEV Team
 * NEW : Recent images can be recent by exif date (instead of databse id) by using the mode=recentdate parameter in the shortcode
 * NEW : Introduce the WP_Object_cache and meta_data
 * NEW : Various new hooks and filters
+* Added : New link parameter for the singlepic shortcode : [singlepic id=x w=x h=x link="http://google.com"]
 * Added : New template gallery-carousel
 * Changed : Added option to link an album with a page id
 * Changed : Support templates for child themes, use STYLESHEETPATH instead TEMPLATEPATH (THX to Prollius)
