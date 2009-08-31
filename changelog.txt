@@ -10,6 +10,8 @@ by Alex Rabe & NextGEN DEV Team
 * NEW : Various new hooks and filters
 * Added : New link parameter for the singlepic shortcode : [singlepic id=x w=x h=x link="http://google.com"]
 * Added : New template gallery-carousel
+* Added : New id parameter for recent and random shortcodes : [random max="7" template="filename" id="2"] takes only pictures from the gallery with id=2
+* Added : New mode paramenter for recent shortcode : [recent max="7" template="filename" id="3" mode="date" /] where mode can be one of (id, date, sort). Recent pictures are delivered by addition to database (id), exif date (date) or user sort order (sort).
 * Changed : Added option to link an album with a page id
 * Changed : Support templates for child themes, use STYLESHEETPATH instead TEMPLATEPATH (THX to Prollius)
 * Bugfix : Check capability to create a new page
@@ -134,11 +136,11 @@ by Alex Rabe & NextGEN DEV Team
 * NEW : Create output via template files, more flexible and support for multiple templates
 * NEW : Extended role system. Each gallery has now a author
 * NEW : [thumb id="4,5,12,..."] shortcode. You can now insert thumbnails for one or more images (that are not necessarly inside the same gallery).
-* Changed : Add swfupload 2.2.0. Support for Adobe Flash 10 upload		
-* Changed : Update all Admin pages for Wordpress 2.7 Admin UI		
+* Changed : Add swfupload 2.2.0. Support for Adobe Flash 10 upload      
+* Changed : Update all Admin pages for Wordpress 2.7 Admin UI       
 * Changed : New icon for TinyMCE and WP2.7 Menue from http://www.pinvoke.com/
 * Changed : Move update message to admin.php
-* Changed : Widgets are now core and doesn't need to be activate, rework as Multi Widgets		
+* Changed : Widgets are now core and doesn't need to be activate, rework as Multi Widgets       
 * Changed : Improved the gallery management page.
 * Changed : Rename the filter 'ngg_create_gallery_thumbcode' to 'ngg_get_thumbcode'.
 * Changed : Convert tags to WP-Taxonomy tables, no more need for ngg_tags, ngg_pic2tags
