@@ -71,7 +71,7 @@ function nggallery_manage_gallery_main() {
 				return false;
 				break;
 			case "new_thumbnail":
-				showDialog('new_thumbnail', 190);
+				showDialog('new_thumbnail', 160);
 				return false;
 				break;
 		}
@@ -279,11 +279,6 @@ if($gallerylist) {
 				<th align="left"><?php _e('Set fix dimension','nggallery') ?></th>
 				<td><input type="checkbox" name="thumbfix" value="1" <?php checked('1', $ngg->options['thumbfix']); ?> />
 				<br /><small><?php _e('Ignore the aspect ratio, no portrait thumbnails','nggallery') ?></small></td>
-			</tr>
-			<tr valign="top">
-				<th align="left"><?php _e('Crop square thumbnail from image','nggallery') ?></th>
-				<td><input type="checkbox" name="thumbcrop" value="1" <?php checked('1', $ngg->options['thumbcrop']); ?> />
-				<br /><small><?php _e('Create square thumbnails, use only the width setting :','nggallery') ?> <?php echo $ngg->options['thumbwidth']; ?> x <?php echo $ngg->options['thumbwidth']; ?></small></td>
 			</tr>
 		  	<tr align="right">
 		    	<td colspan="2" class="submit">

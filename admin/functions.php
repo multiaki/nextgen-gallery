@@ -262,37 +262,22 @@ class nggAdmin{
 
 		// skip if file is not there
 		if (!$thumb->error) {
-			if ($ngg->options['thumbcrop']) {
-				
-				// THX to Kees de Bruin, better thumbnails if portrait format
-				$width = $ngg->options['thumbwidth'];
-				$height = $ngg->options['thumbheight'];
-				$curwidth = $thumb->currentDimensions['width'];
-				$curheight = $thumb->currentDimensions['height'];
-				if ($curwidth > $curheight) {
-					$aspect = (100 * $curwidth) / $curheight;
-				} else {
-					$aspect = (100 * $curheight) / $curwidth;
-				}
-				$width = round(($width * $aspect) / 100);
-				$height = round(($height * $aspect) / 100);
-
-				$thumb->resize($width,$height);
-				$thumb->cropFromCenter($width);
-			} 
-			elseif ($ngg->options['thumbfix'])  {
+			if ($ngg->options['thumbfix'])  {
 				// check for portrait format
 				if ($thumb->currentDimensions['height'] > $thumb->currentDimensions['width']) {
+					// first resize to the wanted width
 					$thumb->resize($ngg->options['thumbwidth'], 0);
 					// get optimal y startpos
 					$ypos = ($thumb->currentDimensions['height'] - $ngg->options['thumbheight']) / 2;
 					$thumb->crop(0, $ypos, $ngg->options['thumbwidth'],$ngg->options['thumbheight']);	
 				} else {
-					$thumb->resize(0,$ngg->options['thumbheight']);	
+					// first resize to the wanted height
+					$thumb->resize(0, $ngg->options['thumbheight']);	
 					// get optimal x startpos
 					$xpos = ($thumb->currentDimensions['width'] - $ngg->options['thumbwidth']) / 2;
 					$thumb->crop($xpos, 0, $ngg->options['thumbwidth'],$ngg->options['thumbheight']);	
 				}
+			//this create a thumbnail but keep ratio settings	
 			} else {
 				$thumb->resize($ngg->options['thumbwidth'],$ngg->options['thumbheight']);	
 			}
@@ -300,6 +285,14 @@ class nggAdmin{
 			// save the new thumbnail
 			$thumb->save($image->thumbPath, $ngg->options['thumbquality']);
 			nggAdmin::chmod ($image->thumbPath); 
+			
+			//read the new sizes
+			$new_size = @getimagesize ( $image->thumbPath );
+			$size['width'] = $new_size[0];
+			$size['height'] = $new_size[1]; 
+			
+			// add them to the database
+			nggdb::update_image_meta($image->pid, array( 'thumbnail' => $size) );
 		} 
 				
 		$thumb->destruct();
@@ -346,6 +339,10 @@ class nggAdmin{
 		if (!$file->error) {
 			$file->resize($width, $height, 4);
 			$file->save($image->imagePath, $ngg->options['imgQuality']);
+			// read the new sizes
+			$size = @getimagesize ( $image->thumbPath );
+			// add them to the database
+			nggdb::update_image_meta($image->pid, array( 'width' => $size[0], 'height' => $size[1] ) );
 			$file->destruct();
 		} else {
             $file->destruct();

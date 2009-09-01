@@ -89,8 +89,6 @@ add_action('wp_ajax_createNewThumb', 'createNewThumb');
 		$thumb = new ngg_Thumbnail($picture->imagePath, TRUE);
 		
 		$thumb->crop($x, $y, $w, $h);
-		
-		$thumb_filename = $picture->thumbPath;
 
 		if ($ngg_options['thumbfix'])  {
 			if ($thumb->currentDimensions['height'] > $thumb->currentDimensions['width']) {
@@ -102,7 +100,16 @@ add_action('wp_ajax_createNewThumb', 'createNewThumb');
 			$thumb->resize($ngg_options['thumbwidth'], $ngg_options['thumbheight'], $ngg_options['thumbResampleMode']);	
 		}
 		
-		if ( $thumb->save($thumb_filename, 100)) {
+		if ( $thumb->save($picture->thumbPath, 100)) {
+			
+			//read the new sizes
+			$new_size = @getimagesize ( $picture->thumbPath );
+			$size['width'] = $new_size[0];
+			$size['height'] = $new_size[1]; 
+			
+			// add them to the database
+			nggdb::update_image_meta($image->pid, array( 'thumbnail' => $size) );
+			
 			echo "OK";
 		} else {
 			header('HTTP/1.1 500 Internal Server Error');			

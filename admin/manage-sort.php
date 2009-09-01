@@ -43,6 +43,8 @@ function nggallery_sortorder($galleryID = 0){
 		
 	//this is the url without any presort variable
 	$clean_url = 'admin.php?page=nggallery-manage-gallery&amp;mode=sort&amp;gid=' . $galleryID;
+	//if we go back , then the mode should be edit
+	$back_url  = 'admin.php?page=nggallery-manage-gallery&amp;mode=edit&amp;gid=' . $galleryID;
 	
 	// In the case somebody presort, then we take this url
 	if ( isset($_GET['dir']) || isset($_GET['presort']) )
@@ -61,7 +63,7 @@ function nggallery_sortorder($galleryID = 0){
 					<input class="button-primary action" type="submit" name="updateSortorder" onclick="saveImageOrder()" value="<?php _e('Update Sort Order', 'nggallery') ?>" />
 				</div>
 				<div class="alignright actions">
-					<input class="button-secondary action" type="submit" name="backToGallery" value="<?php _e('Back to gallery', 'nggallery') ?>" />
+					<a href="<?php echo $back_url; ?>" class="button"><?php _e('Back to gallery', 'nggallery'); ?></a>
 				</div>
 			</div>	
 			<input name="sortorder" type="hidden" />

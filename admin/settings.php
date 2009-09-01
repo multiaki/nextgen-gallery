@@ -199,7 +199,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<h2><?php _e('Thumbnail settings','nggallery'); ?></h2>
 			<form name="thumbnailsettings" method="POST" action="<?php echo $filepath.'#thumbnails'; ?>" >
 			<?php wp_nonce_field('ngg_settings') ?>
-			<input type="hidden" name="page_options" value="thumbwidth,thumbheight,thumbfix,thumbcrop,thumbquality" />
+			<input type="hidden" name="page_options" value="thumbwidth,thumbheight,thumbfix,thumbquality" />
 				<p><?php _e('Please note : If you change the settings, you need to recreate the thumbnails under -> Manage Gallery .', 'nggallery') ?></p>
 				<table class="form-table ngg-options">
 					<tr valign="top">
@@ -211,11 +211,6 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						<th align="left"><?php _e('Set fix dimension','nggallery') ?></th>
 						<td><input type="checkbox" name="thumbfix" value="1" <?php checked('1', $ngg->options['thumbfix']); ?> />
 						<?php _e('Ignore the aspect ratio, no portrait thumbnails','nggallery') ?></td>
-					</tr>
-					<tr valign="top">
-						<th align="left"><?php _e('Crop square thumbnail from image','nggallery') ?></th>
-						<td><input type="checkbox" name="thumbcrop" value="1" <?php checked('1', $ngg->options['thumbcrop']); ?> />
-						<?php _e('Create square thumbnails, use only the width setting :','nggallery') ?> <?php echo $ngg->options['thumbwidth']; ?> x <?php echo $ngg->options['thumbwidth']; ?></td>
 					</tr>
 					<tr valign="top">
 						<th align="left"><?php _e('Thumbnail quality','nggallery') ?></th>

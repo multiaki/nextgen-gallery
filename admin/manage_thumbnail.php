@@ -38,25 +38,15 @@ $resizedPreviewInfo = $thumb->newDimensions;
 $thumb->destruct();
 
 $preview_image		= NGGALLERY_URLPATH . 'nggshow.php?pid=' . $picture->pid . '&amp;width=350&amp;height=350';
-$imageInfo			= getimagesize($picture->imagePath);
+$imageInfo			= @getimagesize($picture->imagePath);
 $rr = round($imageInfo[0] / $resizedPreviewInfo['newWidth'], 2);
 
-if ( ($ngg_options['thumbfix'] == 1) and (!$ngg_options['thumbcrop']) ) {
+if ( ($ngg_options['thumbfix'] == 1) ) {
+	
 	$WidthHtmlPrev  = $ngg_options['thumbwidth'];
 	$HeightHtmlPrev = $ngg_options['thumbheight'];
-}
-
-if ( ($ngg_options['thumbfix'] == 1) and ($ngg_options['thumbcrop'] == 1) ) {
-	$WidthHtmlPrev  = $ngg_options['thumbwidth'];
-	$HeightHtmlPrev = $ngg_options['thumbheight'];
-}
-
-if ( (!$ngg_options['thumbfix']) and ($ngg_options['thumbcrop'] == 1) ) {
-	$WidthHtmlPrev  = $ngg_options['thumbwidth'];
-	$HeightHtmlPrev = $ngg_options['thumbwidth'];
-}
-
-if ( (!$ngg_options['thumbfix']) and (!$ngg_options['thumbcrop']) ) {
+	
+} else {
 	// H > W
 	if ($imageInfo[1] > $imageInfo[0]) {
 

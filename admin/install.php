@@ -148,7 +148,6 @@ function ngg_default_options() {
 	$ngg_options['thumbwidth']			= 100;  						// Thumb Width
 	$ngg_options['thumbheight']			= 75;  							// Thumb height
 	$ngg_options['thumbfix']			= true;							// Fix the dimension
-	$ngg_options['thumbcrop']			= false;						// Crop square thumbnail
 	$ngg_options['thumbquality']		= 100;  						// Thumb Quality
 		
 	// Image Settings

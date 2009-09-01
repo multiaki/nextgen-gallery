@@ -150,7 +150,7 @@ function checkSelected() {
 			return false;
 			break;
 		case "new_thumbnail":
-			showDialog('new_thumbnail', 190);
+			showDialog('new_thumbnail', 160);
 			return false;
 			break;			
 	}
@@ -321,13 +321,11 @@ jQuery(document).ready( function() {
 if($picturelist) {
 	
 	$thumbsize 	= '';
-	$counter	= 0;	
+	$counter	= 0;
+		
 	if ($ngg->options['thumbfix'])
 		$thumbsize = 'width="' . $ngg->options['thumbwidth'] . '" height="' . $ngg->options['thumbheight'] . '"';
-	
-	if ($ngg->options['thumbcrop'])
-		$thumbsize = 'width="' . $ngg->options['thumbwidth'] . '" height="' . $ngg->options['thumbwidth'] . '"';
-		
+
 	foreach($picturelist as $picture) {
 		
 		//for search result we need to check the capatibiliy
@@ -384,7 +382,7 @@ if($picturelist) {
 							$actions['view']   = '<a class="thickbox" href="' . $picture->imageURL . '" title="' . esc_attr(sprintf(__('View "%s"'), $picture->filename)) . '">' . __('View', 'nggallery') . '</a>';
 							$actions['meta']   = '<a class="thickbox" href="' . NGGALLERY_URLPATH . 'admin/showmeta.php?id=' . $pid . '" title="' . __('Show Meta data','nggallery') . '">' . __('Meta', 'nggallery') . '</a>';
 							$actions['custom_thumb']   = '<a class="thickbox" href="' . NGGALLERY_URLPATH . 'admin/manage_thumbnail.php?id=' . $pid . '" title="' . __('Customize thumbnail','nggallery') . '">' . __('Edit thumb', 'nggallery') . '</a>';
-							$actions['delete'] = '<a class="submitdelete" href="' . wp_nonce_url("admin.php?page=nggallery-manage-gallery&amp;mode=delpic&amp;gid=".$act_gid."&amp;pid=".$pid, 'ngg_delpicture'). '" class="delete column-delete" onclick="javascript:check=confirm( \'' . esc_attr(sprintf(__('Delete "%s"' , 'nggallery'), $picture->filename)). '\');if(check==false) return false;">' . __('Delete') . '</a>';
+							$actions['delete'] = '<a class="submitdelete" href="' . wp_nonce_url("admin.php?page=nggallery-manage-gallery&amp;mode=delpic&amp;gid=" . $act_gid . "&amp;pid=" . $pid, 'ngg_delpicture'). '" class="delete column-delete" onclick="javascript:check=confirm( \'' . esc_attr(sprintf(__('Delete "%s"' , 'nggallery'), $picture->filename)). '\');if(check==false) return false;">' . __('Delete') . '</a>';
 							$action_count = count($actions);
 							$i = 0;
 							echo '<div class="row-actions">';
@@ -399,6 +397,9 @@ if($picturelist) {
 						<?php						
 					break;
 					case 'thumbnail' :
+     					// generate the thumbnail size if the meta data available
+     					if (is_array ($size = $picture->meta_data['thumbnail']) )
+							$thumbsize = 'width="' . $size['width'] . '" height="' . $size['height'] . '"';
 						?>
 						<td <?php echo $attributes ?>><a href="<?php echo $picture->imageURL; ?>" class="thickbox" title="<?php echo $picture->filename ?>">
 								<img class="thumb" src="<?php echo $picture->thumbURL; ?>" <?php echo $thumbsize ?> id="thumb<?php echo $pid ?>" />
@@ -557,11 +558,6 @@ if ( $counter==0 )
 				<th align="left"><?php _e('Set fix dimension','nggallery') ?></th>
 				<td><input type="checkbox" name="thumbfix" value="1" <?php checked('1', $ngg->options['thumbfix']); ?> />
 				<br /><small><?php _e('Ignore the aspect ratio, no portrait thumbnails','nggallery') ?></small></td>
-			</tr>
-			<tr valign="top">
-				<th align="left"><?php _e('Crop square thumbnail from image','nggallery') ?></th>
-				<td><input type="checkbox" name="thumbcrop" value="1" <?php checked('1', $ngg->options['thumbcrop']); ?> />
-				<br /><small><?php _e('Create square thumbnails, use only the width setting :','nggallery') ?> <?php echo $ngg->options['thumbwidth']; ?> x <?php echo $ngg->options['thumbwidth']; ?></small></td>
 			</tr>
 		  	<tr align="right">
 		    	<td colspan="2" class="submit">

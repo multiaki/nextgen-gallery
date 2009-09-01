@@ -198,7 +198,6 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '', $ima
     // set thumb size 
     $thumbsize = '';
     if ($ngg_options['thumbfix'])  $thumbsize = 'width="'.$thumbwidth.'" height="'.$thumbheight.'"';
-    if ($ngg_options['thumbcrop']) $thumbsize = 'width="'.$thumbwidth.'" height="'.$thumbwidth.'"';
     
     // show slideshow link
     if ($galleryID) {
@@ -240,7 +239,7 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '', $ima
     }   
 
     foreach ($picturelist as $key => $picture) {
-        
+
         // get the effect code
         if ($galleryID)
             $thumbcode = ($ngg_options['galImgBrowser']) ? '' : $picture->get_thumbcode($picturelist[0]->name);
@@ -251,6 +250,10 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '', $ima
         $args ['nggpage'] = empty($nggpage) ? false : $nggpage;
         $args ['pid']     = $picture->pid;
         $picturelist[$key]->pidlink = $nggRewrite->get_permalink( $args );
+        
+        // generate the thumbnail size if the meta data available
+        if (is_array ($size = $picturelist[$key]->meta_data['thumbnail']) )
+        	$thumbsize = 'width="' . $size['width'] . '" height="' . $size['height'] . '"';
         
         // choose link between imagebrowser or effect
         $link = ($ngg_options['galImgBrowser']) ? $picturelist[$key]->pidlink : $picture->imageURL; 

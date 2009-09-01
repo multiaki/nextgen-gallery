@@ -114,9 +114,6 @@ class nggManageGallery {
 					nggGallery::show_message(__('Operation successful. Please clear your browser cache.',"nggallery"));
 		}
 		
-		if ( isset ($_POST['backToGallery']) )
-			$this->mode = 'edit';
-		
 		// show sort order
 		if ( isset ($_POST['sortGallery']) )
 			$this->mode = 'sort';
@@ -185,7 +182,6 @@ class nggManageGallery {
 			$ngg->options['thumbwidth']  = (int)  $_POST['thumbwidth'];
 			$ngg->options['thumbheight'] = (int)  $_POST['thumbheight'];
 			$ngg->options['thumbfix']    = (bool) $_POST['thumbfix']; 
-			$ngg->options['thumbcrop']   = (bool) $_POST['thumbcrop']; 
 			update_option('ngg_options', $ngg->options);
 			
 			$gallery_ids  = explode(',', $_POST['TB_imagelist']);
@@ -257,7 +253,6 @@ class nggManageGallery {
 			$ngg->options['thumbwidth']  = (int)  $_POST['thumbwidth'];
 			$ngg->options['thumbheight'] = (int)  $_POST['thumbheight'];
 			$ngg->options['thumbfix']    = (bool) $_POST['thumbfix']; 
-			$ngg->options['thumbcrop']   = (bool) $_POST['thumbcrop']; 
 			update_option('ngg_options', $ngg->options);
 			
 			$pic_ids  = explode(',', $_POST['TB_imagelist']);
