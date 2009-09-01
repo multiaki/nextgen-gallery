@@ -353,7 +353,7 @@ function nggShowAlbum($albumID, $template = 'extend') {
 }
 
 /**
- * nggCreateAlbum()
+ * create a gallery overview output
  * 
  * @access internal
  * @param array $galleriesID
@@ -362,8 +362,7 @@ function nggShowAlbum($albumID, $template = 'extend') {
  * @return the content
  */
 function nggCreateAlbum( $galleriesID, $template = 'extend', $album = 0) {
-    // create a gallery overview div
-    
+
     global $wpdb, $nggRewrite, $nggdb;
     
     // $_GET from wp_query
@@ -403,7 +402,7 @@ function nggCreateAlbum( $galleriesID, $template = 'extend', $album = 0) {
 
     // re-order them and populate some 
     foreach ($sortorder as $key) {
-        
+		       
         //if we have a prefix 'a' then it's a subalbum, instead a gallery
         if (substr( $key, 0, 1) == 'a') { 
             // get the album content
@@ -436,10 +435,14 @@ function nggCreateAlbum( $galleriesID, $template = 'extend', $album = 0) {
             
             continue;
         }
-
-        // Add the counter value if avaible
+		
+		// If a gallery is not found it should be ignored
+        if (!$unsort_galleries[$key])
+        	continue;
+		
+		// Add the counter value if avaible
         $galleries[$key] = $unsort_galleries[$key];
-    
+    	
         // add the file name and the link 
         if ($galleries[$key]->previewpic  != 0) {
             $galleries[$key]->previewname = $albumPreview[$galleries[$key]->previewpic]->filename;

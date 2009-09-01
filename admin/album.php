@@ -49,7 +49,7 @@ class nggManageAlbum {
 	
 	function controller() {
 		global $nggdb;
-	
+
 		$this->currentID = isset($_POST['act_album']) ? (int) $_POST['act_album'] : 0 ;
 
 		if (isset ($_POST['update']) || isset( $_POST['delete'] ) || isset( $_POST['add'] ) )
@@ -74,6 +74,8 @@ class nggManageAlbum {
 		if ( isset($_POST['add']) && isset ($_POST['newalbum']) ) { 
 			$newalbum = esc_attr($_POST['newalbum']);
 			$result = $wpdb->query("INSERT INTO $wpdb->nggalbum (name, sortorder) VALUES ('$newalbum','0')");
+			$this->currentID = (int) $wpdb->insert_id;
+			
 			if ($result) 
 				nggGallery::show_message(__('Update Successfully','nggallery'));
 		} 
