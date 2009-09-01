@@ -79,7 +79,7 @@ add_action('wp_ajax_createNewThumb', 'createNewThumb');
 		$ngg_options=get_option('ngg_options');
 		
 		$id 	 = (int) $_POST['id'];
-		$picture = nggdb::find_image($id);
+		$picture = nggdb::find_image( $id );
 
 		$x = round( $_POST['x'] * $_POST['rr'], 0);
 		$y = round( $_POST['y'] * $_POST['rr'], 0);
@@ -108,7 +108,7 @@ add_action('wp_ajax_createNewThumb', 'createNewThumb');
 			$size['height'] = $new_size[1]; 
 			
 			// add them to the database
-			nggdb::update_image_meta($image->pid, array( 'thumbnail' => $size) );
+			nggdb::update_image_meta($picture->pid, array( 'thumbnail' => $size) );
 			
 			echo "OK";
 		} else {
