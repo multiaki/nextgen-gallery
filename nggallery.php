@@ -352,12 +352,12 @@ class nggLoader {
 		
 	function activate() {
 		
-		//Since version 1.4.0 We need PHP5.2
-        if (version_compare(PHP_VERSION, '5.2.0', '<')) { 
-                deactivate_plugins(plugin_basename(__FILE__)); // Deactivate ourself
-                wp_die("Sorry, but you can't run this plugin, it requires PHP 5.2 or higher."); 
-				return; 
-        } 
+		//Since version 1.4.0 it's tested only with PHP5.2, currently we keep PHP4 support a while
+        //if (version_compare(PHP_VERSION, '5.2.0', '<')) { 
+        //        deactivate_plugins(plugin_basename(__FILE__)); // Deactivate ourself
+        //        wp_die("Sorry, but you can't run this plugin, it requires PHP 5.2 or higher."); 
+		//		return; 
+        //} 
 
 		include_once (dirname (__FILE__) . '/admin/install.php');
 		
