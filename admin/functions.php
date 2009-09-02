@@ -343,7 +343,7 @@ class nggAdmin{
 			$file->resize($width, $height, 4);
 			$file->save($image->imagePath, $ngg->options['imgQuality']);
 			// read the new sizes
-			$size = @getimagesize ( $image->thumbPath );
+			$size = @getimagesize ( $image->imagePath );
 			// add them to the database
 			nggdb::update_image_meta($image->pid, array( 'width' => $size[0], 'height' => $size[1] ) );
 			$file->destruct();
