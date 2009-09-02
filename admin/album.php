@@ -32,6 +32,24 @@ class nggManageAlbum {
 	var $albums = false;	
 
 	/**
+	 * The amount of all galleries
+	 *
+	 * @since 1.4.0
+	 * @access privat
+	 * @var int
+	 */
+	var $num_galleries = false;
+	
+	/**
+	 * The amount of all albums
+	 *
+	 * @since 1.4.0
+	 * @access privat
+	 * @var int
+	 */
+	var $num_albums = false;
+
+	/**
 	 * PHP4 compatibility layer for calling the PHP5 constructor.
 	 * 
 	 */
@@ -61,7 +79,8 @@ class nggManageAlbum {
 		// get first all galleries & albums
 		$this->albums = $nggdb->find_all_album();
 		$this->galleries  = $nggdb->find_all_galleries();	
-		
+		$this->num_albums  = count( $this->albums );
+		$this->num_galleries  = count( $this->galleries );	
 		$this->output();	
 	
 	}
@@ -239,7 +258,7 @@ function showDialog() {
 						if( is_array($this->albums) ) {
 							foreach($this->albums as $album) {
 								$selected = ($this->currentID == $album->id) ? 'selected="selected" ' : '';
-								echo '<option value="'.$album->id.'" '.$selected.'>'.$album->name.'</option>'."\n";
+								echo '<option value="' . $album->id . '" ' . $selected . '>' . $album->name . '</option>'."\n";
 							}
 						}
 					?>
@@ -249,9 +268,9 @@ function showDialog() {
 					<input class="button-secondary" type="submit" name="showThickbox" value="<?php _e( 'Edit album', 'nggallery'); ?>" onclick="showDialog(); return false;" />
 					<input class="button-secondary action "type="submit" name="delete" value="<?php _e('Delete', 'nggallery'); ?>" onclick="javascript:check=confirm('<?php _e('Delete album ?','nggallery'); ?>');if(check==false) return false;"/>
 				<?php } else { ?>
-					<span><?php _e('Add new album', 'nggallery') ?>&nbsp;</span>
+					<span><?php _e('Add new album', 'nggallery'); ?>&nbsp;</span>
 					<input class="search-input" id="newalbum" name="newalbum" type="text" value="" />			
-					<input class="button-secondary action" type="submit" name="add" value="<?php _e('Add', 'nggallery') ?>"/>
+					<input class="button-secondary action" type="submit" name="add" value="<?php _e('Add', 'nggallery'); ?>"/>
 				<?php } ?>	
 			</div>
 		</div>
@@ -261,9 +280,9 @@ function showDialog() {
 	
 	<div>
 		<div style="float:right;">
-		  <a href="#" title="<?php _e('Show / hide used galleries','nggallery'); ?>" id="toggle_used"><?php _e('[Show all]', 'nggallery') ?></a>
-		| <a href="#" title="<?php _e('Maximize the widget content','nggallery'); ?>" id="all_max"><?php _e('[Maximize]', 'nggallery') ?></a>
-		| <a href="#" title="<?php _e('Minimize the widget content','nggallery'); ?>" id="all_min"><?php _e('[Minimize]', 'nggallery') ?></a>
+		  <a href="#" title="<?php _e('Show / hide used galleries','nggallery'); ?>" id="toggle_used"><?php _e('[Show all]', 'nggallery'); ?></a>
+		| <a href="#" title="<?php _e('Maximize the widget content','nggallery'); ?>" id="all_max"><?php _e('[Maximize]', 'nggallery'); ?></a>
+		| <a href="#" title="<?php _e('Minimize the widget content','nggallery'); ?>" id="all_min"><?php _e('[Minimize]', 'nggallery'); ?></a>
 		</div>
 		<?php _e('After you create and select a album, you can drag and drop a gallery or another album into your new album below','nggallery'); ?>
 	</div>
@@ -418,22 +437,30 @@ function showDialog() {
 		global $wpdb, $nggdb;
 		
 		$obj =  array();
+		$preview_image = '';
 		
 		// if the id started with a 'a', then it's a sub album
 		if (substr( $id, 0, 1) == 'a') {
 			
 			if ( !$album = $this->albums[ substr( $id, 1) ] )
 				return;
-				
+	
 			$obj['id']   = $album->id;
 			$obj['name'] = $obj['title'] = $album->name;
-			$obj['pagenname'] = '---';
 			$class = 'album_obj';
-			
-			if ($album->previewpic > 0)
-				$image = $nggdb->find_image( $album->previewpic );
-			$preview_image = ($image->thumbURL) ? '<div class="inlinepicture"><img src="' . $image->thumbURL . '" /></div>' : '';
 
+			// get the post name
+			$post = get_post($album->pageid);
+			$obj['pagenname'] = ($post == null) ? '---' : $post->post_title;
+			
+			// for spped reason we limit it to 50
+			if ( $this->num_albums < 50 ) {	
+				if ($album->previewpic != 0)
+					$image = $nggdb->find_image( $album->previewpic );
+				
+					$preview_image = ($image->thumbURL) ? '<div class="inlinepicture"><img src="' . $image->thumbURL . '" /></div>' : '';
+			}
+			
 			// this indicates that we have a album container
 			$prefix = 'a';
 		
@@ -446,13 +473,16 @@ function showDialog() {
 			$obj['title'] = $gallery->title;
 		
 			// get the post name
-			$post= get_post($gallery->pageid);
-			$obj['pagenname'] = ($post == null) ? '' : $post->post_title;	
+			$post = get_post($gallery->pageid);
+			$obj['pagenname'] = ($post == null) ? '---' : $post->post_title;	
 
-			// set image url
-			$image = $nggdb->find_image( $gallery->previewpic );
-			$preview_image = ($image->thumbURL) ? '<div class="inlinepicture"><img src="' . $image->thumbURL . '" /></div>' : '';
-
+			// for spped reason we limit it to 50
+			if ( $this->num_galleries < 50 ) {
+				// set image url
+				$image = $nggdb->find_image( $gallery->previewpic );
+				$preview_image = ($image->thumbURL) ? '<div class="inlinepicture"><img src="' . $image->thumbURL . '" /></div>' : '';
+			}
+			
 			$prefix = '';
 		}
 
