@@ -134,6 +134,7 @@ function ngg_upgrade() {
 				$ngg_options['thumbfix'] = true;
 				$ngg_options['thumbheight'] = $ngg_options['thumbwidth'] ;
 			}
+			$ngg_options['galHiddenImg'] = false;
 			update_option('ngg_options', $ngg_options);
 			echo __('finished', 'nggallery') . "<br />\n";				
 		}

@@ -264,7 +264,7 @@ class nggLoader {
 			} else {
 				require_once (dirname (__FILE__) . '/lib/navigation.php');		// 242.016
 				require_once (dirname (__FILE__) . '/nggfunctions.php');		// n.a.
-				require_once (dirname (__FILE__) . '/lib/shortcodes.php'); 		//  92.664
+				require_once (dirname (__FILE__) . '/lib/shortcodes.php'); 		// 92.664
 			}	
 		}
 	}

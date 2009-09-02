@@ -266,7 +266,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<h2><?php _e('Gallery settings','nggallery'); ?></h2>
 			<form name="galleryform" method="POST" action="<?php echo $filepath.'#gallery'; ?>" >
 			<?php wp_nonce_field('ngg_settings') ?>
-			<input type="hidden" name="page_options" value="galNoPages,galImages,galColumns,galShowSlide,galTextSlide,galTextGallery,galShowOrder,galImgBrowser,galSort,galSortDir" />
+			<input type="hidden" name="page_options" value="galNoPages,galImages,galColumns,galHiddenImg,galShowSlide,galTextSlide,galTextGallery,galShowOrder,galImgBrowser,galSort,galSortDir" />
 				<table class="form-table ngg-options">
 					<tr>
 						<th valign="top"><?php _e('Deactivate gallery page link','nggallery') ?>:</th>
@@ -300,9 +300,15 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						</td>
 					</tr>
 					<tr>
-						<th valign="top"><?php _e('Show ImageBrowser','nggallery') ?>:</th>
+						<th valign="top"><?php _e('Show ImageBrowser','nggallery'); ?>:</th>
 						<td><input name="galImgBrowser" type="checkbox" value="1" <?php checked('1', $ngg->options['galImgBrowser']); ?> />
-						<?php _e('The gallery will open the ImageBrowser instead the effect.','nggallery') ?>
+						<?php _e('The gallery will open the ImageBrowser instead the effect.', 'nggallery'); ?>
+						</td>
+					</tr>
+					<tr>
+						<th valign="top"><?php _e('Add hidden images','nggallery'); ?>:</th>
+						<td><input name="galHiddenImg" type="checkbox" value="1" <?php checked('1', $ngg->options['galHiddenImg']); ?> />
+						<?php _e('If pagination is used, this option will still show all images in the modal window (Thickbox, Lightbox etc.). Note : This increase the page load','nggallery'); ?>
 						</td>
 					</tr>
 				</table>

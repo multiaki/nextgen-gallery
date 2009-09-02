@@ -38,7 +38,7 @@ Follow variables are useable :
 	<?php foreach ($images as $image) : ?>
 	
 	<div id="ngg-image-<?php echo $image->pid ?>" class="ngg-gallery-thumbnail-box" <?php echo $gallery->imagewidth ?> >
-		<div class="ngg-gallery-thumbnail" >
+		<div class="ngg-gallery-thumbnail" <?php echo $image->display ?> >
 			<a href="<?php echo $image->imageURL ?>" title="<?php echo $image->description ?>" <?php echo $image->thumbcode ?> >
 				<img title="<?php echo $image->alttext ?>" alt="<?php echo $image->alttext ?>" src="<?php echo $image->thumbnailURL ?>" <?php echo $image->size ?> />
 			</a>
