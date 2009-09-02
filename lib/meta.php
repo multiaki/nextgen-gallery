@@ -56,12 +56,47 @@ class nggMeta{
 			// get the xmp data in a XML format
 			if ( is_callable('xml_parser_create'))
 			$this->xmp_data = $this->extract_XMP($this->image->imagePath );
-			
+
+			// since v1.4.0 we save some meta data to database
+			if ( $this->image->meta_data['saved'] == false)
+				$this->save_meta();
+						
 			return true;
 		}
  		
  		return false;
  	}
+	
+	/**
+	 * return the saved meta data from the database
+	 * 
+	 * @since 1.4.0
+	 * @param string $object (optional)
+	 * @return array|mixed return either the complete array or the single object
+	 */
+	function get_saved_meta($object = false) {
+		
+		$meta = $this->image->meta_data;
+		
+		//check if we already import the meat data to the database
+		if (!is_array($meta) || ($meta['saved'] != true))
+			return false;
+		
+		// return one element if requested	
+		if ($object)
+			return $meta[$object];
+		
+		//removed saved parameter we don't need that to show
+		unset($meta['saved']);
+		
+		// and remove empty tags
+		foreach ($meta as $key => $value) {
+			if ( empty($value) )
+				unset($meta[$key]);	
+		}
+		
+		return $meta;
+	}
 	
   /**
    * nggMeta::get_EXIF()
@@ -350,7 +385,9 @@ class nggMeta{
    */
 	function get_META($object = false) {
 		
-		// defined order XMP , before IPTC and EXIF.
+		// defined order first look into database, then XMP, IPTC and EXIF.
+		if ($value = $this->get_saved_meta($object))
+			return $value;
 		if ($value = $this->get_XMP($object))
 			return $value;
 		if ($value = $this->get_IPTC($object))
@@ -403,7 +440,9 @@ class nggMeta{
 		'contact'			=> __('Contact','nggallery'),
 		'last_modfied'		=> __('Last modified','nggallery'),
 		'tool'				=> __('Program tool','nggallery'),
-		'format'			=> __('Format','nggallery')
+		'format'			=> __('Format','nggallery'),
+		'width'				=> __('Image Width','nggallery'),
+		'height'			=> __('Image Height','nggallery')
 		);
 		
 		if ($tagnames[$key]) $key = $tagnames[$key];
@@ -467,8 +506,11 @@ class nggMeta{
 		}
 		
 		//let's add now the size of the image 
-		$meta['width'] = $this->size[0];
-		$meta['height'] = $this->size[1]; 
+		$meta['width']  = $this->size[0];
+		$meta['height'] = $this->size[1];
+		
+		//this flag inform us if the import is already one time performed
+		$meta['saved']  = true; 
 		
 		$result = nggdb::update_image_meta($this->image->pid, $meta);
 		

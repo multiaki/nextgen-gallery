@@ -325,7 +325,10 @@ class nggAdmin{
 		
 		if ( !is_object($image) ) 
 			return __('Object didn\'t contain correct data','nggallery');	
-
+		
+		// before we start we import the meta data to database (required for uploads before V1.4.0)
+		nggAdmin::get_MetaData( $image->pid );
+		
 		// if no parameter is set, take global settings
 		$width  = ($width  == 0) ? $ngg->options['imgWidth']  : $width;
 		$height = ($height == 0) ? $ngg->options['imgHeight'] : $height;
@@ -371,7 +374,10 @@ class nggAdmin{
 		
 		if ( !is_object($image) ) 
 			return __('Object didn\'t contain correct data','nggallery');		
-	
+
+		// before we start we import the meta data to database (required for uploads before V1.4.0)
+		nggAdmin::get_MetaData( $image->pid );	
+
 		if (!is_writable($image->imagePath))
 			return ' <strong>' . $image->filename . __(' is not writeable','nggallery') . '</strong>';
 		
@@ -490,23 +496,23 @@ class nggAdmin{
 	 * 
 	 * @class nggAdmin
 	 * @require NextGEN Meta class
-	 * @param string $picPath must be Gallery absPath + filename
+	 * @param int $id image ID
 	 * @param bool $save if is set, the meta data will be saved to the database
 	 * @return array metadata
 	 */
-	function get_MetaData($picPath, $save = false) {
+	function get_MetaData($id, $save = false) {
 		
 		require_once(NGGALLERY_ABSPATH . '/lib/meta.php');
 		
 		$meta = array();
 
-		$pdata = new nggMeta($picPath);
+		$pdata = new nggMeta( $id );
 		$meta['title'] = $pdata->get_META('title');		
 		$meta['caption'] = $pdata->get_META('caption');	
 		$meta['keywords'] = $pdata->get_META('keywords');
 		$meta['timestamp'] = $pdata->get_date_time();
 		
-		//the common data will be saved to the database
+		//the common data will be saved to the database, if wanted
 		if ( $save )
 			$pdata->save_meta();	
 		

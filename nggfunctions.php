@@ -616,12 +616,16 @@ function nggCreateImageBrowser($picarray, $template = '') {
     $exif = $meta->get_EXIF();
     $iptc = $meta->get_IPTC();
     $xmp  = $meta->get_XMP();
+    $db   = $meta->get_saved_meta();
+    
+    //if we get no exif information we try the database 
+    $exif = ($exif == false) ? $db : $exif;
         
     // look for imagebrowser-$template.php or pure imagebrowser.php
     $filename = ( empty($template) ) ? 'imagebrowser' : 'imagebrowser-' . $template;
 
     // create the output
-    $out = nggGallery::capture ( $filename , array ('image' => $picture , 'meta' => $meta, 'exif' => $exif, 'iptc' => $iptc, 'xmp' => $xmp) );
+    $out = nggGallery::capture ( $filename , array ('image' => $picture , 'meta' => $meta, 'exif' => $exif, 'iptc' => $iptc, 'xmp' => $xmp, 'db' => $db) );
     
     return $out;
     
@@ -707,12 +711,16 @@ function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $fl
     $exif = $meta->get_EXIF();
     $iptc = $meta->get_IPTC();
     $xmp  = $meta->get_XMP();
-        
+    $db   = $meta->get_saved_meta();
+    
+    //if we get no exif information we try the database 
+    $exif = ($exif == false) ? $db : $exif;
+	       
     // look for singlepic-$template.php or pure singlepic.php
     $filename = ( empty($template) ) ? 'singlepic' : 'singlepic-' . $template;
 
     // create the output
-    $out = nggGallery::capture ( $filename, array ('image' => $picture , 'meta' => $meta, 'exif' => $exif, 'iptc' => $iptc, 'xmp' => $xmp) );
+    $out = nggGallery::capture ( $filename, array ('image' => $picture , 'meta' => $meta, 'exif' => $exif, 'iptc' => $iptc, 'xmp' => $xmp, 'db' => $db) );
 
     $out = apply_filters('ngg_show_singlepic_content', $out, $picture );
     

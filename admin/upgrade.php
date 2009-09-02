@@ -125,6 +125,19 @@ function ngg_upgrade() {
 			update_option('ngg_options', $ngg_options);
 			echo __('finished', 'nggallery') . "<br />\n";				
 		}
+
+		// Remove thumbcrop setting, thumbfix and quare size do the same
+		if (version_compare($installed_ver, '1.4.0', '<')) {
+			$ngg_options = get_option('ngg_options');
+			echo __('Update settings...', 'nggallery');
+			if ( $ngg_options['thumpcrop'] ) {
+				$ngg_options['thumbfix'] = true;
+				$ngg_options['thumbheight'] = $ngg_options['thumbwidth'] ;
+			}
+			update_option('ngg_options', $ngg_options);
+			echo __('finished', 'nggallery') . "<br />\n";				
+		}
+		
 		return;
 	}
 }

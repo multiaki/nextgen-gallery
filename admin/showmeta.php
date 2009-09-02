@@ -17,12 +17,39 @@ global $wpdb;
 $id = (int) $_GET['id'];
 // let's get the meta data'
 $meta = new nggMeta($id);
+$dbdata = $meta->get_saved_meta();
 $exifdata = $meta->get_EXIF();
 $iptcdata = $meta->get_IPTC();
 $xmpdata = $meta->get_XMP();
 
 ?>
+	<!-- META DATA -->
+	<fieldset class="options nggallery">
+	<h3><?php _e('Meta Data','nggallery'); ?></h3>
+	<?php if ($dbdata) { ?>
+		<table id="the-list-x" width="100%" cellspacing="3" cellpadding="3">
+			<thead>
+				<tr>
+					<th scope="col"><?php _e('Tag','nggallery'); ?></th>
+					<th scope="col"><?php _e('Value','nggallery'); ?></th>
+				</tr>
+			</thead>
+	<?php 
+			foreach ($dbdata as $key => $value){
+				if ( is_array($value) ) continue;
+				$class = ( $class == 'class="alternate"' ) ? '' : 'class="alternate"';
+				echo '<tr '.$class.'>	
+						<td style="width:230px">'.$meta->i8n_name($key).'</td>
+						<td>'.$value.'</td>
+					</tr>';
+			}
+	?>
+		</table>
+	<?php  } else echo "<strong>" . __('No meta data saved','nggallery') . "</strong>"; ?>
+	</fieldset>
+	
 	<!-- EXIF DATA -->
+	<?php if ($exifdata) { ?>
 	<fieldset class="options nggallery">
 	<h3><?php _e('EXIF Data','nggallery'); ?></h3>
 	<?php if ($exifdata) { ?>
@@ -45,7 +72,8 @@ $xmpdata = $meta->get_XMP();
 		</table>
 	<?php  } else echo "<strong>". __('No exif data','nggallery'). "</strong>"; ?>
 	</fieldset>
-
+	<?php  } ?>
+	
 	<!-- IPTC DATA -->
 	<?php if ($iptcdata) { ?>
 	<fieldset class="options nggallery">
