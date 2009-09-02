@@ -38,6 +38,10 @@
 	width:22%;
 } 
 
+a.switch-expert {
+	text-decoration:none;
+}
+
 /* WATERMARK */
 #wm-preview {
 	float:right;
