@@ -196,6 +196,7 @@ class nggAdminPanel{
 
 		switch ($_GET['page']) {
 			case NGGFOLDER :
+				wp_enqueue_style( 'thickbox');	
 			case "nggallery-about" :
 				wp_enqueue_style( 'nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.7.0', 'screen' );
 				wp_admin_css( 'css/dashboard' );

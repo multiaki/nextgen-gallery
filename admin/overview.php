@@ -224,6 +224,7 @@ add_meta_box('dashboard_right_now', __('Welcome to NextGEN Gallery !', 'nggaller
 add_meta_box('dashboard_primary', __('Latest News', 'nggallery'), 'ngg_overview_news', 'ngg_overview', 'right', 'core');
 add_meta_box('ngg_lastdonators', __('Recent donators', 'nggallery'), 'ngg_overview_donators', 'ngg_overview', 'left', 'core');
 add_meta_box('ngg_server', __('Server Settings', 'nggallery'), 'ngg_overview_server', 'ngg_overview', 'left', 'core');
+add_meta_box('dashboard_plugins', __('Related plugins', 'nggallery'), 'ngg_related_plugins', 'ngg_overview', 'right', 'core');
 add_meta_box('ngg_gd_lib', __('Graphic Library', 'nggallery'), 'ngg_overview_graphic_lib', 'ngg_overview', 'right', 'core');
 
 // ***************************************************************
@@ -459,5 +460,58 @@ function ngg_get_phpinfo() {
 	    }
 	    
 	return $phpinfo;
+}
+
+/**
+ * Show NextGEN Gallery related plugins. Fetch plugins from wp.org which have added 'nextgen-gallery' as tag in readme.txt
+ * 
+ * @return postbox output
+ */
+function ngg_related_plugins() {
+	include(ABSPATH . 'wp-admin/includes/plugin-install.php');
+
+	$api = plugins_api('query_plugins', array('tag' => 'nextgen-gallery') );
+	
+	if ( is_wp_error($api) )
+		return;
+		
+	// don't show my own plugin :-) and maybe some other obsolete plugins, don't use the tag for non-related plugins, please.
+	$blacklist = array(
+		'nextgen-gallery',
+		'galleria-wp'
+	);
+	
+	$i = 0; 
+	while ( $i < 4 ) {
+
+		// pick them randomly	
+		if ( 0 == count($api->plugins) )
+			return;
+			
+		$key = array_rand($api->plugins);
+		$plugin = $api->plugins[$key];
+
+		// don't froget to remove them'
+		unset($api->plugins[$key]);
+		
+		if ( !isset($plugin->name) )
+			continue;
+			
+		if ( in_array($plugin->slug , $blacklist ) ) 
+			continue;
+
+		$title = esc_html( $plugin->name );
+	
+		$description = esc_html( strip_tags(@html_entity_decode($plugin->short_description, ENT_QUOTES, get_option('blog_charset'))) );
+	
+		$ilink = wp_nonce_url('plugin-install.php?tab=plugin-information&plugin=' . $plugin->slug, 'install-plugin_' . $plugin->slug) .
+							'&amp;TB_iframe=true&amp;width=600&amp;height=800';
+	
+		echo "<h5><a href='$link'>$title</a></h5>&nbsp;<span>(<a href='$ilink' class='thickbox' title='$title'>" . __( 'Install' ) . "</a>)</span>\n";
+		echo "<p>$description<strong> Author : </strong>$plugin->author</p>\n";
+		
+		$i++;
+	}
+
 }
 ?>
