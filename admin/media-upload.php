@@ -87,7 +87,7 @@ function media_upload_nextgen_form($errors) {
 	$total 		= 1;
 	$picarray 	= false;
 	
-	$form_action_url = get_option('siteurl') . "/wp-admin/media-upload.php?type={$GLOBALS['type']}&tab=nextgen&post_id=$post_id";
+	$form_action_url = site_url( "wp-admin/media-upload.php?type={$GLOBALS['type']}&tab=nextgen&post_id=$post_id", 'admin');
 
 	// Get number of images in gallery	
 	if ($_REQUEST['select_gal']){
