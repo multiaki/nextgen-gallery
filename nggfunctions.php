@@ -242,19 +242,21 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '', $ima
     } 
 	  
     //we cannot use the key as index, cause it's filled with the pid
-	$index = 0;
+	$index = 1;
     foreach ($picturelist as $key => $picture) {
-		
-		//need for hidden images (THX to Sweigold for the main idea at : http://wordpress.org/support/topic/228743/ )
-  		if ( ( ($index < $start) || ($index > ($start + $maxElement)) ) && $ngg_options['galHiddenImg'] ){
-			$picturelist[$key]->hidden  = true;	
-			$picturelist[$key]->display = 'style="display: none"';  //if out of range, hide image
-		} else {
-		  	$picturelist[$key]->hidden  = false;	
-			$picturelist[$key]->display = '';  //otherwise, show it
-  		}
-  		$index++;
 
+		//need for hidden images (THX to Sweigold for the main idea at : http://wordpress.org/support/topic/228743/ )
+		$picturelist[$key]->hidden  = false;	
+		$picturelist[$key]->display = '';
+		
+		if ($maxElement > 0 && $ngg_options['galHiddenImg']) {
+	  		if ( ($index < $start) || ($index > ($start + $maxElement)) ){
+				$picturelist[$key]->hidden  = true;	
+				$picturelist[$key]->display = 'style="display: none"';  //if out of range, hide image
+			}
+  			$index++;
+		}
+		
         // get the effect code
         if ($galleryID)
             $thumbcode = ($ngg_options['galImgBrowser']) ? '' : $picture->get_thumbcode($picturelist[0]->name);

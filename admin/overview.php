@@ -491,7 +491,7 @@ function ngg_related_plugins() {
 		$key = array_rand($api->plugins);
 		$plugin = $api->plugins[$key];
 
-		// don't froget to remove them'
+		// don't forget to remove them
 		unset($api->plugins[$key]);
 		
 		if ( !isset($plugin->name) )
@@ -500,15 +500,16 @@ function ngg_related_plugins() {
 		if ( in_array($plugin->slug , $blacklist ) ) 
 			continue;
 
-		$title = esc_html( $plugin->name );
-	
+		$link   = esc_url( $plugin->homepage );
+		$title  = esc_html( $plugin->name );
+			
 		$description = esc_html( strip_tags(@html_entity_decode($plugin->short_description, ENT_QUOTES, get_option('blog_charset'))) );
 	
 		$ilink = wp_nonce_url('plugin-install.php?tab=plugin-information&plugin=' . $plugin->slug, 'install-plugin_' . $plugin->slug) .
 							'&amp;TB_iframe=true&amp;width=600&amp;height=800';
 	
 		echo "<h5><a href='$link'>$title</a></h5>&nbsp;<span>(<a href='$ilink' class='thickbox' title='$title'>" . __( 'Install' ) . "</a>)</span>\n";
-		echo "<p>$description<strong> Author : </strong>$plugin->author</p>\n";
+		echo "<p>$description<strong> " . __( 'Author' ) . " : </strong>$plugin->author</p>\n";
 		
 		$i++;
 	}
