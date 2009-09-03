@@ -242,7 +242,7 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '', $ima
     } 
 	  
     //we cannot use the key as index, cause it's filled with the pid
-	$index = 1;
+	$index = 0;
     foreach ($picturelist as $key => $picture) {
 
 		//need for hidden images (THX to Sweigold for the main idea at : http://wordpress.org/support/topic/228743/ )
@@ -250,7 +250,7 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '', $ima
 		$picturelist[$key]->display = '';
 		
 		if ($maxElement > 0 && $ngg_options['galHiddenImg']) {
-	  		if ( ($index < $start) || ($index > ($start + $maxElement)) ){
+	  		if ( ($index < $start) || ($index > ($start + $maxElement -1)) ){
 				$picturelist[$key]->hidden  = true;	
 				$picturelist[$key]->display = 'style="display: none"';  //if out of range, hide image
 			}

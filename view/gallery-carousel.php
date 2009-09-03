@@ -31,7 +31,8 @@ Follow variables are useable :
 		<?php endif; ?>
 		
 		<?php foreach ($images as $image) : ?>
-		
+		<?php if ($image->hidden) continue; ?> 
+
 		<li id="ngg-image-<?php echo $image->pid ?>" class="ngg-thumbnail-list <?php if ($image->pid == $current->pid) echo 'selected' ?>" <?php echo $gallery->imagewidth ?> >
 			<a href="<?php echo $image->pidlink ?>" title="<?php echo $image->description ?>" >
 				<img title="<?php echo $image->alttext ?>" alt="<?php echo $image->alttext ?>" src="<?php echo $image->thumbnailURL ?>" <?php echo $image->size ?> />
