@@ -7,7 +7,7 @@ require_once( dirname( dirname( dirname(__FILE__) ) ) . '/ngg-config.php');
 if ( !is_user_logged_in() || !current_user_can('edit_posts') ) 
 	wp_die(__("You are not allowed to be here"));
 
-global $wpdb;
+global $wpdb, $nggdb;
 
 ?>
 

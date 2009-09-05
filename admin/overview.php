@@ -470,15 +470,27 @@ function ngg_get_phpinfo() {
 function ngg_related_plugins() {
 	include(ABSPATH . 'wp-admin/includes/plugin-install.php');
 
-	$api = plugins_api('query_plugins', array('tag' => 'nextgen-gallery') );
+	// this api sucks , tags will not be used in the correct way : nextgen-gallery cannot be searched
+	$api = plugins_api('query_plugins', array('search' => 'nextgen') );
 	
 	if ( is_wp_error($api) )
 		return;
-		
-	// don't show my own plugin :-) and maybe some other obsolete plugins, don't use the tag for non-related plugins, please.
+	
+	// don't show my own plugin :-) and some other plugins, which come up with the search result
 	$blacklist = array(
 		'nextgen-gallery',
-		'galleria-wp'
+		'galleria-wp',
+		'photosmash-galleries',
+		'flash-album-gallery',
+		'events-calendar',
+		'widgets',
+		'side-content',
+		'featurific-for-wordpress',
+		'smooth-gallery-replacement',
+		'livesig',
+		'wordpress-gallery-slideshow',
+		'nkmimagefield',
+		'nextgen-ajax'
 	);
 	
 	$i = 0; 

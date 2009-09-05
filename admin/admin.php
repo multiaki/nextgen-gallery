@@ -280,7 +280,7 @@ class nggAdminPanel{
 			$help .= "</div>\n";
 			$help .= '<h5>' . __('More Help & Info', 'nggallery') . '</h5>';
 			$help .= '<div class="metabox-prefs">';
-			$help .= __('<a href="http://wordpress.org/tags/nextgen-gallery" target="_blank">Support Forums</a>', 'nggallery');
+			$help .= __('<a href="http://wordpress.org/tags/nextgen-gallery?forum_id=10" target="_blank">Support Forums</a>', 'nggallery');
 			$help .= ' | <a href="http://alexrabe.boelinger.com/wordpress-plugins/nextgen-gallery/faq/" target="_blank">' . __('FAQ', 'nggallery') . '</a>';
 			$help .= ' | <a href="http://code.google.com/p/nextgen-gallery/issues/list" target="_blank">' . __('Feature request', 'nggallery') . '</a>';
 			$help .= ' | <a href="http://alexrabe.boelinger.com/wordpress-plugins/nextgen-gallery/languages/" target="_blank">' . __('Get your language pack', 'nggallery') . '</a>';

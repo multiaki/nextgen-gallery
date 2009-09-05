@@ -45,7 +45,7 @@ if (!class_exists('nggLoader')) {
 class nggLoader {
 	
 	var $version     = '1.4.0';
-	var $dbversion   = '1.3.1';
+	var $dbversion   = '1.4.0';
 	var $minium_WP   = '2.8';
 	var $minium_WPMU = '2.8';
 	var $updateURL   = 'http://nextgen.boelinger.com/version.php';
@@ -406,7 +406,7 @@ class nggLoader {
 		
 		if ( $file == plugin_basename(__FILE__) ) {
 			$links[] = '<a href="admin.php?page=nextgen-gallery">' . __('Overview', 'nggallery') . '</a>';
-			$links[] = '<a href="http://wordpress.org/tags/nextgen-gallery/">' . __('Get help', 'nggallery') . '</a>';
+			$links[] = '<a href="http://wordpress.org/tags/nextgen-gallery?forum_id=10">' . __('Get help', 'nggallery') . '</a>';
 			$links[] = '<a href="http://code.google.com/p/nextgen-gallery/">' . __('Contribute', 'nggallery') . '</a>';
 			$links[] = '<a href="http://alexrabe.boelinger.com/donation/">' . __('Donate', 'nggallery') . '</a>';
 		}
