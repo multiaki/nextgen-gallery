@@ -37,10 +37,12 @@ Follow variables are useable :
 	<!-- Thumbnails -->
 	<?php foreach ($images as $image) : ?>
 	
-	<div id="ngg-image-<?php echo $image->pid ?>" class="ngg-gallery-thumbnail-box" <?php echo $gallery->imagewidth ?> >
-		<div class="ngg-gallery-thumbnail" <?php echo $image->display ?> >
+	<div id="ngg-image-<?php echo $image->pid ?>" class="ngg-gallery-thumbnail-box" <?php echo $image->style ?> >
+		<div class="ngg-gallery-thumbnail" >
 			<a href="<?php echo $image->imageURL ?>" title="<?php echo $image->description ?>" <?php echo $image->thumbcode ?> >
+				<?php if (!$image->hidden) { ?>
 				<img title="<?php echo $image->alttext ?>" alt="<?php echo $image->alttext ?>" src="<?php echo $image->thumbnailURL ?>" <?php echo $image->size ?> />
+				<?php } ?>
 			</a>
 		</div>
 	</div>

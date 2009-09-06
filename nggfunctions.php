@@ -193,11 +193,11 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '', $ima
     
     // fixed width if needed
     $gallery->columns    = intval($ngg_options['galColumns']);
-    $gallery->imagewidth = ($gallery->columns > 0) ? 'style="width:'. floor(100/$gallery->columns) .'%;"' : '';
+    $gallery->imagewidth = ($gallery->columns > 0) ? 'style="width:' . floor(100/$gallery->columns) . '%;"' : '';
     
-    // set thumb size 
-    $thumbsize = '';
-    if ($ngg_options['thumbfix'])  $thumbsize = 'width="'.$thumbwidth.'" height="'.$thumbheight.'"';
+    // obsolete in V1.4.0, but kept for compat reason
+	// pre set thumbnail size, from the option, later we look for meta data. 
+    $thumbsize = ($ngg_options['thumbfix']) ? $thumbsize = 'width="' . $thumbwidth . '" height="'.$thumbheight . '"' : '';
     
     // show slideshow link
     if ($galleryID) {
@@ -245,14 +245,14 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '', $ima
 	$index = 0;
     foreach ($picturelist as $key => $picture) {
 
-		//need for hidden images (THX to Sweigold for the main idea at : http://wordpress.org/support/topic/228743/ )
-		$picturelist[$key]->hidden  = false;	
-		$picturelist[$key]->display = '';
+		//needed for hidden images (THX to Sweigold for the main idea at : http://wordpress.org/support/topic/228743/ )
+		$picturelist[$key]->hidden = false;	
+		$picturelist[$key]->style  = $gallery->imagewidth;
 		
 		if ($maxElement > 0 && $ngg_options['galHiddenImg']) {
 	  		if ( ($index < $start) || ($index > ($start + $maxElement -1)) ){
-				$picturelist[$key]->hidden  = true;	
-				$picturelist[$key]->display = 'style="display: none"';  //if out of range, hide image
+				$picturelist[$key]->hidden = true;	
+				$picturelist[$key]->style  = ($gallery->columns > 0) ? 'style="width:' . floor(100/$gallery->columns) . '%;display: none;"' : 'style="display: none;"';
 			}
   			$index++;
 		}
