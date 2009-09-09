@@ -38,25 +38,15 @@ $resizedPreviewInfo = $thumb->newDimensions;
 $thumb->destruct();
 
 $preview_image		= NGGALLERY_URLPATH . 'nggshow.php?pid=' . $picture->pid . '&amp;width=350&amp;height=350';
-$imageInfo			= getimagesize($picture->imagePath);
+$imageInfo			= @getimagesize($picture->imagePath);
 $rr = round($imageInfo[0] / $resizedPreviewInfo['newWidth'], 2);
 
-if ( ($ngg_options['thumbfix'] == 1) and (!$ngg_options['thumbcrop']) ) {
+if ( ($ngg_options['thumbfix'] == 1) ) {
+	
 	$WidthHtmlPrev  = $ngg_options['thumbwidth'];
 	$HeightHtmlPrev = $ngg_options['thumbheight'];
-}
-
-if ( ($ngg_options['thumbfix'] == 1) and ($ngg_options['thumbcrop'] == 1) ) {
-	$WidthHtmlPrev  = $ngg_options['thumbwidth'];
-	$HeightHtmlPrev = $ngg_options['thumbheight'];
-}
-
-if ( (!$ngg_options['thumbfix']) and ($ngg_options['thumbcrop'] == 1) ) {
-	$WidthHtmlPrev  = $ngg_options['thumbwidth'];
-	$HeightHtmlPrev = $ngg_options['thumbwidth'];
-}
-
-if ( (!$ngg_options['thumbfix']) and (!$ngg_options['thumbcrop']) ) {
+	
+} else {
 	// H > W
 	if ($imageInfo[1] > $imageInfo[0]) {
 
@@ -72,8 +62,8 @@ if ( (!$ngg_options['thumbfix']) and (!$ngg_options['thumbcrop']) ) {
 }
 
 ?>
-<script src="<?php echo NGGALLERY_URLPATH ?>/admin/js/Jcrop/js/jquery.Jcrop.js"></script>
-<link rel="stylesheet" href="<?php echo NGGALLERY_URLPATH ?>/admin/js/Jcrop/css/jquery.Jcrop.css" type="text/css" />
+<script src="<?php echo NGGALLERY_URLPATH; ?>/admin/js/Jcrop/js/jquery.Jcrop.js"></script>
+<link rel="stylesheet" href="<?php echo NGGALLERY_URLPATH; ?>/admin/js/Jcrop/css/jquery.Jcrop.css" type="text/css" />
 
 <script language="JavaScript">
 <!--
@@ -91,12 +81,12 @@ if ( (!$ngg_options['thumbfix']) and (!$ngg_options['thumbcrop']) ) {
 			status = 'edit';	
 		}
 		
-		var rx = <?php echo $WidthHtmlPrev ?> / coords.w;
-		var ry = <?php echo $HeightHtmlPrev ?> / coords.h;
+		var rx = <?php echo $WidthHtmlPrev; ?> / coords.w;
+		var ry = <?php echo $HeightHtmlPrev; ?> / coords.h;
 		
 		jQuery('#imageToEditPreview').css({
-			width: Math.round(rx * <?php echo $resizedPreviewInfo['newWidth'] ?>) + 'px',
-			height: Math.round(ry * <?php echo $resizedPreviewInfo['newHeight'] ?>) + 'px',
+			width: Math.round(rx * <?php echo $resizedPreviewInfo['newWidth']; ?>) + 'px',
+			height: Math.round(ry * <?php echo $resizedPreviewInfo['newHeight']; ?>) + 'px',
 			marginLeft: '-' + Math.round(rx * coords.x) + 'px',
 			marginTop: '-' + Math.round(ry * coords.y) + 'px'
 		});
@@ -113,14 +103,14 @@ if ( (!$ngg_options['thumbfix']) and (!$ngg_options['thumbcrop']) ) {
 	function updateThumb() {
 		
 		if ( (wT == 0) || (hT == 0) || (wT == undefined) || (hT == undefined) ) {
-			alert("<?php _e('Select with the mouse the area for the new thumbnail.', 'nggallery') ?>");
+			alert("<?php _e('Select with the mouse the area for the new thumbnail.', 'nggallery'); ?>");
 			return false;			
 		}
 				
 		jQuery.ajax({
 		  url: "admin-ajax.php",
 		  type : "POST",
-		  data:  {x: xT, y: yT, w: wT, h: hT, action: 'createNewThumb', id: <?php echo $id ?>, rr: <?php echo $rr ?>},
+		  data:  {x: xT, y: yT, w: wT, h: hT, action: 'createNewThumb', id: <?php echo $id; ?>, rr: <?php echo $rr; ?>},
 		  cache: false,
 		  success: function(data){
 					var d = new Date();
@@ -146,25 +136,25 @@ if ( (!$ngg_options['thumbfix']) and (!$ngg_options['thumbcrop']) ) {
 <table width="98%" align="center" style="border:1px solid #DADADA">
 	<tr>
 		<td rowspan="3" valign="middle" align="center" width="350" style="background-color:#DADADA;">
-			<img src="<?php echo $preview_image ?>" alt="" id="imageToEdit" />	
+			<img src="<?php echo $preview_image; ?>" alt="" id="imageToEdit" />	
 		</td>
 		<td width="300" style="background-color : #DADADA;">
-			<small style="margin-left:6px; display:block;"><?php _e('Select the area for the thumbnail from the picture on the left.', 'nggallery') ?></small>
+			<small style="margin-left:6px; display:block;"><?php _e('Select the area for the thumbnail from the picture on the left.', 'nggallery'); ?></small>
 		</td>		
 	</tr>
 	<tr>
 		<td align="center" width="300" height="320">
-			<div id="previewNewThumb" style="display:none;width:<?php echo $WidthHtmlPrev ?>px;height:<?php echo $HeightHtmlPrev ?>px;overflow:hidden; margin-left:5px;">
-				<img src="<?php echo $preview_image ?>" id="imageToEditPreview" />
+			<div id="previewNewThumb" style="display:none;width:<?php echo $WidthHtmlPrev; ?>px;height:<?php echo $HeightHtmlPrev; ?>px;overflow:hidden; margin-left:5px;">
+				<img src="<?php echo $preview_image; ?>" id="imageToEditPreview" />
 			</div>
 			<div id="actualThumb">
-				<img src="<?php echo $picture->thumbURL ?>?<?php echo time()?>" />
+				<img src="<?php echo $picture->thumbURL; ?>?<?php echo time()?>" />
 			</div>
 		</td>
 	</tr>
 	<tr style="background-color:#DADADA;">
 		<td>
-			<input type="button" name="update" value="<?php _e('Update', 'nggallery') ?>" onclick="updateThumb()" class="button-secondary" style="float:left; margin-left:4px;"/>
+			<input type="button" name="update" value="<?php _e('Update', 'nggallery'); ?>" onclick="updateThumb()" class="button-secondary" style="float:left; margin-left:4px;"/>
 			<div id="thumbMsg" style="color:#FF0000; display : none;font-size:11px; float:right; width:60%; height:2em; line-height:2em;"></div>
 		</td>
 	</tr>
