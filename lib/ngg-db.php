@@ -113,11 +113,14 @@ class nggdb {
      * @param bool $counter (optional) Select true  when you need to count the images
      * @param int $limit number of paged galleries, 0 shows all galleries
      * @param int $start the start index for paged galleries
+     * @param bool $exclude
      * @return array $galleries
      */
-    function find_all_galleries($order_by = 'gid', $order_dir = 'ASC', $counter = false, $limit = 0, $start = 0) {      
+    function find_all_galleries($order_by = 'gid', $order_dir = 'ASC', $counter = false, $limit = 0, $start = 0, $exclude = true) {      
         global $wpdb; 
         
+        // Check for the exclude setting
+        $exclude_clause = ($exclude) ? ' AND exclude<>1 ' : '';
         $order_dir = ( $order_dir == 'DESC') ? 'DESC' : 'ASC';
         $limit_by  = ( $limit > 0 ) ? 'LIMIT ' . intval($start) . ',' . intval($limit) : '';
         $this->galleries = $wpdb->get_results( "SELECT SQL_CALC_FOUND_ROWS * FROM $wpdb->nggallery ORDER BY {$order_by} {$order_dir} {$limit_by}", OBJECT_K );
@@ -145,7 +148,7 @@ class nggdb {
             return $this->galleries;
         
         // get the counter values   
-        $picturesCounter = $wpdb->get_results('SELECT galleryid, COUNT(*) as counter FROM '.$wpdb->nggpictures.' WHERE galleryid IN (\''.implode('\',\'', $galleriesID).'\') AND exclude != 1 GROUP BY galleryid', OBJECT_K);
+        $picturesCounter = $wpdb->get_results('SELECT galleryid, COUNT(*) as counter FROM '.$wpdb->nggpictures.' WHERE galleryid IN (\''.implode('\',\'', $galleriesID).'\') ' . $exclude_clause . ' GROUP BY galleryid', OBJECT_K);
 
         if ( !$picturesCounter )
             return $this->galleries;
@@ -642,7 +645,7 @@ class nggdb {
         
         // build the final query
         $query = "SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE 1=1 $search ORDER BY tt.pid ASC ";
-                $result = $wpdb->get_results($query);
+        $result = $wpdb->get_results($query);
 
         // Return the object from the query result
         if ($result) {
@@ -654,6 +657,43 @@ class nggdb {
 
         return null;
     }
+
+    /**
+     * search for a filename
+     * 
+     * @since 1.4.0
+     * @param string $filename
+     * @param int (optional) $galleryID
+     * @return Array Result of the request
+     */
+    function search_for_file( $filename, $galleryID = false ) {
+        global $wpdb;
+        
+        // If a search pattern is specified, load the posts that match
+        if ( !empty($filename) ) {
+            // added slashes screw with quote grouping when done early, so done later
+            $term = $wpdb->escape($filename);
+            
+           	$where_clause = '';
+            if ( is_numeric($galleryID) ) {
+            	$id = (int) $galleryID;
+            	$where_clause = ' AND tt.galleryid = {$id}';
+            }
+        }
+        
+        // build the final query
+        $query = "SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE tt.filename = '{$term}' {$where_clause} ORDER BY tt.pid ASC ";
+		$result = $wpdb->get_row($query);
+
+        // Return the object from the query result
+        if ($result) {
+        	$image = new nggImage( $result );
+            return $image;
+        } 
+
+        return null;
+    }
+
     
     /**
      * Update or add meta data for an image

@@ -64,7 +64,6 @@ function nggallery_install () {
 		exclude TINYINT NULL DEFAULT '0' ,
 		sortorder BIGINT(20) DEFAULT '0' NOT NULL ,
 		meta_data LONGTEXT,
-		rotated BOOLEAN DEFAULT '0' NOT NULL,
 		PRIMARY KEY pid (pid),
 		KEY post_id (post_id)
 		) $charset_collate;";

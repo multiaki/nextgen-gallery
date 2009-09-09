@@ -75,12 +75,12 @@ class nggAdminPanel{
 		
   		switch ($_GET['page']){
 			case "nggallery-add-gallery" :
-				include_once ( dirname (__FILE__) . '/functions.php' );	// admin functions
+				include_once ( dirname (__FILE__) . '/functions.php' );		// admin functions
 				include_once ( dirname (__FILE__) . '/addgallery.php' );	// nggallery_admin_add_gallery
 				nggallery_admin_add_gallery();
 				break;
 			case "nggallery-manage-gallery" :
-				include_once ( dirname (__FILE__) . '/functions.php' );	// admin functions
+				include_once ( dirname (__FILE__) . '/functions.php' );		// admin functions
 				include_once ( dirname (__FILE__) . '/manage.php' );		// nggallery_admin_manage_gallery
 				// Initate the Manage Gallery page
 				$ngg->manage_page = new nggManageGallery ();
@@ -89,7 +89,7 @@ class nggAdminPanel{
 				
 				break;
 			case "nggallery-manage-album" :
-				include_once ( dirname (__FILE__) . '/album.php' );		// nggallery_admin_manage_album
+				include_once ( dirname (__FILE__) . '/album.php' );			// nggallery_admin_manage_album
 				$ngg->manage_album = new nggManageAlbum ();
 				$ngg->manage_album->controller();
 				break;				
@@ -101,15 +101,15 @@ class nggAdminPanel{
 				include_once ( dirname (__FILE__) . '/tags.php' );			// nggallery_admin_tags
 				break;
 			case "nggallery-style" :
-				include_once ( dirname (__FILE__) . '/style.php' );		// nggallery_admin_style
+				include_once ( dirname (__FILE__) . '/style.php' );			// nggallery_admin_style
 				nggallery_admin_style();
 				break;
 			case "nggallery-setup" :
-				include_once ( dirname (__FILE__) . '/setup.php' );		// nggallery_admin_setup
+				include_once ( dirname (__FILE__) . '/setup.php' );			// nggallery_admin_setup
 				nggallery_admin_setup();
 				break;
 			case "nggallery-roles" :
-				include_once ( dirname (__FILE__) . '/roles.php' );		// nggallery_admin_roles
+				include_once ( dirname (__FILE__) . '/roles.php' );			// nggallery_admin_roles
 				nggallery_admin_roles();
 				break;
 			case "nggallery-import" :
@@ -156,6 +156,8 @@ class nggAdminPanel{
 		switch ($_GET['page']) {
 			case NGGFOLDER : 
 				wp_enqueue_script( 'postbox' );
+				add_thickbox();
+			break;	
 			case "nggallery-manage-gallery" :
 				wp_enqueue_script( 'postbox' );
 				wp_enqueue_script( 'ngg-ajax' );

@@ -271,7 +271,7 @@ class nggXMLRPC{
 		if( !current_user_can( 'NextGEN Manage gallery' ) )
 			return new IXR_Error( 401, __( 'Sorry, you must be able to manage galleries to view the list of galleries' ) );
 		
-		$gallery_list = $nggdb->find_all_galleries('gid', 'asc', true);
+		$gallery_list = $nggdb->find_all_galleries('gid', 'asc', true, 0, 0, false);
 		
 		return($gallery_list);
 		
