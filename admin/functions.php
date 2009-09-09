@@ -257,7 +257,7 @@ class nggAdmin{
 		if (file_exists($image->thumbPath))
 			if (!is_writable($image->thumbPath))
 				return $image->filename . __(' is not writeable ','nggallery');
-		
+
 		$thumb = new ngg_Thumbnail($image->imagePath, TRUE);
 
 		// skip if file is not there
@@ -354,6 +354,44 @@ class nggAdmin{
 
 		return '1';
 	}
+	
+	
+	function rotate_image($image, $angle) {
+
+		global $ngg;
+
+		if(! class_exists('ngg_Thumbnail'))
+			require_once( nggGallery::graphic_library() );
+		
+		if ( is_numeric($image) )
+			$image = nggdb::find_image( $image );
+		
+		if ( !is_object($image) ) 
+			return __('Object didn\'t contain correct data','nggallery');		
+	
+		if (!is_writable($image->imagePath))
+			return ' <strong>' . $image->filename . __(' is not writeable','nggallery') . '</strong>';
+		
+		$file = new ngg_Thumbnail( $image->imagePath, TRUE );
+		
+		// skip if file is not there
+		if (!$file->error) {
+
+			$file->rotateImage($angle);	
+			$file->save($image->imagePath, $ngg->options['imgQuality']);
+			
+		}
+		
+		$file->destruct();
+
+		if ( !empty($file->errmsg) )
+			return ' <strong>' . $image->filename . ' (Error : '.$file->errmsg .')</strong>';		
+
+		return '1';
+		
+	}
+	
+		
 
 	/**
 	 * nggAdmin::set_watermark() - set the watermarl for the image
@@ -433,7 +471,39 @@ class nggAdmin{
 					$image_ids[] = $pic_id;
 
 				// add the metadata
-				nggAdmin::import_MetaData($pic_id);
+				$meta = nggAdmin::import_MetaData($pic_id);
+				
+				// Don't like this ...
+				$meta = new nggMeta($pic_id);
+				$exifdata = $meta->get_EXIF();
+
+				if (isset($exifdata['Orientation'])) {
+					
+					switch ($exifdata['Orientation']) {
+						case 6 : 
+						case 5 :
+							$angle = 90;
+							break;
+						case 8 :
+						case 7 : 
+							$angle = -90;
+							break;
+						case 4 :
+						case 3 : 
+							$angle = 180;
+							break;
+						default:
+						case 1 :
+							break; 
+		
+					}
+			
+					$result = nggAdmin::rotate_image($picture, $angle); 
+					
+				}
+					
+				// auto rotate
+				nggAdmin::rotate_image($pic_id,$angle);				
 				
 				// action hook for post process after the image is added to the database
 				$image = array( 'id' => $pic_id, 'filename' => $picture, 'galleryID' => $galleryID);
@@ -478,7 +548,13 @@ class nggAdmin{
 				// get the file date/time from exif
 				$timestamp = $meta['timestamp'];
 				// update database
-				$result = $wpdb->query( $wpdb->prepare("UPDATE $wpdb->nggpictures SET alttext = %s, description = %s, imagedate = %s WHERE pid = %d", $alttext, $description, $timestamp, $pic_id) );
+				$result = $wpdb->query( 
+					$wpdb->prepare("UPDATE $wpdb->nggpictures SET 
+						alttext = %s, 
+						description = %s, 
+						imagedate = %s, 
+						meta_tag = %s 
+					WHERE pid = %d", $alttext, $description, $timestamp, serialize($meta), $pic_id) );
 				// add the tags
 				if ($meta['keywords']) {
 					$taglist = explode(',', $meta['keywords']);
@@ -487,7 +563,7 @@ class nggAdmin{
 			}// error check
 		}
 		
-		return true;
+		return $meta;
 		
 	}
 

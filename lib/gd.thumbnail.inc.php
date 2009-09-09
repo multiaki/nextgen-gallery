@@ -39,12 +39,6 @@ class ngg_Thumbnail {
      */
     var $fileName;
     /**
-     * Image meta data if any is available (jpeg/tiff) via the exif library
-     *
-     * @var array
-     */
-    var $imageMeta;
-    /**
      * Current dimensions of working image
      *
      * @var array
@@ -131,7 +125,6 @@ class ngg_Thumbnail {
         $this->currentDimensions    = array();
         $this->newDimensions        = array();
         $this->fileName             = $fileName;
-        $this->imageMeta			= array();
         $this->percent              = 100;
         $this->maxWidth             = 0;
         $this->maxHeight            = 0;
@@ -193,7 +186,6 @@ class ngg_Thumbnail {
 	            $size = GetImageSize($this->fileName);
     	        $this->currentDimensions = array('width'=>$size[0],'height'=>$size[1]);
 	            $this->newImage = $this->oldImage;
-	            $this->gatherImageMeta();
 	        }
         }
 
@@ -695,6 +687,76 @@ class ngg_Thumbnail {
 		$this->currentDimensions['width'] = $width;
 		$this->currentDimensions['height'] = $newHeight;
 	}
+	
+	/**
+	 * Rotate an image. Used in case "imagerotate" doesn't work.
+	 *
+	 * @param int $percent
+	 * @param int $reflection
+	 * @param int $white
+	 * @param bool $border
+	 * @param string $borderColor
+	 */
+
+	function rotateImage($angle) {
+
+		if ( function_exists('imagerotate') ) {
+	        $this->workingImage = imagerotate($this->oldImage, 360 - $angle, 0); // imagerotate() rotates CCW 
+			return true;
+		}
+
+		if (($angle == 180) or ($angle == 360)) 
+			$this->workingImage = imagecreatetruecolor( $this->currentDimensions['width'], $this->currentDimensions['height'] ); 
+		else		
+			$this->workingImage = imagecreatetruecolor( $this->currentDimensions['height'], $this->currentDimensions['width'] ); 
+		
+	    imagealphablending($this->workingImage, false); 
+	    imagesavealpha($this->workingImage, true); 
+
+		switch ($angle) {
+			
+			case 90 :
+				for( $x = 0; $x < $this->currentDimensions['width']; $x++ ) { 
+	   	            for( $y = 0; $y < $this->currentDimensions['height']; $y++ ) { 
+	  	                if ( !imagecopy($this->workingImage, $this->oldImage, $this->currentDimensions['height'] - $y - 1, $x, $x, $y, 1, 1) ) 
+	  	                    return false; 
+	 	            } 
+	  	        } 
+			break;
+			
+			case -90 :
+				for( $x = 0; $x < $this->currentDimensions['width']; $x++ ) { 
+	 	            for( $y = 0; $y < $this->currentDimensions['height']; $y++ ) { 
+	 	                if ( !imagecopy($this->workingImage, $this->oldImage, $y, $this->currentDimensions['width'] - $x - 1, $x, $y, 1, 1) ) 
+	 	                    return false; 
+	 	            } 
+	 	        } 
+			break;
+		
+			case 180 :
+ 	            for( $y = 0; $y < $this->currentDimensions['height']; $y++ ) { 
+ 	                if ( !imagecopy($this->workingImage, $this->oldImage, 0, $y, 0, $this->currentDimensions['height'] - $y- 1, $this->currentDimensions['width'], 1) ) 
+ 	                    return false; 
+ 	            } 
+			break;
+			
+			case 360 :
+ 	            for( $x = 0; $x < $this->currentDimensions['width']; $x++ ) {  
+ 	                if ( !imagecopy($this->workingImage, $this->oldImage, $x, 0, $this->currentDimensions['width'] - $x - 1, 0, 1, $this->currentDimensions['height']) ) 
+ 	                    return false; 
+ 	            } 
+			break;
+						
+			default : 
+				return false;
+		}
+			
+	    $this->oldImage = $this->workingImage;
+		$this->newImage = $this->workingImage;
+		
+	    return true;
+		
+	}	
 
 	/**
 	 * Inverts working image, used by reflection function
@@ -739,69 +801,6 @@ class ngg_Thumbnail {
         return ($asString ? "{$rgb[0]} {$rgb[1]} {$rgb[2]}" : $rgb);
     }
     
-    /**
-     * Reads selected exif meta data from jpg images and populates $this->imageMeta with appropriate values if found
-     *
-     */
-    function gatherImageMeta() {
-    	//only attempt to retrieve info if exif exists
-    	if(function_exists("exif_read_data") && $this->format == 'JPG') {
-			$imageData = @exif_read_data($this->fileName);
-			if(isset($imageData['Make'])) 
-				$this->imageMeta['make'] = ucwords(strtolower($imageData['Make']));
-			if(isset($imageData['Model'])) 
-				$this->imageMeta['model'] = $imageData['Model'];
-			if(isset($imageData['COMPUTED']['ApertureFNumber'])) {
-				$this->imageMeta['aperture'] = $imageData['COMPUTED']['ApertureFNumber'];
-				$this->imageMeta['aperture'] = str_replace('/','',$this->imageMeta['aperture']);
-			}
-			if(isset($imageData['ExposureTime'])) {
-				$exposure = explode('/',$imageData['ExposureTime']);
-				$exposure = round($exposure[1]/$exposure[0],-1);
-				$this->imageMeta['exposure'] = '1/' . $exposure . ' second';
-			}
-			if(isset($imageData['Flash'])) {
-				if($imageData['Flash'] > 0) {
-					$this->imageMeta['flash'] = 'Yes';
-				}
-				else {
-					$this->imageMeta['flash'] = 'No';
-				}
-			}
-			if(isset($imageData['FocalLength'])) {
-				$focus = explode('/',$imageData['FocalLength']);
-				if ($focus[1] > 0)
-					$this->imageMeta['focalLength'] = round($focus[0]/$focus[1],2) . ' mm';
-			}
-			if(isset($imageData['DateTime'])) {
-				$date = $imageData['DateTime'];
-				$date = explode(' ',$date);
-				$date = str_replace(':','-',$date[0]) . ' ' . $date[1];
-				$this->imageMeta['dateTaken'] = date('m/d/Y g:i A',strtotime($date));
-			}
-    	}
-    }
-    
-    /**
-     * Rotates image either 90 degrees clockwise or counter-clockwise
-     *
-     * @param string $direction
-     */
-    function rotateImage($direction = 'CW') {
-    	if($direction == 'CW') {
-    		$this->workingImage = imagerotate($this->workingImage,-90,0);
-    	}
-    	else {
-    		$this->workingImage = imagerotate($this->workingImage,90,0);
-    	}
-    	$newWidth = $this->currentDimensions['height'];
-    	$newHeight = $this->currentDimensions['width'];
-		$this->oldImage = $this->workingImage;
-		$this->newImage = $this->workingImage;
-		$this->currentDimensions['width'] = $newWidth;
-		$this->currentDimensions['height'] = $newHeight;
-    }
-
 	/**
      * Based on the Watermark function by Marek Malcherek  
      * http://www.malcherek.de

@@ -138,7 +138,10 @@ class nggMeta{
 			if (!empty($exif['Make']))
 				$meta['make'] = $exif['Make'];
 			if (!empty($exif['ImageDescription']))
-				$meta['title'] = utf8_encode($exif['ImageDescription']);	
+				$meta['title'] = utf8_encode($exif['ImageDescription']);
+			if (!empty($exif['Orientation']))
+				$meta['Orientation'] = $exif['Orientation'];
+					
 	
 			// this is done by Windows
 			$exif = $this->exif_data['WINXP'];

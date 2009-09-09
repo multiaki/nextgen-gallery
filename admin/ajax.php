@@ -120,4 +120,46 @@ add_action('wp_ajax_createNewThumb', 'createNewThumb');
 		
 	}
 	
+add_action('wp_ajax_rotateImage', 'rotateImage');
+	
+	function rotateImage() {
+		
+		global $wpdb;
+		
+		// check for correct capability
+		if ( !is_user_logged_in() )
+			die('-1');
+			
+		// check for correct NextGEN capability
+		if ( !current_user_can('NextGEN Manage gallery') ) 
+			die('-1');	
+
+
+		require_once( dirname( dirname(__FILE__) ) . '/ngg-config.php');
+		include_once( nggGallery::graphic_library() );
+
+		// include the ngg function
+		include_once (dirname (__FILE__). '/functions.php');
+				
+		$ngg_options=get_option('ngg_options');
+		
+		$id 	= (int) $_POST['id'];
+		$ra 	= $_POST['ra'];
+		
+		$picture = nggdb::find_image($id);		
+		//imageFlipVertical
+		
+		$rotate_result = nggAdmin::rotate_image($picture,$ra);
+		
+		if ( $rotate_result == 1 ) {
+			echo "OK";
+		} else {
+			header('HTTP/1.1 500 Internal Server Error');			
+			echo $rotate_result;
+		}
+		
+		exit();
+		
+	}
+	
 ?>
