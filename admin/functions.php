@@ -355,8 +355,14 @@ class nggAdmin{
 		return '1';
 	}
 	
-	
-	function rotate_image($image, $angle) {
+	/**
+	 * Rotated an image based on the oriemtation flag or a definded angle
+	 * 
+	 * @param int|object $image
+	 * @param integer (optional) $angle, if set to 0, the exif flag will be used
+	 * @return string result code
+	 */
+	function rotate_image($image, $angle = 0) {
 
 		global $ngg;
 
@@ -372,6 +378,34 @@ class nggAdmin{
 		if (!is_writable($image->imagePath))
 			return ' <strong>' . $image->filename . __(' is not writeable','nggallery') . '</strong>';
 		
+		// if there is no angle, we look for the orinetation flag
+		if ($angle == 0) {
+			$meta = new nggMeta( $image->pid );
+			$exif = $meta->get_EXIF();
+	
+			if (isset($exif['Orientation'])) {
+				
+				switch ($exif['Orientation']) {
+					case 6 : 
+					case 5 :
+						$angle = 90;
+						break;
+					case 8 :
+					case 7 : 
+						$angle = -90;
+						break;
+					case 4 :
+					case 3 : 
+						$angle = 180;
+						break;
+					default:
+					case 1 :
+						break; 
+	
+				}
+			}
+		}
+
 		$file = new ngg_Thumbnail( $image->imagePath, TRUE );
 		
 		// skip if file is not there
@@ -379,6 +413,11 @@ class nggAdmin{
 
 			$file->rotateImage($angle);	
 			$file->save($image->imagePath, $ngg->options['imgQuality']);
+			
+			// read the new sizes
+			$size = @getimagesize ( $image->imagePath );
+			// add them to the database
+			nggdb::update_image_meta($image->pid, array( 'width' => $size[0], 'height' => $size[1] ) );
 			
 		}
 		
@@ -473,37 +512,8 @@ class nggAdmin{
 				// add the metadata
 				$meta = nggAdmin::import_MetaData($pic_id);
 				
-				// Don't like this ...
-				$meta = new nggMeta($pic_id);
-				$exifdata = $meta->get_EXIF();
-
-				if (isset($exifdata['Orientation'])) {
-					
-					switch ($exifdata['Orientation']) {
-						case 6 : 
-						case 5 :
-							$angle = 90;
-							break;
-						case 8 :
-						case 7 : 
-							$angle = -90;
-							break;
-						case 4 :
-						case 3 : 
-							$angle = 180;
-							break;
-						default:
-						case 1 :
-							break; 
-		
-					}
-			
-					$result = nggAdmin::rotate_image($picture, $angle); 
-					
-				}
-					
 				// auto rotate
-				nggAdmin::rotate_image($pic_id,$angle);				
+				nggAdmin::rotate_image($pic_id);				
 				
 				// action hook for post process after the image is added to the database
 				$image = array( 'id' => $pic_id, 'filename' => $picture, 'galleryID' => $galleryID);

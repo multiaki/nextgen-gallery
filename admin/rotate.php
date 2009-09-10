@@ -78,17 +78,17 @@ $preview_image		= NGGALLERY_URLPATH . 'nggshow.php?pid=' . $picture->pid . '&amp
 			<img src="<?php echo $preview_image ?>" alt="" id="imageToEdit" />	
 		</td>
 		<td>
-			<input type="radio" name="ra" value="-90" /><?php _e('90° clockwise', 'nggallery') ?><br />
-			<input type="radio" name="ra" value="90" /><?php _e('90° anticlockwise', 'nggallery') ?><br />
-			<input type="radio" name="ra" value="180" /><?php _e('Flip vertically', 'nggallery') ?><br />
-			<input type="radio" name="ra" value="360" /><?php _e('Flip horizontally', 'nggallery') ?>
+			<input type="radio" name="ra" value="90" /><?php _e('90° clockwise', 'nggallery'); ?><br />
+			<input type="radio" name="ra" value="-90" /><?php _e('90° anticlockwise', 'nggallery'); ?><br />
+			<input type="radio" name="ra" value="180" /><?php _e('Flip vertically', 'nggallery'); ?><br />
+			<input type="radio" name="ra" value="360" /><?php _e('Flip horizontally', 'nggallery'); ?>
 		</td>		
 	</tr>
 	<tr style="background-color:#DADADA;">
 
 		<td colspan="2">
-			<input type="button" name="update" value="<?php _e('Preview', 'nggallery') ?>" onclick="rotateImage()" class="button-secondary" style="float:right; margin-left:4px;"/>
-			<input type="button" name="update" value="<?php _e('Update', 'nggallery') ?>" onclick="rotateImage()" class="button-secondary" style="float:right; margin-left:4px;"/>
+			<input type="button" name="update" value="<?php _e('Preview', 'nggallery'); ?>" onclick="rotateImage()" class="button-secondary" style="float:right; margin-left:4px;"/>
+			<input type="button" name="update" value="<?php _e('Update', 'nggallery'); ?>" onclick="rotateImage()" class="button-secondary" style="float:right; margin-left:4px;"/>
 			
 			<div id="thumbMsg" style="color:#FF0000; display : none;font-size:11px; float:right; width:60%; height:2em; line-height:2em;"></div>
 			
