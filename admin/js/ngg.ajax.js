@@ -45,7 +45,7 @@ nggAjax = {
 
 			    },
 			    error: function (msg) {
-					nggProgressBar.addNote( "<strong>ID " + nggAjax.settings.ids[index] + ":</strong> " + nggAjax.settings.failure, msg );
+					nggProgressBar.addNote( "<strong>ID " + nggAjax.settings.ids[index] + ":</strong> " + nggAjax.settings.failure, msg.responseText );
 				},
 				complete: function () {
 					index++;
@@ -73,7 +73,7 @@ nggAjax = {
 			 		imageIDS = imageIDS.concat(msg);
 				},
 			    error: function (msg) {
-					nggProgressBar.addNote( "<strong>ID " + nggAjax.settings.ids[index] + ":</strong> " + nggAjax.settings.failure, msg );
+					nggProgressBar.addNote( "<strong>ID " + nggAjax.settings.ids[index] + ":</strong> " + nggAjax.settings.failure, msg.responseText );
 				},
 				complete: function () {
 					index++;
