@@ -691,20 +691,19 @@ class ngg_Thumbnail {
 	/**
 	 * Rotate an image. Used in case "imagerotate" doesn't work.
 	 *
-	 * @param int $percent
-	 * @param int $reflection
-	 * @param int $white
-	 * @param bool $border
-	 * @param string $borderColor
+	 * @param int $angle
 	 */
 
-	function rotateImage($angle) {
+	function rotateImage( $angle = 90 ) {
 
 		if ( function_exists('imagerotate') ) {
 	        $this->workingImage = imagerotate($this->oldImage, 360 - $angle, 0); // imagerotate() rotates CCW 
+    	    $this->oldImage = $this->workingImage;
+			$this->newImage = $this->workingImage;
 			return true;
 		}
-
+		
+		// flip width/height if you mirror the image
 		if (($angle == 180) or ($angle == 360)) 
 			$this->workingImage = imagecreatetruecolor( $this->currentDimensions['width'], $this->currentDimensions['height'] ); 
 		else		
