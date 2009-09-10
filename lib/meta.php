@@ -34,6 +34,8 @@ class nggMeta{
 		//get the path and other data about the image
 		$this->image = nggdb::find_image( $pic_id );
  
+ 		$this->image = apply_filters( 'ngg_find_image_meta', $this->image  );		
+ 
  		if ( !file_exists( $this->image->imagePath ) )
 			return false;
 
@@ -126,6 +128,8 @@ class nggMeta{
 				 $meta['shutter_speed']  =($meta['shutter_speed'] > 0.0 and $meta['shutter_speed'] < 1.0) ? ( "1/" . round( 1 / $meta['shutter_speed'], -1) ) : ($meta['shutter_speed']); 
 				 $meta['shutter_speed'] .=  __(' sec','nggallery');
 				}
+			if (!empty($exif['Flash']))
+				$meta['flash'] =  ( $exif['Flash'] & 1 ) ? __('On','nggallery') : __('Off','nggallery');
 	
 			// additional information
 			$exif = $this->exif_data['IFD0'];
@@ -137,7 +141,6 @@ class nggMeta{
 				$meta['title'] = utf8_encode($exif['ImageDescription']);
 			if (!empty($exif['Orientation']))
 				$meta['Orientation'] = $exif['Orientation'];
-					
 	
 			// this is done by Windows
 			$exif = $this->exif_data['WINXP'];
@@ -441,7 +444,8 @@ class nggMeta{
 		'tool'				=> __('Program tool','nggallery'),
 		'format'			=> __('Format','nggallery'),
 		'width'				=> __('Image Width','nggallery'),
-		'height'			=> __('Image Height','nggallery')
+		'height'			=> __('Image Height','nggallery'),
+		'flash'				=> __('Flash','nggallery')
 		);
 		
 		if ($tagnames[$key]) $key = $tagnames[$key];
@@ -490,6 +494,7 @@ class nggMeta{
 			'focal_length' => 0,
 			'iso' => 0,
 			'shutter_speed' => 0,
+			'flash' => 0,
 			'title' => '',
 			'keywords' => ''
 		);

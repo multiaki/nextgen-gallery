@@ -386,21 +386,21 @@ class nggAdmin{
 			if (isset($exif['Orientation'])) {
 				
 				switch ($exif['Orientation']) {
-					case 6 : 
-					case 5 :
+					case 6 : // 90 rotate right
+					case 5 : // vertical flip + 90 rotate right
 						$angle = 90;
 						break;
-					case 8 :
-					case 7 : 
+					case 8 : // 90 rotate left
+					case 7 : // horizontal flip + 90 rotate right
 						$angle = -90;
 						break;
-					case 4 :
-					case 3 : 
+					case 4 : // vertical flip
+					case 3 : // 180 rotate left
 						$angle = 180;
 						break;
 					default:
-					case 1 :
-						// no action in the case it doesn't need a rotation
+					case 2 : // horizontal flip
+					case 1 : // no action in the case it doesn't need a rotation
 						return '0';
 						break; 
 				}
