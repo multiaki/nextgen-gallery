@@ -462,6 +462,43 @@ class nggdb {
         }
         return $result;
     }
+
+    /**
+    * Add an image to the database
+    * 
+	* @since V1.4.0
+	* @param int $pid   id of the gallery
+    * @param (optional) string|int $galleryid
+    * @param (optional) string $filename
+    * @param (optional) string $description
+    * @param (optional) string $alttext
+    * @param (optional) array $meta data
+    * @param (optional) int $post_id (required for sync with WP media lib)
+    * @param (optional) string $imagedate
+    * @param (optional) int $exclude (0 or 1)
+    * @param (optional) int $sortorder
+    * @return bool result of the ID of the inserted image
+    */
+    function add_image( $id = false, $filename = false, $description = '', $alttext = '', $meta_data = false, $post_id = 0, $imagedate = '0000-00-00 00:00:00', $exclude = 0, $sortorder = 0  ) {
+        global $wpdb;
+                
+		if ( is_array($meta_data) )
+			$meta_data = serialize($meta_data);
+			
+		// Add the image
+		if ( false === $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->nggpictures (galleryid, filename, description, alttext, meta_data, post_id, imagedate, exclude, sortorder) 
+													 VALUES (%d, %s, %s, %s, %s, %d, %s, %d, %d)", $id, $filename, $description, $alttext, $meta_data, $post_id, $imagedate, $exclude, $sortorder ) ) ) {
+			return false;
+		}
+		
+		$imageID = (int) $wpdb->insert_id;
+			
+		// Remove from cache the galley, needs to be rebuild now
+	    wp_cache_delete( $id, 'ngg_gallery'); 
+		//and give me the new id
+		
+		return $imageID;
+    }
     
     /**
     * Delete an image entry from the database
@@ -700,7 +737,7 @@ class nggdb {
      * 
      * @since 1.4.0
      * @param int $id The image ID
-     * @param array $values An arry with existing or new values
+     * @param array $values An array with existing or new values
      * @return bool result of query
      */ 
     function update_image_meta( $id, $new_values ) {
@@ -712,7 +749,7 @@ class nggdb {
         $old_values = unserialize( $old_values );
 
         $meta = array_merge( (array)$old_values, (array)$new_values );
-
+		
         $result = $wpdb->query( $wpdb->prepare("UPDATE $wpdb->nggpictures SET meta_data = %s WHERE pid = %d", serialize($meta), $id) );
         
         wp_cache_delete($id, 'ngg_image');

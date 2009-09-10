@@ -327,7 +327,7 @@ class nggAdmin{
 			return __('Object didn\'t contain correct data','nggallery');	
 		
 		// before we start we import the meta data to database (required for uploads before V1.4.0)
-		nggAdmin::get_MetaData( $image->pid );
+		nggAdmin::maybe_import_meta( $image->pid );
 		
 		// if no parameter is set, take global settings
 		$width  = ($width  == 0) ? $ngg->options['imgWidth']  : $width;
@@ -356,7 +356,7 @@ class nggAdmin{
 	}
 	
 	/**
-	 * Rotated an image based on the oriemtation flag or a definded angle
+	 * Rotated an image based on the orientation flag or a definded angle
 	 * 
 	 * @param int|object $image
 	 * @param integer (optional) $angle, if set to 0, the exif flag will be used
@@ -378,7 +378,7 @@ class nggAdmin{
 		if (!is_writable($image->imagePath))
 			return ' <strong>' . $image->filename . __(' is not writeable','nggallery') . '</strong>';
 		
-		// if there is no angle, we look for the orinetation flag
+		// if there is no angle, we look for the orientation flag
 		if ($angle == 0) {
 			$meta = new nggMeta( $image->pid );
 			$exif = $meta->get_EXIF();
@@ -400,8 +400,9 @@ class nggAdmin{
 						break;
 					default:
 					case 1 :
+						// no action in the case it doesn't need a rotation
+						return '0';
 						break; 
-	
 				}
 			}
 		}
@@ -411,6 +412,9 @@ class nggAdmin{
 		// skip if file is not there
 		if (!$file->error) {
 
+			// before we start we import the meta data to database (required for uploads before V1.4.0)
+			nggAdmin::maybe_import_meta( $image->pid );
+			
 			$file->rotateImage($angle);	
 			$file->save($image->imagePath, $ngg->options['imgQuality']);
 			
@@ -453,7 +457,7 @@ class nggAdmin{
 			return __('Object didn\'t contain correct data','nggallery');		
 
 		// before we start we import the meta data to database (required for uploads before V1.4.0)
-		nggAdmin::get_MetaData( $image->pid );	
+		nggAdmin::maybe_import_meta( $image->pid );	
 
 		if (!is_writable($image->imagePath))
 			return ' <strong>' . $image->filename . __(' is not writeable','nggallery') . '</strong>';
@@ -510,7 +514,7 @@ class nggAdmin{
 					$image_ids[] = $pic_id;
 
 				// add the metadata
-				$meta = nggAdmin::import_MetaData($pic_id);
+				nggAdmin::import_MetaData($pic_id);
 				
 				// auto rotate
 				nggAdmin::rotate_image($pic_id);				
@@ -527,11 +531,11 @@ class nggAdmin{
 	}
 
 	/**
-	 * Import some metadata into the database (if avialable)
+	 * Import some meta data into the database (if avialable)
 	 * 
 	 * @class nggAdmin
 	 * @param array|int $imagesIds
-	 * @return bool
+	 * @return string result code
 	 */
 	function import_MetaData($imagesIds) {
 			
@@ -542,39 +546,50 @@ class nggAdmin{
 		if (!is_array($imagesIds))
 			$imagesIds = array($imagesIds);
 		
-		foreach($imagesIds as $pic_id) {
+		foreach($imagesIds as $imageID) {
 			
-			$picture = nggdb::find_image($pic_id);
-			if (!$picture->error) {
+			$image = nggdb::find_image( $imageID );
+			if (!$image->error) {
 
-				$meta = nggAdmin::get_MetaData( $picture->pid, true );
+				$meta = nggAdmin::get_MetaData( $image->pid );
 				
 				// get the title
 				if (!$alttext = $meta['title'])
-					$alttext = $picture->alttext;
+					$alttext = $image->alttext;
 				// get the caption / description field
 				if (!$description = $meta['caption'])
-					$description = $picture->description;
+					$description = $image->description;
 				// get the file date/time from exif
 				$timestamp = $meta['timestamp'];
-				// update database
+				// first update database
 				$result = $wpdb->query( 
 					$wpdb->prepare("UPDATE $wpdb->nggpictures SET 
 						alttext = %s, 
 						description = %s, 
-						imagedate = %s, 
-						meta_tag = %s 
-					WHERE pid = %d", $alttext, $description, $timestamp, serialize($meta), $pic_id) );
-				// add the tags
+						imagedate = %s
+					WHERE pid = %d", $alttext, $description, $timestamp, $image->pid) );
+
+				if ($result === false)
+					return ' <strong>' . $image->filename . ' ' . __('(Error : Couldn\'t not update data base)', 'nggallery') . '</strong>';		
+				
+				//this flag will inform us the the import is already one time performed
+				$meta['common']['saved']  = true; 
+				$result = nggdb::update_image_meta($image->pid, $meta['common']);
+				
+				if ($result === false)
+					return ' <strong>' . $image->filename . ' ' . __('(Error : Couldn\'t not update meta data)', 'nggallery') . '</strong>';		
+
+				// add the tags if we found some
 				if ($meta['keywords']) {
 					$taglist = explode(',', $meta['keywords']);
-					wp_set_object_terms($pic_id, $taglist, 'ngg_tag');
-				} // add tags
-			}// error check
+					wp_set_object_terms($image->pid, $taglist, 'ngg_tag');
+				}
+
+			} else
+				return ' <strong>' . $image->filename . ' ' . __('(Error : Couldn\'t not find image)', 'nggallery') . '</strong>';// error check
 		}
 		
-		return $meta;
-		
+		return '1';		
 	}
 
 	/**
@@ -583,27 +598,50 @@ class nggAdmin{
 	 * @class nggAdmin
 	 * @require NextGEN Meta class
 	 * @param int $id image ID
-	 * @param bool $save if is set, the meta data will be saved to the database
 	 * @return array metadata
 	 */
-	function get_MetaData($id, $save = false) {
+	function get_MetaData($id) {
 		
 		require_once(NGGALLERY_ABSPATH . '/lib/meta.php');
 		
 		$meta = array();
 
 		$pdata = new nggMeta( $id );
+		
 		$meta['title'] = $pdata->get_META('title');		
 		$meta['caption'] = $pdata->get_META('caption');	
 		$meta['keywords'] = $pdata->get_META('keywords');
 		$meta['timestamp'] = $pdata->get_date_time();
-		
-		//the common data will be saved to the database, if wanted
-		if ( $save )
-			$pdata->save_meta();	
+		// this contain other useful meta information
+		$meta['common'] = $pdata->get_common_meta();
 		
 		return $meta;
 		
+	}
+
+	/**
+	 * Maybe import some meta data to the database. The functions checks the flag 'saved'
+	 * and if based on compat reason (pre V1.4.0) we save then some meta datas to the database
+	 * 
+	 * @since V1.4.0
+	 * @param int $id
+	 * @return result
+	 */
+	function maybe_import_meta( $id ) {
+				
+		require_once(NGGALLERY_ABSPATH . '/lib/meta.php');
+				
+		$image = new nggMeta( $id );
+		
+		if ( $image->meta_data['saved'] != true ) {
+			//this flag will inform us the the import is already one time performed
+			$meta['saved']  = true; 
+			$result = nggdb::update_image_meta($image->pid, $meta['common']);
+		} else
+			return false;
+		
+		return $result;		
+
 	}
 
 	/**

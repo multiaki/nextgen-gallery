@@ -56,10 +56,6 @@ class nggMeta{
 			// get the xmp data in a XML format
 			if ( is_callable('xml_parser_create'))
 			$this->xmp_data = $this->extract_XMP($this->image->imagePath );
-
-			// since v1.4.0 we save some meta data to database
-			if ( $this->image->meta_data['saved'] == false)
-				$this->save_meta();
 						
 			return true;
 		}
@@ -476,12 +472,12 @@ class nggMeta{
 	}
 	
 	/**
-	 * This function saves the most common metadata to the database (seralized)
+	 * This function return the most common metadata, via a filter we can add more
 	 * Reason : GD manipulation removes that options
 	 * 
 	 * @return void
 	 */
-	function save_meta() {
+	function get_common_meta() {
 		global $wpdb;
 		
 		$meta = array(
@@ -512,12 +508,7 @@ class nggMeta{
 		$meta['width']  = $this->size[0];
 		$meta['height'] = $this->size[1];
 		
-		//this flag inform us if the import is already one time performed
-		$meta['saved']  = true; 
-		
-		$result = nggdb::update_image_meta($this->image->pid, $meta);
-		
-		return $result;		
+		return $meta;		
 	}
 
 }

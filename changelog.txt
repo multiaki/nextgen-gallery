@@ -2,10 +2,11 @@ NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
 = v1.4.0 - in progress =
+* NEW : Automatic rotate images during upload or via manage gallery page (THX to Simone Fumagalli)
 * NEW : Include Bulkupdate for gallery overview, require PHP 5.2
 * NEW : XMLRPC support with 4 new methods : see xmlrpc.php for more information
-* NEW : Recent and random images can be taken from a specific gallery using the id=x parameter in the shortcode
-* NEW : Recent images can be recent by exif date (instead of databse id) by using the mode=recentdate parameter in the shortcode
+* NEW : Recent and random images can be taken from a specific gallery using the id=x parameter in the shortcode (THX to Prollius)
+* NEW : Recent images can be recent by exif date (instead of databse id) by using the mode=recentdate parameter in the shortcode  (THX to Prollius)
 * NEW : Introduce the WP_Object_cache and meta_data
 * NEW : Various new hooks and filters
 * Added : New option to add hidden images. Needed to show all images in a modal window (Thickbox, Lightbox et.)
