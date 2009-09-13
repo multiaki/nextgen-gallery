@@ -297,7 +297,7 @@ function ngg_get_serverinfo() {
 	else $xml = __('No', 'nggallery');
 	
 ?>
-	<li><?php _e('Operating System', 'nggallery'); ?> : <span><?php echo PHP_OS; ?></span></li>
+	<li><?php _e('Operating System', 'nggallery'); ?> : <span><?php echo PHP_OS; ?>&nbsp;(<?php echo (PHP_INT_SIZE * 8) ?>&nbsp;Bit)</span></li>
 	<li><?php _e('Server', 'nggallery'); ?> : <span><?php echo $_SERVER["SERVER_SOFTWARE"]; ?></span></li>
 	<li><?php _e('Memory usage', 'nggallery'); ?> : <span><?php echo $memory_usage; ?></span></li>
 	<li><?php _e('MYSQL Version', 'nggallery'); ?> : <span><?php echo $sqlversion; ?></span></li>

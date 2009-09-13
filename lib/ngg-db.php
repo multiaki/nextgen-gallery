@@ -714,7 +714,7 @@ class nggdb {
            	$where_clause = '';
             if ( is_numeric($galleryID) ) {
             	$id = (int) $galleryID;
-            	$where_clause = ' AND tt.galleryid = {$id}';
+            	$where_clause = " AND tt.galleryid = {$id}";
             }
         }
         

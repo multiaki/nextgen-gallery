@@ -129,7 +129,7 @@ p#ngg-inlinebutton {
 }
 
 .fixed .column-id {
-	width: 2em;
+	width: 5em;
 }
 
 .fixed .column-alt_title_desc {
@@ -194,11 +194,11 @@ div .progressbar span {
 
  /* SETTINGS FOR ALBUM PAGE */
 
-.tablenav select[name="act_album"] {
+.albumnav select[name="act_album"] {
 	width:150px;
 }
 
-.tablenav span {
+.albumnav span {
 	padding-left: 50px;
 }
 

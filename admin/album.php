@@ -249,7 +249,7 @@ function showDialog() {
 	<form id="selectalbum" method="POST" onsubmit="ngg_serialize()" accept-charset="utf-8">
 		<?php wp_nonce_field('ngg_album') ?>
 		<input name="sortorder" type="hidden" />
-		<div class="tablenav">
+		<div class="albumnav tablenav">
 			<div class="alignleft actions">
 				<?php _e('Select album', 'nggallery') ?>
 				<select id="act_album" name="act_album" onchange="this.form.submit();">
