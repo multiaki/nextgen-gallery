@@ -48,7 +48,7 @@ function nggallery_sortorder($galleryID = 0){
 	
 	// In the case somebody presort, then we take this url
 	if ( isset($_GET['dir']) || isset($_GET['presort']) )
-		$base_url = $_SERVER['REQUEST_URI'];
+		$base_url = esc_url( $_SERVER['REQUEST_URI'] );
 	else		
 		$base_url = $clean_url;
 	
