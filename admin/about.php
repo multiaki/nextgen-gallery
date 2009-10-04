@@ -11,7 +11,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		<div class="postbox">
 		    <h3 class="hndle"><span><?php _e("NextGEN DEV Team", 'nggallery'); ?></span></h3>
 		    <div class="inside">
-				<p><?php _e('This plugin is primarily developed, maintained, supported, documented by', 'nggallery'); ?> <a href="http://alexrabe.boelinger.com" target="_blank">Alex Rabe</a>. <?php _e('There are many other folks who have made contributions to this project :', 'nggallery') ;?></p>
+				<p><?php _e('This plugin is primarily developed, maintained, supported, documented by', 'nggallery'); ?> <a href="http://alexrabe.de" target="_blank">Alex Rabe</a>. <?php _e('There are many other folks who have made contributions to this project :', 'nggallery') ;?></p>
 				<p><?php ngg_list_contributors(); ?></p>
 			</div>
 		</div>
@@ -43,12 +43,14 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<li><strong><?php _e('Translate the plugin', 'nggallery') ;?></strong><br /><?php _e('To help people to work with this plugin, I would like to have it in all available languages', 'nggallery') ;?></li>
 					<li><strong><?php _e('Donate the work via paypal', 'nggallery') ;?></strong><br />
 						<form action="https://www.paypal.com/cgi-bin/webscr" method="post" >
-						<input type="hidden" name="cmd" value="_xclick"/><input type="hidden" name="business" value="alterego@boelinger.com"/>
-						<input type="hidden" name="item_name" value="NextGEN Gallery plugin www.alexrabe.boelinger.com"/>
-						<input type="hidden" name="no_shipping" value="1"/><input type="hidden" name="return" value="http://alexrabe.boelinger.com/" />
-						<input type="hidden" name="cancel_return" value="http://alexrabe.boelinger.com/"/>
+						<input type="hidden" name="cmd" value="_xclick"/>
+						<input type="hidden" name="business" value="alter.ego@boelinger.com"/>
+						<input type="hidden" name="item_name" value="NextGEN Gallery plugin"/>
+						<input type="hidden" name="no_shipping" value="1"/>
+						<input type="hidden" name="return" value="http://alexrabe.de/" />
+						<input type="hidden" name="cancel_return" value="http://alexrabe.de/"/>
 						<input type="hidden" name="lc" value="US" /> 
-						<input type="hidden" name="currency_code" value="USD"/>
+						<input type="hidden" name="currency_code" value="EUR"/>
 						<input type="hidden" name="tax" value="0"/>
 						<input type="hidden" name="bn" value="PP-DonationsBF"/>
 						<input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but21.gif" name="submit" alt="Make payments with PayPal - it's fast, free and secure!" style="border: none;"/>

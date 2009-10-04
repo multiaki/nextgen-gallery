@@ -1,12 +1,12 @@
 <?php
 /*
 Plugin Name: NextGEN Gallery
-Plugin URI: http://alexrabe.boelinger.com/?page_id=80
+Plugin URI: http://alexrabe.de/?page_id=80
 Description: A NextGENeration Photo gallery for the Web 2.0.
 Author: Alex Rabe
 Version: 1.4.0a
 
-Author URI: http://alexrabe.boelinger.com/
+Author URI: http://alexrabe.de/
 
 Copyright 2007-2009 by Alex Rabe & NextGEN DEV-Team
 

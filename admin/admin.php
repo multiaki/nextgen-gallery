@@ -239,39 +239,39 @@ class nggAdminPanel{
 				$link  = __('<a href="http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/" target="_blank">Setup</a>', 'nggallery');
 			break;
 			case "{$i18n}_page_nggallery-about" :
-				$link  = __('<a href="http://alexrabe.boelinger.com/wordpress-plugins/nextgen-gallery/languages/" target="_blank">Translation by alex rabe</a>', 'nggallery');
+				$link  = __('<a href="http://alexrabe.de/wordpress-plugins/nextgen-gallery/languages/" target="_blank">Translation by alex rabe</a>', 'nggallery');
 			break;
 			case "{$i18n}_page_nggallery-roles" :
 				$link  = __('<a href="http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/" target="_blank">Roles / Capabilities</a>', 'nggallery');
 			break;
 			case "{$i18n}_page_nggallery-style" :
 				$link  = __('<a href="http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/" target="_blank">Styles</a>', 'nggallery');
-				$link .= ' | <a href="http://nextgen.boelinger.com/templates/" target="_blank">' . __('Templates', 'nggallery') . '</a>';
+				$link .= ' | <a href="http://nextgen-gallery.com/templates/" target="_blank">' . __('Templates', 'nggallery') . '</a>';
 			break;
 			case "{$i18n}_page_nggallery-gallery" :
 				$link  = __('<a href="http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/" target="_blank">Gallery management</a>', 'nggallery');
-				$link .= ' | <a href="http://nextgen.boelinger.com/gallery-page/" target="_blank">' . __('Gallery example', 'nggallery') . '</a>';
+				$link .= ' | <a href="http://nextgen-gallery.com/gallery-page/" target="_blank">' . __('Gallery example', 'nggallery') . '</a>';
 			break;
 			case "{$i18n}_page_nggallery-manage-gallery" :
 			case "nggallery-manage-gallery":
 			case "nggallery-manage-images":
 				$link  = __('<a href="http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/" target="_blank">Gallery management</a>', 'nggallery');
-				$link .= ' | <a href="http://nextgen.boelinger.com/gallery-tags/" target="_blank">' . __('Gallery tags', 'nggallery') . '</a>';
+				$link .= ' | <a href="http://nextgen-gallery.com/gallery-tags/" target="_blank">' . __('Gallery tags', 'nggallery') . '</a>';
 			break;
 			case "{$i18n}_page_nggallery-manage-album" :
 				$link  = __('<a href="http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/" target="_blank">Album management</a>', 'nggallery');
-				$link .= ' | <a href="http://nextgen.boelinger.com/album/" target="_blank">' . __('Album example', 'nggallery') . '</a>';
-				$link .= ' | <a href="http://nextgen.boelinger.com/albumtags/" target="_blank">' . __('Album tags', 'nggallery') . '</a>';
+				$link .= ' | <a href="http://nextgen-gallery.com/album/" target="_blank">' . __('Album example', 'nggallery') . '</a>';
+				$link .= ' | <a href="http://nextgen-gallery.com/albumtags/" target="_blank">' . __('Album tags', 'nggallery') . '</a>';
 			break;
 			case "{$i18n}_page_nggallery-tags" :
 				$link  = __('<a href="http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/" target="_blank">Gallery tags</a>', 'nggallery');
-				$link .= ' | <a href="http://nextgen.boelinger.com/related-images/" target="_blank">' . __('Related images', 'nggallery') . '</a>';
-				$link .= ' | <a href="http://nextgen.boelinger.com/gallery-tags/" target="_blank">' . __('Gallery tags', 'nggallery') . '</a>';
-				$link .= ' | <a href="http://nextgen.boelinger.com/albumtags/" target="_blank">' . __('Album tags', 'nggallery') . '</a>';
+				$link .= ' | <a href="http://nextgen-gallery.com/related-images/" target="_blank">' . __('Related images', 'nggallery') . '</a>';
+				$link .= ' | <a href="http://nextgen-gallery.com/gallery-tags/" target="_blank">' . __('Gallery tags', 'nggallery') . '</a>';
+				$link .= ' | <a href="http://nextgen-gallery.com/albumtags/" target="_blank">' . __('Album tags', 'nggallery') . '</a>';
 			break;
 			case "{$i18n}_page_nggallery-options" :
 				$link  = __('<a href="http://dpotter.net/Technical/2008/03/nextgen-gallery-review-image-management/" target="_blank">Image management</a>', 'nggallery');
-				$link .= ' | <a href="http://nextgen.boelinger.com/custom-fields/" target="_blank">' . __('Custom fields', 'nggallery') . '</a>';
+				$link .= ' | <a href="http://nextgen-gallery.com/custom-fields/" target="_blank">' . __('Custom fields', 'nggallery') . '</a>';
 			break;
 		}
 		
@@ -283,9 +283,9 @@ class nggAdminPanel{
 			$help .= '<h5>' . __('More Help & Info', 'nggallery') . '</h5>';
 			$help .= '<div class="metabox-prefs">';
 			$help .= __('<a href="http://wordpress.org/tags/nextgen-gallery?forum_id=10" target="_blank">Support Forums</a>', 'nggallery');
-			$help .= ' | <a href="http://alexrabe.boelinger.com/wordpress-plugins/nextgen-gallery/faq/" target="_blank">' . __('FAQ', 'nggallery') . '</a>';
+			$help .= ' | <a href="http://alexrabe.de/wordpress-plugins/nextgen-gallery/faq/" target="_blank">' . __('FAQ', 'nggallery') . '</a>';
 			$help .= ' | <a href="http://code.google.com/p/nextgen-gallery/issues/list" target="_blank">' . __('Feature request', 'nggallery') . '</a>';
-			$help .= ' | <a href="http://alexrabe.boelinger.com/wordpress-plugins/nextgen-gallery/languages/" target="_blank">' . __('Get your language pack', 'nggallery') . '</a>';
+			$help .= ' | <a href="http://alexrabe.de/wordpress-plugins/nextgen-gallery/languages/" target="_blank">' . __('Get your language pack', 'nggallery') . '</a>';
 			$help .= ' | <a href="http://code.google.com/p/nextgen-gallery/" target="_blank">' . __('Contribute development', 'nggallery') . '</a>';
 			$help .= ' | <a href="http://wordpress.org/extend/plugins/nextgen-gallery" target="_blank">' . __('Download latest version', 'nggallery') . '</a>';
 			$help .= "</div>\n";
