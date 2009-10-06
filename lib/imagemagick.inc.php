@@ -353,6 +353,18 @@ var $imageMagickBefore;
 		$this->currentDimensions['height'] = $this->newDimensions['newHeight'];
 		
 	}
+
+	/**
+	 * Flip an image.
+	 *
+	 * @param bool $horz flip the image in horizontal mode
+	 * @param bool $vert flip the image in vertical mode
+	 */
+	function flipImage( $horz = false, $vert = false ) {
+		
+		//TODO: need to be added
+
+	}
 	
 	/**
      * Rotates image either 90 degrees clockwise or counter-clockwise

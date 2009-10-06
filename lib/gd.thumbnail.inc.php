@@ -687,14 +687,45 @@ class ngg_Thumbnail {
 		$this->currentDimensions['width'] = $width;
 		$this->currentDimensions['height'] = $newHeight;
 	}
+
+	/**
+	 * Flip an image.
+	 *
+	 * @param bool $horz flip the image in horizontal mode
+	 * @param bool $vert flip the image in vertical mode
+	 */
+	function flipImage( $horz = false, $vert = false ) {
+		
+		$sx = $vert ? ($this->currentDimensions['width'] - 1) : 0;
+		$sy = $horz ? ($this->currentDimensions['height'] - 1) : 0;
+		$sw = $vert ? -$this->currentDimensions['width'] : $this->currentDimensions['width'];
+		$sh = $horz ? -$this->currentDimensions['height'] : $this->currentDimensions['height'];
+		
+		$this->workingImage = imagecreatetruecolor( $this->currentDimensions['width'], $this->currentDimensions['height'] ); 
+		
+		imagecopyresampled($this->workingImage, $this->oldImage, 0, 0, $sx, $sy, $this->currentDimensions['width'], $this->currentDimensions['height'], $sw, $sh) ;
+		$this->oldImage = $this->workingImage;
+		$this->newImage = $this->workingImage;
+		
+		return true;
+	}
 	
 	/**
 	 * Rotate an image. Used in case "imagerotate" doesn't work.
 	 *
 	 * @param int $angle
 	 */
-
 	function rotateImage( $angle = 90 ) {
+		
+		if ( ($angle == 180) ) {
+			$this->flipImage(false, true);
+			return true;
+		}
+		
+		if ( ($angle == 360) ) {
+			$this->flipImage(true, false);
+			return true;
+		}				
 
 		if ( function_exists('imagerotate') ) {
 	        $this->workingImage = imagerotate($this->oldImage, 360 - $angle, 0); // imagerotate() rotates CCW 
@@ -703,11 +734,7 @@ class ngg_Thumbnail {
 			return true;
 		}
 		
-		// flip width/height if you mirror the image
-		if (($angle == 180) or ($angle == 360)) 
-			$this->workingImage = imagecreatetruecolor( $this->currentDimensions['width'], $this->currentDimensions['height'] ); 
-		else		
-			$this->workingImage = imagecreatetruecolor( $this->currentDimensions['height'], $this->currentDimensions['width'] ); 
+		$this->workingImage = imagecreatetruecolor( $this->currentDimensions['height'], $this->currentDimensions['width'] ); 
 		
 	    imagealphablending($this->workingImage, false); 
 	    imagesavealpha($this->workingImage, true); 
@@ -730,20 +757,6 @@ class ngg_Thumbnail {
 	 	                    return false; 
 	 	            } 
 	 	        } 
-			break;
-		
-			case 180 :
- 	            for( $y = 0; $y < $this->currentDimensions['height']; $y++ ) { 
- 	                if ( !imagecopy($this->workingImage, $this->oldImage, 0, $y, 0, $this->currentDimensions['height'] - $y- 1, $this->currentDimensions['width'], 1) ) 
- 	                    return false; 
- 	            } 
-			break;
-			
-			case 360 :
- 	            for( $x = 0; $x < $this->currentDimensions['width']; $x++ ) {  
- 	                if ( !imagecopy($this->workingImage, $this->oldImage, $x, 0, $this->currentDimensions['width'] - $x - 1, 0, 1, $this->currentDimensions['height']) ) 
- 	                    return false; 
- 	            } 
 			break;
 						
 			default : 

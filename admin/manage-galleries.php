@@ -134,6 +134,7 @@ function nggallery_manage_gallery_main() {
 					<input name="doaction" class="button-secondary action" type="submit" onclick="showAddGallery(); return false;" value="<?php _e('Add new gallery', 'nggallery') ?>"/>
 				<?php endif; ?>
 			</div>
+			
 		<?php if ( $page_links ) : ?>
 			<div class="tablenav-pages"><?php $page_links_text = sprintf( '<span class="displaying-num">' . __( 'Displaying %s&#8211;%s of %s' ) . '</span>%s',
 				number_format_i18n( ( $_GET['paged'] - 1 ) * $nggdb->paged['objects_per_page'] + 1 ),
@@ -141,8 +142,9 @@ function nggallery_manage_gallery_main() {
 				number_format_i18n( $nggdb->paged['total_objects'] ),
 				$page_links
 			); echo $page_links_text; ?></div>
-		</div>
 		<?php endif; ?>
+		
+		</div>
 		<table class="widefat" cellspacing="0">
 			<thead>
 			<tr>
