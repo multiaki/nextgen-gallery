@@ -120,7 +120,7 @@ function nggShowGallery( $galleryID, $template = '', $images = false ) {
             
         // 1st look for ImageBrowser link
         if ( !empty($pid) && $ngg_options['galImgBrowser'] )  {
-            $out = nggShowImageBrowser( $galleryID, $mode );
+            $out = nggShowImageBrowser( $galleryID, $template );
             return $out;
         }
         
