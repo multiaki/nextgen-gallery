@@ -3,8 +3,8 @@
  * gd.thumbnail.inc.php
  * 
  * @author 		Ian Selby (ian@gen-x-design.com)
- * @copyright 	Copyright 2006-2008
- * @version 	1.1.3 (PHP4)
+ * @copyright 	Copyright 2006-2009
+ * @version 	1.2.0 (based on 1.1.3)
  * @modded      by Alex Rabe
  * 
  */
@@ -537,7 +537,7 @@ class ngg_Thumbnail {
 	 * @param int $width
 	 * @param int $height
 	 */
-	function crop($startX,$startY,$width,$height) {
+	function crop($startX, $startY, $width, $height) {
 	    //make sure the cropped area is not greater than the size of the image
 	    if($width > $this->currentDimensions['width']) $width = $this->currentDimensions['width'];
 	    if($height > $this->currentDimensions['height']) $height = $this->currentDimensions['height'];
@@ -711,24 +711,18 @@ class ngg_Thumbnail {
 	}
 	
 	/**
-	 * Rotate an image. Used in case "imagerotate" doesn't work.
+	 * Rotate an image clockwise or counter clockwise
 	 *
-	 * @param int $angle
+	 * @param string $direction could be CW or CCW
 	 */
-	function rotateImage( $angle = 90 ) {
+	function rotateImage( $dir = 'CW' ) {
 		
-		if ( ($angle == 180) ) {
-			$this->flipImage(false, true);
-			return true;
-		}
+		$angle = ($dir == 'CW') ? 90 : -90;
 		
-		if ( ($angle == 360) ) {
-			$this->flipImage(true, false);
-			return true;
-		}				
-
 		if ( function_exists('imagerotate') ) {
 	        $this->workingImage = imagerotate($this->oldImage, 360 - $angle, 0); // imagerotate() rotates CCW 
+	        $this->currentDimensions['width']  = imagesx($this->workingImage);
+	    	$this->currentDimensions['height'] = imagesy($this->workingImage);
     	    $this->oldImage = $this->workingImage;
 			$this->newImage = $this->workingImage;
 			return true;
@@ -762,7 +756,9 @@ class ngg_Thumbnail {
 			default : 
 				return false;
 		}
-			
+
+		$this->currentDimensions['width']  = imagesx($this->workingImage);
+	    $this->currentDimensions['height'] = imagesy($this->workingImage);			
 	    $this->oldImage = $this->workingImage;
 		$this->newImage = $this->workingImage;
 		
@@ -907,8 +903,7 @@ class ngg_Thumbnail {
 	}
 	
     /**
-     * Fast imagecopyresampled
-     * by tim@leethost.com
+     * Fast imagecopyresampled by tim@leethost.com
      *
      */	
 	function fastimagecopyresampled (&$dst_image, $src_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h, $quality = 3) {

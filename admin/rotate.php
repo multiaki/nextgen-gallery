@@ -27,7 +27,7 @@ $id = (int) $_GET['id'];
 $picture = nggdb::find_image($id);
 
 include_once( nggGallery::graphic_library() );
-$ngg_options=get_option('ngg_options');
+$ngg_options = get_option('ngg_options');
 
 $thumb = new ngg_Thumbnail($picture->imagePath, TRUE);
 $thumb->resize(350,350);
@@ -52,8 +52,8 @@ $preview_image		= NGGALLERY_URLPATH . 'nggshow.php?pid=' . $picture->pid . '&amp
 		  type : "POST",
 		  data:  {action: 'rotateImage', id: <?php echo $id ?>, ra: rotate_angle},
 		  cache: false,
-		  success: function (msg) { showMessage('<?php echo _e("Image rotated.", "nggallery") ?>') },
-		  error: function (msg, status, errorThrown) { showMessage('<?php echo _e("Error rotating thumbnail.", "nggallery") ?>') }
+		  success: function (msg) { showMessage('<?php _e('Image rotated', 'nggallery'); ?>') },
+		  error: function (msg, status, errorThrown) { showMessage('<?php _e('Error rotating thumbnail', 'nggallery'); ?>') }
 		});
 
 	}
@@ -73,23 +73,21 @@ $preview_image		= NGGALLERY_URLPATH . 'nggshow.php?pid=' . $picture->pid . '&amp
 </script>
 
 <table width="98%" align="center" style="border:1px solid #DADADA">
-	<tr style="height : 370px;">
+	<tr style="height : 360px;">
 		<td valign="middle" align="center" style="background-color:#DADADA; width : 370px;">
 			<img src="<?php echo $preview_image ?>" alt="" id="imageToEdit" />	
 		</td>
 		<td>
-			<input type="radio" name="ra" value="90" /><?php _e('90° clockwise', 'nggallery'); ?><br />
-			<input type="radio" name="ra" value="-90" /><?php _e('90° anticlockwise', 'nggallery'); ?><br />
-			<input type="radio" name="ra" value="180" /><?php _e('Flip vertically', 'nggallery'); ?><br />
-			<input type="radio" name="ra" value="360" /><?php _e('Flip horizontally', 'nggallery'); ?>
+			<input type="radio" name="ra" value="cw" /><?php _e('90° clockwise', 'nggallery'); ?><br />
+			<input type="radio" name="ra" value="ccw" /><?php _e('90° anticlockwise', 'nggallery'); ?><br />
+			<input type="radio" name="ra" value="fv" /><?php _e('Flip vertically', 'nggallery'); ?><br />
+			<input type="radio" name="ra" value="fh" /><?php _e('Flip horizontally', 'nggallery'); ?>
 		</td>		
 	</tr>
 	<tr style="background-color:#DADADA;">
 
 		<td colspan="2">
-			<input type="button" name="update" value="<?php _e('Preview', 'nggallery'); ?>" onclick="rotateImage()" class="button-secondary" style="float:right; margin-left:4px;"/>
 			<input type="button" name="update" value="<?php _e('Update', 'nggallery'); ?>" onclick="rotateImage()" class="button-secondary" style="float:right; margin-left:4px;"/>
-			
 			<div id="thumbMsg" style="color:#FF0000; display : none;font-size:11px; float:right; width:60%; height:2em; line-height:2em;"></div>
 			
 		</td>

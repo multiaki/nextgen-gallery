@@ -369,11 +369,12 @@ var $imageMagickBefore;
 	/**
      * Rotates image either 90 degrees clockwise or counter-clockwise
      *
-     * @param int $angle
+     * @param string $direction
      */
-	function rotateImage($angle = 90) {
+	function rotateImage($dir = 'CW') {
 		
-	  	$angle = (int) $angle;
+		$angle = ($dir == 'CW') ? 90 : -90;
+
   		$this->imageMagickExec .= " -rotate $angle ";
 		
 		$newWidth = $this->currentDimensions['height'];

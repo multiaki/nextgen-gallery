@@ -356,13 +356,14 @@ class nggAdmin{
 	}
 	
 	/**
-	 * Rotated an image based on the orientation flag or a definded angle
+	 * Rotated/Flip an image based on the orientation flag or a definded angle
 	 * 
 	 * @param int|object $image
-	 * @param integer (optional) $angle, if set to 0, the exif flag will be used
+	 * @param integer (optional) $dir, if set to false, the exif flag will be used, could be either CW or CCW
+	 * @param string (optional)  $flip, could be either false | V (flip vertical) | H (flip horizontal)
 	 * @return string result code
 	 */
-	function rotate_image($image, $angle = 0) {
+	function rotate_image($image, $dir = false, $flip = false) {
 
 		global $ngg;
 
@@ -379,28 +380,34 @@ class nggAdmin{
 			return ' <strong>' . $image->filename . __(' is not writeable','nggallery') . '</strong>';
 		
 		// if there is no angle, we look for the orientation flag
-		if ($angle == 0) {
+		if ( $dir === false ) {
 			$meta = new nggMeta( $image->pid );
 			$exif = $meta->get_EXIF();
 	
 			if (isset($exif['Orientation'])) {
 				
 				switch ($exif['Orientation']) {
-					case 6 : // 90 rotate right
 					case 5 : // vertical flip + 90 rotate right
-						$angle = 90;
+						$flip = 'V';
+					case 6 : // 90 rotate right
+						$dir = 'CW';
 						break;
-					case 8 : // 90 rotate left
 					case 7 : // horizontal flip + 90 rotate right
-						$angle = -90;
+						$flip = 'H';
+					case 8 : // 90 rotate left
+						$dir = 'CCW';
 						break;
 					case 4 : // vertical flip
-					case 3 : // 180 rotate left
-						$angle = 180;
+						$flip = 'V';
 						break;
-					default:
+					case 3 : // 180 rotate left
+						$dir = 180;
+						break;
 					case 2 : // horizontal flip
+						$flip = 'H';
+						break;						
 					case 1 : // no action in the case it doesn't need a rotation
+					default:
 						return '0';
 						break; 
 				}
@@ -414,8 +421,16 @@ class nggAdmin{
 
 			// before we start we import the meta data to database (required for uploads before V1.4.0)
 			nggAdmin::maybe_import_meta( $image->pid );
-			
-			$file->rotateImage($angle);	
+
+			if ( $dir !== 0 )
+				$file->rotateImage( $dir );
+			if ( $dir === 180)
+				$file->rotateImage( 'CCW' ); // very sepcial case, we rotate the image two times
+			if ( $flip == 'H')
+				$file->flipImage(true, false);
+			if ( $flip == 'V')
+				$file->flipImage(false, true);
+					
 			$file->save($image->imagePath, $ngg->options['imgQuality']);
 			
 			// read the new sizes
@@ -433,8 +448,6 @@ class nggAdmin{
 		return '1';
 		
 	}
-	
-		
 
 	/**
 	 * nggAdmin::set_watermark() - set the watermarl for the image

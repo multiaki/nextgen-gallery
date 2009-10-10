@@ -103,7 +103,7 @@ if ( ($ngg_options['thumbfix'] == 1) ) {
 	function updateThumb() {
 		
 		if ( (wT == 0) || (hT == 0) || (wT == undefined) || (hT == undefined) ) {
-			alert("<?php _e('Select with the mouse the area for the new thumbnail.', 'nggallery'); ?>");
+			alert("<?php _e('Select with the mouse the area for the new thumbnail', 'nggallery'); ?>");
 			return false;			
 		}
 				
@@ -117,12 +117,12 @@ if ( ($ngg_options['thumbfix'] == 1) ) {
 					newUrl = jQuery("#"+selectedImage).attr("src") + "?" + d.getTime();
 					jQuery("#"+selectedImage).attr("src" , newUrl);
 					
-					jQuery('#thumbMsg').html("<?php echo _e("Thumbnail updated", "nggallery") ?>");
+					jQuery('#thumbMsg').html("<?php _e('Thumbnail updated', 'nggallery') ?>");
 					jQuery('#thumbMsg').css({'display':'block'});
 					setTimeout(function(){ jQuery('#thumbMsg').fadeOut('slow'); }, 1500);
 			},
 		  error: function() {
-		  			jQuery('#thumbMsg').html("<?php echo _e("Error updating thumbnail.", "nggallery") ?>");
+		  			jQuery('#thumbMsg').html("<?php _e('Error updating thumbnail', 'nggallery') ?>");
 					jQuery('#thumbMsg').css({'display':'block'});
 					setTimeout(function(){ jQuery('#thumbMsg').fadeOut('slow'); }, 1500);
 		    }

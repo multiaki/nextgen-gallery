@@ -64,8 +64,6 @@ add_action('wp_ajax_createNewThumb', 'createNewThumb');
 	
 function createNewThumb() {
 	
-	global $wpdb;
-	
 	// check for correct capability
 	if ( !is_user_logged_in() )
 		die('-1');
@@ -121,11 +119,9 @@ function createNewThumb() {
 	
 }
 	
-add_action('wp_ajax_rotateImage', 'rotateImage');
+add_action('wp_ajax_rotateImage', 'ngg_rotateImage');
 	
-function rotateImage() {
-	
-	global $wpdb;
+function ngg_rotateImage() {
 	
 	// check for correct capability
 	if ( !is_user_logged_in() )
@@ -135,30 +131,35 @@ function rotateImage() {
 	if ( !current_user_can('NextGEN Manage gallery') ) 
 		die('-1');	
 
-
 	require_once( dirname( dirname(__FILE__) ) . '/ngg-config.php');
-	include_once( nggGallery::graphic_library() );
 
 	// include the ngg function
 	include_once (dirname (__FILE__). '/functions.php');
 			
-	$ngg_options=get_option('ngg_options');
+	$ngg_options = get_option('ngg_options');
 	
-	$id 	= (int) $_POST['id'];
-	$ra 	= $_POST['ra'];
+	$id = (int) $_POST['id'];
+	$result = '-1';
 	
-	$picture = nggdb::find_image($id);		
-	//imageFlipVertical
-	
-	$rotate_result = nggAdmin::rotate_image($picture,$ra);
-	
-	if ( $rotate_result == 1 ) {
-		echo "OK";
-	} else {
-		header('HTTP/1.1 500 Internal Server Error');			
-		echo $rotate_result;
+	switch ( $_POST['ra'] ) {
+		case 'cw' :
+			$result = nggAdmin::rotate_image($id, 'CW');
+		break;
+		case 'ccw' :
+			$result = nggAdmin::rotate_image($id, 'CCW');
+		break;
+		case 'fv' :
+			$result = nggAdmin::rotate_image($id, 0, 'V');
+		break;
+		case 'fh' :
+			$result = nggAdmin::rotate_image($id, 0, 'H');
+		break;
 	}
 	
-	exit();
+	if ( $result == 1 )
+		die('1');
+
+	header('HTTP/1.1 500 Internal Server Error');			
+	die( $result );
 	
 }
