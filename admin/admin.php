@@ -73,6 +73,35 @@ class nggAdminPanel{
 			echo '<div class="plugin-update">' . __('A new version of NextGEN Gallery is available !', 'nggallery') . ' <a href="http://wordpress.org/extend/plugins/nextgen-gallery/download/" target="_blank">' . __('Download here', 'nggallery') . '</a></div>' ."\n";
 		}
 		
+		// Set installation date
+		if( empty($ngg->options['installDate']) ) {
+			$ngg->options['installDate'] = time();
+			update_option('ngg_options', $ngg->options);			
+		}
+		
+		// Show donation message only one time.
+		if (isset ( $_GET['hide_donation']) ) {
+			$ngg->options['hideDonation'] = true;
+			update_option('ngg_options', $ngg->options);			
+		}
+		
+		if( $ngg->options['hideDonation'] !== true ) {
+			if ( time() > ( $ngg->options['installDate'] + ( 60 * 60 * 24 * 30 ) ) ) {
+			?>	
+				<div id="donator_message">
+					<p><?php echo str_replace('%s', 'http://alexrabe.de/donation', __('Thanks for using this plugin, I hope you are satisfied ! If you would like to support the further development, please consider a <strong><a href="%s">donation</a></strong>! If you still need some help, please post your questions <a href="http://wordpress.org/tags/nextgen-gallery?forum_id=10">here</a> .', 'nggallery')); ?>
+						<span>
+							<a href="<?php echo add_query_arg( array( 'hide_donation' => 'true') ); ?>" >
+								<small><?php _e('OK, hide this message now !', 'nggallery'); ?></small>
+							</a>
+						<span>
+					</p>
+					<br />
+				</div>
+			<?php
+			}
+		}
+		
   		switch ($_GET['page']){
 			case "nggallery-add-gallery" :
 				include_once ( dirname (__FILE__) . '/functions.php' );		// admin functions
@@ -136,7 +165,7 @@ class nggAdminPanel{
 	function load_scripts() {
 		
 		// no need to go on if it's not a plugin page
-		if(!isset($_GET['page']))
+		if( !isset($_GET['page']) )
 			return;
 
 		wp_register_script('ngg-ajax', NGGALLERY_URLPATH .'admin/js/ngg.ajax.js', array('jquery'), '1.4.0');
@@ -193,14 +222,14 @@ class nggAdminPanel{
 	function load_styles() {
 		
 		// no need to go on if it's not a plugin page
-		if(!isset($_GET['page']))
+		if( !isset($_GET['page']) )
 			return;
 
 		switch ($_GET['page']) {
 			case NGGFOLDER :
 				wp_enqueue_style( 'thickbox');	
 			case "nggallery-about" :
-				wp_enqueue_style( 'nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.7.0', 'screen' );
+				wp_enqueue_style( 'nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.8.0', 'screen' );
 				wp_admin_css( 'css/dashboard' );
 			break;
 			case "nggallery-add-gallery" :
@@ -211,7 +240,7 @@ class nggAdminPanel{
 			case "nggallery-roles" :
 			case "nggallery-manage-album" :
 				//wp_enqueue_style( 'jqueryui', NGGALLERY_URLPATH .'admin/css/jquery-ui.css', false, '1.7.1', 'screen' );
-				wp_enqueue_style( 'nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.7.0', 'screen' );
+				wp_enqueue_style( 'nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.8.0', 'screen' );
 				wp_enqueue_style( 'thickbox');			
 			break;
 			case "nggallery-tags" :

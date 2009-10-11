@@ -25,7 +25,39 @@
 	width:24px;
 }
 
+#newversion {
+	border-color:#CCCCCC;
+	border-style:solid;
+	border-width:1px;
+	margin-right:7px;
+	margin-top:10px;
+	padding:2px;
+}
 
+#donator_message {
+	margin:5px 0 15px;
+	background-color:#BDE5F8;
+	border-color:#00529B;
+	-moz-border-radius-bottomleft:3px;
+	-moz-border-radius-bottomright:3px;
+	-moz-border-radius-topleft:3px;
+	-moz-border-radius-topright:3px;
+	border-style:solid;
+	border-width:1px;
+	margin:5px 15px 2px;
+	padding:0 0.6em;
+}
+
+#donator_message p{
+	line-height:1;
+	margin:0.5em 0;
+	padding:2px;
+}
+
+#donator_message span{
+	padding-top:10px;
+	float:right;
+}
 /* SETTING FOR FLASH UPLOAD BUTTON */
 .swfupload {
 	position:absolute;
@@ -107,10 +139,6 @@ p#ngg-inlinebutton {
 	vertical-align: top;
 }
 
-#ngg-listimages td, #ngg-listimages th {
-
-}
-
 .fixed tbody th.column-cb {
 	padding:7px 0 22px;
 }
@@ -132,14 +160,9 @@ p#ngg-inlinebutton {
 	width: 5em;
 }
 
-.fixed .column-alt_title_desc {
-	
-}
-
 .fixed .column-exclude, .fixed .column-action, .fixed .column-delete {
 	width: 10%;
 }
-
 
 /* SETTINGS FOR PROGRESS BAR */
 
@@ -414,6 +437,7 @@ DIV that shows the image as you drag it
 	margin:5px auto;
 	padding:10px;
 }
+
 /* ABOUT PAGE */ 
 .ngg-list {
 	font-size:11px; 

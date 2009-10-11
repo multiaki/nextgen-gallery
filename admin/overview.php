@@ -39,7 +39,7 @@ function nggallery_admin_overview()  {
 }
 
 /**
- * Show the server settings
+ * Show the server settings in a dashboard widget
  * 
  * @return void
  */
@@ -67,7 +67,7 @@ function ngg_overview_server() {
 }
 
 /**
- * Show the GD ibfos
+ * Show the GD lib info in a dashboard widget
  * 
  * @return void
  */
@@ -86,7 +86,7 @@ function ngg_overview_graphic_lib() {
 }
 
 /**
- * Show the GD ibfos
+ * Show the most recent donators
  * 
  * @return void
  */
@@ -227,7 +227,11 @@ add_meta_box('ngg_server', __('Server Settings', 'nggallery'), 'ngg_overview_ser
 add_meta_box('dashboard_plugins', __('Related plugins', 'nggallery'), 'ngg_related_plugins', 'ngg_overview', 'right', 'core');
 add_meta_box('ngg_gd_lib', __('Graphic Library', 'nggallery'), 'ngg_overview_graphic_lib', 'ngg_overview', 'right', 'core');
 
-// ***************************************************************
+/**
+ * Show GD Library version information
+ * 
+ * @return void
+ */
 function ngg_gd_info() {
 	
 	if(function_exists("gd_info")){
@@ -245,18 +249,27 @@ function ngg_gd_info() {
 	}
 }
 
-// ***************************************************************		
-function ngg_gd_yesNo($bool){
+/**
+ * Return localized Yes or no 
+ * 
+ * @param bool $bool
+ * @return return 'Yes' | 'No'
+ */
+function ngg_gd_yesNo( $bool ){
 	if($bool) 
 		return __('Yes', 'nggallery');
 	else 
 		return __('No', 'nggallery');
 }
 
-// ***************************************************************
+
+/**
+ * Show up some server infor's
+ * @author GamerZ (http://www.lesterchan.net)
+ * 
+ * @return void
+ */
 function ngg_get_serverinfo() {
-// thx to GaMerZ for WP-ServerInfo	
-// http://www.lesterchan.net
 
 	global $wpdb;
 	// Get MYSQL Version
