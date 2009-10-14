@@ -274,7 +274,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<h2><?php _e('Gallery settings','nggallery'); ?></h2>
 			<form name="galleryform" method="POST" action="<?php echo $filepath.'#gallery'; ?>" >
 			<?php wp_nonce_field('ngg_settings') ?>
-			<input type="hidden" name="page_options" value="galNoPages,galImages,galColumns,galHiddenImg,galShowSlide,galTextSlide,galTextGallery,galShowOrder,galImgBrowser,galSort,galSortDir" />
+			<input type="hidden" name="page_options" value="galNoPages,galImages,galColumns,galShowSlide,galTextSlide,galTextGallery,galShowOrder,galImgBrowser,galSort,galSortDir,galHiddenImg,galAjaxNav" />
 				<table class="form-table ngg-options">
 					<tr class="expert" >
 						<th valign="top"><?php _e('Deactivate gallery page link','nggallery') ?>:</th>
@@ -317,6 +317,12 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						<th valign="top"><?php _e('Add hidden images','nggallery'); ?>:</th>
 						<td><input name="galHiddenImg" type="checkbox" value="1" <?php checked('1', $ngg->options['galHiddenImg']); ?> />
 						<?php _e('If pagination is used, this option will still show all images in the modal window (Thickbox, Lightbox etc.). Note : This increase the page load','nggallery'); ?>
+						</td>
+					</tr>
+					<tr class="expert" >
+						<th valign="top"><?php _e('Enable AJAX pagination','nggallery'); ?>:</th>
+						<td><input name="galHiddenImg" type="checkbox" value="1" <?php checked('1', $ngg->options['galAjaxNav']); ?> />
+						<?php _e('Browse images without reload the page. Note : Work only in combination with Shutter effect','nggallery'); ?>
 						</td>
 					</tr>
 				</table>

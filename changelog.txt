@@ -15,6 +15,7 @@ by Alex Rabe & NextGEN DEV Team
 * Added : New template gallery-carousel
 * Added : New id parameter for recent and random shortcodes : [random max="7" template="filename" id="2"] takes only pictures from the gallery with id=2
 * Added : New mode paramenter for recent shortcode : [recent max="7" template="filename" id="3" mode="date" /] where mode can be one of (id, date, sort). Recent pictures are delivered by addition to database (id), exif date (date) or user sort order (sort).
+* Added : Enable/Disable Ajax navigation via settings
 * Changed : Added option to link an album with a page id
 * Changed : Support templates for child themes, use STYLESHEETPATH instead TEMPLATEPATH (THX to Prollius)
 * Changed : Rework of Media RSS Widget

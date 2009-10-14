@@ -301,11 +301,13 @@ class nggLoader {
 			wp_enqueue_script('swfobject', NGGALLERY_URLPATH .'admin/js/swfobject.js', FALSE, '2.1');
 
 		// Load AJAX navigation script, works only with shutter script as we need to add the listener
-		if ( ($this->options['thumbEffect'] == "shutter") || function_exists('srel_makeshutter') ) {
-			wp_enqueue_script ( 'ngg_script', NGGALLERY_URLPATH . 'js/ngg.js', array('jquery'));
-			wp_localize_script( 'ngg_script', 'ngg_ajax', array('path'		=> NGGALLERY_URLPATH,
-																'loading'	=> __('loading', 'nggallery'),
-			) );
+		if ( $this->options['galAjaxNav'] ) { 
+			if ( ($this->options['thumbEffect'] == "shutter") || function_exists('srel_makeshutter') ) {
+				wp_enqueue_script ( 'ngg_script', NGGALLERY_URLPATH . 'js/ngg.js', array('jquery'));
+				wp_localize_script( 'ngg_script', 'ngg_ajax', array('path'		=> NGGALLERY_URLPATH,
+																	'loading'	=> __('loading', 'nggallery'),
+				) );
+			}
 		}
 		
 		//TODO:Just for test, remove later !!!

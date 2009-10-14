@@ -133,6 +133,7 @@ function ngg_upgrade() {
 			if ( $ngg_options['thumpcrop'] ) {
 				$ngg_options['thumbfix'] = true;
 				$ngg_options['thumbheight'] = $ngg_options['thumbwidth'] ;
+				$ngg_options['galAjaxNav'] = true;
 			}
 			$ngg_options['galHiddenImg'] = false;
 			update_option('ngg_options', $ngg_options);

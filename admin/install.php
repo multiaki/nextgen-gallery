@@ -170,6 +170,7 @@ function ngg_default_options() {
 	$ngg_options['galNoPages']   		= true;							// use no subpages for gallery
 	$ngg_options['galImgBrowser']   	= false;						// Show ImageBrowser, instead effect
 	$ngg_options['galHiddenImg']   		= false;						// For paged galleries we can hide image
+	$ngg_options['galAjaxNav']   		= false;						// AJAX Navigation for Shutter effect
 
 	// Thumbnail Effect
 	$ngg_options['thumbEffect']			= 'shutter';  					// select effect
