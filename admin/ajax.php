@@ -38,6 +38,14 @@ function ngg_ajax_operation() {
 			case 'resize_image' :
 				$result = nggAdmin::resize_image($picture);
 			break;
+			case 'rotate_cw' :
+				$result = nggAdmin::rotate_image($picture, 'CW');
+				nggAdmin::create_thumbnail($picture);
+			break;
+			case 'rotate_ccw' :
+				$result = nggAdmin::rotate_image($picture, 'CCW');
+				nggAdmin::create_thumbnail($picture);
+			break;			
 			case 'set_watermark' :
 				$result = nggAdmin::set_watermark($picture);
 			break;

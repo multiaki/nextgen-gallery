@@ -202,14 +202,17 @@ class nggManageGallery {
 			
 			switch ($_POST['bulkaction']) {
 				case 'no_action';
-				// No action
 					break;
+				case 'rotate_cw':
+					nggAdmin::do_ajax_operation( 'rotate_cw' , $_POST['doaction'], __('Rotate images', 'nggallery') );
+					break;
+				case 'rotate_ccw':
+					nggAdmin::do_ajax_operation( 'rotate_ccw' , $_POST['doaction'], __('Rotate images', 'nggallery') );
+					break;					
 				case 'set_watermark':
-				// Set watermark
-					nggAdmin::do_ajax_operation( 'set_watermark' , $_POST['doaction'], __('Set watermark','nggallery') );
+					nggAdmin::do_ajax_operation( 'set_watermark' , $_POST['doaction'], __('Set watermark', 'nggallery') );
 					break;
 				case 'delete_images':
-				// Delete images
 					if ( is_array($_POST['doaction']) ) {
 						foreach ( $_POST['doaction'] as $imageID ) {
 							$image = $nggdb->find_image( $imageID );
@@ -222,12 +225,11 @@ class nggManageGallery {
 							}
 						}
 						if($delete_pic)
-							nggGallery::show_message(__('Pictures deleted successfully ', "nggallery"));
+							nggGallery::show_message(__('Pictures deleted successfully ', 'nggallery'));
 					}
 					break;
 				case 'import_meta':
-				// Import Metadata
-					nggAdmin::do_ajax_operation( 'import_metadata' , $_POST['doaction'], __('Import metadata','nggallery') );
+					nggAdmin::do_ajax_operation( 'import_metadata' , $_POST['doaction'], __('Import metadata', 'nggallery') );
 					break;
 			}
 		}

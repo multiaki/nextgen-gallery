@@ -269,8 +269,8 @@ jQuery(document).ready( function() {
 			</table>
 			
 			<div class="submit">
-				<input type="submit" class="button-secondary" name="scanfolder" value="<?php _e("Scan Folder for new images",'nggallery')?> " />
-				<input type="submit" class="button-primary action" name="updatepictures" value="<?php _e("Save Changes",'nggallery')?>" />
+				<input type="submit" class="button-secondary" name="scanfolder" value="<?php _e("Scan Folder for new images",'nggallery'); ?> " />
+				<input type="submit" class="button-primary action" name="updatepictures" value="<?php _e("Save Changes",'nggallery'); ?>" />
 			</div>
 
 		</div>
@@ -289,17 +289,19 @@ jQuery(document).ready( function() {
 	<?php endif; ?>
 	<div class="alignleft actions">
 	<select id="bulkaction" name="bulkaction">
-		<option value="no_action" ><?php _e("No action",'nggallery')?></option>
-		<option value="set_watermark" ><?php _e("Set watermark",'nggallery')?></option>
-		<option value="new_thumbnail" ><?php _e("Create new thumbnails",'nggallery')?></option>
-		<option value="resize_images" ><?php _e("Resize images",'nggallery')?></option>
-		<option value="delete_images" ><?php _e("Delete images",'nggallery')?></option>
-		<option value="import_meta" ><?php _e("Import metadata",'nggallery')?></option>
-		<option value="copy_to" ><?php _e("Copy to...",'nggallery')?></option>
-		<option value="move_to"><?php _e("Move to...",'nggallery')?></option>
-		<option value="add_tags" ><?php _e("Add tags",'nggallery')?></option>
-		<option value="delete_tags" ><?php _e("Delete tags",'nggallery')?></option>
-		<option value="overwrite_tags" ><?php _e("Overwrite tags",'nggallery')?></option>
+		<option value="no_action" ><?php _e("No action",'nggallery'); ?></option>
+		<option value="set_watermark" ><?php _e("Set watermark",'nggallery'); ?></option>
+		<option value="new_thumbnail" ><?php _e("Create new thumbnails",'nggallery'); ?></option>
+		<option value="resize_images" ><?php _e("Resize images",'nggallery'); ?></option>
+		<option value="delete_images" ><?php _e("Delete images",'nggallery'); ?></option>
+		<option value="import_meta" ><?php _e("Import metadata",'nggallery'); ?></option>
+		<option value="rotate_cw" ><?php _e("Rotate images clockwise",'nggallery'); ?></option>
+		<option value="rotate_ccw" ><?php _e("Rotate images counter-clockwise",'nggallery'); ?></option>
+		<option value="copy_to" ><?php _e("Copy to...",'nggallery'); ?></option>
+		<option value="move_to"><?php _e("Move to...",'nggallery'); ?></option>
+		<option value="add_tags" ><?php _e("Add tags",'nggallery'); ?></option>
+		<option value="delete_tags" ><?php _e("Delete tags",'nggallery'); ?></option>
+		<option value="overwrite_tags" ><?php _e("Overwrite tags",'nggallery'); ?></option>
 	</select>
 	<input class="button-secondary" type="submit" name="showThickbox" value="<?php _e('Apply', 'nggallery'); ?>" onclick="if ( !checkSelected() ) return false;" />
 	
@@ -409,8 +411,8 @@ if($picturelist) {
      					if (is_array ($size = $picture->meta_data['thumbnail']) )
 							$thumbsize = 'width="' . $size['width'] . '" height="' . $size['height'] . '"';
 						?>
-						<td <?php echo $attributes ?>><a href="<?php echo $picture->imageURL; ?>" class="thickbox" title="<?php echo $picture->filename ?>">
-								<img class="thumb" src="<?php echo $picture->thumbURL; ?>" <?php echo $thumbsize ?> id="thumb<?php echo $pid ?>" />
+						<td <?php echo $attributes ?>><a href="<?php echo $picture->imageURL . '?' . mt_rand(); ?>" class="thickbox" title="<?php echo $picture->filename ?>">
+								<img class="thumb" src="<?php echo $picture->thumbURL . '?' . mt_rand(); ?>" <?php echo $thumbsize ?> id="thumb<?php echo $pid ?>" />
 							</a>
 						</td>
 						<?php						
@@ -456,7 +458,7 @@ if ( $counter==0 )
 	
 		</tbody>
 	</table>
-	<p class="submit"><input type="submit" class="button-primary action" name="updatepictures" value="<?php _e("Save Changes",'nggallery')?>" /></p>
+	<p class="submit"><input type="submit" class="button-primary action" name="updatepictures" value="<?php _e("Save Changes",'nggallery'); ?>" /></p>
 	</form>	
 	<br class="clear"/>
 	</div><!-- /#wrap -->
@@ -470,11 +472,11 @@ if ( $counter==0 )
 		<input type="hidden" name="page" value="manage-images" />
 		<table width="100%" border="0" cellspacing="3" cellpadding="3" >
 		  	<tr>
-		    	<th><?php _e("Enter the tags",'nggallery')?> : <input name="taglist" type="text" style="width:90%" value="" /></th>
+		    	<th><?php _e("Enter the tags",'nggallery'); ?> : <input name="taglist" type="text" style="width:90%" value="" /></th>
 		  	</tr>
 		  	<tr align="right">
 		    	<td class="submit">
-		    		<input class="button-primary" type="submit" name="TB_EditTags" value="<?php _e("OK",'nggallery')?>" />
+		    		<input class="button-primary" type="submit" name="TB_EditTags" value="<?php _e("OK",'nggallery'); ?>" />
 		    		&nbsp;
 		    		<input class="button-secondary" type="reset" value="&nbsp;<?php _e("Cancel",'nggallery'); ?>&nbsp;" onclick="tb_remove()"/>
 		    	</td>
@@ -510,9 +512,9 @@ if ( $counter==0 )
 		  	</tr>
 		  	<tr align="right">
 		    	<td class="submit">
-		    		<input type="submit" class="button-primary" name="TB_SelectGallery" value="<?php _e("OK",'nggallery')?>" />
+		    		<input type="submit" class="button-primary" name="TB_SelectGallery" value="<?php _e("OK",'nggallery'); ?>" />
 		    		&nbsp;
-		    		<input class="button-secondary" type="reset" value="<?php _e("Cancel",'nggallery')?>" onclick="tb_remove()"/>
+		    		<input class="button-secondary" type="reset" value="<?php _e("Cancel",'nggallery'); ?>" onclick="tb_remove()"/>
 		    	</td>
 			</tr>
 		</table>

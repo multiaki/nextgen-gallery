@@ -359,7 +359,7 @@ class nggAdmin{
 	 * Rotated/Flip an image based on the orientation flag or a definded angle
 	 * 
 	 * @param int|object $image
-	 * @param integer (optional) $dir, if set to false, the exif flag will be used, could be either CW or CCW
+	 * @param string (optional) $dir, CW (clockwise)or CCW (counter clockwise), if set to false, the exif flag will be used
 	 * @param string (optional)  $flip, could be either false | V (flip vertical) | H (flip horizontal)
 	 * @return string result code
 	 */
@@ -379,7 +379,7 @@ class nggAdmin{
 		if (!is_writable($image->imagePath))
 			return ' <strong>' . $image->filename . __(' is not writeable','nggallery') . '</strong>';
 		
-		// if there is no angle, we look for the orientation flag
+		// if you didn't define a rotation, we look for the orientation flag in EXIF
 		if ( $dir === false ) {
 			$meta = new nggMeta( $image->pid );
 			$exif = $meta->get_EXIF();
@@ -419,13 +419,13 @@ class nggAdmin{
 		// skip if file is not there
 		if (!$file->error) {
 
-			// before we start we import the meta data to database (required for uploads before V1.4.0)
+			// before we start we import the meta data to database (required for uploads before V1.4.X)
 			nggAdmin::maybe_import_meta( $image->pid );
 
 			if ( $dir !== 0 )
 				$file->rotateImage( $dir );
 			if ( $dir === 180)
-				$file->rotateImage( 'CCW' ); // very sepcial case, we rotate the image two times
+				$file->rotateImage( 'CCW' ); // very special case, we rotate the image two times
 			if ( $flip == 'H')
 				$file->flipImage(true, false);
 			if ( $flip == 'V')

@@ -6,7 +6,7 @@ by Alex Rabe & NextGEN DEV Team
 * NEW : Include Bulkupdate for gallery overview, require PHP 5.2
 * NEW : XMLRPC support with 4 new methods : see xmlrpc.php for more information
 * NEW : Recent and random images can be taken from a specific gallery using the id=x parameter in the shortcode (THX to Prollius)
-* NEW : Recent images can be recent by exif date (instead of databse id) by using the mode=recentdate parameter in the shortcode  (THX to Prollius)
+* NEW : Recent images can be recent by exif date (instead of database id) by using the mode=recentdate parameter in the shortcode  (THX to Prollius)
 * NEW : Introduce the WP_Object_cache and meta_data
 * NEW : Various new hooks and filters
 * Added : Better support for role manager plugin (THX to Mattias Buelens)
