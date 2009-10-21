@@ -323,7 +323,7 @@ html>body .ngg-album {
 /* ----------- Gallery list -------------*/
 
 .ngg-galleryoverview ul li:before {
-	content: none !important;
+	content: '' !important;
 }
 
 .ngg-gallery-list {

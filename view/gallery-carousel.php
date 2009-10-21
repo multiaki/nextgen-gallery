@@ -21,29 +21,28 @@ Follow variables are useable :
 
 	<div class="pic"><img title="<?php echo $current->alttext ?>" alt="<?php echo $current->alttext ?>" src="<?php echo $current->imageURL ?>" /></div>
 	
-	<!-- Thumbnails -->
 	<ul class="ngg-gallery-list">
 	
+		<!-- PREV LINK -->	
 		<?php if ($prev) : ?>
 		<li class="ngg-prev">
 			<a class="prev" href="<?php echo $prev ?>">&#9668;</a>
 		</li>
 		<?php endif; ?>
 		
-		<?php foreach ($images as $image) : ?>
-		<?php if ($image->hidden) continue; ?> 
-
-		<li id="ngg-image-<?php echo $image->pid ?>" class="ngg-thumbnail-list <?php if ($image->pid == $current->pid) echo 'selected' ?>" <?php echo $gallery->imagewidth ?> >
+		<!-- Thumbnail list -->
+		<?php foreach ( $images as $image ) : ?>
+		<?php if ( $image->hidden ) continue; ?> 
+		
+		<li id="ngg-image-<?php echo $image->pid ?>" class="ngg-thumbnail-list <?php if ($image->pid == $current->pid) echo 'selected' ?>" >
 			<a href="<?php echo $image->pidlink ?>" title="<?php echo $image->description ?>" >
 				<img title="<?php echo $image->alttext ?>" alt="<?php echo $image->alttext ?>" src="<?php echo $image->thumbnailURL ?>" <?php echo $image->size ?> />
 			</a>
 		</li>
-		
-		<?php if ( $gallery->columns > 0 && ++$i % $gallery->columns == 0 ) { ?>
-		<br style="clear: both" />
-		<?php } ?>
+
 	 	<?php endforeach; ?>
 	 	
+	 	<!-- NEXT LINK -->
 		<?php if ($next) : ?>
 		<li class="ngg-next">
 			<a class="next" href="<?php echo $next ?>">&#9658;</a>
