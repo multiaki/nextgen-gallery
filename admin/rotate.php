@@ -78,8 +78,8 @@ $preview_image		= NGGALLERY_URLPATH . 'nggshow.php?pid=' . $picture->pid . '&amp
 			<img src="<?php echo $preview_image ?>" alt="" id="imageToEdit" />	
 		</td>
 		<td>
-			<input type="radio" name="ra" value="cw" /><?php _e('90° clockwise', 'nggallery'); ?><br />
-			<input type="radio" name="ra" value="ccw" /><?php _e('90° anticlockwise', 'nggallery'); ?><br />
+			<input type="radio" name="ra" value="cw" /><?php _e('90&deg; clockwise', 'nggallery'); ?><br />
+			<input type="radio" name="ra" value="ccw" /><?php _e('90&deg; anticlockwise', 'nggallery'); ?><br />
 			<input type="radio" name="ra" value="fv" /><?php _e('Flip vertically', 'nggallery'); ?><br />
 			<input type="radio" name="ra" value="fh" /><?php _e('Flip horizontally', 'nggallery'); ?>
 		</td>		
