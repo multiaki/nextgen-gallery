@@ -51,11 +51,11 @@ if ( ($ngg_options['thumbfix'] == 1) ) {
 	if ($imageInfo[1] > $imageInfo[0]) {
 
 		$HeightHtmlPrev =  $ngg_options['thumbheight'];
-		$WidthHtmlPrev = round($imageInfo[0] / ($imageInfo[1] / $ngg_options['thumbheight']),0);
+		$WidthHtmlPrev  = round($imageInfo[0] / ($imageInfo[1] / $ngg_options['thumbheight']),0);
 		
 	} else {
 		
-		$WidthtHtmlPrev =  $ngg_options['thumbwidth'];
+		$WidthHtmlPrev  =  $ngg_options['thumbwidth'];
 		$HeightHtmlPrev = round($imageInfo[1] / ($imageInfo[0] / $ngg_options['thumbwidth']),0);
 		
 	}
