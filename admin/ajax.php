@@ -163,6 +163,9 @@ function ngg_rotateImage() {
 			$result = nggAdmin::rotate_image($id, 0, 'H');
 		break;
 	}
+    
+    // recreate the thumbnail     
+    nggAdmin::create_thumbnail($picture);
 	
 	if ( $result == 1 )
 		die('1');
