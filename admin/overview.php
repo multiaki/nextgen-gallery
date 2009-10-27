@@ -8,10 +8,11 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
  * @return mixed content
  */
 function nggallery_admin_overview()  {
-
+    
 	?>
 	<div class="wrap ngg-wrap">
 		<h2><?php _e('NextGEN Gallery Overview', 'nggallery') ?></h2>
+        <?php if (version_compare(PHP_VERSION, '5.0.0', '<')) ngg_check_for_PHP5(); ?>
 		<div id="dashboard-widgets-wrap" class="ngg-overview">
 		    <div id="dashboard-widgets" class="metabox-holder">
 				<div id="post-body">
@@ -330,6 +331,19 @@ function ngg_get_serverinfo() {
 	<li><?php _e('PHP IPTC support', 'nggallery'); ?> : <span><?php echo $iptc; ?></span></li>
 	<li><?php _e('PHP XML support', 'nggallery'); ?> : <span><?php echo $xml; ?></span></li>
 <?php
+}
+
+/**
+ * Inform about the end of PHP4
+ * 
+ * @return void
+ */
+function ngg_check_for_PHP5() {
+    ?>
+	<div class="updated">
+		<p><?php _e('NextGEN Gallery contains some functions which are only available under PHP 5.2. You are using the old PHP 4 version, upgrade now! It\'s no longer supported by the PHP group. Many shared hosting providers offer both PHP 4 and PHP 5, running simultaneously. Ask your provider if they can do this.', 'nggallery'); ?></p>
+	</div>
+    <?php
 }
 
 /**
