@@ -165,7 +165,7 @@ function ngg_rotateImage() {
 	}
     
     // recreate the thumbnail     
-    nggAdmin::create_thumbnail($picture);
+    nggAdmin::create_thumbnail($id);
 	
 	if ( $result == 1 )
 		die('1');
