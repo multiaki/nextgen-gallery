@@ -414,7 +414,6 @@ class nggAdmin{
 			} else
                 return '0';
 		}
-        var_dump($dir);
 		$file = new ngg_Thumbnail( $image->imagePath, TRUE );
 		
 		// skip if file is not there
