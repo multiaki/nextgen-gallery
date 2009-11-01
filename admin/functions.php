@@ -411,9 +411,10 @@ class nggAdmin{
 						return '0';
 						break; 
 				}
-			}
+			} else
+                return '0';
 		}
-
+        var_dump($dir);
 		$file = new ngg_Thumbnail( $image->imagePath, TRUE );
 		
 		// skip if file is not there
@@ -758,7 +759,7 @@ class nggAdmin{
 			$filename = $_FILES['zipfile']['name']; 
 						
 			// check if file is a zip file
-			if (!eregi('zip|download|octet-stream', $_FILES['zipfile']['type'])) {
+			if ( !preg_match('/(zip|download|octet-stream)/i', $_FILES['zipfile']['type']) ) {
 				@unlink($temp_zipfile); // del temp file
 				nggGallery::show_error(__('Uploaded file was no or a faulty zip file ! The server recognize : ','nggallery').$_FILES['zipfile']['type']);
 				return false; 

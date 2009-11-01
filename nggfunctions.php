@@ -695,7 +695,7 @@ function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $fl
     }
     
     // clean mode if needed 
-    $mode = ( eregi('web20|watermark', $mode) ) ? $mode : '';
+    $mode = ( preg_match('/(web20|watermark)/i', $mode) ) ? $mode : '';
     
     //let's initiate the url
     $picture->thumbnailURL = false;
