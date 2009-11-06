@@ -239,8 +239,9 @@ class nggdb {
             foreach ($result as $key => $value)
                 $gallery[$key] = new nggImage( $value );
         }
-
-        wp_cache_add($id, $gallery, 'ngg_gallery');
+        
+        // Could not add to cache, the structure is different to find_gallery() cache_add, need rework
+        //wp_cache_add($id, $gallery, 'ngg_gallery');
 
         return $gallery;        
     }
