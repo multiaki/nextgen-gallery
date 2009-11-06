@@ -19,7 +19,7 @@ Follow variables are useable :
 
 <div class="ngg-galleryoverview">
 
-	<div class="pic"><img title="<?php echo $current->alttext ?>" alt="<?php echo $current->alttext ?>" src="<?php echo $current->imageURL ?>" /></div>
+	<div class="pic"><img title="<?php echo $current->alttext ?>" alt="<?php echo $current->alttext ?>" src="<?php echo $current->url; ?>" /></div>
 	
 	<ul class="ngg-gallery-list">
 	

@@ -274,6 +274,8 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '', $ima
         
         // choose link between imagebrowser or effect
         $link = ($ngg_options['galImgBrowser']) ? $picturelist[$key]->pidlink : $picture->imageURL; 
+        // bad solution : for now we need the url always for the carousel, should be reworked in the future
+        $picturelist[$key]->url = $picture->imageURL;
         // add a filter for the link
         $picturelist[$key]->imageURL = apply_filters('ngg_create_gallery_link', $link, $picture);
         $picturelist[$key]->thumbnailURL = $picture->thumbURL;
