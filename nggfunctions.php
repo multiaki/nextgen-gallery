@@ -259,10 +259,10 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '', $ima
 		
         // get the effect code
         if ($galleryID)
-            $thumbcode = ($ngg_options['galImgBrowser']) ? '' : $picture->get_thumbcode($picturelist[0]->name);
+            $thumbcode = ($ngg_options['galImgBrowser']) ? '' : $picture->get_thumbcode('set_' . $galleryID);
         else
             $thumbcode = ($ngg_options['galImgBrowser']) ? '' : $picture->get_thumbcode(get_the_title());
-        
+
         // create link for imagebrowser and other effects
         $args ['nggpage'] = empty($nggpage) ? false : $nggpage;
         $args ['pid']     = $picture->pid;
