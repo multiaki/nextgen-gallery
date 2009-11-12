@@ -96,7 +96,6 @@ class nggAdminPanel{
 							</a>
 						<span>
 					</p>
-					<br />
 				</div>
 			<?php
 			}
