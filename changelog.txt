@@ -3,6 +3,9 @@ by Alex Rabe & NextGEN DEV Team
 
 = V1.4.2 - soon =
 * Bugfix : JS Effect navigation based on wrong array structure
+* Bugfix : Remove whitespaces from meta import
+* Bugfix : Capability check for upgrade notice
+* Removed : Hide "more settings" for now, causes problems with IE and jQuery UI tabs
 
 = V1.4.1 - 10.11.2009 =
 * Bugfix : Capabilites could not be saved

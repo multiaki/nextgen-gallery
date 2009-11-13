@@ -168,7 +168,7 @@ class nggAdminPanel{
 		if( !isset($_GET['page']) )
 			return;
 
-		wp_register_script('ngg-ajax', NGGALLERY_URLPATH .'admin/js/ngg.ajax.js', array('jquery'), '1.4.0');
+		wp_register_script('ngg-ajax', NGGALLERY_URLPATH . 'admin/js/ngg.ajax.js', array('jquery'), '1.4.0');
 		wp_localize_script('ngg-ajax', 'nggAjaxSetup', array(
 					'url' => admin_url('admin-ajax.php'),
 					'action' => 'ngg_ajax_operation',
@@ -229,7 +229,7 @@ class nggAdminPanel{
 			case NGGFOLDER :
 				wp_enqueue_style( 'thickbox');	
 			case "nggallery-about" :
-				wp_enqueue_style( 'nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.8.0', 'screen' );
+				wp_enqueue_style( 'nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.8.1', 'screen' );
 				wp_admin_css( 'css/dashboard' );
 			break;
 			case "nggallery-add-gallery" :
@@ -240,11 +240,11 @@ class nggAdminPanel{
 			case "nggallery-roles" :
 			case "nggallery-manage-album" :
 				//wp_enqueue_style( 'jqueryui', NGGALLERY_URLPATH .'admin/css/jquery-ui.css', false, '1.7.1', 'screen' );
-				wp_enqueue_style( 'nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.8.0', 'screen' );
+				wp_enqueue_style( 'nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.8.1', 'screen' );
 				wp_enqueue_style( 'thickbox');			
 			break;
 			case "nggallery-tags" :
-				wp_enqueue_style( 'nggtags', NGGALLERY_URLPATH .'admin/css/tags-admin.css', false, '2.6.0', 'screen' );
+				wp_enqueue_style( 'nggtags', NGGALLERY_URLPATH .'admin/css/tags-admin.css', false, '2.6.1', 'screen' );
 				break;
 			case "nggallery-style" :
 				wp_admin_css( 'css/theme-editor' );
