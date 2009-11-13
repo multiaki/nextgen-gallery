@@ -69,9 +69,10 @@ class nggAdminPanel{
 		}
 		
 		// Show update message
-		if ( $nggCheck->startCheck() && (!IS_WPMU) ) {
-			echo '<div class="plugin-update">' . __('A new version of NextGEN Gallery is available !', 'nggallery') . ' <a href="http://wordpress.org/extend/plugins/nextgen-gallery/download/" target="_blank">' . __('Download here', 'nggallery') . '</a></div>' ."\n";
-		}
+        if ( current_user_can('activate_plugins') )
+    		if ( $nggCheck->startCheck() && (!IS_WPMU) ) {
+    			echo '<div class="plugin-update">' . __('A new version of NextGEN Gallery is available !', 'nggallery') . ' <a href="http://wordpress.org/extend/plugins/nextgen-gallery/download/" target="_blank">' . __('Download here', 'nggallery') . '</a></div>' ."\n";
+    		}
 		
 		// Set installation date
 		if( empty($ngg->options['installDate']) ) {
