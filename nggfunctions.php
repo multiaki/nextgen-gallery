@@ -119,7 +119,7 @@ function nggShowGallery( $galleryID, $template = '', $images = false ) {
     if ( !is_home() || $pageid == get_the_ID() ) { 
             
         // 1st look for ImageBrowser link
-        if ( !empty($pid) && $ngg_options['galImgBrowser'] )  {
+        if ( !empty($pid) && $ngg_options['galImgBrowser'] && ($template != 'carousel') )  {
             $out = nggShowImageBrowser( $galleryID, $template );
             return $out;
         }
