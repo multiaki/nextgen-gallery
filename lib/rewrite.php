@@ -31,7 +31,10 @@ class nggRewrite {
 		
 		add_filter('query_vars', array(&$this, 'add_queryvars') );
 		add_filter('wp_title' , array(&$this, 'rewrite_title') );
-			
+		
+        //DD32 recommend : http://groups.google.com/group/wp-hackers/browse_thread/thread/50ac0d07e30765e9
+        //add_filter('rewrite_rules_array', array($this, 'RewriteRules')); 
+        	
 		if ($this->options['usePermalinks'])
 			add_action('generate_rewrite_rules', array(&$this, 'RewriteRules'));
 		
