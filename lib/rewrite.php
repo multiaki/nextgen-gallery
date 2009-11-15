@@ -153,6 +153,7 @@ class nggRewrite {
 		$query_vars[] = 'album';
 		$query_vars[] = 'gallerytag';
 		$query_vars[] = 'show';
+        $query_vars[] = 'slideshow';
 
 		return $query_vars;
 	}
@@ -230,6 +231,9 @@ class nggRewrite {
 	*/
 	function RewriteRules($wp_rewrite) {		
 		$rewrite_rules = array (
+            // XML request
+            $this->slug.'/slideshow/([0-9]+)/?$' => 'index.php?slideshow=true&gid=$matches[1]',
+            
 			// rewrite rules for pages
 			$this->slug.'/page-([0-9]+)/?$' => 'index.php?page_id=$matches[1]',
 			$this->slug.'/page-([0-9]+)/page-([0-9]+)/?$' => 'index.php?page_id=$matches[1]&nggpage=$matches[2]',
