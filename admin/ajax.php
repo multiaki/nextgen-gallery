@@ -72,6 +72,8 @@ add_action('wp_ajax_createNewThumb', 'createNewThumb');
 	
 function createNewThumb() {
 	
+    global $ngg;
+    
 	// check for correct capability
 	if ( !is_user_logged_in() )
 		die('-1');
@@ -82,9 +84,7 @@ function createNewThumb() {
 
 	require_once( dirname( dirname(__FILE__) ) . '/ngg-config.php');
 	include_once( nggGallery::graphic_library() );
-	
-	$ngg_options=get_option('ngg_options');
-	
+
 	$id 	 = (int) $_POST['id'];
 	$picture = nggdb::find_image( $id );
 
@@ -96,16 +96,28 @@ function createNewThumb() {
 	$thumb = new ngg_Thumbnail($picture->imagePath, TRUE);
 	
 	$thumb->crop($x, $y, $w, $h);
-
-	if ($ngg_options['thumbfix'])  {
+    
+    // Note : the routine is a bit different to create_thumbnail(), due to rounding it's resized in the other way
+	if ($ngg->options['thumbfix'])  {
+		// check for portrait format
 		if ($thumb->currentDimensions['height'] > $thumb->currentDimensions['width']) {
-			$thumb->resize($ngg_options['thumbwidth'], 0);
+			// first resize to the wanted height, here changed to create_thumbnail()
+			$thumb->resize(0, $ngg->options['thumbheight']);
+			// get optimal y startpos
+			$ypos = ($thumb->currentDimensions['height'] - $ngg->options['thumbheight']) / 2;
+			$thumb->crop(0, $ypos, $ngg->options['thumbwidth'],$ngg->options['thumbheight']);	
 		} else {
-			$thumb->resize(0, $ngg_options['thumbheight']);	
+			// first resize to the wanted width, here changed to create_thumbnail()
+            $thumb->resize($ngg->options['thumbwidth'], 0);
+			//	
+			// get optimal x startpos
+			$xpos = ($thumb->currentDimensions['width'] - $ngg->options['thumbwidth']) / 2;
+			$thumb->crop($xpos, 0, $ngg->options['thumbwidth'],$ngg->options['thumbheight']);	
 		}
+	//this create a thumbnail but keep ratio settings	
 	} else {
-		$thumb->resize($ngg_options['thumbwidth'], $ngg_options['thumbheight'], $ngg_options['thumbResampleMode']);	
-	}
+		$thumb->resize($ngg->options['thumbwidth'],$ngg->options['thumbheight']);	
+	}    
 	
 	if ( $thumb->save($picture->thumbPath, 100)) {
 		
