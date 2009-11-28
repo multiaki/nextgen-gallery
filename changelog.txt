@@ -1,6 +1,11 @@
 NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
+= V1.4.4 - soon =
+* Changed : Rename query var from slideshow to imagerotator for compat reason with other plugin
+* Bugfix : Keep fix dimension in edit thumbnail operation
+* Bugfix : Import meta data didn't work correct for existing images
+
 = V1.4.3 - 16.11.2009 =
 * Bugfix : Urlencode XML file path for sildeshow
 

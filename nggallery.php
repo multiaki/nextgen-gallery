@@ -136,7 +136,7 @@ class nggLoader {
 
     function check_xml_request( $wp ) {
         
-        if (array_key_exists('slideshow', $wp->query_vars) && $wp->query_vars['slideshow'] == 'true') {
+        if (array_key_exists('imagerotator', $wp->query_vars) && $wp->query_vars['imagerotator'] == 'true') {
             require_once (dirname (__FILE__) . '/xml/imagerotator.php');
             exit();
         }

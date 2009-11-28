@@ -76,7 +76,7 @@ class nggMeta{
 		
 		$meta = $this->image->meta_data;
 		
-		//check if we already import the meat data to the database
+		//check if we already import the meta data to the database
 		if (!is_array($meta) || ($meta['saved'] != true))
 			return false;
 		

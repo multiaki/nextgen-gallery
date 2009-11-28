@@ -184,6 +184,7 @@ class nggdb {
         // Build the object from the query result
         if ($gallery) {
             $gallery->abspath = WINABSPATH . $gallery->path;
+            //TODO:Possible failure , $id could be a number or name
             wp_cache_add($id, $gallery, 'ngg_gallery');
             
             return $gallery;            

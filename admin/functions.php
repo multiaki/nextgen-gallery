@@ -252,7 +252,10 @@ class nggAdmin{
 
 		if ( !is_object($image) ) 
 			return __('Object didn\'t contain correct data','nggallery');
-		
+
+		// before we start we import the meta data to database (required for uploads before V1.4.0)
+		nggAdmin::maybe_import_meta( $image->pid );
+        		
 		// check for existing thumbnail
 		if (file_exists($image->thumbPath))
 			if (!is_writable($image->thumbPath))
@@ -585,7 +588,7 @@ class nggAdmin{
 				if ($result === false)
 					return ' <strong>' . $image->filename . ' ' . __('(Error : Couldn\'t not update data base)', 'nggallery') . '</strong>';		
 				
-				//this flag will inform us the the import is already one time performed
+				//this flag will inform us that the import is already one time performed
 				$meta['common']['saved']  = true; 
 				$result = nggdb::update_image_meta($image->pid, $meta['common']);
 				
@@ -644,12 +647,13 @@ class nggAdmin{
 				
 		require_once(NGGALLERY_ABSPATH . '/lib/meta.php');
 				
-		$image = new nggMeta( $id );
-		
-		if ( $image->meta_data['saved'] != true ) {
-			//this flag will inform us the the import is already one time performed
-			$meta['saved']  = true; 
-			$result = nggdb::update_image_meta($image->pid, $meta['common']);
+		$meta_obj = new nggMeta( $id );
+        
+		if ( $meta_obj->image->meta_data['saved'] != true ) {
+            $common = $meta_obj->get_common_meta();
+            //this flag will inform us that the import is already one time performed
+            $common['saved']  = true; 
+			$result = nggdb::update_image_meta($id, $common);
 		} else
 			return false;
 		
