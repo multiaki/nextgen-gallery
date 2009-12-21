@@ -713,14 +713,14 @@ function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $fl
     // add more variables for render output
     $picture->imageURL = ( empty($link) ) ? $picture->imageURL : $link;
     $picture->href_link = $picture->get_href_link();
-    $picture->alttext = html_entity_decode( stripslashes($picture->alttext) );
-    $picture->linktitle = htmlspecialchars( stripslashes($picture->description) );
-    $picture->description = html_entity_decode( stripslashes($picture->description) );
+    $picture->alttext = html_entity_decode( stripslashes(nggGallery::i18n($picture->alttext)) );
+    $picture->linktitle = htmlspecialchars( stripslashes(nggGallery::i18n($picture->description)) );
+    $picture->description = html_entity_decode( stripslashes(nggGallery::i18n($picture->description)) );
     $picture->classname = 'ngg-singlepic'. $float;
     $picture->thumbcode = $picture->get_thumbcode( 'singlepic' . $imageID);
     $picture->height = (int) $height;
     $picture->width = (int) $width;
-    $picture->caption = $caption;
+    $picture->caption = nggGallery::i18n($caption);
 
     // filter to add custom content for the output
     $picture = apply_filters('ngg_image_object', $picture, $imageID);
