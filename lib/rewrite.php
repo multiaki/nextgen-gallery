@@ -200,10 +200,6 @@ class nggRewrite {
 		if ( !empty($tag) )
 			$new_title .= esc_attr($tag) . $sep;
 		
-		// for all sub pages we add the canonical tag	
-		if ( !empty($new_title) )	
-			add_action('wp_head', array(&$this, 'add_canonical_meta'));	
-		
 		//prepend the data
 		$title = $new_title . $title;
 		
@@ -211,9 +207,10 @@ class nggRewrite {
 	}
 	
 	/**
-	 * Canonical support for a better SEO (Dupilcat content)
+	 * Canonical support for a better SEO (Dupilcat content), not longer nedded for Wp 2.9
 	 * See : http://googlewebmastercentral.blogspot.com/2009/02/specify-your-canonical.html
 	 * 
+	 * @deprecated
 	 * @return string $meta 
 	 */
 	function add_canonical_meta()
