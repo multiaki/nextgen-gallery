@@ -11,6 +11,9 @@ class NextGEN_shortcodes {
     
     // register the new shortcodes
     function NextGEN_shortcodes() {
+		
+		//Long posts should require a higher limit, see http://core.trac.wordpress.org/ticket/8553
+		@ini_set('pcre.backtrack_limit', 500000);
     
         // convert the old shortcode
         add_filter('the_content', array(&$this, 'convert_shortcode'));

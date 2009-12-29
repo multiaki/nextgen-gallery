@@ -289,8 +289,8 @@ function ngg_get_serverinfo() {
 	if(ini_get('upload_max_filesize')) $upload_max = ini_get('upload_max_filesize');	
 	else $upload_max = __('N/A', 'nggallery');
 	// Get PHP Output buffer Size
-	if(ini_get('output_buffering')) $output_buffer = ini_get('output_buffering');	
-	else $output_buffer = __('N/A', 'nggallery');
+	if(ini_get('pcre.backtrack_limit')) $backtrack_limit = ini_get('pcre.backtrack_limit');	
+	else $backtrack_limit = __('N/A', 'nggallery');
 	// Get PHP Max Post Size
 	if(ini_get('post_max_size')) $post_max = ini_get('post_max_size');
 	else $post_max = __('N/A', 'nggallery');
@@ -325,7 +325,7 @@ function ngg_get_serverinfo() {
 	<li><?php _e('PHP Memory Limit', 'nggallery'); ?> : <span><?php echo $memory_limit; ?></span></li>
 	<li><?php _e('PHP Max Upload Size', 'nggallery'); ?> : <span><?php echo $upload_max; ?></span></li>
 	<li><?php _e('PHP Max Post Size', 'nggallery'); ?> : <span><?php echo $post_max; ?></span></li>
-	<li><?php _e('PHP Output Buffer Size', 'nggallery'); ?> : <span><?php echo $output_buffer; ?></span></li>
+	<li><?php _e('PCRE Backtracking Limit', 'nggallery'); ?> : <span><?php echo $backtrack_limit; ?></span></li>
 	<li><?php _e('PHP Max Script Execute Time', 'nggallery'); ?> : <span><?php echo $max_execute; ?>s</span></li>
 	<li><?php _e('PHP Exif support', 'nggallery'); ?> : <span><?php echo $exif; ?></span></li>
 	<li><?php _e('PHP IPTC support', 'nggallery'); ?> : <span><?php echo $iptc; ?></span></li>
