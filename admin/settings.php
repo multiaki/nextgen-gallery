@@ -237,7 +237,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			<h2><?php _e('Image settings','nggallery'); ?></h2>
 			<form name="imagesettings" method="POST" action="<?php echo $filepath.'#images'; ?>" >
 			<?php wp_nonce_field('ngg_settings') ?>
-			<input type="hidden" name="page_options" value="imgResize,imgWidth,imgHeight,imgQuality,imgCacheSinglePic" />
+			<input type="hidden" name="page_options" value="imgResize,imgWidth,imgHeight,imgQuality,imgBackup,imgAutoResize,imgCacheSinglePic" />
 				<table class="form-table ngg-options">
 					<tr valign="top">
 						<th scope="row"><label for="fixratio"><?php _e('Resize Images','nggallery') ?></label></th>
@@ -250,6 +250,18 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						<th align="left"><?php _e('Image quality','nggallery') ?></th>
 						<td></td>
 						<td><input type="text" size="3" maxlength="3" name="imgQuality" value="<?php echo $ngg->options['imgQuality']; ?>" /> %</td>
+					</tr>
+					<tr>
+						<th colspan="1"><?php _e('Creates a backup for images','nggallery') ?></th>
+						<td></td>
+						<td colspan="3"><input type="checkbox" name="imgBackup" value="1"<?php echo ($ngg->options['imgBackup'] == 1) ? ' checked ="chechked"' : ''; ?>/>	
+						<span class="setting-description"><?php _e('Creates a backup for inserted images','nggallery') ?></span></td>
+					</tr>
+					<tr>
+						<th colspan="1"><?php _e('Automatically resize','nggallery') ?></th>
+						<td></td>
+						<td colspan="3"><input type="checkbox" name="imgAutoResize" value="1"<?php echo ($ngg->options['imgAutoResize'] == 1) ? ' checked ="chechked"' : ''; ?>/>	
+						<span class="setting-description"><?php _e('Automatically resize images on upload.','nggallery') ?></span></td>
 					</tr>
 				</table>
 				<h3 class="expert"><?php _e('Single picture','nggallery') ?></h3>

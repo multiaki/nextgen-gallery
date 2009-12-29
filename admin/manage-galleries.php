@@ -127,6 +127,7 @@ function nggallery_manage_gallery_main() {
 					<option value="new_thumbnail" ><?php _e("Create new thumbnails",'nggallery'); ?></option>
 					<option value="resize_images" ><?php _e("Resize images",'nggallery'); ?></option>
 					<option value="import_meta" ><?php _e("Import metadata",'nggallery'); ?></option>
+					<option value="recover_images" ><?php _e("Recover from backup",'nggallery'); ?></option>
 				</select>
 				<input name="showThickbox" class="button-secondary" type="submit" value="<?php _e('Apply','nggallery'); ?>" onclick="if ( !checkSelected() ) return false;" />
 				<?php endif; ?>

@@ -293,6 +293,7 @@ jQuery(document).ready( function() {
 		<option value="set_watermark" ><?php _e("Set watermark",'nggallery'); ?></option>
 		<option value="new_thumbnail" ><?php _e("Create new thumbnails",'nggallery'); ?></option>
 		<option value="resize_images" ><?php _e("Resize images",'nggallery'); ?></option>
+		<option value="recover_images" ><?php _e("Recover from backup",'nggallery'); ?></option>
 		<option value="delete_images" ><?php _e("Delete images",'nggallery'); ?></option>
 		<option value="import_meta" ><?php _e("Import metadata",'nggallery'); ?></option>
 		<option value="rotate_cw" ><?php _e("Rotate images clockwise",'nggallery'); ?></option>
@@ -382,6 +383,7 @@ if($picturelist) {
 							<br /><?php echo $date; ?>
 							<?php if ( !empty($picture->meta_data) ): ?>
 							<br /><?php echo $picture->meta_data['width']; ?> x <?php echo $picture->meta_data['height']; ?> <?php _e('pixel', 'nggallery'); ?>
+							
 							<?php endif; ?>
 							<p>
 							<?php
@@ -390,9 +392,11 @@ if($picturelist) {
 							//$actions['edit']   = '<a class="editinline" href="#">' . __('Edit') . '</a>';
 							$actions['view']   = '<a class="thickbox" href="' . $picture->imageURL . '" title="' . esc_attr(sprintf(__('View "%s"'), $picture->filename)) . '">' . __('View', 'nggallery') . '</a>';
 							$actions['meta']   = '<a class="thickbox" href="' . NGGALLERY_URLPATH . 'admin/showmeta.php?id=' . $pid . '" title="' . __('Show Meta data','nggallery') . '">' . __('Meta', 'nggallery') . '</a>';
-							$actions['custom_thumb']   = '<a class="thickbox" href="' . NGGALLERY_URLPATH . 'admin/edit-thumbnail.php?id=' . $pid . '" title="' . __('Customize thumbnail','nggallery') . '">' . __('Edit thumb', 'nggallery') . '</a>';
-							$actions['rotate']   = '<a class="thickbox" href="' . NGGALLERY_URLPATH . 'admin/rotate.php?id=' . $pid . '" title="' . __('Rotate','nggallery') . '">' . __('Rotate', 'nggallery') . '</a>';
-							$actions['delete'] = '<a class="submitdelete" href="' . wp_nonce_url("admin.php?page=nggallery-manage-gallery&amp;mode=delpic&amp;gid=" . $act_gid . "&amp;pid=" . $pid, 'ngg_delpicture'). '" class="delete column-delete" onclick="javascript:check=confirm( \'' . esc_attr(sprintf(__('Delete "%s"' , 'nggallery'), $picture->filename)). '\');if(check==false) return false;">' . __('Delete') . '</a>';
+							$actions['custom_thumb']   = '<a class="thickbox" href="' . NGGALLERY_URLPATH . 'admin/edit-thumbnail.php?id=' . $pid . '" title="' . __('Customize thumbnail','nggallery') . '">' . __('Edit thumb', 'nggallery') . '</a>';							
+							$actions['rotate']	= '<a class="thickbox" href="' . NGGALLERY_URLPATH . 'admin/rotate.php?id=' . $pid . '" title="' . __('Rotate','nggallery') . '">' . __('Rotate', 'nggallery') . '</a>';
+							if (file_exists($picture->imagePath."_backup"))	
+								$actions['recover']   = '<a class="confirmrecover" href="' .wp_nonce_url("admin.php?page=nggallery-manage-gallery&amp;mode=recoverpic&amp;gid=" . $act_gid . "&amp;pid=" . $pid, 'ngg_recoverpicture'). '" title="' . __('Recover','nggallery') . '" onclick="javascript:check=confirm( \'' . esc_attr(sprintf(__('Recover "%s" ?' , 'nggallery'), $picture->filename)). '\');if(check==false) return false;">' . __('Recover', 'nggallery') . '</a>';
+							$actions['delete'] = '<a class="submitdelete" href="' . wp_nonce_url("admin.php?page=nggallery-manage-gallery&amp;mode=delpic&amp;gid=" . $act_gid . "&amp;pid=" . $pid, 'ngg_delpicture'). '" class="delete column-delete" onclick="javascript:check=confirm( \'' . esc_attr(sprintf(__('Delete "%s" ?' , 'nggallery'), $picture->filename)). '\');if(check==false) return false;">' . __('Delete') . '</a>';
 							$action_count = count($actions);
 							$i = 0;
 							echo '<div class="row-actions">';

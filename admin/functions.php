@@ -343,6 +343,11 @@ class nggAdmin{
 
 		// skip if file is not there
 		if (!$file->error) {
+			
+			// If reqired save a backup copy for the file
+			if ($ngg->options['imgBackup'] == 1)
+				@copy ($image->imagePath, $image->imagePath."_backup");
+			
 			$file->resize($width, $height, 4);
 			$file->save($image->imagePath, $ngg->options['imgQuality']);
 			// read the new sizes
@@ -503,6 +508,45 @@ class nggAdmin{
 	}
 
 	/**
+	 * Recover image from backup copy and reprocess it
+	 * 
+	 * @class nggAdmin
+	 * @param object | int $image contain all information about the image or the id
+	 * @return string result code
+	 */
+	
+	function recover_image($image) {
+
+		global $ngg;
+		
+		if ( is_numeric($image) )
+			$image = nggdb::find_image( $image );
+		
+		if ( !is_object($image) ) 
+			return __('Object didn\'t contain correct data','nggallery');		
+			
+		if (!is_writable($image->imagePath))
+			return ' <strong>' . $image->filename . __(' is not writeable','nggallery') . '</strong>';
+		
+		if (!file_exists($image->imagePath."_backup")) {
+			return ' <strong>'.__('File do not exists','nggallery').'</strong>';
+		}
+
+		if (!@copy($image->imagePath."_backup", $image->imagePath))
+			return ' <strong>'.__('Error while recoving file','nggallery').'</strong>';
+		
+		require_once(NGGALLERY_ABSPATH . '/lib/meta.php');
+		$meta_obj = new nggMeta( $image->pid );
+					
+        $common = $meta_obj->get_common_meta();
+        $common['saved']  = true; 
+		$result = nggdb::update_image_meta($image->pid, $common);			
+		
+		return '1';
+		
+	}
+		
+	/**
 	 * Add images to database
 	 * 
 	 * @class nggAdmin
@@ -512,7 +556,7 @@ class nggAdmin{
 	 */
 	function add_Images($galleryID, $imageslist) {
 		
-		global $wpdb;
+		global $wpdb, $ngg;
 		
 		$image_ids = array();
 		
@@ -533,7 +577,12 @@ class nggAdmin{
 				nggAdmin::import_MetaData($pic_id);
 				
 				// auto rotate
-				nggAdmin::rotate_image($pic_id);				
+				nggAdmin::rotate_image($pic_id);		
+
+				// Autoresize image if required
+				if ($ngg->options['imgAutoResize']) {
+						nggAdmin::resize_image( $pic_id );
+				}				
 				
 				// action hook for post process after the image is added to the database
 				$image = array( 'id' => $pic_id, 'filename' => $picture, 'galleryID' => $galleryID);
@@ -545,7 +594,7 @@ class nggAdmin{
 		return $image_ids;
 		
 	}
-
+	
 	/**
 	 * Import some meta data into the database (if avialable)
 	 * 
@@ -914,6 +963,7 @@ class nggAdmin{
 
 			//create thumbnails
 			nggAdmin::do_ajax_operation( 'create_thumbnail' , $image_ids, __('Create new thumbnails','nggallery') );
+			
 			//add the preview image if needed
 			nggAdmin::set_gallery_preview ( $galleryID );
 			

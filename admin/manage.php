@@ -91,13 +91,15 @@ class nggManageGallery {
 	
 		// Delete a picture
 		if ($this->mode == 'delpic') {
-		//TODO:Remove also Tag reference
+
+			//TODO:Remove also Tag reference
 			check_admin_referer('ngg_delpicture');
 			$image = $nggdb->find_image( $this->pid );
 			if ($image) {
 				if ($ngg->options['deleteImg']) {
 					@unlink($image->imagePath);
 					@unlink($image->thumbPath);	
+					@unlink($image->imagePath."_backup");
 				} 
 				$delete_pic = $wpdb->query("DELETE FROM $wpdb->nggpictures WHERE pid = $image->pid");
 			}
@@ -108,6 +110,17 @@ class nggManageGallery {
 	
 		}
 		
+		// Recover picture from backup
+		if ($this->mode == 'recoverpic') {
+
+			check_admin_referer('ngg_recoverpicture');
+			$image = $nggdb->find_image( $this->pid );
+			nggAdmin::recover_image($image);
+				
+		 	$this->mode = 'edit'; // show pictures
+	
+		}
+				
 		// will be called after a ajax operation
 		if (isset ($_POST['ajax_callback']))  {
 				if ($_POST['ajax_callback'] == 1)
@@ -134,6 +147,11 @@ class nggManageGallery {
 			switch ($_POST['bulkaction']) {
 				case 'no_action';
 				// No action
+					break;
+				case 'recover_images':
+				// Recover images from backup
+					// A prefix 'gallery_' will first fetch all ids from the selected galleries
+					nggAdmin::do_ajax_operation( 'gallery_recover_image' , $_POST['doaction'], __('Recover from backup','nggallery') );
 					break;
 				case 'set_watermark':
 				// Set watermark
@@ -208,7 +226,10 @@ class nggManageGallery {
 					break;
 				case 'rotate_ccw':
 					nggAdmin::do_ajax_operation( 'rotate_ccw' , $_POST['doaction'], __('Rotate images', 'nggallery') );
-					break;					
+					break;			
+				case 'recover_images':
+					nggAdmin::do_ajax_operation( 'recover_image' , $_POST['doaction'], __('Recover from backup', 'nggallery') );
+					break;
 				case 'set_watermark':
 					nggAdmin::do_ajax_operation( 'set_watermark' , $_POST['doaction'], __('Set watermark', 'nggallery') );
 					break;
@@ -219,7 +240,8 @@ class nggManageGallery {
 							if ($image) {
 								if ($ngg->options['deleteImg']) {
 									@unlink($image->imagePath);
-									@unlink($image->thumbPath);	
+									@unlink($image->thumbPath);
+									@unlink($image->imagePath."_backup");	
 								} 
 								$delete_pic = nggdb::delete_image( $image->pid );
 							}

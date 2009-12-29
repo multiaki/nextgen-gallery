@@ -49,6 +49,9 @@ function ngg_ajax_operation() {
 			case 'set_watermark' :
 				$result = nggAdmin::set_watermark($picture);
 			break;
+			case 'recover_image' :
+				$result = nggAdmin::recover_image($picture);
+			break;			
 			case 'import_metadata' :
 				$result = nggAdmin::import_MetaData( $id );
 			break;
