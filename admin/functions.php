@@ -345,7 +345,7 @@ class nggAdmin{
 		if (!$file->error) {
 			
 			// If required save a backup copy of the file
-			if ($ngg->options['imgBackup'] == 1)
+			if ( ($ngg->options['imgBackup'] == 1) && (!file_exists($image->imagePath . '_backup')) )
 				@copy ($image->imagePath, $image->imagePath . '_backup');
 			
 			$file->resize($width, $height, 4);
@@ -428,7 +428,7 @@ class nggAdmin{
 		if (!$file->error) {
 
 			// If required save a backup copy of the file
-			if ($ngg->options['imgBackup'] == 1)
+			if ( ($ngg->options['imgBackup'] == 1) && (!file_exists($image->imagePath . '_backup')) )
 				@copy ($image->imagePath, $image->imagePath . '_backup');
 
 			// before we start we import the meta data to database (required for uploads before V1.4.X)
@@ -493,7 +493,7 @@ class nggAdmin{
 		if (!$file->error) {
 			
 			// If required save a backup copy of the file
-			if ($ngg->options['imgBackup'] == 1)
+			if ( ($ngg->options['imgBackup'] == 1) && (!file_exists($image->imagePath . '_backup')) )
 				@copy ($image->imagePath, $image->imagePath . '_backup');
 			
 			if ($ngg->options['wmType'] == 'image') {
