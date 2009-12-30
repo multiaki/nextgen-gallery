@@ -5,6 +5,7 @@ by Alex Rabe & NextGEN DEV Team
 * NEW : Backup and Recover function for images (THX to Simone Fumagalli)
 * NEW : Resize images after upload (THX to Simone Fumagalli)
 * Changed : Rename query var from slideshow to imagerotator for compat reason with other plugin
+* Changed : Convert widget function to new WP structure
 * Bugfix : Select album preview from gallery preview pics instead random list
 * Bugfix : Keep fix dimension in edit thumbnail operation
 * Bugfix : Import meta data didn't work correct for existing images
