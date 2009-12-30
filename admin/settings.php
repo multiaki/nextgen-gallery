@@ -241,8 +241,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				<table class="form-table ngg-options">
 					<tr valign="top">
 						<th scope="row"><label for="fixratio"><?php _e('Resize Images','nggallery') ?></label></th>
-						<!--TODO: checkbox fixratio can be used later -->
-						<td><input type="hidden" name="imgResize" value="1" <?php checked('1', $ngg->options['imgResize']); ?> /> </td>
+						<td></td>
 						<td><input type="text" size="5" name="imgWidth" value="<?php echo $ngg->options['imgWidth']; ?>" /> x <input type="text" size="5" name="imgHeight" value="<?php echo $ngg->options['imgHeight']; ?>" />
 						<span class="setting-description"><?php _e('Width x height (in pixel). NextGEN Gallery will keep ratio size','nggallery') ?></span></td>
 					</tr>
@@ -252,7 +251,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						<td><input type="text" size="3" maxlength="3" name="imgQuality" value="<?php echo $ngg->options['imgQuality']; ?>" /> %</td>
 					</tr>
 					<tr>
-						<th colspan="1"><?php _e('Creates a backup for images','nggallery') ?></th>
+						<th colspan="1"><?php _e('Backup original images','nggallery') ?></th>
 						<td></td>
 						<td colspan="3"><input type="checkbox" name="imgBackup" value="1"<?php echo ($ngg->options['imgBackup'] == 1) ? ' checked ="chechked"' : ''; ?>/>	
 						<span class="setting-description"><?php _e('Creates a backup for inserted images','nggallery') ?></span></td>

@@ -1,10 +1,14 @@
 NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
-= V1.4.4 - soon =
+= V1.5.0 - soon =
+* NEW : Backup and Recover function for images (THX to Simone Fumagalli)
+* NEW : Resize images after upload (THX to Simone Fumagalli)
 * Changed : Rename query var from slideshow to imagerotator for compat reason with other plugin
+* Bugfix : Select album preview from gallery preview pics instead random list
 * Bugfix : Keep fix dimension in edit thumbnail operation
 * Bugfix : Import meta data didn't work correct for existing images
+* Removed : Canonical link is now part of Wordpress 2.9
 
 = V1.4.3 - 16.11.2009 =
 * Bugfix : Urlencode XML file path for sildeshow

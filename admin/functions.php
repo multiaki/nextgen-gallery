@@ -344,9 +344,9 @@ class nggAdmin{
 		// skip if file is not there
 		if (!$file->error) {
 			
-			// If reqired save a backup copy for the file
+			// If required save a backup copy of the file
 			if ($ngg->options['imgBackup'] == 1)
-				@copy ($image->imagePath, $image->imagePath."_backup");
+				@copy ($image->imagePath, $image->imagePath . '_backup');
 			
 			$file->resize($width, $height, 4);
 			$file->save($image->imagePath, $ngg->options['imgQuality']);
@@ -427,6 +427,10 @@ class nggAdmin{
 		// skip if file is not there
 		if (!$file->error) {
 
+			// If required save a backup copy of the file
+			if ($ngg->options['imgBackup'] == 1)
+				@copy ($image->imagePath, $image->imagePath . '_backup');
+
 			// before we start we import the meta data to database (required for uploads before V1.4.X)
 			nggAdmin::maybe_import_meta( $image->pid );
 
@@ -458,7 +462,7 @@ class nggAdmin{
 	}
 
 	/**
-	 * nggAdmin::set_watermark() - set the watermarl for the image
+	 * nggAdmin::set_watermark() - set the watermark for the image
 	 * 
 	 * @class nggAdmin
 	 * @param object | int $image contain all information about the image or the id
@@ -487,6 +491,11 @@ class nggAdmin{
 
 		// skip if file is not there
 		if (!$file->error) {
+			
+			// If required save a backup copy of the file
+			if ($ngg->options['imgBackup'] == 1)
+				@copy ($image->imagePath, $image->imagePath . '_backup');
+			
 			if ($ngg->options['wmType'] == 'image') {
 				$file->watermarkImgPath = $ngg->options['wmPath'];
 				$file->watermarkImage($ngg->options['wmPos'], $ngg->options['wmXpos'], $ngg->options['wmYpos']); 
@@ -511,6 +520,7 @@ class nggAdmin{
 	 * Recover image from backup copy and reprocess it
 	 * 
 	 * @class nggAdmin
+	 * @since 1.5.0
 	 * @param object | int $image contain all information about the image or the id
 	 * @return string result code
 	 */
@@ -522,20 +532,21 @@ class nggAdmin{
 		if ( is_numeric($image) )
 			$image = nggdb::find_image( $image );
 		
-		if ( !is_object($image) ) 
+		if ( !is_object( $image ) ) 
 			return __('Object didn\'t contain correct data','nggallery');		
 			
-		if (!is_writable($image->imagePath))
+		if (!is_writable( $image->imagePath ))
 			return ' <strong>' . $image->filename . __(' is not writeable','nggallery') . '</strong>';
 		
-		if (!file_exists($image->imagePath."_backup")) {
+		if (!file_exists( $image->imagePath . '_backup' )) {
 			return ' <strong>'.__('File do not exists','nggallery').'</strong>';
 		}
 
-		if (!@copy($image->imagePath."_backup", $image->imagePath))
+		if (!@copy( $image->imagePath . '_backup' , $image->imagePath) )
 			return ' <strong>'.__('Error while recoving file','nggallery').'</strong>';
 		
 		require_once(NGGALLERY_ABSPATH . '/lib/meta.php');
+		
 		$meta_obj = new nggMeta( $image->pid );
 					
         $common = $meta_obj->get_common_meta();
@@ -574,10 +585,10 @@ class nggAdmin{
 					$image_ids[] = $pic_id;
 
 				// add the metadata
-				nggAdmin::import_MetaData($pic_id);
+				nggAdmin::import_MetaData( $pic_id );
 				
 				// auto rotate
-				nggAdmin::rotate_image($pic_id);		
+				nggAdmin::rotate_image( $pic_id );		
 
 				// Autoresize image if required
 				if ($ngg->options['imgAutoResize']) {
