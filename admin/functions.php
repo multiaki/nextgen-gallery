@@ -821,11 +821,14 @@ class nggAdmin{
 			$temp_zipfile = $_FILES['zipfile']['tmp_name'];
 			$filename = $_FILES['zipfile']['name']; 
 						
-			// check if file is a zip file
-			if ( !preg_match('/(zip|download|octet-stream)/i', $_FILES['zipfile']['type']) ) {
-				@unlink($temp_zipfile); // del temp file
-				nggGallery::show_error(__('Uploaded file was no or a faulty zip file ! The server recognize : ','nggallery').$_FILES['zipfile']['type']);
-				return false; 
+			// Chrome return a empty content-type : http://code.google.com/p/chromium/issues/detail?id=6800
+			if ( !preg_match('/chrome/i', $_SERVER['HTTP_USER_AGENT']) ) {
+				// check if file is a zip file
+				if ( !preg_match('/(zip|download|octet-stream)/i', $_FILES['zipfile']['type']) ) {
+					@unlink($temp_zipfile); // del temp file
+					nggGallery::show_error(__('Uploaded file was no or a faulty zip file ! The server recognize : ','nggallery').$_FILES['zipfile']['type']);
+					return false; 
+				}
 			}
 		}
 
