@@ -487,8 +487,8 @@ class nggManageGallery {
 		//on what ever reason I need to set again the query var
 		set_query_var('s', $_GET['s']);
 		$request = get_search_query();
-		// looknow for the images
-		$this->search_result = $nggdb->search_for_images( $request );
+		// look now for the images
+	 	$this->search_result = array_merge( (array) $nggdb->search_for_images( $request ), (array) nggTags::find_images_for_tags( $request , 'ASC' ));
 		// show pictures page
 		$this->mode = 'edit'; 
 	}

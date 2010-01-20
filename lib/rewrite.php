@@ -154,6 +154,7 @@ class nggRewrite {
 		$query_vars[] = 'gallerytag';
 		$query_vars[] = 'show';
         $query_vars[] = 'imagerotator';
+        $query_vars[] = 'nggallery';
 
 		return $query_vars;
 	}

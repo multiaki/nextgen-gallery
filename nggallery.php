@@ -8,7 +8,7 @@ Version: 1.5.0a
 
 Author URI: http://alexrabe.de/
 
-Copyright 2007-2009 by Alex Rabe & NextGEN DEV-Team
+Copyright 2007-2010 by Alex Rabe & NextGEN DEV-Team
 
 The NextGEN button is taken from the Fugue Icons of http://www.pinvoke.com/.
 
@@ -82,7 +82,7 @@ class nggLoader {
 		// Start this plugin once all other plugins are fully loaded
 		add_action( 'plugins_loaded', array(&$this, 'start_plugin') );
 		
-		// Register_taxonomy must be used during wo init
+		// Register_taxonomy must be used during the init
 		add_action( 'init', array(&$this, 'register_taxonomy') );
 		
 		// Add a message for PHP4 Users, can disable the update message later on
@@ -119,10 +119,7 @@ class nggLoader {
 				add_action('wp_head', array('nggMediaRss', 'add_piclens_javascript'));
                 
             // Look for XML request, before page is render
-            add_action('parse_request',  array(&$this, 'check_xml_request') );    
-			
-			// Why is this not core ?
-			add_action('wp_head', 'wp_print_styles');
+            add_action('parse_request',  array(&$this, 'check_request') );    
 				
 			// Add the script and style files
 			add_action('wp_print_scripts', array(&$this, 'load_scripts') );
@@ -134,10 +131,15 @@ class nggLoader {
 		}	
 	}
 
-    function check_xml_request( $wp ) {
+    function check_request( $wp ) {
         
         if (array_key_exists('imagerotator', $wp->query_vars) && $wp->query_vars['imagerotator'] == 'true') {
             require_once (dirname (__FILE__) . '/xml/imagerotator.php');
+            exit();
+        }
+
+        if (array_key_exists('nggallery', $wp->query_vars) && $wp->query_vars['nggallery'] == 'true') {
+            require_once (dirname (__FILE__) . '/xml/json.php');
             exit();
         }
         
