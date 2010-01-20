@@ -127,8 +127,8 @@ class nggAdmin{
 	 * TODO: Check permission of existing thumb folder & images
 	 * 
 	 * @class nggAdmin
-	 * @param string $galleryfolder contains relative path
-	 * @return
+	 * @param string $galleryfolder contains relative path to the gallery itself
+	 * @return void
 	 */
 	function import_gallery($galleryfolder) {
 		
@@ -150,6 +150,7 @@ class nggAdmin{
 		
 		// read list of images
 		$new_imageslist = nggAdmin::scandir($gallerypath);
+
 		if (empty($new_imageslist)) {
 			nggGallery::show_message(__('Directory', 'nggallery').' <strong>'.$gallerypath.'</strong> '.__('contains no pictures', 'nggallery'));
 			return;
@@ -211,25 +212,27 @@ class nggAdmin{
 	}
 
 	/**
-	 * nggAdmin::scandir()
+	 * Scan folder for new images
 	 * 
 	 * @class nggAdmin
 	 * @param string $dirname
-	 * @return
+	 * @return array $files list of image filenames 
 	 */
-	function scandir($dirname = '.') { 
-		// thx to php.net :-)
+	function scandir( $dirname = '.' ) { 
 		$ext = array('jpeg', 'jpg', 'png', 'gif'); 
+
 		$files = array(); 
-		if($handle = opendir($dirname)) { 
-		   while(false !== ($file = readdir($handle))) 
-		       for($i=0;$i<sizeof($ext);$i++) 
-		           if(stristr($file, '.' . $ext[$i])) 
-		               $files[] = utf8_encode($file); 
-		   closedir($handle); 
+		if( $handle = opendir( $dirname ) ) { 
+			while( false !== ( $file = readdir( $handle ) ) ) {
+				$info = pathinfo( $file );
+				// just look for images with the correct extension
+				if ( in_array( strtolower($info['extension']), $ext) )
+					$files[] = utf8_encode( $file );
+			}		
+			closedir( $handle ); 
 		} 
-		sort($files);
-		return ($files); 
+		sort( $files );
+		return ( $files ); 
 	} 
 	
 	/**
