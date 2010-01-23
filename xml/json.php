@@ -1,10 +1,7 @@
 <?php
-if ( !function_exists('json_encode') )
-	return false; 
-
 /**
 * REST Application Programming Interface PHP class for the WordPress plugin NextGEN Gallery
-* Should emulate some Flickr JSON callback : ?format=json&api_key=1234567890&method=search&term=myterm
+* Should emulate some kind of Flickr JSON callback : ?format=json&api_key=1234567890&method=search&term=myterm
 
 * 
 * @author 		Alex Rabe 
@@ -13,12 +10,13 @@ if ( !function_exists('json_encode') )
 * @require		PHP 5.2.0 or higher
 * 
 */
+
 class nggAPI {
 
 	/**
 	  *	$_GET Variables 
 	  * 
-	  * @since 1.4.0
+	  * @since 1.5.0
 	  * @access private
 	  * @var string
 	  */
@@ -30,28 +28,35 @@ class nggAPI {
 	var $limit		=	false;		// $_GET['limit']	: maxium of images which we request
 
 	/**
-	 * Contin the final output
+	 * Contain the final output
 	 *
-	 * @since 1.4.0
+	 * @since 1.5.0
 	 * @access private
 	 * @var string
 	 */	
 	var $output		=	'';
 
 	/**
-	 * Holds the requested inbformation as array
+	 * Holds the requested innformation as array
 	 *
-	 * @since 1.4.0
+	 * @since 1.5.0
 	 * @access private
 	 * @var array
 	 */	
 	var $result		=	'';
 	
 	/**
-	 * Init the Database Abstraction layer for NextGEN Gallery
+	 * Init the variables
 	 * 
 	 */	
 	function __construct() {
+		
+		// Enable the JSON API when you add define('NGG_JSON_ENABLE',true); in the wp-config.php file
+		if ( !defined('NGG_JSON_ENABLED') )
+			wp_die('JSON API not enabled. Add <strong>define(\'NGG_JSON_ENABLE\', true);</strong> to your wp-config.php file');
+
+		if ( !function_exists('json_encode') )
+			wp_die('Json_encode not available. You need to use PHP 5.2');
 		
 		// Read the parameter on init
 		$this->format 	= strtolower( $_GET['format'] );

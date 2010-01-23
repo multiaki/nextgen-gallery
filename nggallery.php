@@ -132,14 +132,22 @@ class nggLoader {
 	}
 
     function check_request( $wp ) {
+    	
+    	if ( !array_key_exists('callback', $wp->query_vars) )
+    		return;
         
-        if (array_key_exists('imagerotator', $wp->query_vars) && $wp->query_vars['imagerotator'] == 'true') {
+        if ( $wp->query_vars['callback'] == 'imagerotator') {
             require_once (dirname (__FILE__) . '/xml/imagerotator.php');
             exit();
         }
 
-        if (array_key_exists('nggallery', $wp->query_vars) && $wp->query_vars['nggallery'] == 'true') {
+        if ( $wp->query_vars['callback'] == 'json') {
             require_once (dirname (__FILE__) . '/xml/json.php');
+            exit();
+        }
+
+        if ( $wp->query_vars['callback'] == 'image') {
+            require_once (dirname (__FILE__) . '/nggshow.php');
             exit();
         }
         
@@ -174,7 +182,7 @@ class nggLoader {
 	function check_memory_limit() {
 		
 		$memory_limit = (int) substr( ini_get('memory_limit'), 0, -1);
-		//This works only with enough memory, 8MB is silly, wordpress requires already 7.9999
+		//This works only with enough memory, 12MB is silly, wordpress requires already 16MB :-)
 		if ( ($memory_limit != 0) && ($memory_limit < 12 ) ) {
 			add_action(
 				'admin_notices', 

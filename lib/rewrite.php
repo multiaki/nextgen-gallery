@@ -153,8 +153,7 @@ class nggRewrite {
 		$query_vars[] = 'album';
 		$query_vars[] = 'gallerytag';
 		$query_vars[] = 'show';
-        $query_vars[] = 'imagerotator';
-        $query_vars[] = 'nggallery';
+        $query_vars[] = 'callback';
 
 		return $query_vars;
 	}

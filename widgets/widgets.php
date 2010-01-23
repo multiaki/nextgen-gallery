@@ -69,7 +69,7 @@ class nggSlideshowWidget extends WP_Widget {
 		$swfobject->add_attributes('styleclass', 'slideshow-widget');
 	
 		// adding the flash parameter	
-		$swfobject->add_flashvars( 'file', urlencode( get_option ('siteurl') . '/' . 'index.php?imagerotator=true&gid=' . $galleryID ) );
+		$swfobject->add_flashvars( 'file', urlencode( get_option ('siteurl') . '/' . 'index.php?callback=imagerotator&gid=' . $galleryID ) );
 		$swfobject->add_flashvars( 'shownavigation', 'false', 'true', 'bool');
 		$swfobject->add_flashvars( 'shuffle', $ngg_options['irShuffle'], 'true', 'bool');
 		$swfobject->add_flashvars( 'showicons', $ngg_options['irShowicons'], 'true', 'bool');
@@ -320,7 +320,7 @@ class nggWidget extends WP_Widget {
 				$instance['show'] = ( $instance['show'] == 'orginal' ) ? 'original' : $instance['show'];
 				
 				if ( $instance['show'] == 'original' )
-					$out .= '<img src="'.NGGALLERY_URLPATH.'nggshow.php?pid='.$image->pid.'&amp;width='.$instance['width'].'&amp;height='.$instance['height']. '" title="'.$alttext.'" alt="'.$alttext.'" />';
+					$out .= '<img src="' . get_option ('siteurl') . '/' . 'index.php?callback=image&amp;pid='.$image->pid.'&amp;width='.$instance['width'].'&amp;height='.$instance['height']. '" title="'.$alttext.'" alt="'.$alttext.'" />';
 				else	
 					$out .= '<img src="'.$image->thumbURL.'" width="'.$instance['width'].'" height="'.$instance['height'].'" title="'.$alttext.'" alt="'.$alttext.'" />';			
 				
