@@ -260,6 +260,7 @@ class nggLoader {
 		require_once (dirname (__FILE__) . '/lib/core.php');					//  94.840
 		require_once (dirname (__FILE__) . '/lib/ngg-db.php');					// 132.400
 		require_once (dirname (__FILE__) . '/lib/image.php');					//  59.424
+		require_once (dirname (__FILE__) . '/lib/post-thumbnail.php');			//  n.a.
 		require_once (dirname (__FILE__) . '/widgets/widgets.php');				// 298.792
 		
 		//Just needed if you access remote to WordPress
@@ -345,7 +346,7 @@ class nggLoader {
 		if ( nggGallery::get_theme_css_file() )
 			wp_enqueue_style('NextGEN', nggGallery::get_theme_css_file() , false, '1.0.0', 'screen'); 
 		else if ($this->options['activateCSS'])
-			wp_enqueue_style('NextGEN', NGGALLERY_URLPATH.'css/'.$this->options['CSSfile'], false, '1.0.0', 'screen'); 
+			wp_enqueue_style('NextGEN', NGGALLERY_URLPATH . 'css/' . $this->options['CSSfile'], false, '1.0.0', 'screen'); 
 		
 		//	activate Thickbox
 		if ($this->options['thumbEffect'] == 'thickbox') 

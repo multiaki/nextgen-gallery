@@ -69,6 +69,8 @@ class nggImage{
 		$this->imagePath	= WINABSPATH.$this->path . '/' . $this->filename;
 		$this->thumbPath	= WINABSPATH.$this->path . '/thumbs/thumbs_' . $this->filename;
 		$this->meta_data	= unserialize($this->meta_data);
+		$this->imageHTML	= $this->get_href_link();
+		$this->thumbHTML	= $this->get_href_thumb_link();
 		
 		wp_cache_add($this->pid, $this, 'ngg_image');
 		

@@ -2,6 +2,7 @@ NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
 = V1.5.0 - soon =
+* NEW : Support for Post thumbnail feature (Since WP2.8)
 * NEW : Backup and Recover function for images (THX to Simone Fumagalli)
 * NEW : Resize images after upload (THX to Simone Fumagalli)
 * NEW : Added a JSON class for fetching galleries in a RESTful way
