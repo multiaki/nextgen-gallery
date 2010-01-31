@@ -266,11 +266,15 @@ function showDialog() {
 				<?php if ($this->currentID > 0){ ?>
 					<input class="button-primary" type="submit" name="update" value="<?php _e('Update', 'nggallery'); ?>"/>
 					<input class="button-secondary" type="submit" name="showThickbox" value="<?php _e( 'Edit album', 'nggallery'); ?>" onclick="showDialog(); return false;" />
+					<?php if(nggGallery::current_user_can( 'NextGEN Add/Delete album' )) { ?>
 					<input class="button-secondary action "type="submit" name="delete" value="<?php _e('Delete', 'nggallery'); ?>" onclick="javascript:check=confirm('<?php _e('Delete album ?','nggallery'); ?>');if(check==false) return false;"/>
+					<?php } ?>
 				<?php } else { ?>
+					<?php if(nggGallery::current_user_can( 'NextGEN Add/Delete album' )) { ?>
 					<span><?php _e('Add new album', 'nggallery'); ?>&nbsp;</span>
 					<input class="search-input" id="newalbum" name="newalbum" type="text" value="" />			
 					<input class="button-secondary action" type="submit" name="add" value="<?php _e('Add', 'nggallery'); ?>"/>
+					<?php } ?>
 				<?php } ?>	
 			</div>
 		</div>

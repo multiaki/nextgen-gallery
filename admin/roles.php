@@ -126,7 +126,7 @@ function ngg_set_capability($lowest_role, $capability){
 		if ( $lowest_role == $role )
 			$add_capability = true;
 		
-		// If you rename the roles, then please use the role manager plugin
+		// If you rename the roles, then please use a role manager plugin
 		
 		if ( empty($the_role) )
 			continue;
