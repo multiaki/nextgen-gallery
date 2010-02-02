@@ -69,6 +69,8 @@ function nggallery_picturelist() {
 		$gallery_columns = ngg_manage_gallery_columns();
 		$hidden_columns  = get_hidden_columns('nggallery-manage-images');
 		$num_columns     = count($gallery_columns) - count($hidden_columns);
+		
+		$attr = (nggGallery::current_user_can( 'NextGEN Edit gallery options' )) ? '' : 'disabled="disabled"';
 
 ?>
 <!--[if IE]>
@@ -203,6 +205,7 @@ jQuery(document).ready( function() {
 <?php wp_nonce_field('ngg_updategallery') ?>
 <input type="hidden" name="page" value="manage-images" />
 
+<?php if ( nggGallery::current_user_can( 'NextGEN Edit gallery options' )) : ?>
 <div id="poststuff">
 	<?php wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>
 	<div id="gallerydiv" class="postbox <?php echo postbox_classes('gallerydiv', 'ngg-manage-gallery'); ?>" >
@@ -276,6 +279,8 @@ jQuery(document).ready( function() {
 		</div>
 	</div>
 </div> <!-- poststuff -->
+<?php endif; ?>
+
 <?php endif; ?>
 
 <div class="tablenav ngg-tablenav">

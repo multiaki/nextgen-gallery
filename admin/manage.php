@@ -351,20 +351,22 @@ class nggManageGallery {
 		// Update pictures	
 		
 			check_admin_referer('ngg_updategallery');
-		
-			$gallery_title   = esc_attr($_POST['title']);
-			$gallery_path    = esc_attr($_POST['path']);
-			$gallery_desc    = esc_attr($_POST['gallerydesc']);
-			$gallery_pageid  = (int) $_POST['pageid'];
-			$gallery_preview = (int) $_POST['previewpic'];
 			
-			$wpdb->query("UPDATE $wpdb->nggallery SET title= '$gallery_title', path= '$gallery_path', galdesc = '$gallery_desc', pageid = '$gallery_pageid', previewpic = '$gallery_preview' WHERE gid = '$this->gid'");
-	
-			if (isset ($_POST['author']))  {		
-				$gallery_author  = (int) $_POST['author'];
-				$wpdb->query("UPDATE $wpdb->nggallery SET author = '$gallery_author' WHERE gid = '$this->gid'");
+			if ( nggGallery::current_user_can( 'NextGEN Edit gallery options' )) {
+				$gallery_title   = esc_attr($_POST['title']);
+				$gallery_path 	 = untrailingslashit ( str_replace('\\', '/', trim( stripslashes($_POST['path']) )) );
+				$gallery_desc    = esc_attr($_POST['gallerydesc']);
+				$gallery_pageid  = (int) $_POST['pageid'];
+				$gallery_preview = (int) $_POST['previewpic'];
+				
+				$wpdb->query("UPDATE $wpdb->nggallery SET title= '$gallery_title', path= '$gallery_path', galdesc = '$gallery_desc', pageid = '$gallery_pageid', previewpic = '$gallery_preview' WHERE gid = '$this->gid'");
+		
+				if (isset ($_POST['author']))  {		
+					$gallery_author  = (int) $_POST['author'];
+					$wpdb->query("UPDATE $wpdb->nggallery SET author = '$gallery_author' WHERE gid = '$this->gid'");
+				}
 			}
-	
+		
 			$this->update_pictures();
 	
 			//hook for other plugin to update the fields
