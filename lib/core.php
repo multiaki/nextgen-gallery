@@ -424,6 +424,19 @@ class nggGallery {
 	}
 
 	/**
+	 * Check for extended capabilites and echo disabled="disabled" for input form
+	 * 
+	 * @since 1.5.0
+	 * @param string $capability
+	 * @return void
+	 */
+	function current_user_can_form( $capability ) {
+		
+		if ( !nggGallery::current_user_can( $capability ))
+			echo 'disabled="disabled"';
+	}
+
+	/**
 	 * Register more capabilities for custom use and add it to the administrator
 	 * 
 	 * @since 1.5.0
