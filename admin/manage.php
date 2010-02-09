@@ -353,18 +353,21 @@ class nggManageGallery {
 			check_admin_referer('ngg_updategallery');
 			
 			if ( nggGallery::current_user_can( 'NextGEN Edit gallery options' )) {
-				$gallery_title   = esc_attr($_POST['title']);
-				$gallery_path 	 = untrailingslashit ( str_replace('\\', '/', trim( stripslashes($_POST['path']) )) );
-				$gallery_desc    = esc_attr($_POST['gallerydesc']);
-				$gallery_pageid  = (int) $_POST['pageid'];
-				$gallery_preview = (int) $_POST['previewpic'];
 				
-				$wpdb->query("UPDATE $wpdb->nggallery SET title= '$gallery_title', path= '$gallery_path', galdesc = '$gallery_desc', pageid = '$gallery_pageid', previewpic = '$gallery_preview' WHERE gid = '$this->gid'");
+				if ( nggGallery::current_user_can( 'NextGEN Edit gallery title' ))
+					$wpdb->query( $wpdb->prepare ("UPDATE $wpdb->nggallery SET title= '%s' WHERE gid = %d", $_POST['title'], $this->gid) );
+				if ( nggGallery::current_user_can( 'NextGEN Edit gallery path' ))
+					$wpdb->query( $wpdb->prepare ("UPDATE $wpdb->nggallery SET path= '%s' WHERE gid = %d", untrailingslashit ( str_replace('\\', '/', trim( stripslashes($_POST['path']) )) ), $this->gid ) );
+				if ( nggGallery::current_user_can( 'NextGEN Edit gallery description' ))
+					$wpdb->query( $wpdb->prepare ("UPDATE $wpdb->nggallery SET galdesc= '%s' WHERE gid = %d", $_POST['gallerydesc'], $this->gid) );
+				if ( nggGallery::current_user_can( 'NextGEN Edit gallery page id' ))	
+					$wpdb->query( $wpdb->prepare ("UPDATE $wpdb->nggallery SET pageid= '%d' WHERE gid = %d", (int) $_POST['pageid'], $this->gid) );
+				if ( nggGallery::current_user_can( 'NextGEN Edit gallery preview pic' ))
+					$wpdb->query( $wpdb->prepare ("UPDATE $wpdb->nggallery SET previewpic= '%d' WHERE gid = %d", (int) $_POST['previewpic'], $this->gid) );
+				if ( isset ($_POST['author']) && nggGallery::current_user_can( 'NextGEN Edit gallery author' ) ) 
+					$wpdb->query( $wpdb->prepare ("UPDATE $wpdb->nggallery SET author= '%d' WHERE gid = %d", (int) $_POST['author'], $this->gid) );
+				//$wpdb->query( $wpdb->prepare ("UPDATE $wpdb->nggallery SET title= '$gallery_title', path= '$gallery_path', galdesc = '$gallery_desc', pageid = '$gallery_pageid', previewpic = '$gallery_preview' WHERE gid = '$this->gid'"));
 		
-				if (isset ($_POST['author']))  {		
-					$gallery_author  = (int) $_POST['author'];
-					$wpdb->query("UPDATE $wpdb->nggallery SET author = '$gallery_author' WHERE gid = '$this->gid'");
-				}
 			}
 		
 			$this->update_pictures();
