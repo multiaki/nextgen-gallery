@@ -131,7 +131,7 @@ function nggallery_manage_gallery_main() {
 				</select>
 				<input name="showThickbox" class="button-secondary" type="submit" value="<?php _e('Apply','nggallery'); ?>" onclick="if ( !checkSelected() ) return false;" />
 				<?php endif; ?>
-				<?php if ( current_user_can('NextGEN Upload images') ) : ?>
+				<?php if ( current_user_can('NextGEN Upload images') && nggGallery::current_user_can( 'NextGEN Add new gallery' ) ) : ?>
 					<input name="doaction" class="button-secondary action" type="submit" onclick="showAddGallery(); return false;" value="<?php _e('Add new gallery', 'nggallery') ?>"/>
 				<?php endif; ?>
 			</div>

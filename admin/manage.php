@@ -170,6 +170,9 @@ class nggManageGallery {
 			
 			check_admin_referer('ngg_addgallery');
 
+			if ( !nggGallery::current_user_can( 'NextGEN Add new gallery' ))
+				wp_die(__('Cheatin&#8217; uh?'));			
+
 			// get the default path for a new gallery
 			$defaultpath = $ngg->options['gallerypath'];
 			$newgallery = esc_attr( $_POST['galleryname']);
@@ -366,7 +369,6 @@ class nggManageGallery {
 					$wpdb->query( $wpdb->prepare ("UPDATE $wpdb->nggallery SET previewpic= '%d' WHERE gid = %d", (int) $_POST['previewpic'], $this->gid) );
 				if ( isset ($_POST['author']) && nggGallery::current_user_can( 'NextGEN Edit gallery author' ) ) 
 					$wpdb->query( $wpdb->prepare ("UPDATE $wpdb->nggallery SET author= '%d' WHERE gid = %d", (int) $_POST['author'], $this->gid) );
-				//$wpdb->query( $wpdb->prepare ("UPDATE $wpdb->nggallery SET title= '$gallery_title', path= '$gallery_path', galdesc = '$gallery_desc', pageid = '$gallery_pageid', previewpic = '$gallery_preview' WHERE gid = '$this->gid'"));
 		
 			}
 		

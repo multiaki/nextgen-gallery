@@ -24,6 +24,10 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	
 	if ($_POST['addgallery']){
 		check_admin_referer('ngg_addgallery');
+		
+		if ( !nggGallery::current_user_can( 'NextGEN Add new gallery' ))
+			wp_die(__('Cheatin&#8217; uh?'));
+		
 		$newgallery = esc_attr( $_POST['galleryname']);
 		if ( !empty($newgallery) )
 			nggAdmin::create_gallery($newgallery, $defaultpath);
@@ -31,6 +35,10 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	
 	if ($_POST['zipupload']){
 		check_admin_referer('ngg_addgallery');
+
+		if ( !nggGallery::current_user_can( 'NextGEN Upload a zip' ))
+			wp_die(__('Cheatin&#8217; uh?'));
+
 		if ($_FILES['zipfile']['error'] == 0 || (!empty($_POST['zipurl']))) 
 			nggAdmin::import_zipfile( intval( $_POST['zipgalselect'] ) );
 		else
@@ -39,6 +47,10 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	
 	if ($_POST['importfolder']){
 		check_admin_referer('ngg_addgallery');
+
+		if ( !nggGallery::current_user_can( 'NextGEN Import image folder' ))
+			wp_die(__('Cheatin&#8217; uh?'));
+
 		$galleryfolder = $_POST['galleryfolder'];
 		if ( ( !empty($galleryfolder) ) AND ($defaultpath != $galleryfolder) )
 			nggAdmin::import_gallery($galleryfolder);
@@ -170,16 +182,19 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	<div id="slider" class="wrap">
 	
 		<ul id="tabs">
+			<?php if ( nggGallery::current_user_can( 'NextGEN Add new gallery' )) : ?>
 			<li><a href="#addgallery"><?php _e('Add new gallery', 'nggallery') ;?></a></li>
-			<?php if ( wpmu_enable_function('wpmuZipUpload') ) { ?>
+			<?php endif; ?>
+			<?php if ( wpmu_enable_function('wpmuZipUpload') && nggGallery::current_user_can( 'NextGEN Upload a zip' ) ) : ?>
 			<li><a href="#zipupload"><?php _e('Upload a Zip-File', 'nggallery') ;?></a></li>
-			<?php } 
-			if (!IS_WPMU) {?>
+			<?php endif; 
+			if (!IS_WPMU && nggGallery::current_user_can( 'NextGEN Import image folder' ) ) :?>
 			<li><a href="#importfolder"><?php _e('Import image folder', 'nggallery') ;?></a></li>
-			<?php } ?>
+			<?php endif; ?>
 			<li><a href="#uploadimage"><?php _e('Upload Images', 'nggallery') ;?></a></li>
 		</ul>
 
+		<?php if ( nggGallery::current_user_can( 'NextGEN Add new gallery' )) { ?>
 		<!-- create gallery -->
 		<div id="addgallery">
 		<h2><?php _e('Add new gallery', 'nggallery') ;?></h2>
@@ -199,7 +214,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				<div class="submit"><input class="button-primary" type="submit" name= "addgallery" value="<?php _e('Add gallery', 'nggallery') ;?>"/></div>
 			</form>
 		</div>
-		<?php if ( wpmu_enable_function('wpmuZipUpload')) { ?>
+		<?php }
+		if ( wpmu_enable_function('wpmuZipUpload') && nggGallery::current_user_can( 'NextGEN Upload a zip' )) { ?>
 		<!-- zip-file operation -->
 		<div id="zipupload">
 		<h2><?php _e('Upload a Zip-File', 'nggallery') ;?></h2>
@@ -240,7 +256,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			</form>
 		</div>
 		<?php }
-		if (!IS_WPMU) {?>
+		if (!IS_WPMU && nggGallery::current_user_can( 'NextGEN Import image folder' ) ) {?>
 		<!-- import folder -->
 		<div id="importfolder">
 		<h2><?php _e('Import image folder', 'nggallery') ;?></h2>
