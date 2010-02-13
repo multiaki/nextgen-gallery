@@ -584,6 +584,7 @@ class nggAdmin{
 				$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->nggpictures (galleryid, filename, alttext, exclude) VALUES (%s, %s, %s, 0)", $galleryID, $picture, $alttext) );
 				// and give me the new id
 				$pic_id = (int) $wpdb->insert_id;
+				
 				if ($result) 
 					$image_ids[] = $pic_id;
 
@@ -594,9 +595,8 @@ class nggAdmin{
 				nggAdmin::rotate_image( $pic_id );		
 
 				// Autoresize image if required
-				if ($ngg->options['imgAutoResize']) {
+				if ($ngg->options['imgAutoResize'])
 						nggAdmin::resize_image( $pic_id );
-				}				
 				
 				// action hook for post process after the image is added to the database
 				$image = array( 'id' => $pic_id, 'filename' => $picture, 'galleryID' => $galleryID);
@@ -604,6 +604,8 @@ class nggAdmin{
 									
 			} 
 		} // is_array
+		
+		do_action('ngg_after_new_images_added', $galleryID, $image_ids );
 		
 		return $image_ids;
 		
