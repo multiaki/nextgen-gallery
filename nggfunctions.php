@@ -37,7 +37,7 @@ function nggShowSlideshow($galleryID, $width, $height) {
     $swfobject->message = '<p>'. __('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and <a href="http://www.mozilla.com/firefox/">a browser with Javascript support</a> are needed..', 'nggallery').'</p>';
     $swfobject->add_params('wmode', 'opaque');
     $swfobject->add_params('allowfullscreen', 'true');
-    $swfobject->add_params('bgcolor', $ngg_options['irScreencolor'], '000000', 'string', '#');
+    $swfobject->add_params('bgcolor', $ngg_options['irScreencolor'], 'FFFFFF', 'string', '#');
     $swfobject->add_attributes('styleclass', 'slideshow');
     $swfobject->add_attributes('name', 'so' . $galleryID);
 

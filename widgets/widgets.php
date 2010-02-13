@@ -65,7 +65,7 @@ class nggSlideshowWidget extends WP_Widget {
 		$swfobject->classname = 'ngg-widget-slideshow';
 		$swfobject->message =  __('<a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see the slideshow.', 'nggallery');
 		$swfobject->add_params('wmode', 'opaque');
-		$swfobject->add_params('bgcolor', $ngg_options['irScreencolor'], '000000', 'string', '#');
+		$swfobject->add_params('bgcolor', $ngg_options['irScreencolor'], 'FFFFFF', 'string', '#');
 		$swfobject->add_attributes('styleclass', 'slideshow-widget');
 	
 		// adding the flash parameter	
