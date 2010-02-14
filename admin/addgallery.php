@@ -58,6 +58,10 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	
 	if ($_POST['uploadimage']){
 		check_admin_referer('ngg_addgallery');
+		
+		if ( !nggGallery::current_user_can( 'NextGEN Upload in all galleries' ))
+			wp_die(__('Cheatin&#8217; uh?'));		
+		
 		if ( $_FILES['imagefiles']['error'][0] == 0 )
 			$messagetext = nggAdmin::upload_images();
 		else
@@ -290,8 +294,12 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<option value="0" ><?php _e('Choose gallery', 'nggallery') ?></option>
 					<?php
 						foreach($gallerylist as $gallery) {
-							if ( !nggAdmin::can_manage_this_gallery($gallery->author) )
-								continue;
+							
+							//special case : we check if a user has this cap, then we override the second cap check
+							if ( !current_user_can( 'NextGEN Upload in all galleries' ) )
+								if ( !nggAdmin::can_manage_this_gallery($gallery->author) )
+									continue;
+							
 							$name = ( empty($gallery->title) ) ? $gallery->name : $gallery->title;
 							echo '<option value="' . $gallery->gid . '" >' . $gallery->gid . ' - ' . $name . '</option>' . "\n";
 						}					?>
