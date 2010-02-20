@@ -65,7 +65,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		if ( $_FILES['imagefiles']['error'][0] == 0 )
 			$messagetext = nggAdmin::upload_images();
 		else
-			nggGallery::show_error( __('Upload failed!','nggallery') );	
+			nggGallery::show_error( __('Upload failed! ' . nggAdmin::decode_upload_error( $_FILES['imagefiles']['error'][0]),'nggallery') );	
 	}
 	
 	if (isset($_POST['swf_callback'])){

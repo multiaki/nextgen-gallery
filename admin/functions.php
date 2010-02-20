@@ -1380,6 +1380,7 @@ class nggAdmin{
 	/**
 	 * Return a JSON coded array of Image ids for a requested gallery
 	 * 
+	 * @class nggAdmin
 	 * @param int $galleryID
 	 * @return arry (JSON)
 	 */
@@ -1394,6 +1395,47 @@ class nggAdmin{
 		$output = json_encode($gallery);
 		
 		return $output;
+	}
+
+	/**
+	 * Decode upload error to normal message
+	 *
+	 * @class nggAdmin
+	 * @access internal
+	 * @param int $code php upload error code
+	 * @return string message
+	 */
+	
+	function decode_upload_error( $code ) {
+		
+	        switch ($code) {
+	            case UPLOAD_ERR_INI_SIZE:
+	                $message = __ ( 'The uploaded file exceeds the upload_max_filesize directive in php.ini', 'nggallery' );
+	                break;
+	            case UPLOAD_ERR_FORM_SIZE:
+	                $message = __ ( 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form', 'nggallery' );
+	                break;
+	            case UPLOAD_ERR_PARTIAL:
+	                $message = __ ( 'The uploaded file was only partially uploaded', 'nggallery' );
+	                break;
+	            case UPLOAD_ERR_NO_FILE:
+	                $message = __ ( 'No file was uploaded', 'nggallery' );
+	                break;
+	            case UPLOAD_ERR_NO_TMP_DIR:
+	                $message = __ ( 'Missing a temporary folder', 'nggallery' );
+	                break;
+	            case UPLOAD_ERR_CANT_WRITE:
+	                $message = __ ( 'Failed to write file to disk', 'nggallery' );
+	                break;
+	            case UPLOAD_ERR_EXTENSION:
+	                $message = __ ( 'File upload stopped by extension', 'nggallery' );
+	                break;
+	            default:
+	                $message = __ ( 'Unknown upload error', 'nggallery' );
+	                break;
+	        }
+
+	        return $message; 
 	}
 
 } // END class nggAdmin
