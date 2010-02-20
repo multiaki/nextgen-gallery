@@ -4,7 +4,7 @@
 require_once( dirname( dirname( dirname(__FILE__) ) ) . '/ngg-config.php');
 
 // check for rights
-if ( !current_user_can('edit_pages') || !current_user_can('edit_posts') ) 
+if ( !current_user_can('edit_pages') && !current_user_can('edit_posts') ) 
 	wp_die(__("You are not allowed to be here"));
 
 global $wpdb, $nggdb;
