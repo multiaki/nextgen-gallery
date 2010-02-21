@@ -106,7 +106,8 @@ class nggAdminPanel{
 			case "nggallery-add-gallery" :
 				include_once ( dirname (__FILE__) . '/functions.php' );		// admin functions
 				include_once ( dirname (__FILE__) . '/addgallery.php' );	// nggallery_admin_add_gallery
-				nggallery_admin_add_gallery();
+				$ngg->addgallery_page = new nggAddGallery ();
+				$ngg->addgallery_page->controller();
 				break;
 			case "nggallery-manage-gallery" :
 				include_once ( dirname (__FILE__) . '/functions.php' );		// admin functions
@@ -124,7 +125,8 @@ class nggAdminPanel{
 				break;				
 			case "nggallery-options" :
 				include_once ( dirname (__FILE__) . '/settings.php' );		// nggallery_admin_options
-				nggallery_admin_options();
+				$ngg->option_page = new nggOptions ();
+				$ngg->option_page->controller();
 				break;
 			case "nggallery-tags" :
 				include_once ( dirname (__FILE__) . '/tags.php' );			// nggallery_admin_tags
