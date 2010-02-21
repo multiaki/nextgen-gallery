@@ -292,10 +292,11 @@ class nggWidget extends WP_Widget {
 		else
 			$imageList = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE tt.exclude != 1 $exclude_list ORDER by pid DESC limit 0,$items");
 		
+        // IE8 webslice support if needed
 		if ( $webslice ) {
-			$before_title  = "\n" . '<div class="hslice" id="ngg-webslice" >' . "\n";
-			$before_title .= '<h2 class="widgettitle entry-title">';
-			$after_title   = '</h2>';
+			$before_widget .= "\n" . '<div class="hslice" id="ngg-webslice" >' . "\n";
+            //the headline needs to have the class enty-title
+            $before_title  = str_replace( 'class="' , 'class="entry-title ', $before_title);
 			$after_widget  =  '</div>'."\n" . $after_widget;			
 		}	
 		                      
