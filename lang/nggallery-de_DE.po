@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-21 20:47+0100\n"
-"PO-Revision-Date: 2010-02-21 20:50+0100\n"
-"Last-Translator: Alex Rabe <no@email.com>\n"
+"POT-Creation-Date: 2010-02-24 21:45+0100\n"
+"PO-Revision-Date: 2010-02-24 21:50+0100\n"
+"Last-Translator: Alex Rabe\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -99,7 +99,7 @@ msgstr "Dieses Plugin wird hauptsächlich entwickelt, dokumentiert und supportet
 
 #: ../admin/about.php:14
 msgid "There are many other folks who have made contributions to this project :"
-msgstr "Folgende Personen haben die Entwicklung  bisher unterstützt :"
+msgstr "Folgende Personen haben die Entwicklung unterstützt :"
 
 #: ../admin/about.php:19
 msgid "Contributors / Tribute to"
@@ -805,8 +805,8 @@ msgid "File do not exists"
 msgstr "Datei existiert nicht"
 
 #: ../admin/functions.php:549
-msgid "Error while recoving file"
-msgstr ""
+msgid "Couldn't restore original image"
+msgstr "Konnte Originalbild nicht wiederherstellen"
 
 #: ../admin/functions.php:654
 msgid "(Error : Couldn't not update data base)"
@@ -947,27 +947,24 @@ msgid "The uploaded file was only partially uploaded"
 msgstr ""
 
 #: ../admin/functions.php:1422
-#, fuzzy
 msgid "No file was uploaded"
-msgstr "Deaktiviere Batch-Upload"
+msgstr "Keinen Datei wurde geladen"
 
 #: ../admin/functions.php:1425
 msgid "Missing a temporary folder"
-msgstr ""
+msgstr "Konnte temporäres Verzeichnis nicht finden"
 
 #: ../admin/functions.php:1428
-#, fuzzy
 msgid "Failed to write file to disk"
-msgstr "Konnte das Bild %1$s nicht nach %2$s verschieben"
+msgstr "Konnte Datei nicht speichern"
 
 #: ../admin/functions.php:1431
 msgid "File upload stopped by extension"
 msgstr ""
 
 #: ../admin/functions.php:1434
-#, fuzzy
 msgid "Unknown upload error"
-msgstr "Hier downloaden"
+msgstr "Unbekannter Uploadfehler"
 
 #: ../admin/install.php:23
 msgid "Sorry, NextGEN Gallery works only with a role called administrator"
@@ -1370,7 +1367,7 @@ msgstr "Bild"
 
 #: ../admin/manage.php:127
 msgid "Operation successful. Please clear your browser cache."
-msgstr "Thumbnails erfolgreich erstellt. Bitte Browser-Cache aktualisieren."
+msgstr "Thumbnails erfolgreich erstellt. Bitte Browser-Cache löschen."
 
 #: ../admin/manage.php:228
 #: ../admin/manage.php:231
@@ -1420,7 +1417,7 @@ msgstr "Bild ID:"
 
 #: ../admin/media-upload.php:273
 msgid "Save all changes"
-msgstr "Änderungen Speichern"
+msgstr "Änderungen speichern"
 
 #: ../admin/overview.php:14
 msgid "NextGEN Gallery Overview"
@@ -1579,7 +1576,7 @@ msgstr "PHP Max Post Größe"
 
 #: ../admin/overview.php:328
 msgid "PCRE Backtracking Limit"
-msgstr ""
+msgstr "PCRE Backtracking Limit"
 
 #: ../admin/overview.php:329
 msgid "PHP Max Script Execute Time"
@@ -1848,9 +1845,8 @@ msgid "Image quality"
 msgstr "Bild Qualität"
 
 #: ../admin/settings.php:337
-#, fuzzy
 msgid "Backup original images"
-msgstr "Original Bilder"
+msgstr "Backup von Original Bilder "
 
 #: ../admin/settings.php:340
 msgid "Creates a backup for inserted images"

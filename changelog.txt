@@ -14,6 +14,7 @@ by Alex Rabe & NextGEN DEV Team
 * Bugfix : Select album preview from gallery preview pics instead random list
 * Bugfix : Keep fix dimension in edit thumbnail operation
 * Bugfix : Import meta data didn't work correct for existing images
+* Bugfix : Fix onload bug for Chrome 4 in Shutter script
 * Removed : Canonical link is now part of Wordpress 2.9
 
 = V1.4.3 - 16.11.2009 =

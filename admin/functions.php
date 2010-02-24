@@ -546,7 +546,7 @@ class nggAdmin{
 		}
 
 		if (!@copy( $image->imagePath . '_backup' , $image->imagePath) )
-			return ' <strong>'.__('Error while recoving file','nggallery').'</strong>';
+			return ' <strong>'.__('Couldn\'t restore original image','nggallery').'</strong>';
 		
 		require_once(NGGALLERY_ABSPATH . '/lib/meta.php');
 		
