@@ -137,7 +137,8 @@ function ngg_overview_donators() {
  * @return void
  */
 function ngg_overview_news(){
-	// get feed_messages
+
+	//TODO:Deprecated. Use SimplePie (class-simplepie.php) instead.
 	require_once(ABSPATH . WPINC . '/rss.php');
 ?>
 <div class="rss-widget">
@@ -151,7 +152,7 @@ function ngg_overview_news(){
 		foreach ($rss->items as $item)
         {
         ?>
-          <li><a class="rsswidget" title="" href='<?php echo wp_filter_kses($item['link']); ?>'><?php echo wp_specialchars($item['title']); ?></a>
+          <li><a class="rsswidget" title="" href='<?php echo wp_filter_kses($item['link']); ?>'><?php echo esc_html($item['title']); ?></a>
 		  <span class="rss-date"><?php echo date("F jS, Y", strtotime($item['pubdate'])); ?></span> 
           <div class="rssSummary"><strong><?php echo human_time_diff(strtotime($item['pubdate'], time())); ?></strong> - <?php echo $item['description']; ?></div></li>
         <?php
@@ -355,7 +356,7 @@ function ngg_check_for_PHP5() {
 class ngg_SpaceManager {
  
  	function getQuota() {
-		if (function_exists(get_space_allowed))
+		if (function_exists('get_space_allowed'))
 			$quota = get_space_allowed();
 		else
 			$quota = get_site_option( "blog_upload_space" );

@@ -257,7 +257,11 @@ class nggAdminPanel{
 	}
 	
 	function show_help($help, $screen) {
-
+		
+		// since WP3.0 it's an object
+		if ( is_object($screen) )
+			$screen = $screen->id;
+		
 		$link = '';
 		// menu title is localized...
 		$i18n = strtolower  ( _n( 'Gallery', 'Galleries', 1, 'nggallery' ) );
@@ -369,7 +373,7 @@ class nggAdminPanel{
 	 * @return array of the content
 	 */
 	function get_remote_array($url) {
-		if ( function_exists(wp_remote_request) ) {
+		if ( function_exists('wp_remote_request') ) {
 					
 			$options = array();
 			$options['headers'] = array(
@@ -473,7 +477,7 @@ if ( !class_exists( "CheckPlugin" ) ) {
 				$check_intervall = time() + $this->period;
 				update_option( $this->name . '_next_update', $check_intervall );
 				
-				if ( function_exists(wp_remote_request) ) {
+				if ( function_exists('wp_remote_request') ) {
 					
 					$options = array();
 					$options['headers'] = array(

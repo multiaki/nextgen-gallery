@@ -4,7 +4,7 @@ Plugin Name: NextGEN Gallery
 Plugin URI: http://alexrabe.de/?page_id=80
 Description: A NextGENeration Photo gallery for the Web 2.0.
 Author: Alex Rabe
-Version: 1.5.0b1
+Version: 1.5.0b2
 
 Author URI: http://alexrabe.de/
 
@@ -46,8 +46,8 @@ class nggLoader {
 	
 	var $version     = '1.5.0';
 	var $dbversion   = '1.4.0';
-	var $minium_WP   = '2.8';
-	var $minium_WPMU = '2.8';
+	var $minium_WP   = '2.9';
+	var $minium_WPMU = '2.9';
 	var $updateURL   = 'http://nextgen.boelinger.com/version.php';
 	var $donators    = 'http://nextgen.boelinger.com/donators.php';
 	var $options     = '';
@@ -242,8 +242,8 @@ class nggLoader {
 		// define URL
 		define('NGGFOLDER', plugin_basename( dirname(__FILE__)) );
 		
-		define('NGGALLERY_ABSPATH', str_replace("\\","/", WP_PLUGIN_DIR . '/' . plugin_basename( dirname(__FILE__) ) . '/' ));
-		define('NGGALLERY_URLPATH', WP_PLUGIN_URL . '/' . plugin_basename( dirname(__FILE__) ) . '/' );
+		define('NGGALLERY_ABSPATH', trailingslashit( str_replace("\\","/", WP_PLUGIN_DIR . '/' . plugin_basename( dirname(__FILE__) ) ) ) );
+		define('NGGALLERY_URLPATH', trailingslashit( WP_PLUGIN_URL . '/' . plugin_basename( dirname(__FILE__) ) ) );
 		
 		// look for imagerotator
 		define('NGGALLERY_IREXIST', !empty( $this->options['irURL'] ));

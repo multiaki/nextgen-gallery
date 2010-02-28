@@ -180,7 +180,7 @@ jQuery(document).ready( function() {
 <div class="wrap">
 
 <?php if ($is_search) :?>
-<h2><?php printf( __('Search results for &#8220;%s&#8221;', 'nggallery'), wp_specialchars( get_search_query() ) ); ?></h2>
+<h2><?php printf( __('Search results for &#8220;%s&#8221;', 'nggallery'), esc_html( get_search_query() ) ); ?></h2>
 <form class="search-form" action="" method="get">
 <p class="search-box">
 	<label class="hidden" for="media-search-input"><?php _e( 'Search Images', 'nggallery' ); ?>:</label>

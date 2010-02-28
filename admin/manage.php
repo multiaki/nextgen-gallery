@@ -14,17 +14,17 @@ class nggManageGallery {
 	function nggManageGallery() {
 
 		// GET variables
-		if(isset($_GET['gid']))
+		if( isset($_GET['gid']) )
 			$this->gid  = (int) $_GET['gid'];
-		if(isset($_GET['pid']))
+		if( isset($_GET['pid']) )
 			$this->pid  = (int) $_GET['pid'];	
-		if(isset($_GET['mode']))
+		if( isset($_GET['mode']) )
 			$this->mode = trim ($_GET['mode']);
 		// Should be only called via manage galleries overview
-		if ( $_POST['page'] == 'manage-galleries' )
+		if ( isset($_POST['page']) && $_POST['page'] == 'manage-galleries' )
 			$this->post_processor_galleries();
 		// Should be only called via a edit single gallery page	
-		if ( $_POST['page'] == 'manage-images' )
+		if ( isset($_POST['page']) && $_POST['page'] == 'manage-images' )
 			$this->post_processor_images();
 		//Look for other POST process
 		if ( !empty($_POST) || !empty($_GET) )
