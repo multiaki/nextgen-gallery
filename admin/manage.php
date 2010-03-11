@@ -425,11 +425,11 @@ class nggManageGallery {
 		//TODO:Error message when update failed
 		//TODO:Combine update in one query per image
 		
-		$description = 	$_POST['description'];
-		$alttext = 		$_POST['alttext'];
-		$exclude = 		$_POST['exclude'];
-		$taglist = 		$_POST['tags'];
-		$pictures = 	$_POST['pid'];
+		$description = 	isset ( $_POST['description'] ) ? $_POST['description'] : false;
+		$alttext = 		isset ( $_POST['alttext'] ) ? $_POST['alttext'] : false;
+		$exclude = 		isset ( $_POST['exclude'] ) ? $_POST['exclude'] : false;
+		$taglist = 		isset ( $_POST['tags'] ) ? $_POST['tags'] : false;
+		$pictures = 	isset ( $_POST['pid'] ) ? $_POST['pid'] : false;
 		
 		if ( is_array($description) ) {
 			foreach( $description as $key => $value ) {

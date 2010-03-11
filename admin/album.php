@@ -333,7 +333,7 @@ function showDialog() {
 		
 		if( is_array( $this->galleries ) ) {
 			//get the array of galleries	
-			$sort_array = (array) $this->albums[$this->currentID]->galleries;
+			$sort_array =  $this->currentID > 0 ? (array) $this->albums[$this->currentID]->galleries : array() ;
 			foreach($this->galleries as $gallery) {
 				if (!in_array($gallery->gid, $sort_array)) {
 					if (in_array($gallery->gid,$used_list))
@@ -454,6 +454,7 @@ function showDialog() {
 		
 		$obj =  array();
 		$preview_image = '';
+        $class = '';
 		
 		// if the id started with a 'a', then it's a sub album
 		if (substr( $id, 0, 1) == 'a') {
@@ -469,12 +470,12 @@ function showDialog() {
 			$post = get_post($album->pageid);
 			$obj['pagenname'] = ($post == null) ? '---' : $post->post_title;
 			
-			// for spped reason we limit it to 50
+			// for speed reason we limit it to 50
 			if ( $this->num_albums < 50 ) {	
-				if ($album->previewpic != 0)
-					$image = $nggdb->find_image( $album->previewpic );
-				
-					$preview_image = ($image->thumbURL) ? '<div class="inlinepicture"><img src="' . $image->thumbURL . '" /></div>' : '';
+				if ($album->previewpic != 0) {
+					$image = $nggdb->find_image( $album->previewpic ); 
+    				$preview_image = ( !is_null($image->thumbURL) )  ? '<div class="inlinepicture"><img src="' . $image->thumbURL . '" /></div>' : '';
+                }
 			}
 			
 			// this indicates that we have a album container
