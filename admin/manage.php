@@ -80,8 +80,7 @@ class nggManageGallery {
 				}
 			}
 	
-			$delete_pic = $wpdb->query("DELETE FROM $wpdb->nggpictures WHERE galleryid = $this->gid");
-			$delete_galllery = $wpdb->query("DELETE FROM $wpdb->nggallery WHERE gid = $this->gid");
+			$delete_galllery = nggdb::delete_gallery( $this->gid );
 			
 			if($delete_galllery)
 				nggGallery::show_message( _n( 'Gallery', 'Galleries', 1, 'nggallery' ) . ' \''.$this->gid.'\' '.__('deleted successfully','nggallery'));
@@ -99,10 +98,11 @@ class nggManageGallery {
 				if ($ngg->options['deleteImg']) {
 					@unlink($image->imagePath);
 					@unlink($image->thumbPath);	
-					@unlink($image->imagePath."_backup");
+					@unlink($image->imagePath . "_backup" );
 				} 
-				$delete_pic = $wpdb->query("DELETE FROM $wpdb->nggpictures WHERE pid = $image->pid");
-			}
+				$delete_pic = nggdb::delete_image ( $this->pid );
+            }
+                                
 			if($delete_pic)
 				nggGallery::show_message( __('Picture','nggallery').' \''.$this->pid.'\' '.__('deleted successfully','nggallery') );
 				
@@ -369,6 +369,8 @@ class nggManageGallery {
 					$wpdb->query( $wpdb->prepare ("UPDATE $wpdb->nggallery SET previewpic= '%d' WHERE gid = %d", (int) $_POST['previewpic'], $this->gid) );
 				if ( isset ($_POST['author']) && nggGallery::current_user_can( 'NextGEN Edit gallery author' ) ) 
 					$wpdb->query( $wpdb->prepare ("UPDATE $wpdb->nggallery SET author= '%d' WHERE gid = %d", (int) $_POST['author'], $this->gid) );
+                
+                wp_cache_delete($this->gid, 'ngg_gallery');                    
 		
 			}
 		
@@ -411,7 +413,8 @@ class nggManageGallery {
 			$gallery_pageid = wp_insert_post ($page);
 			if ($gallery_pageid != 0) {
 				$result = $wpdb->query("UPDATE $wpdb->nggallery SET title= '$gallery_title', pageid = '$gallery_pageid' WHERE gid = '$this->gid'");
-				nggGallery::show_message( __('New gallery page ID','nggallery'). ' ' . $pageid . ' -> <strong>' . $gallery_title . '</strong> ' .__('created','nggallery') );
+				wp_cache_delete($this->gid, 'ngg_gallery');
+                nggGallery::show_message( __('New gallery page ID','nggallery'). ' ' . $pageid . ' -> <strong>' . $gallery_title . '</strong> ' .__('created','nggallery') );
 			}
 		}
 	}
@@ -432,12 +435,14 @@ class nggManageGallery {
 			foreach( $description as $key => $value ) {
 				$desc = $wpdb->escape($value);
 				$wpdb->query( "UPDATE $wpdb->nggpictures SET description = '$desc' WHERE pid = $key");
+                wp_cache_delete($key, 'ngg_image');                
 			}
 		}
 		if ( is_array($alttext) ){
 			foreach( $alttext as $key => $value ) {
 				$alttext = $wpdb->escape($value);
 				$wpdb->query( "UPDATE $wpdb->nggpictures SET alttext = '$alttext' WHERE pid = $key");
+                wp_cache_delete($key, 'ngg_image');                
 			}
 		}
 
