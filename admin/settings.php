@@ -52,7 +52,7 @@ class nggOptions {
     		if ($options) {
     			foreach ($options as $option) {
     				$option = trim($option);
-    				$value = trim($_POST[$option]);
+    				$value = isset($_POST[$option]) ? trim($_POST[$option]) : false;
     		//		$value = sanitize_option($option, $value); // This does stripslashes on those that need it
     				$ngg->options[$option] = $value;
     			}

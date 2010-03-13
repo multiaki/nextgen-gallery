@@ -138,26 +138,52 @@ function ngg_overview_donators() {
  */
 function ngg_overview_news(){
 
-	//TODO:Deprecated. Use SimplePie (class-simplepie.php) instead.
-	require_once(ABSPATH . WPINC . '/rss.php');
 ?>
 <div class="rss-widget">
     <?php
-      $rss = @fetch_rss('http://feeds.feedburner.com/alexrabe/');
-
-      if ( isset($rss->items) && 0 != count($rss->items) )
-      {
-        $rss->items = array_slice($rss->items, 0, 3);
-        echo "<ul>";
-		foreach ($rss->items as $item)
-        {
+      $rss = @fetch_feed( 'http://feeds.feedburner.com/alexrabe/' );
+      
+      if ( is_object($rss) || !is_wp_error($rss) ) {
+        echo '<ul>';
+		foreach ( $rss->get_items(0, 3) as $item ) {
+    		$link = $item->get_link();
+    		while ( stristr($link, 'http') != $link )
+    			$link = substr($link, 1);
+    		$link = esc_url(strip_tags($link));
+    		$title = esc_attr(strip_tags($item->get_title()));
+    		if ( empty($title) )
+    			$title = __('Untitled');
+    
+    		$desc = str_replace( array("\n", "\r"), ' ', esc_attr( strip_tags( @html_entity_decode( $item->get_description(), ENT_QUOTES, get_option('blog_charset') ) ) ) );
+    		$desc = wp_html_excerpt( $desc, 360 );
+    
+    		// Append ellipsis. Change existing [...] to [&hellip;].
+    		if ( '[...]' == substr( $desc, -5 ) )
+    			$desc = substr( $desc, 0, -5 ) . '[&hellip;]';
+    		elseif ( '[&hellip;]' != substr( $desc, -10 ) )
+    			$desc .= ' [&hellip;]';
+    
+    		$desc = esc_html( $desc );
+            
+			$date = $item->get_date();
+            $diff = '';
+            
+			if ( $date ) {
+			    
+                $diff = human_time_diff( strtotime($date, time()) );
+                 
+				if ( $date_stamp = strtotime( $date ) )
+					$date = ' <span class="rss-date">' . date_i18n( get_option( 'date_format' ), $date_stamp ) . '</span>';
+				else
+					$date = '';
+			}            
         ?>
-          <li><a class="rsswidget" title="" href='<?php echo wp_filter_kses($item['link']); ?>'><?php echo esc_html($item['title']); ?></a>
-		  <span class="rss-date"><?php echo date("F jS, Y", strtotime($item['pubdate'])); ?></span> 
-          <div class="rssSummary"><strong><?php echo human_time_diff(strtotime($item['pubdate'], time())); ?></strong> - <?php echo $item['description']; ?></div></li>
+          <li><a class="rsswidget" title="" href='<?php echo $link; ?>'><?php echo $title; ?></a>
+		  <span class="rss-date"><?php echo $date; ?></span> 
+          <div class="rssSummary"><strong><?php echo $diff; ?></strong> - <?php echo $desc; ?></div></li>
         <?php
         }
-        echo "</ul>";
+        echo '</ul>';
       }
       else
       {

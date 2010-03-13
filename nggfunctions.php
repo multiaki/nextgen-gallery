@@ -364,8 +364,6 @@ function nggShowAlbum($albumID, $template = 'extend') {
     if( !$album ) 
         return __('[Album not found]','nggallery');
     
-    $mode = ltrim($mode, ',');
-    
     if ( is_array($album->gallery_ids) )
         $out = nggCreateAlbum( $album->gallery_ids, $template, $album );
     
@@ -436,7 +434,7 @@ function nggCreateAlbum( $galleriesID, $template = 'extend', $album = 0) {
             if ($subalbum->previewpic > 0)
                 $image = $nggdb->find_image( $subalbum->previewpic );
             $galleries[$key]->previewpic = $subalbum->previewpic;
-            $galleries[$key]->previewurl = ($image->thumbURL) ? $image->thumbURL : '';
+            $galleries[$key]->previewurl = isset($image->thumbURL) ? $image->thumbURL : '';
             $galleries[$key]->previewname = $subalbum->name;
             
             //link to the subalbum

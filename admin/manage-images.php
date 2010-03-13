@@ -136,7 +136,7 @@ function checkSelected() {
 	var numchecked = getNumChecked(document.getElementById('updategallery'));
 	 
 	if(numchecked < 1) { 
-		alert('<?php echo js_escape(__('No images selected', 'nggallery')); ?>');
+		alert('<?php echo esc_js(__('No images selected', 'nggallery')); ?>');
 		return false; 
 	} 
 	
@@ -164,7 +164,7 @@ function checkSelected() {
 			break;			
 	}
 	
-	return confirm('<?php echo sprintf(js_escape(__("You are about to start the bulk edit for %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>');
+	return confirm('<?php echo sprintf(esc_js(__("You are about to start the bulk edit for %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>');
 }
 
 jQuery(document).ready( function() {

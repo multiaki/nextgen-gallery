@@ -115,7 +115,11 @@ class nggManageGallery {
 
 			check_admin_referer('ngg_recoverpicture');
 			$image = $nggdb->find_image( $this->pid );
+            // bring back the old image
 			nggAdmin::recover_image($image);
+            nggAdmin::create_thumbnail($image);
+            
+            nggGallery::show_message(__('Operation successful. Please clear your browser cache.',"nggallery"));
 				
 		 	$this->mode = 'edit'; // show pictures
 	

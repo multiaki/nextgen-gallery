@@ -59,7 +59,7 @@ function nggallery_manage_gallery_main() {
 		var numchecked = getNumChecked(document.getElementById('editgalleries'));
 		 
 		if(numchecked < 1) { 
-			alert('<?php echo js_escape(__('No images selected', 'nggallery')); ?>');
+			alert('<?php echo esc_js(__('No images selected', 'nggallery')); ?>');
 			return false; 
 		} 
 		
@@ -76,7 +76,7 @@ function nggallery_manage_gallery_main() {
 				break;
 		}
 		
-		return confirm('<?php echo sprintf(js_escape(__("You are about to start the bulk edit for %s galleries \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>');
+		return confirm('<?php echo sprintf(esc_js(__("You are about to start the bulk edit for %s galleries \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>');
 	}
 
 	function showDialog( windowId, height ) {

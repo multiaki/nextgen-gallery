@@ -104,7 +104,9 @@ class nggManageAlbum {
 		} 
 		
 		if ( isset($_POST['update']) && ($this->currentID > 0) ) {
-
+            
+            $gid = '';
+            
 			// get variable galleryContainer 
 			parse_str($_POST['sortorder']); 
 			if (is_array($gid)){ 
