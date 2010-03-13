@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-13 15:47+0100\n"
-"PO-Revision-Date: 2010-03-13 15:51+0100\n"
+"POT-Creation-Date: 2010-03-13 22:29+0100\n"
+"PO-Revision-Date: 2010-03-13 22:36+0100\n"
 "Last-Translator: Alex Rabe\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Poedit-SearchPath-1: ..\n"
 
 #: ../nggallery.php:63
-msgid "<strong>Translation by : </strong><a target=\"_blank\" href=\"http://alexrabe.de/wordpress-plugins/wordtube/translation-of-plugins/\">unknown</a>"
+msgid "<strong>Translation by : </strong><a target=\"_blank\" href=\"http://alexrabe.de/wordpress-plugins/nextgen-gallery/languages/\">See here</a>"
 msgstr "<strong>Übersetzt von : </strong><a target=\"_blank\" href=\"http://alexrabe.de/wordpress-plugins/wordtube/translation-of-plugins/\">Alex Rabe</a>"
 
 #: ../nggallery.php:64
@@ -55,7 +55,7 @@ msgid "loading"
 msgstr "lade..."
 
 #: ../nggallery.php:440
-#: ../nggfunctions.php:850
+#: ../nggfunctions.php:848
 #: ../admin/admin.php:32
 msgid "Overview"
 msgstr "Übersicht"
@@ -77,7 +77,7 @@ msgid "The <a href=\"http://www.macromedia.com/go/getflashplayer\">Flash Player<
 msgstr "Es wird der <a href=\"http://www.macromedia.com/go/getflashplayer\">Adobe Flash Player</a>  benötigt und <a href=\"http://www.mozilla.com/firefox/\">im Browser muss Javascript</a> aktiviert sein.."
 
 #: ../nggfunctions.php:103
-#: ../nggfunctions.php:560
+#: ../nggfunctions.php:558
 msgid "[Gallery not found]"
 msgstr "[Galerie nicht gefunden]"
 
@@ -85,11 +85,11 @@ msgstr "[Galerie nicht gefunden]"
 msgid "[Album not found]"
 msgstr "[Album nicht gefunden]"
 
-#: ../nggfunctions.php:677
+#: ../nggfunctions.php:675
 msgid "[SinglePic not found]"
 msgstr "[Bild nicht gefunden]"
 
-#: ../nggfunctions.php:815
+#: ../nggfunctions.php:813
 msgid "Related images for"
 msgstr "Verwandte Bilder von"
 
@@ -214,11 +214,11 @@ msgstr "und allen anderen Spendern..."
 #: ../admin/addgallery.php:69
 #: ../admin/addgallery.php:80
 #: ../admin/album.php:96
-#: ../admin/album.php:123
-#: ../admin/album.php:138
+#: ../admin/album.php:125
+#: ../admin/album.php:140
 #: ../admin/edit-thumbnail.php:19
 #: ../admin/edit-thumbnail.php:22
-#: ../admin/manage.php:174
+#: ../admin/manage.php:178
 msgid "Cheatin&#8217; uh?"
 msgstr "Cheatin&#8217; uh?"
 
@@ -532,122 +532,122 @@ msgid "Download latest version"
 msgstr "Aktuelle Version downloaden"
 
 #: ../admin/album.php:103
-#: ../admin/album.php:116
-#: ../admin/album.php:148
+#: ../admin/album.php:118
+#: ../admin/album.php:150
 msgid "Update Successfully"
 msgstr "Update erfolgreich"
 
-#: ../admin/album.php:127
+#: ../admin/album.php:129
 msgid "Album deleted"
 msgstr "Album gelöscht"
 
-#: ../admin/album.php:258
+#: ../admin/album.php:260
 msgid "Manage Albums"
 msgstr "Verwalte Alben"
 
-#: ../admin/album.php:264
-#: ../admin/album.php:313
+#: ../admin/album.php:266
+#: ../admin/album.php:315
 msgid "Select album"
 msgstr "Wähle Album"
 
-#: ../admin/album.php:266
+#: ../admin/album.php:268
 msgid "No album selected"
 msgstr "Kein Album ausgewählt"
 
-#: ../admin/album.php:277
+#: ../admin/album.php:279
 #: ../admin/edit-thumbnail.php:157
 msgid "Update"
 msgstr "Aktualisiere"
 
-#: ../admin/album.php:279
+#: ../admin/album.php:281
 msgid "Edit album"
 msgstr "Album ändern"
 
-#: ../admin/album.php:282
+#: ../admin/album.php:284
 #: ../admin/manage-galleries.php:196
 #: ../admin/manage-images.php:404
 msgid "Delete"
 msgstr "Lösche"
 
-#: ../admin/album.php:282
+#: ../admin/album.php:284
 msgid "Delete album ?"
 msgstr "Album löschen ?"
 
-#: ../admin/album.php:286
+#: ../admin/album.php:288
 msgid "Add new album"
 msgstr "Album hinzufügen"
 
-#: ../admin/album.php:288
+#: ../admin/album.php:290
 msgid "Add"
 msgstr "Hinzufügen"
 
-#: ../admin/album.php:299
+#: ../admin/album.php:301
 msgid "Show / hide used galleries"
 msgstr "Zeige / Verstecke verwendete Galerien"
 
-#: ../admin/album.php:299
+#: ../admin/album.php:301
 msgid "[Show all]"
 msgstr "[Alle zeigen]"
 
-#: ../admin/album.php:300
+#: ../admin/album.php:302
 msgid "Maximize the widget content"
 msgstr "Maximiere die Widgets"
 
-#: ../admin/album.php:300
+#: ../admin/album.php:302
 msgid "[Maximize]"
 msgstr "[Vergrößern]"
 
-#: ../admin/album.php:301
+#: ../admin/album.php:303
 msgid "Minimize the widget content"
 msgstr "Minimiere die Widgets"
 
-#: ../admin/album.php:301
+#: ../admin/album.php:303
 msgid "[Minimize]"
 msgstr "[Verkleinern]"
 
-#: ../admin/album.php:303
+#: ../admin/album.php:305
 msgid "After you create and select a album, you can drag and drop a gallery or another album into your new album below"
 msgstr "Nachdem du ein Album erstellt und ausgewählt hast, kannst du per Drag & Drop eine Galerie oder ein anderes Album in das neue Album ziehen"
 
-#: ../admin/album.php:329
+#: ../admin/album.php:331
 msgid "Select gallery"
 msgstr "Wähle Galerie"
 
-#: ../admin/album.php:358
+#: ../admin/album.php:360
 msgid "Album ID"
 msgstr "Album ID"
 
-#: ../admin/album.php:371
+#: ../admin/album.php:373
 msgid "No album selected!"
 msgstr "Kein Album ausgewählt"
 
-#: ../admin/album.php:391
+#: ../admin/album.php:393
 msgid "Album name:"
 msgstr "Album Name :"
 
-#: ../admin/album.php:397
+#: ../admin/album.php:399
 msgid "Album description:"
 msgstr "Beschreibung:"
 
-#: ../admin/album.php:403
+#: ../admin/album.php:405
 msgid "Select a preview image:"
 msgstr "Wähle Vorschaubild:"
 
-#: ../admin/album.php:405
+#: ../admin/album.php:407
 msgid "No picture"
 msgstr "Kein Bild"
 
-#: ../admin/album.php:419
+#: ../admin/album.php:421
 #: ../admin/manage-images.php:218
 msgid "Page Link to"
 msgstr "Seite verlinkt zu"
 
-#: ../admin/album.php:421
+#: ../admin/album.php:423
 #: ../admin/manage-images.php:221
 msgid "Not linked"
 msgstr "Nicht verlinkt"
 
-#: ../admin/album.php:431
+#: ../admin/album.php:433
 #: ../admin/manage-galleries.php:227
 #: ../admin/manage-galleries.php:256
 #: ../admin/manage-galleries.php:286
@@ -658,7 +658,7 @@ msgstr "Nicht verlinkt"
 msgid "OK"
 msgstr "OK"
 
-#: ../admin/album.php:433
+#: ../admin/album.php:435
 #: ../admin/manage-galleries.php:229
 #: ../admin/manage-galleries.php:258
 #: ../admin/manage-galleries.php:288
@@ -669,17 +669,17 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: ../admin/album.php:517
+#: ../admin/album.php:519
 msgid "Name"
 msgstr "Name"
 
-#: ../admin/album.php:518
+#: ../admin/album.php:520
 #: ../admin/manage-galleries.php:156
 #: ../admin/manage-images.php:216
 msgid "Title"
 msgstr "Titel"
 
-#: ../admin/album.php:519
+#: ../admin/album.php:521
 msgid "Page"
 msgstr "Seite"
 
@@ -780,8 +780,8 @@ msgstr "erfolgreich erstellt!"
 #: ../admin/functions.php:984
 #: ../admin/manage-galleries.php:127
 #: ../admin/manage-images.php:299
-#: ../admin/manage.php:211
-#: ../admin/manage.php:287
+#: ../admin/manage.php:215
+#: ../admin/manage.php:291
 msgid "Create new thumbnails"
 msgstr "Neue Vorschaubilder erstellen"
 
@@ -944,15 +944,15 @@ msgstr "Kopiere %1$s Bild(er) in die Galerie : %2$s ."
 
 #: ../admin/functions.php:1413
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
-msgstr ""
+msgstr "Die Datei überschreitet die erlaubte Grösse (upload_max_filesize) in der php.ini"
 
 #: ../admin/functions.php:1416
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
-msgstr ""
+msgstr "Die Datei ist zu gross"
 
 #: ../admin/functions.php:1419
 msgid "The uploaded file was only partially uploaded"
-msgstr ""
+msgstr "Die Datei wurde nur teilweise hochgeladen"
 
 #: ../admin/functions.php:1422
 msgid "No file was uploaded"
@@ -1034,29 +1034,29 @@ msgstr "Keine Aktion"
 
 #: ../admin/manage-galleries.php:126
 #: ../admin/manage-images.php:298
-#: ../admin/manage.php:159
-#: ../admin/manage.php:237
+#: ../admin/manage.php:163
+#: ../admin/manage.php:241
 msgid "Set watermark"
 msgstr "Wasserzeichen setzen"
 
 #: ../admin/manage-galleries.php:128
 #: ../admin/manage-images.php:300
-#: ../admin/manage.php:195
-#: ../admin/manage.php:273
+#: ../admin/manage.php:199
+#: ../admin/manage.php:277
 msgid "Resize images"
 msgstr "Bilder verkleinern"
 
 #: ../admin/manage-galleries.php:129
 #: ../admin/manage-images.php:303
-#: ../admin/manage.php:164
-#: ../admin/manage.php:257
+#: ../admin/manage.php:168
+#: ../admin/manage.php:261
 msgid "Import metadata"
 msgstr "Metadaten importieren"
 
 #: ../admin/manage-galleries.php:130
 #: ../admin/manage-images.php:301
-#: ../admin/manage.php:154
-#: ../admin/manage.php:234
+#: ../admin/manage.php:158
+#: ../admin/manage.php:238
 msgid "Recover from backup"
 msgstr "Original wiederherstellen"
 
@@ -1373,32 +1373,33 @@ msgstr "erfolgreich gelöscht"
 msgid "Picture"
 msgstr "Bild"
 
-#: ../admin/manage.php:127
+#: ../admin/manage.php:122
+#: ../admin/manage.php:131
 msgid "Operation successful. Please clear your browser cache."
 msgstr "Thumbnails erfolgreich erstellt. Bitte Browser-Cache löschen."
 
-#: ../admin/manage.php:228
-#: ../admin/manage.php:231
+#: ../admin/manage.php:232
+#: ../admin/manage.php:235
 msgid "Rotate images"
 msgstr "Bild drehen"
 
-#: ../admin/manage.php:253
+#: ../admin/manage.php:257
 msgid "Pictures deleted successfully "
 msgstr "Bilder erfolgreich gelöscht"
 
-#: ../admin/manage.php:349
+#: ../admin/manage.php:353
 msgid "Tags changed"
 msgstr "Stichwörter geändert"
 
-#: ../admin/manage.php:382
+#: ../admin/manage.php:386
 msgid "Update successful"
 msgstr "Aktualisierung erfolgreich"
 
-#: ../admin/manage.php:417
+#: ../admin/manage.php:421
 msgid "New gallery page ID"
 msgstr "Neue Galerie Seiten ID"
 
-#: ../admin/manage.php:417
+#: ../admin/manage.php:421
 msgid "created"
 msgstr "erstellt"
 
@@ -1431,214 +1432,232 @@ msgstr "Änderungen speichern"
 msgid "NextGEN Gallery Overview"
 msgstr "NextGEN Gallery Übersicht"
 
-#: ../admin/overview.php:104
+#: ../admin/overview.php:86
+msgid "Welcome to NextGEN Gallery !"
+msgstr "Willkomen bei NextGEN Gallery"
+
+#: ../admin/overview.php:88
+msgid "Translation"
+msgstr "Übersetzung"
+
+#: ../admin/overview.php:89
+msgid "Latest News"
+msgstr "Letzte Informationen"
+
+#: ../admin/overview.php:90
+msgid "Recent donators"
+msgstr "Neusten Spender"
+
+#: ../admin/overview.php:91
+msgid "Server Settings"
+msgstr "Server- Einstellungen"
+
+#: ../admin/overview.php:92
+msgid "Related plugins"
+msgstr "Verwandte Plugins"
+
+#: ../admin/overview.php:93
+msgid "Graphic Library"
+msgstr "Grafik Bibliothek"
+
+#: ../admin/overview.php:148
+#: ../admin/overview.php:197
+#: ../admin/overview.php:346
+#: ../admin/overview.php:658
+msgid "Loading&#8230;"
+msgstr "Lade&#8230;"
+
+#: ../admin/overview.php:148
+#: ../admin/overview.php:197
+#: ../admin/overview.php:346
+#: ../admin/overview.php:658
+msgid "This widget requires JavaScript."
+msgstr "Dieses Widget braucht JavaScript."
+
+#: ../admin/overview.php:161
 msgid "Thanks to all donators..."
 msgstr "Danke an alle Spender..."
 
-#: ../admin/overview.php:126
+#: ../admin/overview.php:183
 msgid "View all"
 msgstr "Alle ansehen"
 
-#: ../admin/overview.php:165
+#: ../admin/overview.php:215
+msgid "Untitled"
+msgstr "Kein Titel"
+
+#: ../admin/overview.php:251
 #, php-format
 msgid "Newsfeed could not be loaded.  Check the <a href=\"%s\">front page</a> to check for updates."
 msgstr "Der Newsfeed kann nicht geladen werden. Schaue auf die <a href=\"%s\">Hauptseite</a> um Updates mitzubekommen."
 
-#: ../admin/overview.php:186
+#: ../admin/overview.php:272
 msgid "At a Glance"
 msgstr "Übersicht"
 
-#: ../admin/overview.php:212
+#: ../admin/overview.php:298
 msgid "Upload pictures"
 msgstr "Bilder hochladen"
 
-#: ../admin/overview.php:213
+#: ../admin/overview.php:299
 msgid "Here you can control your images, galleries and albums."
 msgstr "Hier kannst Du die  Bilder, Galerien und Alben verwalten."
 
-#: ../admin/overview.php:217
+#: ../admin/overview.php:303
 msgid "Gallery Administrator"
 msgstr "Galerie-Administrator"
 
-#: ../admin/overview.php:217
+#: ../admin/overview.php:303
 msgid "Gallery Editor"
 msgstr "Galerie-Mitarbeiter"
 
-#: ../admin/overview.php:218
+#: ../admin/overview.php:304
 #, php-format
 msgid "You currently have %s rights."
 msgstr "Du hast derzeit %s Rechte."
 
-#: ../admin/overview.php:242
+#: ../admin/overview.php:332
 msgid "Translation file successful updated. Please reload page."
 msgstr "Überstetzungsdatei aktualisiert. Bitte Seite neu laden."
 
-#: ../admin/overview.php:244
+#: ../admin/overview.php:334
 msgid "Reload page"
 msgstr "Seite neu laden"
 
-#: ../admin/overview.php:249
+#: ../admin/overview.php:339
 msgid "Translation file couldn't be updated"
 msgstr "Übersetzung konnte nicht aktualisiert werden"
 
-#: ../admin/overview.php:277
+#: ../admin/overview.php:376
 msgid "Download"
 msgstr "Jetzt updaten"
 
-#: ../admin/overview.php:290
-msgid "Welcome to NextGEN Gallery !"
-msgstr "Willkomen bei NextGEN Gallery"
-
-#: ../admin/overview.php:292
-msgid "Translation"
-msgstr "Übersetzung"
-
-#: ../admin/overview.php:293
-msgid "Latest News"
-msgstr "Letzte Informationen"
-
-#: ../admin/overview.php:294
-msgid "Recent donators"
-msgstr "Neusten Spender"
-
-#: ../admin/overview.php:295
-msgid "Server Settings"
-msgstr "Server- Einstellungen"
-
-#: ../admin/overview.php:296
-msgid "Related plugins"
-msgstr "Verwandte Plugins"
-
-#: ../admin/overview.php:297
-msgid "Graphic Library"
-msgstr "Grafik Bibliothek"
-
-#: ../admin/overview.php:317
+#: ../admin/overview.php:405
 msgid "No GD support"
 msgstr "Keine GD Unterstützung"
 
-#: ../admin/overview.php:329
-#: ../admin/overview.php:375
-#: ../admin/overview.php:378
-#: ../admin/overview.php:381
+#: ../admin/overview.php:417
+#: ../admin/overview.php:463
+#: ../admin/overview.php:466
+#: ../admin/overview.php:469
 msgid "Yes"
 msgstr "Ja"
 
-#: ../admin/overview.php:331
-#: ../admin/overview.php:376
-#: ../admin/overview.php:379
-#: ../admin/overview.php:382
+#: ../admin/overview.php:419
+#: ../admin/overview.php:464
+#: ../admin/overview.php:467
+#: ../admin/overview.php:470
 msgid "No"
 msgstr "Nein"
 
-#: ../admin/overview.php:349
+#: ../admin/overview.php:437
 msgid "Not set"
 msgstr "Nicht gesetzt"
 
-#: ../admin/overview.php:351
-#: ../admin/overview.php:354
+#: ../admin/overview.php:439
+#: ../admin/overview.php:442
 msgid "On"
 msgstr "An"
 
-#: ../admin/overview.php:352
-#: ../admin/overview.php:355
+#: ../admin/overview.php:440
+#: ../admin/overview.php:443
 msgid "Off"
 msgstr "Aus"
 
-#: ../admin/overview.php:358
-#: ../admin/overview.php:361
-#: ../admin/overview.php:364
-#: ../admin/overview.php:367
-#: ../admin/overview.php:370
-#: ../admin/overview.php:373
+#: ../admin/overview.php:446
+#: ../admin/overview.php:449
+#: ../admin/overview.php:452
+#: ../admin/overview.php:455
+#: ../admin/overview.php:458
+#: ../admin/overview.php:461
 msgid "N/A"
 msgstr "N/A"
 
-#: ../admin/overview.php:372
+#: ../admin/overview.php:460
 msgid " MByte"
 msgstr " MByte"
 
-#: ../admin/overview.php:385
+#: ../admin/overview.php:473
 msgid "Operating System"
 msgstr "Betriebssystem"
 
-#: ../admin/overview.php:386
+#: ../admin/overview.php:474
 msgid "Server"
 msgstr "Server"
 
-#: ../admin/overview.php:387
+#: ../admin/overview.php:475
 msgid "Memory usage"
 msgstr "Speicherverbrauch"
 
-#: ../admin/overview.php:388
+#: ../admin/overview.php:476
 msgid "MYSQL Version"
 msgstr "MySQL Version"
 
-#: ../admin/overview.php:389
+#: ../admin/overview.php:477
 msgid "SQL Mode"
 msgstr "SQL Modus"
 
-#: ../admin/overview.php:390
+#: ../admin/overview.php:478
 msgid "PHP Version"
 msgstr "PHP Version"
 
-#: ../admin/overview.php:391
+#: ../admin/overview.php:479
 msgid "PHP Safe Mode"
 msgstr "PHP Safe Mode"
 
-#: ../admin/overview.php:392
+#: ../admin/overview.php:480
 msgid "PHP Allow URL fopen"
 msgstr "PHP Allow URL fopen"
 
-#: ../admin/overview.php:393
+#: ../admin/overview.php:481
 msgid "PHP Memory Limit"
 msgstr "PHP Memory Limit"
 
-#: ../admin/overview.php:394
+#: ../admin/overview.php:482
 msgid "PHP Max Upload Size"
 msgstr "PHP Max Upload Größe"
 
-#: ../admin/overview.php:395
+#: ../admin/overview.php:483
 msgid "PHP Max Post Size"
 msgstr "PHP Max Post Größe"
 
-#: ../admin/overview.php:396
+#: ../admin/overview.php:484
 msgid "PCRE Backtracking Limit"
 msgstr "PCRE Backtracking Limit"
 
-#: ../admin/overview.php:397
+#: ../admin/overview.php:485
 msgid "PHP Max Script Execute Time"
 msgstr "PHP Max Script Execute Time"
 
-#: ../admin/overview.php:398
+#: ../admin/overview.php:486
 msgid "PHP Exif support"
 msgstr "PHP Exif Modul"
 
-#: ../admin/overview.php:399
+#: ../admin/overview.php:487
 msgid "PHP IPTC support"
 msgstr "PHP IPTC Modul"
 
-#: ../admin/overview.php:400
+#: ../admin/overview.php:488
 msgid "PHP XML support"
 msgstr "PHP XML Modul"
 
-#: ../admin/overview.php:412
+#: ../admin/overview.php:500
 msgid "NextGEN Gallery contains some functions which are only available under PHP 5.2. You are using the old PHP 4 version, upgrade now! It's no longer supported by the PHP group. Many shared hosting providers offer both PHP 4 and PHP 5, running simultaneously. Ask your provider if they can do this."
 msgstr "NextGEN Gallery enthält einige Funktionen die nur unter PHP 5.2 verfügbar sind. Du nutzt immer noch die alte PHP 4 Version. Bitte aktualisiere so bald wie möglich diese Version, sie wird nicht mehr gepflegt und weiterentwicklelt. Die meisten Hoster bieten bereits PHP5 an. Bitte kontaktiere deinen Provider und frag kurz nach ob sie ein Update durchführen können."
 
-#: ../admin/overview.php:471
+#: ../admin/overview.php:559
 msgid "Storage Space"
 msgstr "Speicherplatz"
 
-#: ../admin/overview.php:474
+#: ../admin/overview.php:562
 msgid "Upload Space Used:"
 msgstr "Verbrauchter Uploadspeicher:"
 
-#: ../admin/overview.php:480
+#: ../admin/overview.php:568
 msgid "Upload Space Remaining:"
 msgstr "Verbleibender Speicher:"
 
-#: ../admin/overview.php:622
+#: ../admin/overview.php:713
 msgid "Install"
 msgstr "Installieren"
 
@@ -2331,41 +2350,41 @@ msgstr ""
 "\\n"
 "Wähle [Cancel] zum Abbrechen, [OK] zum Deinstallieren.\\n"
 
-#: ../admin/showmeta.php:28
+#: ../admin/showmeta.php:29
 msgid "Meta Data"
 msgstr "Metadaten"
-
-#: ../admin/showmeta.php:33
-#: ../admin/showmeta.php:59
-#: ../admin/showmeta.php:84
-#: ../admin/showmeta.php:108
-msgid "Tag"
-msgstr "Stichwort"
 
 #: ../admin/showmeta.php:34
 #: ../admin/showmeta.php:60
 #: ../admin/showmeta.php:85
 #: ../admin/showmeta.php:109
+msgid "Tag"
+msgstr "Stichwort"
+
+#: ../admin/showmeta.php:35
+#: ../admin/showmeta.php:61
+#: ../admin/showmeta.php:86
+#: ../admin/showmeta.php:110
 msgid "Value"
 msgstr "Wert"
 
-#: ../admin/showmeta.php:48
+#: ../admin/showmeta.php:49
 msgid "No meta data saved"
 msgstr "Keine Metadaten gespeichert"
 
-#: ../admin/showmeta.php:54
+#: ../admin/showmeta.php:55
 msgid "EXIF Data"
 msgstr "EXIF Daten"
 
-#: ../admin/showmeta.php:73
+#: ../admin/showmeta.php:74
 msgid "No exif data"
 msgstr "Keine Exif Daten"
 
-#: ../admin/showmeta.php:80
+#: ../admin/showmeta.php:81
 msgid "IPTC Data"
 msgstr "IPTC Daten"
 
-#: ../admin/showmeta.php:104
+#: ../admin/showmeta.php:105
 msgid "XMP Data"
 msgstr "XMP Daten"
 
@@ -2565,7 +2584,7 @@ msgstr "Einstellungen gespeichert..."
 
 #: ../admin/upgrade.php:149
 msgid "Updated widget structure. If you used NextGEN Widgets, you need to setup them again..."
-msgstr ""
+msgstr "Die Widgets wurden überarbeitet. Wenn du NextGEN Widgets nutzt, musst du Sie nun neu einfügen..."
 
 #: ../admin/upgrade.php:214
 msgid "Some folders/files could not renamed, please recheck the permission and rescan the folder in the manage gallery section."
@@ -2747,144 +2766,144 @@ msgstr "Ungültige URL"
 msgid "Could not create Temporary file."
 msgstr "Konnte temporäre Datei nicht erstellen"
 
-#: ../lib/meta.php:123
+#: ../lib/meta.php:124
 msgid " mm"
 msgstr " mm"
 
-#: ../lib/meta.php:129
+#: ../lib/meta.php:130
 msgid " sec"
 msgstr " Sek."
 
-#: ../lib/meta.php:133
+#: ../lib/meta.php:134
 msgid "Fired"
 msgstr "ausgelöst"
 
-#: ../lib/meta.php:133
+#: ../lib/meta.php:134
 msgid "Not fired"
 msgstr "Nicht ausgelöst"
 
-#: ../lib/meta.php:414
+#: ../lib/meta.php:423
 msgid "Aperture"
 msgstr "Blende"
 
-#: ../lib/meta.php:415
-#: ../lib/meta.php:440
+#: ../lib/meta.php:424
+#: ../lib/meta.php:449
 msgid "Credit"
 msgstr "Autor"
 
-#: ../lib/meta.php:416
+#: ../lib/meta.php:425
 msgid "Camera"
 msgstr "Kamera"
 
-#: ../lib/meta.php:417
+#: ../lib/meta.php:426
 msgid "Caption"
 msgstr "Beschreibung"
 
-#: ../lib/meta.php:419
+#: ../lib/meta.php:428
 msgid "Copyright"
 msgstr "Rechte"
 
-#: ../lib/meta.php:420
+#: ../lib/meta.php:429
 msgid "Focal length"
 msgstr "Brennweite"
 
-#: ../lib/meta.php:421
+#: ../lib/meta.php:430
 msgid "ISO"
 msgstr "ISO"
 
-#: ../lib/meta.php:422
+#: ../lib/meta.php:431
 msgid "Shutter speed"
 msgstr "Belichtungszeit"
 
-#: ../lib/meta.php:426
+#: ../lib/meta.php:435
 msgid "Subject"
 msgstr "Betreff"
 
-#: ../lib/meta.php:427
+#: ../lib/meta.php:436
 msgid "Make"
 msgstr "Hersteller"
 
-#: ../lib/meta.php:428
+#: ../lib/meta.php:437
 msgid "Edit Status"
 msgstr "Ändere Status"
 
-#: ../lib/meta.php:429
+#: ../lib/meta.php:438
 msgid "Category"
 msgstr "Kategorie"
 
-#: ../lib/meta.php:430
+#: ../lib/meta.php:439
 msgid "Keywords"
 msgstr "Schlüsselwörter"
 
-#: ../lib/meta.php:431
+#: ../lib/meta.php:440
 msgid "Date Created"
 msgstr "erstellt (Datum)"
 
-#: ../lib/meta.php:432
+#: ../lib/meta.php:441
 msgid "Time Created"
 msgstr "erstellt (Zeit)"
 
-#: ../lib/meta.php:433
+#: ../lib/meta.php:442
 msgid "Author Position"
 msgstr "Autor Position"
 
-#: ../lib/meta.php:434
+#: ../lib/meta.php:443
 msgid "City"
 msgstr "Stadt"
 
-#: ../lib/meta.php:435
+#: ../lib/meta.php:444
 msgid "Location"
 msgstr "Ort"
 
-#: ../lib/meta.php:436
+#: ../lib/meta.php:445
 msgid "Province/State"
 msgstr "Staat / PLZ"
 
-#: ../lib/meta.php:437
+#: ../lib/meta.php:446
 msgid "Country code"
 msgstr "Landescode"
 
-#: ../lib/meta.php:438
+#: ../lib/meta.php:447
 msgid "Country"
 msgstr "Land"
 
-#: ../lib/meta.php:439
+#: ../lib/meta.php:448
 msgid "Headline"
 msgstr "Kopfzeile"
 
-#: ../lib/meta.php:441
+#: ../lib/meta.php:450
 msgid "Source"
 msgstr "Quelle"
 
-#: ../lib/meta.php:442
+#: ../lib/meta.php:451
 msgid "Copyright Notice"
 msgstr "Copyright Hinweise / Credits"
 
-#: ../lib/meta.php:443
+#: ../lib/meta.php:452
 msgid "Contact"
 msgstr "Kontakt"
 
-#: ../lib/meta.php:444
+#: ../lib/meta.php:453
 msgid "Last modified"
 msgstr "Zuletzt geändert"
 
-#: ../lib/meta.php:445
+#: ../lib/meta.php:454
 msgid "Program tool"
 msgstr "Programm"
 
-#: ../lib/meta.php:446
+#: ../lib/meta.php:455
 msgid "Format"
 msgstr "Format"
 
-#: ../lib/meta.php:447
+#: ../lib/meta.php:456
 msgid "Image Width"
 msgstr "Breite"
 
-#: ../lib/meta.php:448
+#: ../lib/meta.php:457
 msgid "Image Height"
 msgstr "Höhe"
 
-#: ../lib/meta.php:449
+#: ../lib/meta.php:458
 msgid "Flash"
 msgstr "Blitz"
 
