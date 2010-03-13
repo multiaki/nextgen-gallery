@@ -85,7 +85,6 @@ function createNewThumb() {
 	if ( !current_user_can('NextGEN Manage gallery') ) 
 		die('-1');	
 
-	require_once( dirname( dirname(__FILE__) ) . '/ngg-config.php');
 	include_once( nggGallery::graphic_library() );
 
 	$id 	 = (int) $_POST['id'];
@@ -188,4 +187,35 @@ function ngg_rotateImage() {
 	header('HTTP/1.1 500 Internal Server Error');			
 	die( $result );
 	
+}
+
+add_action('wp_ajax_ngg_dashboard', 'ngg_ajax_dashboard');
+function ngg_ajax_dashboard() {
+    
+   	require_once( dirname( dirname(__FILE__) ) . '/admin/admin.php');
+	require_once( dirname( dirname(__FILE__) ) . '/admin/overview.php');
+    
+    @header( 'Content-Type: ' . get_option( 'html_type' ) . '; charset=' . get_option( 'blog_charset' ) );
+    send_nosniff_header();
+    
+    switch ( $_GET['jax'] ) {
+    
+    case 'ngg_lastdonators' :
+    	ngg_overview_donators();
+    	break;
+    
+    case 'dashboard_primary' :
+    	ngg_overview_news();
+    	break;
+    
+    case 'ngg_locale' :
+    	ngg_locale();
+    	break;
+    
+    case 'dashboard_plugins' :
+    	ngg_related_plugins();
+    	break;
+
+    }
+    die();    
 }

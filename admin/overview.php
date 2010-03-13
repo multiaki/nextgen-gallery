@@ -30,6 +30,46 @@ function nggallery_admin_overview()  {
 	</div>
 	<script type="text/javascript">
 		//<![CDATA[
+        var ajaxWidgets, ajaxPopulateWidgets;
+        
+        jQuery(document).ready( function($) {
+        	// These widgets are sometimes populated via ajax
+        	ajaxWidgets = [
+        		'ngg_lastdonators',
+        		'dashboard_primary',
+        		'ngg_locale',
+        		'dashboard_plugins'
+        	];
+        
+        	ajaxPopulateWidgets = function(el) {
+        		show = function(id, i) {
+        			var p, e = $('#' + id + ' div.inside:visible').find('.widget-loading');
+        			if ( e.length ) {
+        				p = e.parent();
+        				setTimeout( function(){
+        					p.load('admin-ajax.php?action=ngg_dashboard&jax=' + id, '', function() {
+        						p.hide().slideDown('normal', function(){
+        							$(this).css('display', '');
+        							if ( 'dashboard_plugins' == id && $.isFunction(tb_init) )
+        								tb_init('#dashboard_plugins a.thickbox');
+        						});
+        					});
+        				}, i * 500 );
+        			}
+        		}
+        		if ( el ) {
+        			el = el.toString();
+        			if ( $.inArray(el, ajaxWidgets) != -1 )
+        				show(el, 0);
+        		} else {
+        			$.each( ajaxWidgets, function(i) {
+        				show(this, i);
+        			});
+        		}
+        	};
+        	ajaxPopulateWidgets();
+        } );
+
 		jQuery(document).ready( function($) {
 			// postboxes setup
 			postboxes.add_postbox_toggles('ngg-overview');
@@ -38,6 +78,19 @@ function nggallery_admin_overview()  {
 	</script>
 	<?php
 }
+
+/**
+ * Load the meta boxes
+ *
+ */
+add_meta_box('dashboard_right_now', __('Welcome to NextGEN Gallery !', 'nggallery'), 'ngg_overview_right_now', 'ngg_overview', 'left', 'core');
+if ( !(get_locale() == 'en_US') )
+	add_meta_box('ngg_locale', __('Translation', 'nggallery'), 'ngg_widget_locale', 'ngg_overview', 'left', 'core');
+add_meta_box('dashboard_primary', __('Latest News', 'nggallery'), 'ngg_widget_overview_news', 'ngg_overview', 'right', 'core');
+add_meta_box('ngg_lastdonators', __('Recent donators', 'nggallery'), 'ngg_widget_overview_donators', 'ngg_overview', 'left', 'core');
+add_meta_box('ngg_server', __('Server Settings', 'nggallery'), 'ngg_overview_server', 'ngg_overview', 'left', 'core');
+add_meta_box('dashboard_plugins', __('Related plugins', 'nggallery'), 'ngg_widget_related_plugins', 'ngg_overview', 'right', 'core');
+add_meta_box('ngg_gd_lib', __('Graphic Library', 'nggallery'), 'ngg_overview_graphic_lib', 'ngg_overview', 'right', 'core');
 
 /**
  * Show the server settings in a dashboard widget
@@ -91,6 +144,10 @@ function ngg_overview_graphic_lib() {
  * 
  * @return void
  */
+function ngg_widget_overview_donators() { 
+    echo '<p class="widget-loading hide-if-no-js">' . __( 'Loading&#8230;' ) . '</p><p class="describe hide-if-js">' . __('This widget requires JavaScript.') . '</p>';
+}
+ 
 function ngg_overview_donators() {
 	global $ngg;
 	
@@ -136,6 +193,9 @@ function ngg_overview_donators() {
  * 
  * @return void
  */
+function ngg_widget_overview_news() { 
+    echo '<p class="widget-loading hide-if-no-js">' . __( 'Loading&#8230;' ) . '</p><p class="describe hide-if-js">' . __('This widget requires JavaScript.') . '</p>';
+} 
 function ngg_overview_news(){
 
 ?>
@@ -248,16 +308,20 @@ function ngg_overview_right_now() {
 <?php
 }
 
-function ngg_locale() {
-	global $ngg;
-	
+/**
+ * Looks up for translation file
+ * 
+ * @return void
+ */
+function ngg_widget_locale() {
+    
 	require_once(NGGALLERY_ABSPATH . '/lib/locale.php');
 	
 	$locale = new ngg_locale();
 	
-	$overview_url = admin_url() . 'admin.php?page=' . $_GET['page'];
+	$overview_url = admin_url() . 'admin.php?page=' . NGGFOLDER;
 	
-	// Check if some would like to update the translation file
+	// Check if someone would like to update the translation file
 	if ( isset($_GET['locale']) && $_GET['locale'] == 'update' ) {
 		check_admin_referer('ngg_update_locale');
 		
@@ -267,7 +331,7 @@ function ngg_locale() {
 		?>
 		<p class="hint"><?php _e('Translation file successful updated. Please reload page.', 'nggallery'); ?></p>
 		<p class="textright">
-			<a class="button" href="<?php echo $overview_url; ?>"><?php _e('Reload page', 'nggallery'); ?></a>
+			<a class="button" href="<?php echo esc_url(strip_tags($overview_url)); ?>"><?php _e('Reload page', 'nggallery'); ?></a>
 		</p>
 		<?php
 		} else {
@@ -278,9 +342,18 @@ function ngg_locale() {
 		
 		return;
 	}
+        
+    echo '<p class="widget-loading hide-if-no-js">' . __( 'Loading&#8230;' ) . '</p><p class="describe hide-if-js">' . __('This widget requires JavaScript.') . '</p>';
+} 
 
-	$result = $locale->check();
+function ngg_locale() {
+	global $ngg;
 	
+	require_once(NGGALLERY_ABSPATH . '/lib/locale.php');
+	
+	$locale = new ngg_locale();
+	$overview_url = admin_url() . 'admin.php?page=' . NGGFOLDER;
+    $result = $locale->check();
 	$update_url    = wp_nonce_url ( $overview_url . '&amp;locale=update', 'ngg_update_locale');
 
 	//Translators can change this text via gettext
@@ -289,7 +362,7 @@ function ngg_locale() {
 		if ( !is_wp_error($locale->response) && $locale->response['response']['code'] == '200') {
 		?>
 		<p class="textright">
-			<a class="button" href="<?php echo $update_url; ?>"><?php _e('Update', 'nggallery'); ?></a>
+			<a class="button" href="<?php echo esc_url( strip_tags($update_url) ); ?>"><?php _e('Update', 'nggallery'); ?></a>
 		</p>
 		<?php
 		}
@@ -300,7 +373,7 @@ function ngg_locale() {
 		?>
 		<p><strong>Download now your language file !</strong></p>
 		<p class="textright">
-			<a class="button" href="<?php echo $update_url; ?>"><?php _e('Download', 'nggallery'); ?></a>
+			<a class="button" href="<?php echo esc_url( strip_tags($update_url) ); ?>"><?php _e('Download', 'nggallery'); ?></a>
 		</p>
 		<?php
 	}
@@ -309,18 +382,7 @@ function ngg_locale() {
 	if ($result == 'not_exist')
 		echo '<p class="hint">'. sprintf( '<strong>Would you like to help to translate this plugin ?</strong> <a target="_blank" href="%s">Download</a> the current pot file and read <a href="http://alexrabe.de/wordpress-plugins/wordtube/translation-of-plugins/">here</a> how you can translate the plugin.', NGGALLERY_URLPATH . 'lang/nggallery.pot').'</p>';
 
-	//$temp_name = $locale->download_url('http://nextgen-gallery.googlecode.com/files/nggallery-lt_LT-1.4.3.zip');
-	//var_dump($temp_name);
 }
-
-add_meta_box('dashboard_right_now', __('Welcome to NextGEN Gallery !', 'nggallery'), 'ngg_overview_right_now', 'ngg_overview', 'left', 'core');
-if ( !(get_locale() == 'en_US') )
-	add_meta_box('ngg_locale', __('Translation', 'nggallery'), 'ngg_locale', 'ngg_overview', 'left', 'core');
-add_meta_box('dashboard_primary', __('Latest News', 'nggallery'), 'ngg_overview_news', 'ngg_overview', 'right', 'core');
-add_meta_box('ngg_lastdonators', __('Recent donators', 'nggallery'), 'ngg_overview_donators', 'ngg_overview', 'left', 'core');
-add_meta_box('ngg_server', __('Server Settings', 'nggallery'), 'ngg_overview_server', 'ngg_overview', 'left', 'core');
-add_meta_box('dashboard_plugins', __('Related plugins', 'nggallery'), 'ngg_related_plugins', 'ngg_overview', 'right', 'core');
-add_meta_box('ngg_gd_lib', __('Graphic Library', 'nggallery'), 'ngg_overview_graphic_lib', 'ngg_overview', 'right', 'core');
 
 /**
  * Show GD Library version information
@@ -592,6 +654,9 @@ function ngg_get_phpinfo() {
  * 
  * @return postbox output
  */
+function ngg_widget_related_plugins() { 
+    echo '<p class="widget-loading hide-if-no-js">' . __( 'Loading&#8230;' ) . '</p><p class="describe hide-if-js">' . __('This widget requires JavaScript.') . '</p>';
+}  
 function ngg_related_plugins() {
 	include(ABSPATH . 'wp-admin/includes/plugin-install.php');
 
