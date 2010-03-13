@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-24 21:45+0100\n"
-"PO-Revision-Date: 2010-02-24 21:50+0100\n"
+"POT-Creation-Date: 2010-03-13 15:47+0100\n"
+"PO-Revision-Date: 2010-03-13 15:51+0100\n"
 "Last-Translator: Alex Rabe\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
@@ -18,49 +18,57 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 
-#: ../nggallery.php:196
+#: ../nggallery.php:63
+msgid "<strong>Translation by : </strong><a target=\"_blank\" href=\"http://alexrabe.de/wordpress-plugins/wordtube/translation-of-plugins/\">unknown</a>"
+msgstr "<strong>Übersetzt von : </strong><a target=\"_blank\" href=\"http://alexrabe.de/wordpress-plugins/wordtube/translation-of-plugins/\">Alex Rabe</a>"
+
+#: ../nggallery.php:64
+msgid "<strong>This translation is not yet updated for Version 1.5.0</strong>. If you would like to help with translation, download the current po from the plugin folder and read <a href=\"http://alexrabe.de/wordpress-plugins/wordtube/translation-of-plugins/\">here</a> how you can translate the plugin."
+msgstr "Sollten jemand Rechtschreibfehler, Deppenapostrophe oder andere deutsche Ungereimtheiten finden, freue ich mich jederzeit über einen kurzen Hinweis</p>"
+
+#: ../nggallery.php:201
 msgid "Sorry, NextGEN Gallery works only with a Memory Limit of 16 MB higher"
 msgstr "Tut mir leid, aber NextGEN Galerie benötigt minimum 16MB Speicher (Memory Limit) oder mehr"
 
-#: ../nggallery.php:221
+#: ../nggallery.php:226
 msgid "Picture tag"
 msgstr "Bilder Stichwort"
 
-#: ../nggallery.php:222
+#: ../nggallery.php:227
 msgid "Picture tag: %2$l."
 msgstr "Bilder Stichwort: %2$l."
 
-#: ../nggallery.php:223
+#: ../nggallery.php:228
 msgid "Separate picture tags with commas."
 msgstr "Trenne Stichwörter mittels Komma"
 
-#: ../nggallery.php:320
+#: ../nggallery.php:325
 msgid "L O A D I N G"
 msgstr "B I T T E &nbsp;&nbsp;W A R T E N"
 
-#: ../nggallery.php:321
+#: ../nggallery.php:326
 msgid "Click to Close"
 msgstr "Klicken zum Schliessen "
 
-#: ../nggallery.php:337
+#: ../nggallery.php:342
 msgid "loading"
 msgstr "lade..."
 
-#: ../nggallery.php:435
+#: ../nggallery.php:440
 #: ../nggfunctions.php:850
 #: ../admin/admin.php:32
 msgid "Overview"
 msgstr "Übersicht"
 
-#: ../nggallery.php:436
+#: ../nggallery.php:441
 msgid "Get help"
 msgstr "Hilfe"
 
-#: ../nggallery.php:437
+#: ../nggallery.php:442
 msgid "Contribute"
 msgstr "Mithelfen"
 
-#: ../nggallery.php:438
+#: ../nggallery.php:443
 msgid "Donate"
 msgstr "Spenden"
 
@@ -424,102 +432,102 @@ msgstr "Unerwarteter Fehler"
 msgid "A failure occurred"
 msgstr "Ein Fehler ist aufgetreten"
 
-#: ../admin/admin.php:267
+#: ../admin/admin.php:271
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Introduction</a>"
 msgstr "<a href=\"http://www.curlyrob.de/curlyrob/?page_id=129\" target=\"_blank\">Einführung</a>"
 
-#: ../admin/admin.php:270
+#: ../admin/admin.php:274
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Setup</a>"
 msgstr "<a href=\"http://www.curlyrob.de/curlyrob/?page_id=129\" target=\"_blank\">Setup</a>"
 
-#: ../admin/admin.php:273
+#: ../admin/admin.php:277
 msgid "<a href=\"http://alexrabe.de/wordpress-plugins/nextgen-gallery/languages/\" target=\"_blank\">Translation by alex rabe</a>"
 msgstr "<a href=\"http://alexrabe.de/wordpress-plugins/nextgen-gallery/languages/\" target=\"_blank\">Unterstütze bei der Übersetzung</a>"
 
-#: ../admin/admin.php:276
+#: ../admin/admin.php:280
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Roles / Capabilities</a>"
 msgstr "<a href=\"http://www.curlyrob.de/curlyrob/?page_id=129\" target=\"_blank\">Einführung</a>"
 
-#: ../admin/admin.php:279
+#: ../admin/admin.php:283
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Styles</a>"
 msgstr "<a href=\"http://www.curlyrob.de/curlyrob/?page_id=129\" target=\"_blank\">Einführung</a>"
 
-#: ../admin/admin.php:280
+#: ../admin/admin.php:284
 msgid "Templates"
 msgstr "Vorlagen"
 
-#: ../admin/admin.php:283
-#: ../admin/admin.php:289
+#: ../admin/admin.php:287
+#: ../admin/admin.php:293
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Gallery management</a>"
 msgstr "<a href=\"http://www.curlyrob.de/curlyrob/?page_id=129\" target=\"_blank\">Einführung</a>"
 
-#: ../admin/admin.php:284
+#: ../admin/admin.php:288
 msgid "Gallery example"
 msgstr "Galerie Beispiel"
 
-#: ../admin/admin.php:290
-#: ../admin/admin.php:300
+#: ../admin/admin.php:294
+#: ../admin/admin.php:304
 msgid "Gallery tags"
 msgstr "Galerie Stichwörter"
 
-#: ../admin/admin.php:293
+#: ../admin/admin.php:297
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Album management</a>"
 msgstr "<a href=\"http://www.curlyrob.de/curlyrob/?page_id=129\" target=\"_blank\">Einführung</a>"
 
-#: ../admin/admin.php:294
+#: ../admin/admin.php:298
 msgid "Album example"
 msgstr "Album Beispiel"
 
-#: ../admin/admin.php:295
-#: ../admin/admin.php:301
+#: ../admin/admin.php:299
+#: ../admin/admin.php:305
 msgid "Album tags"
 msgstr "Album Stichwörter"
 
-#: ../admin/admin.php:298
+#: ../admin/admin.php:302
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-introduction/\" target=\"_blank\">Gallery tags</a>"
 msgstr "<a href=\"http://www.curlyrob.de/curlyrob/?page_id=129\" target=\"_blank\">Einführung</a>"
 
-#: ../admin/admin.php:299
+#: ../admin/admin.php:303
 msgid "Related images"
 msgstr "Verwandte Bilder"
 
-#: ../admin/admin.php:304
+#: ../admin/admin.php:308
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-image-management/\" target=\"_blank\">Image management</a>"
 msgstr "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-image-management/\" target=\"_blank\">Bilderverwaltung (Englisch)</a>"
 
-#: ../admin/admin.php:305
+#: ../admin/admin.php:309
 msgid "Custom fields"
 msgstr "Spezialfelder"
 
-#: ../admin/admin.php:310
+#: ../admin/admin.php:314
 msgid "Get help with NextGEN Gallery"
 msgstr "Weitere Hilfe zu NextGEN Gallery"
 
-#: ../admin/admin.php:314
+#: ../admin/admin.php:318
 msgid "More Help & Info"
 msgstr "Weitere Hilfe & Informationen"
 
-#: ../admin/admin.php:316
+#: ../admin/admin.php:320
 msgid "<a href=\"http://wordpress.org/tags/nextgen-gallery?forum_id=10\" target=\"_blank\">Support Forums</a>"
 msgstr "<a href=\"http://wordpress.org/tags/nextgen-gallery?forum_id=10\" target=\"_blank\">Support Forum (Englisch)</a>"
 
-#: ../admin/admin.php:317
+#: ../admin/admin.php:321
 msgid "FAQ"
 msgstr "FAQ (englisch)"
 
-#: ../admin/admin.php:318
+#: ../admin/admin.php:322
 msgid "Feature request"
 msgstr "Wünsch dir was"
 
-#: ../admin/admin.php:319
+#: ../admin/admin.php:323
 msgid "Get your language pack"
 msgstr "Lade deine Sprachdatei"
 
-#: ../admin/admin.php:320
+#: ../admin/admin.php:324
 msgid "Contribute development"
 msgstr "Entwicklung helfen"
 
-#: ../admin/admin.php:321
+#: ../admin/admin.php:325
 msgid "Download latest version"
 msgstr "Aktuelle Version downloaden"
 
@@ -661,17 +669,17 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: ../admin/album.php:516
+#: ../admin/album.php:517
 msgid "Name"
 msgstr "Name"
 
-#: ../admin/album.php:517
+#: ../admin/album.php:518
 #: ../admin/manage-galleries.php:156
 #: ../admin/manage-images.php:216
 msgid "Title"
 msgstr "Titel"
 
-#: ../admin/album.php:518
+#: ../admin/album.php:519
 msgid "Page"
 msgstr "Seite"
 
@@ -960,7 +968,7 @@ msgstr "Konnte Datei nicht speichern"
 
 #: ../admin/functions.php:1431
 msgid "File upload stopped by extension"
-msgstr ""
+msgstr "Upload dieser Dateierweiterung nicht erlaubt"
 
 #: ../admin/functions.php:1434
 msgid "Unknown upload error"
@@ -1050,7 +1058,7 @@ msgstr "Metadaten importieren"
 #: ../admin/manage.php:154
 #: ../admin/manage.php:234
 msgid "Recover from backup"
-msgstr ""
+msgstr "Original wiederherstellen"
 
 #: ../admin/manage-galleries.php:132
 #: ../admin/manage-images.php:312
@@ -1276,7 +1284,7 @@ msgstr "Rücksetzen"
 #: ../admin/manage-images.php:403
 #, php-format
 msgid "Recover \"%s\" ?"
-msgstr ""
+msgstr " \"%s\" wiederherstellen ?"
 
 #: ../admin/manage-images.php:404
 #, php-format
@@ -1356,7 +1364,7 @@ msgstr "Aufsteigend"
 msgid "Descending"
 msgstr "Absteigend"
 
-#: ../admin/manage.php:87
+#: ../admin/manage.php:86
 #: ../admin/manage.php:107
 msgid "deleted successfully"
 msgstr "erfolgreich gelöscht"
@@ -1382,15 +1390,15 @@ msgstr "Bilder erfolgreich gelöscht"
 msgid "Tags changed"
 msgstr "Stichwörter geändert"
 
-#: ../admin/manage.php:380
+#: ../admin/manage.php:382
 msgid "Update successful"
 msgstr "Aktualisierung erfolgreich"
 
-#: ../admin/manage.php:414
+#: ../admin/manage.php:417
 msgid "New gallery page ID"
 msgstr "Neue Galerie Seiten ID"
 
-#: ../admin/manage.php:414
+#: ../admin/manage.php:417
 msgid "created"
 msgstr "erstellt"
 
@@ -1431,186 +1439,206 @@ msgstr "Danke an alle Spender..."
 msgid "View all"
 msgstr "Alle ansehen"
 
-#: ../admin/overview.php:164
+#: ../admin/overview.php:165
 #, php-format
 msgid "Newsfeed could not be loaded.  Check the <a href=\"%s\">front page</a> to check for updates."
 msgstr "Der Newsfeed kann nicht geladen werden. Schaue auf die <a href=\"%s\">Hauptseite</a> um Updates mitzubekommen."
 
-#: ../admin/overview.php:184
+#: ../admin/overview.php:186
 msgid "At a Glance"
 msgstr "Übersicht"
 
-#: ../admin/overview.php:211
+#: ../admin/overview.php:212
 msgid "Upload pictures"
 msgstr "Bilder hochladen"
 
-#: ../admin/overview.php:212
+#: ../admin/overview.php:213
 msgid "Here you can control your images, galleries and albums."
 msgstr "Hier kannst Du die  Bilder, Galerien und Alben verwalten."
 
-#: ../admin/overview.php:216
+#: ../admin/overview.php:217
 msgid "Gallery Administrator"
 msgstr "Galerie-Administrator"
 
-#: ../admin/overview.php:216
+#: ../admin/overview.php:217
 msgid "Gallery Editor"
 msgstr "Galerie-Mitarbeiter"
 
-#: ../admin/overview.php:217
+#: ../admin/overview.php:218
 #, php-format
 msgid "You currently have %s rights."
 msgstr "Du hast derzeit %s Rechte."
 
-#: ../admin/overview.php:224
+#: ../admin/overview.php:242
+msgid "Translation file successful updated. Please reload page."
+msgstr "Überstetzungsdatei aktualisiert. Bitte Seite neu laden."
+
+#: ../admin/overview.php:244
+msgid "Reload page"
+msgstr "Seite neu laden"
+
+#: ../admin/overview.php:249
+msgid "Translation file couldn't be updated"
+msgstr "Übersetzung konnte nicht aktualisiert werden"
+
+#: ../admin/overview.php:277
+msgid "Download"
+msgstr "Jetzt updaten"
+
+#: ../admin/overview.php:290
 msgid "Welcome to NextGEN Gallery !"
 msgstr "Willkomen bei NextGEN Gallery"
 
-#: ../admin/overview.php:225
+#: ../admin/overview.php:292
+msgid "Translation"
+msgstr "Übersetzung"
+
+#: ../admin/overview.php:293
 msgid "Latest News"
 msgstr "Letzte Informationen"
 
-#: ../admin/overview.php:226
+#: ../admin/overview.php:294
 msgid "Recent donators"
 msgstr "Neusten Spender"
 
-#: ../admin/overview.php:227
+#: ../admin/overview.php:295
 msgid "Server Settings"
 msgstr "Server- Einstellungen"
 
-#: ../admin/overview.php:228
+#: ../admin/overview.php:296
 msgid "Related plugins"
 msgstr "Verwandte Plugins"
 
-#: ../admin/overview.php:229
+#: ../admin/overview.php:297
 msgid "Graphic Library"
 msgstr "Grafik Bibliothek"
 
-#: ../admin/overview.php:249
+#: ../admin/overview.php:317
 msgid "No GD support"
 msgstr "Keine GD Unterstützung"
 
-#: ../admin/overview.php:261
-#: ../admin/overview.php:307
-#: ../admin/overview.php:310
-#: ../admin/overview.php:313
+#: ../admin/overview.php:329
+#: ../admin/overview.php:375
+#: ../admin/overview.php:378
+#: ../admin/overview.php:381
 msgid "Yes"
 msgstr "Ja"
 
-#: ../admin/overview.php:263
-#: ../admin/overview.php:308
-#: ../admin/overview.php:311
-#: ../admin/overview.php:314
+#: ../admin/overview.php:331
+#: ../admin/overview.php:376
+#: ../admin/overview.php:379
+#: ../admin/overview.php:382
 msgid "No"
 msgstr "Nein"
 
-#: ../admin/overview.php:281
+#: ../admin/overview.php:349
 msgid "Not set"
 msgstr "Nicht gesetzt"
 
-#: ../admin/overview.php:283
-#: ../admin/overview.php:286
+#: ../admin/overview.php:351
+#: ../admin/overview.php:354
 msgid "On"
 msgstr "An"
 
-#: ../admin/overview.php:284
-#: ../admin/overview.php:287
+#: ../admin/overview.php:352
+#: ../admin/overview.php:355
 msgid "Off"
 msgstr "Aus"
 
-#: ../admin/overview.php:290
-#: ../admin/overview.php:293
-#: ../admin/overview.php:296
-#: ../admin/overview.php:299
-#: ../admin/overview.php:302
-#: ../admin/overview.php:305
+#: ../admin/overview.php:358
+#: ../admin/overview.php:361
+#: ../admin/overview.php:364
+#: ../admin/overview.php:367
+#: ../admin/overview.php:370
+#: ../admin/overview.php:373
 msgid "N/A"
 msgstr "N/A"
 
-#: ../admin/overview.php:304
+#: ../admin/overview.php:372
 msgid " MByte"
 msgstr " MByte"
 
-#: ../admin/overview.php:317
+#: ../admin/overview.php:385
 msgid "Operating System"
 msgstr "Betriebssystem"
 
-#: ../admin/overview.php:318
+#: ../admin/overview.php:386
 msgid "Server"
 msgstr "Server"
 
-#: ../admin/overview.php:319
+#: ../admin/overview.php:387
 msgid "Memory usage"
 msgstr "Speicherverbrauch"
 
-#: ../admin/overview.php:320
+#: ../admin/overview.php:388
 msgid "MYSQL Version"
 msgstr "MySQL Version"
 
-#: ../admin/overview.php:321
+#: ../admin/overview.php:389
 msgid "SQL Mode"
 msgstr "SQL Modus"
 
-#: ../admin/overview.php:322
+#: ../admin/overview.php:390
 msgid "PHP Version"
 msgstr "PHP Version"
 
-#: ../admin/overview.php:323
+#: ../admin/overview.php:391
 msgid "PHP Safe Mode"
 msgstr "PHP Safe Mode"
 
-#: ../admin/overview.php:324
+#: ../admin/overview.php:392
 msgid "PHP Allow URL fopen"
 msgstr "PHP Allow URL fopen"
 
-#: ../admin/overview.php:325
+#: ../admin/overview.php:393
 msgid "PHP Memory Limit"
 msgstr "PHP Memory Limit"
 
-#: ../admin/overview.php:326
+#: ../admin/overview.php:394
 msgid "PHP Max Upload Size"
 msgstr "PHP Max Upload Größe"
 
-#: ../admin/overview.php:327
+#: ../admin/overview.php:395
 msgid "PHP Max Post Size"
 msgstr "PHP Max Post Größe"
 
-#: ../admin/overview.php:328
+#: ../admin/overview.php:396
 msgid "PCRE Backtracking Limit"
 msgstr "PCRE Backtracking Limit"
 
-#: ../admin/overview.php:329
+#: ../admin/overview.php:397
 msgid "PHP Max Script Execute Time"
 msgstr "PHP Max Script Execute Time"
 
-#: ../admin/overview.php:330
+#: ../admin/overview.php:398
 msgid "PHP Exif support"
 msgstr "PHP Exif Modul"
 
-#: ../admin/overview.php:331
+#: ../admin/overview.php:399
 msgid "PHP IPTC support"
 msgstr "PHP IPTC Modul"
 
-#: ../admin/overview.php:332
+#: ../admin/overview.php:400
 msgid "PHP XML support"
 msgstr "PHP XML Modul"
 
-#: ../admin/overview.php:344
+#: ../admin/overview.php:412
 msgid "NextGEN Gallery contains some functions which are only available under PHP 5.2. You are using the old PHP 4 version, upgrade now! It's no longer supported by the PHP group. Many shared hosting providers offer both PHP 4 and PHP 5, running simultaneously. Ask your provider if they can do this."
 msgstr "NextGEN Gallery enthält einige Funktionen die nur unter PHP 5.2 verfügbar sind. Du nutzt immer noch die alte PHP 4 Version. Bitte aktualisiere so bald wie möglich diese Version, sie wird nicht mehr gepflegt und weiterentwicklelt. Die meisten Hoster bieten bereits PHP5 an. Bitte kontaktiere deinen Provider und frag kurz nach ob sie ein Update durchführen können."
 
-#: ../admin/overview.php:403
+#: ../admin/overview.php:471
 msgid "Storage Space"
 msgstr "Speicherplatz"
 
-#: ../admin/overview.php:406
+#: ../admin/overview.php:474
 msgid "Upload Space Used:"
 msgstr "Verbrauchter Uploadspeicher:"
 
-#: ../admin/overview.php:412
+#: ../admin/overview.php:480
 msgid "Upload Space Remaining:"
 msgstr "Verbleibender Speicher:"
 
-#: ../admin/overview.php:554
+#: ../admin/overview.php:622
 msgid "Install"
 msgstr "Installieren"
 
@@ -1850,15 +1878,15 @@ msgstr "Backup von Original Bilder "
 
 #: ../admin/settings.php:340
 msgid "Creates a backup for inserted images"
-msgstr ""
+msgstr "Backup der Bilder anlegen"
 
 #: ../admin/settings.php:343
 msgid "Automatically resize"
-msgstr ""
+msgstr "Grösse automatisch anpassen"
 
 #: ../admin/settings.php:346
 msgid "Automatically resize images on upload."
-msgstr ""
+msgstr "Passt die Grösse automatsich beim Upload an"
 
 #: ../admin/settings.php:349
 msgid "Single picture"
@@ -2353,53 +2381,53 @@ msgstr "Du hast nicht die benötigten Rechte um Vorlagen in diesem Blog zu bearb
 msgid "CSS file successfully updated"
 msgstr "CSS Datei erfolgreich aktualisiert"
 
-#: ../admin/style.php:89
+#: ../admin/style.php:88
 msgid "Style Editor"
 msgstr "CSS Editor"
 
-#: ../admin/style.php:93
+#: ../admin/style.php:92
 msgid "Activate and use style sheet:"
 msgstr "Aktiviere und nutze Stylesheet:"
 
-#: ../admin/style.php:113
+#: ../admin/style.php:112
 msgid "Activate"
 msgstr "Aktiviere"
 
-#: ../admin/style.php:123
+#: ../admin/style.php:122
 #, php-format
 msgid "Editing <strong>%s</strong>"
 msgstr "Bearbeite <strong>%s</strong>"
 
-#: ../admin/style.php:125
+#: ../admin/style.php:124
 #, php-format
 msgid "Browsing <strong>%s</strong>"
 msgstr "Durchsuche <strong>%s</strong>"
 
-#: ../admin/style.php:135
+#: ../admin/style.php:134
 msgid "Version"
 msgstr "Version"
 
-#: ../admin/style.php:138
+#: ../admin/style.php:137
 msgid "Tip : Copy your stylesheet (nggallery.css) to your theme folder, so it will be not lost during a upgrade"
 msgstr "Kleiner Tip : Kopiere das Stylesheet (nggallery.css) in dein Theme-Verzeichnis, dadurch wird es beim nächsten Update nicht überschrieben."
 
-#: ../admin/style.php:140
+#: ../admin/style.php:139
 msgid "Your theme contain a NextGEN Gallery stylesheet (nggallery.css), this file will be used"
 msgstr "Dein Theme-Paket enthält eine NextGEN Gallery Stylesheet (nggallery.css), dieses Sheet wird automatisch eingebunden"
 
-#: ../admin/style.php:142
+#: ../admin/style.php:141
 msgid "Tip No. 2: Use the color picker below to help you find the right color scheme for your gallery!"
 msgstr "2.Tip : Beutze die Farbauswahl um den zugehörigen HTML Farbcode zu erhalten"
 
-#: ../admin/style.php:158
+#: ../admin/style.php:157
 msgid "Update File"
 msgstr "Datei aktualisieren"
 
-#: ../admin/style.php:161
+#: ../admin/style.php:160
 msgid "If this file were writable you could edit it."
 msgstr "Wenn diese Datei beschreibbar wäre, könntest Du sie bearbeiten."
 
-#: ../admin/style.php:166
+#: ../admin/style.php:165
 msgid "Oops, no such file exists! Double check the name and try again, merci."
 msgstr "Oha, eine solche Datei existiert nicht! Bitte überprüfe den Namen und probiere es erneut, danke."
 
@@ -2709,6 +2737,15 @@ msgstr "Einfügen"
 #, php-format
 msgid "Note : Based on your server memory limit you should not upload larger images then <strong>%d x %d</strong> pixel"
 msgstr "Hinweis : Basierend auf der Speicherbegrenzung auf dem Server, solltest du keine Bilder grösser als  <strong>%d x %d</strong> Pixel hochladen"
+
+#: ../lib/locale.php:120
+msgid "Invalid URL Provided."
+msgstr "Ungültige URL"
+
+#: ../lib/locale.php:124
+#: ../lib/locale.php:128
+msgid "Could not create Temporary file."
+msgstr "Konnte temporäre Datei nicht erstellen"
 
 #: ../lib/meta.php:123
 msgid " mm"
@@ -3170,6 +3207,21 @@ msgstr "Album-ID  %s existiert nicht"
 msgid "Invalid MediaRSS command (%s)."
 msgstr "Ungültiger Media RSS Befehl (%s)"
 
+#~ msgid ""
+#~ "<strong>Would you like to help to translate this plugin ?</strong> <a "
+#~ "target=\"_blank\" href=\"%s\">Download</a> the current pot file and read "
+#~ "<a href=\"http://alexrabe.de/wordpress-plugins/wordtube/translation-of-"
+#~ "plugins/\">here</a> how you can translate the plugin."
+#~ msgstr ""
+#~ "<strong>Would you like to help to translate this plugin ?</strong> <a "
+#~ "target=\"_blank\" href=\"%s\">Download</a> the current pot file and read "
+#~ "<a href=\"http://alexrabe.de/wordpress-plugins/wordtube/translation-of-"
+#~ "plugins/\">here</a> how you can translate the plugin."
+#~ msgid ""
+#~ "<strong>Translation by : </strong><a target=\"_blank\" href=\"\">N/A</a>"
+#~ msgstr ""
+#~ "<strong>Übersetzt von : </strong><a target=\"_blank\" href=\"\">Alex "
+#~ "Rabe</a>"
 #~ msgid "Setup Gallery"
 #~ msgstr "Galerie Setup"
 #~ msgid "Setup"

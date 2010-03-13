@@ -182,8 +182,8 @@ function ngg_overview_right_now() {
 	$albums    = intval( $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggalbum") );
 ?>
 
-<p class="sub"><?php _e('At a Glance', 'nggallery'); ?></p>
-<div class="table">
+<div class="table table_content">
+	<p class="sub"><?php _e('At a Glance', 'nggallery'); ?></p>
 	<table>
 		<tbody>
 			<tr class="first">
@@ -207,9 +207,9 @@ function ngg_overview_right_now() {
 		</tbody>
 	</table>
 </div>
-<div class="versions">
+<div class="versions" style="padding-top:14px">
     <p>
-	<?php if(current_user_can('NextGEN Upload images')): ?><a class="button rbutton" href="admin.php?page=nggallery-add-gallery"><strong><?php _e('Upload pictures', 'nggallery') ?></strong></a><?php endif; ?>
+	<?php if(current_user_can('NextGEN Upload images')): ?><a class="button rbutton" href="admin.php?page=nggallery-add-gallery"><?php _e('Upload pictures', 'nggallery') ?></a><?php endif; ?>
 	<?php _e('Here you can control your images, galleries and albums.', 'nggallery') ?>
 	</p>
 	<span>
@@ -222,7 +222,74 @@ function ngg_overview_right_now() {
 <?php
 }
 
+function ngg_locale() {
+	global $ngg;
+	
+	require_once(NGGALLERY_ABSPATH . '/lib/locale.php');
+	
+	$locale = new ngg_locale();
+	
+	$overview_url = admin_url() . 'admin.php?page=' . $_GET['page'];
+	
+	// Check if some would like to update the translation file
+	if ( isset($_GET['locale']) && $_GET['locale'] == 'update' ) {
+		check_admin_referer('ngg_update_locale');
+		
+		$result = $locale->download_locale();
+		
+		if ($result == true) {
+		?>
+		<p class="hint"><?php _e('Translation file successful updated. Please reload page.', 'nggallery'); ?></p>
+		<p class="textright">
+			<a class="button" href="<?php echo $overview_url; ?>"><?php _e('Reload page', 'nggallery'); ?></a>
+		</p>
+		<?php
+		} else {
+		?>
+		<p class="hint"><?php _e('Translation file couldn\'t be updated', 'nggallery'); ?></p>
+		<?php		
+		}
+		
+		return;
+	}
+
+	$result = $locale->check();
+	
+	$update_url    = wp_nonce_url ( $overview_url . '&amp;locale=update', 'ngg_update_locale');
+
+	//Translators can change this text via gettext
+	if ($result == 'installed') {
+		echo $ngg->translator;
+		if ( !is_wp_error($locale->response) && $locale->response['response']['code'] == '200') {
+		?>
+		<p class="textright">
+			<a class="button" href="<?php echo $update_url; ?>"><?php _e('Update', 'nggallery'); ?></a>
+		</p>
+		<?php
+		}
+	}
+	
+	//Translators can change this text via gettext
+	if ($result == 'available') {
+		?>
+		<p><strong>Download now your language file !</strong></p>
+		<p class="textright">
+			<a class="button" href="<?php echo $update_url; ?>"><?php _e('Download', 'nggallery'); ?></a>
+		</p>
+		<?php
+	}
+
+	
+	if ($result == 'not_exist')
+		echo '<p class="hint">'. sprintf( '<strong>Would you like to help to translate this plugin ?</strong> <a target="_blank" href="%s">Download</a> the current pot file and read <a href="http://alexrabe.de/wordpress-plugins/wordtube/translation-of-plugins/">here</a> how you can translate the plugin.', NGGALLERY_URLPATH . 'lang/nggallery.pot').'</p>';
+
+	//$temp_name = $locale->download_url('http://nextgen-gallery.googlecode.com/files/nggallery-lt_LT-1.4.3.zip');
+	//var_dump($temp_name);
+}
+
 add_meta_box('dashboard_right_now', __('Welcome to NextGEN Gallery !', 'nggallery'), 'ngg_overview_right_now', 'ngg_overview', 'left', 'core');
+if ( !(get_locale() == 'en_US') )
+	add_meta_box('ngg_locale', __('Translation', 'nggallery'), 'ngg_locale', 'ngg_overview', 'left', 'core');
 add_meta_box('dashboard_primary', __('Latest News', 'nggallery'), 'ngg_overview_news', 'ngg_overview', 'right', 'core');
 add_meta_box('ngg_lastdonators', __('Recent donators', 'nggallery'), 'ngg_overview_donators', 'ngg_overview', 'left', 'core');
 add_meta_box('ngg_server', __('Server Settings', 'nggallery'), 'ngg_overview_server', 'ngg_overview', 'left', 'core');

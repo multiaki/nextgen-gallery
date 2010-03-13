@@ -59,6 +59,10 @@ class nggLoader {
 		// Load the language file
 		$this->load_textdomain();
 		
+		// All credits to the tranlator 
+		$this->translator  = '<p class="hint">'. __('<strong>Translation by : </strong><a target="_blank" href="http://alexrabe.de/wordpress-plugins/wordtube/translation-of-plugins/">unknown</a>', 'nggallery') . '</p>';
+		$this->translator .= '<p class="hint">'. __('<strong>This translation is not yet updated for Version 1.5.0</strong>. If you would like to help with translation, download the current po from the plugin folder and read <a href="http://alexrabe.de/wordpress-plugins/wordtube/translation-of-plugins/">here</a> how you can translate the plugin.', 'nggallery') . '</p>'; 
+
 		// Stop the plugin if we missed the requirements
 		if ( ( !$this->required_version() ) || ( !$this->check_memory_limit() ) )
 			return;
@@ -150,7 +154,8 @@ class nggLoader {
             require_once (dirname (__FILE__) . '/nggshow.php');
             exit();
         }
-
+        
+		//TODO:see trac #12400 could be an option for WP3.0 
         if ( $wp->query_vars['callback'] == 'ngg-ajax') {
             require_once (dirname (__FILE__) . '/xml/ajax.php');
             exit();
