@@ -134,7 +134,10 @@ if ($nb_tags < $tag_count && $offset>0) {
 							<?php
 							$tags = (array) nggTags::find_tags($param, true);
 							foreach( $tags as $tag ) {
-                                echo '<li><span>' . $tag->name . '</span>&nbsp;<a href="'.(get_tag_link( $tag->term_id )).'" title="'.sprintf(__('View all images tagged with %s', 'nggallery'), $tag->name).'">('.$tag->count.')</a></li>'."\n";
+                                //TODO:Tag link should be call a list of images in manage gallery
+                                //echo '<li><span>' . $tag->name . '</span>&nbsp;<a href="'.(ngg_get_tag_link( $tag->term_id )).'" title="'.sprintf(__('View all images tagged with %s', 'nggallery'), $tag->name).'">('.$tag->count.')</a></li>'."\n";
+                                echo '<li><span>' . $tag->name . '</span>&nbsp;'.'('.$tag->count.')</li>'."\n";
+
 							}
 							unset($tags);
 							?>

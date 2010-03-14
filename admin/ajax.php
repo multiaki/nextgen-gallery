@@ -198,6 +198,9 @@ function ngg_ajax_dashboard() {
     @header( 'Content-Type: ' . get_option( 'html_type' ) . '; charset=' . get_option( 'blog_charset' ) );
     send_nosniff_header();
     
+   	if ( !current_user_can('NextGEN Gallery overview') ) 
+		die();	
+    
     switch ( $_GET['jax'] ) {
     
     case 'ngg_lastdonators' :

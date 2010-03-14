@@ -667,6 +667,7 @@ class nggdb {
             
             $n = '%';
             $searchand = '';
+            $search = '';
             
             foreach( (array) $search_terms as $term) {
                 $term = addslashes_gpc($term);

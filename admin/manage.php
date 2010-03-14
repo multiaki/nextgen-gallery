@@ -494,7 +494,7 @@ class nggManageGallery {
 	
 		return $wpdb->get_col( $query );
 	}
-	
+
 	function search_images() {
 		global $nggdb;
 		

@@ -11,11 +11,18 @@ include_once('lib/core.php');
 $ngg_options = get_option('ngg_options');	
 
 // Some parameters from the URL
+if ( !isset($_GET['pid']) )
+    exit;
+    
 $pictureID = (int) $_GET['pid'];
-$mode = isset($_GET['mode']) ? esc_attr($_GET['mode']) : '';
+$mode = isset($_GET['mode']) ? $_GET['mode'] : '';
 
 // let's get the image data
 $picture  = nggdb::find_image( $pictureID );
+
+if ( !is_object($picture) )
+    exit;
+    
 $thumb = new ngg_Thumbnail( $picture->imagePath );
 
 // Resize if necessary
@@ -26,7 +33,21 @@ if ( !empty($_GET['width']) || !empty($_GET['height']) ) {
 	// limit the maxium size, prevent server memory overload
 	if ($w > 1280) $w = 1280;
 	if ($h > 1280) $h = 1280;
-	$thumb->resize( $w, $h );
+    // Crop mode for post thumbnail
+    if ($mode == 'crop') {
+		// check for portrait format
+		if ($thumb->currentDimensions['height'] < $thumb->currentDimensions['width']) {
+            list ( $w, $ratio_h ) = wp_constrain_dimensions($thumb->currentDimensions['width'], $thumb->currentDimensions['height'], $w);
+            $thumb->resize($w, $ratio_h);
+			$ypos = ($thumb->currentDimensions['height'] - $h) / 2;
+			$thumb->crop(0, $ypos, $w, $h);
+		} else {
+		    $thumb->resize($w, 0);
+            $ypos = ($thumb->currentDimensions['height'] - $h) / 2;
+			$thumb->crop(0, $ypos, $w, $h);	
+		}               
+    } else
+        $thumb->resize( $w, $h );   
 }
 
 // Apply effects according to the mode parameter

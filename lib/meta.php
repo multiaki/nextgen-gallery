@@ -357,7 +357,7 @@ class nggMeta{
 
 			foreach ($xmpTags as $key => $value) {
 				// if the kex exist
-				if ($xmlarray[$key]) {
+				if ( isset($xmlarray[$key]) ) {
 					switch ($key) {
 						case 'xap:CreateDate':
 						case 'xap:ModifyDate':

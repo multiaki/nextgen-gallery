@@ -8,8 +8,9 @@ function nggallery_picturelist() {
 	
 	// Look if its a search result
 	$is_search = isset ($_GET['s']) ? true : false;
+	$counter	= 0;	
 	
-	if ($is_search) {
+    if ($is_search) {
 
 		// fetch the imagelist 
 		$picturelist = $ngg->manage_page->search_result;
@@ -336,7 +337,6 @@ jQuery(document).ready( function() {
 if($picturelist) {
 	
 	$thumbsize 	= '';
-	$counter	= 0;
 		
 	if ($ngg->options['thumbfix'])
 		$thumbsize = 'width="' . $ngg->options['thumbwidth'] . '" height="' . $ngg->options['thumbheight'] . '"';
@@ -460,7 +460,7 @@ if($picturelist) {
 }
  
 // In the case you have no capaptibility to see the search result
-if ( $counter==0 )
+if ( $counter == 0 )
 	echo '<tr><td colspan="' . $num_columns . '" align="center"><strong>'.__('No entries found','nggallery').'</strong></td></tr>';
 
 ?>

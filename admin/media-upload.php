@@ -17,6 +17,9 @@ add_filter('media_upload_tabs', 'ngg_wp_upload_tabs');
 
 function media_upload_nextgen() {
 	
+    // Not in use
+    $errors = false;
+    
 	// Generate TinyMCE HTML output
 	if ( isset($_POST['send']) ) {
 		$keys = array_keys($_POST['send']);
@@ -85,24 +88,24 @@ function media_upload_nextgen_form($errors) {
 	$post_id 	= intval($_REQUEST['post_id']);
 	$galleryID 	= 0;
 	$total 		= 1;
-	$picarray 	= false;
+	$picarray 	= array();
 	
 	$form_action_url = site_url( "wp-admin/media-upload.php?type={$GLOBALS['type']}&tab=nextgen&post_id=$post_id", 'admin');
 
 	// Get number of images in gallery	
-	if ($_REQUEST['select_gal']){
+	if ( isset($_REQUEST['select_gal']) ){
 		$galleryID = (int) $_REQUEST['select_gal'];
 		$total = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggpictures WHERE galleryid = '$galleryID'");
 	}
 	
 	// Build navigation
-	$_GET['paged'] = intval($_GET['paged']);
+	$_GET['paged'] = isset($_GET['paged']) ? intval($_GET['paged']) : 0;
 	if ( $_GET['paged'] < 1 )
 		$_GET['paged'] = 1;
 	$start = ( $_GET['paged'] - 1 ) * 10;
 	if ( $start < 1 )
 		$start = 0;
-		
+
 	// Get the images
 	if ( $galleryID != 0 )
 		$picarray = $wpdb->get_col("SELECT pid FROM $wpdb->nggpictures WHERE galleryid = '$galleryID' AND exclude != 1 ORDER BY {$ngg->options['galSort']} {$ngg->options['galSortDir']} LIMIT $start, 10 ");	
@@ -131,8 +134,8 @@ function media_upload_nextgen_form($errors) {
 				jQuery('a.ngg-post-thumbnail').show();
 				$link.text( setPostThumbnailL10n.done );
 				$link.fadeOut( 2000 );
-				// set some parameter ???
-				win.WPSetThumbnailID(id);
+				// set some id as meta input filed
+				win.WPSetThumbnailID('ngg-' + id);
 				// replace the meta box with the image
 				win.WPSetThumbnailHTML(str);
 			}

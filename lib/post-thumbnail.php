@@ -26,7 +26,7 @@ class nggPostThumbnail {
 	function __construct() {
 		
 		add_filter( 'admin_post_thumbnail_html', array( &$this, 'admin_post_thumbnail') );
-		add_action('wp_ajax_ngg_set_post_thumbnail', array( &$this, 'ajax_set_post_thumbnail'));
+		add_action( 'wp_ajax_ngg_set_post_thumbnail', array( &$this, 'ajax_set_post_thumbnail') );
 		// Adding filter for the new post_thumbnail
 		add_filter( 'post_thumbnail_html', array( &$this, 'ngg_post_thumbnail'), 10, 5 );
 		return;		
@@ -41,6 +41,9 @@ class nggPostThumbnail {
 	function admin_post_thumbnail( $content ) {
 		global $post;
 		
+        if ( !is_object($post) )
+           return $content;
+        
 		$thumbnail_id = get_post_meta( $post->ID, '_thumbnail_id', true );
 
 		// in the case it's a ngg image it return ngg-<imageID>
@@ -65,8 +68,8 @@ class nggPostThumbnail {
 	 */
 	function ngg_post_thumbnail( $html, $post_id, $post_thumbnail_id, $size = 'post-thumbnail', $attr = '' ) {
 
-		global $post;
-		 
+		global $post, $_wp_additional_image_sizes;
+
 		// in the case it's a ngg image it return ngg-<imageID>
 		if ( strpos($post_thumbnail_id, 'ngg-') === false)
 			return $html;
@@ -86,23 +89,35 @@ class nggPostThumbnail {
 		$img_src =  false;
 		
 		$class = 'wp-post-image ngg-image-' . $image->pid . ' ';
+        
+        // look up for the post thumbnial size and use them if defined
+        if ($size == 'post-thumbnail') {
+            if ( is_array($_wp_additional_image_sizes) && isset($_wp_additional_image_sizes['post-thumbnail']) ) {
+                $size = array();
+     			$size[0] = $_wp_additional_image_sizes['post-thumbnail']['width'];
+    			$size[1] = $_wp_additional_image_sizes['post-thumbnail']['height'];
+                $size[2] = 'crop';
+            }
+        }
 		
 		if ( is_array($size) )
-			$class .= esc_attr($attr['class']);
+			$class .= isset($attr['class']) ? esc_attr($attr['class']) : '';
 		
 		// render a new image or show the thumbnail if we didn't get size parameters
 		if ( is_array($size) ) {
 			
 			$width = absint( $size[0] );
 			$height = absint( $size[1] );
-			
-		    // check fo cached picture
-		    if ( ($ngg_options['imgCacheSinglePic']) && ($post->post_status == 'publish') )
-		        $img_src = $image->cached_singlepic_file($width, $height );
+            $mode = isset($size[2]) ? $size[2] : '';
+
+            // check fo cached picture
+            if ( ($ngg_options['imgCacheSinglePic']) && ($post->post_status == 'publish') )
+                $img_src = $image->cached_singlepic_file( $width, $height, $mode );                
 		    
 		    // if we didn't use a cached image then we take the on-the-fly mode 
-		    if (!$img_src) 
-		        $img_src = get_option ('siteurl') . '/' . 'index.php?callback=image&amp;pid=' . $image->pid . '&amp;width=' . $width . '&amp;height=' . $height;
+		    if ($img_src ==  false) 
+		        $img_src = get_option ('siteurl') . '/' . 'index.php?callback=image&amp;pid=' . $image->pid . '&amp;width=' . $width . '&amp;height=' . $height . '&amp;mode=crop';
+                
 		} else {
 			$img_src = $image->thumbURL;
 		}
@@ -118,7 +133,7 @@ class nggPostThumbnail {
 	 * @return void
 	 */
 	function ajax_set_post_thumbnail() {
-		
+        
 		// check for correct capability
 		if ( !is_user_logged_in() )
 			die( '-1' );
@@ -152,14 +167,33 @@ class nggPostThumbnail {
 	 * @return string html output
 	 */
 	function _wp_post_thumbnail_html( $thumbnail_id = NULL ) {
+	   
+		global $_wp_additional_image_sizes;
 
 		$content = '<p class="hide-if-no-js"><a href="#" id="set-post-thumbnail" onclick="jQuery(\'#add_image\').click();return false;">' . esc_html__( 'Set thumbnail' ) . '</a></p>';
 
 		$image = nggdb::find_image($thumbnail_id);
-	
+        $img_src = false;
+
+		// get the options
+		$ngg_options = nggGallery::get_option('ngg_options');
+        
 		if ( $image ) {
-			//TODO: currently we do not support post-thumbnail size
-			$thumbnail_html = '<img src="'. get_option ('siteurl') . '/' . 'index.php?callback=image&amp;pid=' . $image->pid . '&amp;width=266" alt="'.$image->alttext.'" title="'.$image->alttext.'" />';
+            if ( is_array($_wp_additional_image_sizes) && isset($_wp_additional_image_sizes['post-thumbnail']) ){
+                // Use post thumbnail settings if defined
+     			$width = absint( $_wp_additional_image_sizes['post-thumbnail']['width'] );
+    			$height = absint( $_wp_additional_image_sizes['post-thumbnail']['height'] );
+    		    // check fo cached picture
+    		    if ( ($ngg_options['imgCacheSinglePic']) )
+    		        $img_src = $image->cached_singlepic_file( $width, $height, 'crop' );                
+            }
+
+		    // if we didn't use a cached image then we take the on-the-fly mode 
+		    if ( $img_src == false ) 
+		        $img_src = get_option ('siteurl') . '/' . 'index.php?callback=image&amp;pid=' . $image->pid . '&amp;width=' . $width . '&amp;height=' . $height . '&amp;mode=crop';
+			
+            $thumbnail_html = '<img width="266" src="'. $img_src . '" alt="'.$image->alttext.'" title="'.$image->alttext.'" />';
+            
 			if ( !empty( $thumbnail_html ) ) {
 				$content = '<a href="#" id="set-post-thumbnail" onclick="jQuery(\'#add_image\').click();return false;">' . $thumbnail_html . '</a>';
 				$content .= '<p class="hide-if-no-js"><a href="#" id="remove-post-thumbnail" onclick="WPRemoveThumbnail();return false;">' . esc_html__( 'Remove thumbnail' ) . '</a></p>';

@@ -201,9 +201,15 @@ function ngg_overview_news(){
 ?>
 <div class="rss-widget">
     <?php
-      $rss = @fetch_feed( 'http://feeds.feedburner.com/alexrabe/' );
+    $rss = @fetch_feed( 'http://feeds.feedburner.com/alexrabe' );
       
-      if ( is_object($rss) || !is_wp_error($rss) ) {
+    if ( is_object($rss) ) {
+
+        if ( is_wp_error($rss) ) {
+            echo '<p>' . sprintf(__('Newsfeed could not be loaded.  Check the <a href="%s">front page</a> to check for updates.', 'nggallery'), 'http://alexrabe.de/') . '</p>';
+    		return;
+        }
+        
         echo '<ul>';
 		foreach ( $rss->get_items(0, 3) as $item ) {
     		$link = $item->get_link();
@@ -244,12 +250,6 @@ function ngg_overview_news(){
         <?php
         }
         echo '</ul>';
-      }
-      else
-      {
-        ?>
-        <p><?php printf(__('Newsfeed could not be loaded.  Check the <a href="%s">front page</a> to check for updates.', 'nggallery'), 'http://alexrabe.boelinger.com/') ?></p>
-        <?php
       }
     ?>
 </div>
