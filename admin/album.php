@@ -499,7 +499,7 @@ function showDialog() {
 			if ( $this->num_galleries < 50 ) {
 				// set image url
 				$image = $nggdb->find_image( $gallery->previewpic );
-				$preview_image = ($image->thumbURL) ? '<div class="inlinepicture"><img src="' . $image->thumbURL . '" /></div>' : '';
+				$preview_image = isset($image->thumbURL) ? '<div class="inlinepicture"><img src="' . $image->thumbURL . '" /></div>' : '';
 			}
 			
 			$prefix = '';

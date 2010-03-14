@@ -226,8 +226,9 @@ class nggAdmin{
 			while( false !== ( $file = readdir( $handle ) ) ) {
 				$info = pathinfo( $file );
 				// just look for images with the correct extension
-				if ( in_array( strtolower($info['extension']), $ext) )
-					$files[] = utf8_encode( $file );
+                if ( isset($info['extension']) )
+				    if ( in_array( strtolower($info['extension']), $ext) )
+					   $files[] = utf8_encode( $file );
 			}		
 			closedir( $handle ); 
 		} 
@@ -1004,10 +1005,8 @@ class nggAdmin{
 
 		global $wpdb;
 		
-		if ($galleryID == 0) {
-			@unlink($temp_file);		
+		if ($galleryID == 0)
 			return __('No gallery selected !', 'nggallery');
-		}
 
 		// WPMU action
 		if (nggAdmin::check_quota())
@@ -1040,7 +1039,7 @@ class nggAdmin{
 
 		// check if this filename already exist
 		$i = 0;
-		while (in_array($filename,$imageslist)) {
+		while (in_array($filename, $imageslist)) {
 			$filename = $filepart['filename'] . '_' . $i++ . '.' . $filepart['extension'];
 		}
 		
