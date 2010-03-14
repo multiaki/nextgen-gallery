@@ -195,11 +195,11 @@ function ngg_ajax_dashboard() {
    	require_once( dirname( dirname(__FILE__) ) . '/admin/admin.php');
 	require_once( dirname( dirname(__FILE__) ) . '/admin/overview.php');
     
-    @header( 'Content-Type: ' . get_option( 'html_type' ) . '; charset=' . get_option( 'blog_charset' ) );
-    send_nosniff_header();
-    
    	if ( !current_user_can('NextGEN Gallery overview') ) 
-		die();	
+		die('-1');	
+        
+    @header( 'Content-Type: ' . get_option( 'html_type' ) . '; charset=' . get_option( 'blog_charset' ) );
+    @header( 'X-Content-Type-Options: nosniff' ); 
     
     switch ( $_GET['jax'] ) {
     

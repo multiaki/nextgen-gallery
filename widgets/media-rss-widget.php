@@ -64,7 +64,7 @@ class nggMediaRssWidget extends WP_Widget {
 		
 		//Defaults
 		$instance = wp_parse_args( (array) $instance, array( 
-            'title' => 'Gallery', 
+            'title' => 'Media RSS', 
             'show_global_mrss' => true,
             'mrss_text'  => __('Media RSS', 'nggallery'),
             'mrss_title' => __('Link to the main image feed', 'nggallery'), 
