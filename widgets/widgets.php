@@ -39,9 +39,9 @@ class nggSlideshowWidget extends WP_Widget {
 			if ( $title)
 				echo $before_title . $title . $after_title;
 		?>
-		<ul>
+		<div class="ngg_slideshow widget">
 			<?php echo $out; ?>
-		</ul>
+		</div>
 		<?php
 			echo $after_widget;
 		}
