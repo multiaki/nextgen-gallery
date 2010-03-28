@@ -25,7 +25,7 @@ class nggAdminPanel{
 		add_filter('screen_meta_screen', array(&$this, 'edit_screen_meta'));
         
         // never ever remove copyright notices and claim you are the author, that's not the way how open source should work...
-        add_action('admin_notices', create_function('', 'if ( $_GET["page"] == base64_decode("Zmxhc2gtYWxidW0tZ2FsbGVyeQ==") ) nggGallery::show_message( base64_decode("RG8geW91IHJlYWxseSB3b3VsZCBsaWtlIHRvIHVzZSBhIHBsdWdpbiB3aGljaCBkb2Vucyd0IHJlc3BlY3QgdGhlIHdvcmsgb2Ygb3RoZXIgcGx1Z2luIGF1dGhvcnMgPw=="));') );
+        add_action('admin_notices', create_function('', 'if ( isset($_GET["page"]) && $_GET["page"] == base64_decode("Zmxhc2gtYWxidW0tZ2FsbGVyeQ==") ) nggGallery::show_message( base64_decode("RG8geW91IHJlYWxseSB3b3VsZCBsaWtlIHRvIHVzZSBhIHBsdWdpbiB3aGljaCBkb2Vucyd0IHJlc3BlY3QgdGhlIHdvcmsgb2Ygb3RoZXIgcGx1Z2luIGF1dGhvcnMgPw=="));') );
 
 	}
 
