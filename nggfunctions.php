@@ -239,7 +239,7 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '', $ima
         $nggNav = new nggNavigation;    
         $navigation = $nggNav->create_navigation($page, $total, $maxElement);
     } else {
-        $navigation = '<div class="ngg-clear">&nbsp;</div>';
+        $navigation = '<div class="ngg-clear"></div>';
     } 
 	  
     //we cannot use the key as index, cause it's filled with the pid
@@ -516,7 +516,7 @@ function nggCreateAlbum( $galleriesID, $template = 'extend', $album = 0) {
         $nggNav = new nggNavigation;    
         $navigation = $nggNav->create_navigation($page, $total, $maxElement);
     } else {
-        $navigation = '<div class="ngg-clear">&nbsp;</div>';
+        $navigation = '<div class="ngg-clear"></div>';
     }
 
     // apply a filter on $galleries before the output
@@ -871,7 +871,7 @@ function nggShowAlbumTags($taglist) {
     }
         
     //TODO: Add pagination later
-    $navigation = '<div class="ngg-clear">&nbsp;</div>';
+    $navigation = '<div class="ngg-clear"></div>';
     
     // create the output
     $out = nggGallery::capture ('album-compact', array ('album' => 0, 'galleries' => $picturelist, 'pagination' => $navigation) );
