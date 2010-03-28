@@ -89,7 +89,7 @@ class nggAdminPanel{
 			update_option('ngg_options', $ngg->options);			
 		}
 		
-		if( $ngg->options['hideDonation'] !== true ) {
+		if( !isset ( $ngg->options['hideDonation']) ||  $ngg->options['hideDonation'] !== true ) {
 			if ( time() > ( $ngg->options['installDate'] + ( 60 * 60 * 24 * 30 ) ) ) {
 			?>	
 				<div id="donator_message">
