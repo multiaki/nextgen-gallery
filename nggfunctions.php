@@ -72,7 +72,7 @@ function nggShowSlideshow($galleryID, $width, $height) {
     if ($ngg_options['irXHTMLvalid']) $out .= "\n".'-->';
     $out .= "\n".'</script>';
 
-    $out = apply_filters('ngg_show_slideshow_content', $out);
+    $out = apply_filters('ngg_show_slideshow_content', $out, $galleryID, $width, $height);
             
     return $out;    
 }

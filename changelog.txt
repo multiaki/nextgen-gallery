@@ -3,6 +3,7 @@ by Alex Rabe & NextGEN DEV Team
 
 = V1.5.3 - soon =
 * New : Adding pagination to footer
+* Changed : Perpare new filter to replace slideshow
 * Bugfix : Remove non-breaking space from navigation
 * Bugfix : Pagination of galleries
 * Bugfix : Fixed brackets position for old shortcode query 
