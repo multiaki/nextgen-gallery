@@ -11,9 +11,11 @@ Thank you!
 www.dhtmlgoodies.com
 Alf Magne Kalleland
 
-************************************************************************************************************/	
+//TODO  : Contain a marker position error when the window will be scroll down
+
+************************************************************************************************************/
 var operaBrowser = navigator.userAgent.indexOf('Opera') >=0 ? 1 : false;
-var safariBrowser = navigator.userAgent.indexOf('Safari') >=0 ? true : false;
+var webkitBrowser = navigator.userAgent.indexOf('Safari') >=0 ? false : false;
 var MSIE = navigator.userAgent.indexOf('MSIE')>= 0 ? true : false;
 var navigatorVersion = navigator.appVersion.replace(/.*?MSIE (\d\.\d).*/g,'$1')/1;
 
@@ -55,10 +57,10 @@ function getTopPos(inputObj)
 {		
   var returnValue = inputObj.offsetTop;
   while((inputObj = inputObj.offsetParent) != null){
-  	if(inputObj.tagName!='HTML'){
-  		returnValue += (inputObj.offsetTop - inputObj.scrollTop);
-  		if(document.all)returnValue+=inputObj.clientTop;
-  	}
+	if(inputObj.tagName!='HTML'){
+		returnValue += (inputObj.offsetTop - inputObj.scrollTop);
+		if(document.all)returnValue+=inputObj.clientTop;
+	}
   } 
   return returnValue;
 }
@@ -67,10 +69,10 @@ function getLeftPos(inputObj)
 {	  
   var returnValue = inputObj.offsetLeft;
   while((inputObj = inputObj.offsetParent) != null){
-  	if(inputObj.tagName!='HTML'){
-  		returnValue += inputObj.offsetLeft;
-  		if(document.all)returnValue+=inputObj.clientLeft;
-  	}
+	if(inputObj.tagName!='HTML'){
+		returnValue += inputObj.offsetLeft;
+		if(document.all)returnValue+=inputObj.clientLeft;
+	}
   }
   return returnValue;
 }
@@ -122,7 +124,7 @@ function startMoveTimer(){
 	return false;
 }
 
-function dragDropEnd()
+function dragDropEnd(ev)
 {
 	readyToMove = false;
 	moveTimer = -1;
@@ -150,7 +152,7 @@ function dragDropMove(e)
 	if(document.all && !operaBrowser)
 		e = event;
 		
-	if (safariBrowser) {
+	if (webkitBrowser) {
 		var leftPos = e.pageX - eventDiff_x;
 		var topPos = e.pageY - eventDiff_y;
 	} else {
@@ -168,9 +170,8 @@ function dragDropMove(e)
 	leftPos = leftPos + eventDiff_x;
 	topPos = topPos + eventDiff_y;
 	
-	if(e.button!=1 && document.all &&  !operaBrowser)dragDropEnd();
+	if(e.button!=1 && document.all &&  !operaBrowser)dragDropEnd(e);
 	var elementFound = false;
-
 	for(var prop in divXPositions){
 		// message  = (divXPositions[prop]/1) + " < " + leftPos/1 + " && " + (divXPositions[prop]/1 + divWidth[prop]*0.7) + " > " + (leftPos/1);
 		// message += "<br />" + (divYPositions[prop]/1) + " < " + topPos/1 + " && " + (divYPositions[prop]/1 + divWidth[prop]) + " > " + (topPos/1);
@@ -178,7 +179,7 @@ function dragDropMove(e)
 		if( (divXPositions[prop]/1 < leftPos/1) && ( (divXPositions[prop]/1 + divWidth[prop]*0.7) > leftPos/1) && ( (divYPositions[prop]/1) < topPos/1) && (( (divYPositions[prop]/1) + divWidth[prop]) > topPos/1)) {
 			
 			// check for IE who support document.all
-			if( document.all && !safariBrowser ){
+			if( document.all && !webkitBrowser ){
 				offsetX = offsetX_marker;
 				offsetY = offsetY_marker;
 			}else{
@@ -196,6 +197,7 @@ function dragDropMove(e)
 			break;	
 		}				
 	}
+	
 	
 	if(!elementFound){
 		jQuery("#insertionMarker").hide();
@@ -215,7 +217,7 @@ function $$(selector, context){
 
 function getDivCoordinates()
 {
-	var divs = document.getElementsByTagName('DIV');
+	var divs = document.getElementsByTagName('div');
 	for(var no=0;no<divs.length;no++){	
 		if(divs[no].className=='imageBox' || divs[no].className=='imageBoxHighlighted' && divs[no].id){
 			divXPositions[divs[no].id] = getLeftPos(divs[no]);
@@ -232,7 +234,7 @@ function getDivCoordinates()
 function saveImageOrder()
 {
 	var serial = "";
-	var objects = document.getElementsByTagName('DIV');
+	var objects = document.getElementsByTagName('div');
 	for(var no=0;no<objects.length;no++){
 		if(objects[no].className=='imageBox' || objects[no].className=='imageBoxHighlighted'){
 			if (serial.length > 0)	serial = serial + '&'
@@ -246,11 +248,10 @@ function saveImageOrder()
 
 function initGallery()
 {
-	var divs = document.getElementsByTagName('DIV');
+	var divs = document.getElementsByTagName('div');
 	for(var no=0;no<divs.length;no++){
 		if(divs[no].className=='imageBox_theImage' || divs[no].className=='imageBox_label'){
-			divs[no].onmousedown = selectImage;	
-
+			divs[no].onmousedown = selectImage;		
 		}
 	}
 	
@@ -268,6 +269,22 @@ function initGallery()
 	// insertionMarker = document.getElementById('insertionMarker');
 	jQuery("#insertionMarker").hide();
 	getDivCoordinates();
+	
+	var list = document.getElementsByClassName('imageBox');
+	var container = list[0].parentNode;
+	var lastImage = list[list.length-1];
+	
+	var fooDiv = document.createElement('div');
+		fooDiv.className = "imageBox";
+		fooDiv.id = "foo";
+		fooDiv.style.cssText = "visibility:hidden";
+	
+	if(lastImage.nextSibling){
+		container.insertBefore(fooDiv,lastImage.nextSibling);
+	} else {
+		container.appendChild(fooDiv);
+	}
+	
 }
 
 function debug(value) {
