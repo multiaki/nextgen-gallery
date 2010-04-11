@@ -181,6 +181,7 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '', $ima
     $gallery = new stdclass;
     $gallery->ID = (int) $galleryID;
     $gallery->show_slideshow = false;
+    $gallery->show_piclens = false;
     $gallery->name = stripslashes ( $first_image->name  );
     $gallery->title = stripslashes( $first_image->title );
     $gallery->description = html_entity_decode(stripslashes( $first_image->galdesc));
