@@ -224,12 +224,12 @@ class nggOptions {
 			<table class="form-table ngg-options">
 				<tr valign="top">
 					<th align="left"><?php _e('Gallery path','nggallery'); ?></th>
-					<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="text" size="35" name="gallerypath" value="<?php echo $ngg->options['gallerypath']; ?>" />
+					<td><input <?php if (is_multisite()) echo 'readonly = "readonly"'; ?> type="text" size="35" name="gallerypath" value="<?php echo $ngg->options['gallerypath']; ?>" />
 					<span class="setting-description"><?php _e('This is the default path for all galleries','nggallery') ?></span></td>
 				</tr>
 				<tr class="expert" valign="top">
 					<th align="left"><?php _e('Delete image files','nggallery'); ?></th>
-					<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="checkbox" name="deleteImg" value="1" <?php checked('1', $ngg->options['deleteImg']); ?> />
+					<td><input <?php if (is_multisite()) echo 'readonly = "readonly"'; ?> type="checkbox" name="deleteImg" value="1" <?php checked('1', $ngg->options['deleteImg']); ?> />
 					<?php _e('Delete files, when removing a gallery in the database','nggallery'); ?></td>
 				</tr>
 				<tr valign="top">
@@ -241,7 +241,7 @@ class nggOptions {
 					<th valign="top"><?php _e('Select graphic library','nggallery'); ?>:</th>
 					<td><label><input name="graphicLibrary" type="radio" value="gd" <?php checked('gd', $ngg->options['graphicLibrary']); ?> /> <?php _e('GD Library', 'nggallery') ;?></label><br />
 					<label><input name="graphicLibrary" type="radio" value="im" <?php checked('im', $ngg->options['graphicLibrary']); ?> /> <?php _e('ImageMagick (Experimental). Path to the library :', 'nggallery') ;?>&nbsp;
-					<input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="text" size="35" name="imageMagickDir" value="<?php echo $ngg->options['imageMagickDir']; ?>" /></label>
+					<input <?php if (is_multisite()) echo 'readonly = "readonly"'; ?> type="text" size="35" name="imageMagickDir" value="<?php echo $ngg->options['imageMagickDir']; ?>" /></label>
 					</td>
 				</tr>
 				<tr>
@@ -351,7 +351,7 @@ class nggOptions {
 				<tr valign="top">
 					<th align="left"><?php _e('Cache single pictures','nggallery'); ?></th>
 					<td></td>
-					<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="checkbox" name="imgCacheSinglePic" value="1" <?php checked('1', $ngg->options['imgCacheSinglePic']); ?> />
+					<td><input <?php if (is_multisite()) echo 'readonly = "readonly"'; ?> type="checkbox" name="imgCacheSinglePic" value="1" <?php checked('1', $ngg->options['imgCacheSinglePic']); ?> />
 					<span class="setting-description"><?php _e('Creates a file for each singlepic settings. Reduce the CPU load','nggallery') ?></span></td>
 				</tr>
 				<tr valign="top">

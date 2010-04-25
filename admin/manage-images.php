@@ -244,7 +244,7 @@ jQuery(document).ready( function() {
 				</tr>
 				<tr>
 					<th align="left"><?php _e('Path', 'nggallery') ?>:</th> 
-					<th align="left"><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> <?php nggGallery::current_user_can_form( 'NextGEN Edit gallery path' ); ?> type="text" size="50" name="path" value="<?php echo $gallery->path; ?>"  /></th>
+					<th align="left"><input <?php if ( is_multisite() ) echo 'readonly = "readonly"'; ?> <?php nggGallery::current_user_can_form( 'NextGEN Edit gallery path' ); ?> type="text" size="50" name="path" value="<?php echo $gallery->path; ?>"  /></th>
 					<th align="right"><?php _e('Author', 'nggallery'); ?>:</th>
 					<th align="left"> 
 					<?php

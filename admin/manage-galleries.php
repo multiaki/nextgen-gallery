@@ -240,7 +240,7 @@ if($gallerylist) {
 		  	<tr>
 		    	<td>
 					<strong><?php _e('New Gallery', 'nggallery') ;?>:</strong> <input type="text" size="35" name="galleryname" value="" /><br />
-					<?php if(!IS_WPMU) { ?>
+					<?php if(!is_multisite()) { ?>
 					<?php _e('Create a new , empty gallery below the folder', 'nggallery') ;?>  <strong><?php echo $ngg->options['gallerypath']; ?></strong><br />
 					<?php } ?>
 					<i>( <?php _e('Allowed characters for file and folder names are', 'nggallery') ;?>: a-z, A-Z, 0-9, -, _ )</i>

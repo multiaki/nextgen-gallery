@@ -101,7 +101,7 @@ function ngg_overview_server() {
 ?>
 <div id="dashboard_server_settings" class="dashboard-widget-holder wp_dashboard_empty">
 	<div class="ngg-dashboard-widget">
-	  <?php if (IS_WPMU) {
+	  <?php if (is_multisite()) {
 	  	if (wpmu_enable_function('wpmuQuotaCheck'))
 			echo ngg_SpaceManager::details();
 		else {

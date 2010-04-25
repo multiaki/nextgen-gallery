@@ -73,7 +73,7 @@ class nggAdminPanel{
 		
 		// Show update message
         if ( current_user_can('activate_plugins') )
-    		if ( $nggCheck->startCheck() && (!IS_WPMU) ) {
+    		if ( $nggCheck->startCheck() && (!is_multisite()) ) {
     			echo '<div class="plugin-update">' . __('A new version of NextGEN Gallery is available !', 'nggallery') . ' <a href="http://wordpress.org/extend/plugins/nextgen-gallery/download/" target="_blank">' . __('Download here', 'nggallery') . '</a></div>' ."\n";
     		}
 		
@@ -412,7 +412,7 @@ function wpmu_site_admin() {
 }
 
 function wpmu_enable_function($value) {
-	if (IS_WPMU) {
+	if (is_multisite()) {
 		$ngg_options = get_site_option('ngg_options');
 		return $ngg_options[$value];
 	}

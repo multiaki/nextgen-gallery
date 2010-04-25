@@ -214,7 +214,7 @@ function ngg_default_options() {
 	$ngg_options['CSSfile']				= 'nggallery.css';  			// set default css filename
 	
 	// special overrides for WPMU	
-	if (IS_WPMU) {
+	if (is_multisite()) {
 		// get the site options
 		$ngg_wpmu_options = get_site_option('ngg_options');
 		

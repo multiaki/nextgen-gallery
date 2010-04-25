@@ -264,7 +264,7 @@ class nggAddGallery {
         if ( wpmu_enable_function('wpmuZipUpload') && nggGallery::current_user_can( 'NextGEN Upload a zip' ) ) 
             $tabs['zipupload'] = __('Upload a Zip-File', 'nggallery');
     	
-        if (!IS_WPMU && nggGallery::current_user_can( 'NextGEN Import image folder' ) ) 
+        if (!is_multisite() && nggGallery::current_user_can( 'NextGEN Import image folder' ) ) 
             $tabs['importfolder'] = __('Import image folder', 'nggallery');
             
     	$tabs['uploadimage'] = __( 'Upload Images', 'nggallery' );
@@ -285,7 +285,7 @@ class nggAddGallery {
 			<tr valign="top"> 
 				<th scope="row"><?php _e('New Gallery', 'nggallery') ;?>:</th> 
 				<td><input type="text" size="35" name="galleryname" value="" /><br />
-				<?php if(!IS_WPMU) { ?>
+				<?php if(!is_multisite()) { ?>
 				<?php _e('Create a new , empty gallery below the folder', 'nggallery') ;?>  <strong><?php echo $this->defaultpath ?></strong><br />
 				<?php } ?>
 				<i>( <?php _e('Allowed characters for file and folder names are', 'nggallery') ;?>: a-z, A-Z, 0-9, -, _ )</i></td>
@@ -331,7 +331,7 @@ class nggAddGallery {
 				</select>
 				<br /><?php echo $this->maxsize; ?>
 				<br /><?php echo _e('Note : The upload limit on your server is ','nggallery') . "<strong>" . ini_get('upload_max_filesize') . "Byte</strong>\n"; ?>
-				<br /><?php if ( (IS_WPMU) && wpmu_enable_function('wpmuQuotaCheck') ) display_space_usage(); ?></td> 
+				<br /><?php if ( (is_multisite()) && wpmu_enable_function('wpmuQuotaCheck') ) display_space_usage(); ?></td> 
 			</tr> 
 			</table>
 			<div class="submit"><input class="button-primary" type="submit" name= "zipupload" value="<?php _e('Start upload', 'nggallery') ;?>"/></div>
@@ -387,7 +387,7 @@ class nggAddGallery {
 					}					?>
 				</select>
 				<br /><?php echo $this->maxsize; ?>
-				<br /><?php if ((IS_WPMU) && wpmu_enable_function('wpmuQuotaCheck')) display_space_usage(); ?></td> 
+				<br /><?php if ((is_multisite()) && wpmu_enable_function('wpmuQuotaCheck')) display_space_usage(); ?></td> 
 			</tr> 
 			</table>
 			<div class="submit">

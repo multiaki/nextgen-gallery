@@ -47,7 +47,6 @@ class nggLoader {
 	var $version     = '1.6.0a';
 	var $dbversion   = '1.5.0';
 	var $minium_WP   = '2.9';
-	var $minium_WPMU = '2.9';
 	var $updateURL   = 'http://nextgen.boelinger.com/version.php';
 	var $donators    = 'http://nextgen.boelinger.com/donators.php';
 	var $options     = '';
@@ -165,16 +164,12 @@ class nggLoader {
 	
 	function required_version() {
 		
-		global $wp_version, $wpmu_version;
-		
-		// Check for WPMU installation
-		if (!defined ('IS_WPMU'))
-			define('IS_WPMU', version_compare($wpmu_version, $this->minium_WPMU, '>=') );
+		global $wp_version;
 			
 		// Check for WP version installation
 		$wp_ok  =  version_compare($wp_version, $this->minium_WP, '>=');
 		
-		if ( ($wp_ok == FALSE) and (IS_WPMU == FALSE) ) {
+		if ( ($wp_ok == FALSE) ) {
 			add_action(
 				'admin_notices', 
 				create_function(
