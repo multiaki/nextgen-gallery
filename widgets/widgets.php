@@ -287,6 +287,10 @@ class nggWidget extends WP_Widget {
 
 			if ($exclude == 'allow')	
 				$exclude_list = "AND t.gid IN ($list)";
+            
+            // Limit the output to the current author, can be used on author template pages
+            if ($exclude == 'user_id' )
+                $exclude_list = "AND t.author IN ($list)";                
 		}
 		
 		if ( $instance['type'] == 'random' ) 
