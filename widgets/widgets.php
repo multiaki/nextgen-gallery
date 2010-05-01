@@ -151,8 +151,8 @@ add_action('widgets_init', create_function('', 'return register_widget("nggSlide
  *
  * @package NextGEN Gallery
  * @author Alex Rabe
- * @copyright 2009
- * @version 2.00
+ * @copyright 2009 - 2010
+ * @version 2.10
  * @since 1.4.4
  * @access public
  */
@@ -193,7 +193,8 @@ class nggWidget extends WP_Widget {
             'list'  =>  '',
             'webslice'  => true ) );
 		$title  = esc_attr( $instance['title'] );
-		$height = esc_attr( $instance['height'] );
+		$items  = intval  ( $instance['items'] );
+        $height = esc_attr( $instance['height'] );
 		$width  = esc_attr( $instance['width'] );
 
 		?>
@@ -206,9 +207,9 @@ class nggWidget extends WP_Widget {
 			
 		<p>
 			<?php _e('Show :','nggallery'); ?><br />
-			<select id="<?php echo $this->get_field_id('items'); ?>" name="<?php echo $this->get_field_name('items'); ?>">
-				<?php for ( $i = 1; $i <= 10; ++$i ) echo "<option value='$i' ".($instance['items']==$i ? "selected='selected'" : '').">$i</option>"; ?>
-			</select>
+			<label for="<?php echo $this->get_field_id('items'); ?>">
+			<input style="width: 50px;" id="<?php echo $this->get_field_id('items'); ?>" name="<?php echo $this->get_field_name('items');?>" type="text" value="<?php echo $items; ?>" />
+			</label>
 			<select id="<?php echo $this->get_field_id('show'); ?>" name="<?php echo $this->get_field_name('show'); ?>" >
 				<option <?php selected("thumbnail" , $instance['show']); ?> value="thumbnail"><?php _e('Thumbnails','nggallery'); ?></option>
 				<option <?php selected("original" , $instance['show']); ?> value="original"><?php _e('Original images','nggallery'); ?></option>
