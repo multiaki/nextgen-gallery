@@ -695,7 +695,8 @@ function ngg_related_plugins() {
 		'livesig',
 		'wordpress-gallery-slideshow',
 		'nkmimagefield',
-		'nextgen-ajax'
+		'nextgen-ajax',
+        'projectmanager'
 	);
 	
 	$i = 0; 
