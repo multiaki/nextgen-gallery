@@ -104,6 +104,7 @@ function nggallery_manage_gallery_main() {
 	//-->
 	</script>
 	<div class="wrap">
+        <?php screen_icon( 'nextgen-gallery' ); ?>
 		<h2><?php _e('Gallery Overview', 'nggallery'); ?></h2>
 		<form class="search-form" action="" method="get">
 		<p class="search-box">

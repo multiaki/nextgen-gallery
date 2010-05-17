@@ -10,8 +10,6 @@ Author URI: http://alexrabe.de/
 
 Copyright 2007-2010 by Alex Rabe & NextGEN DEV-Team
 
-The NextGEN button is taken from the Fugue Icons of http://www.pinvoke.com/.
-
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
@@ -25,14 +23,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-
-Please note  :
-
-The JW Image Rotator (Slideshow) is not part of this license and is available
-under a Creative Commons License, which allowing you to use, modify and redistribute 
-them for noncommercial purposes. 
-
-For commercial use please look at the Jeroen's homepage : http://www.longtailvideo.com 
 
 */ 
 

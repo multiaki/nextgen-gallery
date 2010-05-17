@@ -24,15 +24,12 @@ class nggAdminPanel{
 		add_filter('contextual_help', array(&$this, 'show_help'), 10, 2);
 		add_filter('screen_meta_screen', array(&$this, 'edit_screen_meta'));
         
-        // never ever remove copyright notices and claim you are the author, that's not the way how open source should work...
-        add_action('admin_notices', create_function('', 'if ( isset($_GET["page"]) && $_GET["page"] == base64_decode("Zmxhc2gtYWxidW0tZ2FsbGVyeQ==") ) nggGallery::show_message( base64_decode("RG8geW91IHJlYWxseSB3b3VsZCBsaWtlIHRvIHVzZSBhIHBsdWdpbiB3aGljaCBkb2Vucyd0IHJlc3BlY3QgdGhlIHdvcmsgb2Ygb3RoZXIgcGx1Z2luIGF1dGhvcnMgPw=="));') );
-
 	}
 
 	// integrate the menu	
 	function add_menu()  {
 	
-		add_menu_page( _n( 'Gallery', 'Galleries', 1, 'nggallery' ), _n( 'Gallery', 'Galleries', 1, 'nggallery' ), 'NextGEN Gallery overview', NGGFOLDER, array (&$this, 'show_menu'), NGGALLERY_URLPATH .'admin/images/nextgen.png' );
+		add_menu_page( _n( 'Gallery', 'Galleries', 1, 'nggallery' ), _n( 'Gallery', 'Galleries', 1, 'nggallery' ), 'NextGEN Gallery overview', NGGFOLDER, array (&$this, 'show_menu'), 'div' );
 	    add_submenu_page( NGGFOLDER , __('Overview', 'nggallery'), __('Overview', 'nggallery'), 'NextGEN Gallery overview', NGGFOLDER, array (&$this, 'show_menu'));
 		add_submenu_page( NGGFOLDER , __('Add Gallery / Images', 'nggallery'), __('Add Gallery / Images', 'nggallery'), 'NextGEN Upload images', 'nggallery-add-gallery', array (&$this, 'show_menu'));
 	    add_submenu_page( NGGFOLDER , __('Manage Gallery', 'nggallery'), __('Manage Gallery', 'nggallery'), 'NextGEN Manage gallery', 'nggallery-manage-gallery', array (&$this, 'show_menu'));
@@ -225,6 +222,8 @@ class nggAdminPanel{
 	}		
 	
 	function load_styles() {
+
+        wp_enqueue_style( 'nggmenu', NGGALLERY_URLPATH .'admin/css/menu.css', array() );
 		
 		// no need to go on if it's not a plugin page
 		if( !isset($_GET['page']) )

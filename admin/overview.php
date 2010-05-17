@@ -11,16 +11,17 @@ function nggallery_admin_overview()  {
     
 	?>
 	<div class="wrap ngg-wrap">
+        <?php screen_icon( 'nextgen-gallery' ); ?>
 		<h2><?php _e('NextGEN Gallery Overview', 'nggallery') ?></h2>
         <?php if (version_compare(PHP_VERSION, '5.0.0', '<')) ngg_check_for_PHP5(); ?>
 		<div id="dashboard-widgets-wrap" class="ngg-overview">
 		    <div id="dashboard-widgets" class="metabox-holder">
 				<div id="post-body">
 					<div id="dashboard-widgets-main-content">
-						<div class="postbox-container" style="width:49%;">
+						<div class="postbox-container" style="width:75%;">
 							<?php do_meta_boxes('ngg_overview', 'left', ''); ?>
 						</div>
-			    		<div class="postbox-container" style="width:49%;">
+			    		<div class="postbox-container" style="width:24%;">
 							<?php do_meta_boxes('ngg_overview', 'right', ''); ?>
 						</div>						
 					</div>
@@ -84,13 +85,42 @@ function nggallery_admin_overview()  {
  *
  */
 add_meta_box('dashboard_right_now', __('Welcome to NextGEN Gallery !', 'nggallery'), 'ngg_overview_right_now', 'ngg_overview', 'left', 'core');
+add_meta_box('ngg_meta_box', __('Do you like this Plugin?', 'nggallery'), 'ngg_likeThisMetaBox', 'ngg_overview', 'right', 'core');
 if ( !(get_locale() == 'en_US') )
-	add_meta_box('ngg_locale', __('Translation', 'nggallery'), 'ngg_widget_locale', 'ngg_overview', 'left', 'core');
-add_meta_box('dashboard_primary', __('Latest News', 'nggallery'), 'ngg_widget_overview_news', 'ngg_overview', 'right', 'core');
-add_meta_box('ngg_lastdonators', __('Recent donators', 'nggallery'), 'ngg_widget_overview_donators', 'ngg_overview', 'left', 'core');
-add_meta_box('ngg_server', __('Server Settings', 'nggallery'), 'ngg_overview_server', 'ngg_overview', 'left', 'core');
-add_meta_box('dashboard_plugins', __('Related plugins', 'nggallery'), 'ngg_widget_related_plugins', 'ngg_overview', 'right', 'core');
-add_meta_box('ngg_gd_lib', __('Graphic Library', 'nggallery'), 'ngg_overview_graphic_lib', 'ngg_overview', 'right', 'core');
+	add_meta_box('ngg_locale', __('Translation', 'nggallery'), 'ngg_widget_locale', 'ngg_overview', 'right', 'core');
+add_meta_box('dashboard_primary', __('Latest News', 'nggallery'), 'ngg_widget_overview_news', 'ngg_overview', 'left', 'core');
+add_meta_box('ngg_lastdonators', __('Recent donators', 'nggallery'), 'ngg_widget_overview_donators', 'ngg_overview', 'right', 'core');
+add_meta_box('ngg_server', __('Server Settings', 'nggallery'), 'ngg_overview_server', 'ngg_overview', 'right', 'core');
+add_meta_box('dashboard_plugins', __('Related plugins', 'nggallery'), 'ngg_widget_related_plugins', 'ngg_overview', 'left', 'core');
+
+function ngg_likeThisMetaBox() {
+
+	echo '<p style="padding-left: 8px;">';
+	_e("We spend a lot of effort on Free Software development. Any help would be highly appreciated. Thanks!", 'nggallery');
+	echo '</p><ul>';
+
+	$url = 'http://wordpress.org/extend/plugins/nextgen-gallery/' ;
+	echo "<li style='padding-left: 38px; background:transparent url(" . NGGALLERY_URLPATH . "admin/images/icon-rating.png ) no-repeat scroll center left; background-position: 16px 50%; text-decoration: none;'><a href='{$url}' target='_blank'>";
+	_e('Give it a good rating on WordPress.org.', 'nggallery');
+	echo "</a></li>";
+
+	$url = 'http://alexrabe.de/donation/';
+	echo "<li style='padding-left: 38px; background:transparent url(".NGGALLERY_URLPATH."admin/images/icon-paypal.gif ) no-repeat scroll center left; background-position: 16px 50%; text-decoration: none;'><a href='{$url}' target='_blank'>";
+	_e("Donate the work via paypal.", 'nggallery');
+	echo "</a></li>";
+
+	$url = 'http://www.amazon.de/gp/registry/wishlist/28H3MATVSL17C';
+	echo "<li style='padding-left: 38px; background:transparent url(".NGGALLERY_URLPATH."admin/images/icon-amazon.gif ) no-repeat scroll center left; background-position: 16px 50%; text-decoration: none;'><a href='{$url}' target='_blank'>";
+	_e("Send us a gift to show your appreciation.", 'nggallery');
+	echo "</a></li>";
+
+	$url = 'http://alexrabe.de/wordpress-plugins/wordtube/translation-of-plugins/';
+	echo "<li style='padding-left: 38px; background:transparent url(".NGGALLERY_URLPATH."admin/images/icon-translate.png ) no-repeat scroll center left; background-position: 16px 50%; text-decoration: none;'><a href='{$url}'>";
+	_e("Help us translating it.", 'nggallery');
+	echo "</a></li>";
+
+	echo '</ul>';
+}
 
 /**
  * Show the server settings in a dashboard widget
@@ -112,28 +142,13 @@ function ngg_overview_server() {
 	  	<div class="dashboard-widget-content">
       		<ul class="settings">
       		<?php ngg_get_serverinfo(); ?>
+            </ul>
+            <p><strong><?php _e('Graphic Library', 'nggallery'); ?></strong></p>
+            <ul class="settings">
+            <?php ngg_gd_info(); ?>
 	   		</ul>
 		</div>
 	  <?php } ?>
-    </div>
-</div>
-<?php	
-}
-
-/**
- * Show the GD lib info in a dashboard widget
- * 
- * @return void
- */
-function ngg_overview_graphic_lib() {
-?>
-<div id="dashboard_graphic_settings" class="dashboard-widget-holder">
-	<div class="ngg-dashboard-widget">
-	  	<div class="dashboard-widget-content">
-	  		<ul class="settings">
-			<?php ngg_gd_info(); ?>
-			</ul>
-		</div>
     </div>
 </div>
 <?php	

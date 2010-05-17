@@ -14,6 +14,9 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
  */
 function nggShowSlideshow($galleryID, $width, $height) {
     
+    //TODO: Debug line, remove later
+    //return nggShow_JS_Slideshow($galleryID, $width, $height);
+    
     require_once (dirname (__FILE__).'/lib/swfobject.php');
 
     $ngg_options = nggGallery::get_option('ngg_options');
@@ -65,6 +68,8 @@ function nggShowSlideshow($galleryID, $width, $height) {
     $out  = '<div class="slideshow">' . $swfobject->output() . '</div>';
     // add now the script code
     $out .= "\n".'<script type="text/javascript" defer="defer">';
+    // load script via jQuery afterwards
+    // $out .= "\n".'jQuery.getScript( "'  . NGGALLERY_URLPATH . 'admin/js/swfobject.js' . '", function() {} );';
     if ($ngg_options['irXHTMLvalid']) $out .= "\n".'<!--';
     if ($ngg_options['irXHTMLvalid']) $out .= "\n".'//<![CDATA[';
     $out .= $swfobject->javascript();
@@ -75,6 +80,31 @@ function nggShowSlideshow($galleryID, $width, $height) {
     $out = apply_filters('ngg_show_slideshow_content', $out, $galleryID, $width, $height);
             
     return $out;    
+}
+
+function nggShow_JS_Slideshow($galleryID, $width, $height) {
+    
+    $ngg_options = nggGallery::get_option('ngg_options');
+    
+    // we need to know the current page id
+    $current_page = (get_the_ID() == false) ? rand(5, 15) : get_the_ID();
+    $anchor = 'ngg-slideshow-' . $galleryID . '-' . $current_page;
+    
+    if (empty($width) ) $width  = (int) $ngg_options['irWidth'];
+    if (empty($height)) $height = (int) $ngg_options['irHeight'];
+        
+    $out  = '<div id="' . $anchor . '" class="ngg-slideshow">';
+    $out .= "\n". '<p id="' . $anchor . '-loader" class="ngg-slideshow-loader" >';
+    $out .= "\n". '<img src="'. NGGALLERY_URLPATH . 'images/loader.gif " alt="" />';
+    $out .= "\n". '</p>';
+    $out .= '</div>'."\n";
+    $out .= "\n".'<script type="text/javascript" defer="defer">';
+    $out .= "\n".'jQuery.getScript( "'  . NGGALLERY_URLPATH . 'js/jquery.cycle.all.js' . '", function() { ';
+    $out .= "\n".'jQuery.getScript( "'  . NGGALLERY_URLPATH . 'js/ngg.slideshow.js' . '", function() { nggStartSlideshow( "' . $anchor . '", ' . $galleryID . ', ' . $width . ', ' . $height . ' ); } );';
+    $out .= "\n".'} );';
+    $out .= "\n".'</script>';
+
+    return $out;
 }
 
 /**

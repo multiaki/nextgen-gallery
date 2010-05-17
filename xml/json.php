@@ -51,8 +51,11 @@ class nggAPI {
 	 */	
 	function __construct() {
 		
+        if ( !defined('ABSPATH') )
+            die('You are not allowed to call this page directly.');
+        
 		// Enable the JSON API when you add define('NGG_JSON_ENABLED',true); in the wp-config.php file
-		if ( !defined('NGG_JSON_ENABLED') )
+		if ( !defined('NGG_JSON_ENABLED') || NGG_JSON_ENABLED === false )
 			wp_die('JSON API not enabled. Add <strong>define(\'NGG_JSON_ENABLED\', true);</strong> to your wp-config.php file');
 
 		if ( !function_exists('json_encode') )
@@ -82,16 +85,16 @@ class nggAPI {
 				$this->result['images'] = array_merge( (array) nggdb::search_for_images( $this->term ), (array) nggTags::find_images_for_tags( $this->term , 'ASC' ));
 			break;
 			case 'gallery' :
-				//search for some a gallery
-				$this->result['images'][] = nggdb::get_gallery( $this->id, 'pid', 'ASC' );
+				//search for some gallery
+				$this->result['images'] = nggdb::get_gallery( $this->id, 'pid', 'ASC' );
 			break;
 			case 'image' :
 				//search for some image
-				$this->result['images'][] = nggdb::find_image( $this->id );
+				$this->result['images'] = nggdb::find_image( $this->id );
 			break;
 			case 'tag' :
 				//search for images based on tags
-				$this->result['images'][] = nggTags::find_images_for_tags( $this->term , 'ASC' );
+				$this->result['images'] = nggTags::find_images_for_tags( $this->term , 'ASC' );
 			break;
 			case 'recent' :
 				//search for images based on tags

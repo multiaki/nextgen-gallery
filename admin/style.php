@@ -85,6 +85,7 @@ if (!$error && filesize($real_file) > 0) {
 <div class="wrap">
 
 	<div class="bordertitle">
+        <?php screen_icon( 'nextgen-gallery' ); ?>
 		<h2><?php _e('Style Editor','nggallery') ?></h2>
 		<?php if (!$theme_css_exists) : ?>
 		<form id="themeselector" name="cssfiles" method="post">
