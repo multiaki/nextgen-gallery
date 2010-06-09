@@ -596,8 +596,15 @@ class nggAdmin{
 				nggAdmin::rotate_image( $pic_id );		
 
 				// Autoresize image if required
-				if ($ngg->options['imgAutoResize'])
-						nggAdmin::resize_image( $pic_id );
+                if ($ngg->options['imgAutoResize']) {
+                	$imagetmp = nggdb::find_image( $pic_id );
+                	$sizetmp = @getimagesize ( $imagetmp->imagePath );
+                	$widthtmp  = $ngg->options['imgWidth'];
+                	$heighttmp = $ngg->options['imgHeight'];
+                	if (($sizetmp[0] > $widthtmp && $widthtmp) || ($sizetmp[1] > $heighttmp && $heighttmp)) {
+                			nggAdmin::resize_image( $pic_id );
+                	}
+                }
 				
 				// action hook for post process after the image is added to the database
 				$image = array( 'id' => $pic_id, 'filename' => $picture, 'galleryID' => $galleryID);
