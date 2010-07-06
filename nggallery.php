@@ -257,6 +257,11 @@ class nggLoader {
 		require_once (dirname (__FILE__) . '/lib/image.php');					//  59.424
 		require_once (dirname (__FILE__) . '/lib/post-thumbnail.php');			//  n.a.
 		require_once (dirname (__FILE__) . '/widgets/widgets.php');				// 298.792
+
+        // Load frontend libraries							
+        require_once (dirname (__FILE__) . '/lib/navigation.php');		        // 242.016
+        require_once (dirname (__FILE__) . '/nggfunctions.php');		        // n.a.
+		require_once (dirname (__FILE__) . '/lib/shortcodes.php'); 		        // 92.664
 		
 		//Just needed if you access remote to WordPress
 		if ( defined('XMLRPC_REQUEST') )
@@ -277,12 +282,6 @@ class nggLoader {
 				require_once (dirname (__FILE__) . '/admin/admin.php');
 				require_once (dirname (__FILE__) . '/admin/media-upload.php');
 				$this->nggAdminPanel = new nggAdminPanel();
-				
-			// Load frontend libraries							
-			} else {
-				require_once (dirname (__FILE__) . '/lib/navigation.php');		// 242.016
-				require_once (dirname (__FILE__) . '/nggfunctions.php');		// n.a.
-				require_once (dirname (__FILE__) . '/lib/shortcodes.php'); 		// 92.664
 			}	
 		}
 	}
