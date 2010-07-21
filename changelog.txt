@@ -6,6 +6,9 @@ by Alex Rabe & NextGEN DEV Team
 * TODO : Rework of overview page
 * TODO : Integrate jQuery Cycle as NON-Flash slideshow 
 * TODO : Adding Google Sitemaps for Images
+* TODO : Facebook connector
+* NEW : Adding jQuery File Tree for import folder (THX to Sergey Pasyuk )
+* Changed : Reorder tabs for upload
 * Changed : New menu icon and screen icon (THX to Ben Dunkle)
 * Changed : Load frontend libs always
 
@@ -20,7 +23,7 @@ by Alex Rabe & NextGEN DEV Team
 
 = V1.5.3 - 11.04.2010 =
 * New : Adding pagination to footer
-* Changed : Perpare new filter to replace slideshow
+* Changed : Prepare new filter to replace slideshow
 * Bugfix : Remove non-breaking space from navigation
 * Bugfix : Pagination of galleries
 * Bugfix : Fixed brackets position for old shortcode query 

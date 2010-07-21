@@ -149,6 +149,13 @@ function ngg_upgrade() {
             echo __('Updated widget structure. If you used NextGEN Widgets, you need to setup them again...', 'nggallery');
         }
 		
+        if (version_compare($installed_ver, '1.6.0', '<')) {
+            $ngg_options = get_option('ngg_options');
+            $ngg_options['enableIR'] = true;
+            update_option('ngg_options', $ngg_options);
+            echo __('Updated options.', 'nggallery');
+        }
+        
 		return;
 	}
 }

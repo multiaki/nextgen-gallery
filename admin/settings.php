@@ -490,10 +490,10 @@ class nggOptions {
     function tab_watermark() {
 
         global $wpdb, $ngg;
-    
-	   $imageID = $wpdb->get_var("SELECT MIN(pid) FROM $wpdb->nggpictures");
-	   $imageID = $wpdb->get_row("SELECT * FROM $wpdb->nggpictures WHERE pid = '$imageID'");	
-	   if ($imageID) $imageURL = '<img src="'. get_option ('siteurl') . '/' . 'index.php?callback=image&amp;pid='.$imageID->pid.'&amp;mode=watermark&amp;width=300&amp;height=250" alt="'.$imageID->alttext.'" title="'.$imageID->alttext.'" />';
+        
+        // take the first image as sample
+        $imageID  = $wpdb->get_var("SELECT MIN(pid) FROM $wpdb->nggpictures");
+        $imageURL = ($imageID) ? $imageURL = '<img src="'. get_option ('siteurl') . '/' . 'index.php?callback=image&amp;pid=' . intval ($imageID) . '&amp;mode=watermark&amp;width=300&amp;height=250" />' : '';
 
 	?>
 	<!-- Watermark settings -->
@@ -603,11 +603,14 @@ class nggOptions {
     	<!-- Slideshow settings -->
     	<form name="player_options" method="POST" action="<?php echo $this->filepath.'#slideshow'; ?>" >
     	<?php wp_nonce_field('ngg_settings'); ?>
-    	<input type="hidden" name="page_options" value="irURL,irWidth,irHeight,irShuffle,irLinkfromdisplay,irShownavigation,irShowicons,irWatermark,irOverstretch,irRotatetime,irTransition,irKenburns,irBackcolor,irFrontcolor,irLightcolor,irScreencolor,irAudio,irXHTMLvalid" />
+    	<input type="hidden" name="page_options" value="enableIR,irURL,irWidth,irHeight,irShuffle,irLinkfromdisplay,irShownavigation,irShowicons,irWatermark,irOverstretch,irRotatetime,irTransition,irKenburns,irBackcolor,irFrontcolor,irLightcolor,irScreencolor,irAudio,irXHTMLvalid" />
     	<h2><?php _e('Slideshow','nggallery'); ?></h2>
-    	<?php if (empty($ngg->options['irURL'])) { ?>
+    	<p><?php _e('The settings are used in the JW Image Rotator Version', 'nggallery') ?> 3.17 .
+    	   <?php _e('See more information for the Flash Player on the web page', 'nggallery') ?> <a href="http://www.longtailvideo.com/players/jw-image-rotator/" target="_blank" >JW Image Rotator from Jeroen Wijering</a>.
+    	</p>
+    	<?php if (empty($ngg->options['irURL']) && ($ngg->options['enableIR'] == true)) { ?>
     		<p>
-    			<div id="message" class="error">
+    			<div id="message" class="error inline">
     			<p>
     				<?php _e('The path to imagerotator.swf is not defined, the slideshow will not work.','nggallery') ?><br />
     				<?php _e('If you would like to use the JW Image Rotatator, please download the player <a href="http://www.longtailvideo.com/players/jw-image-rotator/" target="_blank" >here</a> and upload it to your Upload folder (Default is wp-content/uploads).','nggallery') ?>
@@ -615,10 +618,12 @@ class nggOptions {
     			</div>
     		</p>
     	<?php }?>
-    	<p><?php _e('The settings are used in the JW Image Rotator Version', 'nggallery') ?> 3.17 .
-    	   <?php _e('See more information for the Flash Player on the web page', 'nggallery') ?> <a href="http://www.longtailvideo.com/players/jw-image-rotator/" target="_blank" >JW Image Rotator from Jeroen Wijering</a>.
-    	</p>
     			<table class="form-table ngg-options">
+    				<tr>
+    					<th><?php _e('Enable flash slideshow','nggallery') ?>:</th>
+    					<td><input name="enableIR" type="checkbox" value="1" <?php checked('1', $ngg->options['enableIR']); ?> />
+                        <span class="setting-description"><?php _e('Integrate the flash based sildeshow for all flash supported devices','nggallery') ?></span></td>
+    				</tr>
     				<tr>
     					<th><?php _e('Path to the Imagerotator (URL)','nggallery') ?>:</th>
     					<td>

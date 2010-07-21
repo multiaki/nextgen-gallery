@@ -95,8 +95,8 @@ add_meta_box('dashboard_plugins', __('Related plugins', 'nggallery'), 'ngg_widge
 
 function ngg_likeThisMetaBox() {
 
-	echo '<p style="padding-left: 8px;">';
-	_e("We spend a lot of effort on Free Software development. Any help would be highly appreciated. Thanks!", 'nggallery');
+	echo '<p>';
+    echo sprintf(__('This plugin is primarily developed, maintained, supported and documented by <a href="%s">Alex Rabe</a> with a lot of love & effort. Any kind of contribution would be highly appreciated. Thanks!', 'nggallery'), 'http://alexrabe.de/') . '</p>';
 	echo '</p><ul>';
 
 	$url = 'http://wordpress.org/extend/plugins/nextgen-gallery/' ;
@@ -105,18 +105,18 @@ function ngg_likeThisMetaBox() {
 	echo "</a></li>";
 
 	$url = 'http://alexrabe.de/donation/';
-	echo "<li style='padding-left: 38px; background:transparent url(".NGGALLERY_URLPATH."admin/images/icon-paypal.gif ) no-repeat scroll center left; background-position: 16px 50%; text-decoration: none;'><a href='{$url}' target='_blank'>";
+	echo "<li style='padding-left: 38px; background:transparent url(" . NGGALLERY_URLPATH . "admin/images/icon-paypal.gif ) no-repeat scroll center left; background-position: 16px 50%; text-decoration: none;'><a href='{$url}' target='_blank'>";
 	_e("Donate the work via paypal.", 'nggallery');
 	echo "</a></li>";
 
 	$url = 'http://www.amazon.de/gp/registry/wishlist/28H3MATVSL17C';
-	echo "<li style='padding-left: 38px; background:transparent url(".NGGALLERY_URLPATH."admin/images/icon-amazon.gif ) no-repeat scroll center left; background-position: 16px 50%; text-decoration: none;'><a href='{$url}' target='_blank'>";
-	_e("Send us a gift to show your appreciation.", 'nggallery');
+	echo "<li style='padding-left: 38px; background:transparent url(" . NGGALLERY_URLPATH . "admin/images/icon-amazon.gif ) no-repeat scroll center left; background-position: 16px 50%; text-decoration: none;'><a href='{$url}' target='_blank'>";
+	_e("Send a gift to show your appreciation.", 'nggallery');
 	echo "</a></li>";
 
 	$url = 'http://alexrabe.de/wordpress-plugins/wordtube/translation-of-plugins/';
-	echo "<li style='padding-left: 38px; background:transparent url(".NGGALLERY_URLPATH."admin/images/icon-translate.png ) no-repeat scroll center left; background-position: 16px 50%; text-decoration: none;'><a href='{$url}'>";
-	_e("Help us translating it.", 'nggallery');
+	echo "<li style='padding-left: 38px; background:transparent url(" . NGGALLERY_URLPATH . "admin/images/icon-translate.png ) no-repeat scroll center left; background-position: 16px 50%; text-decoration: none;'><a href='{$url}'>";
+	_e("Help to translating it.", 'nggallery');
 	echo "</a></li>";
 
 	echo '</ul>';
@@ -289,19 +289,19 @@ function ngg_overview_right_now() {
 		<tbody>
 			<tr class="first">
 				<td class="first b"><a href="admin.php?page=nggallery-add-gallery"><?php echo $images; ?></a></td>
-				<td class="t"><?php echo _n( 'Image', 'Images', $images, 'nggallery' ); ?></td>
+				<td class="t"><a href="admin.php?page=nggallery-add-gallery"><?php echo _n( 'Image', 'Images', $images, 'nggallery' ); ?></a></td>
 				<td class="b"></td>
 				<td class="last"></td>
 			</tr>
 			<tr>
 				<td class="first b"><a href="admin.php?page=nggallery-manage-gallery"><?php echo $galleries; ?></a></td>
-				<td class="t"><?php echo _n( 'Gallery', 'Galleries', $galleries, 'nggallery' ); ?></td>
+				<td class="t"><a href="admin.php?page=nggallery-manage-gallery"><?php echo _n( 'Gallery', 'Galleries', $galleries, 'nggallery' ); ?></a></td>
 				<td class="b"></td>
 				<td class="last"></td>
 			</tr>
 			<tr>
 				<td class="first b"><a href="admin.php?page=nggallery-manage-album"><?php echo $albums; ?></a></td>
-				<td class="t"><?php echo _n( 'Album', 'Albums', $albums, 'nggallery' ); ?></td>
+				<td class="t"><a href="admin.php?page=nggallery-manage-album"><?php echo _n( 'Album', 'Albums', $albums, 'nggallery' ); ?></a></td>
 				<td class="b"></td>
 				<td class="last"></td>
 			</tr>
@@ -313,12 +313,6 @@ function ngg_overview_right_now() {
 	<?php if(current_user_can('NextGEN Upload images')): ?><a class="button rbutton" href="admin.php?page=nggallery-add-gallery"><?php _e('Upload pictures', 'nggallery') ?></a><?php endif; ?>
 	<?php _e('Here you can control your images, galleries and albums.', 'nggallery') ?>
 	</p>
-	<span>
-	<?php
-		$userlevel = '<span class="b">' . (current_user_can('manage_options') ? __('Gallery Administrator', 'nggallery') : __('Gallery Editor', 'nggallery')) . '</span>';
-        printf(__('You currently have %s rights.', 'nggallery'), $userlevel);
-    ?>
-    </span>
 </div>
 <?php
 }

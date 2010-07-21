@@ -190,7 +190,8 @@ function ngg_default_options() {
 	$ngg_options['wmOpaque']			= '100';  						// Font Opaque
 
 	// Image Rotator settings
-	$ngg_options['irURL']				= '';
+	$ngg_options['enableIR']		    = false;
+    $ngg_options['irURL']				= '';
 	$ngg_options['irXHTMLvalid']		= false;
 	$ngg_options['irAudio']				= '';
 	$ngg_options['irWidth']				= 320; 

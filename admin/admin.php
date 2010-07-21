@@ -212,6 +212,7 @@ class nggAdminPanel{
 				wp_enqueue_script( 'ngg-swfupload-handler', NGGALLERY_URLPATH .'admin/js/swfupload.handler.js', array('swfupload_f10'), '1.0.0' );
 				wp_enqueue_script( 'ngg-ajax' );
 				wp_enqueue_script( 'ngg-progressbar' );
+				wp_enqueue_script( 'jqueryFileTree', NGGALLERY_URLPATH .'admin/js/jqueryFileTree/jqueryFileTree.js', array('jquery'), '1.0.1' );
 			break;
 			case "nggallery-style" :
 				wp_enqueue_script( 'codepress' );
@@ -237,6 +238,7 @@ class nggAdminPanel{
 				wp_admin_css( 'css/dashboard' );
 			break;
 			case "nggallery-add-gallery" :
+				wp_enqueue_style( 'jqueryFileTree', NGGALLERY_URLPATH .'admin/js/jqueryFileTree/jqueryFileTree.css', false, '1.0.1', 'screen' );
 			case "nggallery-options" :
 				wp_enqueue_style( 'nggtabs', NGGALLERY_URLPATH .'admin/css/jquery.ui.tabs.css', false, '2.5.0', 'screen' );
 				wp_enqueue_style( 'nggcolorpicker', NGGALLERY_URLPATH .'admin/js/colorpicker/css/colorpicker.css', false, '1.0', 'screen');

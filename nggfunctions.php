@@ -3,7 +3,7 @@
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
 
 /**
- * Return a script for the Imagerotator flash slideshow. Can be used in any tmeplate with <?php echo nggShowSlideshow($galleryID, $width, $height) ?>
+ * Return a script for the Imagerotator flash slideshow. Can be used in any template with <?php echo nggShowSlideshow($galleryID, $width, $height) ?>
  * Require the script swfobject.js in the header or footer
  * 
  * @access public 
@@ -14,9 +14,6 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
  */
 function nggShowSlideshow($galleryID, $width, $height) {
     
-    //TODO: Debug line, remove later
-    //return nggShow_JS_Slideshow($galleryID, $width, $height);
-    
     require_once (dirname (__FILE__).'/lib/swfobject.php');
 
     $ngg_options = nggGallery::get_option('ngg_options');
@@ -26,6 +23,10 @@ function nggShowSlideshow($galleryID, $width, $height) {
         $out = '[' . nggGallery::i18n($ngg_options['galTextSlide']) . ']'; 
         return $out;
     }
+
+    //Redirect all calls to the JavaScript slideshow if wanted
+    if ( $ngg_options['enableIR'] !== true )
+        return nggShow_JS_Slideshow($galleryID, $width, $height);
     
     // If the Imagerotator didn't exist, skip the output
     if ( NGGALLERY_IREXIST == false ) 
@@ -45,7 +46,7 @@ function nggShowSlideshow($galleryID, $width, $height) {
     $swfobject->add_attributes('name', 'so' . $galleryID);
 
     // adding the flash parameter   
-    $swfobject->add_flashvars( 'file', urlencode (get_option ('siteurl') . '/' . 'index.php?callback=imagerotator&gid=' . $galleryID ) );
+    $swfobject->add_flashvars( 'file', urlencode ( trailingslashit ( get_option ('siteurl') ) . 'index.php?callback=imagerotator&gid=' . $galleryID ) );
     $swfobject->add_flashvars( 'shuffle', $ngg_options['irShuffle'], 'true', 'bool');
     // option has oposite meaning : true should switch to next image
     $swfobject->add_flashvars( 'linkfromdisplay', !$ngg_options['irLinkfromdisplay'], 'false', 'bool');
@@ -82,6 +83,17 @@ function nggShowSlideshow($galleryID, $width, $height) {
     return $out;    
 }
 
+/**
+ * Return a script for the jQuery based slideshow. Can be used in any template with <?php echo nggShow_JS_Slideshow($galleryID, $width, $height) ?>
+ * Require the script jquery.cycle.all.js
+ * 
+ * @since 1.6.0 
+ * @access public
+ * @param integer $galleryID ID of the gallery
+ * @param integer $width Width of the slideshow container
+ * @param integer $height Height of the slideshow container
+ * @return the content
+ */
 function nggShow_JS_Slideshow($galleryID, $width, $height) {
     
     $ngg_options = nggGallery::get_option('ngg_options');
@@ -100,7 +112,7 @@ function nggShow_JS_Slideshow($galleryID, $width, $height) {
     $out .= '</div>'."\n";
     $out .= "\n".'<script type="text/javascript" defer="defer">';
     $out .= "\n".'jQuery.getScript( "'  . NGGALLERY_URLPATH . 'js/jquery.cycle.all.js' . '", function() { ';
-    $out .= "\n".'jQuery.getScript( "'  . NGGALLERY_URLPATH . 'js/ngg.slideshow.js' . '", function() { nggStartSlideshow( "' . $anchor . '", ' . $galleryID . ', ' . $width . ', ' . $height . ' ); } );';
+    $out .= "\n".'jQuery.getScript( "'  . NGGALLERY_URLPATH . 'js/ngg.slideshow.js' . '", function() { nggStartSlideshow( "' . $anchor . '", ' . $galleryID . ', ' . $width . ', ' . $height . ', "' . trailingslashit ( get_option ('siteurl') ) . '" ); } );';
     $out .= "\n".'} );';
     $out .= "\n".'</script>';
 

@@ -1,14 +1,15 @@
-function nggStartSlideshow( obj, id, width, height) { 
+function nggStartSlideshow( obj, id, width, height, url) { 
     
     var obj = '#' + obj;
     var stack = [];
-	var url = 'http://localhost/wpdev/index.php?callback=json&api_key=true&format=json&method=gallery&id=' + id;
+	var url = url + 'index.php?callback=json&api_key=true&format=json&method=gallery&id=' + id;
 
 	jQuery.getJSON(url, function(r){
 		if (r.stat == "ok"){
 		  
             var i = 0; 
-                            
+             
+            // preload images into an array                
             for (img in r.images) {
                 i++;
 				var photo = r.images[img];
@@ -22,7 +23,7 @@ function nggStartSlideshow( obj, id, width, height) {
           
             }
             
-            // preload images into an array; we will preload id 3 and higher
+            // we will load image no.3 and higher step by step
             for ( img in r.images ) { 
                 var new_img = new Image( );
                 var photo = r.images[img];
