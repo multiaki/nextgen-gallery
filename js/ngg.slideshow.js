@@ -17,7 +17,7 @@ function nggStartSlideshow( obj, id, width, height, url) {
 				var title = photo['description'].replace(/<("[^"]*"|'[^']*'|[^'">])*>/gi,"");
 				var src   = decodeURI( photo['imageURL'] );
                 //populate images
-			    jQuery( obj ).append( "<img src='" + src + "' width='" + width + "' alt='" + alt + "'/>" );
+			    jQuery( obj ).append( "<img style='display:none;' src='" + src + "' height='" + height + "' alt='" + alt + "'/>" );
                 if (i == 2)
                     break;
           
@@ -48,22 +48,26 @@ function nggStartSlideshow( obj, id, width, height, url) {
             jQuery( obj + ' img' ).bind( 'load', function() {
                 
                 // hide the loader icon
-            	jQuery( obj + '-loader' ).remove();
+            	jQuery( obj + '-loader' ).empty().remove();
                 
-            	// Start the cycle plugin
-            	jQuery( obj ).cycle( {
-            		fx: 	'fade',
-            		height: height,
-                    before: jCycle_onBefore 
-            	});
+                jQuery(obj + ' img:first').fadeIn(1000, function() {
+               	    // Start the cycle plugin
+                	jQuery( obj ).cycle( {
+                		fx: 	'fade',
+                        timeout: 10000,
+                        next:   obj,
+                        before: jCycle_onBefore 
+                	});
+                });
+                                
             });            
             
 		}
 	});
 
-    // add images to slideshow 
+    // add all images to slideshow 
     function jCycle_onBefore(curr, next, opts) { 
-        if (opts.addSlide) // <-- important! 
+        if (opts.addSlide)
             while(stack.length) {
                 opts.addSlide(stack.pop());
             }  

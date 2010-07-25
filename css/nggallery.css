@@ -262,23 +262,31 @@ html>body .ngg-album {
 }
 
 /* ----------- JS Slideshow -------------*/
+.ngg-slideshow { 
+    position: relative;
+}
+
+/* See also : http://www.brunildo.org/test/img_center.html */
+
+.ngg-slideshow * {
+    vertical-align:middle;
+}
+
 .ngg-slideshow-loader{
+    display: table-cell;
     text-align: center;
+    vertical-align:middle;
 }
 
 .ngg-slideshow-loader img{
     background: none !important; 
-    border: 0 none !important; 
-    text-align: center; 
-    margin: 100px auto !important;
+    border: 0 none !important;
+    margin:auto !important; 
 }
 
 .ngg-slideshow img { 
-    padding: 15px; 
-    border: 1px solid #ccc; 
-    background-color: #eee; 
     margin: auto; 
-    display: block 
+    display: block;
 }
 
 /* ----------- Single picture -------------*/
