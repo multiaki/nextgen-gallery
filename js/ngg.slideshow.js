@@ -1,49 +1,26 @@
-function nggStartSlideshow( obj, id, width, height, url) { 
+function nggStartSlideshow( obj, id, width, height, domain) { 
     
     var obj = '#' + obj;
     var stack = [];
-	var url = url + 'index.php?callback=json&api_key=true&format=json&method=gallery&id=' + id;
+    var url = domain + 'index.php?callback=json&api_key=true&format=json&method=gallery&id=' + id;
 
 	jQuery.getJSON(url, function(r){
 		if (r.stat == "ok"){
-		  
-            var i = 0; 
              
-            // preload images into an array                
             for (img in r.images) {
-                i++;
 				var photo = r.images[img];
-				var alt   = photo['alttext'].replace(/<("[^"]*"|'[^']*'|[^'">])*>/gi,"");
-				var title = photo['description'].replace(/<("[^"]*"|'[^']*'|[^'">])*>/gi,"");
-				var src   = decodeURI( photo['imageURL'] );
-                //populate images
-			    jQuery( obj ).append( "<img style='display:none;' src='" + src + "' height='" + height + "' alt='" + alt + "'/>" );
-                if (i == 2)
-                    break;
-          
+                //populate images into an array
+                stack.push( decodeURI( photo['imageURL'] ) );
             }
             
-            // we will load image no.3 and higher step by step
-            for ( img in r.images ) { 
-                var new_img = new Image( );
-                var photo = r.images[img];
-                
-                new_img.src = decodeURI( photo['imageURL'] );
-                new_img.width = width;
-                new_img.height = height;
-                new_img.alt = photo['alttext'].replace(/<("[^"]*"|'[^']*'|[^'">])*>/gi,"");
-                new_img.title = photo['description'].replace(/<("[^"]*"|'[^']*'|[^'">])*>/gi,"");
-                
-                jQuery( new_img ).bind('load', function() {
-                    stack.push(this); 
-                }); 
-            } 
-            
-            // Setup the max-height
-            jQuery( obj + ' .ngg-slideshow div img' ).each( function () {
-            	jQuery( this ).css( 'max-height', height );
-            });
-            
+            // push the first three images out
+            if (stack.length)
+                jQuery( obj ).append( "<img style='display:none;' src='" + stack.shift() + "'/>"  );
+            if (stack.length)
+                jQuery( obj ).append( "<img style='display:none;' src='" + stack.shift() + "'/>"  );
+            if (stack.length)
+                jQuery( obj ).append( "<img style='display:none;' src='" + stack.shift() + "'/>"  );
+
             // Start the slideshow
             jQuery( obj + ' img' ).bind( 'load', function() {
                 
@@ -56,7 +33,7 @@ function nggStartSlideshow( obj, id, width, height, url) {
                 		fx: 	'fade',
                         timeout: 10000,
                         next:   obj,
-                        before: jCycle_onBefore 
+                        before: jCycle_onBefore
                 	});
                 });
                                 
@@ -65,12 +42,16 @@ function nggStartSlideshow( obj, id, width, height, url) {
 		}
 	});
 
-    // add all images to slideshow 
-    function jCycle_onBefore(curr, next, opts) { 
+    // add images to slideshow step by step
+    function jCycle_onBefore(curr, next, opts) {
         if (opts.addSlide)
-            while(stack.length) {
-                opts.addSlide(stack.pop());
-            }  
+            if (stack.length) {
+                var img = new Image(); 
+                img.src = stack.shift();
+                jQuery( img ).css( 'display', 'none' ); 
+                jQuery( img ).bind('load', function() { 
+                    opts.addSlide(this); 
+                });
+            }
     }; 
-
 }
