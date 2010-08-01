@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-03-13 22:29+0100\n"
-"PO-Revision-Date: 2010-03-13 22:36+0100\n"
-"Last-Translator: Alex Rabe\n"
+"PO-Revision-Date: 2010-07-30 00:29+0100\n"
+"Last-Translator: Martin Kramarz <martin@kramarz.ch>\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,15 +28,15 @@ msgstr "Sollten jemand Rechtschreibfehler, Deppenapostrophe oder andere deutsche
 
 #: ../nggallery.php:201
 msgid "Sorry, NextGEN Gallery works only with a Memory Limit of 16 MB higher"
-msgstr "Tut mir leid, aber NextGEN Galerie benötigt minimum 16MB Speicher (Memory Limit) oder mehr"
+msgstr "Tut mir leid, aber NextGEN-Galerie benötigt minimum 16MB Speicher (Memory Limit) oder mehr"
 
 #: ../nggallery.php:226
 msgid "Picture tag"
-msgstr "Bilder Stichwort"
+msgstr "Bilder-Stichwort"
 
 #: ../nggallery.php:227
 msgid "Picture tag: %2$l."
-msgstr "Bilder Stichwort: %2$l."
+msgstr "Bilder-Stichwort: %2$l."
 
 #: ../nggallery.php:228
 msgid "Separate picture tags with commas."
@@ -74,7 +74,7 @@ msgstr "Spenden"
 
 #: ../nggfunctions.php:37
 msgid "The <a href=\"http://www.macromedia.com/go/getflashplayer\">Flash Player</a> and <a href=\"http://www.mozilla.com/firefox/\">a browser with Javascript support</a> are needed.."
-msgstr "Es wird der <a href=\"http://www.macromedia.com/go/getflashplayer\">Adobe Flash Player</a>  benötigt und <a href=\"http://www.mozilla.com/firefox/\">im Browser muss Javascript</a> aktiviert sein.."
+msgstr "Es wird der <a href=\"http://www.macromedia.com/go/getflashplayer\">Adobe Flash Player</a>  benötigt und <a href=\"http://www.mozilla.com/firefox/\">im Browser muss Javascript</a> aktiviert sein."
 
 #: ../nggfunctions.php:103
 #: ../nggfunctions.php:558
@@ -99,11 +99,11 @@ msgstr "Copyright Hinweise / Credits"
 
 #: ../admin/about.php:12
 msgid "NextGEN DEV Team"
-msgstr "NextGEN DEV Team"
+msgstr "NextGEN-DEV-Team"
 
 #: ../admin/about.php:14
 msgid "This plugin is primarily developed, maintained, supported, documented by"
-msgstr "Dieses Plugin wird hauptsächlich entwickelt, dokumentiert und supportet von"
+msgstr "Dieses Plugin wird hauptsächlich entwickelt, dokumentiert und supported von"
 
 #: ../admin/about.php:14
 msgid "There are many other folks who have made contributions to this project :"
@@ -115,15 +115,15 @@ msgstr "Anerkennung / Hinweise"
 
 #: ../admin/about.php:21
 msgid "If you study the code of this plugin, you will find out that we mixed a lot of good already existing code and ideas together."
-msgstr "Falls Du Dir den Sourcecode dieses Plugins ansiehst wirst Du merken, das wir verschiedene gute Scripte sowie Ideen verwendet haben."
+msgstr "Falls Du Dir den Sourcecode dieses Plugins ansiehst, wirst Du merken, dass wir verschiedene gute Scripte sowie Ideen verwendet haben."
 
 #: ../admin/about.php:22
 msgid "So, we would like to thank the following people for their pioneer work (without this work it's impossible to create such a plugin so fast)"
-msgstr "Wir möchten folgenden Menschen für Ihre Pionier-Arbeit danken (ohne diese Vorleistung wäre es unmöglich ein Plugin so schnell zu entwickeln)"
+msgstr "Wir möchten folgenden Menschen für Ihre Pionier-Arbeit danken (ohne diese Vorleistung wäre es unmöglich, ein Plugin so schnell zu entwickeln)"
 
 #: ../admin/about.php:24
 msgid "for their great documented code"
-msgstr "für Ihren großartig dokumentierten Code"
+msgstr "für ihren großartig dokumentierten Code"
 
 #: ../admin/about.php:25
 msgid "for jQuery, which is the best Web2.0 framework"
@@ -131,7 +131,7 @@ msgstr "für jQuery, das Beste Web 2.0 Framework"
 
 #: ../admin/about.php:26
 msgid "for the fantastic PHP Thumbnail Class"
-msgstr "für die fantastische PHP Thumbnail Klasse"
+msgstr "für die fantastische PHP-Thumbnail-Klasse"
 
 #: ../admin/about.php:27
 msgid "for a lot of very useful plugins and ideas"
@@ -143,19 +143,19 @@ msgstr "für Shutter Reloaded, ein wirklich smarten Bildeffekt"
 
 #: ../admin/about.php:29
 msgid "for the best Media Flash Scripts on earth"
-msgstr "für die besten Media Flash Scripte"
+msgstr "für die besten Media-Flash-Scripte"
 
 #: ../admin/about.php:30
 msgid "for the Fugue Iconset"
-msgstr "für das Fugue Iconset"
+msgstr "für das Fugue-Iconset"
 
 #: ../admin/about.php:31
 msgid "for the Watermark plugin"
-msgstr "für das Wasserzeichen Plugin"
+msgstr "für das Wasserzeichen-Plugin"
 
 #: ../admin/about.php:33
 msgid "If you didn't find your name on this list and there is some code which I integrate in my plugin, don't hesitate to send me a mail."
-msgstr "Falls Du deinen Namen nicht auf dieser Liste findest und es aber Code gibt, den ich in meinem Plugin verwendet habe, so schicken mir bitte sofort eine EMail."
+msgstr "Falls Du Deinen Namen nicht auf dieser Liste findest und es aber Code gibt, den ich in meinem Plugin verwendet habe, so schicken mir bitte sofort eine E-Mail."
 
 #: ../admin/about.php:37
 msgid "How to support ?"
@@ -163,7 +163,7 @@ msgstr "Unterstützung / Hilfe"
 
 #: ../admin/about.php:39
 msgid "There exist several ways to contribute, help or support us in this work. Non of them are mandatory."
-msgstr "Es existieren verschiedene Möglichkeiten diese Arbeit zu unterstützen."
+msgstr "Es existieren verschiedene Möglichkeiten, diese Arbeit zu unterstützen."
 
 #: ../admin/about.php:41
 msgid "Send us bugfixes / code changes"
@@ -333,7 +333,7 @@ msgstr "Importieren aus Server-Pfad:"
 
 #: ../admin/addgallery.php:353
 msgid " Please note : For safe-mode = ON you need to add the subfolder thumbs manually"
-msgstr "Achtung : Da der Safe-Mode  (PHP.INI) eingeschaltet ist, mußt Du das Unterverzeichnis für die Vorschaubilder (\"thumbs\") manuell (per FTP) anlegen"
+msgstr "Achtung : Da der Safe-Mode (PHP.INI) eingeschaltet ist, mußt Du das Unterverzeichnis für die Vorschaubilder (\"thumbs\") manuell (per FTP) anlegen"
 
 #: ../admin/addgallery.php:356
 msgid "Import folder"
@@ -414,7 +414,7 @@ msgstr "Hier downloaden"
 #: ../admin/admin.php:93
 #, php-format
 msgid "Thanks for using this plugin, I hope you are satisfied ! If you would like to support the further development, please consider a <strong><a href=\"%s\">donation</a></strong>! If you still need some help, please post your questions <a href=\"http://wordpress.org/tags/nextgen-gallery?forum_id=10\">here</a> ."
-msgstr "Vielen Dank das du dieses Plugin nutzt. Ich hoffe du bist soweit zufrieden ! Wenn du die Weiterentwicklung unterstützen möchtest, würde ich mich über eine kleine <strong><a href=\"%s\">Spende</a></strong> freuen! Wenn du Fragen oder Problem hast, schreib sie doch <a href=\"http://wordpress.org/tags/nextgen-gallery?forum_id=10\">hier</a>  ins Forum."
+msgstr "Vielen Dank, dass Du dieses Plugin nutzt. Ich hoffe, Du bist soweit zufrieden! Wenn Du die Weiterentwicklung unterstützen möchtest, würde ich mich über eine kleine <strong><a href=\"%s\">Spende</a></strong> freuen! Wenn Du Fragen oder Problem hast, schreib sie doch <a href=\"http://wordpress.org/tags/nextgen-gallery?forum_id=10\">hier</a>  ins Forum."
 
 #: ../admin/admin.php:96
 msgid "OK, hide this message now !"
@@ -493,7 +493,7 @@ msgstr "Verwandte Bilder"
 
 #: ../admin/admin.php:308
 msgid "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-image-management/\" target=\"_blank\">Image management</a>"
-msgstr "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-image-management/\" target=\"_blank\">Bilderverwaltung (Englisch)</a>"
+msgstr "<a href=\"http://dpotter.net/Technical/2008/03/nextgen-gallery-review-image-management/\" target=\"_blank\">Bilderverwaltung (englisch)</a>"
 
 #: ../admin/admin.php:309
 msgid "Custom fields"
@@ -509,7 +509,7 @@ msgstr "Weitere Hilfe & Informationen"
 
 #: ../admin/admin.php:320
 msgid "<a href=\"http://wordpress.org/tags/nextgen-gallery?forum_id=10\" target=\"_blank\">Support Forums</a>"
-msgstr "<a href=\"http://wordpress.org/tags/nextgen-gallery?forum_id=10\" target=\"_blank\">Support Forum (Englisch)</a>"
+msgstr "<a href=\"http://wordpress.org/tags/nextgen-gallery?forum_id=10\" target=\"_blank\">Support Forum (englisch)</a>"
 
 #: ../admin/admin.php:321
 msgid "FAQ"
@@ -517,11 +517,11 @@ msgstr "FAQ (englisch)"
 
 #: ../admin/admin.php:322
 msgid "Feature request"
-msgstr "Wünsch dir was"
+msgstr "Wünsch Dir was"
 
 #: ../admin/admin.php:323
 msgid "Get your language pack"
-msgstr "Lade deine Sprachdatei"
+msgstr "Lade Deine Sprachdatei"
 
 #: ../admin/admin.php:324
 msgid "Contribute development"
@@ -607,7 +607,7 @@ msgstr "[Verkleinern]"
 
 #: ../admin/album.php:305
 msgid "After you create and select a album, you can drag and drop a gallery or another album into your new album below"
-msgstr "Nachdem du ein Album erstellt und ausgewählt hast, kannst du per Drag & Drop eine Galerie oder ein anderes Album in das neue Album ziehen"
+msgstr "Nachdem Du ein Album erstellt und ausgewählt hast, kannst Du per Drag & Drop eine Galerie oder ein anderes Album in das neue Album ziehen"
 
 #: ../admin/album.php:331
 msgid "Select gallery"
@@ -718,7 +718,7 @@ msgstr "nicht gefunden. Bitte erstelle zuerst das Hauptverzeichnis."
 #: ../admin/functions.php:48
 #: ../admin/functions.php:57
 msgid "Check this link, if you didn't know how to set the permission :"
-msgstr "Dieser Link zeigt dir wie man Verzeichnisrechte ändert :"
+msgstr "Dieser Link zeigt Dir, wie man Verzeichnisrechte ändert :"
 
 #: ../admin/functions.php:56
 #: ../admin/functions.php:70
@@ -830,7 +830,7 @@ msgstr "(Fehler : Konnte das Bild nicht finden)"
 
 #: ../admin/functions.php:801
 msgid "No valid URL path "
-msgstr "Kein gültiger URL Pfad"
+msgstr "Kein gültiger URL-Pfad"
 
 #: ../admin/functions.php:817
 msgid "Import via cURL failed."
@@ -847,7 +847,7 @@ msgstr "Konnte keinen gültigen Verzeichnisnamen finden"
 #: ../admin/functions.php:862
 #, php-format
 msgid "Unable to create directory %s. Is its parent directory writable by the server?"
-msgstr "Kann das Verzeichnis %s nicht erstellen. Is das Hauptverzeichnis vielleicht schreibgeschützt ?"
+msgstr "Kann das Verzeichnis %s nicht erstellen. Ist das Hauptverzeichnis vielleicht schreibgeschützt ?"
 
 #: ../admin/functions.php:877
 msgid "Zip-File successfully unpacked"
@@ -868,7 +868,7 @@ msgstr "ist keine zulässige Bilddatei !"
 #: ../admin/functions.php:1244
 #, php-format
 msgid "Unable to write to directory %s. Is this directory writable by the server?"
-msgstr "Kann das Verzeichnis %s nicht erstellen. Is das Hauptverzeichnis vielleicht schreibgeschützt ?"
+msgstr "Kann das Verzeichnis %s nicht erstellen. Ist das Hauptverzeichnis vielleicht schreibgeschützt ?"
 
 #: ../admin/functions.php:961
 #: ../admin/functions.php:1052
@@ -890,17 +890,17 @@ msgstr "Ungültiger Upload. Fehler Code :"
 
 #: ../admin/functions.php:1071
 msgid "Sorry, you have used your space allocation. Please delete some files to upload more files."
-msgstr "Schade, dein freier Speicher scheint aufgebraucht zu sein. Bitte lösche zuerst ein paar Bilder."
+msgstr "Schade, Dein freier Speicher scheint aufgebraucht zu sein. Bitte lösche zuerst ein paar Bilder."
 
 #: ../admin/functions.php:1111
 #, php-format
 msgid "SAFE MODE Restriction in effect! You need to create the folder <strong>%s</strong> manually"
-msgstr "SAFE MODE Einschränkungen ist aktiv. Du must das Verzeichnis <strong>%s</strong> manuell anlegen."
+msgstr "SAFE MODE Einschränkungen ist aktiv. Du musst das Verzeichnis <strong>%s</strong> manuell anlegen."
 
 #: ../admin/functions.php:1112
 #, php-format
 msgid "When safe_mode is on, PHP checks to see if the owner (%s) of the current script matches the owner (%s) of the file to be operated on by a file function or its directory"
-msgstr "Wenn der Safe-Mode eingeschaltet ist, überprüft PHP ob der Besitzer (%s) des Skript mit dem Besitzer (%s) der Datei/Verzeichnis übereinstimmt."
+msgstr "Wenn der Safe-Mode eingeschaltet ist, überprüft PHP, ob der Besitzer (%s) des Skript mit dem Besitzer (%s) der Datei/Verzeichnis übereinstimmt."
 
 #: ../admin/functions.php:1165
 #: ../admin/functions.php:1238
@@ -980,7 +980,7 @@ msgstr "Tut mir leid, aber NextGEN Gallery benötigt zwingend die Rolle \"Admini
 
 #: ../admin/install.php:108
 msgid "NextGEN Gallery : Tables could not created, please check your database settings"
-msgstr "NextGEN Gallery : Tabellen konnten nicht erstellt werden, überprüfe deine Datenbank"
+msgstr "NextGEN Gallery : Tabellen konnten nicht erstellt werden, überprüfe Deine Datenbank"
 
 #: ../admin/install.php:166
 msgid "[Show as slideshow]"
@@ -1089,7 +1089,7 @@ msgstr "Autor"
 
 #: ../admin/manage-galleries.php:159
 msgid "Page ID"
-msgstr "Seiten ID"
+msgstr "Seiten-ID"
 
 #: ../admin/manage-galleries.php:160
 msgid "Quantity"
@@ -1148,7 +1148,7 @@ msgstr "Galerie nicht gefunden"
 
 #: ../admin/manage-images.php:37
 msgid "Sorry, you have no access here"
-msgstr "Sorry, du hast nicht genügend Rechte"
+msgstr "Sorry, Du hast nicht genügend Rechte"
 
 #: ../admin/manage-images.php:167
 #, php-format
@@ -1192,7 +1192,7 @@ msgstr "Neue Seite erstellen"
 
 #: ../admin/manage-images.php:265
 msgid "Main page (No parent)"
-msgstr "Haupseite (keine Unterseite)"
+msgstr "Hauptseite (keine Unterseite)"
 
 #: ../admin/manage-images.php:268
 msgid "Add page"
@@ -1446,7 +1446,7 @@ msgstr "Letzte Informationen"
 
 #: ../admin/overview.php:90
 msgid "Recent donators"
-msgstr "Neusten Spender"
+msgstr "Neueste Spender"
 
 #: ../admin/overview.php:91
 msgid "Server Settings"
@@ -1458,7 +1458,7 @@ msgstr "Verwandte Plugins"
 
 #: ../admin/overview.php:93
 msgid "Graphic Library"
-msgstr "Grafik Bibliothek"
+msgstr "Grafik-Bibliothek"
 
 #: ../admin/overview.php:148
 #: ../admin/overview.php:197
@@ -1489,7 +1489,7 @@ msgstr "Kein Titel"
 #: ../admin/overview.php:251
 #, php-format
 msgid "Newsfeed could not be loaded.  Check the <a href=\"%s\">front page</a> to check for updates."
-msgstr "Der Newsfeed kann nicht geladen werden. Schaue auf die <a href=\"%s\">Hauptseite</a> um Updates mitzubekommen."
+msgstr "Der Newsfeed kann nicht geladen werden. Schaue auf die <a href=\"%s\">Hauptseite</a>, um Updates mitzubekommen."
 
 #: ../admin/overview.php:272
 msgid "At a Glance"
@@ -1518,7 +1518,7 @@ msgstr "Du hast derzeit %s Rechte."
 
 #: ../admin/overview.php:332
 msgid "Translation file successful updated. Please reload page."
-msgstr "Überstetzungsdatei aktualisiert. Bitte Seite neu laden."
+msgstr "Übersetzungsdatei aktualisiert. Bitte Seite neu laden."
 
 #: ../admin/overview.php:334
 msgid "Reload page"
@@ -1643,7 +1643,7 @@ msgstr "PHP XML Modul"
 
 #: ../admin/overview.php:500
 msgid "NextGEN Gallery contains some functions which are only available under PHP 5.2. You are using the old PHP 4 version, upgrade now! It's no longer supported by the PHP group. Many shared hosting providers offer both PHP 4 and PHP 5, running simultaneously. Ask your provider if they can do this."
-msgstr "NextGEN Gallery enthält einige Funktionen die nur unter PHP 5.2 verfügbar sind. Du nutzt immer noch die alte PHP 4 Version. Bitte aktualisiere so bald wie möglich diese Version, sie wird nicht mehr gepflegt und weiterentwicklelt. Die meisten Hoster bieten bereits PHP5 an. Bitte kontaktiere deinen Provider und frag kurz nach ob sie ein Update durchführen können."
+msgstr "NextGEN Gallery enthält einige Funktionen, die nur unter PHP 5.2 verfügbar sind. Du nutzt immer noch die alte PHP 4 Version. Bitte aktualisiere so bald wie möglich diese Version, sie wird nicht mehr gepflegt und weiterentwicklelt. Die meisten Hoster bieten bereits PHP5 an. Bitte kontaktiere Deinen Provider und frag kurz nach, ob sie ein Update durchführen können."
 
 #: ../admin/overview.php:559
 msgid "Storage Space"
@@ -1671,7 +1671,7 @@ msgstr "Rollen / Zugriffsrechte"
 
 #: ../admin/roles.php:28
 msgid "Select the lowest role which should be able to access the follow capabilities. NextGEN Gallery supports the standard roles from WordPress."
-msgstr "Wähle die niedrigste Rolle aus, die Zugriff haben soll. NextGEN Gallery unterstützt nur die Standard Wordpress Rollen/Fähigkeiten von WordPress."
+msgstr "Wähle die niedrigste Rolle aus, die Zugriff haben soll. NextGEN Gallery unterstützt nur die Standard-Wordpress-Rollen-Fähigkeiten von WordPress."
 
 #: ../admin/roles.php:29
 msgid "For a more flexible user management you can use the"
@@ -1800,7 +1800,7 @@ msgstr "Aktiviere Permalinks"
 
 #: ../admin/settings.php:238
 msgid "When you activate this option, you need to update your permalink structure one time."
-msgstr "Wenn du diese Option aktivierst, muss du einmal die Permalink Struktur aktualisieren."
+msgstr "Wenn Du diese Option aktivierst, muss Du einmal die Permalink Struktur aktualisieren."
 
 #: ../admin/settings.php:241
 msgid "Select graphic library"
@@ -1816,7 +1816,7 @@ msgstr "ImageMagick (Experimental). Pfad zur Bibliothek :"
 
 #: ../admin/settings.php:248
 msgid "Activate Media RSS feed"
-msgstr "Aktiviere Media RSS Feed"
+msgstr "Aktiviere Media-RSS-Feed"
 
 #: ../admin/settings.php:250
 msgid "A RSS feed will be added to you blog header. Useful for CoolIris/PicLens"
@@ -1828,7 +1828,7 @@ msgstr "Aktiviere PicLens/CoolIris"
 
 #: ../admin/settings.php:255
 msgid "When you activate this option, some javascript is added to your site footer. Make sure that wp_footer is called in your theme."
-msgstr "Dieser Effekt fügt ein neues Javascript zu deinem Theme hinzu. Beachte das wp_footer() in deinen Vorlagen aufgerufen wird."
+msgstr "Dieser Effekt fügt ein neues Javascript zu Deinem Theme hinzu. Beachte, dass wp_footer() in Deinen Vorlagen aufgerufen wird."
 
 #: ../admin/settings.php:258
 msgid "Tags / Categories"
@@ -1869,7 +1869,7 @@ msgstr "Mehr Einstellungen"
 
 #: ../admin/settings.php:289
 msgid "Thumbnail settings"
-msgstr "Thumbnail Einstellungen"
+msgstr "Thumbnail-Einstellungen"
 
 #: ../admin/settings.php:293
 msgid "Please note : If you change the settings, you need to recreate the thumbnails under -> Manage Gallery ."
@@ -1881,7 +1881,7 @@ msgstr "Thumbnail Qualität"
 
 #: ../admin/settings.php:320
 msgid "Image settings"
-msgstr "Bild Einstellungen"
+msgstr "Bild-Einstellungen"
 
 #: ../admin/settings.php:326
 msgid "Resize Images"
@@ -1893,7 +1893,7 @@ msgstr "Bild Qualität"
 
 #: ../admin/settings.php:337
 msgid "Backup original images"
-msgstr "Backup von Original Bilder "
+msgstr "Backup von Original-Bildern "
 
 #: ../admin/settings.php:340
 msgid "Creates a backup for inserted images"
@@ -1905,7 +1905,7 @@ msgstr "Grösse automatisch anpassen"
 
 #: ../admin/settings.php:346
 msgid "Automatically resize images on upload."
-msgstr "Passt die Grösse automatsich beim Upload an"
+msgstr "Passt die Grösse automatisch beim Upload an"
 
 #: ../admin/settings.php:349
 msgid "Single picture"
@@ -1913,7 +1913,7 @@ msgstr "Einzelbilder"
 
 #: ../admin/settings.php:352
 msgid "Cache single pictures"
-msgstr "Nutze Cache für Einzelbidler"
+msgstr "Nutze Cache für Einzelbilder"
 
 #: ../admin/settings.php:355
 msgid "Creates a file for each singlepic settings. Reduce the CPU load"
@@ -1921,7 +1921,7 @@ msgstr "Erstellt ein Cache-Bild für jedes Einzelbild (singlepic). Reduziert die
 
 #: ../admin/settings.php:358
 msgid "Clear cache folder"
-msgstr "Lösche Cache Verzeichnis"
+msgstr "Lösche Cache-Verzeichnis"
 
 #: ../admin/settings.php:360
 msgid "Proceed now"
@@ -1961,27 +1961,27 @@ msgstr "Zeige als Erstes"
 
 #: ../admin/settings.php:411
 msgid "Show ImageBrowser"
-msgstr "Zeige Bilder Browser"
+msgstr "Zeige Bilder-Browser"
 
 #: ../admin/settings.php:413
 msgid "The gallery will open the ImageBrowser instead the effect."
-msgstr "Es wird der Bilder Browser angezeigt (Kein JavaScript Effekt)"
+msgstr "Es wird der Bilder-Browser angezeigt (Kein JavaScript Effekt)"
 
 #: ../admin/settings.php:417
 msgid "Add hidden images"
-msgstr "Verstecke Bilder hinzufügen"
+msgstr "Versteckte Bilder hinzufügen"
 
 #: ../admin/settings.php:419
 msgid "If pagination is used, this option will still show all images in the modal window (Thickbox, Lightbox etc.). Note : This increase the page load"
-msgstr "Wenn du die Blätterfunktion nutzt, dann kannst du mit dieser Option alle Bilder im Modal-Fenster (Thickbox,Lightbox etc.) anzeigen. Berücksichtige das die Ladezeit der Seite erhöht wird."
+msgstr "Wenn Du die Blätterfunktion nutzt, dann kannst Du mit dieser Option alle Bilder im Modal-Fenster (Thickbox,Lightbox etc.) anzeigen. Berücksichtige, dass die Ladezeit der Seite erhöht wird."
 
 #: ../admin/settings.php:423
 msgid "Enable AJAX pagination"
-msgstr "Aktiviere AJAX Navigation"
+msgstr "Aktiviere AJAX-Navigation"
 
 #: ../admin/settings.php:425
 msgid "Browse images without reload the page. Note : Work only in combination with Shutter effect"
-msgstr "Ermöglicht das Blättern zwischen den Bildern ohne de Seite neuzuladen. Hinweis : Funktioniert nur mit dem Shutter Effekt."
+msgstr "Ermöglicht das Blättern zwischen den Bildern ohne die Seite neu zu laden. Hinweis : Funktioniert nur mit dem Shutter-Effekt."
 
 #: ../admin/settings.php:429
 msgid "Sort options"
@@ -2013,7 +2013,7 @@ msgstr "Sortierreihenfolge"
 
 #: ../admin/settings.php:462
 msgid "Here you can select the thumbnail effect, NextGEN Gallery will integrate the required HTML code in the images. Please note that only the Shutter and Thickbox effect will automatic added to your theme."
-msgstr "Hier kannst Du den Effekt für die Thumbnails auswählen. NextGEN Galerie wird den benötigten HTML Code verwenden. Bitte beachte, das nur Shutter und der Thickbox Effekt automatisch in Dein Theme von Wordpress integriert wird. Alle anderen Effekte mußt Du selbst in die header.php eintragen (JS)."
+msgstr "Hier kannst Du den Effekt für die Thumbnails auswählen. NextGEN Galerie wird den benötigten HTML-Code verwenden. Bitte beachte, dass nur Shutter und der Thickbox Effekt automatisch in Dein Theme von Wordpress integriert wird. Alle anderen Effekte mußt Du selbst in die header.php eintragen (JS)."
 
 #: ../admin/settings.php:463
 msgid "With the placeholder"
@@ -2021,7 +2021,7 @@ msgstr "Mit Platzhalter"
 
 #: ../admin/settings.php:463
 msgid "you can activate a navigation through the images (depend on the effect). Change the code line only , when you use a different thumbnail effect or you know what you do."
-msgstr "Du kannst eine Navigation durch die Bilder aktivieren (hängt vom Effekt ab). Ändere nur die Codezeile falls Du einen anderen Effekt für die Thumbnails verwendest oder einfach weißt, was Du tust."
+msgstr "Du kannst eine Navigation durch die Bilder aktivieren (hängt vom Effekt ab). Ändere nur die Codezeile, falls Du einen anderen Effekt für die Thumbnails verwendest oder einfach weißt, was Du tust."
 
 #: ../admin/settings.php:466
 msgid "JavaScript Thumbnail effect"
@@ -2053,7 +2053,7 @@ msgstr "Eigener"
 
 #: ../admin/settings.php:479
 msgid "Link Code line"
-msgstr "Link Code Zeile"
+msgstr "Link-Code-Zeile"
 
 #: ../admin/settings.php:501
 msgid "Please note : You can only activate the watermark under -> Manage Gallery . This action cannot be undone."
@@ -2094,7 +2094,7 @@ msgstr "Schriftart"
 
 #: ../admin/settings.php:569
 msgid "This function will not work, cause you need the FreeType library"
-msgstr "Diese Funktion benötigt die FreeType Bibliothek"
+msgstr "Diese Funktion benötigt die FreeType-Bibliothek"
 
 #: ../admin/settings.php:571
 msgid "You can upload more fonts in the folder <strong>nggallery/fonts</strong>"
@@ -2126,19 +2126,19 @@ msgstr "Der Pfad zu imagerotator.swf ist nicht gesetzt, die Flash-Diaschau kann 
 
 #: ../admin/settings.php:613
 msgid "If you would like to use the JW Image Rotatator, please download the player <a href=\"http://www.longtailvideo.com/players/jw-image-rotator/\" target=\"_blank\" >here</a> and upload it to your Upload folder (Default is wp-content/uploads)."
-msgstr "Wenn du den JW Image Rotator (Slideshow) nutzen möchtest, lade dir die aktuelle Version <a href=\"http://www.longtailvideo.com/players/jw-image-rotator/\" target=\"_blank\" >hier</a> herunter und übertrage sie dann in dein WordPress Upload Verzeichnis (Normalerweise wp-content/uploads),"
+msgstr "Wenn Du den JW-Image-Rotator (Slideshow) nutzen möchtest, lade Dir die aktuelle Version <a href=\"http://www.longtailvideo.com/players/jw-image-rotator/\" target=\"_blank\" >hier</a> herunter und übertrage sie dann in Dein WordPress-Upload-Verzeichnis (normalerweise wp-content/uploads),"
 
 #: ../admin/settings.php:618
 msgid "The settings are used in the JW Image Rotator Version"
-msgstr "Die Einstellungen werden im JW Image Rotator benutzt , in der Version"
+msgstr "Die Einstellungen werden im JW-Image-Rotator benutzt, in der Version"
 
 #: ../admin/settings.php:619
 msgid "See more information for the Flash Player on the web page"
-msgstr "Weitere Informationen auf der Flash Player Homepage"
+msgstr "Weitere Informationen auf der Flash-Player-Homepage"
 
 #: ../admin/settings.php:623
 msgid "Path to the Imagerotator (URL)"
-msgstr "Pfad zum JW Image Rotator (URL)"
+msgstr "Pfad zum JW-Image-Rotator (URL)"
 
 #: ../admin/settings.php:626
 msgid "Search now"
@@ -2146,7 +2146,7 @@ msgstr "Suche jetzt"
 
 #: ../admin/settings.php:627
 msgid "Press the button to search automatic for the imagerotator, if you uploaded it to wp-content/uploads or a subfolder"
-msgstr "Drücke 'Suche jetzt' um automatisch den Pfad zum Image Rotator zu ermitteln, sofern du den Player in wp-content/uploads oder ein Unterverzeichnis hochgeladen hast."
+msgstr "Drücke 'Suche jetzt' um automatisch den Pfad zum Image-Rotator zu ermitteln, sofern Du den Player in wp-content/uploads oder ein Unterverzeichnis hochgeladen hast."
 
 #: ../admin/settings.php:631
 msgid "Default size (W x H)"
@@ -2250,7 +2250,7 @@ msgstr "Zufall"
 
 #: ../admin/settings.php:688
 msgid "Use slow zooming effect"
-msgstr "nutze Zoom Effekt"
+msgstr "nutze Zoom-Effekt"
 
 #: ../admin/settings.php:692
 msgid "Background Color"
@@ -2266,7 +2266,7 @@ msgstr "Rollover / Aktiv (Link) Farbe"
 
 #: ../admin/settings.php:707
 msgid "Screen Color"
-msgstr "Seiten Farbe"
+msgstr "Seiten-Farbe"
 
 #: ../admin/settings.php:712
 msgid "Background music (URL)"
@@ -2274,7 +2274,7 @@ msgstr "Hintergrundmusik (URL)"
 
 #: ../admin/settings.php:716
 msgid "Try XHTML validation (with CDATA)"
-msgstr "Integriere XHTML Validierung (mittels CDATA)"
+msgstr "Integriere XHTML-Validierung (mittels CDATA)"
 
 #: ../admin/settings.php:718
 msgid "Important : Could causes problem at some browser. Please recheck your page."
@@ -2286,7 +2286,7 @@ msgstr "Stelle alle Einstellungen auf Anfangswerte zurück"
 
 #: ../admin/setup.php:26
 msgid "Uninstall sucessful ! Now delete the plugin and enjoy your life ! Good luck !"
-msgstr "Deinstallation erfolgreich ! Nun kannst Du das Plugin löschen und Dein Leben weiterhin genießen ! Stay geeky ! Viel Glück !"
+msgstr "Deinstallation erfolgreich! Nun kannst Du das Plugin löschen und Dein Leben weiterhin genießen! Stay geeky! Viel Glück!"
 
 #: ../admin/setup.php:30
 msgid "Reset options"
@@ -2320,7 +2320,7 @@ msgstr "Du magst die NextGEN Gallery nicht ?"
 
 #: ../admin/setup.php:45
 msgid "No problem, before you deactivate this plugin press the Uninstall Button, because deactivating NextGEN Gallery does not remove any data that may have been created. "
-msgstr "Null Problemo. Einfach nur vor dem Deaktivieren dieses Plugins den Uninstall-Button betätigen damit alle Tabellen der Galerie entfernt werden."
+msgstr "Null Problemo. Einfach nur vor dem Deaktivieren dieses Plugins den Uninstall-Button betätigen, damit alle Tabellen der Galerie entfernt werden."
 
 #: ../admin/setup.php:47
 msgid "WARNING:"
@@ -2345,7 +2345,7 @@ msgid ""
 "\\n"
 "Choose [Cancel] to Stop, [OK] to Uninstall.\\n"
 msgstr ""
-"Du bist dabei das Plugin zu deinstallieren.\\n"
+"Du bist dabei, das Plugin zu deinstallieren.\\n"
 "Diese Aktion kann NICHT rückgängig gemacht werden.\\n"
 "\\n"
 "Wähle [Cancel] zum Abbrechen, [OK] zum Deinstallieren.\\n"
@@ -2374,19 +2374,19 @@ msgstr "Keine Metadaten gespeichert"
 
 #: ../admin/showmeta.php:55
 msgid "EXIF Data"
-msgstr "EXIF Daten"
+msgstr "EXIF-Daten"
 
 #: ../admin/showmeta.php:74
 msgid "No exif data"
-msgstr "Keine Exif Daten"
+msgstr "Keine Exif-Daten"
 
 #: ../admin/showmeta.php:81
 msgid "IPTC Data"
-msgstr "IPTC Daten"
+msgstr "IPTC-Daten"
 
 #: ../admin/showmeta.php:105
 msgid "XMP Data"
-msgstr "XMP Daten"
+msgstr "XMP-Daten"
 
 #: ../admin/style.php:11
 msgid "(From the theme folder)"
@@ -2394,15 +2394,15 @@ msgstr "(Aus dem Theme Verzeichnis)"
 
 #: ../admin/style.php:43
 msgid "You do not have sufficient permissions to edit templates for this blog."
-msgstr "Du hast nicht die benötigten Rechte um Vorlagen in diesem Blog zu bearbeiten."
+msgstr "Du hast nicht die benötigten Rechte, um Vorlagen in diesem Blog zu bearbeiten."
 
 #: ../admin/style.php:52
 msgid "CSS file successfully updated"
-msgstr "CSS Datei erfolgreich aktualisiert"
+msgstr "CSS-Datei erfolgreich aktualisiert"
 
 #: ../admin/style.php:88
 msgid "Style Editor"
-msgstr "CSS Editor"
+msgstr "CSS-Editor"
 
 #: ../admin/style.php:92
 msgid "Activate and use style sheet:"
@@ -2428,15 +2428,15 @@ msgstr "Version"
 
 #: ../admin/style.php:137
 msgid "Tip : Copy your stylesheet (nggallery.css) to your theme folder, so it will be not lost during a upgrade"
-msgstr "Kleiner Tip : Kopiere das Stylesheet (nggallery.css) in dein Theme-Verzeichnis, dadurch wird es beim nächsten Update nicht überschrieben."
+msgstr "Kleiner Tipp: Kopiere das Stylesheet (nggallery.css) in Dein Theme-Verzeichnis, dadurch wird es beim nächsten Update nicht überschrieben."
 
 #: ../admin/style.php:139
 msgid "Your theme contain a NextGEN Gallery stylesheet (nggallery.css), this file will be used"
-msgstr "Dein Theme-Paket enthält eine NextGEN Gallery Stylesheet (nggallery.css), dieses Sheet wird automatisch eingebunden"
+msgstr "Dein Theme-Paket enthält ein NextGEN-Gallery-Stylesheet (nggallery.css), dieses Sheet wird automatisch eingebunden"
 
 #: ../admin/style.php:141
 msgid "Tip No. 2: Use the color picker below to help you find the right color scheme for your gallery!"
-msgstr "2.Tip : Beutze die Farbauswahl um den zugehörigen HTML Farbcode zu erhalten"
+msgstr "2.Tipp : Benutze die Farbauswahl, um den zugehörigen HTML-Farbcode zu erhalten"
 
 #: ../admin/style.php:157
 msgid "Update File"
@@ -2448,7 +2448,7 @@ msgstr "Wenn diese Datei beschreibbar wäre, könntest Du sie bearbeiten."
 
 #: ../admin/style.php:165
 msgid "Oops, no such file exists! Double check the name and try again, merci."
-msgstr "Oha, eine solche Datei existiert nicht! Bitte überprüfe den Namen und probiere es erneut, danke."
+msgstr "Oha, eine solche Datei existiert nicht! Bitte überprüfe den Namen und probiere es erneut. Danke."
 
 #: ../admin/tags.php:38
 msgid "Most popular"
@@ -2464,7 +2464,7 @@ msgstr "Alphabetisch"
 
 #: ../admin/tags.php:95
 msgid "Manage image tags"
-msgstr "Verwalte Bilder Stichwörter"
+msgstr "Verwalte Bilder-Stichwörter"
 
 #: ../admin/tags.php:107
 msgid "Existing Tags"
@@ -2485,7 +2485,7 @@ msgstr "Sortierung :"
 #: ../admin/tags.php:137
 #, php-format
 msgid "View all images tagged with %s"
-msgstr "Zeige alle Bilder die mit dem Stichwort %s markiert sind"
+msgstr "Zeige alle Bilder, die mit dem Stichwort %s markiert sind"
 
 #: ../admin/tags.php:152
 #: ../admin/tags.php:156
@@ -2512,7 +2512,7 @@ msgstr "Mehrere Stichwörter zum Umbenennen durch Komma trennen"
 
 #: ../admin/tags.php:190
 msgid "Tag(s) to rename:"
-msgstr "Stichwörter umbennenen :"
+msgstr "Stichwörter umbennenen:"
 
 #: ../admin/tags.php:194
 msgid "New tag name(s):"
@@ -2544,7 +2544,7 @@ msgstr "Ändere Schlagwort"
 
 #: ../admin/tags.php:233
 msgid "Enter the tag name to edit and its new slug. <a href=\"http://codex.wordpress.org/Glossary#Slug\">Slug definition</a>"
-msgstr "Trage den Namen des zu ändernden Stichwort und seinen neuen \"Slug\" ein. <a href=\"http://codex.wordpress.org/Glossary#Slug\">Was ist ein Slug?</a>"
+msgstr "Trage den Namen des zu ändernden Stichworts und seinen neuen \"Slug\" ein. <a href=\"http://codex.wordpress.org/Glossary#Slug\">Was ist ein Slug?</a>"
 
 #: ../admin/tags.php:238
 msgid "Tag(s) to match:"
@@ -2576,7 +2576,7 @@ msgstr "Importiere Datum/Uhrzeit..."
 
 #: ../admin/upgrade.php:124
 msgid "Move imagerotator to new location..."
-msgstr "Verschiebe den Image Rotator in ein neues Verzeichnis..."
+msgstr "Verschiebe den Image-Rotator in ein neues Verzeichnis..."
 
 #: ../admin/upgrade.php:135
 msgid "Update settings..."
@@ -2584,11 +2584,11 @@ msgstr "Einstellungen gespeichert..."
 
 #: ../admin/upgrade.php:149
 msgid "Updated widget structure. If you used NextGEN Widgets, you need to setup them again..."
-msgstr "Die Widgets wurden überarbeitet. Wenn du NextGEN Widgets nutzt, musst du Sie nun neu einfügen..."
+msgstr "Die Widgets wurden überarbeitet. Wenn Du NextGEN Widgets nutzt, musst du Sie nun neu einfügen..."
 
 #: ../admin/upgrade.php:214
 msgid "Some folders/files could not renamed, please recheck the permission and rescan the folder in the manage gallery section."
-msgstr "Einige Verzeichnisse / Bilder konnten nicht umbenannt werden, bitte überprüfe die Zugriffsrechte und Scanne dann das Verzeichnis neu ein."
+msgstr "Einige Verzeichnisse / Bilder konnten nicht umbenannt werden, bitte überprüfe die Zugriffsrechte und scanne dann das Verzeichnis neu ein."
 
 #: ../admin/upgrade.php:216
 msgid "Rename failed"
@@ -2597,23 +2597,23 @@ msgstr "Konnte nicht umbenannt werden"
 #: ../admin/upgrade.php:311
 #: ../admin/upgrade.php:330
 msgid "Upgrade NextGEN Gallery"
-msgstr "NextGEN Gallery aktualisieren"
+msgstr "NextGEN-Gallery aktualisieren"
 
 #: ../admin/upgrade.php:312
 msgid "The script detect that you upgrade from a older version."
-msgstr "Es wurde eine ältere NextGEN Datenbank erkannt."
+msgstr "Es wurde eine ältere NextGEN-Datenbank erkannt."
 
 #: ../admin/upgrade.php:313
 msgid "Your database tables for NextGEN Gallery is out-of-date, and must be upgraded before you can continue."
-msgstr "Deinen Datenbank für NextGEN Gallery ist nicht auf dem aktuellen Stand, sie muss jetzt aktualisiert werden."
+msgstr "Deine Datenbanktabellen für NextGEN-Gallery sind nicht auf dem aktuellen Stand, sie müssen jetzt aktualisiert werden."
 
 #: ../admin/upgrade.php:314
 msgid "If you would like to downgrade later, please make first a complete backup of your database and the images."
-msgstr "Wenn du wieder auf eine ältere Version zurückgehen möchtest, solltest du vorher die Datenbank sichern."
+msgstr "Wenn Du wieder auf eine ältere Version zurückgehen möchtest, solltest Du vorher die Datenbank sichern."
 
 #: ../admin/upgrade.php:315
 msgid "The upgrade process may take a while, so please be patient."
-msgstr "Der Upgrade Prozess kann etwas dauern, bitte sei geduldig..."
+msgstr "Der Upgrade-Prozess kann etwas dauern, bitte sei geduldig..."
 
 #: ../admin/upgrade.php:316
 msgid "Start upgrade now"
@@ -2633,11 +2633,11 @@ msgstr "Aktualisierung erfolgreich"
 
 #: ../admin/wpmu.php:41
 msgid "General WordPress MU Settings"
-msgstr "WordPress MU Einstellungen"
+msgstr "WordPress-MU-Einstellungen"
 
 #: ../admin/wpmu.php:49
 msgid "This is the default path for all blogs. With the placeholder %BLOG_ID% you can organize the folder structure better. The path must end with a /."
-msgstr "Dieses ist der Default Pfad für alle Blogs. Mit dem Platzhalter %BLOG_ID% wird die Ordnerstruktur gesteuert. Der Pfad muss mit / enden."
+msgstr "Dieses ist der Default-Pfad für alle Blogs. Mit dem Platzhalter %BLOG_ID% wird die Ordnerstruktur gesteuert. Der Pfad muss mit / enden."
 
 #: ../admin/wpmu.php:52
 msgid "Enable upload quota check"
@@ -2645,7 +2645,7 @@ msgstr "Schalte die Uploadbegrenzung ein"
 
 #: ../admin/wpmu.php:54
 msgid "Should work if the gallery is bellow the blog.dir"
-msgstr "Sollte funktionieren wenn die Galerien sich unterhalb blog.dir befinden"
+msgstr "Sollte funktionieren, wenn die Galerien sich unterhalb blog.dir befinden"
 
 #: ../admin/wpmu.php:58
 msgid "Enable zip upload option"
@@ -2657,11 +2657,11 @@ msgstr "Erlaubt die Nutzung des ZIP-Upload"
 
 #: ../admin/wpmu.php:64
 msgid "Enable style selection"
-msgstr "Freie CSS Style Auswahl"
+msgstr "Freie CSS-Style-Auswahl"
 
 #: ../admin/wpmu.php:66
 msgid "Allow users to choose a style for the gallery."
-msgstr "Erlaube dem User ein CSS für die Galerie zu wählen"
+msgstr "Erlaube dem User, ein CSS für die Galerie zu wählen"
 
 #: ../admin/wpmu.php:70
 msgid "Enable roles/capabilities"
@@ -2673,7 +2673,7 @@ msgstr "Erlaube dem User die Anpassung der Zugangsberechtigung"
 
 #: ../admin/wpmu.php:76
 msgid "Default style"
-msgstr "Standard CSS-Style"
+msgstr "Standard-CSS-Style"
 
 #: ../admin/wpmu.php:93
 msgid "Choose the default style for the galleries."
@@ -2681,7 +2681,7 @@ msgstr "Wähle das Default-Stylesheet für die Galerien"
 
 #: ../admin/tinymce/window.php:8
 msgid "You are not allowed to be here"
-msgstr "Keine Zugrangsberechtigung"
+msgstr "Keine Zugangsberechtigung"
 
 #: ../admin/tinymce/window.php:56
 #: ../admin/tinymce/window.php:84
@@ -2694,7 +2694,7 @@ msgstr "Bilder-Liste"
 
 #: ../admin/tinymce/window.php:59
 msgid "Imagebrowser"
-msgstr "Bilder Browser"
+msgstr "Bilder-Browser"
 
 #: ../admin/tinymce/window.php:72
 msgid "No album"
@@ -2755,7 +2755,7 @@ msgstr "Einfügen"
 #: ../lib/core.php:368
 #, php-format
 msgid "Note : Based on your server memory limit you should not upload larger images then <strong>%d x %d</strong> pixel"
-msgstr "Hinweis : Basierend auf der Speicherbegrenzung auf dem Server, solltest du keine Bilder grösser als  <strong>%d x %d</strong> Pixel hochladen"
+msgstr "Hinweis: Basierend auf der Speicherbegrenzung auf dem Server, solltest Du keine Bilder grösser als <strong>%d x %d</strong> Pixel hochladen"
 
 #: ../lib/locale.php:120
 msgid "Invalid URL Provided."
@@ -2931,7 +2931,7 @@ msgstr "Kein neues Stichwort definiert!"
 
 #: ../lib/tags.php:50
 msgid "No new/old valid tag specified!"
-msgstr "Kein neues Stichwort definiert !"
+msgstr "Kein neues Stichwort definiert!"
 
 #: ../lib/tags.php:86
 msgid "No tag renamed."
@@ -2996,7 +2996,7 @@ msgstr "%s Stichwörter geändert"
 #: ../lib/xmlrpc.php:55
 #, php-format
 msgid "XML-RPC services are disabled on this blog.  An admin user can enable them at %s"
-msgstr "XML-RPC Service ist ausgeschaltet. Der Administartor kann es hier %s einschalten"
+msgstr "XML-RPC Service ist ausgeschaltet. Der Administrator kann es hier %s einschalten"
 
 #: ../lib/xmlrpc.php:62
 msgid "Bad login/pass combination."
@@ -3004,7 +3004,7 @@ msgstr "Username/Password falsch"
 
 #: ../lib/xmlrpc.php:118
 msgid "You are not allowed to upload files to this site."
-msgstr "Du hast keine Berechtigung Bilder hochzuladen"
+msgstr "Du hast keine Berechtigung, Bilder hochzuladen"
 
 #: ../lib/xmlrpc.php:124
 #: ../lib/xmlrpc.php:309
@@ -3014,11 +3014,11 @@ msgstr "Konnte Galerie nicht finden"
 #: ../lib/xmlrpc.php:129
 #: ../lib/xmlrpc.php:314
 msgid "You are not allowed to upload files to this gallery."
-msgstr "Du hast keine Berechtigung Bilder in diese Galerie zuladen"
+msgstr "Du hast keine Berechtigung, Bilder in diese Galerie zuladen"
 
 #: ../lib/xmlrpc.php:141
 msgid "This is no valid image file."
-msgstr "Das ist keine zulässige Bilddatei !"
+msgstr "Das ist keine zulässige Bilddatei!"
 
 #: ../lib/xmlrpc.php:153
 msgid "Could not find image id "
@@ -3037,7 +3037,7 @@ msgstr "Konnte die Datei %1$s (%2$s) nicht schreiben "
 #: ../lib/xmlrpc.php:236
 #: ../lib/xmlrpc.php:272
 msgid "Sorry, you must be able to manage galleries to view the list of galleries"
-msgstr "Sorry, du hast nicht das Recht diese Galerie anzuschauen"
+msgstr "Sorry, Du hast nicht das Recht, diese Galerie anzuschauen"
 
 #: ../lib/xmlrpc.php:242
 msgid "Sorry, could not create the gallery"
@@ -3085,7 +3085,7 @@ msgstr "NextGEN Media RSS"
 
 #: ../widgets/media-rss-widget.php:37
 msgid "Widget that displays Media RSS links for NextGEN Gallery."
-msgstr "Hiermit können NextGEN Bilder als Media RSS eingebunden werden"
+msgstr "Hiermit können NextGEN-Bilder als Media RSS eingebunden werden"
 
 #: ../widgets/media-rss-widget.php:135
 #: ../widgets/media-rss-widget.php:200
@@ -3113,23 +3113,23 @@ msgstr "Zeige den globalen Media RSS Link"
 
 #: ../widgets/media-rss-widget.php:170
 msgid "Text for the global Media RSS link:"
-msgstr "Text für den globalen Media RSS link:"
+msgstr "Text für den globalen Media RSS Link:"
 
 #: ../widgets/media-rss-widget.php:176
 msgid "Tooltip text for the global Media RSS link:"
-msgstr "Tooltip-Text für den globalen Media RSS Link."
+msgstr "Tooltipp-Text für den globalen Media RSS Link."
 
 #: ../widgets/widgets.php:22
 msgid "Show a NextGEN Gallery Slideshow"
-msgstr "Binde eine NextGEN Gallery Slideshow ein"
+msgstr "Binde eine NextGEN-Gallery-Slideshow ein"
 
 #: ../widgets/widgets.php:23
 msgid "NextGEN Slideshow"
-msgstr "NextGEN Diashow"
+msgstr "NextGEN-Diashow"
 
 #: ../widgets/widgets.php:66
 msgid "<a href=\"http://www.macromedia.com/go/getflashplayer\">Get the Flash Player</a> to see the slideshow."
-msgstr "<a href=\"http://www.macromedia.com/go/getflashplayer\">Lade Dir den Flash Player</a> um die Diashow zu sehen."
+msgstr "<a href=\"http://www.macromedia.com/go/getflashplayer\">Lade Dir den Flash Player</a>, um die Diashow zu sehen."
 
 #: ../widgets/widgets.php:123
 msgid "Select Gallery:"
@@ -3149,11 +3149,11 @@ msgstr "Breite:"
 
 #: ../widgets/widgets.php:160
 msgid "Add recent or random images from the galleries"
-msgstr "Füge die neusten Bilder oder Zufallsbilder aus NextGEN Gallery ein"
+msgstr "Füge die neusten Bilder oder Zufallsbilder aus NextGEN-Gallery ein"
 
 #: ../widgets/widgets.php:161
 msgid "NextGEN Widget"
-msgstr "NextGEN Widget"
+msgstr "NextGEN-Widget"
 
 #: ../widgets/widgets.php:200
 msgid "Title :"
@@ -3197,11 +3197,11 @@ msgstr "Nur gelistete"
 
 #: ../widgets/widgets.php:248
 msgid "Gallery ID :"
-msgstr "Galerie ID :"
+msgstr "Galerie-ID :"
 
 #: ../widgets/widgets.php:250
 msgid "Gallery IDs, separated by commas."
-msgstr "Galerie IDs, mit Kommas getrennt"
+msgstr "Galerie-IDs, mit Kommas getrennt"
 
 #: ../xml/media-rss.php:58
 msgid "No galleries have been yet created."
@@ -3224,7 +3224,7 @@ msgstr "Album-ID  %s existiert nicht"
 #: ../xml/media-rss.php:123
 #, php-format
 msgid "Invalid MediaRSS command (%s)."
-msgstr "Ungültiger Media RSS Befehl (%s)"
+msgstr "Ungültiger Media-RSS-Befehl (%s)"
 
 #~ msgid ""
 #~ "<strong>Would you like to help to translate this plugin ?</strong> <a "
@@ -3236,32 +3236,45 @@ msgstr "Ungültiger Media RSS Befehl (%s)"
 #~ "target=\"_blank\" href=\"%s\">Download</a> the current pot file and read "
 #~ "<a href=\"http://alexrabe.de/wordpress-plugins/wordtube/translation-of-"
 #~ "plugins/\">here</a> how you can translate the plugin."
+
 #~ msgid ""
 #~ "<strong>Translation by : </strong><a target=\"_blank\" href=\"\">N/A</a>"
 #~ msgstr ""
 #~ "<strong>Übersetzt von : </strong><a target=\"_blank\" href=\"\">Alex "
 #~ "Rabe</a>"
+
 #~ msgid "Setup Gallery"
 #~ msgstr "Galerie Setup"
+
 #~ msgid "Setup"
 #~ msgstr "Setup"
+
 #~ msgid "Alignment"
 #~ msgstr "Ausrichtung"
+
 #~ msgid "Full size"
 #~ msgstr "Volle Größe"
+
 #~ msgid "Singlepic"
 #~ msgstr "Einzelbilder"
+
 #~ msgid "Insert into Post"
 #~ msgstr "In den Beitrag einfügen"
+
 #~ msgid "PHP Output Buffer Size"
 #~ msgstr "PHP Output Buffer Größe"
+
 #~ msgid "for PclZip , a PHP library that manage ZIP archives"
 #~ msgstr "für PclZip, eine ZIP PHP Library"
+
 #~ msgid "Crop square thumbnail from image"
 #~ msgstr "Mittige Thumbnails aus Bildern ausschneiden"
+
 #~ msgid "Create square thumbnails, use only the width setting :"
 #~ msgstr "Erstellt viereckige Thumbnails, nutzt nur den Wert der Breite :"
+
 #~ msgid "Image"
+
 #~ msgid_plural "Images"
 #~ msgstr[0] "Bild"
 #~ msgstr[1] "Bilder"
@@ -3269,18 +3282,25 @@ msgstr "Ungültiger Media RSS Befehl (%s)"
 #, fuzzy
 #~ msgid "Search Media"
 #~ msgstr "Suche nach Stichwörter"
+
 #~ msgid "Select Gallery"
 #~ msgstr "Wähle Galerie"
+
 #~ msgid "Album Page ID"
 #~ msgstr "Album Seiten ID (Page ID)"
+
 #~ msgid "Import a folder with all images."
 #~ msgstr "Importiere ein Verzeichnis mit Bildern."
+
 #~ msgid "Show tags"
 #~ msgstr "Zeige Tags"
+
 #~ msgid "Hide tags"
 #~ msgstr "Verstecke Tags"
+
 #~ msgid "Delete this file ?"
 #~ msgstr "Diese Datei löschen ?"
+
 #~ msgid ""
 #~ "You are about to copy or move %s images \n"
 #~ " \n"
@@ -3289,27 +3309,37 @@ msgstr "Ungültiger Media RSS Befehl (%s)"
 #~ "Willst du wirklich %s Bild(er) verschieben \n"
 #~ " \n"
 #~ " 'Abbrechen' um zu stoppen, 'OK' um die Bearbeitung durchzuführen."
+
 #~ msgid "Show thumbnails "
 #~ msgstr "Thumbnails zeigen"
+
 #~ msgid "Add Gallery"
 #~ msgstr "Bilder/Galerie hinzufügen"
+
 #~ msgid "Manage galleries"
 #~ msgstr "Galerie verwalten"
+
 #~ msgid ""
 #~ "There are totally %1$s pictures in %2$s galleries, which are spread "
 #~ "across %3$s albums."
 #~ msgstr ""
 #~ "Es gibt insgesamt %1$s Bilder in %2$s Galerien - verteilt in %3$s Alben."
+
 #~ msgid "GD support"
 #~ msgstr "GD Unterstützung"
+
 #~ msgid "ImageMagick"
 #~ msgstr "ImageMagick"
+
 #~ msgid "Add Metadata :"
 #~ msgstr "Metadaten hinzufügen :"
+
 #~ msgid "Import EXIF, IPTC or XMP data (if available)"
 #~ msgstr "EXIF, IPTC oder XMP Daten importieren (wenn verfügbar)"
+
 #~ msgid "New Version available"
 #~ msgstr "Neue Version verfügbar !!"
+
 #~ msgid ""
 #~ "The server reports that a new NextGEN Gallery Version is now available. "
 #~ "Please visit the plugin homepage for more information."
@@ -3317,95 +3347,134 @@ msgstr "Ungültiger Media RSS Befehl (%s)"
 #~ "Der Server benachrichtigt Dich über eine neu verfügbare Version der "
 #~ "NextGEN Galerie. Bitte besuche die Plugin Homepage um weitere "
 #~ "Informationen zu erhalten."
+
 #~ msgid "Resample Mode"
 #~ msgstr "Resample Modus"
+
 #~ msgid "Value between 1-5 (higher value, more CPU load)"
 #~ msgstr "Wähle zwischen 1-5 (je höhere desto länger braucht der Server)"
+
 #~ msgid "NextGEN Gallery %d"
 #~ msgstr "NextGEN Gallery %d"
+
 #~ msgid "How many NextGEN Gallery widgets would you like?"
 #~ msgstr "Wie viele NextGEN Gallery Widgets möchtest du haben ?"
+
 #~ msgid "Save"
 #~ msgstr "Speichern"
+
 #~ msgid "for Simple:Press Forum, it saved me a lot of time"
 #~ msgstr "für das  Simple:Press Forum, welches mir viel Zeit sparte"
+
 #~ msgid "Sorry, NextGEN Gallery works only under WordPress 2.5 or higher"
 #~ msgstr ""
 #~ "Tut mir leid aber NextGEN Galerie arbeitet nur ab WordPress 2.5 und "
 #~ "aufwärts"
+
 #~ msgid "Watch gallery"
 #~ msgstr "Galerie ansehen"
+
 #~ msgid "from"
 #~ msgstr "von"
+
 #~ msgid "Running... Please wait"
 #~ msgstr "Läuft... Bitte warten"
+
 #~ msgid " : Image resized..."
 #~ msgstr " : Bild angepasst..."
+
 #~ msgid "Some pictures are not writeable :"
 #~ msgstr "Einige Bilder sind schreibgeschützt :"
+
 #~ msgid " : Watermark created..."
 #~ msgstr " : Wasserzeichen gesetzt..."
+
 #~ msgid " : Thumbnail created..."
 #~ msgstr ": Thumbnail erstellt..."
+
 #~ msgid "Follow thumbnails could not created."
 #~ msgstr "Folgende Thumbnails konnten nicht erstellt werden  :"
+
 #~ msgid "Some thumbnails are not writeable :"
 #~ msgstr "Einige Thumbnails sind schreibgeschützt :"
+
 #~ msgid "Watermark successfully added"
 #~ msgstr "Wasserzeichen erfolgreich erstellt"
+
 #~ msgid "Images successfully resized"
 #~ msgstr "Bilder erfolgreich verkleinert"
+
 #~ msgid " (require WordPress 2.3 or higher)"
 #~ msgstr " (benötigt WordPress 2.3 oder höher)"
+
 #~ msgid "Show thumbnail description"
 #~ msgstr "Zeige Bildbeschreibung"
+
 #~ msgid "Description text"
 #~ msgstr "Beschreibung"
+
 #~ msgid "Import a folder with images. Please note :"
 #~ msgstr "Importiere ein Verzeichniss mit Bildern. Bitte beachte:"
+
 #~ msgid "For safe-mode = ON you need to add the subfolder thumbs manually"
 #~ msgstr ""
 #~ "Da der Safe-Mode  (PHP.INI) eingeschaltet ist, mußt Du das "
 #~ "Unterverzeichnis für die Vorschaubilder (\"thumbs\") manuell (per FTP) "
 #~ "anlegen"
+
 #~ msgid "The Zip-file is too large. Exceed Memory limit !"
 #~ msgstr "Das Zip-File ist zu groß. Speicherlimit überschritten !"
+
 #~ msgid "Summary"
 #~ msgstr "Zusammenfassung"
+
 #~ msgid "Welcome"
 #~ msgstr "Willkommen"
+
 #~ msgid ""
 #~ "Welcome to NextGEN Gallery. Here you can control your images, galleries "
 #~ "and albums. You currently have %s rights."
 #~ msgstr ""
 #~ "Willkommen zur NextGEN Galerie. Hier kannst Du Deine Bilder, Galerien und "
 #~ "Alben verwalten. Du hast im Moment %s Rechte."
+
 #~ msgid "Add a new gallery or import pictures"
 #~ msgstr "Neue Galerie erstellen oder Bilder importieren"
+
 #~ msgid "Manage galleries and images"
 #~ msgstr "Verwalte Galerien und Bilder"
+
 #~ msgid "Create and manage albums"
 #~ msgstr "Erstelle und verwalte Alben"
+
 #~ msgid "URL"
 #~ msgstr "URL"
+
 #~ msgid "Delete File"
 #~ msgstr "Datei löschen"
+
 #~ msgid "Delete image ?"
 #~ msgstr "Bilder löschen ?"
+
 #~ msgid "Browse your files"
 #~ msgstr "Durchsuche deine Dateien"
+
 #~ msgid "Direct link to file"
 #~ msgstr "Link zur Datei"
+
 #~ msgid "Show:"
 #~ msgstr "Zeige als:"
+
 #~ msgid "Link to:"
 #~ msgstr "Link zu:"
+
 #~ msgid "Send to editor &raquo;"
 #~ msgstr "Zum  Editor schicken &raquo;"
+
 #~ msgid ""
 #~ "Are you sure you want to delete the file '%s'?\n"
 #~ "Click ok to delete or cancel to go back."
 #~ msgstr "Bist du sicher das Du diese Datei '%s' löschen willst ?"
+
 #~ msgid "Alt/Titel text"
 #~ msgstr "Alt / Titel Text"
-
