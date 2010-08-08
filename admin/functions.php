@@ -768,7 +768,6 @@ class nggAdmin{
 	 * @return bool
 	 */
 	function getOnlyImages($p_event, $p_header)	{
-		
 		$info = pathinfo($p_header['filename']);
 		// check for extension
 		$ext = array('jpeg', 'jpg', 'png', 'gif'); 
@@ -1453,9 +1452,28 @@ class nggAdmin{
  * @param mixed $p_header
  * @return
  */
-function ngg_getOnlyImages($p_event, $p_header)	{
+function ngg_getOnlyImages($p_event, &$p_header)	{
 	
 	return nggAdmin::getOnlyImages($p_event, $p_header);
 	
+}
+
+/**
+ * Ensure after zip extraction that it could be only a image file
+ * 
+ * @param mixed $p_event
+ * @param mixed $p_header
+ * @return 1
+ */
+function ngg_checkExtract($p_event, &$p_header)	{
+	
+	    // look for valid extraction
+    if ($p_header['status'] == 'ok') {
+      // check if it's any image file, delete all other files
+      if ( !@getimagesize ( $p_header['filename'] ))
+          unlink($p_header['filename']);
+    }
+	
+    return 1;
 }
 ?>
