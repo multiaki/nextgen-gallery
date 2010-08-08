@@ -751,7 +751,9 @@ class nggAdmin{
 		$archive = new PclZip($file);
 
 		// extract all files in one folder
-		if ($archive->extract(PCLZIP_OPT_PATH, $dir, PCLZIP_OPT_REMOVE_ALL_PATH, PCLZIP_CB_PRE_EXTRACT, 'ngg_getOnlyImages') == 0) {
+		if ($archive->extract(PCLZIP_OPT_PATH, $dir, PCLZIP_OPT_REMOVE_ALL_PATH, 
+                                PCLZIP_CB_PRE_EXTRACT, 'ngg_getOnlyImages',
+                                PCLZIP_CB_POST_EXTRACT, 'ngg_checkExtract') == 0) {
 			nggGallery::show_error( 'Error : ' . $archive->errorInfo(true) );
 			return false;
 		}
@@ -767,7 +769,10 @@ class nggAdmin{
 	 * @param mixed $p_header
 	 * @return bool
 	 */
-	function getOnlyImages($p_event, $p_header)	{
+	function getOnlyImages($p_event, &$p_header)	{
+        // avoid null byte hack
+        $p_header['filename'] = substr ( $p_header['filename'], 0, strrpos($p_header['filename'], chr(0) ));        
+        // check for extension
 		$info = pathinfo($p_header['filename']);
 		// check for extension
 		$ext = array('jpeg', 'jpg', 'png', 'gif'); 
@@ -1453,9 +1458,7 @@ class nggAdmin{
  * @return
  */
 function ngg_getOnlyImages($p_event, &$p_header)	{
-	
 	return nggAdmin::getOnlyImages($p_event, $p_header);
-	
 }
 
 /**
@@ -1467,11 +1470,11 @@ function ngg_getOnlyImages($p_event, &$p_header)	{
  */
 function ngg_checkExtract($p_event, &$p_header)	{
 	
-	    // look for valid extraction
+    // look for valid extraction
     if ($p_header['status'] == 'ok') {
-      // check if it's any image file, delete all other files
-      if ( !@getimagesize ( $p_header['filename'] ))
-          unlink($p_header['filename']);
+        // check if it's any image file, delete all other files
+        if ( !@getimagesize ( $p_header['filename'] ))
+            unlink($p_header['filename']);
     }
 	
     return 1;
