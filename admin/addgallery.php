@@ -158,7 +158,7 @@ class nggAddGallery {
 								
 				// File Upload Settings
 				file_size_limit : "<?php echo wp_max_upload_size(); ?>b",
-				file_types : "*.jpg;*.jpeg;*.JPG;*.JPEG;*.gif;*.GIF;*.png;*.PNG",
+				file_types : "*.jpg;*.jpeg;*.gif;*.png;*.JPG;*.JPEG;*.GIF;*.PNG",
 				file_types_description : "<?php _e('Image Files', 'nggallery') ;?>",
 				
 				// Queue handler

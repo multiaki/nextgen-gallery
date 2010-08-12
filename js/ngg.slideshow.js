@@ -14,12 +14,11 @@ function nggStartSlideshow( obj, id, width, height, domain) {
             }
             
             // push the first three images out
-            if (stack.length)
+            var i = 1;
+            while (stack.length && i <= 3) {
                 jQuery( obj ).append( "<img style='display:none;' src='" + stack.shift() + "'/>"  );
-            if (stack.length)
-                jQuery( obj ).append( "<img style='display:none;' src='" + stack.shift() + "'/>"  );
-            if (stack.length)
-                jQuery( obj ).append( "<img style='display:none;' src='" + stack.shift() + "'/>"  );
+                i++;
+            }
 
             // Start the slideshow
             jQuery( obj + ' img' ).bind( 'load', function() {
@@ -31,6 +30,7 @@ function nggStartSlideshow( obj, id, width, height, domain) {
                	    // Start the cycle plugin
                 	jQuery( obj ).cycle( {
                 		fx: 	'fade',
+                        containerResize: 0,
                         timeout: 10000,
                         next:   obj,
                         before: jCycle_onBefore
