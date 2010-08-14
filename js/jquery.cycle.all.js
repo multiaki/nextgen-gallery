@@ -482,7 +482,7 @@ function exposeAddSlide(opts, els) {
 		if (opts.fit && opts.width)
 			$s.width(opts.width);
 		if (opts.fit && opts.height && opts.height != 'auto')
-			$slides.height(opts.height);
+			$s.height(opts.height);
 		s.cycleH = (opts.fit && opts.height) ? opts.height : $s.height();
 		s.cycleW = (opts.fit && opts.width) ? opts.width : $s.width();
 
