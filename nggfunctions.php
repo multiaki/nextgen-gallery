@@ -105,7 +105,7 @@ function nggShow_JS_Slideshow($galleryID, $width, $height) {
     if (empty($width) ) $width  = (int) $ngg_options['irWidth'];
     if (empty($height)) $height = (int) $ngg_options['irHeight'];
         
-    $out  = '<div id="' . $anchor . '" class="ngg-slideshow" style="height:' . $height . 'px;width:' . $width . 'px;">';
+    $out  = '<div id="' . $anchor . '" class="ngg-slideshow">';
     $out .= "\n". '<div id="' . $anchor . '-loader" class="ngg-slideshow-loader" style="height:' . $height . 'px;width:' . $width . 'px;">';
     $out .= "\n". '<img src="'. NGGALLERY_URLPATH . 'images/loader.gif " alt="" />';
     $out .= "\n". '</div>';
