@@ -20,28 +20,22 @@ function nggStartSlideshow( obj, id, width, height, domain) {
                 i++;
             }
 
+            // hide the loader icon
+        	jQuery( obj + '-loader' ).empty().remove();
+            
             // Start the slideshow
-            jQuery( obj + ' img' ).bind( 'load', function() {
-                
-                // hide the loader icon
-            	jQuery( obj + '-loader' ).empty().remove();
-                
-                jQuery(obj + ' img:first').fadeIn(1000, function() {
-                    //Debug mode
-                    //jQuery.fn.cycle.debug = true;
-               	    // Start the cycle plugin
-                	jQuery( obj ).cycle( {
-                		fx: 	'fade',
-                        containerResize: 1,
-                        height: height,
-                        fit: 1,
-                        timeout: 10000,
-                        next:   obj,
-                        before: jCycle_onBefore
-                	});
-                });
-                                
-            });            
+            jQuery(obj + ' img:first').fadeIn(1000, function() {
+           	    // Start the cycle plugin
+            	jQuery( obj ).cycle( {
+            		fx: 	'fade',
+                    containerResize: 1,
+                    height: height,
+                    fit: 1,
+                    timeout: 10000,
+                    next:   obj,
+                    before: jCycle_onBefore
+            	});
+            });
             
 		}
 	});
