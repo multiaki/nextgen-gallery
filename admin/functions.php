@@ -7,7 +7,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
  * 
  * @package NextGEN Gallery
  * @author Alex Rabe
- * @copyright 2007-2009
+ * @copyright 2007-2010
  * @access public
  */
 class nggAdmin{
@@ -106,7 +106,7 @@ class nggAdmin{
 			do_action('ngg_created_new_gallery', $gallery_id);
 
 			// return only the id if defined
-			if ($return_id)
+			if ($output == false)
 				return $gallery_id;
 				
 			if ($result) {
