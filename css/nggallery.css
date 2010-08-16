@@ -285,8 +285,8 @@ html>body .ngg-album {
 }
 
 .ngg-slideshow img { 
-    margin: auto; 
-    display: block;
+    margin: auto !important; 
+    display: block !important;
 }
 
 /* ----------- Single picture -------------*/

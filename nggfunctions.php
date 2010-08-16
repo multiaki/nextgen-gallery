@@ -112,7 +112,14 @@ function nggShow_JS_Slideshow($galleryID, $width, $height) {
     $out .= '</div>'."\n";
     $out .= "\n".'<script type="text/javascript" defer="defer">';
     $out .= "\n".'jQuery.getScript( "'  . NGGALLERY_URLPATH . 'js/jquery.cycle.all.js' . '", function() { ';
-    $out .= "\n".'jQuery.getScript( "'  . NGGALLERY_URLPATH . 'js/ngg.slideshow.js' . '", function() { nggStartSlideshow( "' . $anchor . '", ' . $galleryID . ', ' . $width . ', ' . $height . ', "' . trailingslashit ( get_option ('siteurl') ) . '" ); } );';
+    $out .= "\n".'jQuery.getScript( "'  . NGGALLERY_URLPATH . 'js/ngg.slideshow.js' . '", function() { nggStartSlideshow( {' .
+            'obj: "'    . $anchor       . '",' .
+            'id: '      . $galleryID    . ',' . 
+            'width:'    . $width        . ',' . 
+            'height:'   . $height       . ',' .
+            'domain: "' . trailingslashit ( get_option ('siteurl') ) . '",' .
+            'timeout:'  . $ngg_options['irRotatetime'] * 1000 .
+            '}); } );';
     $out .= "\n".'} );';
     $out .= "\n".'</script>';
 
