@@ -51,10 +51,12 @@ class nggSlideshowWidget extends WP_Widget {
 	function render_slideshow($galleryID, $irWidth = '', $irHeight = '') {
 		
 		require_once ( dirname (__FILE__) . '/../lib/swfobject.php' );
-		
-		global $wpdb;
 	
 		$ngg_options = get_option('ngg_options');
+
+        //Redirect all calls to the JavaScript slideshow if wanted
+        if ( $ngg_options['enableIR'] !== '1' || nggGallery::detect_mobile_phone() === true )
+            return nggShow_JS_Slideshow($galleryID, $irWidth, $irHeight, 'ngg-widget-slideshow');
 	
 		if (empty($irWidth) ) $irWidth = (int) $ngg_options['irWidth'];
 		if (empty($irHeight)) $irHeight = (int) $ngg_options['irHeight'];

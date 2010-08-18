@@ -25,7 +25,7 @@ function nggShowSlideshow($galleryID, $width, $height) {
     }
 
     //Redirect all calls to the JavaScript slideshow if wanted
-    if ( $ngg_options['enableIR'] !== true )
+    if ( $ngg_options['enableIR'] !== '1' || nggGallery::detect_mobile_phone() === true )
         return nggShow_JS_Slideshow($galleryID, $width, $height);
     
     // If the Imagerotator didn't exist, skip the output
@@ -92,9 +92,10 @@ function nggShowSlideshow($galleryID, $width, $height) {
  * @param integer $galleryID ID of the gallery
  * @param integer $width Width of the slideshow container
  * @param integer $height Height of the slideshow container
+ * @param string $class Classname of the div container
  * @return the content
  */
-function nggShow_JS_Slideshow($galleryID, $width, $height) {
+function nggShow_JS_Slideshow($galleryID, $width, $height, $class = 'ngg-slideshow') {
     
     $ngg_options = nggGallery::get_option('ngg_options');
     
@@ -105,7 +106,7 @@ function nggShow_JS_Slideshow($galleryID, $width, $height) {
     if (empty($width) ) $width  = (int) $ngg_options['irWidth'];
     if (empty($height)) $height = (int) $ngg_options['irHeight'];
         
-    $out  = '<div id="' . $anchor . '" class="ngg-slideshow">';
+    $out  = '<div id="' . $anchor . '" class="' . $class . '" style="height:' . $height . 'px;width:' . $width . 'px;">';
     $out .= "\n". '<div id="' . $anchor . '-loader" class="ngg-slideshow-loader" style="height:' . $height . 'px;width:' . $width . 'px;">';
     $out .= "\n". '<img src="'. NGGALLERY_URLPATH . 'images/loader.gif " alt="" />';
     $out .= "\n". '</div>';

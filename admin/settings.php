@@ -323,40 +323,34 @@ class nggOptions {
 		<input type="hidden" name="page_options" value="imgResize,imgWidth,imgHeight,imgQuality,imgBackup,imgAutoResize,imgCacheSinglePic" />
 			<table class="form-table ngg-options">
 				<tr valign="top">
-					<th scope="row"><label for="fixratio"><?php _e('Resize Images','nggallery') ?></label></th>
-					<td></td>
+					<th valign="top"><label for="fixratio"><?php _e('Resize Images','nggallery') ?></label></th>
 					<td><input type="text" size="5" name="imgWidth" value="<?php echo $ngg->options['imgWidth']; ?>" /> x <input type="text" size="5" name="imgHeight" value="<?php echo $ngg->options['imgHeight']; ?>" />
 					<span class="setting-description"><?php _e('Width x height (in pixel). NextGEN Gallery will keep ratio size','nggallery') ?></span></td>
 				</tr>
 				<tr valign="top">
-					<th align="left"><?php _e('Image quality','nggallery'); ?></th>
-					<td></td>
+					<th valign="top"><?php _e('Image quality','nggallery'); ?></th>
 					<td><input type="text" size="3" maxlength="3" name="imgQuality" value="<?php echo $ngg->options['imgQuality']; ?>" /> %</td>
 				</tr>
 				<tr>
-					<th colspan="1"><?php _e('Backup original images','nggallery'); ?></th>
-					<td></td>
-					<td colspan="3"><input type="checkbox" name="imgBackup" value="1"<?php echo ($ngg->options['imgBackup'] == 1) ? ' checked ="chechked"' : ''; ?>/>	
+					<th valign="top"><?php _e('Backup original images','nggallery'); ?></th>
+					<td><input type="checkbox" name="imgBackup" value="1"<?php echo ($ngg->options['imgBackup'] == 1) ? ' checked ="chechked"' : ''; ?>/>	
 					<span class="setting-description"><?php _e('Creates a backup for inserted images','nggallery'); ?></span></td>
 				</tr>
 				<tr>
-					<th colspan="1"><?php _e('Automatically resize','nggallery'); ?></th>
-					<td></td>
-					<td colspan="3"><input type="checkbox" name="imgAutoResize" value="1"<?php echo ($ngg->options['imgAutoResize'] == 1) ? ' checked ="chechked"' : ''; ?>/>	
+					<th valign="top"><?php _e('Automatically resize','nggallery'); ?></th>
+					<td><input type="checkbox" name="imgAutoResize" value="1"<?php echo ($ngg->options['imgAutoResize'] == 1) ? ' checked ="chechked"' : ''; ?>/>	
 					<span class="setting-description"><?php _e('Automatically resize images on upload.','nggallery') ?></span></td>
 				</tr>
 			</table>
 			<h3 class="expert"><?php _e('Single picture','nggallery') ?></h3>
 			<table class="expert form-table ngg-options">
-				<tr valign="top">
-					<th align="left"><?php _e('Cache single pictures','nggallery'); ?></th>
-					<td></td>
+				<tr>
+					<th valign="top"><?php _e('Cache single pictures','nggallery'); ?></th>
 					<td><input <?php if (is_multisite()) echo 'readonly = "readonly"'; ?> type="checkbox" name="imgCacheSinglePic" value="1" <?php checked('1', $ngg->options['imgCacheSinglePic']); ?> />
 					<span class="setting-description"><?php _e('Creates a file for each singlepic settings. Reduce the CPU load','nggallery') ?></span></td>
 				</tr>
-				<tr valign="top">
-					<th align="left"><?php _e('Clear cache folder','nggallery'); ?></th>
-					<td></td>
+				<tr>
+					<th valign="top"><?php _e('Clear cache folder','nggallery'); ?></th>
 					<td><input type="submit" name="clearcache" class="button-secondary"  value="<?php _e('Proceed now','nggallery') ;?> &raquo;"/></td>
 				</tr>
 			</table>
@@ -608,7 +602,7 @@ class nggOptions {
     	<p><?php _e('The settings are used in the JW Image Rotator Version', 'nggallery') ?> 3.17 .
     	   <?php _e('See more information for the Flash Player on the web page', 'nggallery') ?> <a href="http://www.longtailvideo.com/players/jw-image-rotator/" target="_blank" >JW Image Rotator from Jeroen Wijering</a>.
     	</p>
-    	<?php if (empty($ngg->options['irURL']) && ($ngg->options['enableIR'] == true)) { ?>
+    	<?php if (empty($ngg->options['irURL']) && ($ngg->options['enableIR'] == '1')) { ?>
     		<p>
     			<div id="message" class="error inline">
     			<p>

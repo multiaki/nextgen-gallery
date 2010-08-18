@@ -86,7 +86,7 @@ class nggAPI {
 			break;
 			case 'gallery' :
 				//search for some gallery
-				$this->result['images'] = nggdb::get_gallery( $this->id, 'pid', 'ASC' );
+				$this->result['images'] = ($this->id == 0) ? nggdb::find_last_images( 0 , 100 ) : nggdb::get_gallery( $this->id, 'pid', 'ASC' );
 			break;
 			case 'image' :
 				//search for some image

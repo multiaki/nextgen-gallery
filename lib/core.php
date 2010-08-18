@@ -459,6 +459,52 @@ class nggGallery {
 		}
 		
 	}
+    
+    /**
+     * Check for mobile user agent
+     * 
+     * @since 1.6.0
+     * @author Part taken from WPtouch plugin (http://www.bravenewcode.com)
+     * @return bool $result of  check
+     */
+    function detect_mobile_phone() {
+        
+        $useragents = array();
+        
+        // Check if WPtouch is running
+        if ( function_exists('bnc_wptouch_get_user_agents') )
+            $useragents = bnc_wptouch_get_user_agents();
+        else {   
+        	$useragents = array(		
+        		"iPad",  			 // Apple iPad
+                "iPhone",  			 // Apple iPhone
+        		"iPod", 			 // Apple iPod touch
+        		"Android", 			 // 1.5+ Android
+        		"dream", 		     // Pre 1.5 Android
+        		"CUPCAKE", 			 // 1.5+ Android
+        		"blackberry9500",	 // Storm
+        		"blackberry9530",	 // Storm
+        		"blackberry9520",	 // Storm	v2
+        		"blackberry9550",	 // Storm v2
+        		"blackberry9800",	 // Torch
+        		"webOS",			 // Palm Pre Experimental
+        		"incognito", 		 // Other iPhone browser
+        		"webmate" 			 // Other iPhone browser
+        	);
+        	
+        	asort( $useragents );
+         }
+
+        // WPtouch User Agent Filter
+        $useragents = apply_filters( 'wptouch_user_agents', $useragents );
+
+ 		foreach ( $useragents as $useragent ) {
+			if ( preg_match( "#$useragent#i", $_SERVER['HTTP_USER_AGENT'] ) )
+				return true;
+		}
+    
+        return false;    
+    }
 }
 
 ?>

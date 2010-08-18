@@ -264,6 +264,8 @@ html>body .ngg-album {
 /* ----------- JS Slideshow -------------*/
 .ngg-slideshow { 
     position: relative;
+    text-align:center;
+    margin: auto !important; 
 }
 
 /* See also : http://www.brunildo.org/test/img_center.html */
@@ -284,8 +286,7 @@ html>body .ngg-album {
     margin:auto !important; 
 }
 
-.ngg-slideshow img { 
-    margin: auto !important; 
+.ngg-slideshow img {
     display: block !important;
 }
 
