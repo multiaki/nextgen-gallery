@@ -18,8 +18,6 @@ class nggAdminPanel{
 		// Add the script and style files
 		add_action('admin_print_scripts', array(&$this, 'load_scripts') );
 		add_action('admin_print_styles', array(&$this, 'load_styles') );
-		
-		add_action( 'admin_print_footer_scripts', 'codepress_footer_js' );
 
 		add_filter('contextual_help', array(&$this, 'show_help'), 10, 2);
 		add_filter('screen_meta_screen', array(&$this, 'edit_screen_meta'));
