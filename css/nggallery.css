@@ -264,16 +264,15 @@ html>body .ngg-album {
 /* ----------- JS Slideshow -------------*/
 .ngg-slideshow { 
     position: relative;
-    text-align:center;
-    margin: auto !important; 
+    /* text-align:center; */
+    /* margin: auto !important; */ 
 }
-
-/* See also : http://www.brunildo.org/test/img_center.html */
 
 .ngg-slideshow * {
     vertical-align:middle;
 }
 
+/* See also : http://www.brunildo.org/test/img_center.html */
 .ngg-slideshow-loader{
     display: table-cell;
     text-align: center;
