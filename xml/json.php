@@ -53,10 +53,6 @@ class nggAPI {
 		
         if ( !defined('ABSPATH') )
             die('You are not allowed to call this page directly.');
-        
-		// Enable the JSON API when you add define('NGG_JSON_ENABLED',true); in the wp-config.php file
-		if ( !defined('NGG_JSON_ENABLED') || NGG_JSON_ENABLED === false )
-			wp_die('JSON API not enabled. Add <strong>define(\'NGG_JSON_ENABLED\', true);</strong> to your wp-config.php file');
 
 		if ( !function_exists('json_encode') )
 			wp_die('Json_encode not available. You need to use PHP 5.2');
