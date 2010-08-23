@@ -118,8 +118,8 @@ function nggShow_JS_Slideshow($galleryID, $width, $height, $class = 'ngg-slidesh
     $out .= "\n". '</div>';
     $out .= '</div>'."\n";
     $out .= "\n".'<script type="text/javascript" defer="defer">';
-    $out .= "\n".'jQuery.getScript( "'  . NGGALLERY_URLPATH . 'js/jquery.cycle.all.js' . '", function() { ';
-    $out .= "\n".'jQuery.getScript( "'  . NGGALLERY_URLPATH . 'js/ngg.slideshow.js' . '", function() { jQuery("#' . $anchor . '").nggSlideshow( {' .
+    $out .= "\n".'jQuery.getScript( "'  . NGGALLERY_URLPATH . 'js/jquery.cycle.all.min.js' . '", function() { ';
+    $out .= "\n".'jQuery.getScript( "'  . NGGALLERY_URLPATH . 'js/ngg.slideshow.min.js' . '", function() { jQuery("#' . $anchor . '").nggSlideshow( {' .
             'id: '      . $galleryID    . ',' . 
             'fx:"'      . $ngg_options['slideFx'] . '",' .
             'width:'    . $width        . ',' . 

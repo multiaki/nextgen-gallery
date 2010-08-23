@@ -89,7 +89,7 @@ class nggLoader {
 		
 		// All credits to the tranlator 
 		$this->translator  = '<p class="hint">'. __('<strong>Translation by : </strong><a target="_blank" href="http://alexrabe.de/wordpress-plugins/nextgen-gallery/languages/">See here</a>', 'nggallery') . '</p>';
-		$this->translator .= '<p class="hint">'. __('<strong>This translation is not yet updated for Version 1.5.0</strong>. If you would like to help with translation, download the current po from the plugin folder and read <a href="http://alexrabe.de/wordpress-plugins/wordtube/translation-of-plugins/">here</a> how you can translate the plugin.', 'nggallery') . '</p>'; 
+		$this->translator .= '<p class="hint">'. __('<strong>This translation is not yet updated for Version 1.6.0</strong>. If you would like to help with translation, download the current po from the plugin folder and read <a href="http://alexrabe.de/wordpress-plugins/wordtube/translation-of-plugins/">here</a> how you can translate the plugin.', 'nggallery') . '</p>'; 
 				
 		// Content Filters
 		add_filter('ngg_gallery_name', 'sanitize_title');
@@ -314,9 +314,11 @@ class nggLoader {
 	    }
 		
 		// required for the slideshow
-		if ( NGGALLERY_IREXIST == true ) 
+		if ( NGGALLERY_IREXIST == true && $ngg_options['enableIR'] === '1' && nggGallery::detect_mobile_phone() === false ) 
 			wp_enqueue_script('swfobject', NGGALLERY_URLPATH .'admin/js/swfobject.js', FALSE, '2.2');
-
+        else    
+            wp_enqueue_script ( 'jQuery' );
+            
 		// Load AJAX navigation script, works only with shutter script as we need to add the listener
 		if ( $this->options['galAjaxNav'] ) { 
 			if ( ($this->options['thumbEffect'] == "shutter") || function_exists('srel_makeshutter') ) {
