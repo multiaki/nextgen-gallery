@@ -262,10 +262,9 @@ html>body .ngg-album {
 }
 
 /* ----------- JS Slideshow -------------*/
-.ngg-slideshow { 
+.ngg-slideshow {
+    overflow:hidden;
     position: relative;
-    /* text-align:center; */
-    /* margin: auto !important; */ 
 }
 
 .ngg-slideshow * {
@@ -283,10 +282,6 @@ html>body .ngg-album {
     background: none !important; 
     border: 0 none !important;
     margin:auto !important; 
-}
-
-.ngg-slideshow img {
-    display: block !important;
 }
 
 /* ----------- Single picture -------------*/

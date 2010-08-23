@@ -34,7 +34,8 @@ function nggShowSlideshow($galleryID, $width, $height) {
         
     if (empty($width) ) $width  = (int) $ngg_options['irWidth'];
     if (empty($height)) $height = (int) $ngg_options['irHeight'];
-
+    // Doesn't work fine with zero
+    $ngg_options['irRotatetime'] = ($ngg_options['irRotatetime'] == 0) ? 5 : $ngg_options['irRotatetime'];
     // init the flash output
     $swfobject = new swfobject( $ngg_options['irURL'] , 'so' . $galleryID, $width, $height, '7.0.0', 'false');
 
@@ -115,6 +116,7 @@ function nggShow_JS_Slideshow($galleryID, $width, $height, $class = 'ngg-slidesh
     $out .= "\n".'jQuery.getScript( "'  . NGGALLERY_URLPATH . 'js/jquery.cycle.all.js' . '", function() { ';
     $out .= "\n".'jQuery.getScript( "'  . NGGALLERY_URLPATH . 'js/ngg.slideshow.js' . '", function() { jQuery("#' . $anchor . '").nggSlideshow( {' .
             'id: '      . $galleryID    . ',' . 
+            'fx:"'      . $ngg_options['slideFx'] . '",' .
             'width:'    . $width        . ',' . 
             'height:'   . $height       . ',' .
             'domain: "' . trailingslashit ( get_option ('siteurl') ) . '",' .

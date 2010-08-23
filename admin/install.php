@@ -189,8 +189,9 @@ function ngg_default_options() {
 	$ngg_options['wmColor']				= '000000';  					// Font Color
 	$ngg_options['wmOpaque']			= '100';  						// Font Opaque
 
-	// Image Rotator settings
+	// Image Rotator settings 
 	$ngg_options['enableIR']		    = false;
+    $ngg_options['slideFx']		        = 'fade';
     $ngg_options['irURL']				= '';
 	$ngg_options['irXHTMLvalid']		= false;
 	$ngg_options['irAudio']				= '';

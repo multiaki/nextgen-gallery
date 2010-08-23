@@ -597,129 +597,149 @@ class nggOptions {
     	<!-- Slideshow settings -->
     	<form name="player_options" method="POST" action="<?php echo $this->filepath.'#slideshow'; ?>" >
     	<?php wp_nonce_field('ngg_settings'); ?>
-    	<input type="hidden" name="page_options" value="enableIR,irURL,irWidth,irHeight,irShuffle,irLinkfromdisplay,irShownavigation,irShowicons,irWatermark,irOverstretch,irRotatetime,irTransition,irKenburns,irBackcolor,irFrontcolor,irLightcolor,irScreencolor,irAudio,irXHTMLvalid" />
+    	<input type="hidden" name="page_options" value="slideFx,enableIR,irURL,irWidth,irHeight,irShuffle,irLinkfromdisplay,irShownavigation,irShowicons,irWatermark,irOverstretch,irRotatetime,irTransition,irKenburns,irBackcolor,irFrontcolor,irLightcolor,irScreencolor,irAudio,irXHTMLvalid" />
     	<h2><?php _e('Slideshow','nggallery'); ?></h2>
-    	<p><?php _e('The settings are used in the JW Image Rotator Version', 'nggallery') ?> 3.17 .
-    	   <?php _e('See more information for the Flash Player on the web page', 'nggallery') ?> <a href="http://www.longtailvideo.com/players/jw-image-rotator/" target="_blank" >JW Image Rotator from Jeroen Wijering</a>.
-    	</p>
-    	<?php if (empty($ngg->options['irURL']) && ($ngg->options['enableIR'] == '1')) { ?>
-    		<p>
-    			<div id="message" class="error inline">
-    			<p>
-    				<?php _e('The path to imagerotator.swf is not defined, the slideshow will not work.','nggallery') ?><br />
-    				<?php _e('If you would like to use the JW Image Rotatator, please download the player <a href="http://www.longtailvideo.com/players/jw-image-rotator/" target="_blank" >here</a> and upload it to your Upload folder (Default is wp-content/uploads).','nggallery') ?>
-    			</p>
-    			</div>
-    		</p>
-    	<?php }?>
-    			<table class="form-table ngg-options">
-    				<tr>
-    					<th><?php _e('Enable flash slideshow','nggallery') ?>:</th>
-    					<td><input name="enableIR" type="checkbox" value="1" <?php checked('1', $ngg->options['enableIR']); ?> />
-                        <span class="setting-description"><?php _e('Integrate the flash based sildeshow for all flash supported devices','nggallery') ?></span></td>
-    				</tr>
-    				<tr>
-    					<th><?php _e('Path to the Imagerotator (URL)','nggallery') ?>:</th>
-    					<td>
-    						<input type="text" size="50" id="irURL" name="irURL" value="<?php echo $ngg->options['irURL']; ?>" />
-    						<input type="submit" name="irDetect" class="button-secondary"  value="<?php _e('Search now','nggallery') ;?> &raquo;"/>
-    						<br /><span class="setting-description"><?php _e('Press the button to search automatic for the imagerotator, if you uploaded it to wp-content/uploads or a subfolder','nggallery') ?></span>
-    					</td>
-    				</tr>					
-    				<tr>
-    					<th><?php _e('Default size (W x H)','nggallery') ?>:</th>
-    					<td><input type="text" size="3" maxlength="4" name="irWidth" value="<?php echo $ngg->options['irWidth']; ?>" /> x
-    					<input type="text" size="3" maxlength="4" name="irHeight" value="<?php echo $ngg->options['irHeight']; ?>" /></td>
-    				</tr>					
-    				<tr>
-    					<th><?php _e('Shuffle mode','nggallery') ?>:</th>
-    					<td><input name="irShuffle" type="checkbox" value="1" <?php checked('1', $ngg->options['irShuffle']); ?> /></td>
-    				</tr>
-    				<tr class="expert">
-    					<th><?php _e('Show next image on click','nggallery') ?>:</th>
-    					<td><input name="irLinkfromdisplay" type="checkbox" value="1" <?php checked('1', $ngg->options['irLinkfromdisplay']); ?> /></td>
-    				</tr>					
-    				<tr class="expert">
-    					<th><?php _e('Show navigation bar','nggallery') ?>:</th>
-    					<td><input name="irShownavigation" type="checkbox" value="1" <?php checked('1', $ngg->options['irShownavigation']); ?> /></td>
-    				</tr>
-    				<tr class="expert">
-    					<th><?php _e('Show loading icon','nggallery') ?>:</th>
-    					<td><input name="irShowicons" type="checkbox" value="1" <?php checked('1', $ngg->options['irShowicons']); ?> /></td>
-    				</tr>
-    				<tr class="expert">
-    					<th><?php _e('Use watermark logo','nggallery') ?>:</th>
-    					<td><input name="irWatermark" type="checkbox" value="1" <?php checked('1', $ngg->options['irWatermark']); ?> />
-    					<span class="setting-description"><?php _e('You can change the logo at the watermark settings','nggallery') ?></span></td>
-    				</tr>
-    				<tr class="expert">
-    					<th><?php _e('Stretch image','nggallery') ?>:</th>
-    					<td>
-    					<select size="1" name="irOverstretch">
-    						<option value="true" <?php selected('true', $ngg->options['irOverstretch']); ?> ><?php _e('true', 'nggallery') ;?></option>
-    						<option value="false" <?php selected('false', $ngg->options['irOverstretch']); ?> ><?php _e('false', 'nggallery') ;?></option>
-    						<option value="fit" <?php selected('fit', $ngg->options['irOverstretch']); ?> ><?php _e('fit', 'nggallery') ;?></option>
-    						<option value="none" <?php selected('none', $ngg->options['irOverstretch']); ?> ><?php _e('none', 'nggallery') ;?></option>
-    					</select>
-    					</td>
-    				</tr>
-    				<tr>					
-    					<th><?php _e('Duration time','nggallery') ?>:</th>
-    					<td><input type="text" size="3" maxlength="3" name="irRotatetime" value="<?php echo $ngg->options['irRotatetime'] ?>" /> <?php _e('sec.', 'nggallery') ;?></td>
-    				</tr>					
-    				<tr>					
-    					<th><?php _e('Transition / Fade effect','nggallery') ?>:</th>
-    					<td>
-    					<select size="1" name="irTransition">
-    						<option value="fade" <?php selected('fade', $ngg->options['irTransition']); ?> ><?php _e('fade', 'nggallery') ;?></option>
-    						<option value="bgfade" <?php selected('bgfade', $ngg->options['irTransition']); ?> ><?php _e('bgfade', 'nggallery') ;?></option>
-    						<option value="slowfade" <?php selected('slowfade', $ngg->options['irTransition']); ?> ><?php _e('slowfade', 'nggallery') ;?></option>
-    						<option value="circles" <?php selected('circles', $ngg->options['irTransition']); ?> ><?php _e('circles', 'nggallery') ;?></option>
-    						<option value="bubbles" <?php selected('bubbles', $ngg->options['irTransition']); ?> ><?php _e('bubbles', 'nggallery') ;?></option>
-    						<option value="blocks" <?php selected('blocks', $ngg->options['irTransition']); ?> ><?php _e('blocks', 'nggallery') ;?></option>
-    						<option value="fluids" <?php selected('fluids', $ngg->options['irTransition']); ?> ><?php _e('fluids', 'nggallery') ;?></option>
-    						<option value="flash" <?php selected('flash', $ngg->options['irTransition']); ?> ><?php _e('flash', 'nggallery') ;?></option>
-    						<option value="lines" <?php selected('lines', $ngg->options['irTransition']); ?> ><?php _e('lines', 'nggallery') ;?></option>
-    						<option value="random" <?php selected('random', $ngg->options['irTransition']); ?> ><?php _e('random', 'nggallery') ;?></option>
-    					</select>
-    				</tr>
-    				<tr class="expert">
-    					<th><?php _e('Use slow zooming effect','nggallery') ?>:</th>
-    					<td><input name="irKenburns" type="checkbox" value="1" <?php checked('1', $ngg->options['irKenburns']); ?> /></td>
-    				</tr>
-    				<tr>
-    					<th><?php _e('Background Color','nggallery') ?>:</th>
-    					<td><input class="picker" type="text" size="6" maxlength="6" id="irBackcolor" name="irBackcolor" onchange="setcolor('#previewBack', this.value)" value="<?php echo $ngg->options['irBackcolor'] ?>" />
-    					<input type="text" size="1" readonly="readonly" id="previewBack" style="background-color: #<?php echo $ngg->options['irBackcolor'] ?>" /></td>
-    				</tr>
-    				<tr>					
-    					<th><?php _e('Texts / Buttons Color','nggallery') ?>:</th>
-    					<td><input class="picker" type="text" size="6" maxlength="6" id="irFrontcolor" name="irFrontcolor" onchange="setcolor('#previewFront', this.value)" value="<?php echo $ngg->options['irFrontcolor'] ?>" />
-    					<input type="text" size="1" readonly="readonly" id="previewFront" style="background-color: #<?php echo $ngg->options['irFrontcolor'] ?>" /></td>
-    				</tr>
-    				<tr class="expert">					
-    					<th><?php _e('Rollover / Active Color','nggallery') ?>:</th>
-    					<td><input class="picker" type="text" size="6" maxlength="6" id="irLightcolor" name="irLightcolor" onchange="setcolor('#previewLight', this.value)" value="<?php echo $ngg->options['irLightcolor'] ?>" />
-    					<input type="text" size="1" readonly="readonly" id="previewLight" style="background-color: #<?php echo $ngg->options['irLightcolor'] ?>" /></td>
-    				</tr>
-    				<tr class="expert">					
-    					<th><?php _e('Screen Color','nggallery') ?>:</th>
-    					<td><input class="picker" type="text" size="6" maxlength="6" id="irScreencolor" name="irScreencolor" onchange="setcolor('#previewScreen', this.value)" value="<?php echo $ngg->options['irScreencolor'] ?>" />
-    					<input type="text" size="1" readonly="readonly" id="previewScreen" style="background-color: #<?php echo $ngg->options['irScreencolor'] ?>" /></td>
-    				</tr>
-    				<tr class="expert">					
-    					<th><?php _e('Background music (URL)','nggallery') ?>:</th>
-    					<td><input type="text" size="50" id="irAudio" name="irAudio" value="<?php echo $ngg->options['irAudio'] ?>" /></td>
-    				</tr>
-    				<tr class="expert">
-    					<th ><?php _e('Try XHTML validation (with CDATA)','nggallery') ?>:</th>
-    					<td><input name="irXHTMLvalid" type="checkbox" value="1" <?php checked('1', $ngg->options['irXHTMLvalid']); ?> />
-    					<span class="setting-description"><?php _e('Important : Could causes problem at some browser. Please recheck your page.','nggallery') ?></span></td>
-    				</tr>
-    				</table>
-    			<div class="alignright"><a href="" class="switch-expert" >[<?php _e('More settings','nggallery'); ?>]</a></div>
-    			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes') ;?>"/></div>
-    	</form>
+			<table class="form-table ngg-options">
+				<tr>
+					<th><?php _e('Default size (W x H)','nggallery') ?>:</th>
+					<td><input type="text" size="3" maxlength="4" name="irWidth" value="<?php echo $ngg->options['irWidth']; ?>" /> x
+					<input type="text" size="3" maxlength="4" name="irHeight" value="<?php echo $ngg->options['irHeight']; ?>" /></td>
+				</tr>
+				<tr>					
+					<th><?php _e('Duration time','nggallery') ?>:</th>
+					<td><input type="text" size="3" maxlength="3" name="irRotatetime" value="<?php echo $ngg->options['irRotatetime'] ?>" /> <?php _e('sec.', 'nggallery') ;?></td>
+				</tr>
+				<tr>					
+				    <th><?php _e('Transition / Fade effect','nggallery') ?>:</th>
+					<td>
+					<select size="1" name="slideFx">
+						<option value="fade" <?php selected('fade', $ngg->options['slideFx']); ?> ><?php _e('fade', 'nggallery') ;?></option>
+						<option value="blindX" <?php selected('blindX', $ngg->options['slideFx']); ?> ><?php _e('blindX', 'nggallery') ;?></option>
+						<option value="cover" <?php selected('cover', $ngg->options['slideFx']); ?> ><?php _e('cover', 'nggallery') ;?></option>
+						<option value="scrollUp" <?php selected('scrollUp', $ngg->options['slideFx']); ?> ><?php _e('scrollUp', 'nggallery') ;?></option>
+						<option value="scrollDown" <?php selected('scrollDown', $ngg->options['slideFx']); ?> ><?php _e('scrollDown', 'nggallery') ;?></option>
+						<option value="shuffle" <?php selected('shuffle', $ngg->options['slideFx']); ?> ><?php _e('shuffle', 'nggallery') ;?></option>
+						<option value="toss" <?php selected('toss', $ngg->options['slideFx']); ?> ><?php _e('toss', 'nggallery') ;?></option>
+						<option value="wipe" <?php selected('wipe', $ngg->options['slideFx']); ?> ><?php _e('wipe', 'nggallery') ;?></option>
+					</select>
+                    <span class="description"><?php _e('See here for more information about the effects :', 'nggallery') ?> <a href="http://jquery.malsup.com/cycle/browser.html" target="_blank" >jQuery Cycle</a></span>
+                    </td>
+				</tr>
+ 			    </table>
+    			<h3 class="expert" ><?php _e('Settings for the JW Image Rotator','nggallery') ?></h3>
+            	<p><?php _e('The settings are only used in the JW Image Rotator Version', 'nggallery') ?> 3.17 .
+            	   <?php _e('See more information for the Flash Player on the web page', 'nggallery') ?> <a href="http://www.longtailvideo.com/players/jw-image-rotator/" target="_blank" >JW Image Rotator from Jeroen Wijering</a>.
+            	</p>
+            	<?php if (empty($ngg->options['irURL']) && ($ngg->options['enableIR'] == '1')) { ?>
+            		<p>
+            			<div id="message" class="error inline">
+            			<p>
+            				<?php _e('The path to imagerotator.swf is not defined, the slideshow will not work.','nggallery') ?><br />
+            				<?php _e('If you would like to use the JW Image Rotatator, please download the player <a href="http://www.longtailvideo.com/players/jw-image-rotator/" target="_blank" >here</a> and upload it to your Upload folder (Default is wp-content/uploads).','nggallery') ?>
+            			</p>
+            			</div>
+            		</p>
+            	<?php }?>
+    			<table class="expert form-table ngg-options">
+				<tr>
+					<th><?php _e('Enable flash slideshow','nggallery') ?>:</th>
+					<td><input name="enableIR" type="checkbox" value="1" <?php checked('1', $ngg->options['enableIR']); ?> />
+                    <span class="setting-description"><?php _e('Integrate the flash based sildeshow for all flash supported devices','nggallery') ?></span></td>
+				</tr>
+				<tr>
+					<th><?php _e('Path to the Imagerotator (URL)','nggallery') ?>:</th>
+					<td>
+						<input type="text" size="50" id="irURL" name="irURL" value="<?php echo $ngg->options['irURL']; ?>" />
+						<input type="submit" name="irDetect" class="button-secondary"  value="<?php _e('Search now','nggallery') ;?> &raquo;"/>
+						<br /><span class="setting-description"><?php _e('Press the button to search automatic for the imagerotator, if you uploaded it to wp-content/uploads or a subfolder','nggallery') ?></span>
+					</td>
+				</tr>					
+				<tr>
+					<th><?php _e('Shuffle mode','nggallery') ?>:</th>
+					<td><input name="irShuffle" type="checkbox" value="1" <?php checked('1', $ngg->options['irShuffle']); ?> /></td>
+				</tr>
+				<tr class="expert">
+					<th><?php _e('Show next image on click','nggallery') ?>:</th>
+					<td><input name="irLinkfromdisplay" type="checkbox" value="1" <?php checked('1', $ngg->options['irLinkfromdisplay']); ?> /></td>
+				</tr>					
+				<tr class="expert">
+					<th><?php _e('Show navigation bar','nggallery') ?>:</th>
+					<td><input name="irShownavigation" type="checkbox" value="1" <?php checked('1', $ngg->options['irShownavigation']); ?> /></td>
+				</tr>
+				<tr class="expert">
+					<th><?php _e('Show loading icon','nggallery') ?>:</th>
+					<td><input name="irShowicons" type="checkbox" value="1" <?php checked('1', $ngg->options['irShowicons']); ?> /></td>
+				</tr>
+				<tr class="expert">
+					<th><?php _e('Use watermark logo','nggallery') ?>:</th>
+					<td><input name="irWatermark" type="checkbox" value="1" <?php checked('1', $ngg->options['irWatermark']); ?> />
+					<span class="setting-description"><?php _e('You can change the logo at the watermark settings','nggallery') ?></span></td>
+				</tr>
+				<tr class="expert">
+					<th><?php _e('Stretch image','nggallery') ?>:</th>
+					<td>
+					<select size="1" name="irOverstretch">
+						<option value="true" <?php selected('true', $ngg->options['irOverstretch']); ?> ><?php _e('true', 'nggallery') ;?></option>
+						<option value="false" <?php selected('false', $ngg->options['irOverstretch']); ?> ><?php _e('false', 'nggallery') ;?></option>
+						<option value="fit" <?php selected('fit', $ngg->options['irOverstretch']); ?> ><?php _e('fit', 'nggallery') ;?></option>
+						<option value="none" <?php selected('none', $ngg->options['irOverstretch']); ?> ><?php _e('none', 'nggallery') ;?></option>
+					</select>
+					</td>
+				</tr>
+				<tr>					
+					<th><?php _e('Transition / Fade effect','nggallery') ?>:</th>
+					<td>
+					<select size="1" name="irTransition">
+						<option value="fade" <?php selected('fade', $ngg->options['irTransition']); ?> ><?php _e('fade', 'nggallery') ;?></option>
+						<option value="bgfade" <?php selected('bgfade', $ngg->options['irTransition']); ?> ><?php _e('bgfade', 'nggallery') ;?></option>
+						<option value="slowfade" <?php selected('slowfade', $ngg->options['irTransition']); ?> ><?php _e('slowfade', 'nggallery') ;?></option>
+						<option value="circles" <?php selected('circles', $ngg->options['irTransition']); ?> ><?php _e('circles', 'nggallery') ;?></option>
+						<option value="bubbles" <?php selected('bubbles', $ngg->options['irTransition']); ?> ><?php _e('bubbles', 'nggallery') ;?></option>
+						<option value="blocks" <?php selected('blocks', $ngg->options['irTransition']); ?> ><?php _e('blocks', 'nggallery') ;?></option>
+						<option value="fluids" <?php selected('fluids', $ngg->options['irTransition']); ?> ><?php _e('fluids', 'nggallery') ;?></option>
+						<option value="flash" <?php selected('flash', $ngg->options['irTransition']); ?> ><?php _e('flash', 'nggallery') ;?></option>
+						<option value="lines" <?php selected('lines', $ngg->options['irTransition']); ?> ><?php _e('lines', 'nggallery') ;?></option>
+						<option value="random" <?php selected('random', $ngg->options['irTransition']); ?> ><?php _e('random', 'nggallery') ;?></option>
+					</select>
+                    </td>
+				</tr>
+				<tr class="expert">
+					<th><?php _e('Use slow zooming effect','nggallery') ?>:</th>
+					<td><input name="irKenburns" type="checkbox" value="1" <?php checked('1', $ngg->options['irKenburns']); ?> /></td>
+				</tr>
+				<tr>
+					<th><?php _e('Background Color','nggallery') ?>:</th>
+					<td><input class="picker" type="text" size="6" maxlength="6" id="irBackcolor" name="irBackcolor" onchange="setcolor('#previewBack', this.value)" value="<?php echo $ngg->options['irBackcolor'] ?>" />
+					<input type="text" size="1" readonly="readonly" id="previewBack" style="background-color: #<?php echo $ngg->options['irBackcolor'] ?>" /></td>
+				</tr>
+				<tr>					
+					<th><?php _e('Texts / Buttons Color','nggallery') ?>:</th>
+					<td><input class="picker" type="text" size="6" maxlength="6" id="irFrontcolor" name="irFrontcolor" onchange="setcolor('#previewFront', this.value)" value="<?php echo $ngg->options['irFrontcolor'] ?>" />
+					<input type="text" size="1" readonly="readonly" id="previewFront" style="background-color: #<?php echo $ngg->options['irFrontcolor'] ?>" /></td>
+				</tr>
+				<tr class="expert">					
+					<th><?php _e('Rollover / Active Color','nggallery') ?>:</th>
+					<td><input class="picker" type="text" size="6" maxlength="6" id="irLightcolor" name="irLightcolor" onchange="setcolor('#previewLight', this.value)" value="<?php echo $ngg->options['irLightcolor'] ?>" />
+					<input type="text" size="1" readonly="readonly" id="previewLight" style="background-color: #<?php echo $ngg->options['irLightcolor'] ?>" /></td>
+				</tr>
+				<tr class="expert">					
+					<th><?php _e('Screen Color','nggallery') ?>:</th>
+					<td><input class="picker" type="text" size="6" maxlength="6" id="irScreencolor" name="irScreencolor" onchange="setcolor('#previewScreen', this.value)" value="<?php echo $ngg->options['irScreencolor'] ?>" />
+					<input type="text" size="1" readonly="readonly" id="previewScreen" style="background-color: #<?php echo $ngg->options['irScreencolor'] ?>" /></td>
+				</tr>
+				<tr class="expert">					
+					<th><?php _e('Background music (URL)','nggallery') ?>:</th>
+					<td><input type="text" size="50" id="irAudio" name="irAudio" value="<?php echo $ngg->options['irAudio'] ?>" /></td>
+				</tr>
+				<tr class="expert">
+					<th ><?php _e('Try XHTML validation (with CDATA)','nggallery') ?>:</th>
+					<td><input name="irXHTMLvalid" type="checkbox" value="1" <?php checked('1', $ngg->options['irXHTMLvalid']); ?> />
+					<span class="setting-description"><?php _e('Important : Could causes problem at some browser. Please recheck your page.','nggallery') ?></span></td>
+				</tr>
+				</table>
+			<div class="alignright"><a href="" class="switch-expert" >[<?php _e('More settings','nggallery'); ?>]</a></div>
+			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes') ;?>"/></div>
+	</form>
     <?php        
     }
 }

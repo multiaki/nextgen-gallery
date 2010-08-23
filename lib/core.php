@@ -164,7 +164,8 @@ class nggGallery {
 				'ngg_ir_Transition'			=> 'irTransition',
 				'ngg_ir_Backcolor' 			=> 'irBackcolor',
 				'ngg_ir_Frontcolor' 		=> 'irFrontcolor',
-				'ngg_ir_Lightcolor' 		=> 'irLightcolor'
+				'ngg_ir_Lightcolor' 		=> 'irLightcolor',
+                'ngg_slideshowFX'			=> 'slideFx',
 			),
 
 			'int' => array(

@@ -1,16 +1,21 @@
 NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
-= V1.6.0 - soon =
-* TODO : Wordpress 3.0 Network (Multi-User) support
+= V1.7.0 - sometimes =
 * TODO : Rework of overview page
-* TODO : Integrate jQuery Cycle as NON-Flash slideshow 
 * TODO : Adding Google Sitemaps for Images
 * TODO : Facebook connector
+
+= V1.6.0 - soon =
+* TODO : Wordpress 3.0 Network (Multi-User) support
+* NEW : Integrate jQuery Cycle as NON-Flash slideshow 
 * NEW : Adding jQuery File Tree for import folder (THX to Sergey Pasyuk )
 * Changed : Reorder tabs for upload
 * Changed : New menu icon and screen icon (THX to Ben Dunkle)
 * Changed : Load frontend libs always
+* Bugfix : Security bugfix for Zip-Upload (THX to Dominic Szablewski)
+* Bugfix : Allow JPG, PNG, GIF extension
+* Bugfix : New German translation (THX to Martin Kramarz)
 
 = V1.5.5 - 14.06.2010 =
 * Bugfix : Compat issue for post thumbnails with WP2.9
