@@ -97,12 +97,17 @@ function nggShowSlideshow($galleryID, $width, $height) {
  * @return the content
  */
 function nggShow_JS_Slideshow($galleryID, $width, $height, $class = 'ngg-slideshow') {
-    
+	
+    global $slideCounter;
+   
     $ngg_options = nggGallery::get_option('ngg_options');
     
     // we need to know the current page id
     $current_page = (get_the_ID() == false) ? rand(5, 15) : get_the_ID();
-    $anchor = 'ngg-slideshow-' . $galleryID . '-' . $current_page;
+	// look for a other slideshow instance
+	if ( !isset($slideCounter) ) $slideCounter = 1; 
+    // create unique anchor
+    $anchor = 'ngg-slideshow-' . $galleryID . '-' . $current_page . '-' . $slideCounter++;
     
     if (empty($width) ) $width  = (int) $ngg_options['irWidth'];
     if (empty($height)) $height = (int) $ngg_options['irHeight'];
