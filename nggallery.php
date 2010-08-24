@@ -433,9 +433,15 @@ class nggLoader {
 	}
 	
     function multisite_upgrade ( $blog_id ) {
+        global $wpdb;
+        
         include_once (dirname (__FILE__) . '/admin/upgrade.php');
-        switch_to_blog($blog_id);
+        
+        $current_blog = $wpdb->blogid;
+        switch_to_blog( $blog_id );
         ngg_upgrade();
+        switch_to_blog($current_blog);
+    	return;
     }
     
 	function disable_upgrade($option){

@@ -7,7 +7,7 @@ by Alex Rabe & NextGEN DEV Team
 * TODO : Facebook connector
 
 = V1.6.0 - soon =
-* TODO : Wordpress 3.0 Network (Multi-User) support
+* NEW : Wordpress 3.0 Network (Multi-Site) support
 * NEW : Integrate jQuery Cycle as NON-Flash slideshow 
 * NEW : Adding jQuery File Tree for import folder (THX to Sergey Pasyuk )
 * Changed : Reorder tabs for upload

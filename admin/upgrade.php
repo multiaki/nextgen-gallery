@@ -13,9 +13,12 @@ function ngg_upgrade() {
 
 	// get the current user ID
 	get_currentuserinfo();
-
-	// Be sure that the tables exist
-	if( $wpdb->get_var("show tables like '$wpdb->nggpictures'") == $wpdb->prefix . 'ngg_pictures') {
+    
+    // in multisite environment the pointer $wpdb->nggpictures will not work
+    $nggpictures = $wpdb->prefix . 'ngg_pictures';
+    
+    // Be sure that the tables exist
+	if( $wpdb->get_var("show tables like '$nggpictures'") == $nggpictures) {
 
 		echo __('Upgrade database structure...', 'nggallery');
 		$wpdb->show_errors();
