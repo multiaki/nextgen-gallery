@@ -90,7 +90,12 @@ if ( !(get_locale() == 'en_US') )
 	add_meta_box('ngg_locale', __('Translation', 'nggallery'), 'ngg_widget_locale', 'ngg_overview', 'right', 'core');
 add_meta_box('dashboard_primary', __('Latest News', 'nggallery'), 'ngg_widget_overview_news', 'ngg_overview', 'left', 'core');
 add_meta_box('ngg_lastdonators', __('Recent donators', 'nggallery'), 'ngg_widget_overview_donators', 'ngg_overview', 'right', 'core');
-add_meta_box('ngg_server', __('Server Settings', 'nggallery'), 'ngg_overview_server', 'ngg_overview', 'right', 'core');
+
+if ( !is_multisite() )			
+    add_meta_box('ngg_server', __('Server Settings', 'nggallery'), 'ngg_overview_server', 'ngg_overview', 'right', 'core');
+else
+    add_meta_box('ngg_quota', __('Storage Space', 'nggallery'), 'ngg_server_quota', 'ngg_overview', 'right', 'core');
+    
 add_meta_box('dashboard_plugins', __('Related plugins', 'nggallery'), 'ngg_widget_related_plugins', 'ngg_overview', 'left', 'core');
 
 function ngg_likeThisMetaBox() {
@@ -131,14 +136,6 @@ function ngg_overview_server() {
 ?>
 <div id="dashboard_server_settings" class="dashboard-widget-holder wp_dashboard_empty">
 	<div class="ngg-dashboard-widget">
-	  <?php if (is_multisite()) {
-	  	if (wpmu_enable_function('wpmuQuotaCheck'))
-			echo ngg_SpaceManager::details();
-		else {
-			//TODO:WPMU message in WP2.5 style
-			echo ngg_SpaceManager::details();
-		}
-	  } else { ?>
 	  	<div class="dashboard-widget-content">
       		<ul class="settings">
       		<?php ngg_get_serverinfo(); ?>
@@ -148,7 +145,6 @@ function ngg_overview_server() {
             <?php ngg_gd_info(); ?>
 	   		</ul>
 		</div>
-	  <?php } ?>
     </div>
 </div>
 <?php	
@@ -517,6 +513,10 @@ function ngg_check_for_PHP5() {
  * @url http://dylan.wibble.net/
  *
  */
+function ngg_server_quota() {
+    echo ngg_SpaceManager::details();
+}
+
 class ngg_SpaceManager {
  
  	function getQuota() {
@@ -565,16 +565,16 @@ class ngg_SpaceManager {
 		$percentremain = 100 - $percentused;
 
 		$out = '';
-		$out .= '<div id="spaceused"> <h3>'.__('Storage Space','nggallery').'</h3>';
+		$out .= '<div id="spaceused">';
 
 		if ($settings['used']['display']) {
-			$out .= __('Upload Space Used:','nggallery') . "\n";
+			$out .= __('Upload Space Used:','nggallery') . "<br \><br \>\n";
 			$out .= ngg_SpaceManager::buildGraph($settings['used'], $used,$quota,$percentused);
 			$out .= "<br />";
 		}
 
 		if($settings['remain']['display']) {
-			$out .= __('Upload Space Remaining:','nggallery') . "\n";
+			$out .= __('Upload Space Remaining:','nggallery') . "<br \><br \>\n";
 			$out .= ngg_SpaceManager::buildGraph($settings['remain'], $remaining,$quota,$percentremain);
 
 		}
