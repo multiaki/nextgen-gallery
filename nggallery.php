@@ -70,7 +70,11 @@ class nggLoader {
 		
 		// Register_taxonomy must be used during the init
 		add_action( 'init', array(&$this, 'register_taxonomy') );
-		
+        
+        // Hook to upgrade all blogs with one click and adding a new one later
+        add_action( 'wpmu_upgrade_site', array(&$this, 'multisite_upgrade') );
+        add_action( 'wpmu_new_blog', array(&$this, 'multisite_new_blog'), 10, 6); 	
+        		
 		// Add a message for PHP4 Users, can disable the update message later on
 		if (version_compare(PHP_VERSION, '5.0.0', '<'))
 			add_filter('transient_update_plugins', array(&$this, 'disable_upgrade'));
@@ -367,9 +371,24 @@ class nggLoader {
 		if ( class_exists('nggRewrite') )
 			$nggRewrite = new nggRewrite();	
 	}
+    
+    // THX to Shiba for the code
+    // See: http://shibashake.com/wordpress-theme/write-a-plugin-for-wordpress-multi-site
+    function multisite_new_blog($blog_id, $user_id, $domain, $path, $site_id, $meta ) {
+    	global $wpdb;
+        
+        include_once (dirname (__FILE__) . '/admin/install.php');
+        
+    	if (is_plugin_active_for_network( $this->plugin_name )) {
+    		$current_blog = $wpdb->blogid;
+    		switch_to_blog($blog_id);
+    		nggallery_install();
+    		switch_to_blog($current_blog);
+    	}
+    }
 		
 	function activate() {
-		
+		global $wpdb;
 		//Since version 1.4.0 it's tested only with PHP5.2, currently we keep PHP4 support a while
         //if (version_compare(PHP_VERSION, '5.2.0', '<')) { 
         //        deactivate_plugins(plugin_basename(__FILE__)); // Deactivate ourself
@@ -378,6 +397,21 @@ class nggLoader {
         //} 
 
 		include_once (dirname (__FILE__) . '/admin/install.php');
+        
+    	if ( is_multisite() ) {
+    		// check if it is a network activation - if so, run the activation function for each blog id
+    		if (isset($_GET['networkwide']) && ($_GET['networkwide'] == 1)) {
+                $current_blog = $wpdb->blogid;
+    			// Get all blog ids
+    			$blogids = $wpdb->get_col($wpdb->prepare("SELECT blog_id FROM $wpdb->blogs"));
+    			foreach ($blogids as $blog_id) {
+    				switch_to_blog($blog_id);
+    				nggallery_install();
+    			}
+    			switch_to_blog($current_blog);
+    			return;
+    		}	
+    	} 
 		
 		// check for tables
 		nggallery_install();
@@ -398,6 +432,12 @@ class nggLoader {
         nggallery_uninstall();
 	}
 	
+    function multisite_upgrade ( $blog_id ) {
+        include_once (dirname (__FILE__) . '/admin/upgrade.php');
+        switch_to_blog($blog_id);
+        ngg_upgrade();
+    }
+    
 	function disable_upgrade($option){
 
 	 	$this_plugin = plugin_basename(__FILE__);

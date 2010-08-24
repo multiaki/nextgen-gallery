@@ -93,7 +93,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					</td>
 				</tr>
 			</table> 				
-			<div class="submit"><input type="submit" name="updateoption" value="<?php _e('Update') ;?> &raquo;"/></div>
+			<div class="submit"><input type="submit" name="updateoption" value="<?php _e('Update') ;?>"/></div>
 		</form>	
 	</div>	
 

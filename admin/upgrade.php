@@ -15,12 +15,12 @@ function ngg_upgrade() {
 	get_currentuserinfo();
 
 	// Be sure that the tables exist
-	if($wpdb->get_var("show tables like '$wpdb->nggpictures'") == $wpdb->prefix . 'ngg_pictures') {
+	if( $wpdb->get_var("show tables like '$wpdb->nggpictures'") == $wpdb->prefix . 'ngg_pictures') {
 
 		echo __('Upgrade database structure...', 'nggallery');
 		$wpdb->show_errors();
 
-		$installed_ver = get_option( "ngg_db_version" );
+		$installed_ver = get_option( 'ngg_db_version' );
 		
 		// 0.9.7 is smaller that 0.97, my fault :-)
 		if ( $installed_ver == '0.9.7' ) $installed_ver = '0.97';
@@ -307,10 +307,11 @@ function ngg_maybe_add_column($table_name, $column_name, $create_ddl) {
  * 
  * @return Upgrade Message
  */
-function nggallery_upgrade_page()  {	
+function nggallery_upgrade_page()  {
+    
 	$filepath    = admin_url() . 'admin.php?page=' . $_GET['page'];
 	
-	if ($_GET['upgrade'] == 'now') {
+	if ( isset($_GET['upgrade']) && $_GET['upgrade'] == 'now') {
 		nggallery_start_upgrade($filepath);
 		return;
 	}

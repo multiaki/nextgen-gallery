@@ -42,7 +42,8 @@ class nggAdminPanel{
 		// See trac #14435 , changed for 3.1 : http://core.trac.wordpress.org/ticket/14435
         if ( wpmu_site_admin() ) 
 			add_submenu_page( 'ms-admin.php' , __('NextGEN Gallery', 'nggallery'), __('NextGEN Gallery', 'nggallery'), 'activate_plugins', 'nggallery-wpmu', array (&$this, 'show_menu'));
-	    add_submenu_page( NGGFOLDER , __('Reset / Uninstall', 'nggallery'), __('Reset / Uninstall', 'nggallery'), 'activate_plugins', 'nggallery-setup', array (&$this, 'show_menu'));
+	    if ( !is_multisite() || wpmu_site_admin() ) 
+            add_submenu_page( NGGFOLDER , __('Reset / Uninstall', 'nggallery'), __('Reset / Uninstall', 'nggallery'), 'activate_plugins', 'nggallery-setup', array (&$this, 'show_menu'));
 
 		//register the column fields
 		$this->register_columns();	
