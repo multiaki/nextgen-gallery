@@ -159,6 +159,10 @@ function ngg_upgrade() {
         
 		return;
 	}
+    
+    echo __('Could not find NextGEN Gallery database tables, upgrade failed !', 'nggallery');
+    
+    return;
 }
 
 /**

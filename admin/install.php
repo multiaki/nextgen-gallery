@@ -220,7 +220,7 @@ function ngg_default_options() {
 		// get the site options
 		$ngg_wpmu_options = get_site_option('ngg_options');
 		
-		// get the default value during installation
+		// get the default value during first installation
 		if (!is_array($ngg_wpmu_options)) {
 			$ngg_wpmu_options['gallerypath'] = 'wp-content/blogs.dir/%BLOG_ID%/files/';
 			$ngg_wpmu_options['wpmuCSSfile'] = 'nggallery.css';

@@ -138,7 +138,7 @@ class nggAddGallery {
         $tabs = $this->tabs_order();
 	?>
 	
-	<?php if($ngg->options['swfUpload']) { ?>
+	<?php if($ngg->options['swfUpload'] && !empty ($this->gallerylist) ) { ?>
 	<!-- SWFUpload script -->
 	<script type="text/javascript">
 		var ngg_swf_upload;
