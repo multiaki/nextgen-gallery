@@ -266,7 +266,9 @@ class nggLoader {
         require_once (dirname (__FILE__) . '/lib/navigation.php');		        // 242.016
         require_once (dirname (__FILE__) . '/nggfunctions.php');		        // n.a.
 		require_once (dirname (__FILE__) . '/lib/shortcodes.php'); 		        // 92.664
-		
+        
+        if ( is_multisite() )
+		  require_once (dirname (__FILE__) . '/lib/multisite.php');
 		//Just needed if you access remote to WordPress
 		if ( defined('XMLRPC_REQUEST') )
 			require_once (dirname (__FILE__) . '/lib/xmlrpc.php');

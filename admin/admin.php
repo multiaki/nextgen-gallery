@@ -235,7 +235,7 @@ class nggAdminPanel{
 				wp_enqueue_style( 'thickbox');	
 			case "nggallery-about" :
 				wp_enqueue_style( 'nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.8.1', 'screen' );
-				wp_admin_css( 'css/dashboard' );
+                wp_admin_css( 'css/dashboard' );
 			break;
 			case "nggallery-add-gallery" :
 				wp_enqueue_style( 'jqueryFileTree', NGGALLERY_URLPATH .'admin/js/jqueryFileTree/jqueryFileTree.css', false, '1.0.1', 'screen' );

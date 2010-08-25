@@ -90,13 +90,10 @@ if ( !(get_locale() == 'en_US') )
 	add_meta_box('ngg_locale', __('Translation', 'nggallery'), 'ngg_widget_locale', 'ngg_overview', 'right', 'core');
 add_meta_box('dashboard_primary', __('Latest News', 'nggallery'), 'ngg_widget_overview_news', 'ngg_overview', 'left', 'core');
 add_meta_box('ngg_lastdonators', __('Recent donators', 'nggallery'), 'ngg_widget_overview_donators', 'ngg_overview', 'right', 'core');
-
-if ( !is_multisite() )			
+if ( !is_multisite() || is_super_admin() ) {			
     add_meta_box('ngg_server', __('Server Settings', 'nggallery'), 'ngg_overview_server', 'ngg_overview', 'right', 'core');
-else
-    add_meta_box('ngg_quota', __('Storage Space', 'nggallery'), 'ngg_server_quota', 'ngg_overview', 'right', 'core');
-    
-add_meta_box('dashboard_plugins', __('Related plugins', 'nggallery'), 'ngg_widget_related_plugins', 'ngg_overview', 'left', 'core');
+    add_meta_box('dashboard_plugins', __('Related plugins', 'nggallery'), 'ngg_widget_related_plugins', 'ngg_overview', 'left', 'core');
+}
 
 function ngg_likeThisMetaBox() {
 
@@ -278,7 +275,6 @@ function ngg_overview_right_now() {
 	$galleries = intval( $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggallery") );
 	$albums    = intval( $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggalbum") );
 ?>
-
 <div class="table table_content">
 	<p class="sub"><?php _e('At a Glance', 'nggallery'); ?></p>
 	<table>
@@ -309,8 +305,54 @@ function ngg_overview_right_now() {
 	<?php if(current_user_can('NextGEN Upload images')): ?><a class="button rbutton" href="admin.php?page=nggallery-add-gallery"><?php _e('Upload pictures', 'nggallery') ?></a><?php endif; ?>
 	<?php _e('Here you can control your images, galleries and albums.', 'nggallery') ?>
 	</p>
-</div>
+<br class="clear" />
+</div>    
 <?php
+if ( is_multisite() )
+    ngg_dashboard_quota();
+}
+
+// Display File upload quota on dashboard
+function ngg_dashboard_quota() {
+    
+	if ( get_site_option( 'upload_space_check_disabled' ) )
+		return;
+        
+    if ( !wpmu_enable_function('wpmuQuotaCheck') )
+        return;    
+    
+	$quota = get_space_allowed();
+    delete_transient( 'dirsize_cache' );
+	$used = get_dirsize( BLOGUPLOADDIR ) / 1024 / 1024;
+
+	if ( $used > $quota )
+		$percentused = '100';
+	else
+		$percentused = ( $used / $quota ) * 100;
+	$used_color = ( $percentused < 70 ) ? ( ( $percentused >= 40 ) ? 'waiting' : 'approved' ) : 'spam';
+	$used = round( $used, 2 );
+	$percentused = number_format( $percentused );
+
+	?>
+	<p class="sub musub" style="position:static" ><?php _e( 'Storage Space' ); ?></p>
+	<div class="table table_content musubtable">
+	<table>
+		<tr class="first">
+			<td class="first b b-posts"><?php printf( __( '<a href="%1$s" title="Manage Uploads" class="musublink">%2$sMB</a>' ), esc_url( admin_url( 'admin.php?page=nggallery-manage-gallery' ) ), $quota ); ?></td>
+			<td class="t posts"><?php _e( 'Space Allowed' ); ?></td>
+		</tr>
+	</table>
+	</div>
+	<div class="table table_discussion musubtable">
+	<table>
+		<tr class="first">
+			<td class="b b-comments"><?php printf( __( '<a href="%1$s" title="Manage Uploads" class="musublink">%2$sMB (%3$s%%)</a>' ), esc_url( admin_url( 'admin.php?page=nggallery-manage-gallery' ) ), $used, $percentused ); ?></td>
+			<td class="last t comments <?php echo $used_color;?>"><?php _e( 'Space Used' );?></td>
+		</tr>
+	</table>
+	</div>
+	<br class="clear" />
+	<?php
 }
 
 /**
@@ -505,132 +547,6 @@ function ngg_check_for_PHP5() {
 		<p><?php _e('NextGEN Gallery contains some functions which are only available under PHP 5.2. You are using the old PHP 4 version, upgrade now! It\'s no longer supported by the PHP group. Many shared hosting providers offer both PHP 4 and PHP 5, running simultaneously. Ask your provider if they can do this.', 'nggallery'); ?></p>
 	</div>
     <?php
-}
-
-/**
- * WPMU feature taken from Z-Space Upload Quotas
- * @author Dylan Reeve
- * @url http://dylan.wibble.net/
- *
- */
-function ngg_server_quota() {
-    echo ngg_SpaceManager::details();
-}
-
-class ngg_SpaceManager {
- 
- 	function getQuota() {
-		if (function_exists('get_space_allowed'))
-			$quota = get_space_allowed();
-		else
-			$quota = get_site_option( "blog_upload_space" );
-			
-		return $quota;
-	}
-	 
-	function details() {
-		
-		// take default seetings
-		$settings = array(
-
-			'remain'	=> array(
-			'color_text'	=> 'white',
-			'color_bar'		=> '#0D324F',
-			'color_bg'		=> '#a0a0a0',
-			'decimals'		=> 2,
-			'unit'			=> 'm',
-			'display'		=> true,
-			'graph'			=> false
-			),
-
-			'used'		=> array(
-			'color_text'	=> 'white',
-			'color_bar'		=> '#0D324F',
-			'color_bg'		=> '#a0a0a0',
-			'decimals'		=> 2,
-			'unit'			=> 'm',
-			'display'		=> true,
-			'graph'			=> true
-			)
-		);
-
-		$quota = ngg_SpaceManager::getQuota() * 1024 * 1024;
-		$used = get_dirsize( constant( 'ABSPATH' ) . constant( 'UPLOADS' ) );
-//		$used = get_dirsize( ABSPATH."wp-content/blogs.dir/".$blog_id."/files" );
-		
-		if ($used > $quota) $percentused = '100';
-		else $percentused = ( $used / $quota ) * 100;
-
-		$remaining = $quota - $used;
-		$percentremain = 100 - $percentused;
-
-		$out = '';
-		$out .= '<div id="spaceused">';
-
-		if ($settings['used']['display']) {
-			$out .= __('Upload Space Used:','nggallery') . "<br \><br \>\n";
-			$out .= ngg_SpaceManager::buildGraph($settings['used'], $used,$quota,$percentused);
-			$out .= "<br />";
-		}
-
-		if($settings['remain']['display']) {
-			$out .= __('Upload Space Remaining:','nggallery') . "<br \><br \>\n";
-			$out .= ngg_SpaceManager::buildGraph($settings['remain'], $remaining,$quota,$percentremain);
-
-		}
-
-		$out .= "</div>";
-
-		echo $out;
-	}
-
-	function buildGraph($settings, $size, $quota, $percent) {
-		$color_bar = $settings['color_bar'];
-		$color_bg = $settings['color_bg'];
-		$color_text = $settings['color_text'];
-		
-		switch ($settings['unit']) {
-			case "b":
-				$unit = "B";
-				break;
-				
-			case "k":
-				$unit = "KB";
-				$size = $size / 1024;
-				$quota = $quota / 1024;
-				break;
-				
-			case "g":   // Gigabytes, really?
-				$unit = "GB";
-				$size = $size / 1024 / 1024 / 1024;
-				$quota = $quota / 1024 / 1024 / 1024;
-				break;
-				
-			default:
-				$unit = "MB";
-				$size = $size / 1024 / 1024;
-				$quota = $quota / 1024 / 1024;
-				break;
-		}
-
-		$size = round($size, (int)$settings['decimals']);
-
-		$pct = round(($size / $quota)*100);
-
-		if ($settings['graph']) {
-			//TODO:move style to CSS
-			$out = '<div style="display: block; margin: 0; padding: 0; height: 15px; border: 1px inset; width: 100%; background-color: '.$color_bg.';">'."\n";
-			$out .= '<div style="display: block; height: 15px; border: none; background-color: '.$color_bar.'; width: '.$pct.'%;">'."\n";
-			$out .= '<div style="display: inline; position: relative; top: 0; left: 0; font-size: 10px; color: '.$color_text.'; font-weight: bold; padding-bottom: 2px; padding-left: 5px;">'."\n";
-			$out .= $size.$unit;
-			$out .= "</div>\n</div>\n</div>\n";
-		} else {
-			$out = "<strong>".$size.$unit." ( ".number_format($percent)."%)"."</strong><br />";
-		}
-
-		return $out;
-	}
-
 }
 
 /**

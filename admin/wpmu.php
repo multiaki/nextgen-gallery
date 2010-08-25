@@ -98,5 +98,4 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	</div>	
 
 	<?php
-}	
-?>
+}

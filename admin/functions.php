@@ -612,7 +612,10 @@ class nggAdmin{
 									
 			} 
 		} // is_array
-		
+        
+        // delete dirsize after adding new images
+        delete_transient( 'dirsize_cache' );
+        
 		do_action('ngg_after_new_images_added', $galleryID, $image_ids );
 		
 		return $image_ids;
@@ -800,7 +803,7 @@ class nggAdmin{
 
 		global $ngg, $wpdb;
 		
-		if (nggAdmin::check_quota())
+		if (nggWPMU::check_quota())
 			return false;
 		
 		$defaultpath = $ngg->options['gallerypath'];		
@@ -907,7 +910,7 @@ class nggAdmin{
 		global $nggdb;
 		
 		// WPMU action
-		if (nggAdmin::check_quota())
+		if (nggWPMU::check_quota())
 			return;
 
 		// Images must be an array
@@ -1006,7 +1009,7 @@ class nggAdmin{
 	}
 	
 	/**
-	 * Upload function will be called via teh Flash uploader
+	 * Upload function will be called via the Flash uploader
 	 * 
 	 * @class nggAdmin
 	 * @param integer $galleryID
@@ -1020,7 +1023,7 @@ class nggAdmin{
 			return __('No gallery selected !', 'nggallery');
 
 		// WPMU action
-		if (nggAdmin::check_quota())
+		if (nggWPMU::check_quota())
 			return '0';
 
 		// Check the upload
@@ -1067,22 +1070,6 @@ class nggAdmin{
 		
 		return '0';
 	}	
-	
-	/**
-	 * Check the Quota under WPMU. Only needed for this case
-	 * 
-	 * @class nggAdmin
-	 * @return bool $result
-	 */
-	function check_quota() {
-
-			if ( (is_multisite()) && wpmu_enable_function('wpmuQuotaCheck'))
-				if( $error = upload_is_user_over_quota( false ) ) {
-					nggGallery::show_error( __( 'Sorry, you have used your space allocation. Please delete some files to upload more files.','nggallery' ) );
-					return true;
-				}
-			return false;
-	}
 	
 	/**
 	 * Set correct file permissions (taken from wp core)
@@ -1262,7 +1249,7 @@ class nggAdmin{
 		
 		foreach ($images as $image) {		
 			// WPMU action
-			if ( nggAdmin::check_quota() )
+			if ( nggWPMU::check_quota() )
 				return;
 			
 			$i = 0;
