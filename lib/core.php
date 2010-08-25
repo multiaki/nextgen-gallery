@@ -477,7 +477,6 @@ class nggGallery {
             $useragents = bnc_wptouch_get_user_agents();
         else {   
         	$useragents = array(		
-        		"iPad",  			 // Apple iPad
                 "iPhone",  			 // Apple iPhone
         		"iPod", 			 // Apple iPod touch
         		"Android", 			 // 1.5+ Android
@@ -495,7 +494,11 @@ class nggGallery {
         	
         	asort( $useragents );
          }
-
+        
+        // Godfather Steve says no to flash
+        if ( is_array($useragents) )
+            $useragents[] = "iPad";  // Apple iPad;
+         
         // WPtouch User Agent Filter
         $useragents = apply_filters( 'wptouch_user_agents', $useragents );
 
