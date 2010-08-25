@@ -318,11 +318,10 @@ function ngg_dashboard_quota() {
 	if ( get_site_option( 'upload_space_check_disabled' ) )
 		return;
         
-    if ( !wpmu_enable_function('wpmuQuotaCheck') )
+    if ( wpmu_enable_function('wpmuQuotaCheck') )
         return;    
-    
+
 	$quota = get_space_allowed();
-    delete_transient( 'dirsize_cache' );
 	$used = get_dirsize( BLOGUPLOADDIR ) / 1024 / 1024;
 
 	if ( $used > $quota )
