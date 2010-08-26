@@ -4,7 +4,7 @@ Plugin Name: NextGEN Gallery
 Plugin URI: http://alexrabe.de/?page_id=80
 Description: A NextGENeration Photo gallery for the Web 2.0.
 Author: Alex Rabe
-Version: 1.6.0b1
+Version: 1.6.0b2
 
 Author URI: http://alexrabe.de/
 
@@ -34,7 +34,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 if (!class_exists('nggLoader')) {
 class nggLoader {
 	
-	var $version     = '1.6.0b1';
+	var $version     = '1.6.0b2';
 	var $dbversion   = '1.6.0';
 	var $minium_WP   = '2.9';
 	var $updateURL   = 'http://nextgen.boelinger.com/version.php';
@@ -261,14 +261,13 @@ class nggLoader {
 		require_once (dirname (__FILE__) . '/lib/image.php');					//  59.424
 		require_once (dirname (__FILE__) . '/lib/post-thumbnail.php');			//  n.a.
 		require_once (dirname (__FILE__) . '/widgets/widgets.php');				// 298.792
+        require_once (dirname (__FILE__) . '/lib/multisite.php');
 
         // Load frontend libraries							
         require_once (dirname (__FILE__) . '/lib/navigation.php');		        // 242.016
         require_once (dirname (__FILE__) . '/nggfunctions.php');		        // n.a.
 		require_once (dirname (__FILE__) . '/lib/shortcodes.php'); 		        // 92.664
-        
-        if ( is_multisite() )
-		  require_once (dirname (__FILE__) . '/lib/multisite.php');
+
 		//Just needed if you access remote to WordPress
 		if ( defined('XMLRPC_REQUEST') )
 			require_once (dirname (__FILE__) . '/lib/xmlrpc.php');
