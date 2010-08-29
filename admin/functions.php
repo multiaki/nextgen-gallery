@@ -1195,8 +1195,10 @@ class nggAdmin{
 				continue;				
 			}
 			
+            // Move backup file, if possible
+            @rename($image->imagePath . '_backup', $destination_path . '_backup');
 			// Move the thumbnail, if possible
-			!@rename($image->thumbPath, $destination_thumbnail);
+			@rename($image->thumbPath, $destination_thumbnail);
 			
 			// Change the gallery id in the database , maybe the filename
 			if ( nggdb::update_image($image->pid, $dest_gid, $destination_file_name) )
@@ -1270,8 +1272,10 @@ class nggAdmin{
 				continue;				
 			}
 			
-			// Copy the thumbnail if possible
-			!@copy($image->thumbPath, $destination_thumb_file_path);
+            // Copy backup file, if possible
+            @copy($image->imagePath . '_backup', $destination_file_path . '_backup');
+            // Copy the thumbnail if possible
+			@copy($image->thumbPath, $destination_thumb_file_path);
 			
 			// Create new database entry for the image
 			$new_pid = nggdb::insert_image( $destination->gid, $destination_file_name, $image->alttext, $image->description, $image->exclude);
