@@ -154,7 +154,7 @@ function ngg_upgrade() {
 		
         if (version_compare($installed_ver, '1.6.0', '<')) {
             $ngg_options = get_option('ngg_options');
-            $ngg_options['enableIR'] = true;
+            $ngg_options['enableIR'] = '1';
             $ngg_options['slideFx']  = 'fade';
             update_option('ngg_options', $ngg_options);
             echo __('Updated options.', 'nggallery');

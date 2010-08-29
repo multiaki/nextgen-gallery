@@ -186,7 +186,6 @@ class nggGallery {
 				'ngg_ir_LinkFromDisplay' 	=> 'irLinkfromdisplay',
 				'ngg_ir_ShowNavigation'		=> 'irShownavigation',
 				'ngg_ir_ShowWatermark' 		=> 'irWatermark',
-				'ngg_ir_Overstretch'		=> 'irOverstretch',
 				'ngg_ir_Kenburns' 			=> 'irKenburns'
 			)
 		);

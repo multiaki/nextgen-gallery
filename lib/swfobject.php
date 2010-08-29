@@ -5,7 +5,7 @@ if ( !class_exists('swfobject') ) :
  * 
  * @author Alex Rabe
  * @package NextGEN Gallery
- * @version 0.3
+ * @version 0.5
  * @copyright GNU General Public License Version 2
  * @access public
  * @example http://code.google.com/p/swfobject/
