@@ -345,7 +345,7 @@ function nggallery_start_upgrade($filepath) {
 <div class="wrap">
 	<h2><?php _e('Upgrade NextGEN Gallery', 'nggallery') ;?></h2>
 	<p><?php ngg_upgrade();?></p>
-	<p><?php _e('Upgrade sucessful', 'nggallery') ;?></p>
+	<p><?php _e('Upgrade finished...', 'nggallery') ;?></p>
 	<h3><a href="<?php echo $filepath;?>"><?php _e('Continue', 'nggallery'); ?>...</a></h3>
 </div>
 <?php
