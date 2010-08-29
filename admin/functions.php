@@ -270,8 +270,12 @@ class nggAdmin{
 		// skip if file is not there
 		if (!$thumb->error) {
 			if ($ngg->options['thumbfix'])  {
-				// check for portrait format
-				if ($thumb->currentDimensions['height'] > $thumb->currentDimensions['width']) {
+
+				// calculate correct ratio
+				$wratio = $ngg->options['thumbwidth'] / $thumb->currentDimensions['width'];
+				$hratio = $ngg->options['thumbheight'] / $thumb->currentDimensions['height'];
+				
+				if ($wratio > $hratio) {
 					// first resize to the wanted width
 					$thumb->resize($ngg->options['thumbwidth'], 0);
 					// get optimal y startpos
