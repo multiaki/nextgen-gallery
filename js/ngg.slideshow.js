@@ -22,47 +22,64 @@ jQuery.fn.nggSlideshow = function ( args ) {
                 stack.push( decodeURI( photo['imageURL'] ) );
             }
             
-            // push the first three images out
-            var i = 1;
-            while (stack.length && i <= 3) {
-                jQuery( obj ).append( ImageResize(stack.shift(), s.width, s.height) );
+            // push the first two images out
+            var i = 1, counter = 0;
+            while (stack.length && i <= 2) {
+                var img = new Image(); 
+                img.src = stack.shift();
+                jQuery( img ).bind('load', function() {
+                    jQuery( obj ).append( imageResize(this, s.width , s.height) );
+                    counter++;
+                    // start cycle after the second image
+                    if (counter == 2)
+                        startSlideshow();                        
+                });
                 i++;
             }
-            
-            // hide the loader icon
-        	jQuery( obj + '-loader' ).empty().remove();
-            
-            // Start the slideshow
-            jQuery(obj + ' img:first').fadeIn(1000, function() {
-           	    // Start the cycle plugin
-            	jQuery( obj ).cycle( {
-            		fx: 	s.fx,
-                    containerResize: 1,
-                    fit: 1,
-                    timeout: s.timeout,
-                    next:   obj,
-                    before: jCycle_onBefore
-            	});
-            });
             
 		}
 	});
 
-    //Resize Image and keep ratio on client side, better move to server side later
-    function ImageResize(src, maxWidth , maxHeight) {
+    function startSlideshow() {
+
+        // hide the loader icon
+    	jQuery( obj + '-loader' ).empty().remove();
         
-        var img = new Image();
-            img.src = src;
-             
-        var height = maxHeight,
-        	width = maxWidth;
+        // Start the slideshow
+        jQuery(obj + ' img:first').fadeIn(1000, function() {
+       	    // Start the cycle plugin
+        	jQuery( obj ).cycle( {
+        		fx: 	s.fx,
+                containerResize: 1,
+                fit: 1,
+                timeout: s.timeout,
+                next:   obj,
+                before: jCycle_onBefore
+        	});
+        });
+        
+    }
+
+    //Resize Image and keep ratio on client side, better move to server side later
+    function imageResize(img, maxWidth , maxHeight) {
+
+        // hide it first
+        jQuery( img ).css({
+          'display': 'none'
+        });
+        
+        // in some cases the image is not loaded, we can't resize them
+        if (img.height == 0 || img.width == 0)
+            return img;
+ 
+        var height = (img.height < maxHeight) ? img.height : maxHeight;
+       	var width  = (img.width  < maxWidth)  ? img.width  : maxWidth;
         if (img.height >= img.width)
         	width = Math.floor( Math.ceil(img.width / img.height * maxHeight) );
         else
         	height = Math.floor( Math.ceil(img.height / img.width * maxWidth) );
-        
+  
         jQuery( img ).css({
-          'display': 'none',
           'height': height,
           'width': width
         });
@@ -74,9 +91,10 @@ jQuery.fn.nggSlideshow = function ( args ) {
     function jCycle_onBefore(curr, next, opts) {
         if (opts.addSlide)
             if (stack.length) {
-                var next_img = ImageResize(stack.shift(), s.width, s.height)
-                jQuery( next_img ).bind('load', function() { 
-                    opts.addSlide(this);                     
+                var img = new Image(); 
+                img.src = stack.shift();
+                jQuery( img ).bind('load', function() {
+                    opts.addSlide( imageResize(this, s.width , s.height) );                     
                 });
             }
     }; 
