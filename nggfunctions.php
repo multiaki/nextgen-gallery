@@ -172,6 +172,13 @@ function nggShowGallery( $galleryID, $template = '', $images = false ) {
         $show = 'slide';
     }
 
+    // filter to call up the imagebrowser instead of the gallery
+    // use in your theme : add_action( 'ngg_show_imagebrowser_first', create_function('', 'return true;') );
+    if ( apply_filters('ngg_show_imagebrowser_first', false, $galleryID ) && $show != 'thumbnails' )  {
+        $out = nggShowImageBrowser( $galleryID, $template );
+        return $out;
+    }
+
     // go on only on this page
     if ( !is_home() || $pageid == get_the_ID() ) { 
             
