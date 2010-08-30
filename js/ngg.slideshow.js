@@ -22,16 +22,16 @@ jQuery.fn.nggSlideshow = function ( args ) {
                 stack.push( decodeURI( photo['imageURL'] ) );
             }
             
-            // push the first two images out
+            // push the first three images out
             var i = 1, counter = 0;
-            while (stack.length && i <= 2) {
+            while (stack.length && i <= 3) {
                 var img = new Image(); 
                 img.src = stack.shift();
                 jQuery( img ).bind('load', function() {
                     jQuery( obj ).append( imageResize(this, s.width , s.height) );
                     counter++;
                     // start cycle after the second image
-                    if (counter == 2)
+                    if (counter == 3)
                         startSlideshow();                        
                 });
                 i++;

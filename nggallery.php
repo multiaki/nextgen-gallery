@@ -253,7 +253,6 @@ class nggLoader {
 	}
 	
 	function load_dependencies() {
-		global $nggdb;
 	
 		// Load global libraries												// average memory usage (in bytes)
 		require_once (dirname (__FILE__) . '/lib/core.php');					//  94.840

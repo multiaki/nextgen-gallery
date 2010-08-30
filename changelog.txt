@@ -11,6 +11,7 @@ by Alex Rabe & NextGEN DEV Team
 * NEW : Integrate jQuery Cycle as NON-Flash slideshow 
 * NEW : Adding jQuery File Tree for import folder (THX to Sergey Pasyuk )
 * NEW : Added action hook 'ngg_show_imagebrowser_first' on custom request
+* NEW : Added filter hook 'ngg_slideshow_size' to resize sildeshow for mobile browser plugins
 * Changed : Reorder tabs for upload
 * Changed : New menu icon and screen icon (THX to Ben Dunkle)
 * Changed : Load frontend libs always

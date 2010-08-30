@@ -111,6 +111,9 @@ function nggShow_JS_Slideshow($galleryID, $width, $height, $class = 'ngg-slidesh
     
     if (empty($width) ) $width  = (int) $ngg_options['irWidth'];
     if (empty($height)) $height = (int) $ngg_options['irHeight'];
+    
+    //filter to resize images for mobile browser
+    list($width, $height) = apply_filters('ngg_slideshow_size', array( $width, $height ) );
         
     $out  = '<div id="' . $anchor . '" class="' . $class . '" style="height:' . $height . 'px;width:' . $width . 'px;">';
     $out .= "\n". '<div id="' . $anchor . '-loader" class="ngg-slideshow-loader" style="height:' . $height . 'px;width:' . $width . 'px;">';
