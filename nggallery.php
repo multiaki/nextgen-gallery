@@ -321,7 +321,7 @@ class nggLoader {
 		if ( NGGALLERY_IREXIST == true && $ngg_options['enableIR'] == '1' && nggGallery::detect_mobile_phone() === false ) 
 			wp_enqueue_script('swfobject', NGGALLERY_URLPATH .'admin/js/swfobject.js', FALSE, '2.2');
         else    
-            wp_enqueue_script ( 'jQuery' );
+            wp_enqueue_script ( 'jquery' );
             
 		// Load AJAX navigation script, works only with shutter script as we need to add the listener
 		if ( $this->options['galAjaxNav'] ) { 
