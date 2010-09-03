@@ -2,9 +2,9 @@ NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
 = V1.7.0 - sometimes =
-* TODO : Rework of overview page
 * TODO : Adding Google Sitemaps for Images
 * TODO : Facebook connector
+* TODO : Switch to Plupload (http://www.plupload.com/)
 
 = V1.6.0 - soon =
 * NEW : Wordpress 3.0 Network (Multi-Site) support
@@ -15,6 +15,7 @@ by Alex Rabe & NextGEN DEV Team
 * Changed : Reorder tabs for upload
 * Changed : New menu icon and screen icon (THX to Ben Dunkle)
 * Changed : Load frontend libs always
+* Changed : Rework of overview page
 * Bugfix : Security bugfix for Zip-Upload (THX to Dominic Szablewski)
 * Bugfix : Allow JPG, PNG, GIF extension
 * Bugfix : New German translation (THX to Martin Kramarz)
