@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-29 14:18+0100\n"
-"PO-Revision-Date: 2010-08-29 14:21+0100\n"
+"POT-Creation-Date: 2010-09-05 14:15+0100\n"
+"PO-Revision-Date: 2010-09-05 14:23+0100\n"
 "Last-Translator: Alex Rabe\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
@@ -42,33 +42,33 @@ msgstr "Bilder-Stichwort: %2$l."
 msgid "Separate picture tags with commas."
 msgstr "Trenne Stichwörter mittels Komma"
 
-#: ../nggallery.php:314
+#: ../nggallery.php:313
 msgid "L O A D I N G"
 msgstr "B I T T E &nbsp;&nbsp;W A R T E N"
 
-#: ../nggallery.php:315
+#: ../nggallery.php:314
 msgid "Click to Close"
 msgstr "Klicken zum Schliessen "
 
-#: ../nggallery.php:333
+#: ../nggallery.php:332
 msgid "loading"
 msgstr "lade..."
 
-#: ../nggallery.php:473
-#: ../nggfunctions.php:913
+#: ../nggallery.php:472
+#: ../nggfunctions.php:916
 #: ../admin/admin.php:31
 msgid "Overview"
 msgstr "Übersicht"
 
-#: ../nggallery.php:474
+#: ../nggallery.php:473
 msgid "Get help"
 msgstr "Hilfe"
 
-#: ../nggallery.php:475
+#: ../nggallery.php:474
 msgid "Contribute"
 msgstr "Mithelfen"
 
-#: ../nggallery.php:476
+#: ../nggallery.php:475
 msgid "Donate"
 msgstr "Spenden"
 
@@ -76,20 +76,20 @@ msgstr "Spenden"
 msgid "The <a href=\"http://www.macromedia.com/go/getflashplayer\">Flash Player</a> and <a href=\"http://www.mozilla.com/firefox/\">a browser with Javascript support</a> are needed.."
 msgstr "Es wird der <a href=\"http://www.macromedia.com/go/getflashplayer\">Adobe Flash Player</a>  benötigt und <a href=\"http://www.mozilla.com/firefox/\">im Browser muss Javascript</a> aktiviert sein."
 
-#: ../nggfunctions.php:160
-#: ../nggfunctions.php:623
+#: ../nggfunctions.php:163
+#: ../nggfunctions.php:626
 msgid "[Gallery not found]"
 msgstr "[Galerie nicht gefunden]"
 
-#: ../nggfunctions.php:430
+#: ../nggfunctions.php:433
 msgid "[Album not found]"
 msgstr "[Album nicht gefunden]"
 
-#: ../nggfunctions.php:740
+#: ../nggfunctions.php:743
 msgid "[SinglePic not found]"
 msgstr "[Bild nicht gefunden]"
 
-#: ../nggfunctions.php:878
+#: ../nggfunctions.php:881
 msgid "Related images for"
 msgstr "Verwandte Bilder von"
 
@@ -333,9 +333,8 @@ msgid "Import from Server path:"
 msgstr "Importieren aus Server-Pfad:"
 
 #: ../admin/addgallery.php:366
-#, fuzzy
 msgid "Note : Change the default path in the gallery settings"
-msgstr "Du kannst den Pfad in Einstellungen für das Wasserzeichen angeben"
+msgstr "Hinweis : Der Default-Pfad kann in den Einstellungen angepasst werden"
 
 #: ../admin/addgallery.php:368
 msgid " Please note : For safe-mode = ON you need to add the subfolder thumbs manually"
@@ -1492,7 +1491,7 @@ msgstr "Verwandte Plugins"
 #: ../admin/overview.php:101
 #, php-format
 msgid "This plugin is primarily developed, maintained, supported and documented by <a href=\"%s\">Alex Rabe</a> with a lot of love & effort. Any kind of contribution would be highly appreciated. Thanks!"
-msgstr ""
+msgstr "Dieses Plugin wird mit viel Mühe & Leidenschaft entwickelt, dokumentiert und supported von <a href=\"%s\">Alex Rabe</a>. Vielleicht möchtest Du dich ja dankbar zeigen. "
 
 #: ../admin/overview.php:106
 msgid "Give it a good rating on WordPress.org."
@@ -1504,7 +1503,7 @@ msgstr "Zeig Dich für diese Arbeit per PayPal dankbar"
 
 #: ../admin/overview.php:116
 msgid "Send a gift to show your appreciation."
-msgstr ""
+msgstr "Schau doch einfach auf meinen Wunschzettel."
 
 #: ../admin/overview.php:121
 msgid "Help to translating it."
@@ -2858,7 +2857,7 @@ msgstr "Rechts"
 msgid "Insert"
 msgstr "Einfügen"
 
-#: ../lib/core.php:369
+#: ../lib/core.php:368
 #, php-format
 msgid "Note : Based on your server memory limit you should not upload larger images then <strong>%d x %d</strong> pixel"
 msgstr "Hinweis: Basierend auf der Speicherbegrenzung auf dem Server, solltest Du keine Bilder grösser als <strong>%d x %d</strong> Pixel hochladen"
