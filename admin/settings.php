@@ -631,14 +631,12 @@ class nggOptions {
             	   <?php _e('See more information for the Flash Player on the web page', 'nggallery') ?> <a href="http://www.longtailvideo.com/players/jw-image-rotator/" target="_blank" >JW Image Rotator from Jeroen Wijering</a>.
             	</p>
             	<?php if (empty($ngg->options['irURL']) && ($ngg->options['enableIR'] == '1')) { ?>
-            		<p>
-            			<div id="message" class="error inline">
-            			<p>
-            				<?php _e('The path to imagerotator.swf is not defined, the slideshow will not work.','nggallery') ?><br />
-            				<?php _e('If you would like to use the JW Image Rotatator, please download the player <a href="http://www.longtailvideo.com/players/jw-image-rotator/" target="_blank" >here</a> and upload it to your Upload folder (Default is wp-content/uploads).','nggallery') ?>
-            			</p>
-            			</div>
-            		</p>
+        			<div id="message" class="error inline">
+        			<p>
+        				<?php _e('The path to imagerotator.swf is not defined, the slideshow will not work.','nggallery'); ?><br />
+        				<?php _e('If you would like to use the JW Image Rotatator, please download the player <a href="http://www.longtailvideo.com/players/jw-image-rotator/" target="_blank" >here</a> and upload it to your Upload folder (Default is wp-content/uploads).','nggallery'); ?>
+        			</p>
+        			</div>
             	<?php }?>
     			<table class="expert form-table ngg-options">
 				<tr>

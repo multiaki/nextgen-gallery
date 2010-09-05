@@ -98,7 +98,7 @@ if ( !is_multisite() || is_super_admin() ) {
 function ngg_likeThisMetaBox() {
 
 	echo '<p>';
-    echo sprintf(__('This plugin is primarily developed, maintained, supported and documented by <a href="%s">Alex Rabe</a> with a lot of love & effort. Any kind of contribution would be highly appreciated. Thanks!', 'nggallery'), 'http://alexrabe.de/') . '</p>';
+    echo sprintf(__('This plugin is primarily developed, maintained, supported and documented by <a href="%s">Alex Rabe</a> with a lot of love & effort. Any kind of contribution would be highly appreciated. Thanks!', 'nggallery'), 'http://alexrabe.de/');
 	echo '</p><ul>';
 
 	$url = 'http://wordpress.org/extend/plugins/nextgen-gallery/' ;
@@ -318,7 +318,7 @@ function ngg_dashboard_quota() {
 	if ( get_site_option( 'upload_space_check_disabled' ) )
 		return;
         
-    if ( wpmu_enable_function('wpmuQuotaCheck') )
+    if ( !wpmu_enable_function('wpmuQuotaCheck') )
         return;    
 
 	$quota = get_space_allowed();
