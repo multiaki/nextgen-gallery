@@ -4,7 +4,7 @@ Plugin Name: NextGEN Gallery
 Plugin URI: http://alexrabe.de/?page_id=80
 Description: A NextGENeration Photo gallery for the Web 2.0.
 Author: Alex Rabe
-Version: 1.6.0b3
+Version: 1.6.0RC1
 
 Author URI: http://alexrabe.de/
 
@@ -34,7 +34,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 if (!class_exists('nggLoader')) {
 class nggLoader {
 	
-	var $version     = '1.6.0b3';
+	var $version     = '1.6.0RC1';
 	var $dbversion   = '1.6.0';
 	var $minium_WP   = '2.9';
 	var $updateURL   = 'http://nextgen.boelinger.com/version.php';
@@ -181,8 +181,8 @@ class nggLoader {
 	function check_memory_limit() {
 		
 		$memory_limit = (int) substr( ini_get('memory_limit'), 0, -1);
-		//This works only with enough memory, 12MB is silly, wordpress requires already 16MB :-)
-		if ( ($memory_limit != 0) && ($memory_limit < 12 ) ) {
+		//This works only with enough memory, 16MB is silly, wordpress requires already 16MB :-)
+		if ( ($memory_limit != 0) && ($memory_limit < 16 ) ) {
 			add_action(
 				'admin_notices', 
 				create_function(
