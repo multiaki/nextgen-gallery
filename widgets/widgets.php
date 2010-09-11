@@ -25,10 +25,6 @@ class nggSlideshowWidget extends WP_Widget {
 
 	function widget( $args, $instance ) {
 		extract( $args );
-
-		// If the Imagerotator didn't exist, skip the output
-		if ( NGGALLERY_IREXIST == false ) 	 
-			return;
 			
 		$title = apply_filters('widget_title', empty( $instance['title'] ) ? __('Slideshow', 'nggallery') : $instance['title'], $instance, $this->id_base);
 
@@ -55,7 +51,7 @@ class nggSlideshowWidget extends WP_Widget {
 		$ngg_options = get_option('ngg_options');
 
         //Redirect all calls to the JavaScript slideshow if wanted
-        if ( $ngg_options['enableIR'] !== '1' || nggGallery::detect_mobile_phone() === true )
+        if ( $ngg_options['enableIR'] !== '1' || nggGallery::detect_mobile_phone() === true || NGGALLERY_IREXIST == false )
             return nggShow_JS_Slideshow($galleryID, $irWidth, $irHeight, 'ngg-widget-slideshow');
 	
 		if (empty($irWidth) ) $irWidth = (int) $ngg_options['irWidth'];
