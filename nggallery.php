@@ -258,6 +258,7 @@ class nggLoader {
 		require_once (dirname (__FILE__) . '/lib/core.php');					//  94.840
 		require_once (dirname (__FILE__) . '/lib/ngg-db.php');					// 132.400
 		require_once (dirname (__FILE__) . '/lib/image.php');					//  59.424
+		require_once (dirname (__FILE__) . '/lib/tags.php');				    // 117.136
 		require_once (dirname (__FILE__) . '/lib/post-thumbnail.php');			//  n.a.
 		require_once (dirname (__FILE__) . '/widgets/widgets.php');				// 298.792
         require_once (dirname (__FILE__) . '/lib/multisite.php');
@@ -276,7 +277,6 @@ class nggLoader {
 			require_once (dirname (__FILE__) . '/admin/ajax.php');
 		else {
 			require_once (dirname (__FILE__) . '/lib/meta.php');				// 131.856
-			require_once (dirname (__FILE__) . '/lib/tags.php');				// 117.136
 			require_once (dirname (__FILE__) . '/lib/media-rss.php');			//  82.768
 			require_once (dirname (__FILE__) . '/lib/rewrite.php');				//  71.936
 			include_once (dirname (__FILE__) . '/admin/tinymce/tinymce.php'); 	//  22.408
