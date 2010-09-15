@@ -304,8 +304,19 @@ class nggGallery {
 		
 	}
 	
+	/**
+	 * Look for the stylesheet in the theme folder
+	 * 
+	 * @return string path to stylesheet
+	 */
 	function get_theme_css_file() {
-		if ( file_exists (STYLESHEETPATH . '/nggallery.css') )
+	   
+  		// allow other plugins to include a stylesheet
+		$stylesheet = apply_filters( 'ngg_load_stylesheet', false );
+        
+		if ( ( $stylesheet != false ) &&  file_exists ($stylesheet) )
+			return ( $stylesheet );
+		elseif ( file_exists (STYLESHEETPATH . '/nggallery.css') )
 			return get_stylesheet_directory_uri() . '/nggallery.css';
 		else
 			return false;		
