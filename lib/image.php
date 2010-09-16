@@ -150,17 +150,13 @@ class nggImage{
 		
 		if (!$thumb->error) {
             if ($mode == 'crop') {
-        		// check for portrait format
-        		if ($thumb->currentDimensions['height'] < $thumb->currentDimensions['width']) {
-                    list ( $width, $ratio_h ) = wp_constrain_dimensions($thumb->currentDimensions['width'], $thumb->currentDimensions['height'], $width);
-                    $thumb->resize($width, $ratio_h);
-        			$ypos = ($thumb->currentDimensions['height'] - $height) / 2;
-        			$thumb->crop(0, $ypos, $width, $height);
-        		} else {
-        		    $thumb->resize($width, 0);
-                    $ypos = ($thumb->currentDimensions['height'] - $height) / 2;
-        			$thumb->crop(0, $ypos, $width, $height);	
-        		}                
+        		// calculates the new dimentions for a downsampled image
+                list ( $ratio_w, $ratio_h ) = wp_constrain_dimensions($thumb->currentDimensions['width'], $thumb->currentDimensions['height'], $width, $height);
+                // check ratio to decide which side should be resized
+                ( $ratio_h <  $height || $ratio_w ==  $width ) ? $thumb->resize(0, $height) : $thumb->resize($width, 0);
+                // get the best start postion to crop from the middle    
+                $ypos = ($thumb->currentDimensions['height'] - $height) / 2;
+        		$thumb->crop(0, $ypos, $width, $height);	               
             } else
                 $thumb->resize($width , $height);
 			
