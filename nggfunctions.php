@@ -222,6 +222,8 @@ function nggShowGallery( $galleryID, $template = '', $images = false ) {
 function nggCreateGallery($picturelist, $galleryID = false, $template = '', $images = false) {
     global $nggRewrite;
 
+    require_once (dirname (__FILE__) . '/lib/media-rss.php');
+    
     $ngg_options = nggGallery::get_option('ngg_options');
 
     //the shortcode parameter will override global settings, TODO: rewrite this to a class

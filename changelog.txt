@@ -8,6 +8,9 @@ by Alex Rabe & NextGEN DEV Team
 
 = V1.6.2 - soon =
 * Bugfix : Load Tags library with core files
+* Bugfix : Slideshow script failed in IE7, load script now in header
+* Bugfix : Load slideshow widget always
+* Bugfix : Rework crop feature for featured images 
 
 = V1.6.1 - 08.09.2010 =
 * Bugfix : Script load of swfobject.js failed

@@ -179,10 +179,12 @@ class nggLoader {
 	}
 	
 	function check_memory_limit() {
-		
-		$memory_limit = (int) substr( ini_get('memory_limit'), 0, -1);
+
+        // get the real memory limit before some increase it
+		$this->memory_limit = (int) substr( ini_get('memory_limit'), 0, -1);
+        
 		//This works only with enough memory, 16MB is silly, wordpress requires already 16MB :-)
-		if ( ($memory_limit != 0) && ($memory_limit < 16 ) ) {
+		if ( ($this->memory_limit != 0) && ($this->memory_limit < 16 ) ) {
 			add_action(
 				'admin_notices', 
 				create_function(
