@@ -43,7 +43,7 @@ class nggGallery {
 		}
 		
 		// set gallery url
-		$folder_url 	= get_option ('siteurl') . '/' . $picturepath.nggGallery::get_thumbnail_folder($picturepath, FALSE);
+		$folder_url 	= site_url() . '/' . $picturepath.nggGallery::get_thumbnail_folder($picturepath, FALSE);
 		$thumbnailURL	= $folder_url . 'thumbs_' . $fileName;
 		
 		return $thumbnailURL;
@@ -68,7 +68,7 @@ class nggGallery {
 		}
 		
 		// set gallery url
-		$imageURL 	= get_option ('siteurl') . '/' . $picturepath . '/' . $fileName;
+		$imageURL 	= site_url() . '/' . $picturepath . '/' . $fileName;
 		
 		return $imageURL;	
 	}

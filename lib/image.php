@@ -64,8 +64,8 @@ class nggImage{
 		$this->previewpic	= $gallery->previewpic;
 	
 		// set urls and paths
-		$this->imageURL		= get_option ('siteurl') . '/' . $this->path . '/' . $this->filename;
-		$this->thumbURL 	= get_option ('siteurl') . '/' . $this->path . '/thumbs/thumbs_' . $this->filename;
+		$this->imageURL		= site_url() . '/' . $this->path . '/' . $this->filename;
+		$this->thumbURL 	= site_url() . '/' . $this->path . '/thumbs/thumbs_' . $this->filename;
 		$this->imagePath	= WINABSPATH.$this->path . '/' . $this->filename;
 		$this->thumbPath	= WINABSPATH.$this->path . '/thumbs/thumbs_' . $this->filename;
 		$this->meta_data	= unserialize($this->meta_data);
@@ -133,7 +133,7 @@ class nggImage{
 		// cache filename should be unique
 		$cachename   	= $this->pid . '_' . $mode . '_'. $width . 'x' . $height . '_' . $this->filename;
 		$cachefolder 	= WINABSPATH .$ngg_options['gallerypath'] . 'cache/';
-		$cached_url  	= get_option ('siteurl') . '/' . $ngg_options['gallerypath'] . 'cache/' . $cachename;
+		$cached_url  	= site_url() . '/' . $ngg_options['gallerypath'] . 'cache/' . $cachename;
 		$cached_file	= $cachefolder . $cachename;
 		
 		// check first for the file
