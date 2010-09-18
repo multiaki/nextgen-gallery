@@ -94,6 +94,9 @@ class nggLoader {
 		// All credits to the tranlator 
 		$this->translator  = '<p class="hint">'. __('<strong>Translation by : </strong><a target="_blank" href="http://alexrabe.de/wordpress-plugins/nextgen-gallery/languages/">See here</a>', 'nggallery') . '</p>';
 		$this->translator .= '<p class="hint">'. __('<strong>This translation is not yet updated for Version 1.6.0</strong>. If you would like to help with translation, download the current po from the plugin folder and read <a href="http://alexrabe.de/wordpress-plugins/wordtube/translation-of-plugins/">here</a> how you can translate the plugin.', 'nggallery') . '</p>'; 
+
+        // Check for upgrade
+        $this->check_for_upgrade();
 				
 		// Content Filters
 		add_filter('ngg_gallery_name', 'sanitize_title');
@@ -198,6 +201,22 @@ class nggLoader {
 		return true;
 		
 	}
+
+	function check_for_upgrade() {
+
+		// Inform about a database upgrade
+		if( get_option( 'ngg_db_version' ) != NGG_DBVERSION ) {
+			add_action(
+				'admin_notices', 
+				create_function(
+					'', 
+					'echo \'<div id="message" class="error"><p><strong>' . __('Please update the database of NextGEN Gallery.', 'nggallery') . ' <a href="admin.php?page=nextgen-gallery">' . __('Click here to proceed.', 'nggallery') . '</a>' . '</strong></p></div>\';'
+				)
+			);
+		}
+        
+		return;		
+	}
 	
 	function define_tables() {		
 		global $wpdb;
@@ -300,6 +319,10 @@ class nggLoader {
 	
 	function load_scripts() {
 		
+        // if you don't want that NGG load the scripts, add this constant
+        if ( defined('NGG_SKIP_LOAD_SCRIPTS') )
+            return;
+        
 		//	activate Thickbox
 		if ($this->options['thumbEffect'] == 'thickbox') {
 			wp_enqueue_script( 'thickbox' );
@@ -343,7 +366,7 @@ class nggLoader {
 	
 	function load_thickbox_images() {
 		// WP core reference relative to the images. Bad idea
-		echo "\n" . '<script type="text/javascript">tb_pathToImage = "' . site_url() . '/wp-includes/js/thickbox/loadingAnimation.gif";tb_closeImage = "' . get_option('siteurl') . '/wp-includes/js/thickbox/tb-close.png";</script>'. "\n";			
+		echo "\n" . '<script type="text/javascript">tb_pathToImage = "' . site_url() . '/wp-includes/js/thickbox/loadingAnimation.gif";tb_closeImage = "' . site_url() . '/wp-includes/js/thickbox/tb-close.png";</script>'. "\n";			
 	}
 	
 	function load_styles() {

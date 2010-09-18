@@ -1009,7 +1009,7 @@ function the_related_images($type = 'tags', $maxNumbers = 7) {
 }
 
 /**
- * nggShowRandomRecent($type, $maxImages,$template) - return recent or random images
+ * nggShowRandomRecent($type, $maxImages, $template, $galleryId) - return recent or random images
  * 
  * @access public
  * @param string $type 'id' (for latest addition to DB), 'date' (for image with the latest date), 'sort' (for image sorted by user order) or 'random'
