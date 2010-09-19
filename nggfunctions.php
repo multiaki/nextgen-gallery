@@ -47,7 +47,7 @@ function nggShowSlideshow($galleryID, $width, $height) {
     $swfobject->add_attributes('name', 'so' . $galleryID);
 
     // adding the flash parameter   
-    $swfobject->add_flashvars( 'file', urlencode ( trailingslashit ( site_url() ) . 'index.php?callback=imagerotator&gid=' . $galleryID ) );
+    $swfobject->add_flashvars( 'file', urlencode ( trailingslashit ( home_url() ) . 'index.php?callback=imagerotator&gid=' . $galleryID ) );
     $swfobject->add_flashvars( 'shuffle', $ngg_options['irShuffle'], 'true', 'bool');
     // option has oposite meaning : true should switch to next image
     $swfobject->add_flashvars( 'linkfromdisplay', !$ngg_options['irLinkfromdisplay'], 'false', 'bool');
@@ -126,7 +126,7 @@ function nggShow_JS_Slideshow($galleryID, $width, $height, $class = 'ngg-slidesh
             'fx:"'      . $ngg_options['slideFx'] . '",' .
             'width:'    . $width        . ',' . 
             'height:'   . $height       . ',' .
-            'domain: "' . trailingslashit ( site_url() ) . '",' .
+            'domain: "' . trailingslashit ( home_url() ) . '",' .
             'timeout:'  . $ngg_options['irRotatetime'] * 1000 .
             '});';
     $out .= "\n".'</script>';
@@ -774,7 +774,7 @@ function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $fl
     
     // if we didn't use a cached image then we take the on-the-fly mode 
     if (!$picture->thumbnailURL) 
-        $picture->thumbnailURL = site_url() . '/' . 'index.php?callback=image&amp;pid=' . $imageID . '&amp;width=' . $width . '&amp;height=' . $height . '&amp;mode=' . $mode;
+        $picture->thumbnailURL = home_url() . '/' . 'index.php?callback=image&amp;pid=' . $imageID . '&amp;width=' . $width . '&amp;height=' . $height . '&amp;mode=' . $mode;
 
     // add more variables for render output
     $picture->imageURL = ( empty($link) ) ? $picture->imageURL : $link;
