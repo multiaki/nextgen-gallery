@@ -6,7 +6,7 @@ by Alex Rabe & NextGEN DEV Team
 * TODO : Facebook connector
 * TODO : Switch to Plupload (http://www.plupload.com/)
 
-= V1.6.2 - soon =
+= V1.6.2 - 19.09.2010 =
 * NEW : Added constant NGG_SKIP_LOAD_SCRIPTS to avoid script load
 * Bugfix : Load Tags library with core files
 * Bugfix : Slideshow script failed in IE7, load script now in header
