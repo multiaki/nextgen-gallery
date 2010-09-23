@@ -371,7 +371,11 @@ class nggAdminPanel{
 	function register_columns() {
 		include_once ( dirname (__FILE__) . '/manage-images.php' );
 		
-		$this->register_column_headers('nggallery-manage-images', ngg_manage_gallery_columns() );	
+		$this->register_column_headers('nggallery-manage-images', ngg_manage_image_columns() );
+		
+		include_once ( dirname (__FILE__) . '/manage-galleries.php' );
+		
+		$this->register_column_headers('nggallery-manage-galleries', ngg_manage_gallery_columns() );	
 	}
 
 	/**

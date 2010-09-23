@@ -150,36 +150,23 @@ function nggallery_manage_gallery_main() {
 		<table class="widefat" cellspacing="0">
 			<thead>
 			<tr>
-				<th scope="col" class="column-cb" >
-					<input type="checkbox" onclick="checkAll(document.getElementById('editgalleries'));" name="checkall"/>
-				</th>
-				<th scope="col" ><?php _e('ID'); ?></th>
-				<th scope="col" ><?php _e('Title', 'nggallery'); ?></th>
-				<th scope="col" ><?php _e('Description', 'nggallery'); ?></th>
-				<th scope="col" ><?php _e('Author', 'nggallery'); ?></th>
-				<th scope="col" ><?php _e('Page ID', 'nggallery'); ?></th>
-				<th scope="col" ><?php _e('Quantity', 'nggallery'); ?></th>
-				<th scope="col" ><?php _e('Action'); ?></th>
+<?php print_column_headers('nggallery-manage-galleries'); ?>
 			</tr>
 			</thead>
 			<tfoot>
 			<tr>
-				<th scope="col" class="column-cb" >
-					<input type="checkbox" onclick="checkAll(document.getElementById('editgalleries'));" name="checkall"/>
-				</th>
-				<th scope="col" ><?php _e('ID'); ?></th>
-				<th scope="col" ><?php _e('Title', 'nggallery'); ?></th>
-				<th scope="col" ><?php _e('Description', 'nggallery'); ?></th>
-				<th scope="col" ><?php _e('Author', 'nggallery'); ?></th>
-				<th scope="col" ><?php _e('Page ID', 'nggallery'); ?></th>
-				<th scope="col" ><?php _e('Quantity', 'nggallery'); ?></th>
-				<th scope="col" ><?php _e('Action'); ?></th>
+<?php print_column_headers('nggallery-manage-galleries', false); ?>
 			</tr>
 			</tfoot>            
 			<tbody>
 <?php
 
 if($gallerylist) {
+    //get the columns
+	$gallery_columns = ngg_manage_gallery_columns();
+	$hidden_columns  = get_hidden_columns('nggallery-manage-images');
+	$num_columns     = count($gallery_columns) - count($hidden_columns);
+    
 	foreach($gallerylist as $gallery) {
 		$class = ( !isset($class) || $class == 'class="alternate"' ) ? '' : 'class="alternate"';
 		$gid = $gallery->gid;
@@ -187,30 +174,80 @@ if($gallerylist) {
 		$author_user = get_userdata( (int) $gallery->author );
 		?>
 		<tr id="gallery-<?php echo $gid ?>" <?php echo $class; ?> >
-			<th scope="row" class="cb column-cb">
-				<?php if (nggAdmin::can_manage_this_gallery($gallery->author)) { ?>
-					<input name="doaction[]" type="checkbox" value="<?php echo $gid ?>" />
-				<?php } ?>
-			</th>
-			<td scope="row"><?php echo $gid; ?></td>
-			<td>
-				<?php if (nggAdmin::can_manage_this_gallery($gallery->author)) { ?>
-					<a href="<?php echo wp_nonce_url( $ngg->manage_page->base_page . '&amp;mode=edit&amp;gid=' . $gid, 'ngg_editgallery')?>" class='edit' title="<?php _e('Edit'); ?>" >
-						<?php echo nggGallery::i18n($name); ?>
-					</a>
-				<?php } else { ?>
-					<?php echo nggGallery::i18n($gallery->title); ?>
-				<?php } ?>
-			</td>
-			<td><?php echo nggGallery::i18n($gallery->galdesc); ?>&nbsp;</td>
-			<td><?php echo $author_user->display_name; ?></td>
-			<td><?php echo $gallery->pageid; ?></td>
-			<td><?php echo $gallery->counter; ?></td>
-			<td>
-				<?php if (nggAdmin::can_manage_this_gallery($gallery->author)) : ?>
-					<a href="<?php echo wp_nonce_url( $ngg->manage_page->base_page . '&amp;mode=delete&amp;gid=' . $gid, 'ngg_editgallery')?>" class="delete" onclick="javascript:check=confirm( '<?php _e('Delete this gallery ?', 'nggallery'); ?>');if(check==false) return false;"><?php _e('Delete'); ?></a>
-				<?php endif; ?>
-			</td>
+		<?php 
+		foreach($gallery_columns as $gallery_column_key => $column_display_name) {
+			$class = "class=\"$gallery_column_key column-$gallery_column_key\"";
+	
+			$style = '';
+			if ( in_array($gallery_column_key, $hidden_columns) )
+				$style = ' style="display:none;"';
+	
+			$attributes = "$class$style";
+			
+			switch ($gallery_column_key) {
+				case 'cb' :
+					?>
+        			<th scope="row" class="cb column-cb">
+        				<?php if (nggAdmin::can_manage_this_gallery($gallery->author)) { ?>
+        					<input name="doaction[]" type="checkbox" value="<?php echo $gid ?>" />
+        				<?php } ?>
+        			</th>
+        			<?php 
+    			break;
+    			case 'id' :
+    			    ?>
+					<td <?php echo $attributes ?> scope="row"><?php echo $gid; ?></td>
+					<?php 
+    			break;
+    			case 'title' :
+    			    ?>
+        			<td>
+        				<?php if (nggAdmin::can_manage_this_gallery($gallery->author)) { ?>
+        					<a href="<?php echo wp_nonce_url( $ngg->manage_page->base_page . '&amp;mode=edit&amp;gid=' . $gid, 'ngg_editgallery')?>" class='edit' title="<?php _e('Edit'); ?>" >
+        						<?php echo nggGallery::i18n($name); ?>
+        					</a>
+        				<?php } else { ?>
+        					<?php echo nggGallery::i18n($gallery->title); ?>
+        				<?php } ?>
+        			</td>
+        			<?php 
+    			break;
+    			case 'description' :
+    			    ?>
+					<td <?php echo $attributes ?>><?php echo nggGallery::i18n($gallery->galdesc); ?>&nbsp;</td>
+					<?php 
+    			break;
+    			case 'author' :
+    			    ?>
+					<td <?php echo $attributes ?>><?php echo $author_user->display_name; ?></td>
+					<?php 
+    			break;
+    			case 'page_id' :
+    			    ?>
+        			<td <?php echo $attributes ?>><?php echo $gallery->pageid; ?></td>
+        			<?php 
+    			break;
+    			case 'quantity' :
+    			    ?>
+        			<td <?php echo $attributes ?>><?php echo $gallery->counter; ?></td>
+        			<?php 
+    			break;
+    			case 'action' :
+    			    ?>
+        			<td <?php echo $attributes ?>>
+        				<?php if (nggAdmin::can_manage_this_gallery($gallery->author)) : ?>
+        					<a href="<?php echo wp_nonce_url( $ngg->manage_page->base_page . '&amp;mode=delete&amp;gid=' . $gid, 'ngg_editgallery')?>" class="delete" onclick="javascript:check=confirm( '<?php _e('Delete this gallery ?', 'nggallery'); ?>');if(check==false) return false;"><?php _e('Delete'); ?></a>
+        				<?php endif; ?>
+        			</td>
+        			<?php 
+    			break;
+    			default : 
+					?>
+					<td <?php echo $attributes ?>><?php do_action('ngg_manage_gallery_custom_column', $gallery_column_key, $gid); ?></td>
+					<?php
+				break;
+				}
+	        } ?>
 		</tr>
 		<?php
 	}
@@ -320,4 +357,23 @@ if($gallerylist) {
 
 <?php
 } 
+
+// define the columns to display, the syntax is 'internal name' => 'display name'
+function ngg_manage_gallery_columns() {
+	
+	$gallery_columns = array();
+	
+	$gallery_columns['cb'] = '<input name="checkall" type="checkbox" onclick="checkAll(document.getElementById(\'editgalleries\'));" />';
+	$gallery_columns['id'] = __('ID');
+	$gallery_columns['title'] = __('Title', 'nggallery');
+	$gallery_columns['description'] = __('Description', 'nggallery');
+	$gallery_columns['author'] = __('Author', 'nggallery');
+	$gallery_columns['page_id'] = __('Page ID', 'nggallery');
+	$gallery_columns['quantity'] = __('Quantity', 'nggallery');
+	$gallery_columns['action'] = __('Action', 'nggallery');
+
+	$gallery_columns = apply_filters('ngg_manage_gallery_columns', $gallery_columns);
+
+	return $gallery_columns;
+}
 ?>

@@ -67,9 +67,9 @@ function nggallery_picturelist() {
 		$gallerylist = $nggdb->find_all_galleries();
 
 		//get the columns
-		$gallery_columns = ngg_manage_gallery_columns();
+		$image_columns = ngg_manage_image_columns();
 		$hidden_columns  = get_hidden_columns('nggallery-manage-images');
-		$num_columns     = count($gallery_columns) - count($hidden_columns);
+		$num_columns     = count($image_columns) - count($hidden_columns);
 		
 		$attr = (nggGallery::current_user_can( 'NextGEN Edit gallery options' )) ? '' : 'disabled="disabled"';
 
@@ -359,16 +359,16 @@ if($picturelist) {
 		?>
 		<tr id="picture-<?php echo $pid ?>" class="<?php echo $alternate ?> iedit"  valign="top">
 			<?php
-			foreach($gallery_columns as $gallery_column_key => $column_display_name) {
-				$class = "class=\"$gallery_column_key column-$gallery_column_key\"";
+			foreach($image_columns as $image_column_key => $column_display_name) {
+				$class = "class=\"$image_column_key column-$image_column_key\"";
 		
 				$style = '';
-				if ( in_array($gallery_column_key, $hidden_columns) )
+				if ( in_array($image_column_key, $hidden_columns) )
 					$style = ' style="display:none;"';
 		
 				$attributes = "$class$style";
 				
-				switch ($gallery_column_key) {
+				switch ($image_column_key) {
 					case 'cb' :
 						?> 
 						<th <?php echo $attributes ?> scope="row"><input name="doaction[]" type="checkbox" value="<?php echo $pid ?>" /></th>
@@ -450,7 +450,7 @@ if($picturelist) {
 					break;
 					default : 
 						?>
-						<td <?php echo $attributes ?>><?php do_action('ngg_manage_gallery_custom_column', $gallery_column_key, $pid); ?></td>
+						<td <?php echo $attributes ?>><?php do_action('ngg_manage_image_custom_column', $image_column_key, $pid); ?></td>
 						<?php
 					break;
 				}
@@ -611,24 +611,24 @@ if ( $counter == 0 )
 }
 
 // define the columns to display, the syntax is 'internal name' => 'display name'
-function ngg_manage_gallery_columns() {
+function ngg_manage_image_columns() {
 	
-	$gallery_columns = array();
+	$image_columns = array();
 	
-	$gallery_columns['cb'] = '<input name="checkall" type="checkbox" onclick="checkAll(document.getElementById(\'updategallery\'));" />';
-	$gallery_columns['id'] = __('ID');
-	$gallery_columns['thumbnail'] = __('Thumbnail', 'nggallery');
+	$image_columns['cb'] = '<input name="checkall" type="checkbox" onclick="checkAll(document.getElementById(\'updategallery\'));" />';
+	$image_columns['id'] = __('ID');
+	$image_columns['thumbnail'] = __('Thumbnail', 'nggallery');
 	
-	$gallery_columns['filename'] = __('Filename', 'nggallery');
+	$image_columns['filename'] = __('Filename', 'nggallery');
 	
-	$gallery_columns['alt_title_desc'] = __('Alt &amp; Title Text', 'nggallery') . ' / ' . __('Description', 'nggallery');
-	$gallery_columns['tags'] = __('Tags (comma separated list)', 'nggallery');
+	$image_columns['alt_title_desc'] = __('Alt &amp; Title Text', 'nggallery') . ' / ' . __('Description', 'nggallery');
+	$image_columns['tags'] = __('Tags (comma separated list)', 'nggallery');
 
-	$gallery_columns['exclude'] = __('exclude', 'nggallery');
+	$image_columns['exclude'] = __('exclude', 'nggallery');
 	
-	$gallery_columns = apply_filters('ngg_manage_gallery_columns', $gallery_columns);
+	$image_columns = apply_filters('ngg_manage_images_columns', $image_columns);
 
-	return $gallery_columns;
+	return $image_columns;
 }
 
 ?>

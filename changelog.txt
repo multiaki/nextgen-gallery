@@ -5,6 +5,7 @@ by Alex Rabe & NextGEN DEV Team
 * TODO : Adding Google Sitemaps for Images
 * TODO : Facebook connector
 * TODO : Switch to Plupload (http://www.plupload.com/)
+* Changed : New hooks for gallery table (THX to Alexander Schneider)
 
 = V1.6.2 - 19.09.2010 =
 * NEW : Added constant NGG_SKIP_LOAD_SCRIPTS to avoid script load
