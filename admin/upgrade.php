@@ -14,11 +14,13 @@ function ngg_upgrade() {
 	// get the current user ID
 	get_currentuserinfo();
     
-    // in multisite environment the pointer $wpdb->nggpictures will not work
-    $nggpictures = $wpdb->prefix . 'ngg_pictures';
+    // in multisite environment the pointer $wpdb->nggpictures need to be set again
+	$wpdb->nggpictures					= $wpdb->prefix . 'ngg_pictures';
+	$wpdb->nggallery					= $wpdb->prefix . 'ngg_gallery';
+	$wpdb->nggalbum						= $wpdb->prefix . 'ngg_album';
     
-    // Be sure that the tables exist
-	if( $wpdb->get_var("show tables like '$nggpictures'") == $nggpictures) {
+    // Be sure that the tables exist, avoid case sensitive : http://dev.mysql.com/doc/refman/5.1/en/identifier-case-sensitivity.html
+	if( strcasecmp ( $wpdb->get_var("show tables like '$wpdb->nggpictures'"), $wpdb->nggpictures) == 0 ) {
 
 		echo __('Upgrade database structure...', 'nggallery');
 		$wpdb->show_errors();
@@ -165,6 +167,7 @@ function ngg_upgrade() {
 	}
     
     echo __('Could not find NextGEN Gallery database tables, upgrade failed !', 'nggallery');
+    //var_dump( $wpdb->get_results("SHOW GRANTS FOR CURRENT_USER") );
     
     return;
 }
