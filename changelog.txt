@@ -6,6 +6,7 @@ by Alex Rabe & NextGEN DEV Team
 * TODO : Facebook connector
 * TODO : Switch to Plupload (http://www.plupload.com/)
 * Changed : New hooks for gallery table (THX to Alexander Schneider)
+* Bugfix : Install/Upgrade failed when table prefix contain captial letters
 
 = V1.6.2 - 19.09.2010 =
 * NEW : Added constant NGG_SKIP_LOAD_SCRIPTS to avoid script load

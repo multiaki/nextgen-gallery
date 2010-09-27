@@ -52,7 +52,7 @@ function nggallery_install () {
 	$nggalbum						= $wpdb->prefix . 'ngg_album';
 
     // could be case senstive : http://dev.mysql.com/doc/refman/5.1/en/identifier-case-sensitivity.html
-	if( strcasecmp ( $wpdb->get_var("show tables like '$nggpictures'"), $nggpictures) != 0 ) {
+	if( !$wpdb->get_var( "SHOW TABLES LIKE '$nggpictures'" ) ) {
       
 		$sql = "CREATE TABLE " . $nggpictures . " (
 		pid BIGINT(20) NOT NULL AUTO_INCREMENT ,
@@ -72,7 +72,7 @@ function nggallery_install () {
       dbDelta($sql);
     }
 
-	if( strcasecmp ( $wpdb->get_var("show tables like '$nggallery'"), $nggallery) != 0 ) {
+	if( !$wpdb->get_var( "SHOW TABLES LIKE '$nggallery'" )) {
       
 		$sql = "CREATE TABLE " . $nggallery . " (
 		gid BIGINT(20) NOT NULL AUTO_INCREMENT ,
@@ -89,7 +89,7 @@ function nggallery_install () {
       dbDelta($sql);
    }
     
-	if( strcasecmp ( $wpdb->get_var("show tables like '$nggalbum'"), $nggalbum) != 0 ) {
+	if( !$wpdb->get_var( "SHOW TABLES LIKE '$nggalbum'" )) {
       
 		$sql = "CREATE TABLE " . $nggalbum . " (
 		id BIGINT(20) NOT NULL AUTO_INCREMENT ,
@@ -105,7 +105,7 @@ function nggallery_install () {
     }
 
 	// check one table again, to be sure
-	if( strcasecmp ( $wpdb->get_var("show tables like '$nggpictures'"), $nggpictures) != 0 ) {
+	if( !$wpdb->get_var( "SHOW TABLES LIKE '$nggpictures'" ) ) {
 		update_option( "ngg_init_check", __('NextGEN Gallery : Tables could not created, please check your database settings',"nggallery") );
 		return;
 	}

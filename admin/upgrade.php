@@ -20,7 +20,7 @@ function ngg_upgrade() {
 	$wpdb->nggalbum						= $wpdb->prefix . 'ngg_album';
     
     // Be sure that the tables exist, avoid case sensitive : http://dev.mysql.com/doc/refman/5.1/en/identifier-case-sensitivity.html
-	if( strcasecmp ( $wpdb->get_var("show tables like '$wpdb->nggpictures'"), $wpdb->nggpictures) == 0 ) {
+	if( $wpdb->get_var( "SHOW TABLES LIKE '$wpdb->nggpictures'" ) ) {
 
 		echo __('Upgrade database structure...', 'nggallery');
 		$wpdb->show_errors();
@@ -167,7 +167,6 @@ function ngg_upgrade() {
 	}
     
     echo __('Could not find NextGEN Gallery database tables, upgrade failed !', 'nggallery');
-    //var_dump( $wpdb->get_results("SHOW GRANTS FOR CURRENT_USER") );
     
     return;
 }
