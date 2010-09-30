@@ -422,8 +422,8 @@ if($picturelist) {
      					if (is_array ($size = $picture->meta_data['thumbnail']) )
 							$thumbsize = 'width="' . $size['width'] . '" height="' . $size['height'] . '"';
 						?>
-						<td <?php echo $attributes ?>><a href="<?php echo $picture->imageURL . '?' . mt_rand(); ?>" class="thickbox" title="<?php echo $picture->filename ?>">
-								<img class="thumb" src="<?php echo $picture->thumbURL . '?' . mt_rand(); ?>" <?php echo $thumbsize ?> id="thumb<?php echo $pid ?>" />
+						<td <?php echo $attributes ?>><a href="<?php echo $picture->imageURL; if(strpos($picture->imageURL, '?')) { echo '&'; } else { echo '?'; } echo mt_rand(); ?>" class="thickbox" title="<?php echo $picture->filename ?>">
+								<img class="thumb" src="<?php echo $picture->thumbURL; if(strpos($picture->thumbURL, '?')) { echo '&'; } else { echo '?'; } echo mt_rand(); ?>" <?php echo $thumbsize ?> id="thumb<?php echo $pid ?>" />
 							</a>
 						</td>
 						<?php						
