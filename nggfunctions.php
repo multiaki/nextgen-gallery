@@ -117,7 +117,7 @@ function nggShow_JS_Slideshow($galleryID, $width, $height, $class = 'ngg-slidesh
         
     $out  = '<div id="' . $anchor . '" class="' . $class . '" style="height:' . $height . 'px;width:' . $width . 'px;">';
     $out .= "\n". '<div id="' . $anchor . '-loader" class="ngg-slideshow-loader" style="height:' . $height . 'px;width:' . $width . 'px;">';
-    $out .= "\n". '<img src="'. NGGALLERY_URLPATH . 'images/loader.gif " alt="" />';
+    $out .= "\n". '<img src="'. NGGALLERY_URLPATH . 'images/loader.gif" alt="" />';
     $out .= "\n". '</div>';
     $out .= '</div>'."\n";
     $out .= "\n".'<script type="text/javascript" defer="defer">';
