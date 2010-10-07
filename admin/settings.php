@@ -108,6 +108,7 @@ class nggOptions {
 	?>
 	<script type="text/javascript">
 		jQuery(document).ready(function(){
+		    jQuery('html,body').scrollTop(0);
 			jQuery("a.switch-expert").hide();
             /*
             jQuery(".expert").hide();

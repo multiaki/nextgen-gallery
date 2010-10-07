@@ -84,8 +84,7 @@ function nggallery_picturelist() {
 
 <script type="text/javascript"> 
 <!--
-
-function showDialog( windowId, height ) {
+function showDialog( windowId, title ) {
 	var form = document.getElementById('updategallery');
 	var elementlist = "";
 	for (i = 0, n = form.elements.length; i < n; i++) {
@@ -100,8 +99,14 @@ function showDialog( windowId, height ) {
 	}
 	jQuery("#" + windowId + "_bulkaction").val(jQuery("#bulkaction").val());
 	jQuery("#" + windowId + "_imagelist").val(elementlist);
-	// console.log (jQuery("#TB_imagelist").val());
-	tb_show("", "#TB_inline?width=640&height=" + height + "&inlineId=" + windowId + "&modal=true", false);
+    // now show the dialog
+	jQuery( "#" + windowId ).dialog({
+		width: 640,
+        resizable : false,
+		modal: true,
+        title: title        
+	});
+    jQuery("#" + windowId + ' .dialog-cancel').click(function() { jQuery( "#" + windowId ).dialog("close"); });
 }
 
 function checkAll(form)
@@ -145,22 +150,31 @@ function checkSelected() {
 	
 	switch (actionId) {
 		case "copy_to":
+			showDialog('selectgallery', '<?php echo esc_js(__('Copy image to...','nggallery')); ?>');
+			return false;
+			break;
 		case "move_to":
-			showDialog('selectgallery', 120);
+			showDialog('selectgallery', '<?php echo esc_js(__('Move image to...','nggallery')); ?>');
 			return false;
 			break;
 		case "add_tags":
+			showDialog('entertags', '<?php echo esc_js(__('Add new tags','nggallery')); ?>');
+			return false;
+			break;
 		case "delete_tags":
+			showDialog('entertags', '<?php echo esc_js(__('Delete tags','nggallery')); ?>');
+			return false;
+			break;
 		case "overwrite_tags":
-			showDialog('entertags', 120);
+			showDialog('entertags', '<?php echo esc_js(__('Overwrite','nggallery')); ?>');
 			return false;
 			break;
 		case "resize_images":
-			showDialog('resize_images', 120);
+			showDialog('resize_images', '<?php echo esc_js(__('Resize images','nggallery')); ?>');
 			return false;
 			break;
 		case "new_thumbnail":
-			showDialog('new_thumbnail', 160);
+			showDialog('new_thumbnail', '<?php echo esc_js(__('Create new thumbnails','nggallery')); ?>');
 			return false;
 			break;			
 	}
@@ -499,7 +513,7 @@ if ( $counter == 0 )
 		    	<td class="submit">
 		    		<input class="button-primary" type="submit" name="TB_EditTags" value="<?php _e("OK",'nggallery'); ?>" />
 		    		&nbsp;
-		    		<input class="button-secondary" type="reset" value="&nbsp;<?php _e("Cancel",'nggallery'); ?>&nbsp;" onclick="tb_remove()"/>
+		    		<input class="button-secondary dialog-cancel" type="reset" value="&nbsp;<?php _e("Cancel",'nggallery'); ?>&nbsp;" />
 		    	</td>
 			</tr>
 		</table>
@@ -535,7 +549,7 @@ if ( $counter == 0 )
 		    	<td class="submit">
 		    		<input type="submit" class="button-primary" name="TB_SelectGallery" value="<?php _e("OK",'nggallery'); ?>" />
 		    		&nbsp;
-		    		<input class="button-secondary" type="reset" value="<?php _e("Cancel",'nggallery'); ?>" onclick="tb_remove()"/>
+		    		<input class="button-secondary dialog-cancel" type="reset" value="<?php _e("Cancel",'nggallery'); ?>" />
 		    	</td>
 			</tr>
 		</table>
@@ -564,7 +578,7 @@ if ( $counter == 0 )
 		    	<td colspan="2" class="submit">
 		    		<input class="button-primary" type="submit" name="TB_ResizeImages" value="<?php _e('OK', 'nggallery'); ?>" />
 		    		&nbsp;
-		    		<input class="button-secondary" type="reset" value="&nbsp;<?php _e('Cancel', 'nggallery'); ?>&nbsp;" onclick="tb_remove()"/>
+		    		<input class="button-secondary dialog-cancel" type="reset" value="&nbsp;<?php _e('Cancel', 'nggallery'); ?>&nbsp;" />
 		    	</td>
 			</tr>
 		</table>
@@ -594,7 +608,7 @@ if ( $counter == 0 )
 		    	<td colspan="2" class="submit">
 		    		<input class="button-primary" type="submit" name="TB_NewThumbnail" value="<?php _e('OK', 'nggallery');?>" />
 		    		&nbsp;
-		    		<input class="button-secondary" type="reset" value="&nbsp;<?php _e('Cancel', 'nggallery'); ?>&nbsp;" onclick="tb_remove()"/>
+		    		<input class="button-secondary dialog-cancel" type="reset" value="&nbsp;<?php _e('Cancel', 'nggallery'); ?>&nbsp;" />
 		    	</td>
 			</tr>
 		</table>

@@ -220,6 +220,7 @@ class nggAddGallery {
 	<script type="text/javascript">
 	/* <![CDATA[ */
 		jQuery(document).ready(function(){
+            jQuery('html,body').scrollTop(0);
 			jQuery('#slider').tabs({ fxFade: true, fxSpeed: 'fast' });	
 		});
 		

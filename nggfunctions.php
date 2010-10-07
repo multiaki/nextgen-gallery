@@ -114,7 +114,10 @@ function nggShow_JS_Slideshow($galleryID, $width, $height, $class = 'ngg-slidesh
     
     //filter to resize images for mobile browser
     list($width, $height) = apply_filters('ngg_slideshow_size', array( $width, $height ) );
-        
+    
+    $width  = (int) $width;
+    $height = (int) $height;
+            
     $out  = '<div id="' . $anchor . '" class="' . $class . '" style="height:' . $height . 'px;width:' . $width . 'px;">';
     $out .= "\n". '<div id="' . $anchor . '-loader" class="ngg-slideshow-loader" style="height:' . $height . 'px;width:' . $width . 'px;">';
     $out .= "\n". '<img src="'. NGGALLERY_URLPATH . 'images/loader.gif" alt="" />';

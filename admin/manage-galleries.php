@@ -67,11 +67,11 @@ function nggallery_manage_gallery_main() {
 		
 		switch (actionId) {
 			case "resize_images":
-				showDialog('resize_images', 120);
+                showDialog('resize_images', '<?php echo esc_js(__('Resize images','nggallery')); ?>');
 				return false;
 				break;
 			case "new_thumbnail":
-				showDialog('new_thumbnail', 160);
+				showDialog('new_thumbnail', '<?php echo esc_js(__('Create new thumbnails','nggallery')); ?>');
 				return false;
 				break;
 		}
@@ -79,7 +79,7 @@ function nggallery_manage_gallery_main() {
 		return confirm('<?php echo sprintf(esc_js(__("You are about to start the bulk edit for %s galleries \n \n 'Cancel' to stop, 'OK' to proceed.",'nggallery')), "' + numchecked + '") ; ?>');
 	}
 
-	function showDialog( windowId, height ) {
+	function showDialog( windowId, title ) {
 		var form = document.getElementById('editgalleries');
 		var elementlist = "";
 		for (i = 0, n = form.elements.length; i < n; i++) {
@@ -94,12 +94,24 @@ function nggallery_manage_gallery_main() {
 		}
 		jQuery("#" + windowId + "_bulkaction").val(jQuery("#bulkaction").val());
 		jQuery("#" + windowId + "_imagelist").val(elementlist);
-		// console.log (jQuery("#TB_imagelist").val());
-		tb_show("", "#TB_inline?width=640&height=" + height + "&inlineId=" + windowId + "&modal=true", false);
+        // now show the dialog
+    	jQuery( "#" + windowId ).dialog({
+    		width: 640,
+            resizable : false,
+    		modal: true,
+            title: title      
+    	});
+        jQuery("#" + windowId + ' .dialog-cancel').click(function() { jQuery( "#" + windowId ).dialog("close"); });
 	}
 	
 	function showAddGallery() {
-		tb_show("", "#TB_inline?width=640&height=140&inlineId=addGallery&modal=true", false);
+    	jQuery( "#addGallery").dialog({
+    		width: 640,
+            resizable : false,
+    		modal: true,
+            title: '<?php echo esc_js(__('Add new gallery','nggallery')); ?>'          
+    	});	   
+        jQuery("#addGallery .dialog-cancel").click(function() { jQuery( "#addGallery" ).dialog("close"); });
 	}
 	//-->
 	</script>
@@ -288,7 +300,7 @@ if($gallerylist) {
 		    	<td class="submit">
 		    		<input class="button-primary" type="submit" name="addgallery" value="<?php _e('OK','nggallery'); ?>" />
 		    		&nbsp;
-		    		<input class="button-secondary" type="reset" value="&nbsp;<?php _e('Cancel', 'nggallery'); ?>&nbsp;" onclick="tb_remove()"/>
+		    		<input class="button-secondary dialog-cancel" type="reset" value="&nbsp;<?php _e('Cancel', 'nggallery'); ?>&nbsp;" />
 		    	</td>
 			</tr>
 		</table>
@@ -317,7 +329,7 @@ if($gallerylist) {
 		    	<td colspan="2" class="submit">
 		    		<input class="button-primary" type="submit" name="TB_ResizeImages" value="<?php _e('OK', 'nggallery'); ?>" />
 		    		&nbsp;
-		    		<input class="button-secondary" type="reset" value="&nbsp;<?php _e('Cancel', 'nggallery'); ?>&nbsp;" onclick="tb_remove()"/>
+		    		<input class="button-secondary dialog-cancel" type="reset" value="&nbsp;<?php _e('Cancel', 'nggallery'); ?>&nbsp;" />
 		    	</td>
 			</tr>
 		</table>
@@ -347,7 +359,7 @@ if($gallerylist) {
 		    	<td colspan="2" class="submit">
 		    		<input class="button-primary" type="submit" name="TB_NewThumbnail" value="<?php _e('OK', 'nggallery');?>" />
 		    		&nbsp;
-		    		<input class="button-secondary" type="reset" value="&nbsp;<?php _e('Cancel', 'nggallery'); ?>&nbsp;" onclick="tb_remove()"/>
+		    		<input class="button-secondary dialog-cancel" type="reset" value="&nbsp;<?php _e('Cancel', 'nggallery'); ?>&nbsp;" />
 		    	</td>
 			</tr>
 		</table>
