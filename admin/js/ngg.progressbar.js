@@ -20,7 +20,7 @@
 			width = Math.round( ( 100 / s.maxStep ) * 100 ) /100;			
 			// add the initial progressbar
 			if ( $( "#" + s.id + "_dialog" ).length == 0) {
-				title =	(s.header.length > 0) ? s.header : '' ;
+				s.header = (s.header.length > 0) ? s.header : '' ;
 				$("body").append('<div id="' + s.id + '_dialog"><div id="' + s.id + '" class="progressborder"><div class="' + s.id + '"><span>0%</span></div></div></div>');
    	            $('html,body').scrollTop(0);
                 // we open the dialog
@@ -28,7 +28,7 @@
             		width: 640,
                     resizable : true,
             		modal: true,
-                    title: title       
+                    title: s.header       
             	});
 			}
 		},

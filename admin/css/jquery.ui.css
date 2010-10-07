@@ -61,8 +61,6 @@
 .ui-state-default .ui-icon { background-image: url(images/ui-icons_cccccc_256x240.png); }
 .ui-state-hover .ui-icon, .ui-state-focus .ui-icon {background-image: url(images/ui-icons_ffffff_256x240.png); }
 .ui-state-active .ui-icon {background-image: url(images/ui-icons_222222_256x240.png); }
-.ui-state-highlight .ui-icon {background-image: url(images/ui-icons_4b8e0b_256x240.png); }
-.ui-state-error .ui-icon, .ui-state-error-text .ui-icon {background-image: url(images/ui-icons_a83300_256x240.png); }
 
 /* positioning */
 .ui-icon-close { background-position: -80px -128px; }
