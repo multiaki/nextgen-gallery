@@ -26,6 +26,9 @@ class nggManageGallery {
 		// Should be only called via a edit single gallery page	
 		if ( isset($_POST['page']) && $_POST['page'] == 'manage-images' )
 			$this->post_processor_images();
+		// Should be called via a publish dialog	
+		if ( isset($_POST['page']) && $_POST['page'] == 'publish-post' )
+			$this->publish_post();
 		//Look for other POST process
 		if ( !empty($_POST) || !empty($_GET) )
 			$this->processor();
@@ -425,6 +428,41 @@ class nggManageGallery {
 			}
 		}
 	}
+    
+   	/**
+   	 * Publish a new post with the shortcode from the selected image
+     * 
+   	 * @since 1.7.0
+   	 * @return void
+   	 */
+   	function publish_post() {
+   	    
+   	    check_admin_referer('publish-post');
+
+		// Create a WP page
+		global $user_ID, $ngg;
+        
+		$ngg->options['publish_width']  = (int) $_POST['width'];
+		$ngg->options['publish_height'] = (int) $_POST['height'];
+		$ngg->options['publish_align'] = $_POST['align'];
+        $align = ( $ngg->options['publish_align'] == 'none') ? '' : 'float='.$ngg->options['publish_align']; 
+
+		//save the new values for the next operation
+		update_option('ngg_options', $ngg->options);
+
+		$post['post_type']    = 'post';
+		$post['post_content'] = '[singlepic id=' . intval($_POST['pid']) . ' w=' . $ngg->options['publish_width'] . ' h=' . $ngg->options['publish_height'] . ' ' . $align . ']';
+		$post['post_author']  = $user_ID;
+		$post['post_status']  = isset ( $_POST['publish'] ) ? 'publish' : 'draft';
+		$post['post_title']   = $_POST['post_title'];
+		$post = apply_filters('ngg_add_new_post', $post, $_POST['pid']);
+
+		$post_id = wp_insert_post ($post);
+        
+		if ($post_id != 0)
+            nggGallery::show_message( __('Published a new post','nggallery') );
+
+    }
 	
 	function update_pictures() {
 		global $wpdb, $nggdb;
