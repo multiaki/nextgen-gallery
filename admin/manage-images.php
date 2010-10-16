@@ -109,6 +109,39 @@ function showDialog( windowId, title ) {
     jQuery("#" + windowId + ' .dialog-cancel').click(function() { jQuery( "#" + windowId ).dialog("close"); });
 }
 
+jQuery(function (){
+    // load a content via ajax
+    jQuery('a.ngg-dialog').click(function() {
+        if ( jQuery( "#spinner" ).length == 0)
+            jQuery("body").append('<div id="spinner"></div>');
+        var $this = jQuery(this);
+        var results = new RegExp('[\\?&]w=([^&#]*)').exec(this.href);
+	    var width  = ( results ) ? results[1] : 600;
+        var results = new RegExp('[\\?&]h=([^&#]*)').exec(this.href);
+	    var height = ( results ) ? results[1] : 440;
+        jQuery('#spinner').fadeIn();
+        var dialog = jQuery('<div style="display:hidden"></div>').appendTo('body');
+        // load the remote content
+        dialog.load(
+            this.href, 
+            {},
+            function () {
+                jQuery('#spinner').hide();
+                dialog.dialog({
+                    title: ($this.attr('title')) ? $this.attr('title') : '',
+                    width: width,
+                    height: height,
+                    modal: true,
+                    resizable: false,
+                    close: function() { dialog.remove(); }
+                }).width(width - 30).height(height - 30);
+            }
+        );
+        //prevent the browser to follow the link
+        return false;
+    });
+});
+
 function checkAll(form)
 {
 	for (i = 0, n = form.elements.length; i < n; i++) {
@@ -191,7 +224,6 @@ jQuery(document).ready( function() {
 
 //-->
 </script>
-
 <div class="wrap">
 <?php screen_icon( 'nextgen-gallery' ); ?>
 <?php if ($is_search) :?>
@@ -409,12 +441,10 @@ if($picturelist) {
 							<p>
 							<?php
 							$actions = array();
-							//TODO:Add a JS edit option
-							//$actions['edit']   = '<a class="editinline" href="#">' . __('Edit') . '</a>';
 							$actions['view']   = '<a class="thickbox" href="' . $picture->imageURL . '" title="' . esc_attr(sprintf(__('View "%s"'), $picture->filename)) . '">' . __('View', 'nggallery') . '</a>';
-							$actions['meta']   = '<a class="thickbox" href="' . NGGALLERY_URLPATH . 'admin/showmeta.php?id=' . $pid . '" title="' . __('Show Meta data','nggallery') . '">' . __('Meta', 'nggallery') . '</a>';
-							$actions['custom_thumb']   = '<a class="thickbox" href="' . NGGALLERY_URLPATH . 'admin/edit-thumbnail.php?id=' . $pid . '" title="' . __('Customize thumbnail','nggallery') . '">' . __('Edit thumb', 'nggallery') . '</a>';							
-							$actions['rotate']	= '<a class="thickbox" href="' . NGGALLERY_URLPATH . 'admin/rotate.php?id=' . $pid . '" title="' . __('Rotate','nggallery') . '">' . __('Rotate', 'nggallery') . '</a>';
+							$actions['meta']   = '<a class="ngg-dialog" href="' . NGGALLERY_URLPATH . 'admin/showmeta.php?id=' . $pid . '" title="' . __('Show Meta data','nggallery') . '">' . __('Meta', 'nggallery') . '</a>';
+							$actions['custom_thumb']   = '<a class="ngg-dialog" href="' . NGGALLERY_URLPATH . 'admin/edit-thumbnail.php?id=' . $pid . '" title="' . __('Customize thumbnail','nggallery') . '">' . __('Edit thumb', 'nggallery') . '</a>';							
+							$actions['rotate']	= '<a class="ngg-dialog" href="' . NGGALLERY_URLPATH . 'admin/rotate.php?id=' . $pid . '" title="' . __('Rotate','nggallery') . '">' . __('Rotate', 'nggallery') . '</a>';
 							if ( file_exists( $picture->imagePath . '_backup' ) )	
                                 $actions['recover']   = '<a class="confirmrecover" href="' .wp_nonce_url("admin.php?page=nggallery-manage-gallery&amp;mode=recoverpic&amp;gid=" . $act_gid . "&amp;pid=" . $pid, 'ngg_recoverpicture'). '" title="' . __('Recover','nggallery') . '" onclick="javascript:check=confirm( \'' . esc_attr(sprintf(__('Recover "%s" ?' , 'nggallery'), $picture->filename)). '\');if(check==false) return false;">' . __('Recover', 'nggallery') . '</a>';
 							$actions['delete'] = '<a class="submitdelete" href="' . wp_nonce_url("admin.php?page=nggallery-manage-gallery&amp;mode=delpic&amp;gid=" . $act_gid . "&amp;pid=" . $pid, 'ngg_delpicture'). '" class="delete column-delete" onclick="javascript:check=confirm( \'' . esc_attr(sprintf(__('Delete "%s" ?' , 'nggallery'), $picture->filename)). '\');if(check==false) return false;">' . __('Delete') . '</a>';

@@ -117,3 +117,6 @@
 /* jQuery UI Progressbar */
 .ui-progressbar { height:2em; text-align: left; }
 .ui-progressbar .ui-progressbar-value {margin: -1px; height:100%; }
+
+/* jQuery UI loading spinner */
+#spinner {display: none; width:100px; height: 100px; position: fixed; top: 50%; left: 50%; background:url(../../images/loader.gif) no-repeat center #fff; padding:10px; border:1px solid #666; margin-left: -50px; margin-top: -50px; z-index:2; overflow: auto; }
