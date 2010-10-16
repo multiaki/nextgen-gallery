@@ -427,53 +427,53 @@ class nggManageGallery {
 	}
 	
 	function update_pictures() {
-		global $wpdb;
+		global $wpdb, $nggdb;
 
 		//TODO:Error message when update failed
-		//TODO:Combine update in one query per image
 		
-		$description = 	isset ( $_POST['description'] ) ? $_POST['description'] : false;
-		$alttext = 		isset ( $_POST['alttext'] ) ? $_POST['alttext'] : false;
+		$description = 	isset ( $_POST['description'] ) ? $_POST['description'] : array();
+		$alttext = 		isset ( $_POST['alttext'] ) ? $_POST['alttext'] : array();
 		$exclude = 		isset ( $_POST['exclude'] ) ? $_POST['exclude'] : false;
 		$taglist = 		isset ( $_POST['tags'] ) ? $_POST['tags'] : false;
 		$pictures = 	isset ( $_POST['pid'] ) ? $_POST['pid'] : false;
-		
-		if ( is_array($description) ) {
-			foreach( $description as $key => $value ) {
-				$wpdb->query( $wpdb->prepare ("UPDATE $wpdb->nggpictures SET description = '%s' WHERE pid = %d", $value, $key) );
-                wp_cache_delete($key, 'ngg_image');                
-			}
-		}
-		if ( is_array($alttext) ){
-			foreach( $alttext as $key => $value ) {
-                //TODO: This will add hundreds of queries, pay attention !
-                $slug = nggdb::get_unique_slug( sanitize_title( $value ), 'image' ); 
-				$wpdb->query( $wpdb->prepare ("UPDATE $wpdb->nggpictures SET alttext = '%s', image_slug='%s' WHERE pid = %d", $value, $slug, $key) );
-                wp_cache_delete($key, 'ngg_image');                
-			}
-		}
 
 		if ( is_array($pictures) ){
 			foreach( $pictures as $pid ){
-				$pid = (int) $pid;
-				if (is_array($exclude)){
-					if ( array_key_exists($pid, $exclude) )
-						$wpdb->query("UPDATE $wpdb->nggpictures SET exclude = 1 WHERE pid = '$pid'");
-					else 
-						$wpdb->query("UPDATE $wpdb->nggpictures SET exclude = 0 WHERE pid = '$pid'");
-				} else {
-					$wpdb->query("UPDATE $wpdb->nggpictures SET exclude = 0 WHERE pid = '$pid'");
-				}
-			}
-		}
-
+                $image = $nggdb->find_image( $pid );
+                if ($image) {
+                    // description field
+                    $image->description = $description[$image->pid];
+                    
+                    // only uptade this field if someone change the alttext
+                    if ( $image->alttext != $alttext[$image->pid] ) {
+                        $image->alttext = $alttext[$image->pid];
+                        $image->image_slug = nggdb::get_unique_slug( sanitize_title( $image->alttext ), 'image' );                        
+                    }
+                    
+                    // set exclude flag
+                    if ( is_array($exclude) )
+    					$image->exclude = ( array_key_exists($image->pid, $exclude) )? 1 : 0;
+    				else
+    					$image->exclude = 0;
+                        
+                    // update the database
+                    $wpdb->query( $wpdb->prepare ("UPDATE $wpdb->nggpictures SET image_slug = '%s', alttext = '%s', description = '%s', exclude = %d WHERE pid = %d", 
+                                                                                 $image->image_slug, $image->alttext, $image->description, $image->exclude, $image->pid) );    
+                    // remove from cache    
+                    wp_cache_delete($image->pid, 'ngg_image'); 
+                }
+                
+            }
+        }
+        
+        //TODO: This produce 300-400 queries !
 		if ( is_array($taglist) ){
 			foreach($taglist as $key=>$value) {
 				$tags = explode(',', $value);
 				wp_set_object_terms($key, $tags, 'ngg_tag');
 			}
 		}
-		
+        
 		return;
 	}
 
