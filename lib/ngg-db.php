@@ -4,7 +4,7 @@ if ( !class_exists('nggdb') ) :
  * NextGEN Gallery Database Class
  * 
  * @author Alex Rabe, Vincent Prat
- * @copyright 2008-2009
+ * @copyright 2008-2010
  * @since 1.0.0
  */
 class nggdb {
@@ -492,20 +492,82 @@ class nggdb {
                 
 		if ( is_array($meta_data) )
 			$meta_data = serialize($meta_data);
+
+        // slug must be unique, we use the alttext for that        
+        $slug = nggdb::get_unique_slug( sanitize_title( $alttext ), 'image' );
 			
 		// Add the image
-		if ( false === $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->nggpictures (galleryid, filename, description, alttext, meta_data, post_id, imagedate, exclude, sortorder) 
-													 VALUES (%d, %s, %s, %s, %s, %d, %s, %d, %d)", $id, $filename, $description, $alttext, $meta_data, $post_id, $imagedate, $exclude, $sortorder ) ) ) {
+		if ( false === $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->nggpictures (slug, galleryid, filename, description, alttext, meta_data, post_id, imagedate, exclude, sortorder) 
+													 VALUES (%d, %d, %s, %s, %s, %s, %d, %s, %d, %d)", $slug, $id, $filename, $description, $alttext, $meta_data, $post_id, $imagedate, $exclude, $sortorder ) ) ) {
 			return false;
 		}
 		
 		$imageID = (int) $wpdb->insert_id;
 			
 		// Remove from cache the galley, needs to be rebuild now
-	    wp_cache_delete( $id, 'ngg_gallery'); 
-		//and give me the new id
-		
+	    wp_cache_delete( $id, 'ngg_gallery');
+         
+		//and give me the new id		
 		return $imageID;
+    }
+    
+    /**
+    * Add an album to the database
+    * 
+	* @since V1.7.0
+    * @param (optional) string $title
+    * @param (optional) int $previewpic
+    * @param (optional) string $description
+    * @param (optional) serialized array $sortorder 
+    * @param (optional) int $pageid
+    * @return bool result of the ID of the inserted album
+    */
+    function add_album( $name = false, $previewpic = 0, $description = '', $sortorder = 0, $pageid = 0  ) {
+        global $wpdb;
+       
+        // name must be unique, we use the title for that        
+        $slug = nggdb::get_unique_slug( sanitize_title( $name ), 'album' );
+			
+		// Add the album
+		if ( false === $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->nggalbum (name, slug, previewpic, albumdesc, sortorder, pageid) 
+													 VALUES (%s, %s, %d, %s, %s, %d)", $name, $slug, $previewpic, $description, $sortorder, $pageid ) ) ) {
+			return false;
+		}
+		
+		$albumID = (int) $wpdb->insert_id;
+         
+		//and give me the new id		
+		return $albumID;
+    }
+
+    /**
+    * Add an gallery to the database
+    * 
+	* @since V1.7.0
+    * @param (optional) string $title or name of the gallery
+    * @param (optional) string $path
+    * @param (optional) string $description
+    * @param (optional) int $pageid
+    * @param (optional) int $previewpic
+    * @param (optional) int $author 
+    * @return bool result of the ID of the inserted gallery
+    */
+    function add_gallery( $title = '', $path = '', $description = '', $pageid = 0, $previewpic = 0, $author = 0  ) {
+        global $wpdb;
+       
+        // slug must be unique, we use the title for that        
+        $slug = nggdb::get_unique_slug( sanitize_title( $title ), 'gallery' );
+		
+        // Note : The field 'name' is deprecated, it's currently kept only for compat reason with older shortcodes, we copy the slug into this field
+		if ( false === $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->nggallery (name, slug, path, title, galdesc, pageid, previewpic, author) 
+													 VALUES (%s, %s, %s, %s, %s, %d, %d, %d)", $slug, $slug, $path, $title, $description, $pageid, $previewpic, $author ) ) ) {
+			return false;
+		}
+		
+		$galleryID = (int) $wpdb->insert_id;
+         
+		//and give me the new id		
+		return $galleryID;
     }
     
     /**
@@ -764,6 +826,52 @@ class nggdb {
         wp_cache_delete($id, 'ngg_image');
         
         return $result;
+    }
+
+    /**
+     * Computes a unique slug for the gallery,album or image, when given the desired slug.
+     *
+     * @since 1.7.0
+     * @author taken from WP Core includes/post.php
+     * @param string $slug the desired slug (post_name)
+     * @param string $type ('image', 'album' or 'gallery')
+     * @return string unique slug for the object, based on $slug (with a -1, -2, etc. suffix)
+     */
+    function get_unique_slug( $slug, $type ) {
+    
+    	global $wpdb;
+        
+        switch ($type) {
+            case 'image':
+        		$check_sql = "SELECT image_slug FROM $wpdb->nggpictures WHERE image_slug = %s LIMIT 1";
+            break;
+            case 'album':
+        		$check_sql = "SELECT slug FROM $wpdb->nggalbum WHERE slug = %s LIMIT 1";
+            break;
+            case 'gallery':
+        		$check_sql = "SELECT slug FROM $wpdb->nggallery WHERE slug = %s LIMIT 1";
+            break;
+            default:
+                return false;
+        }
+        
+        //if you didn't give us a nem we take the type
+        $slug = empty($slug) ? $type: $slug;
+        
+   		// Slugs must be unique across all objects.         
+		$slug_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $slug ) );
+
+		if ( $slug_check ) {
+			$suffix = 2;
+			do {
+				$alt_name = substr ($slug, 0, 200 - ( strlen( $suffix ) + 1 ) ) . "-$suffix";
+				$slug_check = $wpdb->get_var( $wpdb->prepare($check_sql, $alt_name ) );
+				$suffix++;
+			} while ( $slug_check );
+			$slug = $alt_name;
+		}        
+        
+       	return $slug;
     }
 
 }

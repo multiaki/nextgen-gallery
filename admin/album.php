@@ -95,9 +95,8 @@ class nggManageAlbum {
 			if (!nggGallery::current_user_can( 'NextGEN Add/Delete album' ))
 				wp_die(__('Cheatin&#8217; uh?'));			
 			
-			$newalbum = esc_attr($_POST['newalbum']);
-			$result = $wpdb->query("INSERT INTO $wpdb->nggalbum (name, sortorder) VALUES ('$newalbum','0')");
-			$this->currentID = (int) $wpdb->insert_id;
+			$result = nggdb::add_album( $_POST['newalbum'] );
+            $this->currentID = ($result) ? $result : 0 ;
 			
 			if ($result) 
 				nggGallery::show_message(__('Update Successfully','nggallery'));
@@ -109,7 +108,7 @@ class nggManageAlbum {
             
 			// get variable galleryContainer 
 			parse_str($_POST['sortorder']); 
-			if (is_array($gid)){ 
+			if ( is_array($gid) ){ 
 				$serial_sort = serialize($gid); 
 				$wpdb->query("UPDATE $wpdb->nggalbum SET sortorder = '$serial_sort' WHERE id = $this->currentID ");
 			} else {
@@ -125,6 +124,9 @@ class nggManageAlbum {
 				wp_die(__('Cheatin&#8217; uh?'));
 				
 			$result = nggdb::delete_album( $this->currentID );
+            
+            $this->currentID = 0;
+            
 			if ($result) 
 				nggGallery::show_message(__('Album deleted','nggallery'));
 		}
@@ -139,12 +141,15 @@ class nggManageAlbum {
 		if (!nggGallery::current_user_can( 'NextGEN Edit album settings' )) 
 			wp_die(__('Cheatin&#8217; uh?'));
 		
-		$name = esc_attr( $_POST['album_name'] );
-		$desc = esc_attr( $_POST['album_desc'] );
+		$name = $_POST['album_name'];
+		$desc = $_POST['album_desc'];
 		$prev = (int) $_POST['previewpic'];
 		$link = (int) $_POST['pageid'];
-		
-		$result = $wpdb->query( $wpdb->prepare( "UPDATE $wpdb->nggalbum SET name= '%s', albumdesc= '%s', previewpic= %d, pageid= %d WHERE id = '$this->currentID'" , $name, $desc, $prev, $link ) );
+        
+		// slug must be unique, we use the title for that
+        $slug = nggdb::get_unique_slug( sanitize_title( $name ), 'album' );
+        
+		$result = $wpdb->query( $wpdb->prepare( "UPDATE $wpdb->nggalbum SET slug= '%s', name= '%s', albumdesc= '%s', previewpic= %d, pageid= %d WHERE id = '%d'" , $slug, $name, $desc, $prev, $link, $this->currentID ) );
         
 		//hook for other plugin to update the fields
 		do_action('ngg_update_album', $this->currentID, $_POST);        
@@ -274,7 +279,7 @@ function showDialog() {
 						if( is_array($this->albums) ) {
 							foreach($this->albums as $album) {
 								$selected = ($this->currentID == $album->id) ? 'selected="selected" ' : '';
-								echo '<option value="' . $album->id . '" ' . $selected . '>' . $album->name . '</option>'."\n";
+								echo '<option value="' . $album->id . '" ' . $selected . '>' . $album->id . ' - ' . $album->name . '</option>'."\n";
 							}
 						}
 					?>

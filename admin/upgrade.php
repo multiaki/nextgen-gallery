@@ -97,6 +97,14 @@ function ngg_upgrade() {
             // add link from album to a page
             ngg_maybe_add_column( $wpdb->nggalbum, 'pageid', "BIGINT(20) DEFAULT '0' NOT NULL AFTER sortorder");
         }   
+
+		 // v1.4.0 -> v1.7.0
+        if (version_compare($installed_ver, '1.7.0', '<')) {
+            // add slug fields 
+            ngg_maybe_add_column( $wpdb->nggpictures, 'image_slug', "VARCHAR(255) NOT NULL AFTER pid");
+            ngg_maybe_add_column( $wpdb->nggalbum, 'slug', "VARCHAR(255) NOT NULL AFTER name");
+            ngg_maybe_add_column( $wpdb->nggallery, 'slug', "VARCHAR(255) NOT NULL AFTER name");
+        }   
       
 		// update now the database
 		update_option( "ngg_db_version", NGG_DBVERSION );
@@ -161,6 +169,10 @@ function ngg_upgrade() {
             $ngg_options['slideFx']  = 'fade';
             update_option('ngg_options', $ngg_options);
             echo __('Updated options.', 'nggallery');
+        }
+        
+        if (version_compare($installed_ver, '1.7.0', '<')) {
+            ngg_rebuild_unique_slugs();
         }
         
 		return;
@@ -310,6 +322,44 @@ function ngg_maybe_add_column($table_name, $column_name, $create_ddl) {
 	
 	echo("Could not add column $column_name in table $table_name<br />\n");
 	return false;
+}
+
+/**
+ * Rebuild slugs for albums, galleries and images. Attention : Is could create a lot of queries
+ * 
+ * @since 1.7.0
+ * @return void
+ */
+function ngg_rebuild_unique_slugs() {
+	global $wpdb;
+	
+	$albumlist = $wpdb->get_results("SELECT * FROM $wpdb->nggalbum ORDER BY id ASC", OBJECT_K);
+	if ( is_array($albumlist) ) {
+        foreach ($albumlist as $album) {
+    		//slug must be unique, we use the name for that
+            $album->slug = nggdb::get_unique_slug( sanitize_title( $album->name ), 'album' );
+            $wpdb->query( $wpdb->prepare( "UPDATE $wpdb->nggalbum SET slug= '%s' WHERE id = '%d'" , $album->slug, $album->id ) );
+        }
+    }    
+
+	$galleries = $wpdb->get_results("SELECT * FROM $wpdb->nggallery ORDER BY gid ASC", OBJECT_K);
+	if ( is_array($galleries) ) {
+        foreach ($galleries as $gallery) {
+    		//slug must be unique, we use the title for that
+            $gallery->slug = nggdb::get_unique_slug( sanitize_title( $gallery->title ), 'gallery' );
+            $wpdb->query( $wpdb->prepare( "UPDATE $wpdb->nggallery SET slug= '%s' WHERE gid = '%d'" , $gallery->slug, $gallery->gid ) );
+        }
+    } 
+
+	$images = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures ORDER BY pid ASC", OBJECT_K);
+	if ( is_array($images) ) {
+        foreach ($images as $image) {
+    		//slug must be unique, we use the alttext for that
+            $image->slug = nggdb::get_unique_slug( sanitize_title( $image->alttext ), 'image' );
+            $wpdb->query( $wpdb->prepare( "UPDATE $wpdb->nggpictures SET image_slug= '%s' WHERE pid = '%d'" , $image->slug, $image->pid ) );
+        }
+    } 
+
 }
 
 /**

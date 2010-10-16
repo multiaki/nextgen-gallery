@@ -35,7 +35,7 @@ if (!class_exists('nggLoader')) {
 class nggLoader {
 	
 	var $version     = '1.7.0a';
-	var $dbversion   = '1.6.0';
+	var $dbversion   = '1.7.0';
 	var $minium_WP   = '3.0';
 	var $updateURL   = 'http://nextgen.boelinger.com/version.php';
 	var $donators    = 'http://nextgen.boelinger.com/donators.php';

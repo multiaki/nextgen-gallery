@@ -361,8 +361,11 @@ class nggManageGallery {
 			
 			if ( nggGallery::current_user_can( 'NextGEN Edit gallery options' )) {
 				
-				if ( nggGallery::current_user_can( 'NextGEN Edit gallery title' ))
-					$wpdb->query( $wpdb->prepare ("UPDATE $wpdb->nggallery SET title= '%s' WHERE gid = %d", esc_attr($_POST['title']), $this->gid) );
+				if ( nggGallery::current_user_can( 'NextGEN Edit gallery title' )) {
+				    // don't forget to update the slug
+				    $slug = nggdb::get_unique_slug( sanitize_title( $_POST['title'] ), 'gallery' );
+				    $wpdb->query( $wpdb->prepare ("UPDATE $wpdb->nggallery SET title= '%s', slug= '%s' WHERE gid = %d", esc_attr($_POST['title']), $slug, $this->gid) );				    
+				}
 				if ( nggGallery::current_user_can( 'NextGEN Edit gallery path' ))
 					$wpdb->query( $wpdb->prepare ("UPDATE $wpdb->nggallery SET path= '%s' WHERE gid = %d", untrailingslashit ( str_replace('\\', '/', trim( stripslashes($_POST['path']) )) ), $this->gid ) );
 				if ( nggGallery::current_user_can( 'NextGEN Edit gallery description' ))
@@ -437,15 +440,15 @@ class nggManageGallery {
 		
 		if ( is_array($description) ) {
 			foreach( $description as $key => $value ) {
-				$desc = $wpdb->escape($value);
-				$wpdb->query( "UPDATE $wpdb->nggpictures SET description = '$desc' WHERE pid = $key");
+				$wpdb->query( $wpdb->prepare ("UPDATE $wpdb->nggpictures SET description = '%s' WHERE pid = %d", $value, $key) );
                 wp_cache_delete($key, 'ngg_image');                
 			}
 		}
 		if ( is_array($alttext) ){
 			foreach( $alttext as $key => $value ) {
-				$alttext = $wpdb->escape($value);
-				$wpdb->query( "UPDATE $wpdb->nggpictures SET alttext = '$alttext' WHERE pid = $key");
+                //TODO: This will add hundreds of queries, pay attention !
+                $slug = nggdb::get_unique_slug( sanitize_title( $value ), 'image' ); 
+				$wpdb->query( $wpdb->prepare ("UPDATE $wpdb->nggpictures SET alttext = '%s', image_slug='%s' WHERE pid = %d", $value, $slug, $key) );
                 wp_cache_delete($key, 'ngg_image');                
 			}
 		}

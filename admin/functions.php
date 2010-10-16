@@ -16,27 +16,26 @@ class nggAdmin{
 	 * create a new gallery & folder
 	 * 
 	 * @class nggAdmin
-	 * @param string $gallerytitle
+	 * @param string $name of the gallery
 	 * @param string $defaultpath
 	 * @param bool $output if the function should show an error messsage or not
 	 * @return 
 	 */
-	function create_gallery($gallerytitle, $defaultpath, $output = true) {
+	function create_gallery($title, $defaultpath, $output = true) {
 
-		global $wpdb, $user_ID;
+		global $user_ID;
  
 		// get the current user ID
 		get_currentuserinfo();
 
 		//cleanup pathname
-		$galleryname = sanitize_file_name( $gallerytitle );
-		$galleryname = apply_filters('ngg_gallery_name', $galleryname);
-		$nggpath = $defaultpath . $galleryname;
+		$name = sanitize_file_name( $title );
+		$name = apply_filters('ngg_gallery_name', $name);
 		$nggRoot = WINABSPATH . $defaultpath;
 		$txt = '';
 		
 		// No gallery name ?
-		if ( empty($galleryname) ) {	
+		if ( empty($name) ) {	
 			if ($output) nggGallery::show_error( __('No valid gallery name!', 'nggallery') );
 			return false;
 		}
@@ -59,17 +58,27 @@ class nggAdmin{
 			return false;
 		}
 		
-		// 1. Create new gallery folder
-		if ( !is_dir(WINABSPATH . $nggpath) ) {
-			if ( !wp_mkdir_p (WINABSPATH . $nggpath) ) 
-				$txt  = __('Unable to create directory ', 'nggallery').$nggpath.'!<br />';
-		}
+		// 1. Check for existing folder
+		if ( is_dir(WINABSPATH . $defaultpath . $name ) ) {
+			$suffix = 1;
+			do {
+				$alt_name = substr ($name, 0, 200 - ( strlen( $suffix ) + 1 ) ) . "_$suffix";
+				$dir_check = is_dir(WINABSPATH . $defaultpath . $alt_name );
+				$suffix++;
+			} while ( $dir_check );
+			$name = $alt_name;
+            $nggpath = $defaultpath . $name;
+		}  
 		
-		// 2. Check folder permission
+		// 2. Create new gallery folder
+		if ( !wp_mkdir_p (WINABSPATH . $nggpath) ) 
+		  $txt  = __('Unable to create directory ', 'nggallery').$nggpath.'!<br />';
+		
+		// 3. Check folder permission
 		if ( !is_writeable(WINABSPATH . $nggpath ) )
 			$txt .= __('Directory', 'nggallery').' <strong>'.$nggpath.'</strong> '.__('is not writeable !', 'nggallery').'<br />';
 
-		// 3. Now create "thumbs" folder inside
+		// 4. Now create thumbnail folder inside
 		if ( !is_dir(WINABSPATH . $nggpath . '/thumbs') ) {				
 			if ( !wp_mkdir_p ( WINABSPATH . $nggpath . '/thumbs') ) 
 				$txt .= __('Unable to create directory ', 'nggallery').' <strong>' . $nggpath . '/thumbs !</strong>';
@@ -92,34 +101,26 @@ class nggAdmin{
 			if ($output) nggGallery::show_error($txt);
 			return false;
 		}
-		
-		$result = $wpdb->get_var("SELECT name FROM $wpdb->nggallery WHERE name = '$galleryname' ");
-		
-		if ($result) {
-			if ($output) nggGallery::show_error( _n( 'Gallery', 'Galleries', 1, 'nggallery' ) .' <strong>' . $galleryname . '</strong> '.__('already exists', 'nggallery'));
-			return false;			
-		} else { 
-			$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->nggallery (name, path, title, author) VALUES (%s, %s, %s, %s)", $galleryname, $nggpath, $gallerytitle , $user_ID) );
-			// and give me the new id
-			$gallery_id = (int) $wpdb->insert_id;
-			// here you can inject a custom function
-			do_action('ngg_created_new_gallery', $gallery_id);
+        
+        // now add the gallery to the database
+        $galleryID = nggdb::add_gallery($title, $nggpath, '', 0, 0, $user_ID );
+		// here you can inject a custom function
+		do_action('ngg_created_new_gallery', $galleryID);
 
-			// return only the id if defined
-			if ($output == false)
-				return $gallery_id;
-				
-			if ($result) {
-				$message  = __('Gallery %1$s successfully created.<br/>You can show this gallery with the tag %2$s.<br/>','nggallery');
-				$message  = sprintf($message, $galleryname, '[nggallery id=' . $gallery_id . ']');
-				$message .= '<a href="' . admin_url() . 'admin.php?page=nggallery-manage-gallery&mode=edit&gid=' . $gallery_id . '" >';
-				$message .= __('Edit gallery','nggallery');
-				$message .= '</a>';
-				
-				if ($output) nggGallery::show_message($message); 
-			}
-			return true;
-		} 
+		// return only the id if defined
+		if ($output == false)
+			return $galleryID;
+			
+		if ($galleryID != false) {
+			$message  = __('Gallery ID %1$s successfully created. You can show this gallery in your post or page with the shortcode %2$s.<br/>','nggallery');
+			$message  = sprintf($message, $galleryID, '<strong>[nggallery id=' . $galleryID . ']</strong>');
+			$message .= '<a href="' . admin_url() . 'admin.php?page=nggallery-manage-gallery&mode=edit&gid=' . $galleryID . '" >';
+			$message .= __('Edit gallery','nggallery');
+			$message .= '</a>';
+			
+			if ($output) nggGallery::show_message($message); 
+		}
+		return true;
 	}
 	
 	/**
