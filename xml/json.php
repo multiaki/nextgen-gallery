@@ -160,7 +160,7 @@ class nggAPI {
 		} else {
 			header('Content-Type: text/xml; charset=' . get_option('blog_charset'), true);
 			$this->output  = "<?xml version='1.0' encoding='UTF-8' standalone='yes'?>\n";
-			$this->output .= "<nextgen-gallery>" . create_xml_array( $this->result )  . "</nextgen-gallery>\n";
+			$this->output .= "<nextgen-gallery>" . $this->create_xml_array( $this->result )  . "</nextgen-gallery>\n";
 		}	
 		
 	}
