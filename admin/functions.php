@@ -29,7 +29,7 @@ class nggAdmin{
 		get_currentuserinfo();
 
 		//cleanup pathname
-		$name = sanitize_file_name( $title );
+		$name = sanitize_file_name( sanitize_title($title)  );
 		$name = apply_filters('ngg_gallery_name', $name);
 		$nggRoot = WINABSPATH . $defaultpath;
 		$txt = '';
