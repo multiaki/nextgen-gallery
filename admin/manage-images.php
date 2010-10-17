@@ -280,6 +280,7 @@ jQuery(document).ready( function() {
 							<?php
 								if(is_array($picturelist)) {
 									foreach($picturelist as $picture) {
+                                        if ($picture->exclude) continue;									   
 										$selected = ($picture->pid == $gallery->previewpic) ? 'selected="selected" ' : '';
 										echo '<option value="'.$picture->pid.'" '.$selected.'>'.$picture->pid.' - '.$picture->filename.'</option>'."\n";
 									}
