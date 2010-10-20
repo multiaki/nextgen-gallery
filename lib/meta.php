@@ -323,8 +323,9 @@ class nggMeta{
 						if ($list_element == false)
 							array_pop($stack);
 						$list_element = true;
-						// save it in our temp array
-						$list_array[] = $val['value']; 
+					    // save it in our temp array
+                        if ( !empty($val['value']) ) 
+    						$list_array[] = $val['value']; 
 						// in the case it's a list element we seralize it
 						$value = implode(",", $list_array);
 						$this->setArrayValue($xmlarray, $stack, $value);
@@ -381,8 +382,7 @@ class nggMeta{
 	function setArrayValue(&$array, $stack, $value) {
 		if ($stack) {
 			$key = array_shift($stack);
-			//TODO:Review this, reports sometimes a error "Fatal error: Only variables can be passed by reference" (PHP 5.2.6)
-	    	$this->setArrayValue($array[$key], $stack, $value);
+            $this->setArrayValue($array[$key], $stack, $value);
 	    	return $array;
 	  	} else {
 	    	$array = $value;
