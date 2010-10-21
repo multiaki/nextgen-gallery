@@ -124,14 +124,14 @@ function nggShow_JS_Slideshow($galleryID, $width, $height, $class = 'ngg-slidesh
     $out .= "\n". '</div>';
     $out .= '</div>'."\n";
     $out .= "\n".'<script type="text/javascript" defer="defer">';
-    $out .= "\n" . 'jQuery("#' . $anchor . '").nggSlideshow( {' .
+    $out .= "\n" . 'jQuery(document).ready(function(){ ' . "\n" . 'jQuery("#' . $anchor . '").nggSlideshow( {' .
             'id: '      . $galleryID    . ',' . 
             'fx:"'      . $ngg_options['slideFx'] . '",' .
             'width:'    . $width        . ',' . 
             'height:'   . $height       . ',' .
             'domain: "' . trailingslashit ( home_url() ) . '",' .
             'timeout:'  . $ngg_options['irRotatetime'] * 1000 .
-            '});';
+            '});' . "\n" . '});';
     $out .= "\n".'</script>';
 
     return $out;
