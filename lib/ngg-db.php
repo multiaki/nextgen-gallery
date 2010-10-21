@@ -79,18 +79,21 @@ class nggdb {
     }   
 
     /**
-     * Get all the album nad unserialize the content
+     * Get all the album and unserialize the content
      * 
      * @since 1.3.0
      * @param string $order_by
      * @param string $order_dir
+     * @param int $limit number of albums, 0 shows all albums
+     * @param int $start the start index for paged albums
      * @return array $album
      */
-    function find_all_album( $order_by = 'id', $order_dir = 'ASC') {    
+    function find_all_album( $order_by = 'id', $order_dir = 'ASC', $limit = 0, $start = 0) {    
         global $wpdb; 
         
         $order_dir = ( $order_dir == 'DESC') ? 'DESC' : 'ASC';
-        $this->albums = $wpdb->get_results("SELECT * FROM $wpdb->nggalbum ORDER BY {$order_by} {$order_dir}" , OBJECT_K );
+        $limit_by  = ( $limit > 0 ) ? 'LIMIT ' . intval($start) . ',' . intval($limit) : '';
+        $this->albums = $wpdb->get_results("SELECT * FROM $wpdb->nggalbum ORDER BY {$order_by} {$order_dir} {$limit_by}" , OBJECT_K );
         
         if ( !$this->albums )
             return array();
@@ -592,9 +595,9 @@ class nggdb {
     /**
      * Get the last images registered in the database with a maximum number of $limit results
      * 
-     * @param integer $page
-     * @param integer $limit
-     * @param bool $use_exclude
+     * @param integer $page start offset as page number (0,1,2,3,4...)
+     * @param integer $limit the number of result
+     * @param bool $exclude do not show exluded images
      * @param int $galleryId Only look for images with this gallery id, or in all galleries if id is 0
      * @param string $orderby is one of "id" (default, order by pid), "date" (order by exif date), sort (order by user sort order)
      * @return
@@ -605,6 +608,9 @@ class nggdb {
         // Check for the exclude setting
         $exclude_clause = ($exclude) ? ' AND exclude<>1 ' : '';
         
+        // a limit of 0 makes no sense
+        $limit = ($limit == 0) ? 30 : $limit;
+        // calculate the offset based on the pagr number
         $offset = (int) $page * $limit;
         
         $galleryId = (int) $galleryId;
@@ -719,9 +725,10 @@ class nggdb {
      * 
      * @since 1.3.0
      * @param string $request
+     * @param int $limit number of results, 0 shows all results
      * @return Array Result of the request
      */
-    function search_for_images( $request ) {
+    function search_for_images( $request, $limit = 0 ) {
         global $wpdb;
         
         // If a search pattern is specified, load the posts that match
@@ -749,10 +756,13 @@ class nggdb {
 
             if ( !empty($search) )
                 $search = " AND ({$search}) ";
-        }
-        
+                
+            $limit  = ( $limit > 0 ) ? 'LIMIT ' . intval($limit) : '';   
+        } else
+            return false;
+            
         // build the final query
-        $query = "SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE 1=1 $search ORDER BY tt.pid ASC ";
+        $query = "SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE 1=1 $search ORDER BY tt.pid ASC $limit";
         $result = $wpdb->get_results($query);
 
         // Return the object from the query result
@@ -764,6 +774,102 @@ class nggdb {
         } 
 
         return null;
+    }
+
+    /**
+     * search for galleries and return the result
+     * 
+     * @since 1.7.0
+     * @param string $request
+     * @param int $limit number of results, 0 shows all results
+     * @return Array Result of the request
+     */
+    function search_for_galleries( $request, $limit = 0 ) {
+        global $wpdb;
+        
+        // If a search pattern is specified, load the posts that match
+        if ( !empty($request) ) {
+            // added slashes screw with quote grouping when done early, so done later
+            $request = stripslashes($request);
+            
+            // split the words it a array if seperated by a space or comma
+            preg_match_all('/".*?("|$)|((?<=[\\s",+])|^)[^\\s",+]+/', $request, $matches);
+            $search_terms = array_map(create_function('$a', 'return trim($a, "\\"\'\\n\\r ");'), $matches[0]);
+            
+            $n = '%';
+            $searchand = '';
+            $search = '';
+            
+            foreach( (array) $search_terms as $term) {
+                $term = addslashes_gpc($term);
+                $search .= "{$searchand}((title LIKE '{$n}{$term}{$n}') OR (name LIKE '{$n}{$term}{$n}') )";
+                $searchand = ' AND ';
+            }
+            
+            $term = $wpdb->escape($request);
+            if (count($search_terms) > 1 && $search_terms[0] != $request )
+                $search .= " OR (title LIKE '{$n}{$term}{$n}') OR (name LIKE '{$n}{$term}{$n}')";
+
+            if ( !empty($search) )
+                $search = " AND ({$search}) ";
+                
+            $limit  = ( $limit > 0 ) ? 'LIMIT ' . intval($limit) : '';   
+        } else
+            return false;
+        
+        // build the final query
+        $query = "SELECT * FROM $wpdb->nggallery WHERE $search ORDER BY title ASC $limit";
+        $result = $wpdb->get_results($query);
+
+        return $result;
+    }
+
+    /**
+     * search for albums and return the result
+     * 
+     * @since 1.7.0
+     * @param string $request
+     * @param int $limit number of results, 0 shows all results
+     * @return Array Result of the request
+     */
+    function search_for_albums( $request, $limit = 0 ) {
+        global $wpdb;
+        
+        // If a search pattern is specified, load the posts that match
+        if ( !empty($request) ) {
+            // added slashes screw with quote grouping when done early, so done later
+            $request = stripslashes($request);
+            
+            // split the words it a array if seperated by a space or comma
+            preg_match_all('/".*?("|$)|((?<=[\\s",+])|^)[^\\s",+]+/', $request, $matches);
+            $search_terms = array_map(create_function('$a', 'return trim($a, "\\"\'\\n\\r ");'), $matches[0]);
+            
+            $n = '%';
+            $searchand = '';
+            $search = '';
+            
+            foreach( (array) $search_terms as $term) {
+                $term = addslashes_gpc($term);
+                $search .= "{$searchand}(name LIKE '{$n}{$term}{$n}')";
+                $searchand = ' AND ';
+            }
+            
+            $term = $wpdb->escape($request);
+            if (count($search_terms) > 1 && $search_terms[0] != $request )
+                $search .= " OR (name LIKE '{$n}{$term}{$n}')";
+
+            if ( !empty($search) )
+                $search = " AND ({$search}) ";
+                
+            $limit  = ( $limit > 0 ) ? 'LIMIT ' . intval($limit) : '';   
+        } else
+            return false;
+        
+        // build the final query
+        $query = "SELECT * FROM $wpdb->nggalbum WHERE $search ORDER BY name ASC $limit";
+        $result = $wpdb->get_results($query);
+
+        return $result;
     }
 
     /**

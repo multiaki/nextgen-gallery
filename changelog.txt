@@ -10,6 +10,7 @@ by Alex Rabe & NextGEN DEV Team
 * Changed : Introduce jQuery dialog as new UI element
 * Bugfix : Install/Upgrade failed when table prefix contain captial letters
 * Bugfix : Fix validation issues in Media-RSS
+* Bugifx : Empty tags in XMP Meta causes PHP error
 
 = V1.6.2 - 19.09.2010 =
 * NEW : Added constant NGG_SKIP_LOAD_SCRIPTS to avoid script load
