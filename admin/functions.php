@@ -67,8 +67,9 @@ class nggAdmin{
 				$suffix++;
 			} while ( $dir_check );
 			$name = $alt_name;
-            $nggpath = $defaultpath . $name;
 		}  
+        // define relative path to gallery inside wp root folder
+        $nggpath = $defaultpath . $name;
 		
 		// 2. Create new gallery folder
 		if ( !wp_mkdir_p (WINABSPATH . $nggpath) ) 
