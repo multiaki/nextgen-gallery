@@ -712,6 +712,8 @@ class nggAdmin{
 		$meta['timestamp'] = $pdata->get_date_time();
 		// this contain other useful meta information
 		$meta['common'] = $pdata->get_common_meta();
+        // hook for addon plugin to add more meta fields
+        $meta = apply_filters('ngg_get_image_metadata', $meta, $pdata);
 		
 		return $meta;
 		
