@@ -53,12 +53,6 @@ class nggAdminPanel{
 	function show_menu() {
 		
 		global $ngg;
-		
-		// init PluginChecker
-		$nggCheck 			= new CheckPlugin();	
-		$nggCheck->URL 		= NGGURL;
-		$nggCheck->version 	= NGGVERSION;
-		$nggCheck->name 	= 'ngg';
 
 		// check for upgrade and show upgrade screen
 		if( get_option( 'ngg_db_version' ) != NGG_DBVERSION ) {
@@ -67,12 +61,6 @@ class nggAdminPanel{
 			nggallery_upgrade_page();
 			return;			
 		}
-		
-		// Show update message
-        if ( current_user_can('activate_plugins') )
-    		if ( $nggCheck->startCheck() && (!is_multisite()) ) {
-    			echo '<div class="plugin-update">' . __('A new version of NextGEN Gallery is available !', 'nggallery') . ' <a href="http://wordpress.org/extend/plugins/nextgen-gallery/download/" target="_blank">' . __('Download here', 'nggallery') . '</a></div>' ."\n";
-    		}
 		
 		// Set installation date
 		if( empty($ngg->options['installDate']) ) {
@@ -430,97 +418,6 @@ function wpmu_enable_function($value) {
 	}
 	// if this is not WPMU, enable it !
 	return true;
-}
-
-/**
- * WordPress PHP class to check for a new version.
- * @author Alex Rabe
- * @version 1.50
- *
- // Dashboard update notification example
-	function myPlugin_update_dashboard() {
-	  $Check = new CheckPlugin();	
-	  $Check->URL 	= "YOUR URL";
-	  $Check->version = "1.00";
-	  $Check->name 	= "myPlugin";
-	  if ($Check->startCheck()) {
- 	    echo '<h3>Update Information</h3>';
-	    echo '<p>A new version is available</p>';
-	  } 
-	}
-	
-	add_action('activity_box_end', 'myPlugin_update_dashboard', '0');
- *
- */
-if ( !class_exists( "CheckPlugin" ) ) {  
-	class CheckPlugin {
-		/**
-		 * URL with the version of the plugin
-		 * @var string
-		 */
-		var $URL = 'myURL';
-		/**
-		 * Version of thsi programm or plugin
-		 * @var string
-		 */
-		var $version = '1.00';
-		/**
-		 * Name of the plugin (will be used in the options table)
-		 * @var string
-		 */
-		var $name = 'myPlugin';
-		/**
-		 * Waiting period until the next check in seconds
-		 * @var int
-		 */
-		var $period = 86400;					
-					
-		/**
-		 * check for a new version, returns true if a version is avaiable
-		 */
-		function startCheck() {
-
-			// If we know that a update exists, don't check it again
-			if (get_option( $this->name . '_update_exists' ) == 'true' )
-				return true;
-
-			$check_intervall = get_option( $this->name . '_next_update' );
-
-			if ( ($check_intervall < time() ) or (empty($check_intervall)) ) {
-				
-				// Do not bother the server to often
-				$check_intervall = time() + $this->period;
-				update_option( $this->name . '_next_update', $check_intervall );
-				
-				if ( function_exists('wp_remote_request') ) {
-					
-					$options = array();
-					$options['headers'] = array(
-						'User-Agent' => 'NextGEN Gallery Version Checker V' . NGGVERSION . '; (' . get_bloginfo('url') .')'
-					 );
-					$response = wp_remote_request($this->URL, $options);
-					
-					if ( is_wp_error( $response ) )
-						return false;
-				
-					if ( 200 != $response['response']['code'] )
-						return false;
-				   	
-					$server_version = unserialize($response['body']);
-
-					if (is_array($server_version)) {
-						if ( version_compare($server_version[$this->name], $this->version, '>') ) {
-							update_option( $this->name . '_update_exists', 'true' );
-							return true;
-						}
-					} 
-						
-					delete_option( $this->name . '_update_exists' );					
-					return false;
-				}				
-			}
-		}
-	}
 }
 
 ?>

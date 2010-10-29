@@ -37,8 +37,7 @@ class nggLoader {
 	var $version     = '1.7.0a';
 	var $dbversion   = '1.7.0';
 	var $minium_WP   = '3.0';
-	var $updateURL   = 'http://nextgen.boelinger.com/version.php';
-	var $donators    = 'http://nextgen.boelinger.com/donators.php';
+	var $donators    = 'http://nextgen-gallery.googlecode.com/files/donators.txt';
 	var $options     = '';
 	var $manage_page;
 	var $add_PHP5_notice = false;
@@ -249,7 +248,6 @@ class nggLoader {
 		define('NGGVERSION', $this->version);
 		// Minimum required database version
 		define('NGG_DBVERSION', $this->dbversion);
-		define('NGGURL', $this->updateURL);
 
 		// required for Windows & XAMPP
 		define('WINABSPATH', str_replace("\\", "/", ABSPATH) );
