@@ -12,8 +12,10 @@ jQuery.fn.nggSlideshow = function ( args ) {
     var obj = this.selector;
     var stack = [];
     var url = s.domain + 'index.php?callback=json&api_key=true&format=json&method=gallery&id=' + s.id;
-
-	jQuery.getJSON(url, function(r){
+    // Avoid cache for IE browser
+    jQuery.ajaxSetup({ cache: false });
+	
+    jQuery.getJSON(url, function(r){
 		if (r.stat == "ok"){
              
             for (img in r.images) {
