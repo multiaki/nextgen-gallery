@@ -411,13 +411,13 @@ class nggOptions {
 				<tr class="expert" >
 					<th valign="top"><?php _e('Add hidden images','nggallery'); ?>:</th>
 					<td><input name="galHiddenImg" type="checkbox" value="1" <?php checked('1', $ngg->options['galHiddenImg']); ?> />
-					<?php _e('If pagination is used, this option will still show all images in the modal window (Thickbox, Lightbox etc.). Note : This increase the page load','nggallery'); ?>
+					<?php _e('If pagination is used, this option will still show all images in the modal window (Thickbox, Lightbox etc.). Note : This increases the page load','nggallery'); ?>
 					</td>
 				</tr>
 				<tr class="expert" >
 					<th valign="top"><?php _e('Enable AJAX pagination','nggallery'); ?>:</th>
 					<td><input name="galAjaxNav" type="checkbox" value="1" <?php checked('1', $ngg->options['galAjaxNav']); ?> />
-					<?php _e('Browse images without reload the page. Note : Work only in combination with Shutter effect','nggallery'); ?>
+					<?php _e('Browse images without reload the page. Note : Works only in combination with Shutter effect','nggallery'); ?>
 					</td>
 				</tr>
 			</table>
@@ -643,14 +643,14 @@ class nggOptions {
 				<tr>
 					<th><?php _e('Enable flash slideshow','nggallery') ?>:</th>
 					<td><input name="enableIR" type="checkbox" value="1" <?php checked('1', $ngg->options['enableIR']); ?> />
-                    <span class="setting-description"><?php _e('Integrate the flash based sildeshow for all flash supported devices','nggallery') ?></span></td>
+                    <span class="setting-description"><?php _e('Integrate the flash based slideshow for all flash supported devices','nggallery') ?></span></td>
 				</tr>
 				<tr>
 					<th><?php _e('Path to the Imagerotator (URL)','nggallery') ?>:</th>
 					<td>
 						<input type="text" size="50" id="irURL" name="irURL" value="<?php echo $ngg->options['irURL']; ?>" />
 						<input type="submit" name="irDetect" class="button-secondary"  value="<?php _e('Search now','nggallery') ;?> &raquo;"/>
-						<br /><span class="setting-description"><?php _e('Press the button to search automatic for the imagerotator, if you uploaded it to wp-content/uploads or a subfolder','nggallery') ?></span>
+						<br /><span class="setting-description"><?php _e('Press the button to search automatically for the imagerotator, if you uploaded it to wp-content/uploads or a subfolder','nggallery') ?></span>
 					</td>
 				</tr>					
 				<tr>

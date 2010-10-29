@@ -192,7 +192,7 @@ class nggLoader {
 				'admin_notices', 
 				create_function(
 					'', 
-					'echo \'<div id="message" class="error"><p><strong>' . __('Sorry, NextGEN Gallery works only with a Memory Limit of 16 MB higher', 'nggallery') . '</strong></p></div>\';'
+					'echo \'<div id="message" class="error"><p><strong>' . __('Sorry, NextGEN Gallery works only with a Memory Limit of 16 MB or higher', 'nggallery') . '</strong></p></div>\';'
 				)
 			);
 			return false;

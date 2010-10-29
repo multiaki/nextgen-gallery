@@ -855,7 +855,7 @@ class nggAdmin{
 				// check if file is a zip file
 				if ( !preg_match('/(zip|download|octet-stream)/i', $_FILES['zipfile']['type']) ) {
 					@unlink($temp_zipfile); // del temp file
-					nggGallery::show_error(__('Uploaded file was no or a faulty zip file ! The server recognize : ','nggallery').$_FILES['zipfile']['type']);
+					nggGallery::show_error(__('Uploaded file was no or a faulty zip file ! The server recognized : ','nggallery').$_FILES['zipfile']['type']);
 					return false; 
 				}
 			}
@@ -982,12 +982,12 @@ class nggAdmin{
 					
 					// save temp file to gallery
 					if ( !@move_uploaded_file($temp_file, $dest_file) ){
-						nggGallery::show_error(__('Error, the file could not moved to : ','nggallery') . $dest_file);
+						nggGallery::show_error(__('Error, the file could not be moved to : ','nggallery') . $dest_file);
 						nggAdmin::check_safemode( $gallery->abspath );		
 						continue;
 					} 
 					if ( !nggAdmin::chmod($dest_file) ) {
-						nggGallery::show_error(__('Error, the file permissions could not set','nggallery'));
+						nggGallery::show_error(__('Error, the file permissions could not be set','nggallery'));
 						continue;
 					}
 					
@@ -1071,11 +1071,11 @@ class nggAdmin{
 		// save temp file to gallery
 		if ( !@move_uploaded_file($_FILES["Filedata"]['tmp_name'], $dest_file) ){
 			nggAdmin::check_safemode(WINABSPATH.$gallerypath);	
-			return __('Error, the file could not moved to : ','nggallery').$dest_file;
+			return __('Error, the file could not be moved to : ','nggallery').$dest_file;
 		} 
 		
 		if ( !nggAdmin::chmod($dest_file) )
-			return __('Error, the file permissions could not set','nggallery');
+			return __('Error, the file permissions could not be set','nggallery');
 		
 		return '0';
 	}	
