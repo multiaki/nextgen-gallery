@@ -38,7 +38,7 @@ jQuery.fn.nggSlideshow = function ( args ) {
                 // Hide them first, Cycle plugin will show them
                 jQuery( img ).hide(); 
                 // Add the image now and resize after loaded
-                jQuery( obj ).append( imageResize(img, s.width , s.height, false) );
+                jQuery( obj ).append( imageResize(img, s.width , s.height) );
                 i++;
                 // start cycle after the third image
                 if (i == 3 || stack.length == 0 )
@@ -68,11 +68,11 @@ jQuery.fn.nggSlideshow = function ( args ) {
     }
 
     //Resize Image and keep ratio on client side, better move to server side later
-    function imageResize(img, maxWidth , maxHeight, flag) {
+    function imageResize(img, maxWidth , maxHeight) {
 
         // we need to wait until the image is loaded
         if ( !img.complete )
-            jQuery( img ).bind('load', function() { imageResize(img, maxWidth , maxHeight, true) });
+            jQuery( img ).bind('load', function() { imageResize(img, maxWidth , maxHeight) });
 
         // in some cases the image is not loaded, we can't resize them
         if (img.height == 0 || img.width == 0)
@@ -100,7 +100,7 @@ jQuery.fn.nggSlideshow = function ( args ) {
                 var img = new Image(); 
                 img.src = stack.shift();
                 jQuery( img ).bind('load', function() {
-                    opts.addSlide( imageResize(this, s.width , s.height, false) );                     
+                    opts.addSlide( imageResize(this, s.width , s.height) );                     
                 });
             }
     }; 

@@ -12,7 +12,7 @@ by Alex Rabe & NextGEN DEV Team
 * Bugfix : Install/Upgrade failed when table prefix contain captial letters
 * Bugfix : Fix validation issues in Media-RSS
 * Bugifx : Empty tags in XMP Meta causes PHP error
-* Bugifx : Disable cache for slideshow
+* Bugifx : Rework load mechanism for slideshow
 
 = V1.6.2 - 19.09.2010 =
 * NEW : Added constant NGG_SKIP_LOAD_SCRIPTS to avoid script load
