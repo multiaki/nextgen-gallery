@@ -256,7 +256,7 @@ class nggLoader {
 		define('NGGFOLDER', plugin_basename( dirname(__FILE__)) );
 		
 		define('NGGALLERY_ABSPATH', trailingslashit( str_replace("\\","/", WP_PLUGIN_DIR . '/' . plugin_basename( dirname(__FILE__) ) ) ) );
-		define('NGGALLERY_URLPATH', trailingslashit( WP_PLUGIN_URL . '/' . plugin_basename( dirname(__FILE__) ) ) );
+		define('NGGALLERY_URLPATH', trailingslashit( plugins_url( '', __FILE__ ) ) );
 		
 		// look for imagerotator
 		define('NGGALLERY_IREXIST', !empty( $this->options['irURL'] ));
