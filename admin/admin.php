@@ -13,8 +13,9 @@ class nggAdminPanel{
 	function nggAdminPanel() {
 
 		// Add the admin menu
-		add_action( 'admin_menu', array (&$this, 'add_menu') );
-		
+		add_action( 'admin_menu', array (&$this, 'add_menu') ); 
+		add_action( 'network_admin_menu', array (&$this, 'add_network_admin_menu') );
+        
 		// Add the script and style files
 		add_action('admin_print_scripts', array(&$this, 'load_scripts') );
 		add_action('admin_print_styles', array(&$this, 'load_styles') );
@@ -39,15 +40,31 @@ class nggAdminPanel{
 	    if ( wpmu_enable_function('wpmuRoles') || wpmu_site_admin() )
 			add_submenu_page( NGGFOLDER , __('Roles', 'nggallery'), __('Roles', 'nggallery'), 'activate_plugins', 'nggallery-roles', array (&$this, 'show_menu'));
 	    add_submenu_page( NGGFOLDER , __('About this Gallery', 'nggallery'), __('About', 'nggallery'), 'NextGEN Gallery overview', 'nggallery-about', array (&$this, 'show_menu'));
-		// See trac #14435 , changed for 3.1 : http://core.trac.wordpress.org/ticket/14435
+		//TODO: Remove after WP 3.1 release, not longer needed 
         if ( wpmu_site_admin() ) 
 			add_submenu_page( 'ms-admin.php' , __('NextGEN Gallery', 'nggallery'), __('NextGEN Gallery', 'nggallery'), 'activate_plugins', 'nggallery-wpmu', array (&$this, 'show_menu'));
+
 	    if ( !is_multisite() || wpmu_site_admin() ) 
             add_submenu_page( NGGFOLDER , __('Reset / Uninstall', 'nggallery'), __('Reset / Uninstall', 'nggallery'), 'activate_plugins', 'nggallery-setup', array (&$this, 'show_menu'));
 
 		//register the column fields
 		$this->register_columns();	
 	}
+
+	// integrate the network menu	
+	function add_network_admin_menu()  {
+	
+		add_menu_page( _n( 'Gallery', 'Galleries', 1, 'nggallery' ), _n( 'Gallery', 'Galleries', 1, 'nggallery' ), 'nggallery-wpmu', NGGFOLDER, array (&$this, 'show_network_settings'), 'div' );
+		add_submenu_page( NGGFOLDER , __('Network settings', 'nggallery'), __('Network settings', 'nggallery'), 'nggallery-wpmu', NGGFOLDER,  array (&$this, 'show_network_settings'));
+        add_submenu_page( NGGFOLDER , __('Reset / Uninstall', 'nggallery'), __('Reset / Uninstall', 'nggallery'), 'activate_plugins', 'nggallery-setup', array (&$this, 'show_menu'));
+	}
+
+    // show the network page
+    function show_network_settings() {
+		include_once ( dirname (__FILE__) . '/style.php' );		
+		include_once ( dirname (__FILE__) . '/wpmu.php' );
+		nggallery_wpmu_setup();        
+    }
 
 	// load the script for the defined page and load only this code	
 	function show_menu() {
@@ -139,6 +156,7 @@ class nggAdminPanel{
 				include_once ( dirname (__FILE__) . '/about.php' );		// nggallery_admin_about
 				nggallery_admin_about();
 				break;
+            //TODO: Remove after WP 3.1 release, not longer needed   
 			case "nggallery-wpmu" :
 				include_once ( dirname (__FILE__) . '/style.php' );		
 				include_once ( dirname (__FILE__) . '/wpmu.php' );		// nggallery_wpmu_admin

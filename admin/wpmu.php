@@ -7,11 +7,10 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	if ( !is_super_admin() )
  		die('You are not allowed to call this page.');
 
+    $messagetext = '';
+
 	// get the options
 	$ngg_options = get_site_option('ngg_options');
-	
-	// same as $_SERVER['REQUEST_URI'], but should work under IIS 6.0
-	$filepath    = site_url( 'wp-admin/ms-admin.php?page=' . $_GET['page'], 'admin' );
 
 	if ( isset($_POST['updateoption']) ) {	
 		check_admin_referer('ngg_wpmu_settings');
@@ -27,24 +26,27 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			}
 		}
 
+        // the path should always end with a slash	
+        $ngg_options['gallerypath']    = trailingslashit($ngg_options['gallerypath']);
 		update_site_option('ngg_options', $ngg_options);
+        
 	 	$messagetext = __('Update successfully','nggallery');
 	}		
 	
 	// message windows
-	if(!empty($messagetext)) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$messagetext.'</p></div>'; }
+	if( !empty($messagetext) ) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$messagetext.'</p></div>'; }
 	
 	?>
 
 	<div class="wrap">
-		<h2><?php _e('General WordPress MU Settings','nggallery'); ?></h2>
+		<h2><?php _e('Network Options','nggallery'); ?></h2>
 		<form name="generaloptions" method="post">
 		<?php wp_nonce_field('ngg_wpmu_settings') ?>
 		<input type="hidden" name="page_options" value="gallerypath,wpmuQuotaCheck,wpmuZipUpload,wpmuStyle,wpmuRoles,wpmuCSSfile" />
 			<table class="form-table">
 				<tr valign="top">
 					<th align="left"><?php _e('Gallery path','nggallery') ?></th>
-					<td><input type="text" size="50" name="gallerypath" value="<?php echo $ngg_options['gallerypath']; ?>" title="TEST" /><br />
+					<td><input type="text" size="50" name="gallerypath" value="<?php echo $ngg_options['gallerypath']; ?>" /><br />
 					<?php _e('This is the default path for all blogs. With the placeholder %BLOG_ID% you can organize the folder structure better. The path must end with a /.','nggallery') ?></td>
 				</tr>
 				<tr>
