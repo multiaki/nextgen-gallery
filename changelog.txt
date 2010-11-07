@@ -14,6 +14,7 @@ by Alex Rabe & NextGEN DEV Team
 * Bugifx : Empty tags in XMP Meta causes PHP error
 * Bugifx : Rework load mechanism for slideshow
 * Bugfix : Copy meta data when image is copied
+* Bugfix : Icon Support for Ozh' Admin Drop Down Menu
 
 = V1.6.2 - 19.09.2010 =
 * NEW : Added constant NGG_SKIP_LOAD_SCRIPTS to avoid script load

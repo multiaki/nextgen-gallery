@@ -10,3 +10,7 @@
 #icon-nextgen-gallery  {
     background:url("../images/nextgen_32_grey.png") no-repeat scroll 1px 1px transparent;
 }
+
+/* Icon Support for Ozh' Admin Drop Down Menu */
+#oam_toplevel_page_nextgen-gallery div.wp-menu-image {background:transparent url('../images/nextgen_16_grey.png') no-repeat scroll 6px 6px;}
+#oam_toplevel_page_nextgen-gallery:hover div.wp-menu-image {background:transparent url('../images/nextgen_16_color.png') no-repeat scroll 6px 6px;}
