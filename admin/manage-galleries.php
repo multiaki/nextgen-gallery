@@ -180,12 +180,12 @@ if($gallerylist) {
 	$num_columns     = count($gallery_columns) - count($hidden_columns);
     
 	foreach($gallerylist as $gallery) {
-		$class = ( !isset($class) || $class == 'class="alternate"' ) ? '' : 'class="alternate"';
+		$alternate = ( !isset($alternate) || $alternate == 'class="alternate"' ) ? '' : 'class="alternate"';
 		$gid = $gallery->gid;
 		$name = (empty($gallery->title) ) ? $gallery->name : $gallery->title;
 		$author_user = get_userdata( (int) $gallery->author );
 		?>
-		<tr id="gallery-<?php echo $gid ?>" <?php echo $class; ?> >
+		<tr id="gallery-<?php echo $gid ?>" <?php echo $alternate; ?> >
 		<?php 
 		foreach($gallery_columns as $gallery_column_key => $column_display_name) {
 			$class = "class=\"$gallery_column_key column-$gallery_column_key\"";
