@@ -1234,6 +1234,8 @@ class nggAdmin{
 	 * @return void
 	 */
 	function copy_images($pic_ids, $dest_gid) {
+	   
+        require_once(NGGALLERY_ABSPATH . '/lib/meta.php');
 		
 		$errors = $messages = '';
 		
@@ -1296,6 +1298,10 @@ class nggAdmin{
 				
 			// Copy tags
 			nggTags::copy_tags($image->pid, $new_pid);
+            
+            // Copy meta information
+            $meta = new nggMeta($image->pid);
+            nggdb::update_image_meta( $new_pid, $meta->image->meta_data);
 			
 			if ( $tmp_prefix != '' ) {
 				$messages .= sprintf(__('Image %1$s (%2$s) copied as image %3$s (%4$s) &raquo; The file already existed in the destination gallery.','nggallery'),
