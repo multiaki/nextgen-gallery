@@ -1,16 +1,11 @@
 <?php
 
-// look up for the path
-require_once( dirname( dirname( dirname(__FILE__) ) ) . '/ngg-config.php');
-
-// check for rights
-if ( !current_user_can('edit_pages') && !current_user_can('edit_posts') ) 
-	wp_die(__("You are not allowed to be here"));
-
+if ( !defined('ABSPATH') )
+    die('You are not allowed to call this page directly.');
+    
 global $wpdb, $nggdb;
 
 ?>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>NextGEN Gallery</title>
