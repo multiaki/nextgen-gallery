@@ -19,7 +19,7 @@
 			ed.addCommand('mceNextGEN', function() {
 				ed.windowManager.open({
 				    // call content via admin-ajax, no need to know the full plugin path
-					file : tinymce.documentBaseURL + '/admin-ajax.php?action=ngg_tinymce',
+					file : ajaxurl + '?action=ngg_tinymce',
 					width : 360 + ed.getLang('NextGEN.delta_width', 0),
 					height : 210 + ed.getLang('NextGEN.delta_height', 0),
 					inline : 1
@@ -75,5 +75,3 @@
 	// Register plugin
 	tinymce.PluginManager.add('NextGEN', tinymce.plugins.NextGEN);
 })();
-
-

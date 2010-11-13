@@ -818,7 +818,7 @@ class nggdb {
             return false;
         
         // build the final query
-        $query = "SELECT * FROM $wpdb->nggallery WHERE $search ORDER BY title ASC $limit";
+        $query = "SELECT * FROM $wpdb->nggallery WHERE 1=1 $search ORDER BY title ASC $limit";
         $result = $wpdb->get_results($query);
 
         return $result;
@@ -866,7 +866,7 @@ class nggdb {
             return false;
         
         // build the final query
-        $query = "SELECT * FROM $wpdb->nggalbum WHERE $search ORDER BY name ASC $limit";
+        $query = "SELECT * FROM $wpdb->nggalbum WHERE 1=1 $search ORDER BY name ASC $limit";
         $result = $wpdb->get_results($query);
 
         return $result;

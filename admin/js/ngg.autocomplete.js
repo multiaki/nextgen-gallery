@@ -25,6 +25,7 @@ jQuery.fn.nggAutocomplete = function ( args ) {
     //hide first the drop down field
     jQuery(obj).hide();
     jQuery(obj).after('<input name="' + id + '_ac" type="text" id="' + id + '_ac"/>');
+    jQuery(obj + "_ac").addClass('ui-autocomplete-start')
     jQuery(obj + "_ac").autocomplete({
 		source: function( request, response ) {
 			var term = request.term;
@@ -46,7 +47,8 @@ jQuery.fn.nggAutocomplete = function ( args ) {
             // adding this to the dropdown list
             jQuery(obj).append( new Option(ui.item.label, ui.item.id) );
             // now select it
-            jQuery(obj).val(ui.item.id)
+            jQuery(obj).val(ui.item.id);
+            jQuery(obj + "_ac").removeClass('ui-autocomplete-start');
 	   }
 	});
 
