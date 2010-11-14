@@ -24,8 +24,10 @@ class nggXMLRPC{
 	    $methods['ngg.getGalleries'] = array(&$this, 'getGalleries');
 	    $methods['ngg.getImages'] = array(&$this, 'getImages');
 	    $methods['ngg.newGallery'] = array(&$this, 'newGallery');
+        $methods['ngg.deleteGallery'] = array(&$this, 'deleteGallery');
         $methods['ngg.newAlbum'] = array(&$this, 'newAlbum');
-	    
+	    $methods['ngg.deleteAlbum'] = array(&$this, 'deleteAlbum');
+        
 		return $methods;
 	}
 
@@ -234,7 +236,7 @@ class nggXMLRPC{
 			return $this->error;
 
 		if( !current_user_can( 'NextGEN Manage gallery' ) )
-			return new IXR_Error( 401, __( 'Sorry, you must be able to manage galleries to view the list of galleries' ) );
+			return new IXR_Error( 401, __( 'Sorry, you must be able to manage galleries' ) );
 
 		if ( !empty( $name ) )
 			$id = nggAdmin::create_gallery($name, $ngg->options['gallerypath'], false);
@@ -271,15 +273,15 @@ class nggXMLRPC{
 		$password	= $wpdb->escape($args[2]);
 		$name   	= $wpdb->escape($args[3]);
 		$preview   	= $wpdb->escape($args[4]);
-        $description= $wpdb->escape($args[4]);
-        $galleries 	= $wpdb->escape($args[4]);
+        $description= $wpdb->escape($args[5]);
+        $galleries 	= $wpdb->escape($args[6]);
         $id 		= false;
 
 		if ( !$user = $this->login($username, $password) )
 			return $this->error;
 
 		if( !current_user_can( 'NextGEN Add/Delete album' ) )
-			return new IXR_Error( 401, __( 'Sorry, you must be able to manage albums to add an new album' ) );
+			return new IXR_Error( 401, __( 'Sorry, you must be able to manage albums' ) );
 
 		if ( !empty( $name ) )
 			$id = $result = nggdb::add_album( $name, $preview, $description, $galleries );
@@ -288,6 +290,74 @@ class nggXMLRPC{
 			return new IXR_Error(500, __('Sorry, could not create the album'));
 
 		return($id);
+		
+	}
+
+	/**
+	 * Method "ngg.deleteAlbum"
+	 * Delete a album from the database
+	 * 
+	 * @since 1.7
+	 * 
+	 * @param array $args Method parameters.
+	 * 			- int blog_id
+	 *	    	- string username
+	 *	    	- string password
+	 *	    	- int album id 
+	 * @return true
+	 */
+	function deleteAlbum($args) {
+		
+		global $nggdb, $wpdb;
+
+		$blog_ID    = (int) $args[0];
+		$username	= $wpdb->escape($args[1]);
+		$password	= $wpdb->escape($args[2]);
+        $id    	    = (int) $args[3];
+
+		if ( !$user = $this->login($username, $password) )
+			return $this->error;
+
+		if( !current_user_can( 'NextGEN Add/Delete album' ) )
+			return new IXR_Error( 401, __( 'Sorry, you must be able to manage albums' ) );
+		
+		$nggdb->delete_album($id);
+		
+		return true;
+		
+	}
+
+	/**
+	 * Method "ngg.deleteGallery"
+	 * Delete a gallery from the database, including all images
+	 * 
+	 * @since 1.7
+	 * 
+	 * @param array $args Method parameters.
+	 * 			- int blog_id
+	 *	    	- string username
+	 *	    	- string password
+	 *	    	- int gallery_id 
+	 * @return true
+	 */
+	function deleteGallery($args) {
+		
+		global $nggdb, $wpdb;
+
+		$blog_ID    = (int) $args[0];
+		$username	= $wpdb->escape($args[1]);
+		$password	= $wpdb->escape($args[2]);
+        $id    	    = (int) $args[3];
+
+		if ( !$user = $this->login($username, $password) )
+			return $this->error;
+
+		if( !current_user_can( 'NextGEN Manage gallery' ) )
+			return new IXR_Error( 401, __( 'Sorry, you must be able to manage galleries' ) );
+		
+		$nggdb->delete_gallery($id);
+		
+		return true;
 		
 	}
 
@@ -315,7 +385,7 @@ class nggXMLRPC{
 			return $this->error;
 
 		if( !current_user_can( 'NextGEN Manage gallery' ) )
-			return new IXR_Error( 401, __( 'Sorry, you must be able to manage galleries to view the list of galleries' ) );
+			return new IXR_Error( 401, __( 'Sorry, you must be able to manage galleries' ) );
 		
 		$gallery_list = $nggdb->find_all_galleries('gid', 'asc', true, 0, 0, false);
 		
