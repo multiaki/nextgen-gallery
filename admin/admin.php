@@ -189,6 +189,8 @@ class nggAdminPanel{
 		) );
 		wp_register_script('ngg-progressbar', NGGALLERY_URLPATH .'admin/js/ngg.progressbar.js', array('jquery'), '2.0.0');
 		wp_register_script('swfupload_f10', NGGALLERY_URLPATH .'admin/js/swfupload.js', array('jquery'), '2.2.0');
+        wp_register_script('jquery-ui', NGGALLERY_URLPATH .'admin/js/jquery-ui-1.8.5.min.js', array('jquery'), '1.8.5');
+        wp_register_script('ngg-autocomplete', NGGALLERY_URLPATH .'admin/js/ngg.autocomplete.js', array('jquery-ui'), '1.0');
 				
 		switch ($_GET['page']) {
 			case NGGFOLDER : 
@@ -206,6 +208,7 @@ class nggAdminPanel{
 			break;
 			case "nggallery-manage-album" :
 				wp_enqueue_script( 'jquery-ui-sortable' );
+                wp_enqueue_script( 'ngg-autocomplete' );
 				add_thickbox();
 			break;
 			case "nggallery-options" :
@@ -232,31 +235,33 @@ class nggAdminPanel{
 	function load_styles() {
         // load the icon for the navigation menu
         wp_enqueue_style( 'nggmenu', NGGALLERY_URLPATH .'admin/css/menu.css', array() );
-		
-		// no need to go on if it's not a plugin page
+		wp_register_style( 'nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.8.1', 'screen' );
+		wp_register_style( 'ngg-jqueryui', NGGALLERY_URLPATH .'admin/css/jquery.ui.css', false, '1.8.5', 'screen' );
+        
+        // no need to go on if it's not a plugin page
 		if( !isset($_GET['page']) )
 			return;
 
 		switch ($_GET['page']) {
 			case NGGFOLDER :
-				wp_enqueue_style( 'thickbox');	
+				wp_enqueue_style( 'thickbox' );	
 			case "nggallery-about" :
-				wp_enqueue_style( 'nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.8.1', 'screen' );
+				wp_enqueue_style( 'nggadmin' );
                 wp_admin_css( 'css/dashboard' );
 			break;
 			case "nggallery-add-gallery" :
-				wp_enqueue_style( 'ngg-jqueryui', NGGALLERY_URLPATH .'admin/css/jquery.ui.css', false, '1.8.5', 'screen' );
+				wp_enqueue_style( 'ngg-jqueryui' );
 				wp_enqueue_style( 'jqueryFileTree', NGGALLERY_URLPATH .'admin/js/jqueryFileTree/jqueryFileTree.css', false, '1.0.1', 'screen' );
 			case "nggallery-options" :
 				wp_enqueue_style( 'nggtabs', NGGALLERY_URLPATH .'admin/css/jquery.ui.tabs.css', false, '2.5.0', 'screen' );
-				wp_enqueue_style( 'nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.8.1', 'screen' );
+				wp_enqueue_style( 'nggadmin' );
             break;    
 			case "nggallery-manage-gallery" :
 			case "nggallery-roles" :
 			case "nggallery-manage-album" :
-				wp_enqueue_style( 'ngg-jqueryui', NGGALLERY_URLPATH .'admin/css/jquery.ui.css', false, '1.8.5', 'screen' );
-				wp_enqueue_style( 'nggadmin', NGGALLERY_URLPATH .'admin/css/nggadmin.css', false, '2.8.1', 'screen' );
-				wp_enqueue_style( 'thickbox');			
+				wp_enqueue_style( 'ngg-jqueryui' );
+				wp_enqueue_style( 'nggadmin' );
+				wp_enqueue_style( 'thickbox' );			
 			break;
 			case "nggallery-tags" :
 				wp_enqueue_style( 'nggtags', NGGALLERY_URLPATH .'admin/css/tags-admin.css', false, '2.6.1', 'screen' );

@@ -1,5 +1,5 @@
 /* 
-** NextGEN Gallery Style for Wordpress 2.9
+** NextGEN Gallery Style for Wordpress 3.0
 */
 
 /* SETTINGS FOR Overview Gallery */
@@ -344,6 +344,7 @@ div.widget-top {
 	font-size: 13px;
 }
 
+.ui-autocomplete-start { background-position: 98% center; }	
 
 /* SETTINGS FOR SORT GALLERY */
 

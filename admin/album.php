@@ -134,7 +134,7 @@ class nggManageAlbum {
 	}
 
 	function update_album() {
-		global $wpdb;
+		global $wpdb, $nggdb;
 		
 		check_admin_referer('ngg_thickbox_form');
 		
@@ -172,7 +172,10 @@ class nggManageAlbum {
 jQuery(document).ready(
 	function()
 	{
-
+        jQuery("#previewpic").nggAutocomplete( {
+            type: 'image',domain: "<?php echo site_url(); ?>"
+        });
+        
 		jQuery('#selectContainer').sortable( {
 			items: '.groupItem',
 			placeholder: 'sort_placeholder',
@@ -412,15 +415,16 @@ function showDialog() {
 	  	<tr>
 	    	<th>
 	    		<?php _e('Select a preview image:', 'nggallery'); ?><br />
-					<select name="previewpic" style="width:95%" >
+					<select id="previewpic" name="previewpic" style="width:98%" >
+                        <?php if ($album->previewpic == 0) ?>
 		                <option value="0"><?php _e('No picture', 'nggallery'); ?></option>
 						<?php
-							$picturelist = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt WHERE tt.pid=t.previewpic ORDER by tt.galleryid");
-							if( is_array($picturelist) ) {
-								foreach($picturelist as $picture) {
-									echo '<option value="' . $picture->pid . '"'. (($picture->pid == $album->previewpic) ? ' selected="selected"' : '') . ' >'. $picture->pid . ' - ' . ( empty($picture->name) ? $picture->filename : $picture->name ) .' </option>'."\n";
-								}
-							}
+                            if ($album->previewpic == 0)
+                                echo '<option value="0" selected="selected">' . __('No picture', 'nggallery') . '</option>';
+                            else {
+                                $picture = nggdb::find_image($album->previewpic);
+                                echo '<option value="' . $picture->pid . '" selected="selected" >'. $picture->pid . ' - ' . ( empty($picture->name) ? $picture->filename : $picture->name ) .' </option>'."\n";
+                            }
 						?>
 					</select>
 	    	</th>

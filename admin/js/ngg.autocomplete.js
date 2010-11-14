@@ -22,9 +22,14 @@ jQuery.fn.nggAutocomplete = function ( args ) {
     var id  = jQuery(this).attr('id');
     var cache = {}, lastXhr;
     
+    // get current value of drop down field
+    var c_text = jQuery(obj + ' :selected').text();
+    var c_val  = jQuery(obj).val();
     //hide first the drop down field
     jQuery(obj).hide();
     jQuery(obj).after('<input name="' + id + '_ac" type="text" id="' + id + '_ac"/>');
+    // Fill up current value
+    jQuery(obj + "_ac").val(c_text);
     jQuery(obj + "_ac").addClass('ui-autocomplete-start')
     jQuery(obj + "_ac").autocomplete({
 		source: function( request, response ) {
@@ -53,7 +58,12 @@ jQuery.fn.nggAutocomplete = function ( args ) {
 	});
 
    	jQuery(obj + "_ac").click(function() {
+   	    
+   	    var search = jQuery(obj + "_ac").val();
+        // if the value is prefilled, we pass a empty string
+        if ( search == c_text)
+            search = '';            
         // pass empty string as value to search for, displaying all results
-        jQuery(obj + "_ac").autocomplete('search', jQuery(obj + "_ac").val() );
+        jQuery(obj + "_ac").autocomplete('search', search );
 	});
 }
