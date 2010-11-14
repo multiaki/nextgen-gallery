@@ -25,11 +25,14 @@ jQuery.fn.nggAutocomplete = function ( args ) {
     // get current value of drop down field
     var c_text = jQuery(obj + ' :selected').text();
     var c_val  = jQuery(obj).val();
+    var c_width= jQuery(obj).css('width');
     //hide first the drop down field
     jQuery(obj).hide();
     jQuery(obj).after('<input name="' + id + '_ac" type="text" id="' + id + '_ac"/>');
-    // Fill up current value
+    // Fill up current value & style
     jQuery(obj + "_ac").val(c_text);
+    jQuery(obj + "_ac").css('width', c_width);
+    // Add the dropdown icon
     jQuery(obj + "_ac").addClass('ui-autocomplete-start')
     jQuery(obj + "_ac").autocomplete({
 		source: function( request, response ) {

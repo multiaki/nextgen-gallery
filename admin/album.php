@@ -415,7 +415,7 @@ function showDialog() {
 	  	<tr>
 	    	<th>
 	    		<?php _e('Select a preview image:', 'nggallery'); ?><br />
-					<select id="previewpic" name="previewpic" style="width:98%" >
+					<select id="previewpic" name="previewpic" style="width:95%" >
                         <?php if ($album->previewpic == 0) ?>
 		                <option value="0"><?php _e('No picture', 'nggallery'); ?></option>
 						<?php
@@ -423,7 +423,7 @@ function showDialog() {
                                 echo '<option value="0" selected="selected">' . __('No picture', 'nggallery') . '</option>';
                             else {
                                 $picture = nggdb::find_image($album->previewpic);
-                                echo '<option value="' . $picture->pid . '" selected="selected" >'. $picture->pid . ' - ' . ( empty($picture->name) ? $picture->filename : $picture->name ) .' </option>'."\n";
+                                echo '<option value="' . $picture->pid . '" selected="selected" >'. $picture->pid . ' - ' . ( empty($picture->alltext) ? $picture->filename : $picture->alltext ) .' </option>'."\n";
                             }
 						?>
 					</select>

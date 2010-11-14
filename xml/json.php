@@ -2,7 +2,6 @@
 /**
 * REST Application Programming Interface PHP class for the WordPress plugin NextGEN Gallery
 * Should emulate some kind of Flickr JSON callback : ?callback=json&format=json&api_key=1234567890&method=search&term=myterm
-
 * 
 * @version      1.1.0
 * @author 		Alex Rabe 
@@ -150,7 +149,7 @@ class nggAPI {
                         // reorder result to array-object
                         $obj = new stdClass();
                         $obj->id = $image->pid;
-                        $obj->label = $image->pid . ' - ' . $image->filename;
+                        $obj->label = $image->pid . ' - ' . ( empty($image->alttext) ? $image->filename : $image->alttext );
                         $obj->value = $image->filename;
                         $this->result[] = $obj;
         			}

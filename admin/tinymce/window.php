@@ -53,17 +53,9 @@ jQuery(document).ready(function(){
          <tr>
             <td nowrap="nowrap"><label for="gallerytag"><?php _e("Select gallery", 'nggallery'); ?></label></td>
             <td><select id="gallerytag" name="gallerytag" style="width: 200px">
-                <option value="0"><?php _e("No gallery", 'nggallery'); ?></option>
-				<?php
-					$gallerylist = $nggdb->find_all_galleries('gid', 'DESC', false, 50);
-					if(is_array($gallerylist)) {
-						foreach($gallerylist as $gallery) {
-							$name = ( empty($gallery->title) ) ? $gallery->name : $gallery->title;
-							echo '<option value="' . $gallery->gid . '" >' . $gallery->gid . ' - ' . $name . '</option>' . "\n";
-						}
-					}
-				?>
-            </select></td>
+                <option value="0" selected="selected"><?php _e("Select gallery", 'nggallery'); ?></option>
+                </select>
+            </td>
           </tr>
           <tr>
             <td nowrap="nowrap" valign="top"><label for="showtype"><?php _e("Show as", 'nggallery'); ?></label></td>
@@ -82,16 +74,9 @@ jQuery(document).ready(function(){
          <tr>
             <td nowrap="nowrap"><label for="albumtag"><?php _e("Select album", 'nggallery'); ?></label></td>
             <td><select id="albumtag" name="albumtag" style="width: 200px">
-                <option value="0"><?php _e("No album", 'nggallery'); ?></option>
-				<?php
-					$albumlist = $wpdb->get_results("SELECT * FROM $wpdb->nggalbum ORDER BY id DESC LIMIT 50");
-					if(is_array($albumlist)) {
-						foreach($albumlist as $album) {
-							echo '<option value="' . $album->id . '" >' . $album->id . ' - ' . $album->name . '</option>'."\n";
-						}
-					}
-				?>
-            </select></td>
+                    <option value="0" selected="selected"><?php _e("Select album", 'nggallery'); ?></option>
+                </select>
+            </td>
           </tr>
           <tr>
             <td nowrap="nowrap" valign="top"><label for="showtype"><?php _e("Show as", 'nggallery'); ?></label></td>
@@ -109,16 +94,9 @@ jQuery(document).ready(function(){
          <tr>
             <td nowrap="nowrap"><label for="singlepictag"><?php _e("Select picture", 'nggallery'); ?></label></td>
             <td><select id="singlepictag" name="singlepictag" style="width: 200px">
-                <option value="0"><?php _e("No picture", 'nggallery'); ?></option>
-				<?php
-					$picturelist = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures ORDER BY pid DESC LIMIT 50");
-					if(is_array($picturelist)) {
-						foreach($picturelist as $picture) {
-							echo '<option value="' . $picture->pid . '" >'. $picture->pid . ' - ' . $picture->filename.'</option>'."\n";
-						}
-					}
-				?>
-            </select></td>
+                <option value="0" selected="selected"><?php _e("Select picture", 'nggallery'); ?></option>
+                </select>
+            </td>
           </tr>
           <tr>
             <td nowrap="nowrap"><?php _e("Width x Height", 'nggallery'); ?></td>

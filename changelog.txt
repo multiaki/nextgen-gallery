@@ -9,6 +9,8 @@ by Alex Rabe & NextGEN DEV Team
 = V1.7.0 - sometimes =
 * NEW : Publish a new post direct from the gallery admin page
 * NEW : Added filter hook 'ngg_get_image_metadata' to add more exif/iptc information
+* NEW : Adding Autocomplete field to TinyMCE Popup and Album page
+* NEW : More methods for XMLRPC interface
 * Changed : New hooks for gallery table (THX to Alexander Schneider)
 * Changed : Introduce jQuery dialog as new UI element
 * Changed : Call TinyMCE window via admin-ajax
