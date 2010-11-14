@@ -4,7 +4,7 @@
  *
  * @package NextGEN Gallery
  * @author Alex Rabe
- * @copyright 2009
+ * @copyright 2009-2010
  */
 class nggXMLRPC{
 	
@@ -24,6 +24,7 @@ class nggXMLRPC{
 	    $methods['ngg.getGalleries'] = array(&$this, 'getGalleries');
 	    $methods['ngg.getImages'] = array(&$this, 'getImages');
 	    $methods['ngg.newGallery'] = array(&$this, 'newGallery');
+        $methods['ngg.newAlbum'] = array(&$this, 'newAlbum');
 	    
 		return $methods;
 	}
@@ -240,6 +241,51 @@ class nggXMLRPC{
 		
 		if ( !$id )
 			return new IXR_Error(500, __('Sorry, could not create the gallery'));
+
+		return($id);
+		
+	}
+
+	/**
+	 * Method "ngg.newAlbum"
+	 * Create a new album
+	 * 
+	 * @since 1.7
+	 * 
+	 * @param array $args Method parameters.
+	 * 			- int blog_id
+	 *	    	- string username
+	 *	    	- string password
+	 *	    	- string new album name
+     *          - int id of preview image
+     *          - string description
+     *          - string serialized array of galleries 
+	 * @return int with new album ID
+	 */
+	function newAlbum($args) {
+		
+		global $ngg, $wpdb;
+
+		$blog_ID    = (int) $args[0];
+		$username	= $wpdb->escape($args[1]);
+		$password	= $wpdb->escape($args[2]);
+		$name   	= $wpdb->escape($args[3]);
+		$preview   	= $wpdb->escape($args[4]);
+        $description= $wpdb->escape($args[4]);
+        $galleries 	= $wpdb->escape($args[4]);
+        $id 		= false;
+
+		if ( !$user = $this->login($username, $password) )
+			return $this->error;
+
+		if( !current_user_can( 'NextGEN Add/Delete album' ) )
+			return new IXR_Error( 401, __( 'Sorry, you must be able to manage albums to add an new album' ) );
+
+		if ( !empty( $name ) )
+			$id = $result = nggdb::add_album( $name, $preview, $description, $galleries );
+		
+		if ( !$id )
+			return new IXR_Error(500, __('Sorry, could not create the album'));
 
 		return($id);
 		
