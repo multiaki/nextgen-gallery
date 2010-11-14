@@ -74,14 +74,6 @@ function nggallery_picturelist() {
 		$attr = (nggGallery::current_user_can( 'NextGEN Edit gallery options' )) ? '' : 'disabled="disabled"';
 
 ?>
-<!--[if IE]>
-	<style type="text/css">
-		.custom_thumb {
-			display : none;
-		}
-	</style>
-<![endif]-->
-
 <script type="text/javascript"> 
 <!--
 function showDialog( windowId, title ) {

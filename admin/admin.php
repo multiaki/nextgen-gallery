@@ -202,14 +202,12 @@ class nggAdminPanel{
 				wp_enqueue_script( 'ngg-ajax' );
 				wp_enqueue_script( 'ngg-progressbar' );
 				wp_enqueue_script( 'jquery-ui-dialog' );
-				//TODO:Add Inline edit later
-				//wp_enqueue_script( 'ngg-inline-edit', NGGALLERY_URLPATH .'admin/js/ngg.inline-edit-images.js', array('jquery'), '1.0.0' );
 				add_thickbox();
 			break;
 			case "nggallery-manage-album" :
 				wp_enqueue_script( 'jquery-ui-sortable' );
+                wp_enqueue_script( 'jquery-ui-dialog' );
                 wp_enqueue_script( 'ngg-autocomplete' );
-				add_thickbox();
 			break;
 			case "nggallery-options" :
 				wp_enqueue_script( 'jquery-ui-tabs' );

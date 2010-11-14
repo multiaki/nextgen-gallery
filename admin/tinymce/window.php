@@ -51,7 +51,7 @@ jQuery(document).ready(function(){
 		<br />
 		<table border="0" cellpadding="4" cellspacing="0">
          <tr>
-            <td nowrap="nowrap"><label for="gallerytag"><?php _e("Select gallery", 'nggallery'); ?></label></td>
+            <td nowrap="nowrap"><label for="gallerytag"><?php _e("Gallery", 'nggallery'); ?></label></td>
             <td><select id="gallerytag" name="gallerytag" style="width: 200px">
                 <option value="0" selected="selected"><?php _e("Select gallery", 'nggallery'); ?></option>
                 </select>
@@ -72,7 +72,7 @@ jQuery(document).ready(function(){
 		<br />
 		<table border="0" cellpadding="4" cellspacing="0">
          <tr>
-            <td nowrap="nowrap"><label for="albumtag"><?php _e("Select album", 'nggallery'); ?></label></td>
+            <td nowrap="nowrap"><label for="albumtag"><?php _e("Album", 'nggallery'); ?></label></td>
             <td><select id="albumtag" name="albumtag" style="width: 200px">
                     <option value="0" selected="selected"><?php _e("Select album", 'nggallery'); ?></option>
                 </select>
@@ -92,7 +92,7 @@ jQuery(document).ready(function(){
 		<br />
 		<table border="0" cellpadding="4" cellspacing="0">
          <tr>
-            <td nowrap="nowrap"><label for="singlepictag"><?php _e("Select picture", 'nggallery'); ?></label></td>
+            <td nowrap="nowrap"><label for="singlepictag"><?php _e("Picture", 'nggallery'); ?></label></td>
             <td><select id="singlepictag" name="singlepictag" style="width: 200px">
                 <option value="0" selected="selected"><?php _e("Select picture", 'nggallery'); ?></option>
                 </select>

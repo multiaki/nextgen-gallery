@@ -262,7 +262,13 @@ function ngg_serialize(s)
 }
 
 function showDialog() {
-	tb_show("", "#TB_inline?width=640&height=305&inlineId=editalbum&modal=true", false);
+	jQuery( "#editalbum").dialog({
+		width: 640,
+        resizable : false,
+		modal: true,
+        title: '<?php _e('Edit Album', 'nggallery'); ?>'        
+	});
+    jQuery('#editalbum .dialog-cancel').click(function() { jQuery( "#editalbum" ).dialog("close"); });
 }
 
 </script>
@@ -448,7 +454,7 @@ function showDialog() {
 	    	<td class="submit">
 	    		<input type="submit" class="button-primary" name="update_album" value="<?php _e('OK', 'nggallery'); ?>" />
 	    		&nbsp;
-	    		<input class="button-secondary" type="reset" value="<?php _e('Cancel', 'nggallery'); ?>" onclick="tb_remove()"/>
+	    		<input class="button-secondary dialog-cancel" type="reset" value="<?php _e('Cancel', 'nggallery'); ?>" onclick="tb_remove()"/>
 	    	</td>
 		</tr>
 	</table>
