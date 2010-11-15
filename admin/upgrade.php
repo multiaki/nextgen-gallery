@@ -172,9 +172,8 @@ function ngg_upgrade() {
         }
         
         if (version_compare($installed_ver, '1.7.0', '<')) {
-            ngg_rebuild_unique_slugs();
+            ngg_rebuild_unique_slugs::init();
         }
-        
 		return;
 	}
     
@@ -325,44 +324,6 @@ function ngg_maybe_add_column($table_name, $column_name, $create_ddl) {
 }
 
 /**
- * Rebuild slugs for albums, galleries and images. Attention : Is could create a lot of queries
- * 
- * @since 1.7.0
- * @return void
- */
-function ngg_rebuild_unique_slugs() {
-	global $wpdb;
-	
-	$albumlist = $wpdb->get_results("SELECT * FROM $wpdb->nggalbum ORDER BY id ASC", OBJECT_K);
-	if ( is_array($albumlist) ) {
-        foreach ($albumlist as $album) {
-    		//slug must be unique, we use the name for that
-            $album->slug = nggdb::get_unique_slug( sanitize_title( $album->name ), 'album' );
-            $wpdb->query( $wpdb->prepare( "UPDATE $wpdb->nggalbum SET slug= '%s' WHERE id = '%d'" , $album->slug, $album->id ) );
-        }
-    }    
-
-	$galleries = $wpdb->get_results("SELECT * FROM $wpdb->nggallery ORDER BY gid ASC", OBJECT_K);
-	if ( is_array($galleries) ) {
-        foreach ($galleries as $gallery) {
-    		//slug must be unique, we use the title for that
-            $gallery->slug = nggdb::get_unique_slug( sanitize_title( $gallery->title ), 'gallery' );
-            $wpdb->query( $wpdb->prepare( "UPDATE $wpdb->nggallery SET slug= '%s' WHERE gid = '%d'" , $gallery->slug, $gallery->gid ) );
-        }
-    } 
-
-	$images = $wpdb->get_results("SELECT * FROM $wpdb->nggpictures ORDER BY pid ASC", OBJECT_K);
-	if ( is_array($images) ) {
-        foreach ($images as $image) {
-    		//slug must be unique, we use the alttext for that
-            $image->slug = nggdb::get_unique_slug( sanitize_title( $image->alttext ), 'image' );
-            $wpdb->query( $wpdb->prepare( "UPDATE $wpdb->nggpictures SET image_slug= '%s' WHERE pid = '%d'" , $image->slug, $image->pid ) );
-        }
-    } 
-
-}
-
-/**
  * nggallery_upgrade_page() - This page showsup , when the database version doesn't fir to the script NGG_DBVERSION constant.
  * 
  * @return Upgrade Message
@@ -398,9 +359,115 @@ function nggallery_start_upgrade($filepath) {
 <div class="wrap">
 	<h2><?php _e('Upgrade NextGEN Gallery', 'nggallery') ;?></h2>
 	<p><?php ngg_upgrade();?></p>
-	<p><?php _e('Upgrade finished...', 'nggallery') ;?></p>
-	<h3><a href="<?php echo $filepath;?>"><?php _e('Continue', 'nggallery'); ?>...</a></h3>
+	<p class="finished"><?php _e('Upgrade finished...', 'nggallery') ;?></p>
+	<h3><a class="finished" href="<?php echo $filepath;?>"><?php _e('Continue', 'nggallery'); ?>...</a></h3>
 </div>
 <?php
-} 
+}
+
+/**
+ * Rebuild slugs for albums, galleries and images via AJAX request
+ * 
+ * @sine 1.7.0
+ * @access internal
+ */
+class ngg_rebuild_unique_slugs {
+
+	static function init() {
+        self::start_rebuild();
+	}
+
+	static function start_rebuild() {
+        global $wpdb;
+        
+        $total = array();
+        // get the total number of images
+		$total['images'] = intval( $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggpictures") );
+        $total['gallery'] = intval( $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggallery") );
+        $total['album'] = intval( $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->nggalbum") );
+        
+		$messages = array(
+			'images' => __( 'Rebuild image structure : %s / %s images', 'nggallery' ),
+			'gallery' => __( 'Rebuild gallery structure : %s / %s galleries', 'nggallery' ),
+            'album' => __( 'Rebuild album structure : %s / %s albums', 'nggallery' ),
+		);
+
 ?>
+	   <h2><?php _e('Create unique slug', 'nggallery') ;?></h2>
+	   <p><?php _e('One of the upcomming features are a reworked permalinks structure.', 'nggallery') ;?>
+	   <?php _e('Therefore it\'s needed to have a unique identifier for each image, gallery and album.', 'nggallery'); ?><br />
+       <?php _e('Depend on the amount of database entries this will take a while, don\'t reload this page.', 'nggallery') ;?></p>
+<?php
+        
+        foreach ( array_keys( $messages ) as $key ) {
+                       
+    		$message = sprintf( $messages[ $key ] ,
+    			"<span class='ngg-count-current'>0</span>",
+    			"<span class='ngg-count-total'>" . $total[ $key ] . "</span>"
+    		);
+    
+    		echo "<div class='$key updated'><p class='ngg'>$message</p></div>";
+        }
+        
+		$ajax_url = add_query_arg( 'action', 'ngg_rebuild_unique_slugs', admin_url( 'admin-ajax.php' ) );
+?>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	var ajax_url = '<?php echo $ajax_url; ?>',
+		_action = 'images',
+		images = <?php echo $total['images']; ?>,
+		gallery = <?php echo $total['gallery']; ?>,
+        album = <?php echo $total['album']; ?>,
+        total = 0,
+        offset = 0,
+		count = 50;
+
+	var $display = $('.ngg-count-current');
+    $('.finished, .gallery, .album').hide();
+    total = images;
+        
+	function call_again() {
+		if ( offset > total ) {
+		    offset = 0;
+            // 1st run finished 
+            if (_action == 'images') {
+                _action = 'gallery';
+                total = gallery;
+                $('.images, .gallery').toggle();
+                $display.html(offset);
+                call_again();
+                return;
+            }  
+            // 2nd run finished
+            if (_action == 'gallery') {
+                _action = 'album';
+                total = album;
+                $('.gallery, .album').toggle();
+                $display.html(offset);
+                call_again();
+                return;
+            } 
+            // 3rd run finished, exit now
+            if (_action == 'album') {
+    			$('.ngg')
+    				.html('<?php _e( 'Done.', 'nggallery' ); ?>')
+    				.parent('div').hide();
+                $('.finished').show();    
+    			return;
+            }
+		}
+
+		$.post(ajax_url, {'_action': _action, 'offset': offset}, function(response) {
+			$display.html(offset);
+
+			offset += count;
+			call_again();
+		});
+	}
+
+	call_again();
+});
+</script>
+<?php
+	}
+}
