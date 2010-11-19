@@ -1363,8 +1363,6 @@ class nggAdmin{
 			} );
 		</script>
 		
-		<div id="progressbar_container" class="wrap"></div>
-		
 		<?php	
 	}
 	

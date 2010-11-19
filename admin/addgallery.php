@@ -183,23 +183,20 @@ class nggAddGallery {
 				},
 
 				// Debug settings
-				debug: true
+				debug: false
 				
 			});
 			
 			// on load change the upload to swfupload
 			initSWFUpload();
+
+			nggAjaxOptions = {
+			  	header: "<?php _e('Upload images', 'nggallery') ;?>",
+			  	maxStep: 100
+			};
 			
 		};
 	</script>
-	
-	<div class="wrap" id="progressbar-wrap">
-		<div class="progressborder">
-			<div class="progressbar" id="progressbar">
-				<span>0%</span>
-			</div>
-		</div>
-	</div>
 	
 	<?php } else { ?>
 	<!-- MultiFile script -->

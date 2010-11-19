@@ -1,6 +1,6 @@
 /*
  * Progress bar Plugin for NextGEN gallery
- * Version:  2.0.0
+ * Version:  2.0.1
  * Author : Alex Rabe
  */ 
 (function($) {
@@ -22,7 +22,7 @@
 			if ( $( "#" + s.id + "_dialog" ).length == 0) {
 				s.header = (s.header.length > 0) ? s.header : '' ;
 				$("body").append('<div id="' + s.id + '_dialog"><div id="' + s.id + '" class="progressborder"><div class="' + s.id + '"><span>0%</span></div></div></div>');
-   	            $('html,body').scrollTop(0);
+   	            $('html,body').scrollTop(0); // works only in IE, FF
                 // we open the dialog
                 $( "#" + s.id + "_dialog" ).dialog({
             		width: 640,
@@ -71,15 +71,19 @@
 			if (s.wait) {
                 $("#" + s.id).delay(1000).hide("slow");
 				div.click(function () {
-				    $("#" + s.id + "_dialog").dialog("close");
+				    $("#" + s.id + "_dialog").dialog("destroy");
+                    $("#" + s.id + "_dialog").remove();
+                    // In the casee it's the manage page, force a submit
 					$('.nggform').prepend("<input type=\"hidden\" name=\"ajax_callback\" value=\"0\">");
 	      			$('.nggform').submit();
 	    		});
 	    	} else {
 
                 window.setTimeout(function() {
-                    $("#" + s.id + "_dialog" ).delay(4000).dialog("close");
-    				$('.nggform').prepend("<input type=\"hidden\" name=\"ajax_callback\" value=\"1\">");
+                    $("#" + s.id + "_dialog" ).delay(4000).dialog("destroy");
+                    $("#" + s.id + "_dialog").remove();
+    				// In the casee it's the manage page, force a submit
+                    $('.nggform').prepend("<input type=\"hidden\" name=\"ajax_callback\" value=\"1\">");
                     $('.nggform').delay(4000).submit();
                 }, 1000);
 	    	}

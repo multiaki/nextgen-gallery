@@ -24,13 +24,13 @@ global $wpdb, $nggdb;
 <script type="text/javascript">
 jQuery(document).ready(function(){ 
     jQuery("#gallerytag").nggAutocomplete( {
-        type: 'gallery',domain: "<?php echo site_url(); ?>"
+        type: 'gallery',domain: "<?php echo site_url(); ?>/"
     });
     jQuery("#albumtag").nggAutocomplete( {
-        type: 'album',domain: "<?php echo site_url(); ?>"
+        type: 'album',domain: "<?php echo site_url(); ?>/"
     });
     jQuery("#singlepictag").nggAutocomplete( {
-        type: 'image',domain: "<?php echo site_url(); ?>"
+        type: 'image',domain: "<?php echo site_url(); ?>/"
     });
 });
 </script>

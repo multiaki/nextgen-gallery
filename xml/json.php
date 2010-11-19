@@ -61,7 +61,7 @@ class nggAPI {
 		$this->format 	= isset($_GET['format']) ? strtolower( $_GET['format'] ) : false;
 		$this->api_key 	= isset($_GET['api_key'])? $_GET['api_key'] : false; 
 		$this->method 	= isset($_GET['method']) ? strtolower( $_GET['method'] ) : false; 
-		$this->term		= isset($_GET['term'])   ? strtolower( $_GET['term'] ) : false; 
+		$this->term		= isset($_GET['term'])   ? urldecode( $_GET['term'] ) : false; 
 		$this->id 		= isset($_GET['id'])     ? (int) $_GET['id'] : 0;
 		$this->limit 	= isset($_GET['limit'])  ? (int) $_GET['limit'] : 0;
         $this->type		= isset($_GET['type'])   ? strtolower( $_GET['type'] ) : false; 		
@@ -238,7 +238,7 @@ class nggAPI {
 	function render_output() {
 		
 		if ($this->format == 'json') {
-			header('Content-Type: text/plain; charset=' . get_option('blog_charset'), true);
+			header('Content-Type: application/json; charset=' . get_option('blog_charset'), true);
 			$this->output = json_encode($this->result);
 		} else {
 			header('Content-Type: text/xml; charset=' . get_option('blog_charset'), true);

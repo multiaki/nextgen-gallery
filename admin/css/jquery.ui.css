@@ -130,7 +130,7 @@
 /* this limit the height of the result list*/
 .ui-autocomplete { max-height: 90px; overflow-y: auto; }
 * html .ui-autocomplete { height: 90px; }
-.ui-state-hover, .ui-widget-content .ui-state-hover { background: #1e90ff; color: #FFFFFF !important; }
+.ui-autocomplete .ui-state-hover, .ui-autocomplete .ui-widget-content .ui-state-hover { background: #1e90ff; color: #FFFFFF !important; }
 .ui-widget-content { border: 1px solid #dddddd; border-style:outset; background: #FFFFFF; }
 .ui-autocomplete, .ui-autocomplete .ui-corner-all { -moz-border-radius: 0px; -webkit-border-radius: 0px; border-radius: 0px; }
 .ui-menu { list-style:none;	padding: 1px; margin: 0; display:block;	float: left; }
