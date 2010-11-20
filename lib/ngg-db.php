@@ -377,7 +377,7 @@ class nggdb {
     }
 
     /**
-     * nggdb::update_image() - Insert an image in the database
+     * nggdb::update_image() - Update an image in the database
      * 
      * @param int $pid   id of the image
      * @param (optional) string|int $galleryid
@@ -386,7 +386,7 @@ class nggdb {
      * @param (optional) string $alttext
      * @param (optional) int $exclude (0 or 1)
      * @param (optional) int $sortorder
-     * @return bool result of the ID of the inserted image
+     * @return bool result of update query
      */
     function update_image($pid, $galleryid = false, $filename = false, $description = false, $alttext = false, $exclude = false, $sortorder = false) {
 
@@ -395,7 +395,11 @@ class nggdb {
         $sql = array();
         $pid = (int) $pid;
         
+        // slug must be unique, we use the alttext for that        
+        $slug = nggdb::get_unique_slug( sanitize_title( $alttext ), 'image' );
+        
         $update = array(
+            'image_slug'  => $slug,
             'galleryid'   => $galleryid,
             'filename'    => $filename,
             'description' => $description,
@@ -415,6 +419,101 @@ class nggdb {
             $result = $wpdb->query( "UPDATE $wpdb->nggpictures SET $sql WHERE pid = $pid" );
         
         wp_cache_delete($pid, 'ngg_image'); 
+
+        return $result;
+    }
+ 
+     /**
+     * nggdb::update_gallery() - Update an gallery in the database
+     * 
+     * @since V1.7.0
+     * @param int $id   id of the gallery
+     * @param (optional) string $title or name of the gallery
+     * @param (optional) string $path
+     * @param (optional) string $description
+     * @param (optional) int $pageid
+     * @param (optional) int $previewpic
+     * @param (optional) int $author 
+     * @return bool result of update query
+     */
+    function update_gallery($id, $name = false, $path = false, $title = false, $description = false, $pageid = false, $previewpic = false, $author = false) {
+
+        global $wpdb;
+        
+        $sql = array();
+        $id = (int) $id;
+        
+        // slug must be unique, we use the title for that        
+        $slug = nggdb::get_unique_slug( sanitize_title( $title ), 'gallery' );
+        
+        $update = array(
+            'name'       => $name,
+            'slug'       => $slug,
+            'path'       => $path,
+            'title'      => $title,
+            'galdesc'    => $description,
+            'pageid'     => $pageid,
+            'previewpic' => $previewpic,
+            'author'     => $author);
+        
+        // create the sql parameter "name = value"
+        foreach ($update as $key => $value)
+            if ($value)
+                $sql[] = $key . " = '" . $value . "'";
+        
+        // create the final string
+        $sql = implode(', ', $sql);
+        
+        if ( !empty($sql) && $id != 0)
+            $result = $wpdb->query( "UPDATE $wpdb->nggallery SET $sql WHERE gid = $id" );
+        
+        wp_cache_delete($id, 'ngg_gallery'); 
+
+        return $result;
+    }
+
+     /**
+     * nggdb::update_album() - Update an album in the database
+     * 
+     * @since V1.7.0
+     * @param int $ id   id of the album
+     * @param (optional) string $title
+     * @param (optional) int $previewpic
+     * @param (optional) string $description
+     * @param (optional) serialized array $sortorder 
+     * @param (optional) int $pageid
+     * @return bool result of update query
+     */
+    function update_album($id, $name = false, $previewpic = false, $description = false, $sortorder = false, $pageid = false ) {
+
+        global $wpdb;
+        
+        $sql = array();
+        $id = (int) $id;
+        
+        // slug must be unique, we use the title for that        
+        $slug = nggdb::get_unique_slug( sanitize_title( $name ), 'album' );
+        
+        $update = array(
+            'name'       => $name,
+            'slug'       => $slug,
+            'previewpic' => $previewpic,
+            'albumdesc'  => $description,
+            'sortorder'  => $sortorder,
+            'pageid'     => $pageid);
+        
+        // create the sql parameter "name = value"
+        foreach ($update as $key => $value)
+            if ($value)
+                $sql[] = $key . " = '" . $value . "'";
+        
+        // create the final string
+        $sql = implode(', ', $sql);
+        
+        if ( !empty($sql) && $id != 0)
+            $result = $wpdb->query( "UPDATE $wpdb->nggalbum SET $sql WHERE id = $id" );
+        
+        wp_cache_delete($id, 'ngg_album');
 
         return $result;
     }

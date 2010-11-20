@@ -24,9 +24,11 @@ class nggXMLRPC{
 	    $methods['ngg.getGalleries'] = array(&$this, 'getGalleries');
 	    $methods['ngg.getImages'] = array(&$this, 'getImages');
 	    $methods['ngg.newGallery'] = array(&$this, 'newGallery');
+        $methods['ngg.editGallery'] = array(&$this, 'editGallery');
         $methods['ngg.deleteGallery'] = array(&$this, 'deleteGallery');
         $methods['ngg.newAlbum'] = array(&$this, 'newAlbum');
-	    $methods['ngg.deleteAlbum'] = array(&$this, 'deleteAlbum');
+	    $methods['ngg.editAlbum'] = array(&$this, 'editAlbum');
+        $methods['ngg.deleteAlbum'] = array(&$this, 'deleteAlbum');
         
 		return $methods;
 	}
@@ -222,14 +224,15 @@ class nggXMLRPC{
 	 */
 	function newGallery($args) {
 		
-		global $ngg, $wpdb;
+		global $ngg;
 
 		require_once ( dirname ( dirname( __FILE__ ) ). '/admin/functions.php' );	// admin functions
-
+        
+        $this->escape($args);
 		$blog_ID    = (int) $args[0];
-		$username	= $wpdb->escape($args[1]);
-		$password	= $wpdb->escape($args[2]);
-		$name   	= $wpdb->escape($args[3]);
+		$username	= $args[1];
+		$password	= $args[2];
+		$name   	= $args[3];
 		$id 		= false;
 
 		if ( !$user = $this->login($username, $password) )
@@ -245,6 +248,60 @@ class nggXMLRPC{
 			return new IXR_Error(500, __('Sorry, could not create the gallery'));
 
 		return($id);
+		
+	}
+
+	/**
+	 * Method "ngg.editGallery"
+	 * Edit a existing gallery
+	 * 
+	 * @since 1.7.0
+	 * 
+	 * @param array $args Method parameters.
+	 * 			- int blog_id
+	 *	    	- string username
+	 *	    	- string password
+	 *	    	- int gallery ID
+	 *	    	- string gallery name
+	 *	    	- string title
+	 *	    	- string description 
+     *          - int ID of the preview picture 
+	 * @return true if success
+	 */
+	function editGallery($args) {
+		
+		global $ngg;
+
+		require_once ( dirname ( dirname( __FILE__ ) ). '/admin/functions.php' );	// admin functions
+        
+        $this->escape($args);
+		$blog_ID    = (int) $args[0];
+		$username	= $args[1];
+		$password	= $args[2];
+		$id      	= (int) $args[3];
+		$name 		= $args[4];
+        $title      = $args[5];
+        $description= $args[6];
+        $previewpic = (int) $args[7];
+
+		if ( !$user = $this->login($username, $password) )
+			return $this->error;
+            
+        $gallery = nggdb::find_gallery($id);    
+
+		if ( !$gallery )
+			return(new IXR_Error(404, __("Invalid gallery ID")));
+
+        if ( !current_user_can( 'NextGEN Manage gallery' ) || !nggAdmin::can_manage_this_gallery($gallery->author) )
+            return new IXR_Error( 401, __( 'Sorry, you must be able to manage this gallery' ) );
+
+		if ( !empty( $name ) )
+			$result = nggdb::update_gallery($id, $name, false, $title, $description, false, $previewpic);
+		
+		if ( !$result )
+			return new IXR_Error(500, __('Sorry, could not update the gallery'));
+
+		return true;
 		
 	}
 
@@ -266,15 +323,16 @@ class nggXMLRPC{
 	 */
 	function newAlbum($args) {
 		
-		global $ngg, $wpdb;
+		global $ngg;
 
+        $this->escape($args);
 		$blog_ID    = (int) $args[0];
-		$username	= $wpdb->escape($args[1]);
-		$password	= $wpdb->escape($args[2]);
-		$name   	= $wpdb->escape($args[3]);
-		$preview   	= $wpdb->escape($args[4]);
-        $description= $wpdb->escape($args[5]);
-        $galleries 	= $wpdb->escape($args[6]);
+		$username	= $args[1];
+		$password	= $args[2];
+		$name   	= $args[3];
+		$preview   	= (int) $args[4];
+        $description= $args[5];
+        $galleries 	= $args[6];
         $id 		= false;
 
 		if ( !$user = $this->login($username, $password) )
@@ -294,10 +352,64 @@ class nggXMLRPC{
 	}
 
 	/**
+	 * Method "ngg.editAlbum"
+	 * Edit a existing Album
+	 * 
+	 * @since 1.7.0
+	 * 
+	 * @param array $args Method parameters.
+	 * 			- int blog_id
+	 *	    	- string username
+	 *	    	- string password
+	 *	    	- int album ID
+	 *	    	- string album name
+     *          - int id of preview image
+     *          - string description
+     *          - string serialized array of galleries 
+	 * @return true if success
+	 */
+	function editAlbum($args) {
+		
+		global $ngg;
+
+		require_once ( dirname ( dirname( __FILE__ ) ). '/admin/functions.php' );	// admin functions
+        
+        $this->escape($args);
+		$blog_ID    = (int) $args[0];
+		$username	= $args[1];
+		$password	= $args[2];
+		$id      	= (int) $args[3];
+		$name   	= $args[4];
+		$preview   	= (int) $args[5];
+        $description= $args[6];
+        $galleries 	= $args[7];
+
+		if ( !$user = $this->login($username, $password) )
+			return $this->error;
+            
+        $album = nggdb::find_album($id);    
+
+		if ( !$album )
+			return(new IXR_Error(404, __("Invalid album ID")));
+
+		if( !current_user_can( 'NextGEN Add/Delete album' ) )
+			return new IXR_Error( 401, __( 'Sorry, you must be able to manage albums' ) );
+
+		if ( !empty( $name ) )
+			$result = nggdb::update_album($id, $name, $preview, $description, $description, $galleries);
+		
+		if ( !$result )
+			return new IXR_Error(500, __('Sorry, could not update the album'));
+
+		return true;
+		
+	}
+
+	/**
 	 * Method "ngg.deleteAlbum"
 	 * Delete a album from the database
 	 * 
-	 * @since 1.7
+	 * @since 1.7.0
 	 * 
 	 * @param array $args Method parameters.
 	 * 			- int blog_id
@@ -308,11 +420,12 @@ class nggXMLRPC{
 	 */
 	function deleteAlbum($args) {
 		
-		global $nggdb, $wpdb;
+		global $nggdb;
 
+        $this->escape($args);
 		$blog_ID    = (int) $args[0];
-		$username	= $wpdb->escape($args[1]);
-		$password	= $wpdb->escape($args[2]);
+		$username	= $args[1];
+		$password	= $args[2];
         $id    	    = (int) $args[3];
 
 		if ( !$user = $this->login($username, $password) )
@@ -331,7 +444,7 @@ class nggXMLRPC{
 	 * Method "ngg.deleteGallery"
 	 * Delete a gallery from the database, including all images
 	 * 
-	 * @since 1.7
+	 * @since 1.7.0
 	 * 
 	 * @param array $args Method parameters.
 	 * 			- int blog_id
@@ -342,11 +455,12 @@ class nggXMLRPC{
 	 */
 	function deleteGallery($args) {
 		
-		global $nggdb, $wpdb;
+		global $nggdb;
 
+        $this->escape($args);
 		$blog_ID    = (int) $args[0];
-		$username	= $wpdb->escape($args[1]);
-		$password	= $wpdb->escape($args[2]);
+		$username	= $args[1];
+		$password	= $args[2];
         $id    	    = (int) $args[3];
 
 		if ( !$user = $this->login($username, $password) )
@@ -375,11 +489,12 @@ class nggXMLRPC{
 	 */
 	function getGalleries($args) {
 		
-		global $nggdb, $wpdb;
+		global $nggdb;
 
+        $this->escape($args);
 		$blog_ID    = (int) $args[0];
-		$username	= $wpdb->escape($args[1]);
-		$password	= $wpdb->escape($args[2]);
+		$username	= $args[1];
+		$password	= $args[2];
 
 		if ( !$user = $this->login($username, $password) )
 			return $this->error;
@@ -408,13 +523,14 @@ class nggXMLRPC{
 	 */
 	function getImages($args) {
 		
-		global $nggdb, $wpdb;
+		global $nggdb;
 
 		require_once ( dirname ( dirname( __FILE__ ) ). '/admin/functions.php' );	// admin functions
-
+        
+        $this->escape($args);
 		$blog_ID    = (int) $args[0];
-		$username	= $wpdb->escape($args[1]);
-		$password	= $wpdb->escape($args[2]);
+		$username	= $args[1];
+		$password	= $args[2];
 		$gid    	= (int) $args[3];
 
 		if ( !$user = $this->login($username, $password) )
@@ -436,6 +552,34 @@ class nggXMLRPC{
 		
 		return($picture_list);
 		
+	}
+
+	/**
+	 * Sanitize string or array of strings for database.
+	 *
+	 * @since 1.7.0
+     * @author WordPress Core
+     * @filesource inludes/class-wp-xmlrpc-server.php
+	 *
+	 * @param string|array $array Sanitize single string or array of strings.
+	 * @return string|array Type matches $array and sanitized for the database.
+	 */
+	function escape(&$array) {
+		global $wpdb;
+
+		if (!is_array($array)) {
+			return($wpdb->escape($array));
+		} else {
+			foreach ( (array) $array as $k => $v ) {
+				if ( is_array($v) ) {
+					$this->escape($array[$k]);
+				} else if ( is_object($v) ) {
+					//skip
+				} else {
+					$array[$k] = $wpdb->escape($v);
+				}
+			}
+		}
 	}
 
 	/**
