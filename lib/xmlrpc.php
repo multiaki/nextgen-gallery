@@ -20,12 +20,16 @@ class nggXMLRPC{
 	function add_methods($methods) {
 	    
 		$methods['ngg.installed'] = array(&$this, 'nggInstalled');
+        // Image methods
 	    $methods['ngg.uploadImage'] = array(&$this, 'uploadImage');
-	    $methods['ngg.getGalleries'] = array(&$this, 'getGalleries');
 	    $methods['ngg.getImages'] = array(&$this, 'getImages');
+        // Gallery methods
+	    $methods['ngg.getGalleries'] = array(&$this, 'getGalleries');
 	    $methods['ngg.newGallery'] = array(&$this, 'newGallery');
         $methods['ngg.editGallery'] = array(&$this, 'editGallery');
         $methods['ngg.deleteGallery'] = array(&$this, 'deleteGallery');
+        // Album methods
+   	    $methods['ngg.getAlbums'] = array(&$this, 'getAlbums');
         $methods['ngg.newAlbum'] = array(&$this, 'newAlbum');
 	    $methods['ngg.editAlbum'] = array(&$this, 'editAlbum');
         $methods['ngg.deleteAlbum'] = array(&$this, 'deleteAlbum');
@@ -472,6 +476,39 @@ class nggXMLRPC{
 		$nggdb->delete_gallery($id);
 		
 		return true;
+		
+	}
+
+	/**
+	 * Method "ngg.getAlbums"
+	 * Return the list of all albums
+	 * 
+	 * @since 1.7.0
+	 * 
+	 * @param array $args Method parameters.
+	 * 			- int blog_id
+	 *	    	- string username
+	 *	    	- string password
+	 * @return array with all galleries
+	 */
+	function getAlbums($args) {
+		
+		global $nggdb;
+
+        $this->escape($args);
+		$blog_ID    = (int) $args[0];
+		$username	= $args[1];
+		$password	= $args[2];
+
+		if ( !$user = $this->login($username, $password) )
+			return $this->error;
+
+		if( !current_user_can( 'NextGEN Add/Delete album' ) )
+			return new IXR_Error( 401, __( 'Sorry, you must be able to manage albums' ) );
+		
+		$album_list = $nggdb->find_all_album('id', 'ASC', 0, 0 );
+		
+		return($album_list);
 		
 	}
 
