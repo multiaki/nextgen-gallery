@@ -276,7 +276,7 @@ class nggAddGallery {
         if ( wpmu_enable_function('wpmuZipUpload') && nggGallery::current_user_can( 'NextGEN Upload a zip' ) ) 
             $tabs['zipupload'] = __('Upload a Zip-File', 'nggallery');
     	
-        if (!is_multisite() && nggGallery::current_user_can( 'NextGEN Import image folder' ) ) 
+        if ( wpmu_enable_function('wpmuImportFolder') && nggGallery::current_user_can( 'NextGEN Import image folder' ) ) 
             $tabs['importfolder'] = __('Import image folder', 'nggallery');
             
     	$tabs = apply_filters('ngg_addgallery_tabs', $tabs);

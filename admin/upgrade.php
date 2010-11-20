@@ -1,7 +1,4 @@
 <?php
-
-if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
-
 /**
  * ngg_upgrade() - update routine for older version
  * 
@@ -172,7 +169,9 @@ function ngg_upgrade() {
         }
         
         if (version_compare($installed_ver, '1.7.0', '<')) {
-            ngg_rebuild_unique_slugs::init();
+            // Network blogs need to call this manually
+            if ( !is_multisite() )
+                ngg_rebuild_unique_slugs::init();
         }
 		return;
 	}
