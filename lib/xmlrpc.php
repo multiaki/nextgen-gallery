@@ -290,13 +290,11 @@ class nggXMLRPC{
 
 		if ( !$user = $this->login($username, $password) )
 			return $this->error;
-            
-        $gallery = nggdb::find_gallery($id);    
 
-		if ( !$gallery )
+		if ( !$gallery = nggdb::find_gallery($id);  )
 			return(new IXR_Error(404, __("Invalid gallery ID")));
 
-        if ( !current_user_can( 'NextGEN Manage gallery' ) || !nggAdmin::can_manage_this_gallery($gallery->author) )
+        if ( !current_user_can( 'NextGEN Manage gallery' ) && !nggAdmin::can_manage_this_gallery($gallery->author) )
             return new IXR_Error( 401, __( 'Sorry, you must be able to manage this gallery' ) );
 
 		if ( !empty( $name ) )
@@ -342,7 +340,7 @@ class nggXMLRPC{
 		if ( !$user = $this->login($username, $password) )
 			return $this->error;
 
-		if( !current_user_can( 'NextGEN Add/Delete album' ) )
+		if( !current_user_can( 'NextGEN Edit album' ) || !nggGallery::current_user_can( 'NextGEN Add/Delete album' ) )
 			return new IXR_Error( 401, __( 'Sorry, you must be able to manage albums' ) );
 
 		if ( !empty( $name ) )
@@ -390,13 +388,11 @@ class nggXMLRPC{
 
 		if ( !$user = $this->login($username, $password) )
 			return $this->error;
-            
-        $album = nggdb::find_album($id);    
 
-		if ( !$album )
+		if ( !$album = nggdb::find_album($id); )
 			return(new IXR_Error(404, __("Invalid album ID")));
 
-		if( !current_user_can( 'NextGEN Add/Delete album' ) )
+		if( !current_user_can( 'NextGEN Edit album' ) )
 			return new IXR_Error( 401, __( 'Sorry, you must be able to manage albums' ) );
 
 		if ( !empty( $name ) )
@@ -435,7 +431,10 @@ class nggXMLRPC{
 		if ( !$user = $this->login($username, $password) )
 			return $this->error;
 
-		if( !current_user_can( 'NextGEN Add/Delete album' ) )
+		if ( !$album = nggdb::find_album($id);  )
+			return(new IXR_Error(404, __("Invalid album ID")));
+
+		if( !current_user_can( 'NextGEN Edit album' ) && !nggGallery::current_user_can( 'NextGEN Add/Delete album' ) )
 			return new IXR_Error( 401, __( 'Sorry, you must be able to manage albums' ) );
 		
 		$nggdb->delete_album($id);
@@ -470,7 +469,10 @@ class nggXMLRPC{
 		if ( !$user = $this->login($username, $password) )
 			return $this->error;
 
-		if( !current_user_can( 'NextGEN Manage gallery' ) )
+		if ( !$gallery = nggdb::find_gallery($id) )
+			return(new IXR_Error(404, __("Invalid gallery ID")));
+
+		if ( !current_user_can( 'NextGEN Manage gallery' ) && !nggAdmin::can_manage_this_gallery($gallery->author) )
 			return new IXR_Error( 401, __( 'Sorry, you must be able to manage galleries' ) );
 		
 		$nggdb->delete_gallery($id);
@@ -503,7 +505,7 @@ class nggXMLRPC{
 		if ( !$user = $this->login($username, $password) )
 			return $this->error;
 
-		if( !current_user_can( 'NextGEN Add/Delete album' ) )
+		if( !current_user_can( 'NextGEN Edit album' ) )
 			return new IXR_Error( 401, __( 'Sorry, you must be able to manage albums' ) );
 		
 		$album_list = $nggdb->find_all_album('id', 'ASC', 0, 0 );
