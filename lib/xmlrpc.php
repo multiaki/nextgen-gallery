@@ -291,7 +291,7 @@ class nggXMLRPC{
 		if ( !$user = $this->login($username, $password) )
 			return $this->error;
 
-		if ( !$gallery = nggdb::find_gallery($id);  )
+		if ( !$gallery = nggdb::find_gallery($id)  )
 			return(new IXR_Error(404, __("Invalid gallery ID")));
 
         if ( !current_user_can( 'NextGEN Manage gallery' ) && !nggAdmin::can_manage_this_gallery($gallery->author) )
@@ -389,7 +389,7 @@ class nggXMLRPC{
 		if ( !$user = $this->login($username, $password) )
 			return $this->error;
 
-		if ( !$album = nggdb::find_album($id); )
+		if ( !$album = nggdb::find_album($id) )
 			return(new IXR_Error(404, __("Invalid album ID")));
 
 		if( !current_user_can( 'NextGEN Edit album' ) )
@@ -431,7 +431,7 @@ class nggXMLRPC{
 		if ( !$user = $this->login($username, $password) )
 			return $this->error;
 
-		if ( !$album = nggdb::find_album($id);  )
+		if ( !$album = nggdb::find_album($id) )
 			return(new IXR_Error(404, __("Invalid album ID")));
 
 		if( !current_user_can( 'NextGEN Edit album' ) && !nggGallery::current_user_can( 'NextGEN Add/Delete album' ) )
