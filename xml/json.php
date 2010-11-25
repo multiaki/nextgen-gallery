@@ -86,7 +86,7 @@ class nggAPI {
 			break;
 			case 'gallery' :
 				//search for some gallery
-				$this->result['images'] = ($this->id == 0) ? nggdb::find_last_images( 0 , 100 ) : nggdb::get_gallery( $this->id, $ngg->options['galSort'], $ngg->options['galSortDir'] );
+				$this->result['images'] = ($this->id == 0) ? nggdb::find_last_images( 0 , 100 ) : nggdb::get_gallery( $this->id, $ngg->options['galSort'], $ngg->options['galSortDir'], true, 0, 0, true );
 			break;
 			case 'image' :
 				//search for some image

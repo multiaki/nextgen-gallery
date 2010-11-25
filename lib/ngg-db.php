@@ -210,14 +210,16 @@ class nggdb {
      * @param bool $exclude
      * @param int $limit number of paged galleries, 0 shows all galleries
      * @param int $start the start index for paged galleries
+     * @param bool $json remove the key for associative array in json request
      * @return An array containing the nggImage objects representing the images in the gallery.
      */
-    function get_gallery($id, $order_by = 'sortorder', $order_dir = 'ASC', $exclude = true, $limit = 0, $start = 0) {
+    function get_gallery($id, $order_by = 'sortorder', $order_dir = 'ASC', $exclude = true, $limit = 0, $start = 0, $json = false) {
 
         global $wpdb;
 
         // init the gallery as empty array
         $gallery = array();
+        $i = 0;
         
         // Check for the exclude setting
         $exclude_clause = ($exclude) ? ' AND tt.exclude<>1 ' : '';
@@ -246,8 +248,12 @@ class nggdb {
         if ($result) {
                 
             // Now added all image data
-            foreach ($result as $key => $value)
+            foreach ($result as $key => $value) {
+                // due to a browser bug we need to remove the key for associative array for json request 
+                // (see http://code.google.com/p/chromium/issues/detail?id=883)
+                if ($json) $key = $i++;               
                 $gallery[$key] = new nggImage( $value );
+            }
         }
         
         // Could not add to cache, the structure is different to find_gallery() cache_add, need rework
