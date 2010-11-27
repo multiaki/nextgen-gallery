@@ -170,8 +170,16 @@ function ngg_upgrade() {
         
         if (version_compare($installed_ver, '1.7.0', '<')) {
             // Network blogs need to call this manually
-            if ( !is_multisite() )
-                ngg_rebuild_unique_slugs::init();
+            if ( !is_multisite() ) {
+        	   ?>
+               <h2><?php _e('Create unique slug', 'nggallery') ;?></h2>
+        	   <p><?php _e('One of the upcomming features are a reworked permalinks structure.', 'nggallery') ;?>
+        	   <?php _e('Therefore it\'s needed to have a unique identifier for each image, gallery and album.', 'nggallery'); ?><br />
+               <?php _e('Depend on the amount of database entries this will take a while, don\'t reload this page.', 'nggallery') ;?></p>
+               <?php
+               ngg_rebuild_unique_slugs::init();
+            }
+                
         }
 		return;
 	}
@@ -392,10 +400,6 @@ class ngg_rebuild_unique_slugs {
 		);
 
 ?>
-	   <h2><?php _e('Create unique slug', 'nggallery') ;?></h2>
-	   <p><?php _e('One of the upcomming features are a reworked permalinks structure.', 'nggallery') ;?>
-	   <?php _e('Therefore it\'s needed to have a unique identifier for each image, gallery and album.', 'nggallery'); ?><br />
-       <?php _e('Depend on the amount of database entries this will take a while, don\'t reload this page.', 'nggallery') ;?></p>
 <?php
         
         foreach ( array_keys( $messages ) as $key ) {
