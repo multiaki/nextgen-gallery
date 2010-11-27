@@ -117,7 +117,7 @@ function nggallery_manage_gallery_main() {
 	</script>
 	<div class="wrap">
         <?php screen_icon( 'nextgen-gallery' ); ?>
-		<h2><?php _e('Gallery Overview', 'nggallery'); ?></h2>
+		<h2><?php echo _n( 'Gallery', 'Galleries', 2, 'nggallery'); ?></h2>
 		<form class="search-form" action="" method="get">
 		<p class="search-box">
 			<label class="hidden" for="media-search-input"><?php _e( 'Search Images', 'nggallery' ); ?>:</label>
@@ -135,8 +135,9 @@ function nggallery_manage_gallery_main() {
 			<div class="alignleft actions">
 				<?php if ( function_exists('json_encode') ) : ?>
 				<select name="bulkaction" id="bulkaction">
-					<option value="no_action" ><?php _e("No action",'nggallery'); ?></option>
-					<option value="set_watermark" ><?php _e("Set watermark",'nggallery'); ?></option>
+					<option value="no_action" ><?php _e("Bulk actions",'nggallery'); ?></option>
+					<option value="delete_gallery" ><?php _e("Delete",'nggallery'); ?></option>
+                    <option value="set_watermark" ><?php _e("Set watermark",'nggallery'); ?></option>
 					<option value="new_thumbnail" ><?php _e("Create new thumbnails",'nggallery'); ?></option>
 					<option value="resize_images" ><?php _e("Resize images",'nggallery'); ?></option>
 					<option value="import_meta" ><?php _e("Import metadata",'nggallery'); ?></option>
@@ -242,15 +243,6 @@ if($gallerylist) {
     			case 'quantity' :
     			    ?>
         			<td <?php echo $attributes ?>><?php echo $gallery->counter; ?></td>
-        			<?php 
-    			break;
-    			case 'action' :
-    			    ?>
-        			<td <?php echo $attributes ?>>
-        				<?php if (nggAdmin::can_manage_this_gallery($gallery->author)) : ?>
-        					<a href="<?php echo wp_nonce_url( $ngg->manage_page->base_page . '&amp;mode=delete&amp;gid=' . $gid, 'ngg_editgallery')?>" class="delete" onclick="javascript:check=confirm( '<?php _e('Delete this gallery ?', 'nggallery'); ?>');if(check==false) return false;"><?php _e('Delete'); ?></a>
-        				<?php endif; ?>
-        			</td>
         			<?php 
     			break;
     			default : 
@@ -377,12 +369,11 @@ function ngg_manage_gallery_columns() {
 	
 	$gallery_columns['cb'] = '<input name="checkall" type="checkbox" onclick="checkAll(document.getElementById(\'editgalleries\'));" />';
 	$gallery_columns['id'] = __('ID');
-	$gallery_columns['title'] = __('Title', 'nggallery');
+	$gallery_columns['title'] = _n( 'Gallery', 'Galleries', 1, 'nggallery');
 	$gallery_columns['description'] = __('Description', 'nggallery');
 	$gallery_columns['author'] = __('Author', 'nggallery');
 	$gallery_columns['page_id'] = __('Page ID', 'nggallery');
-	$gallery_columns['quantity'] = __('Quantity', 'nggallery');
-	$gallery_columns['action'] = __('Action', 'nggallery');
+	$gallery_columns['quantity'] = _n( 'Image', 'Images', 2, 'nggallery' );
 
 	$gallery_columns = apply_filters('ngg_manage_gallery_columns', $gallery_columns);
 

@@ -58,39 +58,6 @@ class nggManageGallery {
 	
 		global $wpdb, $ngg, $nggdb;
 		
-		// Delete a gallery
-		if ($this->mode == 'delete') {
-		
-			check_admin_referer('ngg_editgallery');
-		
-			// get the path to the gallery
-			$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->nggallery WHERE gid = '$this->gid' ");
-			if ($gallerypath){
-		
-				// delete pictures
-				//TODO:Remove also Tag reference, look here for ids instead filename
-				$imagelist = $wpdb->get_col("SELECT filename FROM $wpdb->nggpictures WHERE galleryid = '$this->gid' ");
-				if ($ngg->options['deleteImg']) {
-					if (is_array($imagelist)) {
-						foreach ($imagelist as $filename) {
-							@unlink(WINABSPATH . $gallerypath . '/thumbs/thumbs_' . $filename);
-							@unlink(WINABSPATH . $gallerypath .'/'. $filename);
-						}
-					}
-					// delete folder
-						@rmdir( WINABSPATH . $gallerypath . '/thumbs' );
-						@rmdir( WINABSPATH . $gallerypath );
-				}
-			}
-	
-			$delete_galllery = nggdb::delete_gallery( $this->gid );
-			
-			if($delete_galllery)
-				nggGallery::show_message( _n( 'Gallery', 'Galleries', 1, 'nggallery' ) . ' \''.$this->gid.'\' '.__('deleted successfully','nggallery'));
-				
-		 	$this->mode = 'main'; // show mainpage
-		}
-	
 		// Delete a picture
 		if ($this->mode == 'delpic') {
 
@@ -169,6 +136,37 @@ class nggManageGallery {
 				// Import Metadata
 					// A prefix 'gallery_' will first fetch all ids from the selected galleries
 					nggAdmin::do_ajax_operation( 'gallery_import_metadata' , $_POST['doaction'], __('Import metadata','nggallery') );
+					break;
+				case 'delete_gallery':
+				// Delete gallery
+					if ( is_array($_POST['doaction']) ) {
+                        $deleted = false;
+						foreach ( $_POST['doaction'] as $id ) {
+                			// get the path to the gallery
+                			$gallery = nggdb::find_gallery($id);
+                			if ($gallery){
+                				//TODO:Remove also Tag reference, look here for ids instead filename
+                				$imagelist = $wpdb->get_col("SELECT filename FROM $wpdb->nggpictures WHERE galleryid = '$gallery->gid' ");
+                				if ($ngg->options['deleteImg']) {
+                					if (is_array($imagelist)) {
+                						foreach ($imagelist as $filename) {
+                							@unlink(WINABSPATH . $gallery->path . '/thumbs/thumbs_' . $filename);
+                							@unlink(WINABSPATH . $gallery->path .'/'. $filename);
+                                            @unlink(WINABSPATH . $gallery->path .'/'. $filename . '_backup');
+                						}
+                					}
+                					// delete folder
+               						@rmdir( WINABSPATH . $gallery->path . '/thumbs' );
+               						@rmdir( WINABSPATH . $gallery->path );
+                				}
+                			}
+                	
+                			$deleted = nggdb::delete_gallery( $id );
+  						}
+                        
+						if($deleted)
+							nggGallery::show_message(__('Gallery deleted successfully ', 'nggallery'));
+					}
 					break;
 			}
 		}

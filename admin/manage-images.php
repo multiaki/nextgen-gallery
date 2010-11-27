@@ -336,7 +336,7 @@ jQuery(document).ready( function() {
 	<?php endif; ?>
 	<div class="alignleft actions">
 	<select id="bulkaction" name="bulkaction">
-		<option value="no_action" ><?php _e("No action",'nggallery'); ?></option>
+		<option value="no_action" ><?php _e("Bulk actions",'nggallery'); ?></option>
 		<option value="set_watermark" ><?php _e("Set watermark",'nggallery'); ?></option>
 		<option value="new_thumbnail" ><?php _e("Create new thumbnails",'nggallery'); ?></option>
 		<option value="resize_images" ><?php _e("Resize images",'nggallery'); ?></option>
