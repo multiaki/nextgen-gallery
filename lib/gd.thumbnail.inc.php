@@ -624,8 +624,9 @@ class ngg_Thumbnail {
 	    	$this->errmsg = 'Create Image failed. Check safe mode settings';
 	    	return false;
 	    }
-
-	    do_action('ngg_ajax_image_save', $name);
+        
+        if( function_exists('do_action') )
+	       do_action('ngg_ajax_image_save', $name);
 
 	    return true;
 	}
