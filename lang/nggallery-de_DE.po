@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-27 12:48+0100\n"
-"PO-Revision-Date: 2010-11-27 12:49+0100\n"
+"POT-Creation-Date: 2010-12-05 15:18+0100\n"
+"PO-Revision-Date: 2010-12-05 15:44+0100\n"
 "Last-Translator: Alex Rabe\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,6 @@ msgid "<strong>This translation is not yet updated for Version 1.6.0</strong>. I
 msgstr "Sollten jemand Rechtschreibfehler, Deppenapostrophe oder andere deutsche Ungereimtheiten finden, freue ich mich jederzeit über einen kurzen Hinweis</p>"
 
 #: ../nggallery.php:194
-#, fuzzy
 msgid "Sorry, NextGEN Gallery works only with a Memory Limit of 16 MB or higher"
 msgstr "Tut mir leid, aber NextGEN-Galerie benötigt minimum 16MB Speicher (Memory Limit) oder mehr"
 
@@ -82,7 +81,6 @@ msgid "Donate"
 msgstr "Spenden"
 
 #: ../nggfunctions.php:42
-#, fuzzy
 msgid "The <a href=\"http://www.macromedia.com/go/getflashplayer\">Flash Player</a> and <a href=\"http://www.mozilla.com/firefox/\">a browser with Javascript support</a> are needed."
 msgstr "Es wird der <a href=\"http://www.macromedia.com/go/getflashplayer\">Adobe Flash Player</a>  benötigt und <a href=\"http://www.mozilla.com/firefox/\">im Browser muss Javascript</a> aktiviert sein."
 
@@ -441,9 +439,8 @@ msgid "Reset / Uninstall"
 msgstr "Rücksetzen"
 
 #: ../admin/admin.php:58
-#, fuzzy
 msgid "Network settings"
-msgstr "Mehr Einstellungen"
+msgstr "Netzwerk Einstellungen"
 
 #: ../admin/admin.php:98
 #, php-format
@@ -790,9 +787,9 @@ msgid "with permission 777 manually !"
 msgstr "mit den Berechtigungen 777 manuell !"
 
 #: ../admin/functions.php:116
-#, fuzzy, php-format
+#, php-format
 msgid "Gallery ID %1$s successfully created. You can show this gallery in your post or page with the shortcode %2$s.<br/>"
-msgstr "Galerie %1$s erstellt..<br/>Du kannst diese Galerie jetzt mit dem Stichwort %2$s einbinden.<br/>"
+msgstr "Galerie ID %1$s erstellt..<br/>Du kannst diese Galerie jetzt mit dem Stichwort %2$s in einen Artikel einbinden.<br/>"
 
 #: ../admin/functions.php:119
 msgid "Edit gallery"
@@ -877,7 +874,6 @@ msgid "Import via cURL failed."
 msgstr "Import via cURL abgebrochen"
 
 #: ../admin/functions.php:858
-#, fuzzy
 msgid "Uploaded file was no or a faulty zip file ! The server recognized : "
 msgstr "Die hochgeladene Datei war keine korrekte Zip-Datei. Servermeldung :"
 
@@ -913,13 +909,11 @@ msgstr "Kann das Verzeichnis %s nicht erstellen. Ist das Hauptverzeichnis vielle
 
 #: ../admin/functions.php:985
 #: ../admin/functions.php:1074
-#, fuzzy
 msgid "Error, the file could not be moved to : "
 msgstr "Fehler: Diese Datei kann nicht verschoben werden zu :"
 
 #: ../admin/functions.php:990
 #: ../admin/functions.php:1078
-#, fuzzy
 msgid "Error, the file permissions could not be set"
 msgstr "Fehler: Die Berechtigungen für diese Datei können nicht gesetzt werden"
 
@@ -1073,9 +1067,8 @@ msgstr "Suche Bilder"
 
 #: ../admin/manage-galleries.php:138
 #: ../admin/manage-images.php:339
-#, fuzzy
 msgid "Bulk actions"
-msgstr "Keine Aktion"
+msgstr "Aktion wählen"
 
 #: ../admin/manage-galleries.php:140
 #: ../admin/manage-images.php:340
@@ -1185,17 +1178,14 @@ msgid "Sorry, you have no access here"
 msgstr "Sorry, Du hast nicht genügend Rechte"
 
 #: ../admin/manage-images.php:178
-#, fuzzy
 msgid "Copy image to..."
 msgstr "Kopiere nach..."
 
 #: ../admin/manage-images.php:182
-#, fuzzy
 msgid "Move image to..."
 msgstr "Verschiebe nach..."
 
 #: ../admin/manage-images.php:186
-#, fuzzy
 msgid "Add new tags"
 msgstr "Stichwörter hinzufügen"
 
@@ -1205,9 +1195,8 @@ msgid "Delete tags"
 msgstr "Stichwörter löschen"
 
 #: ../admin/manage-images.php:194
-#, fuzzy
 msgid "Overwrite"
-msgstr "Stichwörter überschreiben"
+msgstr "Überschreiben"
 
 #: ../admin/manage-images.php:207
 #, php-format
@@ -1334,11 +1323,11 @@ msgstr "Drehen"
 
 #: ../admin/manage-images.php:442
 msgid "Publish this image"
-msgstr ""
+msgstr "Bild veröffentlichen"
 
 #: ../admin/manage-images.php:442
 msgid "Publish"
-msgstr ""
+msgstr "Veröffentlichen"
 
 #: ../admin/manage-images.php:444
 msgid "Recover"
@@ -1367,7 +1356,7 @@ msgid "Thumbnail"
 msgstr "Thumbnail"
 
 #: ../admin/manage-images.php:661
-#: ../admin/manage-sort.php:74
+#: ../admin/manage-sort.php:77
 msgid "Filename"
 msgstr "Dateiname"
 
@@ -1383,47 +1372,47 @@ msgstr "Stichwörter (Tags)"
 msgid "exclude"
 msgstr "ausschließen"
 
-#: ../admin/manage-sort.php:30
+#: ../admin/manage-sort.php:33
 msgid "Sort order changed"
 msgstr "Reihenfolge aktualisiert"
 
-#: ../admin/manage-sort.php:59
+#: ../admin/manage-sort.php:62
 msgid "Sort Gallery"
 msgstr "Sortiere Bilder"
 
-#: ../admin/manage-sort.php:63
+#: ../admin/manage-sort.php:66
 msgid "Update Sort Order"
 msgstr "Sortierung speichern"
 
-#: ../admin/manage-sort.php:66
+#: ../admin/manage-sort.php:69
 msgid "Back to gallery"
 msgstr "Zurück zur Galerie"
 
-#: ../admin/manage-sort.php:71
+#: ../admin/manage-sort.php:74
 msgid "Presort"
 msgstr "Vorsortieren"
 
-#: ../admin/manage-sort.php:72
+#: ../admin/manage-sort.php:75
 msgid "Unsorted"
 msgstr "Unsortiert"
 
-#: ../admin/manage-sort.php:73
+#: ../admin/manage-sort.php:76
 msgid "Image ID"
 msgstr "Bilder ID"
 
-#: ../admin/manage-sort.php:75
+#: ../admin/manage-sort.php:78
 msgid "Alt/Title text"
 msgstr "Alt / Titel Text"
 
-#: ../admin/manage-sort.php:76
+#: ../admin/manage-sort.php:79
 msgid "Date/Time"
 msgstr "Datum/Zeit"
 
-#: ../admin/manage-sort.php:77
+#: ../admin/manage-sort.php:80
 msgid "Ascending"
 msgstr "Aufsteigend"
 
-#: ../admin/manage-sort.php:78
+#: ../admin/manage-sort.php:81
 msgid "Descending"
 msgstr "Absteigend"
 
@@ -1441,9 +1430,8 @@ msgid "Operation successful. Please clear your browser cache."
 msgstr "Thumbnails erfolgreich erstellt. Bitte Browser-Cache löschen."
 
 #: ../admin/manage.php:168
-#, fuzzy
 msgid "Gallery deleted successfully "
-msgstr "erfolgreich gelöscht"
+msgstr "Galerie gelöscht"
 
 #: ../admin/manage.php:233
 #: ../admin/manage.php:236
@@ -1472,7 +1460,7 @@ msgstr "erstellt"
 
 #: ../admin/manage.php:461
 msgid "Published a new post"
-msgstr ""
+msgstr "Verföffentliche einen neuen Beitrag"
 
 #: ../admin/media-upload.php:166
 msgid "No gallery"
@@ -1548,7 +1536,6 @@ msgid "Send a gift to show your appreciation."
 msgstr "Schau doch einfach auf meinen Wunschzettel."
 
 #: ../admin/overview.php:121
-#, fuzzy
 msgid "Help translating it."
 msgstr "Hilf das Plugin zu übersetzen."
 
@@ -1756,17 +1743,15 @@ msgstr "Installieren"
 
 #: ../admin/publish.php:45
 msgid "Post title"
-msgstr ""
+msgstr "Beitragstitel"
 
 #: ../admin/publish.php:47
-#, fuzzy
 msgid "Enter the post title "
-msgstr "Stichwörter angeben"
+msgstr "Artikelüberschrift "
 
 #: ../admin/publish.php:52
-#, fuzzy
 msgid "Size of the image"
-msgstr "Bild dehnen"
+msgstr "Größe des Bildes"
 
 #: ../admin/publish.php:55
 msgid "Alignment"
@@ -1794,7 +1779,7 @@ msgstr "Rechts"
 
 #: ../admin/publish.php:70
 msgid "Draft"
-msgstr ""
+msgstr "Entwurf"
 
 #: ../admin/roles.php:22
 msgid "Updated capabilities"
@@ -1805,7 +1790,6 @@ msgid "Roles / capabilities"
 msgstr "Rollen / Zugriffsrechte"
 
 #: ../admin/roles.php:29
-#, fuzzy
 msgid "Select the lowest role which should be able to access the following capabilities. NextGEN Gallery supports the standard roles from WordPress."
 msgstr "Wähle die niedrigste Rolle aus, die Zugriff haben soll. NextGEN Gallery unterstützt nur die Standard-Wordpress-Rollen-Fähigkeiten von WordPress."
 
@@ -1935,9 +1919,8 @@ msgid "When you activate this option, you need to update your permalink structur
 msgstr "Wenn Du diese Option aktivierst, muss Du einmal die Permalink Struktur aktualisieren."
 
 #: ../admin/settings.php:249
-#, fuzzy
 msgid "Create new URL friendly image slugs"
-msgstr "Erstelle und verwalte Alben"
+msgstr "Erstelle neue URL lesbare Schlagwörter "
 
 #: ../admin/settings.php:250
 #: ../admin/settings.php:367
@@ -1946,7 +1929,7 @@ msgstr "Jetzt durchführen"
 
 #: ../admin/settings.php:251
 msgid "Currently not used, prepare database for upcoming version"
-msgstr ""
+msgstr "Derzeit nicht genutzt, Vorbereitung für kommende Versionen"
 
 #: ../admin/settings.php:254
 msgid "Select graphic library"
@@ -2114,7 +2097,6 @@ msgid "Add hidden images"
 msgstr "Versteckte Bilder hinzufügen"
 
 #: ../admin/settings.php:426
-#, fuzzy
 msgid "If pagination is used, this option will still show all images in the modal window (Thickbox, Lightbox etc.). Note : This increases the page load"
 msgstr "Wenn Du die Blätterfunktion nutzt, dann kannst Du mit dieser Option alle Bilder im Modal-Fenster (Thickbox,Lightbox etc.) anzeigen. Berücksichtige, dass die Ladezeit der Seite erhöht wird."
 
@@ -2123,7 +2105,6 @@ msgid "Enable AJAX pagination"
 msgstr "Aktiviere AJAX-Navigation"
 
 #: ../admin/settings.php:432
-#, fuzzy
 msgid "Browse images without reload the page. Note : Works only in combination with Shutter effect"
 msgstr "Ermöglicht das Blättern zwischen den Bildern ohne die Seite neu zu laden. Hinweis : Funktioniert nur mit dem Shutter-Effekt."
 
@@ -2339,7 +2320,6 @@ msgid "Enable flash slideshow"
 msgstr "Aktiviere Flash Slideshow"
 
 #: ../admin/settings.php:658
-#, fuzzy
 msgid "Integrate the flash based slideshow for all flash supported devices"
 msgstr "Verwende die Flash Slideshow für alle Flash-unterstützte Geräte"
 
@@ -2352,7 +2332,6 @@ msgid "Search now"
 msgstr "Suche jetzt"
 
 #: ../admin/settings.php:665
-#, fuzzy
 msgid "Press the button to search automatically for the imagerotator, if you uploaded it to wp-content/uploads or a subfolder"
 msgstr "Drücke 'Suche jetzt' um automatisch den Pfad zum Image-Rotator zu ermitteln, sofern Du den Player in wp-content/uploads oder ein Unterverzeichnis hochgeladen hast."
 
@@ -2774,21 +2753,20 @@ msgid "Updated options."
 msgstr "Einstellungen gespeichert."
 
 #: ../admin/upgrade.php:175
-#, fuzzy
 msgid "Create unique slug"
-msgstr "Neue Seite erstellen"
+msgstr "Permalinks erstellen"
 
 #: ../admin/upgrade.php:176
 msgid "One of the upcomming features are a reworked permalinks structure."
-msgstr ""
+msgstr "Die Permalinkstruktur wird in einer kommenden Version überarbeitet."
 
 #: ../admin/upgrade.php:177
 msgid "Therefore it's needed to have a unique identifier for each image, gallery and album."
-msgstr ""
+msgstr "Deshalb ist es notwendig ein eindeutiges Schlagwort für jedes Bild, Galerie und Album zu erzeugen."
 
 #: ../admin/upgrade.php:178
 msgid "Depend on the amount of database entries this will take a while, don't reload this page."
-msgstr ""
+msgstr "Diese Operation kann je nach Anzahl der Bilder eine Weile daueren, bitte die Seite nicht neu laden."
 
 #: ../admin/upgrade.php:187
 msgid "Could not find NextGEN Gallery database tables, upgrade failed !"
@@ -2838,17 +2816,17 @@ msgstr "Weiter"
 #: ../admin/upgrade.php:397
 #, php-format
 msgid "Rebuild image structure : %s / %s images"
-msgstr ""
+msgstr "Erzeuge Permalinks für Bilder : %s / %s Bilder"
 
 #: ../admin/upgrade.php:398
 #, php-format
 msgid "Rebuild gallery structure : %s / %s galleries"
-msgstr ""
+msgstr "Erzeuge Permalinks für Galerien : %s / %s Galerien"
 
 #: ../admin/upgrade.php:399
 #, php-format
 msgid "Rebuild album structure : %s / %s albums"
-msgstr ""
+msgstr "Erzeuge Permalinks für Alben : %s / %s Alben"
 
 #: ../admin/upgrade.php:456
 msgid "Done."
@@ -2859,24 +2837,22 @@ msgid "Update successfully"
 msgstr "Aktualisierung erfolgreich"
 
 #: ../admin/wpmu.php:45
-#, fuzzy, php-format
+#, php-format
 msgid "Thanks for using this plugin, NextGEN Gallery is initially developed for self hosted blogs. A multisite setup is possible, but cannot currently fully supported, as it can have several special condition ( i.e. Domain mapping).<br /> If you would like to support the further development, please consider a <strong><a href=\"%s\">donation</a></strong>! If you still need some help, please post your questions <a href=\"http://wordpress.org/tags/nextgen-gallery?forum_id=10\">here</a> ."
-msgstr "Vielen Dank, dass Du dieses Plugin nutzt. Ich hoffe, Du bist soweit zufrieden! Wenn Du die Weiterentwicklung unterstützen möchtest, würde ich mich über eine kleine <strong><a href=\"%s\">Spende</a></strong> freuen! Wenn Du Fragen oder Problem hast, schreib sie doch <a href=\"http://wordpress.org/tags/nextgen-gallery?forum_id=10\">hier</a>  ins Forum."
+msgstr "Vielen Dank, dass Du dieses Plugin nutzt. NextGEN Gallery wurde für einfache Blogs entwickelt. Die Nutzung im Netzwerk (Multisite) ist möglich, aber wird nicht vollständig unterstützt (z.B. Domain Mapping).<br /> Wenn Du die Weiterentwicklung unterstützen möchtest, würde ich mich über eine kleine <strong><a href=\"%s\">Spende</a></strong> freuen! Wenn Du Fragen oder Problem hast, schreib sie doch <a href=\"http://wordpress.org/tags/nextgen-gallery?forum_id=10\">hier</a>  ins Forum."
 
 #: ../admin/wpmu.php:62
-#, fuzzy
 msgid "Network Options"
-msgstr "Allg. Optionen"
+msgstr "Netzwerk Optionen"
 
 #: ../admin/wpmu.php:70
-#, fuzzy
 msgid "This is the default path for all blogs. With the placeholder %BLOG_ID% you can organize the folder structure better."
 msgstr "Dieses ist der Default-Pfad für alle Blogs. Mit dem Platzhalter %BLOG_ID% wird die Ordnerstruktur gesteuert. Der Pfad muss mit / enden."
 
 #: ../admin/wpmu.php:71
 #, php-format
 msgid "The default setting should be %s"
-msgstr ""
+msgstr "Grundeinstellung ist %s"
 
 #: ../admin/wpmu.php:75
 msgid "Enable upload quota check"
@@ -2895,14 +2871,12 @@ msgid "Allow users to upload zip folders."
 msgstr "Erlaubt die Nutzung des ZIP-Upload"
 
 #: ../admin/wpmu.php:87
-#, fuzzy
 msgid "Enable import function"
-msgstr "Erlaube ZIP-Upload"
+msgstr "Erlaube Import Funktion"
 
 #: ../admin/wpmu.php:89
-#, fuzzy
 msgid "Allow users to import images folders from the server."
-msgstr "Erlaube dem User, ein CSS für die Galerie zu wählen"
+msgstr "Erlaube dem User Bilder direkt aus den Server Verzeichnissen zu importieren."
 
 #: ../admin/wpmu.php:93
 msgid "Enable style selection"
@@ -2928,6 +2902,10 @@ msgstr "Standard-CSS-Style"
 msgid "Choose the default style for the galleries."
 msgstr "Wähle das Default-Stylesheet für die Galerien"
 
+#: ../admin/tinymce/window.php:56
+msgid "Select or enter gallery"
+msgstr "Wähle oder Suche Galerie"
+
 #: ../admin/tinymce/window.php:61
 #: ../admin/tinymce/window.php:82
 msgid "Show as"
@@ -2941,6 +2919,10 @@ msgstr "Bilder-Liste"
 msgid "Imagebrowser"
 msgstr "Bilder-Browser"
 
+#: ../admin/tinymce/window.php:77
+msgid "Select or enter album"
+msgstr "Wähle oder Suche Album"
+
 #: ../admin/tinymce/window.php:83
 msgid "Extended version"
 msgstr "Erweiterte Version"
@@ -2950,8 +2932,8 @@ msgid "Compact version"
 msgstr "Kompakte Version"
 
 #: ../admin/tinymce/window.php:97
-msgid "Select picture"
-msgstr "Wähle Bild"
+msgid "Select or enter picture"
+msgstr "Wähle oder Suche Bild"
 
 #: ../admin/tinymce/window.php:102
 msgid "Width x Height"
@@ -3261,9 +3243,8 @@ msgstr "Konnte die Datei %1$s (%2$s) nicht schreiben "
 #: ../lib/xmlrpc.php:246
 #: ../lib/xmlrpc.php:476
 #: ../lib/xmlrpc.php:542
-#, fuzzy
 msgid "Sorry, you must be able to manage galleries"
-msgstr "Sorry, Du hast nicht das Recht, diese Galerie anzuschauen"
+msgstr "Sorry, Du hast nicht das Recht, diese Galerie zu bearbeiten"
 
 #: ../lib/xmlrpc.php:252
 msgid "Sorry, could not create the gallery"
@@ -3271,42 +3252,36 @@ msgstr "Konnte die Galerie nicht anlegen"
 
 #: ../lib/xmlrpc.php:295
 #: ../lib/xmlrpc.php:473
-#, fuzzy
 msgid "Invalid gallery ID"
-msgstr "Kein gültiger Galerie-Name!"
+msgstr "Keine gültige Galerie ID"
 
 #: ../lib/xmlrpc.php:298
-#, fuzzy
 msgid "Sorry, you must be able to manage this gallery"
-msgstr "Sorry, Du hast nicht das Recht, diese Galerie anzuschauen"
+msgstr "Sorry, Du hast nicht das Recht, diese Galerie zu bearbeiten"
 
 #: ../lib/xmlrpc.php:304
-#, fuzzy
 msgid "Sorry, could not update the gallery"
-msgstr "Konnte die Galerie nicht anlegen"
+msgstr "Konnte die Galerie nicht aktualisieren"
 
 #: ../lib/xmlrpc.php:344
 #: ../lib/xmlrpc.php:396
 #: ../lib/xmlrpc.php:438
 #: ../lib/xmlrpc.php:509
-#, fuzzy
 msgid "Sorry, you must be able to manage albums"
-msgstr "Sorry, Du hast nicht das Recht, diese Galerie anzuschauen"
+msgstr "Sorry, Du hast nicht das Recht, dieses Album zu bearbeiten"
 
 #: ../lib/xmlrpc.php:350
-#, fuzzy
 msgid "Sorry, could not create the album"
-msgstr "Konnte die Galerie nicht anlegen"
+msgstr "Konnte das Album nicht anlegen"
 
 #: ../lib/xmlrpc.php:393
 #: ../lib/xmlrpc.php:435
 msgid "Invalid album ID"
-msgstr ""
+msgstr "Ungültige Album ID"
 
 #: ../lib/xmlrpc.php:402
-#, fuzzy
 msgid "Sorry, could not update the album"
-msgstr "Konnte die Galerie nicht anlegen"
+msgstr "Konnte das Album nicht aktualisieren"
 
 #: ../view/album-compact.php:32
 #: ../view/album-extend.php:30

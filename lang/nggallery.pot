@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-27 12:49+0100\n"
-"PO-Revision-Date: 2010-11-27 12:50+0100\n"
+"POT-Creation-Date: 2010-12-05 15:45+0100\n"
+"PO-Revision-Date: 2010-12-05 15:45+0100\n"
 "Last-Translator: Alex Rabe\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
@@ -1349,7 +1349,7 @@ msgid "Thumbnail"
 msgstr ""
 
 #: ../admin/manage-images.php:661
-#: ../admin/manage-sort.php:74
+#: ../admin/manage-sort.php:77
 msgid "Filename"
 msgstr ""
 
@@ -1365,47 +1365,47 @@ msgstr ""
 msgid "exclude"
 msgstr ""
 
-#: ../admin/manage-sort.php:30
+#: ../admin/manage-sort.php:33
 msgid "Sort order changed"
 msgstr ""
 
-#: ../admin/manage-sort.php:59
+#: ../admin/manage-sort.php:62
 msgid "Sort Gallery"
 msgstr ""
 
-#: ../admin/manage-sort.php:63
+#: ../admin/manage-sort.php:66
 msgid "Update Sort Order"
 msgstr ""
 
-#: ../admin/manage-sort.php:66
+#: ../admin/manage-sort.php:69
 msgid "Back to gallery"
 msgstr ""
 
-#: ../admin/manage-sort.php:71
+#: ../admin/manage-sort.php:74
 msgid "Presort"
 msgstr ""
 
-#: ../admin/manage-sort.php:72
+#: ../admin/manage-sort.php:75
 msgid "Unsorted"
 msgstr ""
 
-#: ../admin/manage-sort.php:73
+#: ../admin/manage-sort.php:76
 msgid "Image ID"
 msgstr ""
 
-#: ../admin/manage-sort.php:75
+#: ../admin/manage-sort.php:78
 msgid "Alt/Title text"
 msgstr ""
 
-#: ../admin/manage-sort.php:76
+#: ../admin/manage-sort.php:79
 msgid "Date/Time"
 msgstr ""
 
-#: ../admin/manage-sort.php:77
+#: ../admin/manage-sort.php:80
 msgid "Ascending"
 msgstr ""
 
-#: ../admin/manage-sort.php:78
+#: ../admin/manage-sort.php:81
 msgid "Descending"
 msgstr ""
 
@@ -2888,6 +2888,10 @@ msgstr ""
 msgid "Choose the default style for the galleries."
 msgstr ""
 
+#: ../admin/tinymce/window.php:56
+msgid "Select or enter gallery"
+msgstr ""
+
 #: ../admin/tinymce/window.php:61
 #: ../admin/tinymce/window.php:82
 msgid "Show as"
@@ -2901,6 +2905,10 @@ msgstr ""
 msgid "Imagebrowser"
 msgstr ""
 
+#: ../admin/tinymce/window.php:77
+msgid "Select or enter album"
+msgstr ""
+
 #: ../admin/tinymce/window.php:83
 msgid "Extended version"
 msgstr ""
@@ -2910,7 +2918,7 @@ msgid "Compact version"
 msgstr ""
 
 #: ../admin/tinymce/window.php:97
-msgid "Select picture"
+msgid "Select or enter picture"
 msgstr ""
 
 #: ../admin/tinymce/window.php:102

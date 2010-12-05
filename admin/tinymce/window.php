@@ -53,7 +53,7 @@ jQuery(document).ready(function(){
          <tr>
             <td nowrap="nowrap"><label for="gallerytag"><?php _e("Gallery", 'nggallery'); ?></label></td>
             <td><select id="gallerytag" name="gallerytag" style="width: 200px">
-                <option value="0" selected="selected"><?php _e("Select gallery", 'nggallery'); ?></option>
+                <option value="0" selected="selected"><?php _e("Select or enter gallery", 'nggallery'); ?></option>
                 </select>
             </td>
           </tr>
@@ -74,7 +74,7 @@ jQuery(document).ready(function(){
          <tr>
             <td nowrap="nowrap"><label for="albumtag"><?php _e("Album", 'nggallery'); ?></label></td>
             <td><select id="albumtag" name="albumtag" style="width: 200px">
-                    <option value="0" selected="selected"><?php _e("Select album", 'nggallery'); ?></option>
+                    <option value="0" selected="selected"><?php _e("Select or enter album", 'nggallery'); ?></option>
                 </select>
             </td>
           </tr>
@@ -94,7 +94,7 @@ jQuery(document).ready(function(){
          <tr>
             <td nowrap="nowrap"><label for="singlepictag"><?php _e("Picture", 'nggallery'); ?></label></td>
             <td><select id="singlepictag" name="singlepictag" style="width: 200px">
-                <option value="0" selected="selected"><?php _e("Select picture", 'nggallery'); ?></option>
+                <option value="0" selected="selected"><?php _e("Select or enter picture", 'nggallery'); ?></option>
                 </select>
             </td>
           </tr>

@@ -151,8 +151,11 @@ class nggAPI {
                         // reorder result to array-object
                         $obj = new stdClass();
                         $obj->id = $image->pid;
-                        $obj->label = $image->pid . ' - ' . ( empty($image->alttext) ? $image->filename : $image->alttext );
-                        $obj->value = $image->filename;
+                        $name = ( empty($image->alttext) ? $image->filename : $image->alttext );
+                        //TODO : need to rework save/load 
+                        $name = stripslashes( htmlspecialchars_decode($name, ENT_QUOTES));
+                        $obj->label = $image->pid . ' - ' . $name;
+                        $obj->value = $name;
                         $this->result[] = $obj;
         			}
         		}
@@ -172,6 +175,7 @@ class nggAPI {
                         $obj = new stdClass();
                         $obj->id = $gallery->gid;
                         $name = ( empty($gallery->title) ) ? $gallery->name : $gallery->title;
+                        $name = stripslashes( htmlspecialchars_decode($name, ENT_QUOTES));
                         $obj->label = $gallery->gid . ' - ' . $name;
                         $obj->value = $name;
                         $this->result[] = $obj;
@@ -191,6 +195,7 @@ class nggAPI {
                         // reorder result to array-object            			 
                         $obj = new stdClass();
                         $obj->id = $album->id;
+                        $album->name = stripslashes( htmlspecialchars_decode($album->name, ENT_QUOTES));
                         $obj->label = $album->id . ' - ' . $album->name;
                         $obj->value = $album->name;
                         $this->result[] = $obj;
