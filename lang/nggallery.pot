@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NextGEN Gallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-05 15:45+0100\n"
-"PO-Revision-Date: 2010-12-05 15:45+0100\n"
+"POT-Creation-Date: 2010-12-05 20:30+0100\n"
+"PO-Revision-Date: 2010-12-05 20:30+0100\n"
 "Last-Translator: Alex Rabe\n"
 "Language-Team: Alex Rabe\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgid "<strong>Translation by : </strong><a target=\"_blank\" href=\"http://alex
 msgstr ""
 
 #: ../nggallery.php:95
-msgid "<strong>This translation is not yet updated for Version 1.6.0</strong>. If you would like to help with translation, download the current po from the plugin folder and read <a href=\"http://alexrabe.de/wordpress-plugins/wordtube/translation-of-plugins/\">here</a> how you can translate the plugin."
+msgid "<strong>This translation is not yet updated for Version 1.7.0</strong>. If you would like to help with translation, download the current po from the plugin folder and read <a href=\"http://alexrabe.de/wordpress-plugins/wordtube/translation-of-plugins/\">here</a> how you can translate the plugin."
 msgstr ""
 
 #: ../nggallery.php:194
