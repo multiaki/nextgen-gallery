@@ -189,7 +189,10 @@ class nggAdminPanel{
 		) );
 		wp_register_script('ngg-progressbar', NGGALLERY_URLPATH .'admin/js/ngg.progressbar.js', array('jquery'), '2.0.1');
 		wp_register_script('swfupload_f10', NGGALLERY_URLPATH .'admin/js/swfupload.js', array('jquery'), '2.2.0');
-        wp_register_script('jquery-ui', NGGALLERY_URLPATH .'admin/js/jquery-ui-1.8.5.min.js', array('jquery'), '1.8.5');
+        // Package included sortable, dialog, autocomplete, tabs
+        wp_register_script('jquery-ui', NGGALLERY_URLPATH .'admin/js/jquery-ui-1.8.6.min.js', array('jquery'), '1.8.6');
+        // Until release of 3.1 not used, due to script conflict
+        wp_register_script('jquery-ui-autocomplete', NGGALLERY_URLPATH .'admin/js/jquery.ui.autocomplete.min.js', array('jquery-ui-core'), '1.8.6');
         wp_register_script('ngg-autocomplete', NGGALLERY_URLPATH .'admin/js/ngg.autocomplete.js', array('jquery-ui'), '1.0');
 				
 		switch ($_GET['page']) {
@@ -205,8 +208,9 @@ class nggAdminPanel{
 				add_thickbox();
 			break;
 			case "nggallery-manage-album" :
-				wp_enqueue_script( 'jquery-ui-sortable' );
-                wp_enqueue_script( 'jquery-ui-dialog' );
+                // Until release of 3.1 comment out, due to script conflict
+				//wp_enqueue_script( 'jquery-ui-sortable' );
+                //wp_enqueue_script( 'jquery-ui-dialog' );
                 wp_enqueue_script( 'ngg-autocomplete' );
 			break;
 			case "nggallery-options" :

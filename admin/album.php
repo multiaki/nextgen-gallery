@@ -454,7 +454,7 @@ function showDialog() {
 	    	<td class="submit">
 	    		<input type="submit" class="button-primary" name="update_album" value="<?php _e('OK', 'nggallery'); ?>" />
 	    		&nbsp;
-	    		<input class="button-secondary dialog-cancel" type="reset" value="<?php _e('Cancel', 'nggallery'); ?>" onclick="tb_remove()"/>
+	    		<input class="button-secondary dialog-cancel" type="reset" value="<?php _e('Cancel', 'nggallery'); ?>"/>
 	    	</td>
 		</tr>
 	</table>
