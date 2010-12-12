@@ -6,6 +6,10 @@ by Alex Rabe & NextGEN DEV Team
 * TODO : Facebook connector
 * TODO : Switch to Plupload (http://www.plupload.com/)
 
+= V1.7.1 - soon =
+* Changed : Disable upgrade for PHP4 user
+* Changed : Disable colorpicker for option page
+
 = V1.7.0 - 11.12.2010 =
 * NEW : Publish a new post direct from the gallery admin page
 * NEW : Added filter hook 'ngg_get_image_metadata' to add more exif/iptc information

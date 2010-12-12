@@ -4,7 +4,7 @@ Plugin Name: NextGEN Gallery
 Plugin URI: http://alexrabe.de/?page_id=80
 Description: A NextGENeration Photo gallery for the Web 2.0.
 Author: Alex Rabe
-Version: 1.7.0
+Version: 1.7.1a
 
 Author URI: http://alexrabe.de/
 
@@ -34,7 +34,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 if (!class_exists('nggLoader')) {
 class nggLoader {
 	
-	var $version     = '1.7.0';
+	var $version     = '1.7.1';
 	var $dbversion   = '1.7.0';
 	var $minium_WP   = '3.0';
 	var $donators    = 'http://nextgen.boelinger.com/donators.php';
@@ -415,12 +415,12 @@ class nggLoader {
 		
 	function activate() {
 		global $wpdb;
-		//Since version 1.4.0 it's tested only with PHP5.2, currently we keep PHP4 support a while
-        //if (version_compare(PHP_VERSION, '5.2.0', '<')) { 
-        //        deactivate_plugins(plugin_basename(__FILE__)); // Deactivate ourself
-        //        wp_die("Sorry, but you can't run this plugin, it requires PHP 5.2 or higher."); 
-		//		return; 
-        //} 
+		//Since version 1.7.0 it's works only with PHP5.2
+        if (version_compare(PHP_VERSION, '5.2.0', '<')) { 
+                deactivate_plugins(plugin_basename(__FILE__)); // Deactivate ourself
+                wp_die("Sorry, but you can't run this plugin, it requires PHP 5.2 or higher."); 
+				return; 
+        } 
 
 		include_once (dirname (__FILE__) . '/admin/install.php');
         
@@ -479,8 +479,8 @@ class nggLoader {
 			return $option;
 
 	    if( isset($option->response[ $this_plugin ]) ){
-	        //TODO:Clear its download link, not now but maybe later
-	        //$option->response[ $this_plugin ]->package = '';
+	        //Clear its download link
+	        $option->response[ $this_plugin ]->package = '';
 	        
 	        //Add a notice message
 	        if ($this->add_PHP5_notice == false){

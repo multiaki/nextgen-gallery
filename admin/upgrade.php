@@ -380,11 +380,11 @@ function nggallery_start_upgrade($filepath) {
  */
 class ngg_rebuild_unique_slugs {
 
-	static function init() {
+	function init() {
         self::start_rebuild();
 	}
 
-	static function start_rebuild() {
+	function start_rebuild() {
         global $wpdb;
         
         $total = array();
