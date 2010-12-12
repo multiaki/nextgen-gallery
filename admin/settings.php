@@ -125,6 +125,7 @@ class nggOptions {
 			});
             */
 			jQuery('#slider').tabs({ fxFade: true, fxSpeed: 'fast' });
+            /*
 			jQuery('.picker').ColorPicker({
 				onSubmit: function(hsb, hex, rgb, el) {
 					jQuery(el).val(hex);
@@ -137,6 +138,7 @@ class nggOptions {
 			.bind('keyup', function(){
 				jQuery(this).ColorPickerSetColor(this.value);
 			});
+            */
 		});
 	
 		function insertcode(value) {
