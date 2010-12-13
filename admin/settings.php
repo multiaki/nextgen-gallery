@@ -95,7 +95,7 @@ class nggOptions {
     	if ( isset($_POST['createslugs']) ) {
     		check_admin_referer('ngg_settings');
             include_once (dirname (__FILE__) . '/upgrade.php');
-            ngg_rebuild_unique_slugs::init();
+            ngg_rebuild_unique_slugs::start_rebuild();
     	}
         
         do_action( 'ngg_update_options_page' );
