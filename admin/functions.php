@@ -588,11 +588,9 @@ class nggAdmin{
 				$path_parts = pathinfo( $picture );
 				$alttext = ( !isset($path_parts['filename']) ) ? substr($path_parts['basename'], 0,strpos($path_parts['basename'], '.')) : $path_parts['filename'];
 				// save it to the database
-                $result = nggdb::add_image( $galleryID, $picture, '', $alttext ); 
-				// and give me the new id
-				$pic_id = (int) $wpdb->insert_id;
-				
-				if ($result) 
+                $pic_id = nggdb::add_image( $galleryID, $picture, '', $alttext ); 
+
+				if ( !empty($pic_id) ) 
 					$image_ids[] = $pic_id;
 
 				// add the metadata
