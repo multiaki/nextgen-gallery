@@ -41,7 +41,7 @@ class nggAdminPanel{
 			add_submenu_page( NGGFOLDER , __('Roles', 'nggallery'), __('Roles', 'nggallery'), 'activate_plugins', 'nggallery-roles', array (&$this, 'show_menu'));
 	    add_submenu_page( NGGFOLDER , __('About this Gallery', 'nggallery'), __('About', 'nggallery'), 'NextGEN Gallery overview', 'nggallery-about', array (&$this, 'show_menu'));
 		//TODO: Remove after WP 3.1 release, not longer needed 
-        if ( wpmu_site_admin() ) 
+        if ( is_multisite() && wpmu_site_admin() ) 
 			add_submenu_page( 'ms-admin.php' , __('NextGEN Gallery', 'nggallery'), __('NextGEN Gallery', 'nggallery'), 'activate_plugins', 'nggallery-wpmu', array (&$this, 'show_menu'));
 
 	    if ( !is_multisite() || wpmu_site_admin() ) 
