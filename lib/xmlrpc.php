@@ -218,7 +218,7 @@ class nggXMLRPC{
 	 * Method "ngg.deleteImage"
 	 * Delete a Image from the database and gallery
 	 * 
-	 * @since 1.7.4
+	 * @since 1.7.3
 	 * 
 	 * @param array $args Method parameters.
 	 * 			- int blog_id
