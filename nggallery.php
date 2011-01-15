@@ -8,7 +8,7 @@ Version: 1.7.3a
 
 Author URI: http://alexrabe.de/
 
-Copyright 2007-2010 by Alex Rabe & NextGEN DEV-Team
+Copyright 2007-2011 by Alex Rabe & NextGEN DEV-Team
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

@@ -8,6 +8,7 @@ by Alex Rabe & NextGEN DEV Team
 
 = V1.7.3 - soon 
 * NEW : Adding new XMLRPC method ngg.deleteImage
+* NEW : Adding new XMLRPC method ngg.editImage
 * Bugfix : Bugfix for Multisite setup and flash upload
 * Bugfix : WP3.1 compat issue, show site admin page only on Multisite installation
 
