@@ -208,7 +208,9 @@ function ngg_plugin_check() {
                             
 			    },
 			    error: function (msg) {
-                    nggPluginCheck.failed(2);
+                    if (step == 1)
+                        nggPluginCheck.failed(2);
+                    stop = true;
 				},
                 complete: function () {
                     step++;
