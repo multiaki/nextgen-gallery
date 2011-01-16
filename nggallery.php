@@ -79,7 +79,10 @@ class nggLoader {
 			add_filter('transient_update_plugins', array(&$this, 'disable_upgrade'));
 		
 		//Add some links on the plugin page
-		add_filter('plugin_row_meta', array(&$this, 'add_plugin_links'), 10, 2);	
+		add_filter('plugin_row_meta', array(&$this, 'add_plugin_links'), 10, 2);
+        
+        // Check for the header / footer
+        add_action( 'init', array(&$this, 'test_head_footer_init' ) );	
 		
 	}
 	
@@ -502,6 +505,18 @@ class nggLoader {
 		}
 		return $links;
 	}
+    
+    // Check for the header / footer, parts taken from Matt Martz (http://sivel.net/)
+    function test_head_footer_init() {
+    
+    	// If test-head query var exists hook into wp_head
+    	if ( isset( $_GET['test-head'] ) )
+    		add_action( 'wp_head', create_function('', 'echo \'<!--wp_head-->\';'), 99999 );
+    
+    	// If test-footer query var exists hook into wp_footer
+    	if ( isset( $_GET['test-footer'] ) )
+    		add_action( 'wp_footer', create_function('', 'echo \'<!--wp_footer-->\';'), 99999 );
+    }
 	
 }
 	// Let's start the holy plugin

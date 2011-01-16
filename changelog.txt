@@ -7,6 +7,7 @@ by Alex Rabe & NextGEN DEV Team
 * TODO : Switch to Plupload (http://www.plupload.com/)
 
 = V1.7.3 - soon 
+* NEW : Introduce plugin health check for conflicts with other plugins/themes
 * NEW : Adding new XMLRPC method ngg.deleteImage
 * NEW : Adding new XMLRPC method ngg.editImage
 * Bugfix : Bugfix for Multisite setup and flash upload
