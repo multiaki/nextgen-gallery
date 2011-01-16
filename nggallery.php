@@ -95,7 +95,7 @@ class nggLoader {
 		
 		// All credits to the tranlator 
 		$this->translator  = '<p class="hint">'. __('<strong>Translation by : </strong><a target="_blank" href="http://alexrabe.de/wordpress-plugins/nextgen-gallery/languages/">See here</a>', 'nggallery') . '</p>';
-		$this->translator .= '<p class="hint">'. __('<strong>This translation is not yet updated for Version 1.7.0</strong>. If you would like to help with translation, download the current po from the plugin folder and read <a href="http://alexrabe.de/wordpress-plugins/wordtube/translation-of-plugins/">here</a> how you can translate the plugin.', 'nggallery') . '</p>'; 
+		$this->translator .= '<p class="hint">'. __('<strong>This translation is not yet updated for Version 1.7.3</strong>. If you would like to help with translation, download the current po from the plugin folder and read <a href="http://alexrabe.de/wordpress-plugins/wordtube/translation-of-plugins/">here</a> how you can translate the plugin.', 'nggallery') . '</p>'; 
 
         // Check for upgrade
         $this->check_for_upgrade();

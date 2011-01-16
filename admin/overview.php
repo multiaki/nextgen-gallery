@@ -305,7 +305,7 @@ function ngg_plugin_check() {
                     <strong><?php _e('Check plugin/theme conflict', 'nggallery'); ?></strong>
                     <p class="default message"><?php _e('Not tested', 'nggallery'); ?></p>                   
                     <p class="success message" style="display: none;"><?php _e('No conflict could be detected', 'nggallery'); ?></p>
-                    <p class="failed message" style="display: none;"><?php _e('Test failed, disable orther plugins & switch to default theme', 'nggallery'); ?></p>
+                    <p class="failed message" style="display: none;"><?php _e('Test failed, disable other plugins & switch to default theme', 'nggallery'); ?></p>
                 </li>
                 <li id="check2">
                     <strong><?php _e('Test image function', 'nggallery'); ?></strong>
@@ -317,7 +317,7 @@ function ngg_plugin_check() {
                     <strong><?php _e('Check theme compatibility', 'nggallery'); ?></strong>
                     <p class="default message"><?php _e('Not tested', 'nggallery'); ?></p>
                     <p class="success message" style="display: none;"><?php _e('Your theme should work fine with NextGEN Gallery', 'nggallery'); ?></p>
-                    <p class="failed message" style="display: none;"><?php _e('wp_head() is missing, contact the theme author', 'nggallery'); ?></p>
+                    <p class="failed message" style="display: none;"><?php _e('wp_head()/wp_footer() is missing, contact the theme author', 'nggallery'); ?></p>
                 </li>
             </ul>
  			<p class="textright">
