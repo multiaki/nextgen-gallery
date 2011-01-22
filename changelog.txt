@@ -6,10 +6,11 @@ by Alex Rabe & NextGEN DEV Team
 * TODO : Facebook connector
 * TODO : Switch to Plupload (http://www.plupload.com/)
 
-= V1.7.3 - soon 
+= V1.7.3 - 20.1.2011 
 * NEW : Introduce plugin health check for conflicts with other plugins/themes
 * NEW : Adding new XMLRPC method ngg.deleteImage
 * NEW : Adding new XMLRPC method ngg.editImage
+* Changed : Rework register script for autocomplete feature
 * Bugfix : Bugfix for Multisite setup and flash upload
 * Bugfix : WP3.1 compat issue, show site admin page only on Multisite installation
 
