@@ -6,7 +6,10 @@ by Alex Rabe & NextGEN DEV Team
 * TODO : Facebook connector
 * TODO : Switch to Plupload (http://www.plupload.com/)
 
-= V1.7.3 - 20.1.2011 
+= V1.7.4 - sooon =
+* Bugfix : Rework jQuery Cycle slideshow for IE compat reason (THX to Justin Dickenson)
+
+= V1.7.3 - 20.1.2011 =
 * NEW : Introduce plugin health check for conflicts with other plugins/themes
 * NEW : Adding new XMLRPC method ngg.deleteImage
 * NEW : Adding new XMLRPC method ngg.editImage
