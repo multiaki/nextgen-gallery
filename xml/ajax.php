@@ -1,8 +1,11 @@
 <?php
 // see http://codex.wordpress.org/AJAX_in_Plugins
-// check if we have all needed parameter
-if ((!isset($_GET['galleryid']) || !is_numeric($_GET['galleryid'])) || (!isset($_GET['p']) || !is_numeric($_GET['p'])) || !isset($_GET['type']))
-	die('Insufficient parameters.');
+
+// check if we have all needed parameter, otherwise redirect to mmain page
+if ( !defined('ABSPATH') || (!isset($_GET['galleryid']) || !is_numeric($_GET['galleryid'])) || (!isset($_GET['p']) || !is_numeric($_GET['p'])) || !isset($_GET['type'])){
+    header('Location: http://'. $_SERVER['HTTP_HOST']);
+    die();    
+}
 
 switch ($_GET['type']) {
 	case 'gallery':
