@@ -1,7 +1,7 @@
 /*!
  * NextGEN Slideshow based on jQuery Cycle Plugin
  * Copyright (c) 2010-2011 Alex Rabe
- * Version: 1.0.4
+ * Version: 1.0.5
  * Requires: jQuery v1.2.6 or later
  */
 jQuery.fn.nggSlideshow = function ( args ) { 
@@ -58,10 +58,11 @@ jQuery.fn.nggSlideshow = function ( args ) {
          // Add the image now and resize after loaded 
 		 jQuery( obj ).append( imageResize(img, s.width , s.height) );
          // start slideshow with third image, load next image if not
-		 if (num == 3 || stackLength == 0 ) 
+		 if (num == 3 || stackLength == 0 ) { 
          	startSlideshow(); 
-		 else
+		 } else {
 		 	loadImage(++num); // increase index and load next image
+         }
 		 
 	}
 
@@ -95,12 +96,21 @@ jQuery.fn.nggSlideshow = function ( args ) {
         if (img.height == 0 || img.width == 0)
             return img;
  
-        var height = (img.height < maxHeight) ? img.height : maxHeight;
-       	var width  = (img.width  < maxWidth)  ? img.width  : maxWidth;
-        if (img.height >= img.width)
-        	width = Math.floor( Math.ceil(img.width / img.height * maxHeight) );
-        else
-        	height = Math.floor( Math.ceil(img.height / img.width * maxWidth) );
+        var width, height;
+
+        if (img.width * maxHeight > img.height * maxWidth) {
+            // img has a wider ratio than target size, make width fit
+    		if (img.width > maxWidth) {
+    			width = maxWidth;
+    			height = Math.round(img.height / img.width * maxWidth);
+    		}
+        } else {
+            // img has a less wide ratio than target size, make height fit
+    		if (img.height > maxHeight) {
+    			height = maxHeight;
+    			width = Math.round(img.width / img.height * maxHeight);
+    		}
+        }
   
         jQuery( img ).css({
           'height': height,
