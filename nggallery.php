@@ -284,6 +284,7 @@ class nggLoader {
 		require_once (dirname (__FILE__) . '/lib/post-thumbnail.php');			//  n.a.
 		require_once (dirname (__FILE__) . '/widgets/widgets.php');				// 298.792
         require_once (dirname (__FILE__) . '/lib/multisite.php');
+        require_once (dirname (__FILE__) . '/lib/sitemap.php');
 
         // Load frontend libraries							
         require_once (dirname (__FILE__) . '/lib/navigation.php');		        // 242.016
