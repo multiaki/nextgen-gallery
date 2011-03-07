@@ -415,7 +415,7 @@ class nggdb {
         
         // create the sql parameter "name = value"
         foreach ($update as $key => $value)
-            if ($value)
+            if ($value !== false)
                 $sql[] = $key . " = '" . $value . "'";
         
         // create the final string
@@ -464,7 +464,7 @@ class nggdb {
         
         // create the sql parameter "name = value"
         foreach ($update as $key => $value)
-            if ($value)
+            if ($value !== false)
                 $sql[] = $key . " = '" . $value . "'";
         
         // create the final string
@@ -510,7 +510,7 @@ class nggdb {
         
         // create the sql parameter "name = value"
         foreach ($update as $key => $value)
-            if ($value)
+            if ($value !== false)
                 $sql[] = $key . " = '" . $value . "'";
         
         // create the final string
