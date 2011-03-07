@@ -6,6 +6,7 @@ by Alex Rabe & NextGEN DEV Team
 * TODO : Switch to Plupload (http://www.plupload.com/)
 * NEW : Adding Google Sitemaps for Images (require WordPress SEO plugin by YOAST )
 * Bugfix : Empty values in XMLRPC update calls are ignored
+* Bugfix : Create gallery failed when safe-mode on
 
 = V1.7.4 - 15.02.2011 =
 * Bugfix : Disallow direct call of ajax file to avoid path disclosure (THX to High-Tech Bridge SA)

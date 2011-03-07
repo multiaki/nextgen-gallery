@@ -47,17 +47,7 @@ function nggallery_picturelist() {
 		
 		// get picture values
 		$picturelist = $nggdb->get_gallery($act_gid, $ngg->options['galSort'], $ngg->options['galSortDir'], false, 50, $start );
-		
-		// build pagination
-		$page_links = paginate_links( array(
-			'base' => add_query_arg( 'paged', '%#%' ),
-			'format' => '',
-			'prev_text' => __('&laquo;'),
-			'next_text' => __('&raquo;'),
-			'total' => $nggdb->paged['max_objects_per_page'],
-			'current' => $_GET['paged']
-		));
-		
+
 		// get the current author
 		$act_author_user    = get_userdata( (int) $gallery->author );
 
@@ -211,7 +201,6 @@ jQuery(document).ready( function() {
 	// close postboxes that should be closed
 	jQuery('.if-js-closed').removeClass('if-js-closed').addClass('closed');
 	postboxes.add_postbox_toggles('ngg-manage-gallery');
-
 });
 
 //-->
@@ -325,15 +314,8 @@ jQuery(document).ready( function() {
 
 <?php endif; ?>
 
-<div class="tablenav ngg-tablenav">
-	<?php if ( $page_links ) : ?>
-	<div class="tablenav-pages"><?php $page_links_text = sprintf( '<span class="displaying-num">' . __( 'Displaying %s&#8211;%s of %s' ) . '</span>%s',
-		number_format_i18n( ( $_GET['paged'] - 1 ) * $nggdb->paged['objects_per_page'] + 1 ),
-		number_format_i18n( min( $_GET['paged'] * $nggdb->paged['objects_per_page'], $nggdb->paged['total_objects'] ) ),
-		number_format_i18n( $nggdb->paged['total_objects'] ),
-		$page_links
-	); echo $page_links_text; ?></div>
-	<?php endif; ?>
+<div class="tablenav top ngg-tablenav">
+    <?php $ngg->manage_page->pagination( 'top', $_GET['paged'], $nggdb->paged['total_objects'], $nggdb->paged['objects_per_page']  ); ?>
 	<div class="alignleft actions">
 	<select id="bulkaction" name="bulkaction">
 		<option value="no_action" ><?php _e("Bulk actions",'nggallery'); ?></option>
@@ -508,16 +490,9 @@ if ( $counter == 0 )
 	
 		</tbody>
 	</table>
-    <div class="tablenav">
+    <div class="tablenav bottom">
     <input type="submit" class="button-primary action" name="updatepictures" value="<?php _e('Save Changes', 'nggallery'); ?>" />
-	<?php if ( $page_links ) : ?>
-	<div class="tablenav-pages"><?php $page_links_text = sprintf( '<span class="displaying-num">' . __( 'Displaying %s&#8211;%s of %s' ) . '</span>%s',
-		number_format_i18n( ( $_GET['paged'] - 1 ) * $nggdb->paged['objects_per_page'] + 1 ),
-		number_format_i18n( min( $_GET['paged'] * $nggdb->paged['objects_per_page'], $nggdb->paged['total_objects'] ) ),
-		number_format_i18n( $nggdb->paged['total_objects'] ),
-		$page_links
-	); echo $page_links_text; ?></div>
-	<?php endif; ?>
+    <?php $ngg->manage_page->pagination( 'bottom', $_GET['paged'], $nggdb->paged['total_objects'], $nggdb->paged['objects_per_page']  ); ?>
     </div>
 	</form>	
 	<br class="clear"/>

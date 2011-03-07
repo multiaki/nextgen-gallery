@@ -14,15 +14,6 @@ function nggallery_manage_gallery_main() {
 	$start = ( $_GET['paged'] - 1 ) * 25;
 	$gallerylist = $nggdb->find_all_galleries('gid', 'asc', TRUE, 25, $start, false);
 
-	$page_links = paginate_links( array(
-		'base' => add_query_arg( 'paged', '%#%' ),
-		'format' => '',
-		'prev_text' => __('&laquo;'),
-		'next_text' => __('&raquo;'),
-		'total' => $nggdb->paged['max_objects_per_page'],
-		'current' => $_GET['paged']
-	));
-
 	?>
 	<script type="text/javascript"> 
 	<!--
@@ -130,7 +121,7 @@ function nggallery_manage_gallery_main() {
 		<?php wp_nonce_field('ngg_bulkgallery') ?>
 		<input type="hidden" name="page" value="manage-galleries" />
 		
-		<div class="tablenav">
+		<div class="tablenav top">
 			
 			<div class="alignleft actions">
 				<?php if ( function_exists('json_encode') ) : ?>
@@ -150,14 +141,8 @@ function nggallery_manage_gallery_main() {
 				<?php endif; ?>
 			</div>
 			
-		<?php if ( $page_links ) : ?>
-			<div class="tablenav-pages"><?php $page_links_text = sprintf( '<span class="displaying-num">' . __( 'Displaying %s&#8211;%s of %s' ) . '</span>%s',
-				number_format_i18n( ( $_GET['paged'] - 1 ) * $nggdb->paged['objects_per_page'] + 1 ),
-				number_format_i18n( min( $_GET['paged'] * $nggdb->paged['objects_per_page'], $nggdb->paged['total_objects'] ) ),
-				number_format_i18n( $nggdb->paged['total_objects'] ),
-				$page_links
-			); echo $page_links_text; ?></div>
-		<?php endif; ?>
+		
+        <?php $ngg->manage_page->pagination( 'top', $_GET['paged'], $nggdb->paged['total_objects'], $nggdb->paged['objects_per_page']  ); ?>
 		
 		</div>
 		<table class="widefat" cellspacing="0">
@@ -261,15 +246,8 @@ if($gallerylist) {
 ?>			
 			</tbody>
 		</table>
-        <div class="tablenav">
-		<?php if ( $page_links ) : ?>
-			<div class="tablenav-pages"><?php $page_links_text = sprintf( '<span class="displaying-num">' . __( 'Displaying %s&#8211;%s of %s' ) . '</span>%s',
-				number_format_i18n( ( $_GET['paged'] - 1 ) * $nggdb->paged['objects_per_page'] + 1 ),
-				number_format_i18n( min( $_GET['paged'] * $nggdb->paged['objects_per_page'], $nggdb->paged['total_objects'] ) ),
-				number_format_i18n( $nggdb->paged['total_objects'] ),
-				$page_links
-			); echo $page_links_text; ?></div>
-		<?php endif; ?>
+        <div class="tablenav bottom">
+		<?php $ngg->manage_page->pagination( 'bottom', $_GET['paged'], $nggdb->paged['total_objects'], $nggdb->paged['objects_per_page']  ); ?>
         </div>
 		</form>
 	</div>
