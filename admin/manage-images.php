@@ -155,7 +155,16 @@ function getNumChecked(form)
 function checkSelected() {
 
 	var numchecked = getNumChecked(document.getElementById('updategallery'));
-	 
+
+    if (typeof document.activeElement == "undefined" && document.addEventListener) {
+    	document.addEventListener("focus", function (e) {
+    		document.activeElement = e.target;
+    	}, true);
+    }
+	
+    if ( document.activeElement.name == 'paged' )
+        return true;
+     
 	if(numchecked < 1) { 
 		alert('<?php echo esc_js(__('No images selected', 'nggallery')); ?>');
 		return false; 

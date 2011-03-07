@@ -46,6 +46,15 @@ function nggallery_manage_gallery_main() {
 
 	// this function check for a the number of selected images, sumbmit false when no one selected
 	function checkSelected() {
+
+        if (typeof document.activeElement == "undefined" && document.addEventListener) {
+        	document.addEventListener("focus", function (e) {
+        		document.activeElement = e.target;
+        	}, true);
+        }
+    	
+        if ( document.activeElement.name == 'paged' )
+            return true;
 	
 		var numchecked = getNumChecked(document.getElementById('editgalleries'));
 		 
