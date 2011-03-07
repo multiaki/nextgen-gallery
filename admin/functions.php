@@ -59,7 +59,7 @@ class nggAdmin{
 		}
 		
 		// 1. Check for existing folder
-		if ( is_dir(WINABSPATH . $defaultpath . $name ) ) {
+		if ( is_dir(WINABSPATH . $defaultpath . $name ) && !(SAFE_MODE) ) {
 			$suffix = 1;
 			do {
 				$alt_name = substr ($name, 0, 200 - ( strlen( $suffix ) + 1 ) ) . "_$suffix";
