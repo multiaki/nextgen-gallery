@@ -22,6 +22,9 @@ class nggAdminPanel{
 
 		add_filter('contextual_help', array(&$this, 'show_help'), 10, 2);
 		add_filter('screen_meta_screen', array(&$this, 'edit_screen_meta'));
+
+        // Add WPML hook to register description / alt text for translation
+        add_action('ngg_image_updated', array('nggGallery', 'RegisterString') );	
         
 	}
 

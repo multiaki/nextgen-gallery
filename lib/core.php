@@ -323,12 +323,13 @@ class nggGallery {
 	}
 
 	/**
-	 * Support for i18n with polyglot or qtrans
+	 * Support for i18n with wpml, polyglot or qtrans
 	 * 
 	 * @param string $in
+	 * @param string $name (optional) required for wpml to determine the type of translation
 	 * @return string $in localized
 	 */
-	function i18n($in) {
+	function i18n($in, $name = null) {
 		
 		if ( function_exists( 'langswitch_filter_langs_with_message' ) )
 			$in = langswitch_filter_langs_with_message($in);
@@ -338,11 +339,28 @@ class nggGallery {
 		
 		if ( function_exists( 'qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage' ))
 			$in = qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($in);
+
+        if (is_string($name) && !empty($name) && function_exists('icl_translate'))
+            $in = icl_translate('plugin_ngg', $name, $in, true);
 		
 		$in = apply_filters('localization', $in);
 		
 		return $in;
 	}
+
+    /**
+     * This function register strings for the use with WPML plugin (see http://wpml.org/ )
+     * 
+     * @param object $image
+     * @return void
+     */
+    function RegisterString($image) {
+        if (function_exists('icl_register_string')) {
+            global $wpdb;
+            icl_register_string('plugin_ngg', 'pic_' . $image->pid . '_description', $image->description, TRUE);
+            icl_register_string('plugin_ngg', 'pic_' . $image->pid . '_alttext', $image->alttext, TRUE);
+        }
+    }
 	
 	/**
 	 * Check the memory_limit and calculate a recommended memory size

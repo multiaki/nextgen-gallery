@@ -352,9 +352,9 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '', $ima
         $picturelist[$key]->thumbnailURL = $picture->thumbURL;
         $picturelist[$key]->size = $thumbsize;
         $picturelist[$key]->thumbcode = $thumbcode;
-        $picturelist[$key]->caption = ( empty($picture->description) ) ? '&nbsp;' : html_entity_decode ( stripslashes(nggGallery::i18n($picture->description)) );
-        $picturelist[$key]->description = ( empty($picture->description) ) ? ' ' : htmlspecialchars ( stripslashes(nggGallery::i18n($picture->description)) );
-        $picturelist[$key]->alttext = ( empty($picture->alttext) ) ?  ' ' : htmlspecialchars ( stripslashes(nggGallery::i18n($picture->alttext)) );
+        $picturelist[$key]->caption = ( empty($picture->description) ) ? '&nbsp;' : html_entity_decode ( stripslashes(nggGallery::i18n($picture->description, 'pic_' . $picture->pid . '_description')) );
+        $picturelist[$key]->description = ( empty($picture->description) ) ? ' ' : htmlspecialchars ( stripslashes(nggGallery::i18n($picture->description, 'pic_' . $picture->pid . '_description')) );
+        $picturelist[$key]->alttext = ( empty($picture->alttext) ) ?  ' ' : htmlspecialchars ( stripslashes(nggGallery::i18n($picture->alttext, 'pic_' . $picture->pid . '_alttext')) );
         
         // filter to add custom content for the output
         $picturelist[$key] = apply_filters('ngg_image_object', $picturelist[$key], $picture->pid);
@@ -783,9 +783,9 @@ function nggSinglePicture($imageID, $width = 250, $height = 250, $mode = '', $fl
     // add more variables for render output
     $picture->imageURL = ( empty($link) ) ? $picture->imageURL : $link;
     $picture->href_link = $picture->get_href_link();
-    $picture->alttext = html_entity_decode( stripslashes(nggGallery::i18n($picture->alttext)) );
-    $picture->linktitle = htmlspecialchars( stripslashes(nggGallery::i18n($picture->description)) );
-    $picture->description = html_entity_decode( stripslashes(nggGallery::i18n($picture->description)) );
+    $picture->alttext = html_entity_decode( stripslashes(nggGallery::i18n($picture->alttext, 'pic_' . $picture->pid . '_alttext')) );
+    $picture->linktitle = htmlspecialchars( stripslashes(nggGallery::i18n($picture->description, 'pic_' . $picture->pid . '_description')) );
+    $picture->description = html_entity_decode( stripslashes(nggGallery::i18n($picture->description, 'pic_' . $picture->pid . '_description')) );
     $picture->classname = 'ngg-singlepic'. $float;
     $picture->thumbcode = $picture->get_thumbcode( 'singlepic' . $imageID);
     $picture->height = (int) $height;
@@ -884,8 +884,8 @@ function nggShowRelatedGallery($taglist, $maxImages = 0) {
         // get the effect code
         $thumbcode = $picture->get_thumbcode( __('Related images for', 'nggallery') . ' ' . get_the_title());
 
-        $out .= '<a href="' . $picture->imageURL . '" title="' . stripslashes(nggGallery::i18n($picture->description)) . '" ' . $thumbcode . ' >';
-        $out .= '<img title="' . stripslashes(nggGallery::i18n($picture->alttext)) . '" alt="' . stripslashes(nggGallery::i18n($picture->alttext)) . '" src="' . $picture->thumbURL . '" />';
+        $out .= '<a href="' . $picture->imageURL . '" title="' . stripslashes(nggGallery::i18n($picture->description, 'pic_' . $picture->pid . '_description')) . '" ' . $thumbcode . ' >';
+        $out .= '<img title="' . stripslashes(nggGallery::i18n($picture->alttext, 'pic_' . $picture->pid . '_alttext')) . '" alt="' . stripslashes(nggGallery::i18n($picture->alttext, 'pic_' . $picture->pid . '_alttext')) . '" src="' . $picture->thumbURL . '" />';
         $out .= '</a>' . "\n";
     }
     $out .= '</div>' . "\n";

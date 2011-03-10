@@ -5,6 +5,8 @@ by Alex Rabe & NextGEN DEV Team
 * TODO : Facebook connector
 * TODO : Switch to Plupload (http://www.plupload.com/)
 * NEW : Adding Google Sitemaps for Images (require WordPress SEO plugin by YOAST )
+* NEW : Support for WPML ( WordPress Multilingual Plugin )
+* Changed : Updated pagination to new WP3.1 style
 * Bugfix : Empty values in XMLRPC update calls are ignored
 * Bugfix : Create gallery failed when safe-mode on
 
