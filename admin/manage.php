@@ -503,7 +503,10 @@ class nggManageGallery {
                     $wpdb->query( $wpdb->prepare ("UPDATE $wpdb->nggpictures SET image_slug = '%s', alttext = '%s', description = '%s', exclude = %d WHERE pid = %d", 
                                                                                  $image->image_slug, $image->alttext, $image->description, $image->exclude, $image->pid) );    
                     // remove from cache    
-                    wp_cache_delete($image->pid, 'ngg_image'); 
+                    wp_cache_delete($image->pid, 'ngg_image');
+                    
+                    // hook for other plugins after image is updated
+                    do_action('ngg_image_updated', $image); 
                 }
                 
             }
