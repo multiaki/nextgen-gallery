@@ -8,7 +8,7 @@
 *
 * @package NextGEN Gallery
 * @author Alex Rabe
-* @copyright 2008
+* @copyright 2008-2011
 */
 class nggRewrite {
 
@@ -104,7 +104,7 @@ class nggRewrite {
 			if  (isset ($args['show']))
 				$url .= ( $args['show'] == 'slide' ) ? '/slideshow' : '/images';
 
-			return $url;
+			return apply_filters('ngg_get_permalink', $url, $args);
 			
 		} else {			
 			// we need to add the page/post id at the start_page otherwise we don't know which gallery is clicked
@@ -123,7 +123,7 @@ class nggRewrite {
 			else
 				$query = htmlspecialchars( add_query_arg( $args ) );
 			
-			return $query;
+            return apply_filters('ngg_get_permalink', $query, $args);
 		}
 	}
 
