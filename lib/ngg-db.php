@@ -170,7 +170,7 @@ class nggdb {
     /**
      * Get a gallery given its ID
      * 
-     * @param int|string $id or $name
+     * @param int|string $id or $slug
      * @return A nggGallery object (null if not found)
      */
     function find_gallery( $id ) {      
@@ -184,7 +184,7 @@ class nggdb {
             $gallery = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->nggallery WHERE gid = %d", $id ) );
 
         } else
-            $gallery = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->nggallery WHERE name = %s", $id ) );
+            $gallery = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->nggallery WHERE slug = %s", $id ) );
         
         // Build the object from the query result
         if ($gallery) {
@@ -235,7 +235,7 @@ class nggdb {
         if( is_numeric($id) )
             $result = $wpdb->get_results( $wpdb->prepare( "SELECT SQL_CALC_FOUND_ROWS tt.*, t.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = %d {$exclude_clause} ORDER BY tt.{$order_by} {$order_dir} {$limit_by}", $id ), OBJECT_K );
         else
-            $result = $wpdb->get_results( $wpdb->prepare( "SELECT SQL_CALC_FOUND_ROWS tt.*, t.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.name = %s {$exclude_clause} ORDER BY tt.{$order_by} {$order_dir} {$limit_by}", $id ), OBJECT_K );
+            $result = $wpdb->get_results( $wpdb->prepare( "SELECT SQL_CALC_FOUND_ROWS tt.*, t.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.slug = %s {$exclude_clause} ORDER BY tt.{$order_by} {$order_dir} {$limit_by}", $id ), OBJECT_K );
 
         // Count the number of images and calculate the pagination
         if ($limit > 0) {
@@ -286,7 +286,7 @@ class nggdb {
         if( is_numeric($id) )
             $result = $wpdb->get_col( $wpdb->prepare( "SELECT tt.pid FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = %d $exclude_clause ORDER BY tt.{$order_by} $order_dir", $id ) );
         else
-            $result = $wpdb->get_col( $wpdb->prepare( "SELECT tt.pid FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.name = %s $exclude_clause ORDER BY tt.{$order_by} $order_dir", $id ) );
+            $result = $wpdb->get_col( $wpdb->prepare( "SELECT tt.pid FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE t.slug = %s $exclude_clause ORDER BY tt.{$order_by} $order_dir", $id ) );
 
         return $result;     
     }   
@@ -317,11 +317,11 @@ class nggdb {
     function find_album( $id ) {        
         global $wpdb;
         
-        if ( $album = wp_cache_get($id, 'ngg_album') )
-            return $album;
-        
         // Query database
         if ( is_numeric($id) && $id != 0 ) {
+            if ( $album = wp_cache_get($id, 'ngg_album') )
+                return $album;
+                
             $album = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->nggalbum WHERE id = %d", $id) );
         } elseif ( $id == 'all' || (is_numeric($id) && $id == 0) ) {
             // init the object and fill it
@@ -332,7 +332,7 @@ class nggdb {
             $album->previewpic = 0;
             $album->sortorder  =  serialize( $wpdb->get_col("SELECT gid FROM $wpdb->nggallery") );
         } else {
-            $album = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->nggalbum WHERE name = '%s'", $id) );
+            $album = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->nggalbum WHERE slug = %s", $id) );
         }
         
         // Unserialize the galleries inside the album
@@ -344,7 +344,7 @@ class nggdb {
             $album->albumdesc  = stripslashes($album->albumdesc);
             $album->name       = stripslashes($album->name);
             
-            wp_cache_add($id, $album, 'ngg_album');     
+            wp_cache_add($album->id, $album, 'ngg_album');     
             return $album;
         } 
         
@@ -527,17 +527,21 @@ class nggdb {
     /**
      * Get an image given its ID
      * 
-     * @param int $id The image ID
+     * @param  int|string The image ID or Slug
      * @return object A nggImage object representing the image (false if not found)
      */
     function find_image( $id ) {
         global $wpdb;
+
+        if( is_numeric($id) ) {
+            
+            if ( $image = wp_cache_get($id, 'ngg_image') )
+                return $image;
         
-        if ( $image = wp_cache_get($id, 'ngg_image') )
-            return $image;
-        
-        $result = $wpdb->get_row( $wpdb->prepare( "SELECT tt.*, t.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE tt.pid = %d ", $id ) );
-        
+            $result = $wpdb->get_row( $wpdb->prepare( "SELECT tt.*, t.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE tt.pid = %d ", $id ) );
+        } else
+            $result = $wpdb->get_row( $wpdb->prepare( "SELECT tt.*, t.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE tt.image_slug = %s ", $id ) ); 
+          
         // Build the object from the query result
         if ($result) {
             $image = new nggImage($result);

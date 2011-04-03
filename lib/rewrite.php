@@ -64,8 +64,7 @@ class nggRewrite {
 			if ( !empty( $gallerytag ) )
 				$args ['gallerytag'] = $gallerytag;
 			
-			/** urlconstructor =  slug | type | tags | [nav] | [show]
-				type : 	page | post
+			/** urlconstructor =  post url | slug | tags | [nav] | [show]
 				tags : 	album, gallery 	-> /album-([0-9]+)/gallery-([0-9]+)/
 						pid 			-> /image/([0-9]+)/
 						gallerytag		-> /tags/([^/]+)/
@@ -74,21 +73,14 @@ class nggRewrite {
 						show=gallery	-> /images/	
 			**/
 
-			// 1. Blog url + main slug
-			$url = get_option('home') . '/' . $this->slug;
+			// 1. Post / Page url + main slug
+            $url = get_permalink ($post->ID) . $this->slug; 
 			
-			// 2. Post or page ?
-			if ( $post->post_type == 'page' )
-				$url .= '/page-' . $post->ID; // Pagnename is nicer but how to handle /parent/pagename ? Confused...
-			else
-				$url .= '/post/' . $post->post_name;
-			
-			// 3. Album, pid or tags
-				
+			// 2. Album, pid or tags
 			if (isset ($args['album']) && ($args['gallery'] == false) )
-				$url .= '/album-' . $args['album'];
+				$url .= '/' . $args['album'];
 			elseif  (isset ($args['album']) && isset ($args['gallery']) )
-				$url .= '/album-' . $args['album'] . '/gallery-' . $args['gallery'];
+				$url .= '/' . $args['album'] . '/' . $args['gallery'];
 				
 			if  (isset ($args['gallerytag']))
 				$url .= '/tags/' . $args['gallerytag'];
@@ -96,11 +88,11 @@ class nggRewrite {
 			if  (isset ($args['pid']))
 				$url .= '/image/' . $args['pid'];			
 			
-			// 4. Navigation
+			// 3. Navigation
 			if  (isset ($args['nggpage']) && ($args['nggpage']) )
 				$url .= '/page-' . $args['nggpage'];
 			
-			// 5. Show images or Slideshow
+			// 4. Show images or Slideshow
 			if  (isset ($args['show']))
 				$url .= ( $args['show'] == 'slide' ) ? '/slideshow' : '/images';
 
@@ -176,8 +168,8 @@ class nggRewrite {
 		$tag  	 = get_query_var('gallerytag');
 		$show    = get_query_var('show');
 
-		//TODO:: I could parse for the Picture name , gallery etc, but this increase the queries
-		//TODO:: Class nggdb need to cache the query for the nggfunctions.php
+		//TODO: I could parse for the Picture name , gallery etc, but this increase the queries
+		//TODO: Class nggdb need to cache the query for the nggfunctions.php
 
 		if ( $show == 'slide' )
 			$new_title .= __('Slideshow', 'nggallery') . $sep ;
@@ -185,16 +177,16 @@ class nggRewrite {
 			$new_title .= __('Gallery', 'nggallery') . $sep ;	
 
 		if ( !empty($pid) )
-			$new_title .= __('Picture', 'nggallery') . ' ' . intval($pid) . $sep ;
+			$new_title .= __('Picture', 'nggallery') . ' ' . esc_attr($pid) . $sep ;
 
 		if ( !empty($album) )
-			$new_title .= __('Album', 'nggallery') . ' ' . intval($album) . $sep ;
+			$new_title .= __('Album', 'nggallery') . ' ' . esc_attr($album) . $sep ;
 
 		if ( !empty($gallery) )
-			$new_title .= __('Gallery', 'nggallery') . ' ' . intval($gallery) . $sep ;
+			$new_title .= __('Gallery', 'nggallery') . ' ' . esc_attr($gallery) . $sep ;
 			
 		if ( !empty($nggpage) )
-			$new_title .= __('Page', 'nggallery') . ' ' . intval($nggpage) . $sep ;
+			$new_title .= __('Page', 'nggallery') . ' ' . esc_attr($nggpage) . $sep ;
 		
 		//esc_attr should avoid XSS like http://domain/?gallerytag=%3C/title%3E%3Cscript%3Ealert(document.cookie)%3C/script%3E
 		if ( !empty($tag) )
@@ -228,6 +220,29 @@ class nggRewrite {
 	*/
 	function RewriteRules($wp_rewrite) {		
 		$rewrite_rules = array (
+        
+            //TODO: Posts can build custom permalink structure, need to build rewrite rules like this
+            //'([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/([^/]+)/' . $this->slug . '/slideshow/?$' => 'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&name=$matches[4]&show=slide',
+    		
+            // page rewrites
+            '(.+?)/' . $this->slug . '/page-([0-9]+)/?$' => 'index.php?pagename=$matches[1]&nggpage=$matches[2]',
+    		'(.+?)/' . $this->slug . '/image/([^/]+)/?$' => 'index.php?pagename=$matches[1]&pid=$matches[2]',
+    		'(.+?)/' . $this->slug . '/image/([^/]+)/page-([0-9]+)/?$' => 'index.php?pagename=$matches[1]&pid=$matches[2]&nggpage=$matches[3]',
+    		'(.+?)/' . $this->slug . '/slideshow/?$' => 'index.php?pagename=$matches[1]&show=slide',
+    		'(.+?)/' . $this->slug . '/images/?$' => 'index.php?pagename=$matches[1]&show=gallery',
+    		'(.+?)/' . $this->slug . '/tags/([^/]+)/?$' => 'index.php?pagename=$matches[1]&gallerytag=$matches[2]',
+    		'(.+?)/' . $this->slug . '/tags/([^/]+)/page-([0-9]+)/?$' => 'index.php?pagename=$matches[1]gallerytag=$matches[2]&nggpage=$matches[3]',
+
+    		'(.+?)/' . $this->slug . '/([^/]+)/?$' => 'index.php?pagename=$matches[1]&album=$matches[2]',
+    		'(.+?)/' . $this->slug . '/([^/]+)/page-([0-9]+)/?$' => 'index.php?pagename=$matches[1]&album=$matches[2]&nggpage=$matches[3]',
+    		'(.+?)/' . $this->slug . '/([^/]+)/([^/]+)/?$' => 'index.php?pagename=$matches[1]&album=$matches[2]&gallery=$matches[3]',
+    		'(.+?)/' . $this->slug . '/([^/]+)/([^/]+)/slideshow/?$' => 'index.php?pagename=$matches[1]&album=$matches[2]&gallery=$matches[3]&show=slide',
+    		'(.+?)/' . $this->slug . '/([^/]+)/([^/]+)/images/?$' => 'index.php?pagename=$matches[1]&album=$matches[2]&gallery=$matches[3]&show=gallery',
+    		'(.+?)/' . $this->slug . '/([^/]+)/([^/]+)/page-([0-9]+)/?$' => 'index.php?pagename=$matches[1]&album=$matches[2]&gallery=$matches[3]&nggpage=$matches[4]',
+    		'(.+?)/' . $this->slug . '/([^/]+)/([^/]+)/page-([0-9]+)/slideshow/?$' => 'index.php?pagename=$matches[1]&album=$matches[21]&gallery=$matches[3]&nggpage=$matches[4]&show=slide',
+    		'(.+?)/' . $this->slug . '/([^/]+)/([^/]+)/page-([0-9]+)/images/?$' => 'index.php?pagename=$matches[1]&album=$matches[2]&gallery=$matches[3]&nggpage=$matches[4]&show=gallery',
+    		'(.+?)/' . $this->slug . '/([^/]+)/([^/]+)/([^/]+)/?$' => 'index.php?pagename=$matches[1]&album=$matches[2]&gallery=$matches[3]&pid=$matches[4]',
+            
             // XML request
             $this->slug.'/slideshow/([0-9]+)/?$' => 'index.php?imagerotator=true&gid=$matches[1]',
             

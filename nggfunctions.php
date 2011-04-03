@@ -141,7 +141,7 @@ function nggShow_JS_Slideshow($galleryID, $width, $height, $class = 'ngg-slidesh
  * nggShowGallery() - return a gallery  
  * 
  * @access public 
- * @param int $galleryID
+ * @param int | string ID or slug from a gallery
  * @param string $template (optional) name for a template file, look for gallery-$template
  * @param int $images (optional) number of images per page
  * @return the content
@@ -151,7 +151,6 @@ function nggShowGallery( $galleryID, $template = '', $images = false ) {
     global $nggRewrite;
 
     $ngg_options = nggGallery::get_option('ngg_options');
-    $galleryID = (int) $galleryID;
     
     //Set sort order value, if not used (upgrade issue)
     $ngg_options['galSort'] = ($ngg_options['galSort']) ? $ngg_options['galSort'] : 'pid';
@@ -162,6 +161,12 @@ function nggShowGallery( $galleryID, $template = '', $images = false ) {
 
     if ( !$picturelist )
         return __('[Gallery not found]','nggallery');
+
+    // If we have we slug instead the id, we should extract the ID from the first image
+    if ( !is_numeric($galleryID) ) {
+        $first_image = current($picturelist);
+        $galleryID = intval($first_image->gid);
+    }
 
     // $_GET from wp_query
     $show    = get_query_var('show');
@@ -336,7 +341,7 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '', $ima
 
         // create link for imagebrowser and other effects
         $args ['nggpage'] = empty($nggpage) ? false : $nggpage;
-        $args ['pid']     = $picture->pid;
+        $args ['pid']     = ($ngg_options['usePermalinks']) ? $picture->image_slug : $picture->pid;
         $picturelist[$key]->pidlink = $nggRewrite->get_permalink( $args );
         
         // generate the thumbnail size if the meta data available
@@ -414,7 +419,7 @@ function nggShowAlbum($albumID, $template = 'extend') {
                 return;
                 
         // if gallery is submit , then show the gallery instead 
-        $out = nggShowGallery( intval($gallery) );
+        $out = nggShowGallery( $gallery );
         $GLOBALS['nggShowGallery'] = true;
         
         return $out;
@@ -510,7 +515,7 @@ function nggCreateAlbum( $galleriesID, $template = 'extend', $album = 0) {
             $galleries[$key]->previewname = $subalbum->name;
             
             //link to the subalbum
-            $args['album'] = $subalbum->id;
+            $args['album'] = ( $ngg_options['usePermalinks'] ) ? $subalbum->slug : $subalbum->id;
             $args['gallery'] = false; 
             $args['nggpage'] = false;
             $pageid = (isset($subalbum->pageid) ? $subalbum->pageid : 0);
@@ -548,8 +553,8 @@ function nggCreateAlbum( $galleriesID, $template = 'extend', $album = 0) {
 
         // choose between variable and page link
         if ($ngg_options['galNoPages']) {
-            $args['album'] = $album->id; 
-            $args['gallery'] = $key;
+            $args['album'] = ( $ngg_options['usePermalinks'] ) ? $album->slug : $album->id; 
+            $args['gallery'] = ( $ngg_options['usePermalinks'] ) ? $galleries[$key]->slug : $key;
             $args['nggpage'] = false;
             $galleries[$key]->pagelink = $nggRewrite->get_permalink($args);
             
@@ -622,7 +627,7 @@ function nggShowImageBrowser($galleryID, $template = '') {
     $ngg_options['galSortDir'] = ($ngg_options['galSortDir'] == 'DESC') ? 'DESC' : 'ASC';
     
     // get the pictures
-    $picturelist = nggdb::get_ids_from_gallery($galleryID, $ngg_options['galSort'], $ngg_options['galSortDir']);
+    $picturelist = nggdb::get_gallery($galleryID, $ngg_options['galSort'], $ngg_options['galSortDir']);
     
     if ( is_array($picturelist) )
         $out = nggCreateImageBrowser($picturelist, $template);
@@ -639,13 +644,13 @@ function nggShowImageBrowser($galleryID, $template = '') {
  * nggCreateImageBrowser()
  * 
  * @access internal
- * @param array $picarray with pid
+ * @param array $picturelist
  * @param string $template (optional) name for a template file, look for imagebrowser-$template
  * @return the content
  */
-function nggCreateImageBrowser($picarray, $template = '') {
+function nggCreateImageBrowser($picturelist, $template = '') {
 
-    global $nggRewrite;
+    global $nggRewrite, $ngg;
     
     require_once( dirname (__FILE__) . '/lib/meta.php' );
     
@@ -654,22 +659,32 @@ function nggCreateImageBrowser($picarray, $template = '') {
     
     // we need to know the current page id
     $current_page = (get_the_ID() == false) ? 0 : get_the_ID();
-
-    if ( !is_array($picarray) )
-        $picarray = array($picarray);
+    
+    // create a array with id's for better walk inside
+    foreach ($picturelist as $picture)
+        $picarray[] = $picture->pid;
 
     $total = count($picarray);
 
-    // look for gallery variable 
     if ( !empty( $pid )) {
-        $act_pid = (int) $pid;
+        if ( is_numeric($pid) ) 
+            $act_pid = $intval($pid);
+        else {
+            // in the case it's a slug we need to search for the pid
+            foreach ($picturelist as $key => $picture) {
+                if ($picture->image_slug == $pid) {
+                    $act_pid = $key;
+                    break;
+                }
+            }           
+        }
     } else {
         reset($picarray);
         $act_pid = current($picarray);
     }
     
     // get ids for back/next
-    $key = array_search($act_pid,$picarray);
+    $key = array_search($act_pid, $picarray);
     if (!$key) {
         $act_pid = reset($picarray);
         $key = key($picarray);
@@ -686,9 +701,11 @@ function nggCreateImageBrowser($picarray, $template = '') {
         
     // add more variables for render output
     $picture->href_link = $picture->get_href_link();
-    $picture->previous_image_link = $nggRewrite->get_permalink(array ('pid' => $back_pid));
+    $args ['pid'] = ($ngg->options['usePermalinks']) ? $picturelist[$back_pid]->image_slug : $back_pid;
+    $picture->previous_image_link = $nggRewrite->get_permalink( $args );
     $picture->previous_pid = $back_pid;
-    $picture->next_image_link  = $nggRewrite->get_permalink(array ('pid' => $next_pid));
+    $args ['pid'] = ($ngg->options['usePermalinks']) ? $picturelist[$next_pid]->image_slug : $next_pid;
+    $picture->next_image_link  = $nggRewrite->get_permalink( $args );
     $picture->next_pid = $next_pid;
     $picture->number = $key + 1;
     $picture->total = $total;
@@ -835,10 +852,7 @@ function nggShowGalleryTags($taglist) {
     // look for ImageBrowser if we have a $_GET('pid')
     if ( $pageid == get_the_ID() || !is_home() )  
         if (!empty( $pid ))  {
-            foreach ($picturelist as $picture) {
-                $picarray[] = $picture->pid;
-            }
-            $out = nggCreateImageBrowser($picarray);
+            $out = nggCreateImageBrowser( $picturelist );
             return $out;
         }
 
@@ -1050,10 +1064,7 @@ function nggShowRandomRecent($type, $maxImages, $template = '', $galleryId = 0) 
     // look for ImageBrowser if we have a $_GET('pid')
     if ( $pageid == get_the_ID() || !is_home() )  
         if (!empty( $pid ))  {
-            foreach ($picturelist as $picture) {
-                $picarray[] = $picture->pid;
-            }
-            $out = nggCreateImageBrowser($picarray);
+            $out = nggCreateImageBrowser( $picturelist );
             return $out;
         }
 
