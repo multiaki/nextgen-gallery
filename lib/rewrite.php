@@ -1,7 +1,7 @@
 <?php
 
 /**
-* nggRewrite - First version of Rewrite Rules
+* nggRewrite - Rewrite Rules for NextGEN Gallery
 *
 * sorry wp-guys I didn't understand this at all. 
 * I tried it a couple of hours : this is the only pooooor result
@@ -221,17 +221,14 @@ class nggRewrite {
 	function RewriteRules($wp_rewrite) {		
 		$rewrite_rules = array (
         
-            //TODO: Posts can build custom permalink structure, need to build rewrite rules like this
-            //'([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/([^/]+)/' . $this->slug . '/slideshow/?$' => 'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&name=$matches[4]&show=slide',
-    		
-            // page rewrites
+            // new page rewrites
             '(.+?)/' . $this->slug . '/page-([0-9]+)/?$' => 'index.php?pagename=$matches[1]&nggpage=$matches[2]',
     		'(.+?)/' . $this->slug . '/image/([^/]+)/?$' => 'index.php?pagename=$matches[1]&pid=$matches[2]',
     		'(.+?)/' . $this->slug . '/image/([^/]+)/page-([0-9]+)/?$' => 'index.php?pagename=$matches[1]&pid=$matches[2]&nggpage=$matches[3]',
     		'(.+?)/' . $this->slug . '/slideshow/?$' => 'index.php?pagename=$matches[1]&show=slide',
     		'(.+?)/' . $this->slug . '/images/?$' => 'index.php?pagename=$matches[1]&show=gallery',
     		'(.+?)/' . $this->slug . '/tags/([^/]+)/?$' => 'index.php?pagename=$matches[1]&gallerytag=$matches[2]',
-    		'(.+?)/' . $this->slug . '/tags/([^/]+)/page-([0-9]+)/?$' => 'index.php?pagename=$matches[1]gallerytag=$matches[2]&nggpage=$matches[3]',
+    		'(.+?)/' . $this->slug . '/tags/([^/]+)/page-([0-9]+)/?$' => 'index.php?pagename=$matches[1]&gallerytag=$matches[2]&nggpage=$matches[3]',
 
     		'(.+?)/' . $this->slug . '/([^/]+)/?$' => 'index.php?pagename=$matches[1]&album=$matches[2]',
     		'(.+?)/' . $this->slug . '/([^/]+)/page-([0-9]+)/?$' => 'index.php?pagename=$matches[1]&album=$matches[2]&nggpage=$matches[3]',
@@ -246,7 +243,7 @@ class nggRewrite {
             // XML request
             $this->slug.'/slideshow/([0-9]+)/?$' => 'index.php?imagerotator=true&gid=$matches[1]',
             
-			// rewrite rules for pages
+			// obsolete rewrite rules for pages, could be removed later
 			$this->slug.'/page-([0-9]+)/?$' => 'index.php?page_id=$matches[1]',
 			$this->slug.'/page-([0-9]+)/page-([0-9]+)/?$' => 'index.php?page_id=$matches[1]&nggpage=$matches[2]',
 			$this->slug.'/page-([0-9]+)/image/([0-9]+)/?$' => 'index.php?page_id=$matches[1]&pid=$matches[2]',
@@ -260,12 +257,12 @@ class nggRewrite {
 			$this->slug.'/page-([0-9]+)/album-([^/]+)/gallery-([0-9]+)/?$' => 'index.php?page_id=$matches[1]&album=$matches[2]&gallery=$matches[3]',
 			$this->slug.'/page-([0-9]+)/album-([^/]+)/gallery-([0-9]+)/slideshow/?$' => 'index.php?page_id=$matches[1]&album=$matches[2]&gallery=$matches[3]&show=slide',
 			$this->slug.'/page-([0-9]+)/album-([^/]+)/gallery-([0-9]+)/images/?$' => 'index.php?page_id=$matches[1]&album=$matches[2]&gallery=$matches[3]&show=gallery',
-			$this->slug.'/page-([0-9]+)/album-([^/]+)/gallery-([0-9]+)/page/([0-9]+)/?$' => 'index.php?page_id=$matches[1]&album=$matches[2]&gallery=$matches[3]&pid=$matches[4]',
+			$this->slug.'/page-([0-9]+)/album-([^/]+)/gallery-([0-9]+)/image/([0-9]+)/?$' => 'index.php?page_id=$matches[1]&album=$matches[2]&gallery=$matches[3]&pid=$matches[4]',
 			$this->slug.'/page-([0-9]+)/album-([^/]+)/gallery-([0-9]+)/page-([0-9]+)/?$' => 'index.php?page_id=$matches[1]&album=$matches[2]&gallery=$matches[3]&nggpage=$matches[4]',
 			$this->slug.'/page-([0-9]+)/album-([^/]+)/gallery-([0-9]+)/page-([0-9]+)/slideshow/?$' => 'index.php?page_id=$matches[1]&album=$matches[2]&gallery=$matches[3]&nggpage=$matches[4]&show=slide',
 			$this->slug.'/page-([0-9]+)/album-([^/]+)/gallery-([0-9]+)/page-([0-9]+)/images/?$' => 'index.php?page_id=$matches[1]&album=$matches[2]&gallery=$matches[3]&nggpage=$matches[4]&show=gallery',
 			
-			// rewrite rules for posts
+			// obsolete rewrite rules for posts, could be removed later
 			$this->slug.'/post/([^/]+)/?$' => 'index.php?name=$matches[1]',
 			$this->slug.'/post/([^/]+)/page-([0-9]+)/?$' => 'index.php?name=$matches[1]&nggpage=$matches[2]',
 			$this->slug.'/post/([^/]+)/image/([0-9]+)/?$' => 'index.php?name=$matches[1]&pid=$matches[2]',
@@ -279,13 +276,120 @@ class nggRewrite {
 			$this->slug.'/post/([^/]+)/album-([^/]+)/gallery-([0-9]+)/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]',
 			$this->slug.'/post/([^/]+)/album-([^/]+)/gallery-([0-9]+)/slideshow/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]&show=slide',
 			$this->slug.'/post/([^/]+)/album-([^/]+)/gallery-([0-9]+)/images/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]&show=gallery',
-			$this->slug.'/post/([^/]+)/album-([^/]+)/gallery-([0-9]+)/page/([0-9]+)/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]&pid=$matches[4]',
+			$this->slug.'/post/([^/]+)/album-([^/]+)/gallery-([0-9]+)/image/([0-9]+)/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]&pid=$matches[4]',
 			$this->slug.'/post/([^/]+)/album-([^/]+)/gallery-([0-9]+)/page-([0-9]+)/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]&nggpage=$matches[4]',
 			$this->slug.'/post/([^/]+)/album-([^/]+)/gallery-([0-9]+)/page-([0-9]+)/slideshow/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]&nggpage=$matches[4]&show=slide',
 			$this->slug.'/post/([^/]+)/album-([^/]+)/gallery-([0-9]+)/page-([0-9]+)/images/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]&nggpage=$matches[4]&show=gallery',
 		);
-		
+        
+        $rewrite_rules = array_merge($this->generate_rewrite_rules(), $rewrite_rules);                                                
 		$wp_rewrite->rules = array_merge($rewrite_rules, $wp_rewrite->rules);		
+	}
+
+	/**
+	 * Mainly a copy of the same function in wp-includes\rewrite.php
+     * Adding the NGG tags to each post & page. Never found easier and proper way to handle this with other functions.
+	 * 
+	 * @return array the permalink structure
+	 */
+	function generate_rewrite_rules() {
+        global $wp_rewrite;	   
+        
+        $new_rules = array(
+            '/page-([0-9]+)/' => '&nggpage=[matches]',
+    		'/image/([^/]+)/' => '&pid=[matches]',
+    		'/image/([^/]+)/page-([0-9]+)/' => '&pid=[matches]&nggpage=[matches]',
+    		'/slideshow/' => '&show=slide',
+    		'/images/' => '&show=gallery',
+    		'/tags/([^/]+)/' => '&gallerytag=[matches]',
+    		'/tags/([^/]+)/page-([0-9]+)/' => '&gallerytag=[matches]&nggpage=[matches]',
+    		'/([^/]+)/' => '&album=[matches]',
+    		'/([^/]+)/page-([0-9]+)/' => '&album=[matches]&nggpage=[matches]',
+    		'/([^/]+)/([^/]+)/' => '&album=[matches]&gallery=[matches]',
+    		'/([^/]+)/([^/]+)/slideshow/' => '&album=[matches]&gallery=[matches]&show=slide',
+    		'/([^/]+)/([^/]+)/images/' => '&album=[matches]&gallery=[matches]&show=gallery',
+    		'/([^/]+)/([^/]+)/page-([0-9]+)/' => '&album=[matches]&gallery=[matches]&nggpage=[matches]',
+    		'/([^/]+)/([^/]+)/page-([0-9]+)/slideshow/' => '&album=[matches]&gallery=[matches]&nggpage=[matches]&show=slide',
+    		'/([^/]+)/([^/]+)/page-([0-9]+)/images/' => '&album=[matches]&gallery=[matches]&nggpage=[matches]&show=gallery',
+    		'/([^/]+)/([^/]+)/([^/]+)/' => '&album=[matches]&gallery=[matches]&pid=[matches]'        
+        );
+        
+        $permalink_structure =  $wp_rewrite->permalink_structure;      
+		
+        //get everything up to the first rewrite tag
+		$front = substr($permalink_structure, 0, strpos($permalink_structure, '%'));
+		//build an array of the tags (note that said array ends up being in $tokens[0])
+		preg_match_all('/%.+?%/', $permalink_structure, $tokens);
+        
+		$num_tokens = count($tokens[0]);
+
+		$index = $wp_rewrite->index; //probably 'index.php'
+
+		//build a list from the rewritecode and queryreplace arrays, that will look something like
+		//tagname=$matches[i] where i is the current $i
+		for ( $i = 0; $i < $num_tokens; ++$i ) {
+			if ( 0 < $i )
+				$queries[$i] = $queries[$i - 1] . '&';
+			else
+				$queries[$i] = '';
+
+			$query_token = str_replace($wp_rewrite->rewritecode, $wp_rewrite->queryreplace, $tokens[0][$i]) . $wp_rewrite->preg_index($i+1);
+			$queries[$i] .= $query_token;
+		}
+
+		//get the structure, minus any cruft (stuff that isn't tags) at the front
+		$structure = $permalink_structure;
+		if ( $front != '/' )
+			$structure = str_replace($front, '', $structure);
+
+		//create a list of dirs to walk over, making rewrite rules for each level
+		//so for example, a $structure of /%year%/%month%/%postname% would create
+		//rewrite rules for /%year%/, /%year%/%month%/ and /%year%/%month%/%postname%
+		$structure = trim($structure, '/');
+
+		//strip slashes from the front of $front
+		$struct = preg_replace('|^/+|', '', $front);
+
+		//get the struct for this dir, and trim slashes off the front
+		$struct .= $structure . '/'; //accumulate. see comment near explode('/', $structure) above
+		$struct = ltrim($struct, '/');
+
+		//replace tags with regexes
+		$match = str_replace($wp_rewrite->rewritecode, $wp_rewrite->rewritereplace, $struct);
+
+		//make a list of tags, and store how many there are in $num_toks
+		$num_toks = preg_match_all('/%.+?%/', $struct, $toks);
+
+		//get the 'tagname=$matches[i]'
+		$query = ( isset($queries) && is_array($queries) ) ? $queries[$num_toks - 1] : '';
+
+        $post_rewrite = array();
+        
+        foreach ( $new_rules as $regex => $new_query) {
+            
+            // first add your nextgen slug
+            $final_match = $match . $this->slug;
+           
+            //add regex parameter
+            $final_match .= $regex;
+            // check how often we found matches fields
+            $count = substr_count($new_query, '[matches]');
+            // we need to know how many tags before
+            $offset = $num_toks;
+            // build the query and count up the matches : tagname=$matches[x]
+            for ( $i = 0; $i < $count; $i++ ) {
+                $new_query = preg_replace('/\[matches\]/', '$matches[' . ++$offset . ']', $new_query, 1);
+            }
+            $final_query = $query . $new_query;
+            
+            //close the match and finalise the query
+            $final_match .= '?$';
+            $final_query = $index . '?' . $final_query;
+            
+            $post_rewrite = array_merge($post_rewrite, array($final_match => $final_query));
+        }
+
+		return $post_rewrite; //the finished rules. phew!
 	}
 	
 }  // of nggRewrite CLASS
