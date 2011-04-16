@@ -244,6 +244,12 @@ function nggCreateGallery($picturelist, $galleryID = false, $template = '', $ima
     $pageid   = get_query_var('pageid');
     $pid      = get_query_var('pid');
     
+    // in case of permalinks the pid is a slug, we need the id
+    if( !is_numeric($pid) ) {
+        $picture = nggdb::find_image($pid);        
+        $pid = $picture->pid;
+    }   
+    
     // we need to know the current page id
     $current_page = (get_the_ID() == false) ? 0 : get_the_ID();
 
