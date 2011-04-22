@@ -436,10 +436,10 @@ function ngg_ajax_test_head_footer() {
 
 		// Check to see if we found the existence of wp_head
 		if ( ! strstr( $html, '<!--wp_head-->' ) )
-			die('Missing the call to <?php wp_head(); ?> in your theme');
+			die('Missing the call to wp_head() in your theme, contact the theme author');
 		// Check to see if we found the existence of wp_footer
 		if ( ! strstr( $html, '<!--wp_footer-->' ) )
-			die('Missing the call to <?php wp_footer(); ?> in your theme');
+			die('Missing the call to wp_footer() in your theme, contact the theme author');
 	}
     die('success');	
 }
