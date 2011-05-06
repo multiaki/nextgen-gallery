@@ -24,7 +24,7 @@ class nggRewrite {
 		$this->options = get_option('ngg_options');
 		
 		// get later from the options
-		$this->slug = 'nggallery';
+        $this->slug = $this->options['permalinkSlug'];
 
 		/*WARNING: Do nothook rewrite rule regentation on the init hook for anything other than dev. */
 		//add_action('init',array(&$this, 'flush'));
@@ -123,11 +123,12 @@ class nggRewrite {
 	* The permalinks needs to be flushed after activation
 	*/
 	function flush() { 
-		global $wp_rewrite;
+		global $wp_rewrite, $ngg;
 		
-		$this->options = get_option('ngg_options');
-		
-		if ($this->options['usePermalinks'])
+        // reload slug, maybe it changed during the flush routine
+        $this->slug = $ngg->options['permalinkSlug'];
+        
+		if ($ngg->options['usePermalinks'])
 			add_action('generate_rewrite_rules', array(&$this, 'RewriteRules'));
 			
 		$wp_rewrite->flush_rules();
@@ -218,7 +219,9 @@ class nggRewrite {
 	/**
 	* The actual rewrite rules
 	*/
-	function RewriteRules($wp_rewrite) {		
+	function RewriteRules($wp_rewrite) {
+        global $ngg;
+        
 		$rewrite_rules = array (
         
             // new page rewrites
@@ -241,45 +244,7 @@ class nggRewrite {
     		'(.+?)/' . $this->slug . '/([^/]+)/([^/]+)/([^/]+)/?$' => 'index.php?pagename=$matches[1]&album=$matches[2]&gallery=$matches[3]&pid=$matches[4]',
             
             // XML request
-            $this->slug.'/slideshow/([0-9]+)/?$' => 'index.php?imagerotator=true&gid=$matches[1]',
-            
-			// obsolete rewrite rules for pages, could be removed later
-			$this->slug.'/page-([0-9]+)/?$' => 'index.php?page_id=$matches[1]',
-			$this->slug.'/page-([0-9]+)/page-([0-9]+)/?$' => 'index.php?page_id=$matches[1]&nggpage=$matches[2]',
-			$this->slug.'/page-([0-9]+)/image/([0-9]+)/?$' => 'index.php?page_id=$matches[1]&pid=$matches[2]',
-			$this->slug.'/page-([0-9]+)/image/([0-9]+)/page-([0-9]+)/?$' => 'index.php?page_id=$matches[1]&pid=$matches[2]&nggpage=$matches[3]',
-			$this->slug.'/page-([0-9]+)/slideshow/?$' => 'index.php?page_id=$matches[1]&show=slide',
-			$this->slug.'/page-([0-9]+)/images/?$' => 'index.php?page_id=$matches[1]&show=gallery',
-			$this->slug.'/page-([0-9]+)/tags/([^/]+)/?$' => 'index.php?page_id=$matches[1]&gallerytag=$matches[2]',
-			$this->slug.'/page-([0-9]+)/tags/([^/]+)/page-([0-9]+)/?$' => 'index.php?page_id=$matches[1]&gallerytag=$matches[2]&nggpage=$matches[3]',
-			$this->slug.'/page-([0-9]+)/album-([^/]+)/?$' => 'index.php?page_id=$matches[1]&album=$matches[2]',
-			$this->slug.'/page-([0-9]+)/album-([^/]+)/page-([0-9]+)/?$' => 'index.php?page_id=$matches[1]&album=$matches[2]&nggpage=$matches[3]',
-			$this->slug.'/page-([0-9]+)/album-([^/]+)/gallery-([0-9]+)/?$' => 'index.php?page_id=$matches[1]&album=$matches[2]&gallery=$matches[3]',
-			$this->slug.'/page-([0-9]+)/album-([^/]+)/gallery-([0-9]+)/slideshow/?$' => 'index.php?page_id=$matches[1]&album=$matches[2]&gallery=$matches[3]&show=slide',
-			$this->slug.'/page-([0-9]+)/album-([^/]+)/gallery-([0-9]+)/images/?$' => 'index.php?page_id=$matches[1]&album=$matches[2]&gallery=$matches[3]&show=gallery',
-			$this->slug.'/page-([0-9]+)/album-([^/]+)/gallery-([0-9]+)/image/([0-9]+)/?$' => 'index.php?page_id=$matches[1]&album=$matches[2]&gallery=$matches[3]&pid=$matches[4]',
-			$this->slug.'/page-([0-9]+)/album-([^/]+)/gallery-([0-9]+)/page-([0-9]+)/?$' => 'index.php?page_id=$matches[1]&album=$matches[2]&gallery=$matches[3]&nggpage=$matches[4]',
-			$this->slug.'/page-([0-9]+)/album-([^/]+)/gallery-([0-9]+)/page-([0-9]+)/slideshow/?$' => 'index.php?page_id=$matches[1]&album=$matches[2]&gallery=$matches[3]&nggpage=$matches[4]&show=slide',
-			$this->slug.'/page-([0-9]+)/album-([^/]+)/gallery-([0-9]+)/page-([0-9]+)/images/?$' => 'index.php?page_id=$matches[1]&album=$matches[2]&gallery=$matches[3]&nggpage=$matches[4]&show=gallery',
-			
-			// obsolete rewrite rules for posts, could be removed later
-			$this->slug.'/post/([^/]+)/?$' => 'index.php?name=$matches[1]',
-			$this->slug.'/post/([^/]+)/page-([0-9]+)/?$' => 'index.php?name=$matches[1]&nggpage=$matches[2]',
-			$this->slug.'/post/([^/]+)/image/([0-9]+)/?$' => 'index.php?name=$matches[1]&pid=$matches[2]',
-			$this->slug.'/post/([^/]+)/image/([0-9]+)/page-([0-9]+)/?$' => 'index.php?name=$matches[1]&pid=$matches[2]&nggpage=$matches[3]',
-			$this->slug.'/post/([^/]+)/slideshow/?$' => 'index.php?name=$matches[1]&show=slide',
-			$this->slug.'/post/([^/]+)/images/?$' => 'index.php?name=$matches[1]&show=gallery',
-			$this->slug.'/post/([^/]+)/tags/([^/]+)/?$' => 'index.php?name=$matches[1]&gallerytag=$matches[2]',
-			$this->slug.'/post/([^/]+)/tags/([^/]+)/page-([0-9]+)/?$' => 'index.php?name=$matches[1]&gallerytag=$matches[2]&nggpage=$matches[3]',
-			$this->slug.'/post/([^/]+)/album-([^/]+)/?$' => 'index.php?name=$matches[1]&album=$matches[2]',
-			$this->slug.'/post/([^/]+)/album-([^/]+)/page-([0-9]+)/?$' => 'index.php?name=$matches[1]&album=$matches[2]&nggpage=$matches[3]',
-			$this->slug.'/post/([^/]+)/album-([^/]+)/gallery-([0-9]+)/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]',
-			$this->slug.'/post/([^/]+)/album-([^/]+)/gallery-([0-9]+)/slideshow/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]&show=slide',
-			$this->slug.'/post/([^/]+)/album-([^/]+)/gallery-([0-9]+)/images/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]&show=gallery',
-			$this->slug.'/post/([^/]+)/album-([^/]+)/gallery-([0-9]+)/image/([0-9]+)/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]&pid=$matches[4]',
-			$this->slug.'/post/([^/]+)/album-([^/]+)/gallery-([0-9]+)/page-([0-9]+)/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]&nggpage=$matches[4]',
-			$this->slug.'/post/([^/]+)/album-([^/]+)/gallery-([0-9]+)/page-([0-9]+)/slideshow/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]&nggpage=$matches[4]&show=slide',
-			$this->slug.'/post/([^/]+)/album-([^/]+)/gallery-([0-9]+)/page-([0-9]+)/images/?$' => 'index.php?name=$matches[1]&album=$matches[2]&gallery=$matches[3]&nggpage=$matches[4]&show=gallery',
+            $this->slug . '/slideshow/([0-9]+)/?$' => 'index.php?imagerotator=true&gid=$matches[1]',
 		);
         
         $rewrite_rules = array_merge($this->generate_rewrite_rules(), $rewrite_rules);                                                

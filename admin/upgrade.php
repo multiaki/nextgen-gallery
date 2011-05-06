@@ -181,6 +181,11 @@ function ngg_upgrade() {
             }
                 
         }
+        
+        if (version_compare($installed_ver, '1.8.0', '<')) {
+            // new permalink structure
+            $ngg_options['permalinkSlug']		= 'nggallery'; 
+        }
 		return;
 	}
     
