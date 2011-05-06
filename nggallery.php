@@ -184,21 +184,27 @@ class nggLoader {
 	}
 	
 	function check_memory_limit() {
-
-        // get the real memory limit before some increase it
-		$this->memory_limit = (int) substr( ini_get('memory_limit'), 0, -1);
         
-		//This works only with enough memory, 16MB is silly, wordpress requires already 16MB :-)
-		if ( ($this->memory_limit != 0) && ($this->memory_limit < 16 ) ) {
-			add_action(
-				'admin_notices', 
-				create_function(
-					'', 
-					'echo \'<div id="message" class="error"><p><strong>' . __('Sorry, NextGEN Gallery works only with a Memory Limit of 16 MB or higher', 'nggallery') . '</strong></p></div>\';'
-				)
-			);
-			return false;
-		}
+        // get the real memory limit before some increase it
+		$this->memory_limit = ini_get('memory_limit');
+        
+        // Yes, we reached Gigabyte limits, so check if it's a megabyte limit
+        if (strtolower( substr($memory_limit, -1) ) == 'm') {
+            
+            $this->memory_limit = (int) substr( $this->memory_limit, 0, -1);
+        
+    		//This works only with enough memory, 16MB is silly, wordpress requires already 16MB :-)
+    		if ( ($this->memory_limit != 0) && ($this->memory_limit < 16 ) ) {
+    			add_action(
+    				'admin_notices', 
+    				create_function(
+    					'', 
+    					'echo \'<div id="message" class="error"><p><strong>' . __('Sorry, NextGEN Gallery works only with a Memory Limit of 16 MB or higher', 'nggallery') . '</strong></p></div>\';'
+    				)
+    			);
+    			return false;
+    		}
+        }
 		
 		return true;
 		
