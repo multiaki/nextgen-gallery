@@ -74,7 +74,7 @@ class nggRewrite {
 			**/
 
 			// 1. Post / Page url + main slug
-            $url = get_permalink ($post->ID) . $this->slug; 
+            $url = trailingslashit ( get_permalink ($post->ID) ) . $this->slug; 
 			
 			// 2. Album, pid or tags
 			if (isset ($args['album']) && ($args['gallery'] == false) )
