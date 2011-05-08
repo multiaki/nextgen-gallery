@@ -364,7 +364,7 @@ class nggLoader {
 			if ( ($this->options['thumbEffect'] == "shutter") || function_exists('srel_makeshutter') ) {
 				wp_enqueue_script ( 'ngg_script', NGGALLERY_URLPATH . 'js/ngg.js', array('jquery'), '2.0');
 				wp_localize_script( 'ngg_script', 'ngg_ajax', array('path'		=> NGGALLERY_URLPATH,
-                                                                    'callback'  => site_url() . '/' . 'index.php?callback=ngg-ajax',
+                                                                    'callback'  => home_url() . '/' . 'index.php?callback=ngg-ajax',
 																	'loading'	=> __('loading', 'nggallery'),
 				) );
 			}
