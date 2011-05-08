@@ -161,7 +161,7 @@ function nggallery_manage_gallery_main() {
         <?php $ngg->manage_page->pagination( 'top', $_GET['paged'], $nggdb->paged['total_objects'], $nggdb->paged['objects_per_page']  ); ?>
 		
 		</div>
-		<table class="widefat" cellspacing="0">
+		<table class="wp-list-table widefat fixed" cellspacing="0">
 			<thead>
 			<tr>
 <?php $wp_list_table->print_column_headers(true); ?>
