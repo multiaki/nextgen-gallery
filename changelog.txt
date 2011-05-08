@@ -1,12 +1,17 @@
 NextGEN Gallery
 by Alex Rabe & NextGEN DEV Team
 
-= V1.8.0 - sometimes =
+= V1.9.0 - sometimes = 
 * TODO : Facebook connector
 * TODO : Switch to Plupload (http://www.plupload.com/)
+* TODO : rework album page for large amount of galleries
+
+= V1.8.0 - soon =
+* NEW : Full rework of permalink url structure
 * NEW : Adding Google Sitemaps for Images (require WordPress SEO plugin by YOAST )
 * NEW : Support for WPML ( WordPress Multilingual Plugin )
 * NEW : Adding support for arrow key in shutter effect (THX to Flyvans)
+* NEW : Adding sort operation for galleries overview page
 * Changed : Updated pagination to new WP3.1 style
 * Bugfix : Empty values in XMLRPC update calls are ignored
 * Bugfix : Create gallery failed when safe-mode on

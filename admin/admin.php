@@ -50,8 +50,6 @@ class nggAdminPanel{
 	    if ( !is_multisite() || wpmu_site_admin() ) 
             add_submenu_page( NGGFOLDER , __('Reset / Uninstall', 'nggallery'), __('Reset / Uninstall', 'nggallery'), 'activate_plugins', 'nggallery-setup', array (&$this, 'show_menu'));
 
-		//register the column fields
-		$this->register_columns();	
 	}
 
 	// integrate the network menu	
@@ -377,29 +375,6 @@ class nggAdminPanel{
 		}
 
 		return $screen;
-	}
-
-	function register_column_headers($screen, $columns) {
-		global $_wp_column_headers, $wp_list_table;
-	
-		if ( !isset($_wp_column_headers) )
-			$_wp_column_headers = array();
-	
-		$_wp_column_headers[$screen] = $columns;
-        
-        //TODO: Deprecated in 3.1, see http://core.trac.wordpress.org/ticket/14579
-       	//$wp_list_table = new _WP_List_Table_Compat($screen);
-       	//$wp_list_table->_columns = $columns;
-	}
-
-	function register_columns() {
-		include_once ( dirname (__FILE__) . '/manage-images.php' );
-		
-		$this->register_column_headers('nggallery-manage-images', ngg_manage_image_columns() );
-		
-		include_once ( dirname (__FILE__) . '/manage-galleries.php' );
-		
-		$this->register_column_headers('nggallery-manage-galleries', ngg_manage_gallery_columns() );	
 	}
 
 	/**

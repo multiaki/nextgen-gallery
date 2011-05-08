@@ -11,8 +11,15 @@ function nggallery_manage_gallery_main() {
 	if ( ! isset( $_GET['paged'] ) || $_GET['paged'] < 1 )
 		$_GET['paged'] = 1;
 	
-	$start = ( $_GET['paged'] - 1 ) * 25;
-	$gallerylist = $nggdb->find_all_galleries('gid', 'asc', TRUE, 25, $start, false);
+    $items_per_page = 25;
+    
+	$start = ( $_GET['paged'] - 1 ) * $items_per_page;
+    
+    $order = ( isset ( $_GET['order'] ) && $_GET['order'] == 'desc' ) ? 'DESC' : 'ASC';
+    $orderby = ( isset ( $_GET['orderby'] ) && ( in_array( $_GET['orderby'], array('gid', 'title', 'author') )) ) ? $_GET['orderby'] : 'gid';
+
+	$gallerylist = $nggdb->find_all_galleries( $orderby, $order , TRUE, $items_per_page, $start, false);
+	$wp_list_table = new _NGG_Galleries_List_Table('nggallery-manage-galleries');
 
 	?>
 	<script type="text/javascript"> 
@@ -157,12 +164,12 @@ function nggallery_manage_gallery_main() {
 		<table class="widefat" cellspacing="0">
 			<thead>
 			<tr>
-<?php print_column_headers('nggallery-manage-galleries'); ?>
+<?php $wp_list_table->print_column_headers(true); ?>
 			</tr>
 			</thead>
 			<tfoot>
 			<tr>
-<?php print_column_headers('nggallery-manage-galleries', false); ?>
+<?php $wp_list_table->print_column_headers(false); ?>
 			</tr>
 			</tfoot>            
 			<tbody>
@@ -170,7 +177,7 @@ function nggallery_manage_gallery_main() {
 
 if($gallerylist) {
     //get the columns
-	$gallery_columns = ngg_manage_gallery_columns();
+	$gallery_columns = $wp_list_table->get_columns();
 	$hidden_columns  = get_hidden_columns('nggallery-manage-images');
 	$num_columns     = count($gallery_columns) - count($hidden_columns);
     
@@ -349,21 +356,70 @@ if($gallerylist) {
 <?php
 } 
 
-// define the columns to display, the syntax is 'internal name' => 'display name'
-function ngg_manage_gallery_columns() {
-	
-	$gallery_columns = array();
-	
-	$gallery_columns['cb'] = '<input name="checkall" type="checkbox" onclick="checkAll(document.getElementById(\'editgalleries\'));" />';
-	$gallery_columns['id'] = __('ID');
-	$gallery_columns['title'] = _n( 'Gallery', 'Galleries', 1, 'nggallery');
-	$gallery_columns['description'] = __('Description', 'nggallery');
-	$gallery_columns['author'] = __('Author', 'nggallery');
-	$gallery_columns['page_id'] = __('Page ID', 'nggallery');
-	$gallery_columns['quantity'] = _n( 'Image', 'Images', 2, 'nggallery' );
+/**
+ * Construtor class to create the table layout
+ *
+ * @package WordPress
+ * @subpackage List_Table
+ * @since 1.8.0
+ * @access private
+ */
+class _NGG_Galleries_List_Table extends WP_List_Table {
+	var $_screen;
+	var $_columns;
 
-	$gallery_columns = apply_filters('ngg_manage_gallery_columns', $gallery_columns);
+	function _NGG_Galleries_List_Table( $screen ) {
+		if ( is_string( $screen ) )
+			$screen = convert_to_screen( $screen );
 
-	return $gallery_columns;
+		$this->_screen = $screen;
+		$this->_columns = array() ;
+
+		add_filter( 'manage_' . $screen->id . '_columns', array( &$this, 'get_columns' ), 0 );
+	}
+
+	function get_column_info() {
+		$columns = get_column_headers( $this->_screen );
+		$hidden = get_hidden_columns( $this->_screen );
+		$_sortable = $this->get_sortable_columns();
+
+		foreach ( $_sortable as $id => $data ) {
+			if ( empty( $data ) )
+				continue;
+
+			$data = (array) $data;
+			if ( !isset( $data[1] ) )
+				$data[1] = false;
+
+			$sortable[$id] = $data;
+		}
+        
+		return array( $columns, $hidden, $sortable );
+	}
+    
+    // define the columns to display, the syntax is 'internal name' => 'display name'
+	function get_columns() {
+    	$columns = array();
+    	
+    	$columns['cb'] = '<input name="checkall" type="checkbox" onclick="checkAll(document.getElementById(\'editgalleries\'));" />';
+    	$columns['id'] = __('ID');
+    	$columns['title'] = _n( 'Gallery', 'Galleries', 1, 'nggallery');
+    	$columns['description'] = __('Description', 'nggallery');
+    	$columns['author'] = __('Author', 'nggallery');
+    	$columns['page_id'] = __('Page ID', 'nggallery');
+    	$columns['quantity'] = _n( 'Image', 'Images', 2, 'nggallery' );
+    
+    	$columns = apply_filters('ngg_manage_gallery_columns', $columns);
+    
+    	return $columns;
+	}
+
+	function get_sortable_columns() {
+		return array(
+			'id'    => array( 'gid', true ),
+			'title'   => 'title',
+			'author'   => 'author'
+		);
+	}    
 }
 ?>

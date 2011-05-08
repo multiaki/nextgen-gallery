@@ -8,7 +8,9 @@ function nggallery_picturelist() {
 	
 	// Look if its a search result
 	$is_search = isset ($_GET['s']) ? true : false;
-	$counter	= 0;	
+	$counter	= 0;
+    
+    $wp_list_table = new _NGG_Images_List_Table('nggallery-manage-images');	
 	
     if ($is_search) {
 
@@ -57,7 +59,7 @@ function nggallery_picturelist() {
 		$gallerylist = $nggdb->find_all_galleries();
 
 		//get the columns
-		$image_columns = ngg_manage_image_columns();
+		$image_columns   = $wp_list_table->get_columns();
 		$hidden_columns  = get_hidden_columns('nggallery-manage-images');
 		$num_columns     = count($image_columns) - count($hidden_columns);
 		
@@ -356,12 +358,12 @@ jQuery(document).ready( function() {
 
 	<thead>
 	<tr>
-<?php print_column_headers('nggallery-manage-images'); ?>
+<?php $wp_list_table->print_column_headers(true); ?>
 	</tr>
 	</thead>
 	<tfoot>
 	<tr>
-<?php print_column_headers('nggallery-manage-images', false); ?>
+<?php $wp_list_table->print_column_headers(false); ?>
 	</tr>
 	</tfoot>
 	<tbody>
@@ -633,25 +635,67 @@ if ( $counter == 0 )
 	<?php
 }
 
-// define the columns to display, the syntax is 'internal name' => 'display name'
-function ngg_manage_image_columns() {
-	
-	$image_columns = array();
-	
-	$image_columns['cb'] = '<input name="checkall" type="checkbox" onclick="checkAll(document.getElementById(\'updategallery\'));" />';
-	$image_columns['id'] = __('ID');
-	$image_columns['thumbnail'] = __('Thumbnail', 'nggallery');
-	
-	$image_columns['filename'] = __('Filename', 'nggallery');
-	
-	$image_columns['alt_title_desc'] = __('Alt &amp; Title Text', 'nggallery') . ' / ' . __('Description', 'nggallery');
-	$image_columns['tags'] = __('Tags (comma separated list)', 'nggallery');
+/**
+ * Construtor class to create the table layout
+ *
+ * @package WordPress
+ * @subpackage List_Table
+ * @since 1.8.0
+ * @access private
+ */
+class _NGG_Images_List_Table extends WP_List_Table {
+	var $_screen;
+	var $_columns;
 
-	$image_columns['exclude'] = __('exclude', 'nggallery');
-	
-	$image_columns = apply_filters('ngg_manage_images_columns', $image_columns);
+	function _NGG_Images_List_Table( $screen ) {
+		if ( is_string( $screen ) )
+			$screen = convert_to_screen( $screen );
 
-	return $image_columns;
+		$this->_screen = $screen;
+		$this->_columns = array() ;
+
+		add_filter( 'manage_' . $screen->id . '_columns', array( &$this, 'get_columns' ), 0 );
+	}
+
+	function get_column_info() {
+		$columns = get_column_headers( $this->_screen );
+		$hidden = get_hidden_columns( $this->_screen );
+		$_sortable = $this->get_sortable_columns();
+
+		foreach ( $_sortable as $id => $data ) {
+			if ( empty( $data ) )
+				continue;
+
+			$data = (array) $data;
+			if ( !isset( $data[1] ) )
+				$data[1] = false;
+
+			$sortable[$id] = $data;
+		}
+        
+		return array( $columns, $hidden, $sortable );
+	}
+    
+    // define the columns to display, the syntax is 'internal name' => 'display name'
+	function get_columns() {
+    	$columns = array();
+    	
+    	$columns['cb'] = '<input name="checkall" type="checkbox" onclick="checkAll(document.getElementById(\'updategallery\'));" />';
+    	$columns['id'] = __('ID');
+    	$columns['thumbnail'] = __('Thumbnail', 'nggallery');
+    	$columns['filename'] = __('Filename', 'nggallery');
+    	$columns['alt_title_desc'] = __('Alt &amp; Title Text', 'nggallery') . ' / ' . __('Description', 'nggallery');
+    	$columns['tags'] = __('Tags (comma separated list)', 'nggallery');
+    	$columns['exclude'] = __('exclude', 'nggallery');
+    	
+    	$columns = apply_filters('ngg_manage_images_columns', $columns);
+    
+    	return $columns;
+	}
+
+	function get_sortable_columns() {
+		return array();
+	}    
 }
 
 ?>
