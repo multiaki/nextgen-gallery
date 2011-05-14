@@ -172,7 +172,7 @@ function nggallery_manage_gallery_main() {
 <?php $wp_list_table->print_column_headers(false); ?>
 			</tr>
 			</tfoot>            
-			<tbody>
+			<tbody id="the-list">
 <?php
 
 if($gallerylist) {
@@ -201,7 +201,7 @@ if($gallerylist) {
 			switch ($gallery_column_key) {
 				case 'cb' :
 					?>
-        			<th scope="row" class="cb column-cb">
+        			<th scope="row" class="column-cb check-column">
         				<?php if (nggAdmin::can_manage_this_gallery($gallery->author)) { ?>
         					<input name="doaction[]" type="checkbox" value="<?php echo $gid ?>" />
         				<?php } ?>
@@ -210,12 +210,12 @@ if($gallerylist) {
     			break;
     			case 'id' :
     			    ?>
-					<td <?php echo $attributes ?> scope="row"><?php echo $gid; ?></td>
+					<td <?php echo $attributes ?>><?php echo $gid; ?></td>
 					<?php 
     			break;
     			case 'title' :
     			    ?>
-        			<td>
+        			<td class="title column-title">
         				<?php if (nggAdmin::can_manage_this_gallery($gallery->author)) { ?>
         					<a href="<?php echo wp_nonce_url( $ngg->manage_page->base_page . '&amp;mode=edit&amp;gid=' . $gid, 'ngg_editgallery')?>" class='edit' title="<?php _e('Edit'); ?>" >
         						<?php echo nggGallery::i18n($name); ?>
@@ -223,6 +223,7 @@ if($gallerylist) {
         				<?php } else { ?>
         					<?php echo nggGallery::i18n($gallery->title); ?>
         				<?php } ?>
+                        <div class="row-actions"></div>
         			</td>
         			<?php 
     			break;

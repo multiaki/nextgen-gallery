@@ -166,7 +166,7 @@ p#ngg-inlinebutton {
 }
 
 .fixed .column-title {
-	width: 40em;
+	width: 50%;
 }
 
 .fixed .column-exclude, .fixed .column-action, .fixed .column-delete {

@@ -366,7 +366,7 @@ jQuery(document).ready( function() {
 <?php $wp_list_table->print_column_headers(false); ?>
 	</tr>
 	</tfoot>
-	<tbody>
+	<tbody id="the-list">
 <?php
 if($picturelist) {
 	
@@ -392,28 +392,30 @@ if($picturelist) {
 		<tr id="picture-<?php echo $pid ?>" class="<?php echo $alternate ?> iedit"  valign="top">
 			<?php
 			foreach($image_columns as $image_column_key => $column_display_name) {
-				$class = "class=\"$image_column_key column-$image_column_key\"";
+				$class = "class='$image_column_key column-$image_column_key'";
 		
 				$style = '';
 				if ( in_array($image_column_key, $hidden_columns) )
 					$style = ' style="display:none;"';
 		
-				$attributes = "$class$style";
+				$attributes = $class . $style;
 				
 				switch ($image_column_key) {
 					case 'cb' :
+                        $attributes = 'class="column-cb check-column"' . $style;
 						?> 
 						<th <?php echo $attributes ?> scope="row"><input name="doaction[]" type="checkbox" value="<?php echo $pid ?>" /></th>
 						<?php
 					break;
 					case 'id' :
 						?>
-						<td <?php echo $attributes ?> scope="row" style=""><?php echo $pid; ?>
+						<td <?php echo $attributes ?> style=""><?php echo $pid; ?>
 							<input type="hidden" name="pid[]" value="<?php echo $pid ?>" />
 						</td>
 						<?php
 					break;
 					case 'filename' :
+                        $attributes = 'class="title column-filename column-title"' . $style;
 						?>
 						<td <?php echo $attributes ?>>
 							<strong><a href="<?php echo $picture->imageURL; ?>" class="thickbox" title="<?php echo $picture->filename ?>">
@@ -450,12 +452,10 @@ if($picturelist) {
 						<?php						
 					break;
 					case 'thumbnail' :
-     					// generate the thumbnail size if the meta data available
-     					if (is_array ($size = $picture->meta_data['thumbnail']) )
-							$thumbsize = 'width="' . $size['width'] . '" height="' . $size['height'] . '"';
+                        $attributes = 'class="id column-icon media-icon"' . $style;
 						?>
 						<td <?php echo $attributes ?>><a href="<?php echo $picture->imageURL; if(strpos($picture->imageURL, '?')) { echo '&'; } else { echo '?'; } echo mt_rand(); ?>" class="thickbox" title="<?php echo $picture->filename ?>">
-								<img class="thumb" src="<?php echo $picture->thumbURL; if(strpos($picture->thumbURL, '?')) { echo '&'; } else { echo '?'; } echo mt_rand(); ?>" <?php echo $thumbsize ?> id="thumb<?php echo $pid ?>" />
+								<img class="thumb" src="<?php echo $picture->thumbURL; if(strpos($picture->thumbURL, '?')) { echo '&'; } else { echo '?'; } echo mt_rand(); ?>" id="thumb<?php echo $pid ?>" />
 							</a>
 						</td>
 						<?php						
