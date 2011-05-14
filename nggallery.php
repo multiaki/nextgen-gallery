@@ -4,7 +4,7 @@ Plugin Name: NextGEN Gallery
 Plugin URI: http://alexrabe.de/?page_id=80
 Description: A NextGENeration Photo Gallery for WordPress
 Author: Alex Rabe
-Version: 1.8.0a
+Version: 1.8.0b1
 
 Author URI: http://alexrabe.de/
 
@@ -35,7 +35,7 @@ if (!class_exists('nggLoader')) {
 class nggLoader {
 	
 	var $version     = '1.8.0';
-	var $dbversion   = '1.7.0';
+	var $dbversion   = '1.8.0';
 	var $minium_WP   = '3.0';
 	var $donators    = 'http://nextgen.boelinger.com/donators.php';
 	var $options     = '';
@@ -95,7 +95,7 @@ class nggLoader {
 		
 		// All credits to the tranlator 
 		$this->translator  = '<p class="hint">'. __('<strong>Translation by : </strong><a target="_blank" href="http://alexrabe.de/wordpress-plugins/nextgen-gallery/languages/">See here</a>', 'nggallery') . '</p>';
-		$this->translator .= '<p class="hint">'. __('<strong>This translation is not yet updated for Version 1.7.3</strong>. If you would like to help with translation, download the current po from the plugin folder and read <a href="http://alexrabe.de/wordpress-plugins/wordtube/translation-of-plugins/">here</a> how you can translate the plugin.', 'nggallery') . '</p>'; 
+		$this->translator .= '<p class="hint">'. __('<strong>This translation is not yet updated for Version 1.8.0</strong>. If you would like to help with translation, download the current po from the plugin folder and read <a href="http://alexrabe.de/wordpress-plugins/wordtube/translation-of-plugins/">here</a> how you can translate the plugin.', 'nggallery') . '</p>'; 
 
         // Check for upgrade
         $this->check_for_upgrade();
@@ -214,6 +214,7 @@ class nggLoader {
 
 		// Inform about a database upgrade
 		if( get_option( 'ngg_db_version' ) != NGG_DBVERSION ) {
+            if ( isset ($_GET['page']) && $_GET['page'] == NGGFOLDER ) return;
 			add_action(
 				'admin_notices', 
 				create_function(
