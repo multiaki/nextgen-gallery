@@ -1070,7 +1070,7 @@ class nggdb {
                 return false;
         }
         
-        //if you didn't give us a nem we take the type
+        //if you didn't give us a name we take the type
         $slug = empty($slug) ? $type: $slug;
         
    		// Slugs must be unique across all objects.         
