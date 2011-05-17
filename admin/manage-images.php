@@ -452,7 +452,7 @@ if($picturelist) {
 						<?php						
 					break;
 					case 'thumbnail' :
-                        $attributes = 'class="id column-icon media-icon"' . $style;
+                        $attributes = 'class="id column-thumbnail media-icon"' . $style;
 						?>
 						<td <?php echo $attributes ?>><a href="<?php echo $picture->imageURL; if(strpos($picture->imageURL, '?')) { echo '&'; } else { echo '?'; } echo mt_rand(); ?>" class="thickbox" title="<?php echo $picture->filename ?>">
 								<img class="thumb" src="<?php echo $picture->thumbURL; if(strpos($picture->thumbURL, '?')) { echo '&'; } else { echo '?'; } echo mt_rand(); ?>" id="thumb<?php echo $pid ?>" />

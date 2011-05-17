@@ -19,7 +19,7 @@ function nggallery_manage_gallery_main() {
     $orderby = ( isset ( $_GET['orderby'] ) && ( in_array( $_GET['orderby'], array('gid', 'title', 'author') )) ) ? $_GET['orderby'] : 'gid';
 
 	$gallerylist = $nggdb->find_all_galleries( $orderby, $order , TRUE, $items_per_page, $start, false);
-	$wp_list_table = new _NGG_Galleries_List_Table('nggallery-manage-galleries');
+	$wp_list_table = new _NGG_Galleries_List_Table('nggallery-manage-gallery');
 
 	?>
 	<script type="text/javascript"> 
@@ -178,7 +178,7 @@ function nggallery_manage_gallery_main() {
 if($gallerylist) {
     //get the columns
 	$gallery_columns = $wp_list_table->get_columns();
-	$hidden_columns  = get_hidden_columns('nggallery-manage-images');
+	$hidden_columns  = get_hidden_columns('nggallery-manage-gallery');
 	$num_columns     = count($gallery_columns) - count($hidden_columns);
     
 	foreach($gallerylist as $gallery) {

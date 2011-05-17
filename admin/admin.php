@@ -21,11 +21,11 @@ class nggAdminPanel{
 		add_action('admin_print_styles', array(&$this, 'load_styles') );
 
 		add_filter('contextual_help', array(&$this, 'show_help'), 10, 2);
-		add_filter('screen_meta_screen', array(&$this, 'edit_screen_meta'));
+        add_filter('current_screen', array(&$this, 'edit_current_screen'));
 
         // Add WPML hook to register description / alt text for translation
-        add_action('ngg_image_updated', array('nggGallery', 'RegisterString') );	
-        
+        add_action('ngg_image_updated', array('nggGallery', 'RegisterString') );
+       
 	}
 
 	// integrate the menu	
@@ -50,6 +50,8 @@ class nggAdminPanel{
 	    if ( !is_multisite() || wpmu_site_admin() ) 
             add_submenu_page( NGGFOLDER , __('Reset / Uninstall', 'nggallery'), __('Reset / Uninstall', 'nggallery'), 'activate_plugins', 'nggallery-setup', array (&$this, 'show_menu'));
 
+		//register the column fields
+		$this->register_columns();	
 	}
 
 	// integrate the network menu	
@@ -354,27 +356,52 @@ class nggAdminPanel{
 		
 		return $help;
 	}
-	
-	function edit_screen_meta($screen) {
+
+	/**
+	 * We need to manipulate the current_screen name so that we can show the correct column screen options
+	 * 
+     * @since 1.8.0
+	 * @param object $screen
+	 * @return object $screen
+	 */
+	function edit_current_screen($screen) {
+	   
+    	if ( is_string($screen) )
+    		$screen = convert_to_screen($screen);
 
 		// menu title is localized, so we need to change the toplevel name
 		$i18n = strtolower  ( _n( 'Gallery', 'Galleries', 1, 'nggallery' ) );
 		
-		switch ($screen) {
+		switch ($screen->id) {
 			case "{$i18n}_page_nggallery-manage-gallery" :
 				// we would like to have screen option only at the manage images / gallery page
 				if ( isset ($_POST['sortGallery']) )
 					$screen = $screen;
 				else if ( ($_GET['mode'] == 'edit') || isset ($_POST['backToGallery']) )
-					$screen = 'nggallery-manage-images';
+					$screen->base = $screen->id = 'nggallery-manage-images';
 				else if ( ($_GET['mode'] == 'sort') )
 					$screen = $screen;
 				else
-					$screen = 'nggallery-manage-gallery';	
+					$screen->base = $screen->id = 'nggallery-manage-gallery';	
 			break;
 		}
 
 		return $screen;
+	}
+
+	/**
+	 * We need to register the columns at a very early point
+	 * 
+	 * @return void
+	 */
+	function register_columns() {
+		include_once ( dirname (__FILE__) . '/manage-images.php' );
+
+		$wp_list_table = new _NGG_Images_List_Table('nggallery-manage-images');
+		
+		include_once ( dirname (__FILE__) . '/manage-galleries.php' );
+		
+		$wp_list_table = new _NGG_Galleries_List_Table('nggallery-manage-gallery');	
 	}
 
 	/**
