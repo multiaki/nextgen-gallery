@@ -13,6 +13,8 @@ by Alex Rabe & NextGEN DEV Team
 * NEW : Adding support for arrow key in shutter effect (THX to Flyvans)
 * NEW : Adding sort operation for galleries overview page
 * Changed : Updated pagination to new WP3.1 style
+* Bugfix : Create unique slug in a better way
+* Bugfix : Rework screen options filter for gallery and image table 
 * Bugfix : Empty values in XMLRPC update calls are ignored
 * Bugfix : Create gallery failed when safe-mode on
 

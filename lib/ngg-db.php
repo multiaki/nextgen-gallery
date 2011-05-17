@@ -1050,21 +1050,22 @@ class nggdb {
      * @author taken from WP Core includes/post.php
      * @param string $slug the desired slug (post_name)
      * @param string $type ('image', 'album' or 'gallery')
+     * @param int (optional) $id of the object, so that it's not checked against itself
      * @return string unique slug for the object, based on $slug (with a -1, -2, etc. suffix)
      */
-    function get_unique_slug( $slug, $type ) {
+    function get_unique_slug( $slug, $type, $id = 0 ) {
     
     	global $wpdb;
         
         switch ($type) {
             case 'image':
-        		$check_sql = "SELECT image_slug FROM $wpdb->nggpictures WHERE image_slug = %s LIMIT 1";
+        		$check_sql = "SELECT image_slug FROM $wpdb->nggpictures WHERE image_slug = %s AND NOT pid = %d LIMIT 1";
             break;
             case 'album':
-        		$check_sql = "SELECT slug FROM $wpdb->nggalbum WHERE slug = %s LIMIT 1";
+        		$check_sql = "SELECT slug FROM $wpdb->nggalbum WHERE slug = %s AND NOT id = %d LIMIT 1";
             break;
             case 'gallery':
-        		$check_sql = "SELECT slug FROM $wpdb->nggallery WHERE slug = %s LIMIT 1";
+        		$check_sql = "SELECT slug FROM $wpdb->nggallery WHERE slug = %s AND NOT gid = %d LIMIT 1";
             break;
             default:
                 return false;
@@ -1074,13 +1075,13 @@ class nggdb {
         $slug = empty($slug) ? $type: $slug;
         
    		// Slugs must be unique across all objects.         
-		$slug_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $slug ) );
+        $slug_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $slug, $id ) );
 
 		if ( $slug_check ) {
 			$suffix = 2;
 			do {
 				$alt_name = substr ($slug, 0, 200 - ( strlen( $suffix ) + 1 ) ) . "-$suffix";
-				$slug_check = $wpdb->get_var( $wpdb->prepare($check_sql, $alt_name ) );
+				$slug_check = $wpdb->get_var( $wpdb->prepare($check_sql, $alt_name, $id ) );
 				$suffix++;
 			} while ( $slug_check );
 			$slug = $alt_name;

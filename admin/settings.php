@@ -256,8 +256,7 @@ class nggOptions {
 				</tr>
 				<tr class="expert">
 					<th valign="top"><?php _e('Create new URL friendly image slugs','nggallery'); ?></th>
-					<td><input type="submit" name="createslugs" class="button-secondary"  value="<?php _e('Proceed now','nggallery') ;?> &raquo;"/>
-                    <?php _e('Currently not used, prepare database for upcoming version','nggallery'); ?></td>
+					<td><input type="submit" name="createslugs" class="button-secondary"  value="<?php _e('Proceed now','nggallery') ;?> &raquo;"/></td>
 				</tr>                
 				<tr class="expert">
 					<th valign="top"><?php _e('Select graphic library','nggallery'); ?></th>

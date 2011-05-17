@@ -371,7 +371,7 @@ class nggManageGallery {
 				
 				if ( nggGallery::current_user_can( 'NextGEN Edit gallery title' )) {
 				    // don't forget to update the slug
-				    $slug = nggdb::get_unique_slug( sanitize_title( $_POST['title'] ), 'gallery' );
+				    $slug = nggdb::get_unique_slug( sanitize_title( $_POST['title'] ), 'gallery', $this->gid );
 				    $wpdb->query( $wpdb->prepare ("UPDATE $wpdb->nggallery SET title= '%s', slug= '%s' WHERE gid = %d", esc_attr($_POST['title']), $slug, $this->gid) );				    
 				}
 				if ( nggGallery::current_user_can( 'NextGEN Edit gallery path' ))
@@ -490,7 +490,7 @@ class nggManageGallery {
                     // only uptade this field if someone change the alttext
                     if ( $image->alttext != $alttext[$image->pid] ) {
                         $image->alttext = $alttext[$image->pid];
-                        $image->image_slug = nggdb::get_unique_slug( sanitize_title( $image->alttext ), 'image' );                        
+                        $image->image_slug = nggdb::get_unique_slug( sanitize_title( $image->alttext ), 'image', $image->pid );                        
                     }
                     
                     // set exclude flag
