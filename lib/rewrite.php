@@ -241,7 +241,7 @@ class nggRewrite {
     		'(.+?)/' . $this->slug . '/([^/]+)/([^/]+)/page-([0-9]+)/?$' => 'index.php?pagename=$matches[1]&album=$matches[2]&gallery=$matches[3]&nggpage=$matches[4]',
     		'(.+?)/' . $this->slug . '/([^/]+)/([^/]+)/page-([0-9]+)/slideshow/?$' => 'index.php?pagename=$matches[1]&album=$matches[21]&gallery=$matches[3]&nggpage=$matches[4]&show=slide',
     		'(.+?)/' . $this->slug . '/([^/]+)/([^/]+)/page-([0-9]+)/images/?$' => 'index.php?pagename=$matches[1]&album=$matches[2]&gallery=$matches[3]&nggpage=$matches[4]&show=gallery',
-    		'(.+?)/' . $this->slug . '/([^/]+)/([^/]+)/([^/]+)/?$' => 'index.php?pagename=$matches[1]&album=$matches[2]&gallery=$matches[3]&pid=$matches[4]',
+    		'(.+?)/' . $this->slug . '/([^/]+)/([^/]+)/image/([^/]+)/?$' => 'index.php?pagename=$matches[1]&album=$matches[2]&gallery=$matches[3]&pid=$matches[4]',
             
             // XML request
             $this->slug . '/slideshow/([0-9]+)/?$' => 'index.php?imagerotator=true&gid=$matches[1]',
@@ -276,7 +276,7 @@ class nggRewrite {
     		'/([^/]+)/([^/]+)/page-([0-9]+)/' => '&album=[matches]&gallery=[matches]&nggpage=[matches]',
     		'/([^/]+)/([^/]+)/page-([0-9]+)/slideshow/' => '&album=[matches]&gallery=[matches]&nggpage=[matches]&show=slide',
     		'/([^/]+)/([^/]+)/page-([0-9]+)/images/' => '&album=[matches]&gallery=[matches]&nggpage=[matches]&show=gallery',
-    		'/([^/]+)/([^/]+)/([^/]+)/' => '&album=[matches]&gallery=[matches]&pid=[matches]'        
+    		'/([^/]+)/([^/]+)/image/([^/]+)/' => '&album=[matches]&gallery=[matches]&pid=[matches]'        
         );
         
         $permalink_structure =  $wp_rewrite->permalink_structure;      
