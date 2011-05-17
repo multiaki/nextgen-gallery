@@ -17,6 +17,7 @@ by Alex Rabe & NextGEN DEV Team
 * Bugfix : Rework screen options filter for gallery and image table 
 * Bugfix : Empty values in XMLRPC update calls are ignored
 * Bugfix : Create gallery failed when safe-mode on
+* Bugfix : Permalink didn't work in combination with  album & imagebrowser
 
 = V1.7.4 - 15.02.2011 =
 * Bugfix : Disallow direct call of ajax file to avoid path disclosure (THX to High-Tech Bridge SA)
