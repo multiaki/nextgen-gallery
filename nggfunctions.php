@@ -673,8 +673,8 @@ function nggCreateImageBrowser($picturelist, $template = '') {
     $total = count($picarray);
 
     if ( !empty( $pid )) {
-        if ( is_numeric($pid) ) 
-            $act_pid = $intval($pid);
+        if ( is_numeric($pid) )     
+            $act_pid = intval($pid);
         else {
             // in the case it's a slug we need to search for the pid
             foreach ($picturelist as $key => $picture) {
