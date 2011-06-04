@@ -3,7 +3,7 @@
 * Main PHP Class for XML Image Sitemaps
 * 
 * @author 		Alex Rabe 
-* @version      0.1
+* @version      1.0
 * @copyright 	Copyright 2011
 * 
 */
@@ -18,24 +18,27 @@ class nggSitemaps {
      */
     function __construct() {
         
-        add_filter('add_ngg_images_in_sitemap', array( &$this, 'add_wpseo_xml_sitemap_images'), 10, 2);
+        add_filter('wpseo_sitemap_urlimages', array( &$this, 'add_wpseo_xml_sitemap_images'), 10, 2);
         
     }
 
     /**
-     * Filter support for WordPress SEO by Yoast ( http://wordpress.org/extend/plugins/wordpress-seo/ )
+     * Filter support for WordPress SEO by Yoast 0.4.0 or higher ( http://wordpress.org/extend/plugins/wordpress-seo/ )
      * 
-     * @param array $array
-     * @param string $content
+     * @since Version 1.8.0
+     * @param array $images
+     * @param int $post ID
      * @return array $image list of all founded images
      */
-    function add_wpseo_xml_sitemap_images( $array, $content )  {
+    function add_wpseo_xml_sitemap_images( $images, $post_id )  {
 
-        // start with a empty array
-        $this->images = array();
-                
+        $this->images = $images;
+
+        // first get the content of the post/page
+        $p = get_post($post_id);
+
         // Backward check for older images
-        $content->post_content = NextGEN_Shortcodes::convert_shortcode($content->post_content);
+        $p->post_content = NextGEN_Shortcodes::convert_shortcode($p->post_content);
         
         // Don't process the images in the normal way
   		remove_all_shortcodes();
@@ -48,7 +51,7 @@ class nggSitemaps {
         add_shortcode( 'slideshow', array(&$this, 'add_gallery' ) );
 
         // Search now for shortcodes
-        do_shortcode( $content->post_content );
+        do_shortcode( $p->post_content );
         
         return $this->images;
     }
@@ -74,13 +77,13 @@ class nggSitemaps {
         $images = nggdb::get_gallery($id, 'pid', 'ASC', true, 1000);
 
         foreach ($images as $image) {
+            $src   = $image->imageURL;
             $newimage = array();
-            $newimage['src']   = $image->imageURL;
             if ( !empty($image->title) )
                 $newimage['title'] = $image->title;
             if ( !empty($image->alttext) )    
                 $newimage['alt']   = $image->alttext;
-            $this->images[] = $newimage;
+            $this->images[$src] = $newimage;
         }
             
         return;
@@ -108,13 +111,13 @@ class nggSitemaps {
         $images = nggdb::find_images_in_list( $pids );
         
         foreach ($images as $image) {
+            $src   = $image->imageURL;
             $newimage = array();
-            $newimage['src']   = $image->imageURL;
             if ( !empty($image->title) )
                 $newimage['title'] = $image->title;
             if ( !empty($image->alttext) )    
                 $newimage['alt']   = $image->alttext;
-            $this->images[] = $newimage;
+            $this->images[$src] = $newimage;
         }
 
         return;
