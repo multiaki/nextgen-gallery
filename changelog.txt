@@ -4,7 +4,7 @@ by Alex Rabe & NextGEN DEV Team
 = V1.9.0 - sometimes = 
 * TODO : Facebook connector
 * TODO : Switch to Plupload (http://www.plupload.com/)
-* TODO : rework album page for large amount of galleries
+* TODO : Rework album page for large amount of galleries
 
 = V1.8.0 - soon =
 * NEW : Full rework of permalink url structure
@@ -17,7 +17,7 @@ by Alex Rabe & NextGEN DEV Team
 * Bugfix : Rework screen options filter for gallery and image table 
 * Bugfix : Empty values in XMLRPC update calls are ignored
 * Bugfix : Create gallery failed when safe-mode on
-* Bugfix : Permalink didn't work in combination with  album & imagebrowser
+* Bugfix : Permalink didn't work in combination with album & imagebrowser
 
 = V1.7.4 - 15.02.2011 =
 * Bugfix : Disallow direct call of ajax file to avoid path disclosure (THX to High-Tech Bridge SA)

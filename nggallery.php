@@ -4,7 +4,7 @@ Plugin Name: NextGEN Gallery
 Plugin URI: http://alexrabe.de/?page_id=80
 Description: A NextGENeration Photo Gallery for WordPress
 Author: Alex Rabe
-Version: 1.8.0b2
+Version: 1.8.0RC1
 
 Author URI: http://alexrabe.de/
 
@@ -427,11 +427,11 @@ class nggLoader {
 	function activate() {
 		global $wpdb;
 		//Starting from version 1.8.0 it's works only with PHP5.2
-        //if (version_compare(PHP_VERSION, '5.2.0', '<')) { 
-        //        deactivate_plugins(plugin_basename(__FILE__)); // Deactivate ourself
-        //        wp_die("Sorry, but you can't run this plugin, it requires PHP 5.2 or higher."); 
-		//		return; 
-        //} 
+        if (version_compare(PHP_VERSION, '5.2.0', '<')) { 
+                deactivate_plugins(plugin_basename(__FILE__)); // Deactivate ourself
+                wp_die("Sorry, but you can't run this plugin, it requires PHP 5.2 or higher."); 
+				return; 
+        } 
 
 		include_once (dirname (__FILE__) . '/admin/install.php');
         
