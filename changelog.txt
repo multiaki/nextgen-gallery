@@ -7,6 +7,7 @@ by Alex Rabe & NextGEN DEV Team
 * TODO : Rework album page for large amount of galleries
 
 = V1.8.1 - soon =
+* Bugfix : Special case for pagination, instead of showing page-1, we show the clean url
 * Bugfix : Various PHP notice fixes
 * Bugfix : Typo in rewrite rules
 * Bugfix : Flush rewrite rules during upgrade later
