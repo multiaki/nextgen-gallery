@@ -20,14 +20,7 @@ class nggManageGallery {
 			$this->pid  = (int) $_GET['pid'];	
 		if( isset($_GET['mode']) )
 			$this->mode = trim ($_GET['mode']);
-        // Check for pagination request, avoid post process of other submit button
-        if ( isset($_POST['paged']) && isset($_GET['paged']) ) {
-            if ( $_GET['paged'] != $_POST['paged'] ) {
-                $_GET['paged'] = $_POST['paged'];
-                return; 
-            }
-        }    
-		// Should be only called via manage galleries overview
+        // Should be only called via manage galleries overview
 		if ( isset($_POST['page']) && $_POST['page'] == 'manage-galleries' )
 			$this->post_processor_galleries();
 		// Should be only called via a edit single gallery page	
