@@ -21,7 +21,7 @@ class nggManageGallery {
 		if( isset($_GET['mode']) )
 			$this->mode = trim ($_GET['mode']);
         // Check for pagination request, avoid post process of other submit button
-        if ( isset($_POST['paged']) ) {
+        if ( isset($_POST['paged']) && isset($_GET['paged']) ) {
             if ( $_GET['paged'] != $_POST['paged'] ) {
                 $_GET['paged'] = $_POST['paged'];
                 return; 
@@ -362,12 +362,12 @@ class nggManageGallery {
 			}
 		}
 	
-		if (isset ($_POST['updatepictures']))  {
+		if (isset ($_POST['updatepictures']) )  {
 		// Update pictures	
 		
 			check_admin_referer('ngg_updategallery');
 			
-			if ( nggGallery::current_user_can( 'NextGEN Edit gallery options' )) {
+			if ( nggGallery::current_user_can( 'NextGEN Edit gallery options' )  && !isset ($_GET['s']) ) {
 				
 				if ( nggGallery::current_user_can( 'NextGEN Edit gallery title' )) {
 				    // don't forget to update the slug
