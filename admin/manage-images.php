@@ -164,7 +164,7 @@ function checkSelected() {
     	}, true);
     }
 	
-    if ( document.activeElement.name == 'paged' )
+    if ( document.activeElement.name == 'post_paged' )
         return true;
      
 	if(numchecked < 1) { 
