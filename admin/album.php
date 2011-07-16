@@ -173,7 +173,7 @@ jQuery(document).ready(
 	function()
 	{
         jQuery("#previewpic").nggAutocomplete( {
-            type: 'image',domain: "<?php echo home_url(); ?>/"
+            type: 'image',domain: "<?php echo home_url('index.php'); ?>/"
         });
         
 		jQuery('#selectContainer').sortable( {

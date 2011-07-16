@@ -6,6 +6,9 @@ by Alex Rabe & NextGEN DEV Team
 * TODO : Switch to Plupload (http://www.plupload.com/)
 * TODO : Rework album page for large amount of galleries
 
+= V1.8.3 - soon =
+* Bugfix : Adding index.php to home_url()
+
 = V1.8.2 - 12.07.2011 =
 * Bugfix : Set pagination variables for search result, otherwise update failed
 * Bugfix : Update failed for paged galleries since WordPress 3.2
