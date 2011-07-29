@@ -85,6 +85,10 @@ class nggImage{
 	* Applies the filter 'ngg_get_thumbcode'
 	*/
 	function get_thumbcode($galleryname = '') {
+	   
+        // clean up the name
+        $galleryname = sanitize_title( $galleryname );
+        
 		// read the option setting
 		$ngg_options = get_option('ngg_options');
 		
