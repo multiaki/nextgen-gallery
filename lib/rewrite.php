@@ -51,8 +51,9 @@ class nggRewrite {
 		if ($wp_rewrite->using_permalinks() && $this->options['usePermalinks'] ) {
 			$post = &get_post(get_the_ID());
 
-			// $_GET from wp_query
-			$album = get_query_var('album');
+			// If the album is not set before get it from the wp_query ($_GET) 
+            if ( !isset ($args['album'] ) )
+                $album = get_query_var('album');
 			if ( !empty( $album ) )
 				$args ['album'] = $album;
 			
