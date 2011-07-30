@@ -253,6 +253,7 @@ class nggdb {
                 // (see http://code.google.com/p/chromium/issues/detail?id=883)
                 if ($json) $key = $i++;               
                 $gallery[$key] = new nggImage( $value );
+                // keep in my each request requery 8 - 16 kb memory usage
             }
         }
         
