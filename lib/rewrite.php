@@ -327,6 +327,8 @@ class nggRewrite {
 		$query = ( isset($queries) && is_array($queries) ) ? $queries[$num_toks - 1] : '';
        
         if ( $num_toks ) {
+            // In the case we build for each and every page ( based on a simple %pagename% rule ) the rewrite rules,
+            // we need to add them first, then the post rules
             if ( $wp_rewrite->use_verbose_page_rules )
                 $rewrite_rules = array_merge ( $this->page_rewrite_rules(), $this->add_rewrite_rules( $match, $query, $num_toks ) );
             else
@@ -376,6 +378,7 @@ class nggRewrite {
     /**
      * Build the final structure of the rewrite rules based on match/query
      * 
+     * @since 1.8.3
      * @param string $match
      * @param string $query
      * @param int $num_toks

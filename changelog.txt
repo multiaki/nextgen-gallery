@@ -7,6 +7,7 @@ by Alex Rabe & NextGEN DEV Team
 * TODO : Rework album page for large amount of galleries
 
 = V1.8.3 - soon =
+* Changed : Support for simple custom permalink structures (i.e. /%category%/%postname%/)
 * Bugfix : Sub-Albums in Albums didn't create the correct link 
 * Bugfix : AJAX Pagination didn't work anymore
 * Bugfix : Adding index.php to home_url()
