@@ -80,6 +80,10 @@ class nggRewrite {
 	function get_permalink( $args ) {
 		global $wp_rewrite, $wp_query;
 
+        // taken from is_frontpage plugin, required for static homepage
+        $show_on_front = get_option('show_on_front');
+        $page_on_front = get_option('page_on_front');
+
 		//TODO: Watch out for ticket http://trac.wordpress.org/ticket/6627
 		if ($wp_rewrite->using_permalinks() && $this->options['usePermalinks'] ) {
 			$post = &get_post(get_the_ID());
@@ -109,6 +113,9 @@ class nggRewrite {
 
 			// 1. Post / Page url + main slug
             $url = trailingslashit ( get_permalink ($post->ID) ) . $this->slug; 
+            //TODO: For static home pages generate the link to the selected page, still doesn't work
+            if (($show_on_front == 'page') && ($page_on_front == get_the_ID()))
+                $url = trailingslashit ( $post->guid ) . $this->slug;
 
 			// 2. Album, pid or tags
 			if (isset ($args['album']) && ($args['gallery'] == false) )
@@ -138,10 +145,6 @@ class nggRewrite {
 			// we need to add the page/post id at the start_page otherwise we don't know which gallery is clicked
 			if (is_home())
 				$args['pageid'] = get_the_ID();
-			
-			// taken from is_frontpage plugin, required for static homepage
-			$show_on_front = get_option('show_on_front');
-			$page_on_front = get_option('page_on_front');
 			
 			if (($show_on_front == 'page') && ($page_on_front == get_the_ID()))
 				$args['page_id'] = get_the_ID();
