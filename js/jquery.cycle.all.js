@@ -7,7 +7,7 @@
  * http://jquery.malsup.com/license.html
  * Requires: jQuery v1.3.2 or later
  */
-;(function($) {
+(function($) {
 
 var ver = '2.9995';
 
