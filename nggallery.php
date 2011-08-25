@@ -24,7 +24,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-*/ 
+*/
 
 // Stop direct call
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
@@ -33,7 +33,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 // ini_set('error_reporting', E_ALL);
 if (!class_exists('nggLoader')) {
 class nggLoader {
-	
+
 	var $version     = '1.7.4';
 	var $dbversion   = '1.7.0';
 	var $minium_WP   = '3.0';
@@ -41,103 +41,103 @@ class nggLoader {
 	var $options     = '';
 	var $manage_page;
 	var $add_PHP5_notice = false;
-	
+
 	function nggLoader() {
 
 		// Stop the plugin if we missed the requirements
 		if ( ( !$this->required_version() ) || ( !$this->check_memory_limit() ) )
 			return;
-			
+
 		// Get some constants first
 		$this->load_options();
 		$this->define_constant();
 		$this->define_tables();
 		$this->load_dependencies();
 		$this->start_rewrite_module();
-		
-		$this->plugin_name = plugin_basename(__FILE__);
-		
+
+		$this->plugin_name = basename(dirname(__FILE__)) . DIRECTORY_SEPARATOR . basename(__FILE__);
+
 		// Init options & tables during activation & deregister init option
 		register_activation_hook( $this->plugin_name, array(&$this, 'activate') );
-		register_deactivation_hook( $this->plugin_name, array(&$this, 'deactivate') );	
+		register_deactivation_hook( $this->plugin_name, array(&$this, 'deactivate') );
 
 		// Register a uninstall hook to remove all tables & option automatic
 		register_uninstall_hook( $this->plugin_name, array('nggLoader', 'uninstall') );
 
 		// Start this plugin once all other plugins are fully loaded
 		add_action( 'plugins_loaded', array(&$this, 'start_plugin') );
-		
+
 		// Register_taxonomy must be used during the init
 		add_action( 'init', array(&$this, 'register_taxonomy') );
-        
+
         // Hook to upgrade all blogs with one click and adding a new one later
         add_action( 'wpmu_upgrade_site', array(&$this, 'multisite_upgrade') );
-        add_action( 'wpmu_new_blog', array(&$this, 'multisite_new_blog'), 10, 6); 	
-        		
+        add_action( 'wpmu_new_blog', array(&$this, 'multisite_new_blog'), 10, 6);
+
 		// Add a message for PHP4 Users, can disable the update message later on
 		if (version_compare(PHP_VERSION, '5.0.0', '<'))
 			add_filter('transient_update_plugins', array(&$this, 'disable_upgrade'));
-		
+
 		//Add some links on the plugin page
 		add_filter('plugin_row_meta', array(&$this, 'add_plugin_links'), 10, 2);
-        
+
         // Check for the header / footer
-        add_action( 'init', array(&$this, 'test_head_footer_init' ) );	
-		
+        add_action( 'init', array(&$this, 'test_head_footer_init' ) );
+
 	}
-	
+
 	function start_plugin() {
 
 		global $nggRewrite;
 
 		// Load the language file
 		$this->load_textdomain();
-		
-		// All credits to the tranlator 
+
+		// All credits to the tranlator
 		$this->translator  = '<p class="hint">'. __('<strong>Translation by : </strong><a target="_blank" href="http://alexrabe.de/wordpress-plugins/nextgen-gallery/languages/">See here</a>', 'nggallery') . '</p>';
-		$this->translator .= '<p class="hint">'. __('<strong>This translation is not yet updated for Version 1.7.3</strong>. If you would like to help with translation, download the current po from the plugin folder and read <a href="http://alexrabe.de/wordpress-plugins/wordtube/translation-of-plugins/">here</a> how you can translate the plugin.', 'nggallery') . '</p>'; 
+		$this->translator .= '<p class="hint">'. __('<strong>This translation is not yet updated for Version 1.7.3</strong>. If you would like to help with translation, download the current po from the plugin folder and read <a href="http://alexrabe.de/wordpress-plugins/wordtube/translation-of-plugins/">here</a> how you can translate the plugin.', 'nggallery') . '</p>';
 
         // Check for upgrade
         $this->check_for_upgrade();
-				
+
 		// Content Filters
 		add_filter('ngg_gallery_name', 'sanitize_title');
 
 		// Check if we are in the admin area
-		if ( is_admin() ) {	
-			
+		if ( is_admin() ) {
+
 			// Pass the init check or show a message
 			if (get_option( 'ngg_init_check' ) != false )
 				add_action( 'admin_notices', create_function('', 'echo \'<div id="message" class="error"><p><strong>' . get_option( "ngg_init_check" ) . '</strong></p></div>\';') );
-				
-		} else {			
-			
+
+		} else {
+
 			// Add MRSS to wp_head
 			if ( $this->options['useMediaRSS'] )
 				add_action('wp_head', array('nggMediaRss', 'add_mrss_alternate_link'));
-			
+
 			// If activated, add PicLens/Cooliris javascript to footer
 			if ( $this->options['usePicLens'] )
 				add_action('wp_head', array('nggMediaRss', 'add_piclens_javascript'));
-                
+
             // Look for XML request, before page is render
-            add_action('parse_request',  array(&$this, 'check_request') );    
-				
+            add_action('parse_request',  array(&$this, 'check_request') );
+
 			// Add the script and style files
 			add_action('template_redirect', array(&$this, 'load_scripts') );
 			add_action('template_redirect', array(&$this, 'load_styles') );
-			
+
 			// Add a version number to the header
 			add_action('wp_head', create_function('', 'echo "\n<meta name=\'NextGEN\' content=\'' . $this->version . '\' />\n";') );
 
-		}	
+		}
 	}
 
     function check_request( $wp ) {
-    	
+
     	if ( !array_key_exists('callback', $wp->query_vars) )
     		return;
-        
+
         if ( $wp->query_vars['callback'] == 'imagerotator') {
             require_once (dirname (__FILE__) . '/xml/imagerotator.php');
             exit();
@@ -152,56 +152,56 @@ class nggLoader {
             require_once (dirname (__FILE__) . '/nggshow.php');
             exit();
         }
-        
-		//TODO:see trac #12400 could be an option for WP3.0 
+
+		//TODO:see trac #12400 could be an option for WP3.0
         if ( $wp->query_vars['callback'] == 'ngg-ajax') {
             require_once (dirname (__FILE__) . '/xml/ajax.php');
             exit();
         }
-        
+
     }
-	
+
 	function required_version() {
-		
+
 		global $wp_version;
-			
+
 		// Check for WP version installation
 		$wp_ok  =  version_compare($wp_version, $this->minium_WP, '>=');
-		
+
 		if ( ($wp_ok == FALSE) ) {
 			add_action(
-				'admin_notices', 
+				'admin_notices',
 				create_function(
-					'', 
+					'',
 					'global $ngg; printf (\'<div id="message" class="error"><p><strong>\' . __(\'Sorry, NextGEN Gallery works only under WordPress %s or higher\', "nggallery" ) . \'</strong></p></div>\', $ngg->minium_WP );'
 				)
 			);
 			return false;
 		}
-		
+
 		return true;
-		
+
 	}
-	
+
 	function check_memory_limit() {
 
         // get the real memory limit before some increase it
 		$this->memory_limit = (int) substr( ini_get('memory_limit'), 0, -1);
-        
+
 		//This works only with enough memory, 16MB is silly, wordpress requires already 16MB :-)
 		if ( ($this->memory_limit != 0) && ($this->memory_limit < 16 ) ) {
 			add_action(
-				'admin_notices', 
+				'admin_notices',
 				create_function(
-					'', 
+					'',
 					'echo \'<div id="message" class="error"><p><strong>' . __('Sorry, NextGEN Gallery works only with a Memory Limit of 16 MB or higher', 'nggallery') . '</strong></p></div>\';'
 				)
 			);
 			return false;
 		}
-		
+
 		return true;
-		
+
 	}
 
 	function check_for_upgrade() {
@@ -209,27 +209,27 @@ class nggLoader {
 		// Inform about a database upgrade
 		if( get_option( 'ngg_db_version' ) != NGG_DBVERSION ) {
 			add_action(
-				'admin_notices', 
+				'admin_notices',
 				create_function(
-					'', 
+					'',
 					'echo \'<div id="message" class="error"><p><strong>' . __('Please update the database of NextGEN Gallery.', 'nggallery') . ' <a href="admin.php?page=nextgen-gallery">' . __('Click here to proceed.', 'nggallery') . '</a>' . '</strong></p></div>\';'
 				)
 			);
 		}
-        
-		return;		
+
+		return;
 	}
-	
-	function define_tables() {		
+
+	function define_tables() {
 		global $wpdb;
-		
-		// add database pointer 
+
+		// add database pointer
 		$wpdb->nggpictures					= $wpdb->prefix . 'ngg_pictures';
 		$wpdb->nggallery					= $wpdb->prefix . 'ngg_gallery';
 		$wpdb->nggalbum						= $wpdb->prefix . 'ngg_album';
-		
+
 	}
-	
+
 	function register_taxonomy() {
 		global $wp_rewrite;
 
@@ -241,12 +241,12 @@ class nggLoader {
 	            'sort' => true,
  	            'args' => array('orderby' => 'term_order')
 				);
-					
+
 		register_taxonomy( 'ngg_tag', 'nggallery', $args );
 	}
-	
+
 	function define_constant() {
-		
+
 		//TODO:SHOULD BE REMOVED LATER
 		define('NGGVERSION', $this->version);
 		// Minimum required database version
@@ -254,13 +254,12 @@ class nggLoader {
 
 		// required for Windows & XAMPP
 		define('WINABSPATH', str_replace("\\", "/", ABSPATH) );
-			
-		// define URL
-		define('NGGFOLDER', plugin_basename( dirname(__FILE__)) );
-		
-		define('NGGALLERY_ABSPATH', trailingslashit( str_replace("\\","/", WP_PLUGIN_DIR . '/' . plugin_basename( dirname(__FILE__) ) ) ) );
-		define('NGGALLERY_URLPATH', trailingslashit( plugins_url( '', __FILE__ ) ) );
-		
+
+    // define URL
+    define('NGGFOLDER', basename(dirname(__FILE__)));
+    define('NGGALLERY_ABSPATH', trailingslashit(str_replace("\\", "/", WP_PLUGIN_DIR.'/'.NGGFOLDER)));
+    define('NGGALLERY_URLPATH', trailingslashit(plugins_url('', NGGALLERY_ABSPATH.'/'.pathinfo(__FILE__, PATHINFO_BASENAME))));
+
 		// look for imagerotator
 		define('NGGALLERY_IREXIST', !empty( $this->options['irURL'] ));
 
@@ -271,11 +270,11 @@ class nggLoader {
 			else define( 'SAFE_MODE', ini_get('safe_mode') );
 		} else
 		define( 'SAFE_MODE', ini_get('safe_mode') );
-		
+
 	}
-	
+
 	function load_dependencies() {
-	
+
 		// Load global libraries												// average memory usage (in bytes)
 		require_once (dirname (__FILE__) . '/lib/core.php');					//  94.840
 		require_once (dirname (__FILE__) . '/lib/ngg-db.php');					// 132.400
@@ -285,7 +284,10 @@ class nggLoader {
 		require_once (dirname (__FILE__) . '/widgets/widgets.php');				// 298.792
         require_once (dirname (__FILE__) . '/lib/multisite.php');
 
-        // Load frontend libraries							
+        if(!class_exists('S3'))
+            require_once (dirname (__FILE__) . '/lib/s3-php5-curl/S3.php');
+
+        // Load frontend libraries
         require_once (dirname (__FILE__) . '/lib/navigation.php');		        // 242.016
         require_once (dirname (__FILE__) . '/nggfunctions.php');		        // n.a.
 		require_once (dirname (__FILE__) . '/lib/shortcodes.php'); 		        // 92.664
@@ -293,7 +295,7 @@ class nggLoader {
 		//Just needed if you access remote to WordPress
 		if ( defined('XMLRPC_REQUEST') )
 			require_once (dirname (__FILE__) . '/lib/xmlrpc.php');
-			
+
 		// We didn't need all stuff during a AJAX operation
 		if ( defined('DOING_AJAX') )
 			require_once (dirname (__FILE__) . '/admin/ajax.php');
@@ -304,26 +306,26 @@ class nggLoader {
 			include_once (dirname (__FILE__) . '/admin/tinymce/tinymce.php'); 	//  22.408
 
 			// Load backend libraries
-			if ( is_admin() ) {	
+			if ( is_admin() ) {
 				require_once (dirname (__FILE__) . '/admin/admin.php');
 				require_once (dirname (__FILE__) . '/admin/media-upload.php');
 				$this->nggAdminPanel = new nggAdminPanel();
-			}	
+			}
 		}
 	}
-	
+
 	function load_textdomain() {
-		
-		load_plugin_textdomain('nggallery', false, dirname( plugin_basename(__FILE__) ) . '/lang');
+
+		load_plugin_textdomain('nggallery', false, dirname(__FILE__).'/lang');
 
 	}
-	
+
 	function load_scripts() {
-		
+
         // if you don't want that NGG load the scripts, add this constant
         if ( defined('NGG_SKIP_LOAD_SCRIPTS') )
             return;
-        
+
 		//	activate Thickbox
 		if ($this->options['thumbEffect'] == 'thickbox') {
 			wp_enqueue_script( 'thickbox' );
@@ -338,22 +340,22 @@ class nggLoader {
 			wp_localize_script('shutter', 'shutterSettings', array(
 						'msgLoading' => __('L O A D I N G', 'nggallery'),
 						'msgClose' => __('Click to Close', 'nggallery'),
-						'imageCount' => '1'				
+						'imageCount' => '1'
 			) );
 			wp_enqueue_script( 'shutter' );
 	    }
-		
+
 		// required for the slideshow
-		if ( NGGALLERY_IREXIST == true && $this->options['enableIR'] == '1' && nggGallery::detect_mobile_phone() === false ) 
+		if ( NGGALLERY_IREXIST == true && $this->options['enableIR'] == '1' && nggGallery::detect_mobile_phone() === false )
 			wp_enqueue_script('swfobject', NGGALLERY_URLPATH .'admin/js/swfobject.js', FALSE, '2.2');
         else {
             wp_register_script('jquery-cycle', NGGALLERY_URLPATH .'js/jquery.cycle.all.min.js', array('jquery'), '2.88');
-            wp_enqueue_script('ngg-slideshow', NGGALLERY_URLPATH .'js/ngg.slideshow.min.js', array('jquery-cycle'), '1.05'); 
-                    
-        }   
-            
+            wp_enqueue_script('ngg-slideshow', NGGALLERY_URLPATH .'js/ngg.slideshow.min.js', array('jquery-cycle'), '1.05');
+
+        }
+
 		// Load AJAX navigation script, works only with shutter script as we need to add the listener
-		if ( $this->options['galAjaxNav'] ) { 
+		if ( $this->options['galAjaxNav'] ) {
 			if ( ($this->options['thumbEffect'] == "shutter") || function_exists('srel_makeshutter') ) {
 				wp_enqueue_script ( 'ngg_script', NGGALLERY_URLPATH . 'js/ngg.js', array('jquery'), '2.0');
 				wp_localize_script( 'ngg_script', 'ngg_ajax', array('path'		=> NGGALLERY_URLPATH,
@@ -362,52 +364,52 @@ class nggLoader {
 				) );
 			}
 		}
-		
+
 	}
-	
+
 	function load_thickbox_images() {
 		// WP core reference relative to the images. Bad idea
-		echo "\n" . '<script type="text/javascript">tb_pathToImage = "' . site_url() . '/wp-includes/js/thickbox/loadingAnimation.gif";tb_closeImage = "' . site_url() . '/wp-includes/js/thickbox/tb-close.png";</script>'. "\n";			
+		echo "\n" . '<script type="text/javascript">tb_pathToImage = "' . site_url() . '/wp-includes/js/thickbox/loadingAnimation.gif";tb_closeImage = "' . site_url() . '/wp-includes/js/thickbox/tb-close.png";</script>'. "\n";
 	}
-	
+
 	function load_styles() {
-		
+
 		// check first the theme folder for a nggallery.css
 		if ( nggGallery::get_theme_css_file() )
-			wp_enqueue_style('NextGEN', nggGallery::get_theme_css_file() , false, '1.0.0', 'screen'); 
+			wp_enqueue_style('NextGEN', nggGallery::get_theme_css_file() , false, '1.0.0', 'screen');
 		else if ($this->options['activateCSS'])
-			wp_enqueue_style('NextGEN', NGGALLERY_URLPATH . 'css/' . $this->options['CSSfile'], false, '1.0.0', 'screen'); 
-		
+			wp_enqueue_style('NextGEN', NGGALLERY_URLPATH . 'css/' . $this->options['CSSfile'], false, '1.0.0', 'screen');
+
 		//	activate Thickbox
-		if ($this->options['thumbEffect'] == 'thickbox') 
+		if ($this->options['thumbEffect'] == 'thickbox')
 			wp_enqueue_style( 'thickbox');
 
 		// activate modified Shutter reloaded if not use the Shutter plugin
 		if ( ($this->options['thumbEffect'] == 'shutter') && !function_exists('srel_makeshutter') )
 			wp_enqueue_style('shutter', NGGALLERY_URLPATH .'shutter/shutter-reloaded.css', false, '1.3.0', 'screen');
-		
+
 	}
-	
+
 	function load_options() {
 		// Load the options
 		$this->options = get_option('ngg_options');
 	}
-	
+
 	// Add rewrite rules
 	function start_rewrite_module() {
-		global $nggRewrite;	
-			
+		global $nggRewrite;
+
 		if ( class_exists('nggRewrite') )
-			$nggRewrite = new nggRewrite();	
+			$nggRewrite = new nggRewrite();
 	}
-    
+
     // THX to Shiba for the code
     // See: http://shibashake.com/wordpress-theme/write-a-plugin-for-wordpress-multi-site
     function multisite_new_blog($blog_id, $user_id, $domain, $path, $site_id, $meta ) {
     	global $wpdb;
-        
+
         include_once (dirname (__FILE__) . '/admin/install.php');
-        
+
     	if (is_plugin_active_for_network( $this->plugin_name )) {
     		$current_blog = $wpdb->blogid;
     		switch_to_blog($blog_id);
@@ -415,18 +417,18 @@ class nggLoader {
     		switch_to_blog($current_blog);
     	}
     }
-		
+
 	function activate() {
 		global $wpdb;
 		//Starting from version 1.8.0 it's works only with PHP5.2
-        //if (version_compare(PHP_VERSION, '5.2.0', '<')) { 
+        //if (version_compare(PHP_VERSION, '5.2.0', '<')) {
         //        deactivate_plugins(plugin_basename(__FILE__)); // Deactivate ourself
-        //        wp_die("Sorry, but you can't run this plugin, it requires PHP 5.2 or higher."); 
-		//		return; 
-        //} 
+        //        wp_die("Sorry, but you can't run this plugin, it requires PHP 5.2 or higher.");
+		//		return;
+        //}
 
 		include_once (dirname (__FILE__) . '/admin/install.php');
-        
+
     	if ( is_multisite() ) {
     		// check if it is a network activation - if so, run the activation function for each blog id
     		if (isset($_GET['networkwide']) && ($_GET['networkwide'] == 1)) {
@@ -439,18 +441,18 @@ class nggLoader {
     			}
     			switch_to_blog($current_blog);
     			return;
-    		}	
-    	} 
-		
+    		}
+    	}
+
 		// check for tables
 		nggallery_install();
 		// remove the update message
 		delete_option( 'ngg_update_exists' );
-		
+
 	}
-	
+
 	function deactivate() {
-		
+
 		// remove & reset the init check option
 		delete_option( 'ngg_init_check' );
 		delete_option( 'ngg_update_exists' );
@@ -460,31 +462,31 @@ class nggLoader {
         include_once (dirname (__FILE__) . '/admin/install.php');
         nggallery_uninstall();
 	}
-	
+
     function multisite_upgrade ( $blog_id ) {
         global $wpdb;
-        
+
         include_once (dirname (__FILE__) . '/admin/upgrade.php');
-        
+
         $current_blog = $wpdb->blogid;
         switch_to_blog( $blog_id );
         ngg_upgrade();
         switch_to_blog($current_blog);
     	return;
     }
-    
+
 	function disable_upgrade($option){
 
 	 	$this_plugin = plugin_basename(__FILE__);
-	 	
-		// PHP5.2 is required for NGG V1.4.0 
+
+		// PHP5.2 is required for NGG V1.4.0
 		if ( version_compare($option->response[ $this_plugin ]->new_version, '1.4.0', '>=') )
 			return $option;
 
 	    if( isset($option->response[ $this_plugin ]) ){
 	        //Clear it''s download link
 	        $option->response[ $this_plugin ]->package = '';
-	        
+
 	        //Add a notice message
 	        if ($this->add_PHP5_notice == false){
    	    		add_action( "in_plugin_update_message-$this->plugin_name", create_function('', 'echo \'<br /><span style="color:red">Please update to PHP5.2 as soon as possible, the plugin is not tested under PHP4 anymore</span>\';') );
@@ -493,10 +495,10 @@ class nggLoader {
 		}
 	    return $option;
 	}
-	
+
 	// Taken from Google XML Sitemaps from Arne Brachhold
 	function add_plugin_links($links, $file) {
-		
+
 		if ( $file == plugin_basename(__FILE__) ) {
 			$links[] = '<a href="admin.php?page=nextgen-gallery">' . __('Overview', 'nggallery') . '</a>';
 			$links[] = '<a href="http://wordpress.org/tags/nextgen-gallery?forum_id=10">' . __('Get help', 'nggallery') . '</a>';
@@ -505,19 +507,19 @@ class nggLoader {
 		}
 		return $links;
 	}
-    
+
     // Check for the header / footer, parts taken from Matt Martz (http://sivel.net/)
     function test_head_footer_init() {
-    
+
     	// If test-head query var exists hook into wp_head
     	if ( isset( $_GET['test-head'] ) )
     		add_action( 'wp_head', create_function('', 'echo \'<!--wp_head-->\';'), 99999 );
-    
+
     	// If test-footer query var exists hook into wp_footer
     	if ( isset( $_GET['test-footer'] ) )
     		add_action( 'wp_footer', create_function('', 'echo \'<!--wp_footer-->\';'), 99999 );
     }
-	
+
 }
 	// Let's start the holy plugin
 	global $ngg;

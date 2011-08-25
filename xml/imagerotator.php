@@ -12,10 +12,12 @@
 if ( !defined('ABSPATH') ) 
     require_once( dirname(__FILE__) . '/../ngg-config.php');
 
+require_once( dirname(__FILE__) . '/../admin/functions.php');
+
 global $wpdb;
 
 $ngg_options = get_option ('ngg_options');
-$siteurl	 = site_url();
+$siteurl	 = nggAdmin::is_s3_hosting() ? nggAdmin::get_s3_url() : site_url();
 
 // get the gallery id
 $galleryID = (int) $_GET['gid'];

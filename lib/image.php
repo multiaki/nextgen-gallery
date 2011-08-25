@@ -49,7 +49,9 @@ class nggImage{
 	 */
 	function nggImage($gallery) {			
 			
-		//This must be an object
+		require_once( dirname( dirname(__FILE__) ) . '/admin/functions.php');
+
+        //This must be an object
 		$gallery = (object) $gallery;
 
 		// Build up the object
@@ -64,8 +66,9 @@ class nggImage{
 		$this->previewpic	= $gallery->previewpic;
 	
 		// set urls and paths
-		$this->imageURL		= site_url() . '/' . $this->path . '/' . $this->filename;
-		$this->thumbURL 	= site_url() . '/' . $this->path . '/thumbs/thumbs_' . $this->filename;
+        $url_path = nggAdmin::is_s3_hosting() ? nggAdmin::get_s3_url() : site_url();
+		$this->imageURL		= $url_path . '/' . $this->path . '/' . $this->filename;
+		$this->thumbURL 	= $url_path . '/' . $this->path . '/thumbs/thumbs_' . $this->filename;
 		$this->imagePath	= WINABSPATH.$this->path . '/' . $this->filename;
 		$this->thumbPath	= WINABSPATH.$this->path . '/thumbs/thumbs_' . $this->filename;
 		$this->meta_data	= unserialize($this->meta_data);
@@ -209,6 +212,14 @@ class nggImage{
 
 		return $this->permalink; 
 	}
+
+    function get_original_s3_object_uri(){
+        return $this->path . '/' . $this->filename;
+    }
+
+    function get_thumb_s3_object_uri(){
+        return $this->path . $this->thumbFolder . $this->thumbPrefix . $this->filename;
+    }
 }
 endif;
 ?>

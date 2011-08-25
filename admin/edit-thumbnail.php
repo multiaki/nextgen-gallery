@@ -28,6 +28,11 @@ $id = (int) $_GET['id'];
 // let's get the image data
 $picture = nggdb::find_image($id);
 
+//if file doesn't exist on local machine, i.e. using s3 hosting, download it
+if(!file_exists($picture->imagePath)){
+    file_put_contents($picture->imagePath, file_get_contents($picture->imageURL));
+}
+
 include_once( nggGallery::graphic_library() );
 $ngg_options=get_option('ngg_options');
 

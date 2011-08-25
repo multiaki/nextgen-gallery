@@ -534,16 +534,20 @@ function nggCreateAlbum( $galleriesID, $template = 'extend', $album = 0) {
 		
 		// Add the counter value if avaible
         $galleries[$key] = $unsort_galleries[$key];
-    	
+
+        require_once 'admin/functions.php';
+
+        $host = nggAdmin::is_s3_hosting() ? nggAdmin::get_s3_url() : site_url();
+
         // add the file name and the link 
         if ($galleries[$key]->previewpic  != 0) {
             $galleries[$key]->previewname = $albumPreview[$galleries[$key]->previewpic]->filename;
-            $galleries[$key]->previewurl  = site_url().'/' . $galleries[$key]->path . '/thumbs/thumbs_' . $albumPreview[$galleries[$key]->previewpic]->filename;
+            $galleries[$key]->previewurl  = $host.'/' . $galleries[$key]->path . '/thumbs/thumbs_' . $albumPreview[$galleries[$key]->previewpic]->filename;
         } else {
             $first_image = $wpdb->get_row('SELECT * FROM '. $wpdb->nggpictures .' WHERE exclude != 1 AND galleryid = '. $key .' ORDER by pid DESC limit 0,1');
             $galleries[$key]->previewpic  = $first_image->pid;
             $galleries[$key]->previewname = $first_image->filename;
-            $galleries[$key]->previewurl  = site_url() . '/' . $galleries[$key]->path . '/thumbs/thumbs_' . $first_image->filename;
+            $galleries[$key]->previewurl  = $host . '/' . $galleries[$key]->path . '/thumbs/thumbs_' . $first_image->filename;
         }
 
         // choose between variable and page link

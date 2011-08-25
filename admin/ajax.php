@@ -121,9 +121,9 @@ function createNewThumb() {
 	//this create a thumbnail but keep ratio settings	
 	} else {
 		$thumb->resize($ngg->options['thumbwidth'],$ngg->options['thumbheight']);	
-	}    
-	
-	if ( $thumb->save($picture->thumbPath, 100)) {
+	}
+   
+	if ( $thumb->save($picture->thumbPath, 100) ) {
 		
 		//read the new sizes
 		$new_size = @getimagesize ( $picture->thumbPath );
@@ -132,6 +132,17 @@ function createNewThumb() {
 		
 		// add them to the database
 		nggdb::update_image_meta($picture->pid, array( 'thumbnail' => $size) );
+
+        include_once (dirname (__FILE__) . '/functions.php');
+
+        if(nggAdmin::is_s3_hosting()){
+            //Upload to S3 and delete local file
+            nggAdmin::upload_to_s3($picture->thumbPath, $picture->get_thumb_s3_object_uri());
+            unlink($picture->thumbPath);
+            //Delete original image that was downloaded to create new thumb
+            if(file_exists($picture->imagePath))
+                unlink($picture->imagePath);
+        }
 		
 		echo "OK";
 	} else {

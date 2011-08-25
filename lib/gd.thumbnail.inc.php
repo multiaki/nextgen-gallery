@@ -1,12 +1,12 @@
 <?php
 /**
  * gd.thumbnail.inc.php
- * 
+ *
  * @author 		Ian Selby (ian@gen-x-design.com)
  * @copyright 	Copyright 2006-2011
  * @version 	1.2.1 (based on 1.1.3)
  * @modded      by Alex Rabe
- * 
+ *
  */
 
 /**
@@ -96,21 +96,21 @@ class ngg_Thumbnail {
      * Image for Watermark
      *
      * @var string
-     * 
+     *
      */
     var $watermarkImgPath;
     /**
      * Text for Watermark
      *
      * @var string
-     * 
+     *
      */
     var $watermarkText;
     /**
      * Image Resource ID for Watermark
      *
      * @var string
-     * 
+     *
      */
     function ngg_Thumbnail($fileName,$no_ErrorImage = false) {
         //make sure the GD library is installed
@@ -141,7 +141,7 @@ class ngg_Thumbnail {
             $this->errmsg = 'File is not readable';
             $this->error = true;
         }
-        
+
         //if there are no errors, determine the file format
         if($this->error == false) {
     		$data = @getimagesize($this->fileName);
@@ -159,19 +159,19 @@ class ngg_Thumbnail {
                 $this->error = true;
             }
         }
-        
+
 		// increase memory-limit if possible, GD needs this for large images
 		// @ini_set('memory_limit', '128M');
-        
-		if($this->error == false) { 
+
+		if($this->error == false) {
         // Check memory consumption if file exists
 			$this->checkMemoryForImage($this->fileName);
 		}
 
         //initialize resources if no errors
-        if($this->error == false) { 
+        if($this->error == false) {
 
-            switch($this->format) {            	
+            switch($this->format) {
                 case 'GIF':
                     $this->oldImage = ImageCreateFromGif($this->fileName);
                     break;
@@ -182,7 +182,7 @@ class ngg_Thumbnail {
                     $this->oldImage = ImageCreateFromPng($this->fileName);
 					break;
             }
-			if (!$this->oldImage) { 
+			if (!$this->oldImage) {
 				$this->errmsg = 'Create Image failed. Check memory limit';
 		        $this->error = true;
 		    } else {
@@ -205,10 +205,10 @@ class ngg_Thumbnail {
      *
      */
 	function checkMemoryForImage( $filename ){
-		
+
 		if ( (function_exists('memory_get_usage')) && (ini_get('memory_limit')) ) {
 			$imageInfo = getimagesize($filename);
-			switch($this->format) {            	
+			switch($this->format) {
                 case 'GIF':
                 	// measured factor 1 is better
                     $CHANNEL = 1;
@@ -236,7 +236,7 @@ class ngg_Thumbnail {
 			if ($memory_limit != '') {
 				$memory_limit = substr($memory_limit, 0, -1) * 1024 * 1024;
 			}
-			
+
 			if ($memoryNeeded > $memory_limit) {
 				$memoryNeeded = round ($memoryNeeded / 1024 / 1024, 2);
 				$this->errmsg = 'Exceed Memory limit. Require : '.$memoryNeeded. " MByte" ;
@@ -282,8 +282,14 @@ class ngg_Thumbnail {
      * @return array
      */
     function calcWidth($width,$height) {
-        $newWp = (100 * $this->maxWidth) / $width;
-        $newHeight = ($height * $newWp) / 100;
+        if ($height > 0) {
+            $newWp = (100 * $this->maxWidth) / $width;
+            $newHeight = ($height * $newWp) / 100;
+        } else {
+            $newWp = 100;
+            $newHeight = $height;
+        }
+
         return array('newWidth'=>intval($this->maxWidth),'newHeight'=>intval($newHeight));
     }
 
@@ -376,7 +382,7 @@ class ngg_Thumbnail {
 
     /**
      * Resizes image to fixed Width x Height
-     * 
+     *
      * @param int $Width
      * @param int $Height
      * @param int $resampleMode
@@ -627,7 +633,7 @@ class ngg_Thumbnail {
 	    	$this->errmsg = 'Create Image failed. Check safe mode settings';
 	    	return false;
 	    }
-        
+
         if( function_exists('do_action') )
 	       do_action('ngg_ajax_image_save', $name);
 
@@ -702,80 +708,80 @@ class ngg_Thumbnail {
 	 * @param bool $vert flip the image in vertical mode
 	 */
 	function flipImage( $horz = false, $vert = false ) {
-		
+
 		$sx = $vert ? ($this->currentDimensions['width'] - 1) : 0;
 		$sy = $horz ? ($this->currentDimensions['height'] - 1) : 0;
 		$sw = $vert ? -$this->currentDimensions['width'] : $this->currentDimensions['width'];
 		$sh = $horz ? -$this->currentDimensions['height'] : $this->currentDimensions['height'];
-		
-		$this->workingImage = imagecreatetruecolor( $this->currentDimensions['width'], $this->currentDimensions['height'] ); 
-		
+
+		$this->workingImage = imagecreatetruecolor( $this->currentDimensions['width'], $this->currentDimensions['height'] );
+
 		imagecopyresampled($this->workingImage, $this->oldImage, 0, 0, $sx, $sy, $this->currentDimensions['width'], $this->currentDimensions['height'], $sw, $sh) ;
 		$this->oldImage = $this->workingImage;
 		$this->newImage = $this->workingImage;
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Rotate an image clockwise or counter clockwise
 	 *
 	 * @param string $direction could be CW or CCW
 	 */
 	function rotateImage( $dir = 'CW' ) {
-		
+
 		$angle = ($dir == 'CW') ? 90 : -90;
-		
+
 		if ( function_exists('imagerotate') ) {
-	        $this->workingImage = imagerotate($this->oldImage, 360 - $angle, 0); // imagerotate() rotates CCW 
+	        $this->workingImage = imagerotate($this->oldImage, 360 - $angle, 0); // imagerotate() rotates CCW
 	        $this->currentDimensions['width']  = imagesx($this->workingImage);
 	    	$this->currentDimensions['height'] = imagesy($this->workingImage);
     	    $this->oldImage = $this->workingImage;
 			$this->newImage = $this->workingImage;
 			return true;
 		}
-		
-		$this->workingImage = imagecreatetruecolor( $this->currentDimensions['height'], $this->currentDimensions['width'] ); 
-		
-	    imagealphablending($this->workingImage, false); 
-	    imagesavealpha($this->workingImage, true); 
+
+		$this->workingImage = imagecreatetruecolor( $this->currentDimensions['height'], $this->currentDimensions['width'] );
+
+	    imagealphablending($this->workingImage, false);
+	    imagesavealpha($this->workingImage, true);
 
 		switch ($angle) {
-			
+
 			case 90 :
-				for( $x = 0; $x < $this->currentDimensions['width']; $x++ ) { 
-	   	            for( $y = 0; $y < $this->currentDimensions['height']; $y++ ) { 
-	  	                if ( !imagecopy($this->workingImage, $this->oldImage, $this->currentDimensions['height'] - $y - 1, $x, $x, $y, 1, 1) ) 
-	  	                    return false; 
-	 	            } 
-	  	        } 
+				for( $x = 0; $x < $this->currentDimensions['width']; $x++ ) {
+	   	            for( $y = 0; $y < $this->currentDimensions['height']; $y++ ) {
+	  	                if ( !imagecopy($this->workingImage, $this->oldImage, $this->currentDimensions['height'] - $y - 1, $x, $x, $y, 1, 1) )
+	  	                    return false;
+	 	            }
+	  	        }
 			break;
-			
+
 			case -90 :
-				for( $x = 0; $x < $this->currentDimensions['width']; $x++ ) { 
-	 	            for( $y = 0; $y < $this->currentDimensions['height']; $y++ ) { 
-	 	                if ( !imagecopy($this->workingImage, $this->oldImage, $y, $this->currentDimensions['width'] - $x - 1, $x, $y, 1, 1) ) 
-	 	                    return false; 
-	 	            } 
-	 	        } 
+				for( $x = 0; $x < $this->currentDimensions['width']; $x++ ) {
+	 	            for( $y = 0; $y < $this->currentDimensions['height']; $y++ ) {
+	 	                if ( !imagecopy($this->workingImage, $this->oldImage, $y, $this->currentDimensions['width'] - $x - 1, $x, $y, 1, 1) )
+	 	                    return false;
+	 	            }
+	 	        }
 			break;
-						
-			default : 
+
+			default :
 				return false;
 		}
 
 		$this->currentDimensions['width']  = imagesx($this->workingImage);
-	    $this->currentDimensions['height'] = imagesy($this->workingImage);			
+	    $this->currentDimensions['height'] = imagesy($this->workingImage);
 	    $this->oldImage = $this->workingImage;
 		$this->newImage = $this->workingImage;
-		
+
 	    return true;
-		
-	}	
+
+	}
 
 	/**
 	 * Inverts working image, used by reflection function
-	 * 
+	 *
 	 * @access	private
 	 */
 	function imageFlipVertical() {
@@ -815,9 +821,9 @@ class ngg_Thumbnail {
 
         return ($asString ? "{$rgb[0]} {$rgb[1]} {$rgb[2]}" : $rgb);
     }
-    
+
 	/**
-     * Based on the Watermark function by Marek Malcherek  
+     * Based on the Watermark function by Marek Malcherek
      * http://www.malcherek.de
      *
  	 * @param string $color
@@ -829,12 +835,12 @@ class ngg_Thumbnail {
 		// set font path
 		$wmFontPath = NGGALLERY_ABSPATH."fonts/".$wmFont;
 		if ( !is_readable($wmFontPath))
-			return;	
-			
-		// This function requires both the GD library and the FreeType library. 
+			return;
+
+		// This function requires both the GD library and the FreeType library.
 		if ( !function_exists('ImageTTFBBox') )
 			return;
-	
+
 		$TextSize = @ImageTTFBBox($wmSize, 0, $wmFontPath, $this->watermarkText) or die;
 		$TextWidth = abs($TextSize[2]) + abs($TextSize[0]);
 		$TextHeight = abs($TextSize[7]) + abs($TextSize[1]);
@@ -847,16 +853,16 @@ class ngg_Thumbnail {
 		$wmTransp = 127 -( $wmOpaque * 1.27 );
 		$rgb = $this->hex2rgb($color,false);
 		$TextColor = imagecolorallocatealpha($this->workingImage, $rgb[0], $rgb[1], $rgb[2], $wmTransp);
-		
+
 		// Create Text on image
 		imagettftext($this->workingImage, $wmSize, 0, 0, abs($TextSize[5]), $TextColor, $wmFontPath, $this->watermarkText);
 		$this->watermarkImgPath = $this->workingImage;
 
-		return;		
+		return;
 	}
-    
+
     /**
-     * Modfied Watermark function by Steve Peart 
+     * Modfied Watermark function by Steve Peart
      * http://parasitehosting.com/
      *
  	 * @param string $relPOS
@@ -864,18 +870,18 @@ class ngg_Thumbnail {
  	 * @param int $yPOS
      */
     function watermarkImage( $relPOS = 'botRight', $xPOS = 0, $yPOS = 0) {
-    	
+
 		// if it's a resource ID take it as watermark text image
     	if(is_resource($this->watermarkImgPath)) {
     		$this->workingImage = $this->watermarkImgPath;
     	} else {
-		// Would you really want to use anything other than a png? 
+		// Would you really want to use anything other than a png?
 		$this->workingImage = @imagecreatefrompng($this->watermarkImgPath);
 		// if it's not a valid file die...
 		if (empty($this->workingImage) or (!$this->workingImage))
 			return;
 		}
-		
+
 		imagealphablending($this->workingImage, false);
 		imagesavealpha($this->workingImage, true);
 		$sourcefile_width=imageSX($this->oldImage);
@@ -894,8 +900,8 @@ class ngg_Thumbnail {
 			case 'Right':	$dest_x = $sourcefile_width - $watermarkfile_width - $xPOS; break;
 			default : 		$dest_x = 0; break;
 		}
-		
-		// debug	
+
+		// debug
 		// $this->errmsg = 'X '.$dest_x.' Y '.$dest_y;
 		// $this->showErrorImage();
 
@@ -905,14 +911,14 @@ class ngg_Thumbnail {
 			imagecopy($tempimage, $this->oldImage, 0, 0, 0, 0,$sourcefile_width, $sourcefile_height);
 			$this->newImage = $tempimage;
 		}
-		
+
 		imagecopy($this->newImage, $this->workingImage, $dest_x, $dest_y, 0, 0,$watermarkfile_width, $watermarkfile_height);
 	}
-	
+
     /**
      * Fast imagecopyresampled by tim@leethost.com
      *
-     */	
+     */
 	function fastimagecopyresampled (&$dst_image, $src_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h, $quality = 3) {
 		// Plug-and-Play fastimagecopyresampled function replaces much slower imagecopyresampled.
 		// Just include this function and change all "imagecopyresampled" references to "fastimagecopyresampled".
@@ -925,9 +931,9 @@ class ngg_Thumbnail {
 		// 3 = Up to 60 times faster.  Will give high quality smooth results very close to imagecopyresampled.
 		// 4 = Up to 25 times faster.  Almost identical to imagecopyresampled for most images.
 		// 5 = No speedup.  Just uses imagecopyresampled, highest quality but no advantage over imagecopyresampled.
-		
+
 		if (empty($src_image) || empty($dst_image)) { return false; }
-		
+
 		if ($quality <= 1) {
 			$temp = imagecreatetruecolor ($dst_w + 1, $dst_h + 1);
 			imagecopyresized ($temp, $src_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w + 1, $dst_h + 1, $src_w, $src_h);

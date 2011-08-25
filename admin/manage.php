@@ -69,6 +69,10 @@ class nggManageGallery {
 					@unlink($image->imagePath);
 					@unlink($image->thumbPath);	
 					@unlink($image->imagePath . "_backup" );
+                    if(nggAdmin::is_s3_hosting()){
+                        nggAdmin::delete_from_s3($image->get_original_s3_object_uri());
+                        nggAdmin::delete_from_s3($image->get_thumb_s3_object_uri());
+                    }
 				} 
 				$delete_pic = nggdb::delete_image ( $this->pid );
             }
