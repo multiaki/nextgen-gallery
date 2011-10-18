@@ -156,9 +156,8 @@ class nggAdmin{
 		if (substr($galleryfolder, -1) == '/') $galleryfolder = substr($galleryfolder, 0, -1);
 		$gallerypath = WINABSPATH . $galleryfolder;
 
-		if (!is_dir($gallerypath)) {
-			nggGallery::show_error(__('Directory', 'nggallery').' <strong>'.$gallerypath.'</strong> '.__('doesn&#96;t exist!', 'nggallery'));
-			return ;
+		if (!is_dir($gallerypath)) {				
+			mkdir ($gallerypath);
 		}
 
 		// read list of images

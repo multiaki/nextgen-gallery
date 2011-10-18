@@ -11,7 +11,7 @@
 
 /** Define the server path to the file wp-config here, if you placed WP-CONTENT outside the classic file structure */
 
-define(WP_LOAD_PATH, dirname(WP_CONTENT_DIR).'/'); // It should be end with a trailing slash
+define('WP_LOAD_PATH', dirname(WP_CONTENT_DIR).'/'); // It should be end with a trailing slash
 
 // let's load WordPress
 require_once( WP_LOAD_PATH . 'wp-load.php');
