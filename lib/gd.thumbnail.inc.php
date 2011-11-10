@@ -161,7 +161,7 @@ class ngg_Thumbnail {
         }
 
 		// increase memory-limit if possible, GD needs this for large images
-		// @ini_set('memory_limit', '128M');
+		@ini_set('memory_limit', '128M');
 
 		if($this->error == false) {
         // Check memory consumption if file exists

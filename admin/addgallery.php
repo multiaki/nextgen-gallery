@@ -95,18 +95,6 @@ class nggAddGallery {
     			nggAdmin::import_gallery($gallerypath);
     		}	
     	}
-    
-    	if ( isset($_POST['disable_flash']) ){
-    		check_admin_referer('ngg_addgallery');
-    		$ngg->options['swfUpload'] = false;	
-    		update_option('ngg_options', $ngg->options);
-    	}
-    
-    	if ( isset($_POST['enable_flash']) ){
-    		check_admin_referer('ngg_addgallery');
-    		$ngg->options['swfUpload'] = true;	
-    		update_option('ngg_options', $ngg->options);
-    	}
 
         do_action( 'ngg_update_addgallery_page' );
         
@@ -135,70 +123,6 @@ class nggAddGallery {
         $tabs = $this->tabs_order();
 	?>
 	
-	<?php if($ngg->options['swfUpload'] && !empty ($this->gallerylist) ) { ?>
-	<!-- SWFUpload script -->
-	<script type="text/javascript">
-		var ngg_swf_upload;
-			
-		window.onload = function () {
-			ngg_swf_upload = new SWFUpload({
-				// Backend settings
-				upload_url : "<?php echo esc_attr( $swf_upload_link ); ?>",
-				flash_url : "<?php echo NGGALLERY_URLPATH; ?>admin/js/swfupload.swf",
-				
-				// Button Settings
-				button_placeholder_id : "spanButtonPlaceholder",
-				button_width: 300,
-				button_height: 27,
-				button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
-				button_cursor: SWFUpload.CURSOR.HAND,
-								
-				// File Upload Settings
-				file_size_limit : "<?php echo wp_max_upload_size(); ?>b",
-				file_types : "*.jpg;*.jpeg;*.gif;*.png;*.JPG;*.JPEG;*.GIF;*.PNG",
-				file_types_description : "<?php _e('Image Files', 'nggallery') ;?>",
-				
-				// Queue handler
-				file_queued_handler : fileQueued,
-				
-				// Upload handler
-				upload_start_handler : uploadStart,
-				upload_progress_handler : uploadProgress,
-				upload_error_handler : uploadError,
-				upload_success_handler : uploadSuccess,
-				upload_complete_handler : uploadComplete,
-				
-				post_params : {
-					"auth_cookie" : "<?php echo (is_ssl() ? $_COOKIE[SECURE_AUTH_COOKIE] : $_COOKIE[AUTH_COOKIE]); ?>",
-                    "logged_in_cookie": "<?php echo $_COOKIE[LOGGED_IN_COOKIE]; ?>",
-                    "_wpnonce" : "<?php echo wp_create_nonce('ngg_swfupload'); ?>",                    
-					"galleryselect" : "0"
-				},
-				
-				// i18names
-				custom_settings : {
-					"remove" : "<?php _e('remove', 'nggallery') ;?>",
-					"browse" : "<?php _e('Browse...', 'nggallery') ;?>",
-					"upload" : "<?php _e('Upload images', 'nggallery') ;?>"
-				},
-
-				// Debug settings
-				debug: false
-				
-			});
-			
-			// on load change the upload to swfupload
-			initSWFUpload();
-
-			nggAjaxOptions = {
-			  	header: "<?php _e('Upload images', 'nggallery') ;?>",
-			  	maxStep: 100
-			};
-			
-		};
-	</script>
-	
-	<?php } else { ?>
 	<!-- MultiFile script -->
 	<script type="text/javascript">	
 	/* <![CDATA[ */
@@ -211,7 +135,7 @@ class nggAddGallery {
 		});
 	/* ]]> */
 	</script>
-	<?php } ?>
+
 	<!-- jQuery Tabs script -->
 	<script type="text/javascript">
 	/* <![CDATA[ */
@@ -403,11 +327,6 @@ class nggAddGallery {
 			</tr> 
 			</table>
 			<div class="submit">
-				<?php if ($ngg->options['swfUpload']) { ?>
-				<input type="submit" name="disable_flash" id="disable_flash" title="<?php _e('The batch upload requires Adobe Flash 10, disable it if you have problems','nggallery') ?>" value="<?php _e('Disable flash upload', 'nggallery') ;?>" />
-				<?php } else { ?>
-				<input type="submit" name="enable_flash" id="enable_flash" title="<?php _e('Upload multiple files at once by ctrl/shift-selecting in dialog','nggallery') ?>" value="<?php _e('Enable flash based upload', 'nggallery') ;?>" />
-				<?php } ?>
 				<input class="button-primary" type="submit" name="uploadimage" id="uploadimage_btn" value="<?php _e('Upload images', 'nggallery') ;?>" />
 			</div>
 		</form>
