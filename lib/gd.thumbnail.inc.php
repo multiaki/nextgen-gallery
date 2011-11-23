@@ -114,11 +114,16 @@ class ngg_Thumbnail {
      */
     function ngg_Thumbnail($fileName,$no_ErrorImage = false) {
         //make sure the GD library is installed
-    	if(!function_exists("gd_info")) {
+    	error_log('ngg_thumb start');
+
+        if(!function_exists("gd_info")) {
         	echo 'You do not have the GD Library installed.  This class requires the GD library to function properly.' . "\n";
         	echo 'visit http://us2.php.net/manual/en/ref.image.php for more information';
-        	exit;
+        	error_log('no gd');
+            exit;
         }
+
+        error_log('if passed');
     	//initialize variables
         $this->errmsg               = '';
         $this->error                = false;

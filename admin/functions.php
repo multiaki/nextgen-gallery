@@ -272,6 +272,7 @@ class nggAdmin{
 	 * @since v1.0.0
 	 */
 	function create_thumbnail($image) {
+		error_log('Starting create_thumbnail');
 
 		global $ngg;
 
@@ -281,21 +282,28 @@ class nggAdmin{
 		if ( is_numeric($image) )
 			$image = nggdb::find_image( $image );
 
+			error_log('test1');
+
 		if ( !is_object($image) )
 			return __('Object didn\'t contain correct data','nggallery');
+
+error_log('test2');
 
 		// before we start we import the meta data to database (required for uploads before V1.4.0)
 		nggAdmin::maybe_import_meta( $image->pid );
 
+error_log($image->thumbPath);
 		// check for existing thumbnail
 		if (file_exists($image->thumbPath))
 			if (!is_writable($image->thumbPath))
 				return $image->filename . __(' is not writeable ','nggallery');
-
+error_log('test3');
 		$thumb = new ngg_Thumbnail($image->imagePath, TRUE);
-
+error_log('test4');
+		
 		// skip if file is not there
 		if (!$thumb->error) {
+			error_log('No error');
 			if ($ngg->options['thumbfix'])  {
 
 				// calculate correct ratio
@@ -1053,6 +1061,7 @@ class nggAdmin{
 			// add images to database
 			$image_ids = nggAdmin::add_Images($galleryID, $imageslist);
 
+			error_log('Just about to make thumbs');
 			//create thumbnails
 			nggAdmin::do_ajax_operation( 'create_thumbnail' , $image_ids, __('Create new thumbnails','nggallery') );
 
