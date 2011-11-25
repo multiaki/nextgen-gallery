@@ -292,6 +292,9 @@ class nggAdmin{
 			if (!is_writable($image->thumbPath))
 				return $image->filename . __(' is not writeable ','nggallery');
 
+		if (!file_exists($image->imagePath))
+			file_put_contents($image->imagePath, file_get_contents($image->imageURL));
+		
 		$thumb = new ngg_Thumbnail($image->imagePath, TRUE);
 
 		// skip if file is not there
