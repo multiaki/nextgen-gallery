@@ -300,6 +300,7 @@ class nggAddGallery {
     	<!-- upload images -->
     	<h2><?php _e('Upload Images', 'nggallery') ;?></h2>
 		<form name="uploadimage" id="uploadimage_form" method="POST" enctype="multipart/form-data" action="<?php echo $this->filepath.'#uploadimage'; ?>" accept-charset="utf-8" >
+        <p>.jpeg (or .jpg) images must be less than <strong>3MB</strong> and uploaded <strong>one at a time</strong>.</p>
 		<?php wp_nonce_field('ngg_addgallery') ?>
 			<table class="form-table"> 
 			<tr valign="top"> 
