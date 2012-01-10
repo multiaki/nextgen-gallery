@@ -156,7 +156,7 @@ class nggAdmin{
 		if (substr($galleryfolder, -1) == '/') $galleryfolder = substr($galleryfolder, 0, -1);
 		$gallerypath = WINABSPATH . $galleryfolder;
 
-		if (!is_dir($gallerypath)) {				
+		if (!is_dir($gallerypath)) {
 			mkdir ($gallerypath);
 		}
 
@@ -287,6 +287,8 @@ class nggAdmin{
 		// before we start we import the meta data to database (required for uploads before V1.4.0)
 		nggAdmin::maybe_import_meta( $image->pid );
 
+		$image->ensure_gallery_path_exists();
+
 		// check for existing thumbnail
 		if (file_exists($image->thumbPath))
 			if (!is_writable($image->thumbPath))
@@ -294,7 +296,7 @@ class nggAdmin{
 
 		if (!file_exists($image->imagePath))
 			file_put_contents($image->imagePath, file_get_contents($image->imageURL));
-		
+
 		$thumb = new ngg_Thumbnail($image->imagePath, TRUE);
 
 		// skip if file is not there
