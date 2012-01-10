@@ -16,6 +16,7 @@ class nggAdmin{
 	  //cleanup pathname
 		$name = sanitize_file_name( sanitize_title($title)  );
 		$name = apply_filters('ngg_gallery_name', $name);
+		$defaultpath = rtrim($defaultpath, '/').'/';
 		$nggRoot = WINABSPATH . $defaultpath;
 
 		// No gallery name ?
@@ -44,16 +45,19 @@ class nggAdmin{
 			return false;
 		}
 
+		// ** COMMENTED THIS OUT BECAUSE IN A MULTI-SERVER ENVIRONMENT, WE WANT
+		// ** A CONSISTENT LOCATION FOR Galleries
+
 		// 1. Check for existing folder
-		if ( is_dir(WINABSPATH . $defaultpath . $name ) ) {
-			$suffix = 1;
-			do {
-				$alt_name = substr ($name, 0, 200 - ( strlen( $suffix ) + 1 ) ) . "_$suffix";
-				$dir_check = is_dir(WINABSPATH . $defaultpath . $alt_name );
-				$suffix++;
-			} while ( $dir_check );
-			$name = $alt_name;
-		}
+		// if ( is_dir(WINABSPATH . $defaultpath . $name ) ) {
+		// 	$suffix = 1;
+		// 	do {
+		// 		$alt_name = substr ($name, 0, 200 - ( strlen( $suffix ) + 1 ) ) . "_$suffix";
+		// 		$dir_check = is_dir(WINABSPATH . $defaultpath . $alt_name );
+		// 		$suffix++;
+		// 	} while ( $dir_check );
+		// 	$name = $alt_name;
+		// }
 
     // define relative path to gallery inside wp root folder
     $nggpath = $defaultpath . $name;
@@ -235,6 +239,7 @@ class nggAdmin{
         $ext_incl_backups = array('jpeg', 'jpg', 'png', 'gif', 'jpeg_backup', 'jpg_backup', 'png_backup', 'gif_backup');
 
 		$files = array();
+
 		if( $handle = opendir( $dirname ) ) {
 			while( false !== ( $file = readdir( $handle ) ) ) {
 				$info = pathinfo( $file );

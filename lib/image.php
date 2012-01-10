@@ -222,7 +222,7 @@ class nggImage{
     }
 
     function ensure_gallery_path_exists() {
-    	nggAdmin::create_directories_for_gallery($this->title, $this->path)
+    	nggAdmin::create_directories_for_gallery($this->title, dirname($this->path));
     }
 }
 endif;

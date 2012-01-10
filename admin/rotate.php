@@ -26,6 +26,8 @@ $id = (int) $_GET['id'];
 // let's get the image data
 $picture = nggdb::find_image($id);
 
+$picture->ensure_gallery_path_exists();
+
 //if file doesn't exist on local machine, i.e. using s3 hosting, download it
 if(!file_exists($picture->imagePath)){
     file_put_contents($picture->imagePath, file_get_contents($picture->imageURL));

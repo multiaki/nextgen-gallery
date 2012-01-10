@@ -9,7 +9,7 @@ More info and update : http://www.iliveinperego.com/custom_thumbnail_for_ngg/
 Credits:
  NextGen Gallery : Alex Rabe | http://alexrabe.boelinger.com/wordpress-plugins/nextgen-gallery/
  jCrop : Kelly Hallman <khallman@wrack.org> | http://deepliquid.com/content/Jcrop.html
- 
+
 **/
 
 require_once( dirname( dirname(__FILE__) ) . '/ngg-config.php');
@@ -17,8 +17,8 @@ require_once( NGGALLERY_ABSPATH . '/lib/image.php' );
 
 if ( !is_user_logged_in() )
 	die(__('Cheatin&#8217; uh?'));
-	
-if ( !current_user_can('NextGEN Manage gallery') ) 
+
+if ( !current_user_can('NextGEN Manage gallery') )
 	die(__('Cheatin&#8217; uh?'));
 
 global $wpdb;
@@ -27,6 +27,8 @@ $id = (int) $_GET['id'];
 
 // let's get the image data
 $picture = nggdb::find_image($id);
+
+$picture->ensure_gallery_path_exists();
 
 //if file doesn't exist on local machine, i.e. using s3 hosting, download it
 if(!file_exists($picture->imagePath)){
@@ -47,22 +49,22 @@ $imageInfo			= @getimagesize($picture->imagePath);
 $rr = round($imageInfo[0] / $resizedPreviewInfo['newWidth'], 2);
 
 if ( ($ngg_options['thumbfix'] == 1) ) {
-	
+
 	$WidthHtmlPrev  = $ngg_options['thumbwidth'];
 	$HeightHtmlPrev = $ngg_options['thumbheight'];
-	
+
 } else {
 	// H > W
 	if ($imageInfo[1] > $imageInfo[0]) {
 
 		$HeightHtmlPrev =  $ngg_options['thumbheight'];
 		$WidthHtmlPrev  = round($imageInfo[0] / ($imageInfo[1] / $ngg_options['thumbheight']),0);
-		
+
 	} else {
-		
+
 		$WidthHtmlPrev  =  $ngg_options['thumbwidth'];
 		$HeightHtmlPrev = round($imageInfo[1] / ($imageInfo[0] / $ngg_options['thumbwidth']),0);
-		
+
 	}
 }
 
@@ -72,46 +74,46 @@ if ( ($ngg_options['thumbfix'] == 1) ) {
 
 <script language="JavaScript">
 <!--
-	
+
 	var status = 'start';
 	var xT, yT, wT, hT, selectedCoords;
 	var selectedImage = "thumb<?php echo $id ?>";
 
 	function showPreview(coords)
 	{
-		
+
 		if (status != 'edit') {
 			jQuery('#actualThumb').hide();
 			jQuery('#previewNewThumb').show();
-			status = 'edit';	
+			status = 'edit';
 		}
-		
+
 		var rx = <?php echo $WidthHtmlPrev; ?> / coords.w;
 		var ry = <?php echo $HeightHtmlPrev; ?> / coords.h;
-		
+
 		jQuery('#imageToEditPreview').css({
 			width: Math.round(rx * <?php echo $resizedPreviewInfo['newWidth']; ?>) + 'px',
 			height: Math.round(ry * <?php echo $resizedPreviewInfo['newHeight']; ?>) + 'px',
 			marginLeft: '-' + Math.round(rx * coords.x) + 'px',
 			marginTop: '-' + Math.round(ry * coords.y) + 'px'
 		});
-		
+
 		xT = coords.x;
 		yT = coords.y;
 		wT = coords.w;
 		hT = coords.h;
-		
+
 		jQuery("#sizeThumb").html(xT+" "+yT+" "+wT+" "+hT);
-		
+
 	};
-	
+
 	function updateThumb() {
-		
+
 		if ( (wT == 0) || (hT == 0) || (wT == undefined) || (hT == undefined) ) {
 			alert("<?php _e('Select with the mouse the area for the new thumbnail', 'nggallery'); ?>");
-			return false;			
+			return false;
 		}
-				
+
 		jQuery.ajax({
 		  url: "admin-ajax.php",
 		  type : "POST",
@@ -121,7 +123,7 @@ if ( ($ngg_options['thumbfix'] == 1) ) {
 					var d = new Date();
 					newUrl = jQuery("#"+selectedImage).attr("src") + "?" + d.getTime();
 					jQuery("#"+selectedImage).attr("src" , newUrl);
-					
+
 					jQuery('#thumbMsg').html("<?php _e('Thumbnail updated', 'nggallery') ?>");
 					jQuery('#thumbMsg').css({'display':'block'});
 					setTimeout(function(){ jQuery('#thumbMsg').fadeOut('slow'); }, 1500);
@@ -134,18 +136,18 @@ if ( ($ngg_options['thumbfix'] == 1) ) {
 		});
 
 	}
-	
+
 -->
 </script>
 
 <table width="98%" align="center" style="border:1px solid #DADADA">
 	<tr>
 		<td rowspan="3" valign="middle" align="center" width="350" style="background-color:#DADADA;">
-			<img src="<?php echo $preview_image; ?>" alt="" id="imageToEdit" />	
+			<img src="<?php echo $preview_image; ?>" alt="" id="imageToEdit" />
 		</td>
 		<td width="300" style="background-color : #DADADA;">
 			<small style="margin-left:6px; display:block;"><?php _e('Select the area for the thumbnail from the picture on the left.', 'nggallery'); ?></small>
-		</td>		
+		</td>
 	</tr>
 	<tr>
 		<td align="center" width="300" height="320">
