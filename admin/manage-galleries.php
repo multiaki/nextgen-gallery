@@ -137,8 +137,8 @@ function nggallery_manage_gallery_main() {
 				<select name="bulkaction" id="bulkaction">
 					<option value="no_action" ><?php _e("Bulk actions",'nggallery'); ?></option>
 					<option value="delete_gallery" ><?php _e("Delete",'nggallery'); ?></option>
-					<option value="new_thumbnail" ><?php _e("Create new thumbnails",'nggallery'); ?></option>
-      <!--<option value="set_watermark" ><?php _e("Set watermark",'nggallery'); ?></option>
+			<!--<option value="new_thumbnail" ><?php _e("Create new thumbnails",'nggallery'); ?></option>
+      		<option value="set_watermark" ><?php _e("Set watermark",'nggallery'); ?></option>
 					<option value="resize_images" ><?php _e("Resize images",'nggallery'); ?></option>
 					<option value="import_meta" ><?php _e("Import metadata",'nggallery'); ?></option>
 					<option value="recover_images" ><?php _e("Recover from backup",'nggallery'); ?></option>-->

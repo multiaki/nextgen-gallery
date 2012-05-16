@@ -337,12 +337,12 @@ jQuery(document).ready( function() {
 	<div class="alignleft actions">
 	<select id="bulkaction" name="bulkaction">
 		<option value="no_action" ><?php _e("Bulk actions",'nggallery'); ?></option>
-		<option value="new_thumbnail" ><?php _e("Create new thumbnails",'nggallery'); ?></option>
 		<option value="delete_images" ><?php _e("Delete images",'nggallery'); ?></option>
 		<option value="add_tags" ><?php _e("Add tags",'nggallery'); ?></option>
 		<option value="delete_tags" ><?php _e("Delete tags",'nggallery'); ?></option>
 		<option value="overwrite_tags" ><?php _e("Overwrite tags",'nggallery'); ?></option>
 	<!--
+		<option value="new_thumbnail" ><?php _e("Create new thumbnails",'nggallery'); ?></option>
 		<option value="import_meta" ><?php _e("Import metadata",'nggallery'); ?></option>
 		<option value="rotate_cw" ><?php _e("Rotate images clockwise",'nggallery'); ?></option>
 		<option value="rotate_ccw" ><?php _e("Rotate images counter-clockwise",'nggallery'); ?></option>
