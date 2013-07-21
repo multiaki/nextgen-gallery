@@ -258,7 +258,12 @@ class nggWidget extends WP_Widget {
 
 	function widget( $args, $instance ) {
 		extract( $args );
-        
+        	$before_widget = '';
+	        $before_title  = '';
+	        $title = '';
+	        $after_title = '';
+	        $after_widget = '';
+
         $title = apply_filters('widget_title', empty($instance['title']) ? '&nbsp;' : $instance['title'], $instance, $this->id_base);
 
 		global $wpdb;
